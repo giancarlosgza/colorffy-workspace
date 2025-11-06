@@ -1,0 +1,28 @@
+:root {
+    --theme-primary-base: #4f46e5;
+    --theme-secondary-base: #ec4899;
+    --theme-accent-base: #0ea5e9;
+    --theme-warning-base: #f59e0b;
+    --theme-success-base: #22c55e;
+    --theme-danger-base: #ef4444;
+    --theme-on-success: #000000;
+    --theme-surface-base: #ffffff;
+
+    --font-primary: 'Stack Sans Headline', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Mozilla Text', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dark-mode {
+    --theme-primary-base: #ab87ff;
+    --theme-secondary-base: #fd98cc;
+    --theme-accent-base: #6ad2ff;
+    --theme-warning-base: #ffcf57;
+    --theme-success-base: #76f6a5;
+    --theme-danger-base: #fd8585;
+    --theme-on-success: #000000;
+    --theme-surface-base: #121212;
+}
+
+.dialog {
+    --_dialog-radius: 25px;
+}
