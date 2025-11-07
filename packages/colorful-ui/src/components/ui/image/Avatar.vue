@@ -1,12 +1,6 @@
 <script setup lang="ts">
+import type { IAvatarProps } from '@/types/avatar'
 import { computed, ref } from 'vue'
-
-/** Interfaces */
-interface IAvatarProps {
-  src?: string
-  size?: 'sm' | 'md' | 'lg' | 'navbar' | 'menu'
-  initials?: string | null
-}
 
 /** Props */
 const props = withDefaults(defineProps<IAvatarProps>(), {
