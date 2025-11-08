@@ -1,0 +1,225 @@
+@layer utilities.scroll {
+  // Axis
+  .inline-scroll {
+    --_inline-scroll-height: 100%;
+
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+
+    height: auto;
+    width: var(--_inline-scroll-height);
+    padding-bottom: .35rem;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .block-scroll {
+    --_block-scroll-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    width: auto;
+    height: var(--_block-scroll-height);
+    padding-bottom: .35rem;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  // Overflow
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .overflow-visible {
+    overflow: visible;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  .overflow-scroll {
+    overflow: scroll;
+  }
+
+  .overflow-clip {
+    overflow: clip;
+  }
+
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .overflow-x-visible {
+    overflow-x: visible;
+  }
+
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+
+  .overflow-x-scroll {
+    overflow-x: scroll;
+  }
+
+  .overflow-x-clip {
+    overflow-x: clip;
+  }
+
+  .overflow-y-hidden {
+    overflow-y: hidden;
+  }
+
+  .overflow-y-visible {
+    overflow-y: visible;
+  }
+
+  .overflow-y-auto {
+    overflow-y: auto;
+  }
+
+  .overflow-y-scroll {
+    overflow-y: scroll;
+  }
+
+  .overflow-y-clip {
+    overflow-y: clip;
+  }
+
+  // Overscroll behaviors
+  .overscroll-auto {
+    overscroll-behavior: auto;
+  }
+
+  .overscroll-contain {
+    overscroll-behavior: contain;
+  }
+
+  .overscroll-none {
+    overscroll-behavior: none;
+  }
+
+  .overscroll-x-auto {
+    overscroll-behavior-x: auto;
+  }
+
+  .overscroll-x-contain {
+    overscroll-behavior-x: contain;
+  }
+
+  .overscroll-x-none {
+    overscroll-behavior-x: none;
+  }
+
+  .overscroll-y-auto {
+    overscroll-behavior-y: auto;
+  }
+
+  .overscroll-y-contain {
+    overscroll-behavior-y: contain;
+  }
+
+  .overscroll-y-none {
+    overscroll-behavior-y: none;
+  }
+
+  // Fadeout block scroll effect
+  @property --fade-top {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: false;
+  }
+  @property --fade-bottom {
+    syntax: '<length>';
+    initial-value: 40px;
+    inherits: false;
+  }
+
+  .scroll-fade-block-effect {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        #000 var(--fade-top),
+        #000 calc(100% - var(--fade-bottom)),
+        transparent 100%
+    );
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+
+    @supports (animation-timeline: scroll()) {
+      animation: scroll-top-fade 1s linear both, scroll-bottom-fade 1s linear both;
+      animation-timeline: scroll(self), scroll(self);
+      animation-range: 0% 12%, 88% 100%;
+    }
+  }
+
+  @keyframes scroll-top-fade {
+    from {
+      --fade-top: 0px;
+    }
+    to {
+      --fade-top: 40px;
+    }
+  }
+  @keyframes scroll-bottom-fade {
+    from {
+      --fade-bottom: 40px;
+    }
+    to {
+      --fade-bottom: 0px;
+    }
+  }
+
+  // Fadeout inline scroll effect
+  @property --fade-left {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: false;
+  }
+  @property --fade-right {
+    syntax: '<length>';
+    initial-value: 40px;
+    inherits: false;
+  }
+
+  .scroll-fade-inline-effect {
+    mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 var(--fade-left),
+        #000 calc(100% - var(--fade-right)),
+        transparent 100%
+    );
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+
+    @supports (animation-timeline: scroll()) {
+      animation: scroll-left-fade 1s linear both, scroll-right-fade 1s linear both;
+      animation-timeline: scroll(self inline), scroll(self inline);
+      animation-range: 0% 12%, 88% 100%;
+    }
+  }
+
+  @keyframes scroll-left-fade {
+    from {
+      --fade-left: 0px;
+    }
+    to {
+      --fade-left: 40px;
+    }
+  }
+  @keyframes scroll-right-fade {
+    from {
+      --fade-right: 40px;
+    }
+    to {
+      --fade-right: 0px;
+    }
+  }
+}

@@ -1,0 +1,405 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer utilities.text {
+  // Font families
+  .font-primary {
+    font-family: v.$font-primary;
+  }
+
+  .font-secondary {
+    font-family: v.$font-secondary;
+  }
+
+  // Font xl sizes
+  .fs-xl-100 {
+    font-size: var(--fs-xl-100);
+  }
+
+  // Font sizes
+  .fs-100 {
+    font-size: var(--fs-100);
+  }
+
+  .fs-200 {
+    font-size: var(--fs-200);
+  }
+
+  .fs-300 {
+    font-size: var(--fs-300);
+  }
+
+  .fs-400 {
+    font-size: var(--fs-400);
+  }
+
+  .fs-500 {
+    font-size: var(--fs-500);
+  }
+
+  .fs-600 {
+    font-size: var(--fs-600);
+  }
+
+  // Font sm sizes
+  .fs-sm-100 {
+    font-size: var(--fs-sm-100);
+  }
+
+  .fs-sm-200 {
+    font-size: var(--fs-sm-200);
+  }
+
+  .fs-sm-300 {
+    font-size: var(--fs-sm-300);
+  }
+
+  .fs-sm-400 {
+    font-size: var(--fs-sm-400);
+  }
+
+  .fs-sm-500 {
+    font-size: var(--fs-sm-500);
+  }
+
+  // Font weights
+  .fw-400 {
+    font-weight: v.$fw-400;
+  }
+
+  .fw-500 {
+    font-weight: v.$fw-500;
+  }
+
+  .fw-600 {
+    font-weight: v.$fw-600;
+  }
+
+  .fw-700 {
+    font-weight: v.$fw-700;
+  }
+
+  .fw-800 {
+    font-weight: v.$fw-800;
+  }
+
+  // Text align
+  .text-left {
+    text-align: left;
+  }
+
+  .text-start {
+    text-align: start;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  /*
+  * Responsive text align
+  * Generate utilities for each breakpoint
+  */
+  @each $breakpoint, $size in v.$grid-breakpoints {
+    @media (min-width: $size) {
+      .text-#{$breakpoint}-left {
+        text-align: left;
+      }
+
+      .text-#{$breakpoint}-start {
+        text-align: start;
+      }
+
+      .text-#{$breakpoint}-center {
+        text-align: center;
+      }
+
+      .text-#{$breakpoint}-right {
+        text-align: right;
+      }
+
+      .text-#{$breakpoint}-end {
+        text-align: end;
+      }
+    }
+  }
+
+  // Balance
+  .text-wrap-balance {
+    @include m.text-wrap-pretty
+  }
+
+  // Text wrap
+  .text-wrap {
+    white-space: normal;
+  }
+
+  .text-nowrap {
+    white-space: nowrap;
+  }
+
+  // Text word break
+  .text-break {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .text-keep-all {
+    word-break: keep-all;
+  }
+
+  // Text truncate
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Text transform
+  .text-lowercase {
+    text-transform: lowercase;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+
+  .text-capitalize {
+    text-transform: capitalize;
+  }
+
+  .fl-capitalize {
+    & :first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+  // Line height
+  .lh-1 {
+    line-height: 1;
+  }
+
+  .lh-sm {
+    line-height: 1.25;
+  }
+
+  .lh-base {
+    line-height: 1.5;
+  }
+
+  .lh-md {
+    line-height: 1.75;
+  }
+
+  .lh-lg {
+    line-height: 2;
+  }
+
+  // First letter capitalization
+  .fl-capitalize {
+    text-transform: capitalize;
+  }
+
+  // Icon weight
+  .iw-semi-bold {
+    font-variation-settings: var(--iw-semi-bold);
+  }
+
+  .iw-bold {
+    font-variation-settings: var(--iw-bold);
+  }
+
+  .ie-low {
+    font-variation-settings: var(--ie-low) !important;
+  }
+
+  // Text side lines
+  .text-decoration-side-lines {
+    --_side-lines-opacity: .35;
+    --_side-lines-height: 1px;
+    --_side-lines-bg-color: var(--theme-muted-fixed);
+    --_side-lines-radius: #{v.$rounded-full};
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: .75rem;
+    align-items: center;
+
+    &:before,
+    &:after {
+      content: '';
+      height: var(--_side-lines-height);
+      border-radius: var(--_side-lines-radius);
+      background-color: rgba(var(--_side-lines-bg-color), var(--_side-lines-opacity));
+    }
+
+    &.decoration-single-line {
+      grid-template-columns: auto 1fr;
+
+      &:before {
+        content: none;
+      }
+    }
+  }
+
+  .text-decoration-underline {
+    border-bottom: 2px dashed var(--theme-primary-a10);
+  }
+
+  // Text selection
+  .user-select-all {
+    user-select: all;
+  }
+
+  .user-select-none {
+    user-select: none;
+  }
+
+  // Text headings
+  .text-hero {
+    font-size: var(--fs-xl-100);
+    font-weight: v.$fw-800;
+    line-height: 1.25;
+  }
+
+  // Use for medium headings like colors name
+  .text-heading {
+    font-size: var(--fs-400);
+    font-weight: v.$fw-800;
+    line-height: 1.25;
+    @include m.text-variable(true);
+
+    &:is(.heading-lg) {
+      font-size: var(--fs-200);
+    }
+
+    &:is(.heading-xl) {
+      font-size: var(--fs-xl-100);
+    }
+  }
+
+  // Use for medium-small subheadings
+  .text-subheading {
+    --_text-subheading-gutter: 1rem;
+
+    font-size: var(--fs-500);
+    font-weight: v.$fw-600;
+    margin-bottom: var(--_text-subheading-gutter);
+    position: relative;
+    width: fit-content;
+    @include m.text-variable(false);
+
+    &:has(~ p) {
+      margin-bottom: calc(var(--_text-subheading-gutter) / 2);
+
+      ~ p {
+        color: var(--theme-muted-a10);
+        margin-bottom: var(--_text-subheading-gutter, 1rem);
+      }
+    }
+
+    &:is(.subheading-m0) {
+      --_text-subheading-gutter: 0;
+    }
+
+    &:is(.subheading-m1) {
+      --_text-subheading-gutter: .25rem;
+    }
+
+    &:is(.subheading-m2) {
+      --_text-subheading-gutter: 1rem;
+    }
+
+    // If it has a data-link attribute, add a hash icon
+    &[data-link*='true'] {
+      cursor: pointer;
+
+      &:is(:hover) {
+        &::before {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      &::before {
+        content: '';
+        inline-size: 16px;
+        block-size: 16px;
+        background-color: var(--theme-muted-a10);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m360-320-33 131q-3 13-13 21t-24 8q-19 0-31-15t-7-33l28-112H171q-20 0-32-15.5t-7-34.5q3-14 14-22t25-8h129l40-160H231q-20 0-32-15.5t-7-34.5q3-14 14-22t25-8h129l33-131q3-13 13-21t24-8q19 0 31 15t7 33l-28 112h160l33-131q3-13 13-21t24-8q19 0 31 15t7 33l-28 112h109q20 0 32 15.5t7 34.5q-3 14-14 22t-25 8H660l-40 160h109q20 0 32 15.5t7 34.5q-3 14-14 22t-25 8H600l-33 131q-3 13-13 21t-24 8q-19 0-31-15t-7-33l28-112H360Zm20-80h160l40-160H420l-40 160Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m360-320-33 131q-3 13-13 21t-24 8q-19 0-31-15t-7-33l28-112H171q-20 0-32-15.5t-7-34.5q3-14 14-22t25-8h129l40-160H231q-20 0-32-15.5t-7-34.5q3-14 14-22t25-8h129l33-131q3-13 13-21t24-8q19 0 31 15t7 33l-28 112h160l33-131q3-13 13-21t24-8q19 0 31 15t7 33l-28 112h109q20 0 32 15.5t7 34.5q-3 14-14 22t-25 8H660l-40 160h109q20 0 32 15.5t7 34.5q-3 14-14 22t-25 8H600l-33 131q-3 13-13 21t-24 8q-19 0-31-15t-7-33l28-112H360Zm20-80h160l40-160H420l-40 160Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -1.25rem;
+        margin: auto;
+
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 200ms ease-in-out,
+        visibility 200ms ease-in-out;
+      }
+    }
+  }
+
+  .text-title-description {
+    display: inline-block;
+    font-size: var(--fs-600);
+    font-weight: v.$fw-600;
+
+    ~ p:is(.subtitle-1) {
+      position: relative;
+      width: fit-content;
+      color: var(--theme-muted-a10);
+
+      &:after {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: v.$rounded-sm;
+        background-color: rgba(var(--theme-secondary-fixed), 20%);
+        transform-origin: left;
+
+        scale: 0 1;
+        transition: scale 200ms v.$easing-out-fallback;
+      }
+    }
+
+    // Scale highlight effect on the next p when text-title is hovered
+    &:is(:hover) {
+      ~ p:is(.subtitle-1) {
+        color: var(--theme-secondary-a90);
+
+        &:after {
+          scale: 1 1;
+          transition: scale 300ms ease-in-out;
+        }
+      }
+    }
+  }
+
+  .text-highlight {
+    &:is(.highlight-pulse) {
+      animation: 500ms ease-in-out zoom-in-out both;
+      animation-iteration-count: 3;
+    }
+  }
+
+  // Font variations
+  .tabular-numbers {
+    font-family: v.$font-primary;
+    font-variant-numeric: tabular-nums;
+  }
+}

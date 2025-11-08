@@ -1,0 +1,20 @@
+@layer utilities.visibility {
+  .visibility-hidden {
+    visibility: hidden;
+  }
+
+  .visibility-visible {
+    visibility: visible;
+  }
+
+  // It makes the element invisible but still takes up space in the layout
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}

@@ -1,0 +1,407 @@
+@use "../abstracts/variables" as v;
+@use '../base/typography';
+
+@layer components.dropdown {
+  .v-popper {
+    &:is(.v-popper--theme-dropdown) {
+      display: inline-block;
+
+      // Rotate trailing icon when dropdown is open
+      &.v-popper--theme-dropdown:is(.v-popper--shown) {
+        .btn {
+          i:is(.i-search) {
+            rotate: 180deg;
+          }
+        }
+      }
+    }
+  }
+
+  .v-popper__popper {
+    --_dropdown-bg-color: var(--theme-surface-overlay);
+    --_dropdown-color: var(--theme-on-primary);
+    --_dropdown-padding: 12px 0;
+    --_dropdown-shadow: var(--shadow-lg);
+    --_dropdown-radius: #{v.$rounded-lg};
+
+    --_dropdown-easing-in: #{v.$easing-in-fallback};
+    --_dropdown-easing-out: #{v.$easing-out-fallback};
+    --_dropdown-easing-duration: 400ms;
+
+    --_dropdown-item-gutter-x: 1rem;
+    --_dropdown-item-gutter-y: .5rem;
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_dropdown-easing-in: #{v.$easing-overshoot-soft};
+      --_dropdown-easing-duration: 500ms;
+    }
+
+    &.v-popper--theme-dropdown {
+      isolation: isolate;
+      position: relative;
+      transform-origin: center;
+
+      // Content
+      & .v-popper__wrapper {
+        & .v-popper__inner {
+          background-color: var(--_dropdown-bg-color);
+          color: var(--_dropdown-color);
+          padding: var(--_dropdown-padding);
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--_dropdown-radius);
+          border: v.$border-sm solid transparent;
+          min-width: 10rem;
+
+          & kbd {
+            background-color: var(--theme-surface-kbd);
+            border: v.$border-sm solid var(--theme-surface-kbd);
+            color: var(--theme-on-primary-inverse);
+            font-weight: v.$fw-800;
+          }
+
+          // Menu list styles
+          & ul {
+            list-style: none;
+            margin-block: 0;
+            padding-left: 0;
+
+            & li {
+              list-style: none;
+
+              & .v-dropdown-item {
+                font-weight: v.$fw-600;
+                background: inherit;
+                color: var(--_dropdown-color);
+
+                padding-block: var(--_dropdown-item-gutter-y);
+                padding-left: var(--_dropdown-item-gutter-x);
+                padding-right: calc(var(--_dropdown-item-gutter-x) * 1.5);
+
+                border: none;
+                border-radius: v.$rounded-none;
+
+                font-family: v.$font-primary;
+                font-size: var(--fs-sm-500);
+                text-align: left;
+
+                width: 100%;
+                cursor: pointer;
+
+                &.v-text-item {
+                  display: inline-block;
+                  color: var(--theme-muted-a10);
+                  padding-block: 8px;
+                  border-radius: v.$rounded-none;
+                  font-size: var(--fs-sm-500);
+
+                  &:is(:hover, :focus, :active) {
+                    background-color: inherit;
+                    color: var(--theme-muted-a10);
+                    cursor: default;
+                  }
+                }
+
+                &:is(a, span) {
+                  display: inline-block;
+                  @extend .undecorated;
+                }
+
+                & .badge {
+                  --_badge-font-size: 8px;
+                  --_badge-gutter-y: 0.25rem;
+                  --_badge-gutter-x: 0.375rem;
+
+                  margin-left: .35rem;
+                  line-height: 1.25;
+                }
+
+                i {
+                  font-size: 16px;
+                  font-variation-settings: var(--iw-semi-bold);
+                  margin-right: 0.35rem;
+                }
+
+                &:is(.v-danger) {
+                  & i {
+                    color: var(--theme-danger-a10);
+                  }
+                }
+
+                &:is(.v-active) {
+                  background-color: var(--theme-surface-container-highest);
+                  color: var(--theme-on-primary);
+                  font-weight: v.$fw-700;
+                }
+
+                &:is(.v-disabled) {
+                  color: var(--theme-muted-a10);
+                  cursor: not-allowed;
+                  opacity: 0.75;
+
+                  & i {
+                    color: inherit;
+                  }
+                }
+
+                // States
+                &:is(:hover) {
+                  background-color: var(--theme-surface-container-high);
+                  color: var(--theme-on-primary);
+                }
+
+                &:is(:focus, :active, .active) {
+                  background-color: var(--theme-surface-container-highest);
+                  color: var(--theme-on-primary);
+                }
+
+                &:is(.disabled) {
+                  background-color: rgba(var(--theme-muted-fixed), 15%);
+                  color: var(--theme-muted-a10);
+                }
+              }
+
+              &.v-dropdown-divider {
+                height: 0;
+                margin: .25rem;
+                overflow: hidden;
+                border-top: v.$border-sm solid rgba(var(--theme-muted-fixed), 50%);
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        & .v-popper__inner {
+          &:has(.color-picker-popper) {
+            --_dropdown-padding: 12px;
+
+            // Color Picker Popover
+            .color-picker-popper {
+              --_color-pickerp-width: 240px;
+
+              display: flex;
+              flex-direction: column;
+              width: var(--_color-pickerp-width);
+              gap: .75rem;
+              user-select: none;
+
+              /* Color Picker Area */
+              & .saturation-value-area {
+                position: relative;
+                width: 100%;
+                height: 150px;
+                cursor: crosshair;
+                overflow: hidden;
+                border-radius: calc(var(--_dropdown-radius) / 1.25);
+
+                & .saturation-gradient {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background: linear-gradient(to right, white, transparent);
+                }
+
+                & .value-gradient {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background: linear-gradient(to top, black, transparent);
+                }
+
+                & .sv-marker {
+                  position: absolute;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  border: 2px solid white;
+                  box-shadow: 0 0 0 1.5px black, inset 0 0 0 1.5px black; /* Make marker visible on any background */
+                  transform: translate(-50%, -50%);
+                  pointer-events: none; /* Prevent marker from interfering with clicks */
+                  box-sizing: border-box;
+                }
+              }
+
+              /* Hue Slider Area */
+              & .hue-slider-area {
+                position: relative;
+                width: 100%;
+                height: 15px;
+                cursor: ew-resize;
+                border-radius: v.$rounded-full;
+                overflow: hidden;
+
+                & .hue-gradient {
+                  position: absolute;
+                  inset: 0;
+                  background: linear-gradient(to right,
+                          hsl(0, 100%, 50%),
+                          hsl(60, 100%, 50%),
+                          hsl(120, 100%, 50%),
+                          hsl(180, 100%, 50%),
+                          hsl(240, 100%, 50%),
+                          hsl(300, 100%, 50%),
+                          hsl(360, 100%, 50%)
+                  );
+                }
+
+                & .hue-marker {
+                  position: absolute;
+                  top: 50%;
+                  width: 12px;
+                  height: 12px;
+                  aspect-ratio: 1;
+                  background-color: transparent;
+                  border: v.$border-md solid v.$white;
+                  outline: v.$border-md solid v.$dark;
+                  outline-offset: 0;
+                  border-radius: v.$rounded-md;
+                  box-shadow: var(--shadow-sm);
+                  pointer-events: none;
+                  box-sizing: border-box;
+                  transform: translate(-50%, -50%);
+                }
+              }
+
+              /* Controls Area */
+              .controls {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+
+                & .preview-swatch {
+                  flex-shrink: 0;
+                  width: 30px;
+                  height: 30px;
+                  aspect-ratio: 1;
+                  border: v.$border-sm solid var(--theme-outline-surface);
+                  border-radius: v.$rounded-full;
+                }
+
+                & .form-group {
+                  flex-grow: 1;
+                  align-items: center;
+
+                  & label {
+                    position: absolute;
+                    block-size: 0;
+                    visibility: hidden;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Hide default arrow
+        & .v-popper__arrow-container {
+          & .v-popper__arrow-outer,
+          & .v-popper__arrow-inner {
+            visibility: hidden;
+          }
+        }
+      }
+
+      // Desktop
+      &.v-popper__popper--hidden {
+        visibility: hidden;
+        opacity: 0;
+        translate: 0 -3rem;
+        transition: translate calc(var(--_dropdown-easing-duration) / 3) var(--_dropdown-easing-out),
+        opacity calc(var(--_dropdown-easing-duration) / 2),
+        visibility calc(var(--_dropdown-easing-duration) / 2);
+        transform-origin: center;
+      }
+
+      &.v-popper__popper--shown {
+        visibility: visible;
+        opacity: 1;
+        translate: 0;
+        transition: translate var(--_dropdown-easing-duration) var(--_dropdown-easing-in),
+        opacity var(--_dropdown-easing-duration),
+        visibility var(--_dropdown-easing-duration);
+        transform-origin: center;
+      }
+
+      // Mobile
+      &.v-popper__popper--no-positioning {
+        --_dropdown-easing-duration: 300ms;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        overscroll-behavior: contain;
+        z-index: v.$z-index-fullscreen;
+
+        @supports (transition: all 100ms linear(1, 1, 1)) {
+          --_dropdown-easing-in: #{v.$easing-overshoot-soft};
+          --_dropdown-easing-duration: 500ms;
+        }
+
+        & .v-popper__backdrop {
+          display: block;
+          background: rgba(var(--theme-overlay-fixed), 50%);
+        }
+
+        & .v-popper__wrapper {
+          width: 100%;
+          pointer-events: auto;
+
+          & .v-popper__inner {
+            border-radius: v.$rounded-xl;
+            //padding-block: 12px 24px;
+            margin: .5rem;
+
+            .color-picker-popper {
+              --_color-pickerp-width: 100%;
+            }
+
+            & ul {
+              & li {
+                & .v-dropdown-item {
+                  padding-block: 12px;
+                  font-size: 12px;
+
+                  & i {
+                    font-variation-settings: var(--iw-semi-bold);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Hidden menu
+        &.v-popper__popper--hidden {
+          translate: 0;
+
+          .v-popper__wrapper {
+            translate: 0 50vh;
+            transition: translate calc(var(--_dropdown-easing-duration) / 2) var(--_dropdown-easing-out),
+            opacity 100ms ease-in-out,
+            visibility 100ms ease-in-out;
+          }
+        }
+
+        // Shown menu
+        &.v-popper__popper--shown {
+          translate: 0;
+
+          .v-popper__wrapper {
+            translate: 0;
+            transition: translate var(--_dropdown-easing-duration) var(--_dropdown-easing-in),
+            opacity 100ms ease-in-out,
+            visibility 100ms ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}

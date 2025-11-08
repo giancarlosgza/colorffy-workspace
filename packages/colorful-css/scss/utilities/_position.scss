@@ -1,0 +1,68 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer utilities.position {
+  .position-static {
+    position: static;
+  }
+
+  .position-relative {
+    position: relative;
+  }
+
+  .position-absolute {
+    position: absolute;
+  }
+
+  .position-fixed {
+    position: fixed;
+  }
+
+  .position-sticky {
+    position: sticky;
+  }
+
+  /**
+    * Add position utilities for top, right, bottom, and left
+   */
+  @each $space, $value in v.$spacing-sizes {
+    .top-#{$space} {
+      top: #{$value};
+    }
+
+    .right-#{$space} {
+      right: #{$value};
+    }
+
+    .bottom-#{$space} {
+      bottom: #{$value};
+    }
+
+    .left-#{$space} {
+      left: #{$value};
+    }
+  }
+
+  // Generate position utilities for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @each $space, $value in v.$spacing-sizes {
+      @include m.media-breakpoint-up($breakpoint) {
+        .top-#{$breakpoint}-#{$space} {
+          top: #{$value};
+        }
+
+        .right-#{$breakpoint}-#{$space} {
+          right: #{$value};
+        }
+
+        .bottom-#{$breakpoint}-#{$space} {
+          bottom: #{$value};
+        }
+
+        .left-#{$breakpoint}-#{$space} {
+          left: #{$value};
+        }
+      }
+    }
+  }
+}

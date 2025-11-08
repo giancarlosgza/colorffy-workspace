@@ -1,0 +1,207 @@
+@use "../abstracts/variables" as v;
+@use '../base/typography';
+
+@layer components.list {
+  .list-group {
+    --_list-group-item-bg-color: var(--theme-surface-container);
+    --_list-group-item-border-color: transparent;
+    --_list-group-item-color: var(--theme-on-primary);
+    --_list-group-item-color-subtitle: var(--theme-muted-a10);
+    --_list-group-item-icon-bg-color: var(--theme-surface-container-lowest);
+    --_list-group-item-icon-color: var(--theme-on-primary);
+    --_list-group-item-radius: #{v.$rounded-md};
+
+    display: grid;
+    grid-template-rows: auto;
+    gap: .35rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background: transparent;
+
+    & .list-group-item {
+      width: 100%;
+      background-color: var(--_list-group-item-bg-color);
+      border: v.$border-sm solid var(--_list-group-item-border-color);
+      border-radius: var(--_list-group-item-radius);
+      transition: v.$easing-in-fallback;
+
+      // Border radius
+      &:is(:first-child) {
+        --_list-group-item-radius: #{v.$rounded-lg} #{v.$rounded-lg} #{v.$rounded-sm} #{v.$rounded-sm};
+      }
+
+      &:is(:last-child) {
+        --_list-group-item-radius: #{v.$rounded-sm} #{v.$rounded-sm} #{v.$rounded-lg} #{v.$rounded-lg};
+      }
+
+      &:not(:first-child, :last-child) {
+        --_list-group-item-radius: #{v.$rounded-md};
+      }
+
+      // Item
+      & .list-item {
+        --_list-item-gap: 0.85rem;
+        --_list-item-padding: 0.55rem;
+
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: var(--_list-item-gap);
+        padding: var(--_list-item-padding);
+        border-radius: var(--_list-group-item-radius);
+        width: 100%;
+
+        // Text
+        & p {
+          &:is(.subtitle-1) {
+            font-family: v.$font-primary;
+            font-weight: v.$fw-600;
+            font-size: var(--fs-sm-400);
+            color: var(--_list-group-item-color);
+            margin-bottom: 0;
+          }
+
+          &:is(.subtitle-2) {
+            font-size: var(--fs-sm-400);
+            color: var(--_list-group-item-color-subtitle);
+            margin-block: 0;
+          }
+        }
+
+        &:is(a) {
+          cursor: pointer;
+          @extend .undecorated;
+        }
+
+        // Icon
+        & .list-item-icon-wrapper {
+          border-radius: v.$rounded-md;
+          padding: .625rem;
+          aspect-ratio: 1;
+          background-color: var(--_list-group-item-icon-bg-color);
+
+          & i {
+            font-size: var(--fs-500);
+            color: var(--_list-group-item-icon-color);
+          }
+        }
+      }
+
+      &.list-item-active {
+        --_list-group-item-bg-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
+        --_list-group-item-border-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
+        --_list-group-item-icon-bg-color: var(--theme-primary-a90);
+        --_list-group-item-icon-color: var(--theme-on-primary-inverse);
+
+        z-index: 2;
+        border-width: v.$border-md;
+
+        :where(.list-item-icon-wrapper i) {
+          font-variation-settings: var(--iw-bold);
+        }
+      }
+
+      &.list-item-disabled {
+        --_list-group-item-bg-color: var(--theme-surface-disabled);
+        --_list-group-item-border-color: var(--theme-surface-disabled);
+        --_list-group-item-color: var(--theme-muted-a10);
+        --_list-group-item-color-subtitle: var(--theme-muted-a10);
+        --_list-group-item-icon-bg-color: var(--theme-surface-disabled);
+        --_list-group-item-icon-color: var(--theme-muted-a10);
+
+        cursor: not-allowed;
+      }
+    }
+
+    &:not(:has(.list-group-item:nth-child(2))) {
+      .list-group-item:nth-child(1) {
+        --_list-group-item-radius: #{v.$rounded-md};
+      }
+    }
+
+    // Sizes
+    &.list-group-sm {
+      .list-group-item {
+        & .list-item {
+          --_list-item-gap: 0.45rem;
+          --_list-item-padding: 0.35rem;
+        }
+      }
+    }
+
+    &.list-group-md {
+      .list-group-item {
+        & .list-item {
+          --_list-item-gap: 0.65rem;
+          --_list-item-padding: 0.45rem;
+        }
+      }
+    }
+
+    // Variants
+    &.list-group-flush {
+      --_list-group-item-bg-color: transparent;
+      --_list-group-item-border-color: var(--theme-outline-surface);
+
+      gap: 0;
+
+      & .list-group-item {
+        --_list-group-item-radius: #{v.$rounded-none};
+
+        border: transparent;
+        border-radius: #{v.$rounded-none};
+        border-bottom: v.$border-sm solid var(--_list-group-item-border-color);
+
+        &:last-child {
+          border-bottom: transparent;
+        }
+      }
+    }
+
+    &.list-group-low-contrast {
+      --_list-group-item-bg-color: var(--theme-surface-container-low);
+      --_list-group-item-icon-bg-color: var(--theme-surface-body-pane);
+    }
+
+    // States
+    &.list-group-interactive {
+      & .list-group-item {
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+
+        &:after {
+          content: '';
+          inline-size: 16px;
+          block-size: 16px;
+          background-color: var(--theme-muted-a10);
+          -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+            
+          position: absolute;
+          inset-block: 0;
+          right: 1rem;
+          margin: auto;
+        }
+
+        &:is(:hover) {
+          --_list-group-item-bg-color: var(--theme-surface-container-high);
+        }
+
+        &:is(:active, :focus) {
+          --_list-group-item-bg-color: var(--theme-surface-container-highest);
+        }
+      }
+
+      &:is(.list-group-sm, .list-group-md) {
+        & .list-group-item {
+          &:after {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+}

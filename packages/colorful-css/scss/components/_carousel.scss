@@ -1,0 +1,40 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.carousel {
+  .carousel {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    anchor-name: --carousel;
+
+    // Scroll buttons
+    &::scroll-button(*) {
+      position: fixed;
+      position-anchor: --carousel;
+      font-family: v.$font-icons;
+      font-size: 16px;
+      inline-size: 44px;
+      aspect-ratio: 1;
+      padding: .75rem;
+      display: grid;
+      place-content: center;
+      border-color: transparent;
+      background: var(--theme-surface-body-pane);
+      color: var(--theme-on-primary);
+      box-shadow: var(--shadow-sm);
+      border-radius: v.$rounded-full;
+    }
+
+    &::scroll-button(right) {
+      position-area: inline-end center;
+      content: 'arrow_forward' / 'Next';
+    }
+
+    &::scroll-button(left) {
+      position-area: inline-start center;
+      content: 'arrow_back' / 'Previous';
+    }
+  }
+}

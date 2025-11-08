@@ -1,0 +1,97 @@
+@use "sass:map";
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.header {
+  .header-container {
+    container: HeaderContainer / inline-size;
+
+    & .header {
+      --_header-columns: 1fr;
+      --_header-columns-gap: 1rem;
+
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--_header-columns);
+      gap: var(--_header-columns-gap);
+      margin-block: 0 var(--_header-columns-gap);
+
+      // Text title
+      & .header-title {
+        // Texts
+        & .text-title {
+          font-size: var(--fs-400);
+          line-height: 1.25;
+          letter-spacing: -.15px;
+          margin-bottom: .25rem;
+          @include m.text-variable(true);
+        }
+
+        & .text-description {
+          font-size: var(--fs-sm-200);
+          color: var(--theme-muted-a10);
+          max-inline-size: 50ch;
+          margin-bottom: 0;
+          @include m.text-wrap-pretty;
+        }
+
+        // Breadcrumb or back navigation
+        &.page-header-breadcrumb {
+          display: flex;
+          gap: calc(var(--_header-columns-gap) / 4);
+        }
+
+        &.page-header-featured {
+          & h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
+
+          & span {
+            display: grid;
+            place-items: center;
+
+            & .badge {
+              --_badge-radius: #{v.$rounded-sm};
+              font-variation-settings: 'wght' 600;
+            }
+          }
+        }
+      }
+
+      // Actions
+      &:has(.page-header-actions) {
+        --_header-columns: 1fr auto;
+      }
+
+      & .header-actions {
+        text-align: end;
+        align-content: center;
+
+        & .btn-group {
+          justify-content: flex-end;
+        }
+      }
+
+      // CQ
+      @container HeaderContainer (width <= 700px) {
+        &:has(.page-header-actions) {
+          --_header-columns: 1fr;
+
+          & .header-actions {
+            text-align: start;
+
+            & .btn-group {
+              justify-content: flex-start;
+            }
+
+            &:is(.page-header-actions-responsive) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

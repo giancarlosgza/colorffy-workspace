@@ -1,0 +1,15 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer utilities.opacity {
+  /*
+  * Opacity
+  * Generate opacity utilities for each value
+  */
+  @each $value, $opacity in v.$opacity {
+    .opacity-#{$value} {
+      --_opacity: #{$opacity};
+      @include m.opacity($opacity);
+    }
+  }
+}

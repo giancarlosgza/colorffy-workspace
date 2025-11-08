@@ -1,0 +1,36 @@
+@use "../abstracts/variables" as v;
+
+@layer utilities.transform {
+  // Rotate
+  @each $degree, $value in v.$degrees {
+    .rotate-#{$degree} {
+      rotate: #{$value};
+    }
+  }
+
+  // Translate
+  @each $space, $value in v.$spacing-sizes {
+    .translate-x-#{$space} {
+      translate: #{$value} 0;
+    }
+
+    .translate-x--#{$space} {
+      translate: -#{$value} 0;
+    }
+
+    .translate-y-#{$space} {
+      translate: 0 #{$value};
+    }
+
+    .translate-y--#{$space} {
+      translate: 0 -#{$value};
+    }
+  }
+
+  // Scale
+  @each $scale, $value in v.$scales {
+    .scale-#{$scale} {
+      scale: #{$value};
+    }
+  }
+}

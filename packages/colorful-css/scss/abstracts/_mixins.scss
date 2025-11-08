@@ -1,0 +1,945 @@
+@use "sass:math";
+@use "sass:map";
+@use 'variables' as v;
+@use 'functions' as f;
+
+// Texts
+@mixin text-color($color) {
+  color: $color;
+}
+
+@mixin text-gradient($deg, $colors...) {
+  $deg: 45deg !default;
+
+  background-image: linear-gradient($deg, $colors);
+  background-image: -webkit-linear-gradient($deg, $colors);
+
+  @supports (background: linear-gradient(45deg in oklch, red, blue)) {
+    background-image: linear-gradient($deg in oklch, $colors);
+    background-image: -webkit-linear-gradient($deg in oklch, $colors);
+  }
+}
+
+@mixin text-wrap-pretty() {
+  text-wrap: balance;
+
+  @supports (text-wrap: pretty) {
+    text-wrap: pretty;
+  }
+}
+
+@mixin text-variable($bold: false) {
+  $bold: false !default;
+
+  @supports not (font-variation-settings: 'wght' 500) {
+    font-family: v.$font-secondary;
+  }
+
+  /* Add support for variable font settings */
+  @supports (font-variation-settings: 'wght' 500) {
+    font-family: v.$font-primary;
+    font-optical-sizing: auto;
+    letter-spacing: -.15px;
+    transition: font-variation-settings 500ms v.$easing-spring;
+
+    @if ($bold == true) {
+      font-variation-settings: var(--vfs-heading-bold);
+    } @else {
+      font-variation-settings: var(--vfs-heading);
+    }
+  }
+}
+
+// Backgrounds
+@mixin bg-color($color) {
+  background-color: $color;
+}
+
+@mixin bg-gradient($deg, $colors...) {
+  $deg: 45deg !default;
+
+  background: -webkit-linear-gradient($deg, $colors);
+  background: linear-gradient($deg, $colors);
+
+  @supports (background: linear-gradient(45deg in oklch, red, blue)) {
+    background: linear-gradient($deg in oklch, $colors);
+  }
+}
+
+// Images
+@mixin make-image($size) {
+  width: $size;
+  height: $size;
+}
+
+/*
+* Tonal badges
+* Generate badge tonal background colors
+*/
+@mixin container-tonal($tonal, $color, $isDark, $isBordered, $prefix) {
+  $mix-color: var(--theme-on-primary-inverse);
+  $mix-intensity: 70%;
+  $isDark: false !default;
+  $isBordered: false !default;
+  $prefix: badge !default;
+
+  // If the color is dark, set the mix intensity to the dark intensity
+  @if ($isDark == true) {
+    $mix-intensity: var(--theme-tonal-dark-intensity);
+  } @else {
+    $mix-intensity: var(--theme-tonal-light-intensity);
+  }
+
+  // If the element is bordered, set the border color the same as the color variable
+  @if ($isBordered == true) {
+    --_#{$prefix}-border-color: #{$color};
+  } @else {
+    --_#{$prefix}-border-color: color-mix(in srgb, #{$tonal}, #{$mix-color} #{$mix-intensity});
+  }
+
+  // Set the background color and text color
+  --_#{$prefix}-bg-color: color-mix(in srgb, #{$tonal}, #{$mix-color} #{$mix-intensity});
+  --_#{$prefix}-color: #{$color};
+}
+
+// Buttons
+@mixin btn-base() {
+  display: grid;
+  grid-template-columns: var(--_btn-columns);
+  grid-template-areas: 'icon text';
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+
+  height: fit-content;
+  min-height: var(--_btn-height);
+  gap: var(--_btn-gap);
+  border-radius: var(--_btn-radius);
+  padding-block: var(--_btn-padding-block);
+  padding-inline: var(--_btn-padding-inline);
+
+  background: var(--_btn-bg-color);
+  color: var(--_btn-color);
+  border: var(--_btn-border) solid var(--_btn-border-color);
+  box-shadow: var(--_btn-shadow);
+
+  font-family: map.get(v.$type-button, font-family);
+  font-weight: map.get(v.$type-button, font-weight);
+  font-size: map.get(v.$type-button, font-size);
+  letter-spacing: map.get(v.$type-button, letter-spacing);
+  text-transform: inherit;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  scale: 1;
+  transition: all var(--_btn-easing-duration) var(--_btn-easing-in);
+
+  // If button has an icon add styles to it
+  &:has(i, svg) {
+    --_btn-columns: auto 1fr;
+    --_btn-gap: .35rem;
+
+    &:is(.icon-trailing) {
+      --_btn-columns: 1fr auto;
+      grid-template-areas: 'text icon';
+    }
+
+    :where(i, svg) {
+      grid-area: icon;
+      font-size: var(--_btn-icon-size);
+      font-variation-settings: var(--iw-semi-bold);
+      color: inherit;
+    }
+  }
+
+  // If button has spinner stack, remove the gap to avoid spacing issues
+  &:has(.icon-spinner-stack) {
+    --_btn-gap: 0;
+  }
+
+  &:is(:hover) {
+    --_btn-shadow: var(--shadow-md);
+
+    i:is(.material-symbols-rounded) {
+      font-variation-settings: var(--iw-bold);
+    }
+  }
+
+  &:is(:focus, :active) {
+    --_btn-shadow: var(--shadow-lg);
+  }
+
+  &:is(:active) {
+    scale: 0.95;
+  }
+}
+
+/*
+* Tonal button
+* Generate button tonal states
+*/
+@mixin btn-tonal($tonal, $color, $isDark) {
+  $mix-color: var(--theme-on-primary-inverse);
+  $mix-intensity: 70%;
+  $isDark: false !default;
+
+  @if ($isDark == true) {
+    $mix-intensity: var(--theme-tonal-dark-intensity);
+  } @else {
+    $mix-intensity: var(--theme-tonal-light-intensity);
+  }
+
+  --_btn-bg-color: color-mix(in srgb, #{$tonal}, #{$mix-color} #{$mix-intensity});
+  --_btn-color: #{$color};
+
+  &:is(:hover) {
+    @supports (color: color-mix(in srgb, red, blue)) {
+      --_btn-bg-color: color-mix(in srgb, #{$tonal}, #{$mix-color} calc(#{$mix-intensity} - 10%));
+    }
+  }
+
+  &:is(:focus, :active) {
+    @supports (color: color-mix(in srgb, red, blue)) {
+      --_btn-bg-color: color-mix(in srgb, #{$tonal}, #{$mix-color} calc(#{$mix-intensity} - 20%));
+    }
+  }
+}
+
+/*
+* Button sizes
+* Generate button sizes
+*/
+@mixin btn-size($size) {
+  @if ($size == 'sm') {
+    --_btn-padding-inline: 0.55rem;
+    --_btn-height: 32px;
+    --_btn-icon-size: 1rem;
+  } @else if ($size == 'lg') {
+    --_btn-padding-inline: 0.85rem;
+    --_btn-height: 48px;
+    --_btn-icon-size: 1.45rem;
+
+    // Large button font size
+    font-size: 14px;
+  } @else if ($size == 'fab') {
+    --_btn-padding-inline: 1rem;
+    --_btn-padding-block: 1rem;
+    --_btn-height: 48px;
+    --_btn-icon-size: 1.5rem;
+
+    font-size: 14px;
+  }
+}
+
+@mixin ripple-color($color) {
+  background-image: radial-gradient(circle, $color 10%, transparent 10.01%);
+}
+
+@mixin form-placeholder($opacity) {
+  $opacity: 35% !default;
+
+  &::placeholder {
+    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+  }
+
+  &::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+  }
+
+  &::-moz-placeholder {
+    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+  }
+
+  &::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+  }
+}
+
+/*
+* Helper to use media queries with breakpoints
+* @author Giancarlos Garza
+* @param {Breakpoints} $breakpoints
+*/
+@mixin media-query($key) {
+  $size: map.get(v.$breakpoints, $key);
+
+  @media only screen and (max-width: $size) {
+    @content
+  }
+}
+
+/*
+* Color tones
+* Generate colors tones method using color-mix() css function
+*/
+
+// Light tones
+@mixin surface-light-tones() {
+  @supports (color: color-mix(in srgb, white, gray)) {
+    /* surfaces */
+    --#{v.$property-prefix}surface-a0: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 96%);
+    --#{v.$property-prefix}surface-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 95%);
+    --#{v.$property-prefix}surface-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 90%);
+    --#{v.$property-prefix}surface-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 85%);
+    --#{v.$property-prefix}surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
+    --#{v.$property-prefix}surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
+    --#{v.$property-prefix}surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
+
+    /* surfaces darker */
+    --#{v.$property-prefix}surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 60%);
+    --#{v.$property-prefix}surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 50%);
+    --#{v.$property-prefix}surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 40%);
+
+    /* surfaces states */
+    --#{v.$property-prefix}surface-disabled: color-mix(in srgb, var(--theme-on-primary-container), var(--theme-muted-a10) 20%);
+
+    /* primaries */
+    --#{v.$property-prefix}primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 15%);
+    --#{v.$property-prefix}primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 20%);
+    --#{v.$property-prefix}primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 25%);
+
+    /* primaries darker */
+    --#{v.$property-prefix}primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 80%);
+
+    /* primaries states */
+    --#{v.$property-prefix}primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
+
+    /* secondaries */
+    --#{v.$property-prefix}secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 15%);
+
+    /* secondaries darker */
+    --#{v.$property-prefix}secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 80%);
+
+    /* accents */
+    --#{v.$property-prefix}accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 15%);
+
+    /* accent darker */
+    --#{v.$property-prefix}accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 80%);
+  }
+}
+
+@mixin semantic-light-tones() {
+  @supports (color: color-mix(in srgb, white, gray)) {
+    /* success */
+    --#{v.$property-prefix}success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 15%);
+    --#{v.$property-prefix}success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 20%);
+    --#{v.$property-prefix}success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 25%);
+
+    /* success darker */
+    --#{v.$property-prefix}success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 80%);
+
+    /* warning */
+    --#{v.$property-prefix}warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 15%);
+    --#{v.$property-prefix}warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 20%);
+    --#{v.$property-prefix}warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 25%);
+
+    /* warning darker */
+    --#{v.$property-prefix}warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 80%);
+
+    /* danger */
+    --#{v.$property-prefix}danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 15%);
+    --#{v.$property-prefix}danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 20%);
+    --#{v.$property-prefix}danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 25%);
+
+    /* danger darker */
+    --#{v.$property-prefix}danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 80%);
+
+    /* muted */
+    --#{v.$property-prefix}muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 15%);
+    --#{v.$property-prefix}muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 20%);
+    --#{v.$property-prefix}muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 25%);
+
+    /* muted darker */
+    --#{v.$property-prefix}muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 80%);
+  }
+}
+
+// Dark tones
+@mixin surface-dark-tones() {
+  @supports (color: color-mix(in srgb, black, gray)) {
+    /* surfaces */
+    --#{v.$property-prefix}surface-a0: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 96%);
+    --#{v.$property-prefix}surface-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 95%);
+    --#{v.$property-prefix}surface-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 90%);
+    --#{v.$property-prefix}surface-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 85%);
+    --#{v.$property-prefix}surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
+    --#{v.$property-prefix}surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
+    --#{v.$property-prefix}surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
+
+    /* surfaces lighter */
+    --#{v.$property-prefix}surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 60%);
+    --#{v.$property-prefix}surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 50%);
+    --#{v.$property-prefix}surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 40%);
+
+    /* surfaces states */
+    --#{v.$property-prefix}surface-disabled: color-mix(in srgb, var(--theme-on-primary-container), var(--theme-muted-a10) 30%);
+
+    /* primaries */
+    --#{v.$property-prefix}primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 5%);
+    --#{v.$property-prefix}primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 10%);
+    --#{v.$property-prefix}primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 15%);
+
+    /* primaries lighter */
+    --#{v.$property-prefix}primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 50%);
+
+    /* primaries states */
+    --#{v.$property-prefix}primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
+
+    /* secondaries */
+    --#{v.$property-prefix}secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 5%);
+    --#{v.$property-prefix}secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 10%);
+    --#{v.$property-prefix}secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 15%);
+
+    /* secondaries lighter */
+    --#{v.$property-prefix}secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 50%);
+
+    /* accents */
+    --#{v.$property-prefix}accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 5%);
+    --#{v.$property-prefix}accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 10%);
+    --#{v.$property-prefix}accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 15%);
+
+    /* accent lighter */
+    --#{v.$property-prefix}accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 50%);
+  }
+}
+
+@mixin semantic-dark-tones() {
+  @supports (color: color-mix(in srgb, black, gray)) {
+    /* success */
+    --#{v.$property-prefix}success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 15%);
+
+    /* success lighter */
+    --#{v.$property-prefix}success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 50%);
+
+    /* warning */
+    --#{v.$property-prefix}warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 15%);
+
+    /* warning lighter */
+    --#{v.$property-prefix}warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 50%);
+
+    /* danger */
+    --#{v.$property-prefix}danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 15%);
+
+    /* danger lighter */
+    --#{v.$property-prefix}danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 50%);
+
+    /* muted */
+    --#{v.$property-prefix}muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 5%);
+    --#{v.$property-prefix}muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 10%);
+    --#{v.$property-prefix}muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 15%);
+
+    /* muted lighter */
+    --#{v.$property-prefix}muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 50%);
+  }
+}
+
+/*
+* RGBA colors
+* Generate rgba colors method using @hexToRgb function
+*/
+@mixin primary-fixed-colors() {
+  & {
+    @each $color, $value in v.$primary-colors {
+      --#{v.$property-prefix}#{$color}-fixed: #{f.hexToRgb($value)};
+    }
+  }
+}
+
+/*
+* Containers
+* Generate container with media queries
+*/
+@mixin container {
+  --_container-gutter-x: 1.5rem;
+  --_container-gutter-y: 0;
+
+  margin-inline: auto;
+  padding-inline: calc(var(--_container-gutter-x) * .5);
+  width: 100%;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+}
+
+// Fluid container styles
+@mixin container-fluid {
+  --_container-gutter-x: 1.5rem;
+  --_container-gutter-y: 0;
+
+  margin-inline: auto;
+  padding-inline: calc(var(--_container-gutter-x) * .5);
+  width: 100%;
+}
+
+/*
+* Row
+* Generate row
+*/
+@mixin make-row {
+  --_row-gutter-x: 1.5rem;
+  --_row-gutter-y: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--_row-gutter-y));
+  margin-right: calc(-.5 * var(--_row-gutter-x));
+  margin-left: calc(-.5 * var(--_row-gutter-x));
+}
+
+/*
+* Columns
+* Generate columns mixin
+*/
+@mixin make-col-ready {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-inline: calc(var(--_row-gutter-x) * .5);
+  margin-top: var(--_row-gutter-y);
+}
+
+@mixin make-col($size, $columns: 12) {
+  flex: 1 1 auto;
+  width: calc(100% * #{$size} / #{$columns});
+  max-width: calc(100% * #{$size} / #{$columns});
+}
+
+// Media query mixin
+@mixin media-breakpoint-up($size) {
+  @media (min-width: map.get(v.$grid-breakpoints, $size)) {
+    @content;
+  }
+}
+
+/*
+* Grid
+* Generate grid columns system
+*/
+@mixin make-grid-cols($columns) {
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+@mixin make-grid-rows($rows) {
+  grid-template-rows: repeat($rows, 1fr);
+}
+
+@mixin make-grid-span($span) {
+  grid-column: span $span / span $span;
+}
+
+@mixin make-grid-position($prefix, $direction, $position) {
+  grid-#{$prefix}-#{$direction}: $position;
+}
+
+@mixin make-grid-auto($type, $size) {
+  grid-template-columns: repeat(auto-#{$type}, minmax($size, 1fr));
+}
+
+@mixin make-gap($direction, $size) {
+  @if ($direction == 'inline') {
+    column-gap: $size;
+  } @else {
+    row-gap: $size;
+  }
+}
+
+/*
+* Spacing
+* Generate margin and padding spacing mixins
+*/
+@mixin make-margin($direction, $size) {
+  @if ($direction == 'all') {
+    margin: map.get(v.$spacing-sizes, $size);
+  } @else {
+    margin-#{$direction}: map.get(v.$spacing-sizes, $size);
+  }
+}
+
+@mixin make-padding($direction, $size) {
+  @if ($direction == 'all') {
+    padding: map.get(v.$spacing-sizes, $size);
+  } @else {
+    padding-#{$direction}: map.get(v.$spacing-sizes, $size);
+  }
+}
+
+/*
+* Opacity
+* Generate opacity mixin
+*/
+@mixin opacity($level) {
+  $opacity-value: math.div($level, 1);
+  opacity: $opacity-value;
+}
+
+/*
+* Radius
+* Generate radius mixin
+*/
+@mixin make-radius($direction, $radius) {
+  @if $direction == 't' {
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+  } @else if $direction == 'r' {
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+  } @else if $direction == 'b' {
+    border-bottom-right-radius: $radius;
+    border-bottom-left-radius: $radius;
+  } @else if $direction == 'l' {
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+}
+
+
+/*
+* Properties
+*/
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --color-wheel-radius {
+  syntax: "<percentage>";
+  initial-value: 15%;
+  inherits: false;
+}
+
+@property --element-radius {
+  syntax: "<length>";
+  initial-value: 25px;
+  inherits: false;
+}
+
+@property --dots-scroll-position {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --gradient-shape-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-shape-primary {
+  syntax: "<color>";
+  initial-value: rgba(56, 43, 240, 1);
+  inherits: false;
+}
+
+@property --gradient-shape-accent {
+  syntax: "<color>";
+  initial-value: rgba(200, 27, 212, 1);
+  inherits: false;
+}
+
+@property --noise-lines {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0.00010px;
+}
+
+/*
+* Gradient border
+*/
+@mixin gradient-glow-border($colors...) {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.1rem;
+    z-index: -1;
+    background: conic-gradient(from var(--gradient-angle), $colors);
+    border-radius: inherit;
+    animation: angle-spin 5s linear infinite;
+  }
+
+  &::after {
+    filter: blur(0.5rem);
+    -webkit-filter: blur(0.5rem);
+  }
+}
+
+@mixin gradient-static-border($angle, $colors...) {
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: -0.4rem;
+    z-index: -1;
+    background: conic-gradient(from $angle, $colors);
+    border-radius: inherit;
+  }
+
+  &::after {
+    filter: blur(0.5rem);
+    -webkit-filter: blur(0.5rem);
+  }
+}
+
+@mixin gradient-btn-border($angle, $colors...) {
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: -0.1rem;
+    z-index: -1;
+    background: conic-gradient(from $angle, $colors);
+    border-radius: inherit;
+  }
+}
+
+@mixin absolute-icon($top, $left) {
+  $top: 2px !default;
+  $left: 30px !default;
+
+  position: absolute;
+  top: $top;
+  left: $left;
+  font-size: 16px;
+  font-variation-settings: var(--iw-bold);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  @include text-gradient(45deg, v.$gradient-amethyst);
+}
+
+@mixin gradient-variants($isBordered: false, $isBg: false) {
+  &.g-primary {
+    --_badge-gradient-color: #{v.$white};
+
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-primary};
+    } @else if ($isBg == true) {
+      @include bg-gradient(var(--gradient-angle), v.$gradient-primary);
+    } @else {
+      @include text-gradient(var(--gradient-angle), v.$gradient-primary);
+    }
+  }
+
+  &.g-secondary {
+    --_badge-gradient-color: #{v.$dark};
+
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-secondary};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-secondary);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-secondary);
+    }
+  }
+
+  &.g-accent {
+    --_badge-gradient-color: #{v.$white};
+
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-accent};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-accent);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-accent);
+    }
+  }
+
+  &.g-gold {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-gold};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-gold);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-gold);
+    }
+  }
+
+  &.g-green {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-neon-green};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-neon-green);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-neon-green);
+    }
+  }
+
+  &.g-cyan {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-cyan};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-cyan);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-cyan);
+    }
+  }
+
+  &.g-yellow {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-honey};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-honey);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-honey);
+    }
+  }
+
+  &.g-orange {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-heat};
+    } @else if ($isBg == true) {
+      @include bg-gradient(var(--gradient-angle), v.$gradient-heat);
+    } @else {
+      @include text-gradient(var(--gradient-angle), v.$gradient-heat);
+    }
+  }
+
+  &.g-purple {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-database};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-database);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-database);
+    }
+  }
+
+  &.g-red {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-crimson};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-crimson);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-crimson);
+    }
+  }
+
+  &.g-blue {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-majestic};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-majestic);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-majestic);
+    }
+  }
+
+  &.g-black {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-shadow};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-shadow);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-shadow);
+    }
+  }
+
+  &.g-indigo {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-ghost};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-ghost);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-ghost);
+    }
+  }
+
+  &.g-violet {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-amethyst};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-amethyst);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-amethyst);
+    }
+  }
+
+  &.g-pink {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-pink};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-pink);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-pink);
+    }
+  }
+
+  &.g-white {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-pure};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-pure);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-pure);
+    }
+  }
+
+  &.g-galaxy {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-galaxy};
+    } @else if ($isBg == true) {
+      @include bg-gradient(var(--gradient-angle), v.$gradient-galaxy);
+    } @else {
+      @include text-gradient(var(--gradient-angle), v.$gradient-galaxy);
+    }
+  }
+
+  // Gradient to text body color to semantic color
+  &.g-body-primary {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-body-primary};
+    } @else {
+      @include text-gradient(0deg, v.$gradient-body-primary);
+    }
+  }
+
+  &.g-body-secondary {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-body-secondary};
+    } @else {
+      @include text-gradient(45deg, v.$gradient-body-secondary);
+    }
+  }
+
+  &.g-body-success {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-body-success};
+    } @else {
+      @include text-gradient(0deg, v.$gradient-body-success);
+    }
+  }
+
+  &.g-body-danger {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-body-danger};
+    } @else {
+      @include text-gradient(45deg, v.$gradient-body-danger);
+    }
+  }
+}

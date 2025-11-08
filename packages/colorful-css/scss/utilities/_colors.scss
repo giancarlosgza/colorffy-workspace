@@ -1,0 +1,128 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer utilities.colors {
+  // Primary colors
+  .text-primary {
+    @include m.text-color(var(--theme-primary-a10));
+  }
+
+  .text-primary-high-contrast {
+    @include m.text-color(var(--theme-primary-a90));
+  }
+
+  .text-secondary {
+    @include m.text-color(var(--theme-secondary-a10));
+  }
+
+  .text-secondary-high-contrast {
+    @include m.text-color(var(--theme-secondary-a90));
+  }
+
+  .text-accent {
+    @include m.text-color(var(--theme-accent-a10));
+  }
+
+  .text-accent-high-contrast {
+    @include m.text-color(var(--theme-accent-a90));
+  }
+
+  // Semantic colors
+  .text-success {
+    @include m.text-color(var(--theme-success-a10));
+  }
+
+  .text-success-high-contrast {
+    @include m.text-color(var(--theme-success-a90));
+  }
+
+  .text-warning {
+    @include m.text-color(var(--theme-warning-a10));
+  }
+
+  .text-warning-high-contrast {
+    @include m.text-color(var(--theme-warning-a90));
+  }
+
+  .text-danger {
+    @include m.text-color(var(--theme-danger-a10));
+  }
+
+  .text-danger-high-contrast {
+    @include m.text-color(var(--theme-danger-a90));
+  }
+
+  .text-muted {
+    @include m.text-color(var(--theme-muted-a10));
+  }
+
+  .text-muted-high-contrast {
+    @include m.text-color(var(--theme-muted-a90));
+  }
+
+  // Basic colors
+  .text-white {
+    @include m.text-color(v.$white);
+  }
+
+  .text-dark {
+    @include m.text-color(v.$black);
+  }
+
+  .text-red {
+    @include m.text-color(v.$danger);
+  }
+
+  // On surface colors
+  .text-on-primary {
+    @include m.text-color(var(--theme-on-primary));
+  }
+
+  .text-on-secondary {
+    @include m.text-color(var(--theme-on-secondary));
+  }
+
+  .text-on-accent {
+    @include m.text-color(var(--theme-on-secondary));
+  }
+
+  .text-on-success {
+    @include m.text-color(v.$black);
+  }
+
+  .text-on-warning {
+    @include m.text-color(v.$black);
+  }
+
+  .text-on-danger {
+    @include m.text-color(var(--theme-on-primary-inverse));
+  }
+
+  .text-on-body {
+    @include m.text-color(var(--theme-on-primary));
+  }
+
+  .text-on-body-inverse {
+    @include m.text-color(var(--theme-on-primary-inverse));
+  }
+
+  .text-link {
+    border-bottom: 1.5px solid var(--theme-secondary-a20);
+    @include m.text-color(var(--theme-secondary-a20));
+
+    &.text-link-high-contrast {
+      border-color: var(--theme-secondary-a90);
+      @include m.text-color(var(--theme-secondary-a90));
+    }
+  }
+
+  // Gradient
+  .text-gradient {
+    color: var(--theme-primary-a10);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @include m.text-gradient(45deg, v.$gradient-sunset);
+    @include m.gradient-variants;
+  }
+}

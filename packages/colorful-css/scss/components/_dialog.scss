@@ -1,0 +1,384 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+@use "../utilities/mask";
+
+@layer components.dialog {
+  .dialog {
+    --_dialog-radius: #{v.$dialog-border-radius};
+    --_dialog-gutter: calc(#{v.$space-1} * 1.25);
+    --_dialog-max-size: 90%;
+    --_discrete: allow-discrete;
+
+    --_dialog-easing-in: #{v.$easing-in-fallback};
+    --_dialog-easing-out: #{v.$easing-out-fallback};
+    --_dialog-easing-duration: 600ms;
+    --_dialog-easing-out-duration: 300ms;
+
+    position: fixed;
+    inset: 0;
+    padding: 0;
+    width: calc(100vh - 20vh);
+    height: calc(100vh - 30vh);
+    max-width: var(--_dialog-max-size);
+    max-height: var(--_dialog-max-size);
+
+    border: none;
+    background-color: var(--theme-surface-container);
+    box-shadow: var(--shadow-xl);
+
+    // Dialog content
+    & .dialog-content {
+      display: flex;
+      flex-direction: column;
+      flex-basis: auto;
+      flex-wrap: nowrap;
+      height: 100%;
+      min-height: 100%;
+      padding: calc(var(--_dialog-gutter) / 1.25);
+      overscroll-behavior: contain;
+
+      & .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        word-break: break-word;
+        align-items: center;
+
+        :where(p) {
+          &:is(.dialog-title) {
+            color: var(--theme-on-primary);
+            font-family: v.$font-primary;
+            font-weight: v.$fw-700;
+            font-size: var(--fs-600);
+            margin-bottom: .25rem;
+          }
+
+          &:is(.dialog-subtitle) {
+            color: var(--theme-muted-a10);
+            font-weight: v.$fw-500;
+            font-size: var(--fs-sm-300);
+            margin-bottom: 0;
+          }
+        }
+
+        &:is(:empty) {
+          display: none;
+        }
+      }
+
+      & .dialog-body {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-block: calc(var(--_dialog-gutter) * 1);
+        color: var(--theme-on-primary);
+
+        & p {
+          :not(.alert, .badge) {
+            color: var(--theme-on-primary);
+          }
+
+          &:is(.dialog-highlight) {
+            position: relative;
+            padding-left: .75rem;
+            font-family: v.$font-primary;
+            font-weight: v.$fw-800;
+            margin-block: 1.25rem;
+
+            &:first-child {
+              margin-block: 0 1.25rem;
+            }
+
+            &:before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 0.35rem;
+              height: 100%;
+              border-radius: v.$rounded-lg;
+              @include m.bg-gradient(135deg, v.$gradient-ghost)
+            }
+          }
+        }
+
+        &:is(:empty) {
+          display: none;
+        }
+      }
+
+      & .dialog-footer {
+        display: inline-flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: calc(var(--_dialog-gutter) / 2);
+
+        & .btn {
+          padding-inline: 1rem;
+          margin-inline: 0;
+        }
+
+        &:is(:empty) {
+          display: none;
+        }
+      }
+    }
+
+    // Modal
+    &.dialog-modal {
+      border-radius: var(--_dialog-radius);
+
+      /* 0. Not visible default state */
+      scale: 0;
+      translate: 0 -3rem;
+      transform-origin: center;
+
+      &, &::backdrop {
+        opacity: 0;
+        transition: overlay 150ms var(--_discrete),
+        display 600ms var(--_discrete),
+        scale var(--_dialog-easing-duration),
+        translate var(--_dialog-easing-duration),
+        opacity calc(var(--_dialog-easing-duration) / 3);
+        transition-timing-function: var(--_dialog-easing-in);
+      }
+
+      @supports (transition: all 100ms linear(1, 1, 1)) {
+        --_dialog-easing-in: #{v.$easing-overshoot-soft};
+        --_dialog-easing-duration: 600ms;
+      }
+
+      /* 2. On appear transition */
+      &[open] {
+        scale: 1;
+        translate: 0 0;
+        opacity: 1;
+
+        &::backdrop {
+          opacity: 1;
+        }
+      }
+
+      /* 1. Before appear on screen */
+      @starting-style {
+        &[open],
+        &[open]::backdrop {
+          opacity: 0;
+        }
+
+        &[open] {
+          scale: 0.90;
+          translate: 0 -1.5rem;
+        }
+      }
+
+      /* 2.5. Animation fallback */
+      @supports not (transition-behavior: allow-discrete) {
+        animation: fade-in-down 300ms ease-in-out both;
+        animation-timing-function: var(--_dialog-easing-in);
+      }
+    }
+
+    // Side Sheet
+    &.dialog-side-sheet {
+      --_dialog-radius: #{v.$dialog-border-radius};
+
+      inset-inline: auto .5rem;
+      inset-block: 1rem;
+      margin: auto;
+      width: 18rem;
+      height: 100%;
+      max-height: calc(100vh - 1rem);
+      border-radius: var(--_dialog-radius);
+
+      /* 0. Not visible default state */
+      translate: 20rem 0;
+      transform-origin: center right;
+      will-change: translate, opacity;
+
+      &, &::backdrop {
+        opacity: 0;
+        transition: overlay 150ms var(--_discrete),
+        display 350ms var(--_discrete),
+        translate var(--_dialog-easing-duration),
+        opacity calc(var(--_dialog-easing-duration));
+        transition-timing-function: var(--_dialog-easing-in);
+      }
+
+      @supports (transition: all 100ms linear(1, 1, 1)) {
+        --_dialog-easing-in: #{v.$easing-overshoot-soft};
+        --_dialog-easing-duration: 600ms;
+      }
+
+      &[open] {
+        /* 2. On appear transition */
+        translate: 0 0;
+        opacity: 1;
+
+        &::backdrop {
+          opacity: 1;
+        }
+      }
+
+      /* 1. Before appear on screen */
+      @starting-style {
+        &[open],
+        &[open]::backdrop {
+          opacity: 0.85;
+        }
+
+        &[open] {
+          translate: 20rem 0;
+        }
+      }
+
+      /* 2.5. Animation fallback */
+      @supports not (transition-behavior: allow-discrete) {
+        animation: opacity-in 300ms ease-in-out both;
+        animation-timing-function: var(--_dialog-easing-duration);
+      }
+
+      & .dialog-content {
+        & .dialog-footer {
+          :nth-child(1 of .btn) {
+            padding-inline: v.$space-1;
+            flex: 1;
+            order: 0;
+          }
+        }
+      }
+    }
+
+    // Confirm
+    &.dialog-confirm {
+      border-radius: var(--_dialog-radius);
+
+      width: clamp(20rem, 90%, 25rem);
+      height: fit-content;
+
+      & .dialog-body {
+        display: grid;
+        place-content: center;
+
+        & i {
+          font-size: var(--fs-200);
+          font-variation-settings: var(--iw-semi-bold);
+          margin-bottom: .5rem;
+        }
+
+        & p:not(.text-muted) {
+          font-size: var(--fs-500);
+          font-family: v.$font-primary;
+          font-weight: v.$fw-700;
+          line-height: 1.35;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    // Sizes
+    &.dialog-sm {
+      width: calc(100vh - 50vh);
+      height: fit-content;
+    }
+
+    &.dialog-md {
+      width: calc(100vh - 30vh);
+      height: calc(100vh - 40vh);
+    }
+
+    &.dialog-lg {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    // Headless
+    &.dialog-headless {
+      .dialog-content {
+        .dialog-header {
+          flex-wrap: nowrap;
+          gap: .75rem;
+          text-align: start;
+          justify-content: flex-start;
+          width: 100%;
+          padding-top: calc(var(--_dialog-gutter) - .55rem);
+
+          & i {
+            padding: 15px;
+            font-size: var(--fs-400);
+            border-radius: v.$rounded-lg;
+            color: v.$white;
+            @include m.bg-gradient(45deg, v.$gradient-ghost);
+            @include m.gradient-variants(false, true);
+            @extend .mask-shape !optional;
+          }
+        }
+      }
+    }
+
+    &.dialog-cols-2 {
+      @include m.bg-gradient(var(--gradient-angle), v.$gradient-ghost-emphasized);
+
+      & .dialog-content {
+        display: grid;
+        grid-template-columns: .75fr 1fr;
+        grid-template-rows: 100%;
+        gap: var(--_dialog-gutter);
+
+        & svg {
+          animation: scale-in 900ms v.$easing-spring both;
+          animation-delay: 100ms;
+        }
+
+        & h2 {
+          animation: fade-in-down 900ms v.$easing-spring both;
+        }
+
+        & h3 {
+          animation: fade-in-left 900ms v.$easing-spring both;
+        }
+
+        // Gradient left column
+        & .dialog-banner {
+          --gradient-angle: 135deg;
+
+          border-radius: calc(var(--_dialog-radius) / 2);
+          animation: angle-spin 10s linear infinite;
+          @include m.bg-gradient(var(--gradient-angle), v.$gradient-body-success);
+        }
+
+        // Right column
+        & .dialog-header {
+          text-align: start;
+        }
+
+        & .dialog-body {
+          flex: 1 1 auto;
+        }
+
+        & .dialog-footer {
+          display: flex;
+
+          & .btn {
+            flex: 1 1 auto;
+          }
+        }
+      }
+    }
+
+    // Backdrop
+    &::backdrop {
+      background: rgba(0, 0, 0, 50%);
+    }
+
+    // Reduced motion
+    @media (prefers-reduced-motion) {
+      &.dialog-modal {
+        &, &::backdrop {
+          transition-timing-function: step-start;
+        }
+      }
+    }
+  }
+}

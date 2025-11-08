@@ -1,0 +1,60 @@
+@use "../abstracts/variables" as v;
+
+@layer layout.input-group {
+  .input-group {
+    --_input-group-radius: #{v.$rounded-md};
+    --_input-group-bg-color: transparent;
+    --_input-group-border-width: #{v.$form-border};
+    --_input-group-border-color: var(--theme-outline-text-field);
+    --_input-group-gutter-x: .5rem;
+    --_input-group-color: var(--theme-muted-a10);
+
+    display: flex;
+    flex-direction: row;
+
+    // Prefix and Suffix styles
+    :where(.input-group-prefix, .input-group-suffix) {
+      display: grid;
+      align-items: center;
+      padding-inline: var(--_input-group-gutter-x);
+      background-color: var(--_input-group-bg-color);
+      border: var(--_input-group-border-width) solid var(--_input-group-border-color);
+      color: var(--_input-group-color);
+      font-size: var(--fs-sm-300);
+
+      i {
+        color: inherit;
+        font-size: var(--fs-600);
+        font-variation-settings: var(--iw-semi-bold);
+      }
+    }
+
+    // Prefix and Suffix order and border-radius
+    .input-group-prefix {
+      order: 0;
+      border-top-left-radius: var(--_input-group-radius);
+      border-bottom-left-radius: var(--_input-group-radius);
+    }
+
+    .input-group-suffix {
+      order: 1;
+      border-top-right-radius: var(--_input-group-radius);
+      border-bottom-right-radius: var(--_input-group-radius);
+    }
+
+    // Change the border-radius from form-control when input-group has prefix or suffix
+    &:has(.input-group-prefix) {
+      .form-control {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    &:has(.input-group-suffix) {
+      .form-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+}

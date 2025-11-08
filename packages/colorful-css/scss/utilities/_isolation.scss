@@ -1,0 +1,10 @@
+@layer utilities.isolation {
+  .isolate {
+    isolation: isolate;
+  }
+
+  .isolate-auto {
+    isolation: auto;
+  }
+}
+

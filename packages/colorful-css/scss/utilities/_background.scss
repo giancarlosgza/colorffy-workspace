@@ -1,0 +1,177 @@
+@use "sass:map";
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+@use '../abstracts/functions' as f;
+
+@layer utilities.background {
+  // Default background color
+  .bg-primary {
+    @include m.bg-color(var(--theme-primary-a10));
+  }
+
+  .bg-secondary {
+    @include m.bg-color(var(--theme-secondary-a10));
+  }
+
+  .bg-accent {
+    @include m.bg-color(var(--theme-accent-a10));
+  }
+
+  .bg-success {
+    @include m.bg-color(var(--theme-success-a10));
+  }
+
+  .bg-warning {
+    @include m.bg-color(var(--theme-warning-a10));
+  }
+
+  .bg-danger {
+    @include m.bg-color(var(--theme-danger-a10));
+  }
+
+  .bg-dark {
+    @include m.bg-color(v.$black);
+  }
+
+  .bg-white {
+    @include m.bg-color(v.$white);
+  }
+
+  .bg-body {
+    @include m.bg-color(var(--theme-background))
+  }
+
+  .bg-surface-base {
+    @include m.bg-color(var(--theme-surface-base))
+  }
+
+  .bg-surface-pane {
+    @include m.bg-color(var(--theme-surface-body-pane))
+  }
+
+  .bg-frosted {
+    background-color: var(--theme-frosted-glass-bg);
+    backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+  }
+
+  .bg-transparent {
+    @include m.bg-color(transparent)
+  }
+
+  // Emphasis background color
+  .bg-primary-emphasis {
+    @include m.bg-color(var(--theme-primary-a30));
+  }
+
+  .bg-secondary-emphasis {
+    @include m.bg-color(var(--theme-secondary-a30));
+  }
+
+  .bg-accent-emphasis {
+    @include m.bg-color(var(--theme-accent-a30));
+  }
+
+  .bg-success-emphasis {
+    @include m.bg-color(var(--theme-success-a30));
+  }
+
+  .bg-warning-emphasis {
+    @include m.bg-color(var(--theme-warning-a30));
+  }
+
+  .bg-danger-emphasis {
+    @include m.bg-color(var(--theme-danger-a30));
+  }
+
+  // Fixed background color
+  .bg-primary-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-primary-fixed), var(--_bg-opacity));
+  }
+
+  .bg-secondary-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-secondary-fixed), var(--_bg-opacity));
+  }
+
+  .bg-accent-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-accent-fixed), var(--_bg-opacity));
+  }
+
+  .bg-success-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-success-fixed), var(--_bg-opacity));
+  }
+
+  .bg-warning-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-warning-fixed), var(--_bg-opacity));
+  }
+
+  .bg-danger-fixed {
+    --_bg-opacity: .35;
+    background: rgba(var(--theme-danger-fixed), var(--_bg-opacity));
+  }
+
+  /*
+  * Fixed opacity
+  * Generate fixed opacity background utilities for each value
+  */
+  @each $value, $opacity in v.$opacity {
+    .bg-opacity-#{$value} {
+      --_bg-opacity: #{$opacity};
+    }
+  }
+
+  // Custom wrapper backgrounds
+  .pane-content {
+    --_pane-content-gutter-inline: 1rem;
+    --_pane-content-gutter-block: 1rem;
+    --_pane-content-radius: #{v.$card-border-radius};
+    --_pane-content-min-height: auto;
+
+    background-color: var(--theme-surface-body-pane);
+    padding-inline: var(--_pane-content-gutter-inline);
+    padding-block: var(--_pane-content-gutter-block);
+    border-radius: var(--_pane-content-radius);
+    min-height: var(--_pane-content-min-height);
+
+    &.pane-content-expanded {
+      --_pane-content-min-height: calc(100vh - 185px);
+    }
+
+    &:has(.border.border-animated) {
+      isolation: isolate;
+    }
+  }
+
+  // Color Mix
+  .bg-color-mix {
+    --_bg-color-one: var(--theme-primary-a10);
+    --_bg-color-two: #{v.$white};
+    --_bg-color-mix-opacity: 90%;
+
+    background-color: var(--_bg-color-one);
+    @supports (color: color-mix(in srgb, white, black)) {
+      background-color: color-mix(in srgb, var(--_bg-color-one) var(--_bg-color-mix-opacity), var(--_bg-color-two));
+    }
+  }
+
+  // Relative color
+  .bg-relative-color {
+    --_bg-relative-base-color: var(--theme-primary-a10);
+    --_bg-relative-alpha: 1;
+
+    background-color: var(--_bg-relative-base-color);
+    @supports (color: hsl(from white h s l)) {
+      background-color: oklch(from var(--_bg-relative-base-color) l c h / var(--_bg-relative-alpha));
+    }
+  }
+
+  // Gradient backgrounds
+  .bg-gradient {
+    @include m.bg-gradient(45deg, v.$gradient-database);
+    @include m.gradient-variants(false, true);
+  }
+}

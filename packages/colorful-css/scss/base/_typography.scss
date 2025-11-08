@@ -1,0 +1,210 @@
+@use "sass:map";
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer base.typography {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: v.$fw-500;
+    font-style: normal;
+    line-height: 1.2;
+    color: var(--theme-on-primary);
+  }
+
+  // Type scale system
+  h1 {
+    font-family: map.get(v.$type-h1, font-family);
+    font-weight: map.get(v.$type-h1, font-weight);
+    font-size: map.get(v.$type-h1, font-size);
+    letter-spacing: map.get(v.$type-h1, letter-spacing);
+  }
+
+  h2 {
+    font-family: map.get(v.$type-h2, font-family);
+    font-weight: map.get(v.$type-h2, font-weight);
+    font-size: map.get(v.$type-h2, font-size);
+    letter-spacing: map.get(v.$type-h2, letter-spacing);
+  }
+
+  h3 {
+    font-family: map.get(v.$type-h3, font-family);
+    font-weight: map.get(v.$type-h3, font-weight);
+    font-size: map.get(v.$type-h3, font-size);
+    letter-spacing: map.get(v.$type-h3, letter-spacing);
+  }
+
+  h4 {
+    font-family: map.get(v.$type-h4, font-family);
+    font-weight: map.get(v.$type-h4, font-weight);
+    font-size: map.get(v.$type-h4, font-size);
+    letter-spacing: map.get(v.$type-h4, letter-spacing);
+  }
+
+  h5 {
+    font-family: map.get(v.$type-h5, font-family);
+    font-weight: map.get(v.$type-h5, font-weight);
+    font-size: map.get(v.$type-h5, font-size);
+    letter-spacing: map.get(v.$type-h5, letter-spacing);
+  }
+
+  h6 {
+    font-family: map.get(v.$type-h6, font-family);
+    font-weight: map.get(v.$type-h6, font-weight);
+    font-size: map.get(v.$type-h6, font-size);
+    letter-spacing: map.get(v.$type-h6, letter-spacing);
+  }
+
+  .subtitle-1 {
+    font-family: map.get(v.$type-subtitle1, font-family);
+    font-weight: map.get(v.$type-subtitle1, font-weight);
+    font-size: map.get(v.$type-subtitle1, font-size);
+    letter-spacing: map.get(v.$type-subtitle1, letter-spacing);
+  }
+
+  .subtitle-2 {
+    font-family: map.get(v.$type-subtitle2, font-family);
+    font-weight: map.get(v.$type-subtitle2, font-weight);
+    font-size: map.get(v.$type-subtitle2, font-size);
+    letter-spacing: map.get(v.$type-subtitle2, letter-spacing);
+  }
+
+  .body-1 {
+    font-family: map.get(v.$type-body1, font-family);
+    font-weight: map.get(v.$type-body1, font-weight);
+    font-size: map.get(v.$type-body1, font-size);
+    letter-spacing: map.get(v.$type-body1, letter-spacing);
+    line-height: map.get(v.$type-body1, line-height);
+  }
+
+  .caption {
+    font-family: map.get(v.$type-caption, font-family);
+    font-weight: map.get(v.$type-caption, font-weight);
+    font-size: map.get(v.$type-caption, font-size);
+    letter-spacing: map.get(v.$type-caption, letter-spacing);
+  }
+
+  .overline {
+    font-family: map.get(v.$type-overline, font-family);
+    font-weight: map.get(v.$type-overline, font-weight);
+    font-size: map.get(v.$type-overline, font-size);
+    letter-spacing: map.get(v.$type-overline, letter-spacing);
+    text-transform: uppercase;
+    @include m.text-variable(true);
+  }
+
+  // Html texts
+  p,
+  a {
+    font-weight: v.$fw-400;
+    font-size: var(--fs-sm-200);
+    letter-spacing: 0.4px;
+    line-height: 20px;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    @include m.text-wrap-pretty;
+  }
+
+  a,
+  .anchor-link {
+    --_hyperlink-color: var(--theme-primary-a10);
+    --_hyperlink-bg-color: var(--theme-primary-a20);
+    --_hyperlink-radius: #{v.$rounded-full};
+    --_hyperlink-easing-in: #{v.$easing-in-fallback};
+    --_hyperlink-easing-duration: 200ms;
+
+    color: var(--_hyperlink-color);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_hyperlink-easing-in: #{v.$easing-spring};
+      --_hyperlink-easing-duration: 800ms;
+    }
+
+    // Remove underline from button and undecorated links
+    &:is(.undecorated, .btn) {
+      &:after {
+        content: none;
+      }
+    }
+
+    &:after {
+      content: '';
+
+      position: absolute;
+      bottom: -.15em;
+      left: 0;
+      margin: auto;
+
+      width: 100%;
+      height: 2px;
+      background: var(--_hyperlink-bg-color);
+      border-radius: var(--_hyperlink-radius);
+
+      opacity: 0;
+      scale: 0 0;
+
+      transition: opacity var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in),
+      scale var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in);
+    }
+
+    &:is(:hover) {
+      color: var(--theme-primary-a20);
+      text-decoration: none;
+
+      &:after {
+        opacity: 1;
+        scale: 1 1;
+      }
+    }
+
+    &:is(:active, :focus) {
+      color: var(--theme-primary-a30);
+      text-decoration: none;
+    }
+  }
+
+  label,
+  .label {
+    font-family: map.get(v.$type-label, font-family);
+    font-weight: map.get(v.$type-label, font-weight);
+    font-size: map.get(v.$type-label, font-size);
+    letter-spacing: map.get(v.$type-label, letter-spacing);
+    color: var(--theme-on-primary);
+    margin-bottom: .75rem;
+  }
+
+  code {
+    --_code-color: var(--theme-muted-a10);
+
+    font-size: var(--fs-sm-400);
+    color: var(--_code-color);
+    cursor: pointer;
+
+    @supports (font-feature-settings: 'colr') {
+      font-family: "Monaspace", monospace;
+      font-feature-settings: "colr", "calt";
+    }
+  }
+
+  kbd {
+    font-weight: v.$fw-600;
+    font-size: var(--fs-sm-300);
+    padding: .1875rem .375rem;
+    color: var(--theme-on-primary-container);
+    background-color: var(--theme-surface-toast);
+    border: v.$border-sm solid var(--theme-surface-toast);
+    box-shadow: var(--shadow-sm);
+    border-radius: v.$rounded-sm;
+  }
+}

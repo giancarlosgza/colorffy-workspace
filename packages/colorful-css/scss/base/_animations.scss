@@ -1,0 +1,494 @@
+@use '../abstracts/variables' as v;
+
+@layer base.animations {
+  /*
+   * Animations
+   * Fade
+   */
+  @keyframes fade-in-down {
+    0% {
+      translate: 0 2rem;
+      opacity: 0;
+    }
+
+    100% {
+      translate: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-left {
+    0% {
+      translate: 2rem 0;
+      opacity: 0;
+    }
+
+    100% {
+      translate: 0;
+      opacity: 1;
+    }
+  }
+
+  /*
+   * Animations
+   * Opacity
+   */
+  @keyframes opacity-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /*
+   * Animations
+   * Scale
+   */
+  @keyframes scale-in {
+    0% {
+      scale: 0;
+      opacity: 0;
+    }
+
+    100% {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  /*
+  * Animations
+  * Slide
+  */
+  @keyframes slide-in-down {
+    0% {
+      translate: 0 2rem;
+    }
+
+    100% {
+      translate: 0;
+    }
+  }
+
+  /*
+   * Animations
+   * Spin
+   */
+  @keyframes spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  .animation-spin {
+    animation-name: spin;
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  /*
+   * Animations
+   * Misc
+   */
+  @keyframes spin-wheel {
+    to {
+      --color-wheel-radius: 50%;
+      rotate: 360deg;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      scale: 0.90;
+    }
+
+    50% {
+      scale: 1;
+    }
+
+    100% {
+      scale: 0.90;
+    }
+  }
+
+  @keyframes glitch {
+    0% {
+      translate: 0;
+    }
+    20% {
+      translate: -5px 5px;
+    }
+    40% {
+      translate: -5px -5px;
+    }
+    60% {
+      translate: 5px 5px;
+    }
+    80% {
+      translate: 5px -5px;
+    }
+    to {
+      translate: 0;
+    }
+  }
+
+  @keyframes shake-x {
+    0%, 100% {
+      translate: 0;
+    }
+    20% {
+      translate: -5%;
+    }
+    40% {
+      translate: 5%;
+    }
+    60% {
+      translate: -5%;
+    }
+    80% {
+      translate: 5%;
+    }
+  }
+
+  @keyframes shake-y {
+    0%, 100% {
+      translate: 0 0;
+    }
+    20% {
+      translate: 0 -5%
+    }
+    40% {
+      translate: 0 5%
+    }
+    60% {
+      translate: 0 -5%
+    }
+    80% {
+      translate: 0 5%
+    }
+  }
+
+  @keyframes zoom-in-out {
+    from {
+      scale: inherit;
+    }
+
+    50% {
+      scale: 1.1;
+    }
+
+    to {
+      scale: inherit;
+    }
+  }
+
+  @keyframes progress-bar-stripes {
+    from {
+      width: 0;
+    }
+
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes animate-wheel {
+    from {
+      --_scheme-offset: 1.5rem;
+      --_scheme-col-size: 0.938rem;
+
+      rotate: 0deg;
+    }
+
+    to {
+      --_scheme-offset: 2.25rem;
+      --_scheme-col-size: 0.938rem;
+
+      rotate: 360deg;
+    }
+  }
+
+  @keyframes angle-spin {
+    0% {
+      --gradient-angle: 0deg;
+    }
+
+    100% {
+      --gradient-angle: 360deg;
+    }
+  }
+
+  @keyframes angle-glow {
+    100% {
+      --gradient-angle: 405deg;
+    }
+  }
+
+  @keyframes shine-light {
+    to {
+      --_shine-left: 115%;
+    }
+  }
+
+  @keyframes dots-scroll {
+    from {
+      --dots-scroll-position: 250px;
+    }
+
+    to {
+      --dots-scroll-position: 0;
+    }
+  }
+
+  @keyframes animate-gradient-shape-1 {
+    from {
+      --gradient-shape-primary: initial;
+      --gradient-shape-angle: 0deg;
+    }
+
+    50% {
+      --gradient-shape-primary: rgba(42, 32, 180, 1);
+    }
+
+    to {
+      --gradient-shape-accent: initial;
+      --gradient-shape-angle: 360deg;
+    }
+  }
+
+  @keyframes animate-gradient-shape-2 {
+    from {
+      --gradient-shape-accent: initial;
+      --gradient-shape-angle: 0deg;
+    }
+
+    50% {
+      --gradient-shape-accent: rgba(102, 0, 255, 1)
+    }
+
+    to {
+      --gradient-shape-accent: initial;
+      --gradient-shape-angle: 360deg;
+    }
+  }
+
+  /*
+   * Animations
+   * Prefers reduced motion
+   */
+  @media (prefers-reduced-motion) {
+    @keyframes fade-in-down {
+      0% {
+        translate: 0;
+        opacity: 0;
+      }
+
+      100% {
+        translate: 0;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fade-in-left {
+      0% {
+        translate: 0;
+        opacity: 0;
+      }
+
+      100% {
+        translate: 0;
+        opacity: 1;
+      }
+    }
+
+    @keyframes scale-in {
+      0% {
+        scale: 1;
+        opacity: 0;
+      }
+
+      100% {
+        scale: 1;
+        opacity: 1;
+      }
+    }
+  }
+
+  /*
+  * Transitions
+  * Nuxt pages
+  */
+  .page-enter-active,
+  .page-leave-active,
+  .layout-enter-active,
+  .layout-leave-active {
+    transition: opacity ease 0.2s;
+  }
+
+  .page-enter,
+  .page-leave-to,
+  .layout-enter,
+  .layout-leave-to {
+    opacity: 0;
+  }
+
+  .slide-enter-active {
+    --_slide-easing-in: #{v.$easing-in-fallback};
+
+    overflow-x: clip;
+    transition: opacity 600ms var(--_slide-easing-in),
+    translate 800ms var(--_slide-easing-in);
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_slide-easing-in: #{v.$easing-emphasized};
+    }
+  }
+
+  .slide-leave-active {
+    --_slide-easing-out: #{v.$easing-out-fallback};
+
+    transition: opacity 200ms var(--_slide-easing-out),
+    translate 300ms var(--_slide-easing-out);
+    overflow-x: clip;
+  }
+
+  .slide-enter-from,
+  .slide-leave-to {
+    opacity: 0;
+    translate: 1.5rem 0;
+  }
+
+  /*
+  * Transitions
+  * Vue
+  */
+  .table-move,
+  .table-enter-active,
+  .table-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .table-enter-from,
+  .table-leave-to {
+    opacity: 0;
+    translate: 0 30px;
+  }
+
+  /* Ensure leaving items are taken out of layout flow so that moving
+     animations can be calculated correctly. */
+  .table-leave-active {
+    position: absolute;
+  }
+
+  /*
+    Table td enter and leave
+    fade transition when isExpanding toggle
+  */
+  .table-td-fade-enter-active {
+    transition: all 0.5s ease-out;
+  }
+
+  .table-td-fade-leave-active {
+    transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .table-td-fade-enter-from,
+  .table-td-fade-leave-to {
+    translate: -20px;
+    opacity: 0;
+  }
+
+  /*
+    Slide enter and leave
+    transition for tab menu changes
+  */
+  .slide-inline-enter-active {
+    --_slide-inline-easing-in: #{v.$easing-in-fallback};
+
+    transition: translate 600ms var(--_slide-inline-easing-in),
+    opacity 600ms var(--_slide-inline-easing-in);
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_slide-inline-easing-in: #{v.$easing-emphasized};
+    }
+  }
+
+  .slide-inline-leave-active {
+    --_slide-inline-easing-out: #{v.$easing-out-fallback};
+
+    transition: translate 300ms var(--_slide-inline-easing-out),
+    opacity 300ms var(--_slide-inline-easing-out);
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_slide-inline-easing-out: #{v.$easing-emphasized};
+    }
+  }
+
+  .slide-inline-enter-from {
+    opacity: 0;
+    translate: 2rem 0;
+  }
+
+  .slide-inline-leave-to {
+    opacity: 0;
+    translate: -2rem 0;
+  }
+
+  /*
+    Slide enter and leave
+    vertical transition
+  */
+  .slide-block-enter-active {
+    transition: translate 800ms v.$easing-in-fallback,
+    opacity 400ms v.$easing-in-fallback;
+  }
+
+  .slide-block-leave-active {
+    transition: translate 400ms v.$easing-out-fallback,
+    opacity 200ms v.$easing-out-fallback;
+  }
+
+  .slide-block-enter-from {
+    opacity: 0;
+    translate: 0 1.875rem;
+  }
+
+  .slide-block-leave-to {
+    opacity: 0;
+    translate: 0 -1.875rem;
+  }
+
+  /*
+  Fade inline enter and leave
+  horizontal transition
+  */
+  .fade-inline-enter-active {
+    --_fade-inline-easing-in: #{v.$easing-in-fallback};
+
+    transition: translate 400ms var(--_fade-inline-easing-in),
+    opacity 400ms var(--_fade-inline-easing-in);
+  }
+
+  .fade-inline-leave-active {
+    --_fade-inline-easing-out: #{v.$easing-out-fallback};
+
+    transition: translate 250ms var(--_fade-inline-easing-out),
+    opacity 250ms var(--_fade-inline-easing-out);
+  }
+
+  .fade-inline-enter-from {
+    opacity: 0;
+    translate: -1rem 0;
+  }
+
+  .fade-inline-leave-to {
+    opacity: 0;
+    translate: 1rem 0;
+  }
+}

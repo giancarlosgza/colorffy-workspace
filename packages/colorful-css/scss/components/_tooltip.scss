@@ -1,0 +1,42 @@
+@use "../abstracts/variables" as v;
+
+@layer components.tooltip {
+  .v-popper--theme-tooltip {
+    --_tooltip-bg-color: var(--theme-surface-tooltip);
+    --_tooltip-text-color: #{v.$white};
+    --_tooltip-padding: 8px;
+
+    isolation: isolate;
+    position: relative;
+    //z-index: 100;
+
+    .v-popper__wrapper {
+      .v-popper__inner {
+        background-color: var(--_tooltip-bg-color);
+        color: var(--_tooltip-text-color);
+        padding: var(--_tooltip-padding);
+        box-shadow: none;
+        border-radius: v.$rounded-md;
+        font-size: 11px;
+        font-weight: v.$fw-500;
+
+        :where(span, p, a) {
+          color: var(--_tooltip-text-color);
+        }
+
+        // KBD styles inside the tooltip
+        kbd {
+          background-color: var(--theme-surface-kbd);
+          border: v.$border-sm solid var(--theme-surface-kbd);
+          color: var(--theme-on-primary-inverse);
+          font-weight: v.$fw-800;
+        }
+      }
+    }
+
+    .v-popper__arrow-outer,
+    .v-popper__arrow-inner {
+      visibility: hidden;
+    }
+  }
+}

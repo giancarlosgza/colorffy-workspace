@@ -1,0 +1,400 @@
+@use "sass:map";
+@use "sass:color";
+
+$property-prefix: theme- !default;
+
+// Primary colors
+$primary: #002678 !default;
+$secondary: #0075d6 !default;
+$accent: #fda001 !default;
+
+// Semantic colors
+$white: hsl(100, 100%, 100%);
+$black: hsl(0, 0%, 0%);
+$dark: hsl(0, 0%, 7.1%);
+
+$success: hsl(145, 100%, 39%) !default;
+$muted: #52595f !default;
+$warning: hsl(40, 100%, 50%) !default;
+$info: hsl(240, 100%, 37%) !default;
+$danger: hsl(354, 73%, 51%) !default;
+
+$primary-colors: (
+        'primary': $primary,
+        'secondary': $secondary,
+        'accent': $accent,
+        'overlay': $black,
+        'white': $white,
+        'success': $success,
+        'info': $info,
+        'warning': $warning,
+        'danger': $danger,
+        'muted': $muted,
+);
+
+// Gradients
+$gradient-primary: $primary, color.scale($primary, $lightness: -20%) !default;
+$gradient-secondary: $secondary, color.scale($secondary, $lightness: -20%) !default;
+$gradient-accent: $accent, color.scale($accent, $lightness: -20%) !default;
+$gradient-pink: #5300fa, #ab068e, #ee5aaf !default;
+$gradient-sunset: #7319fa, #ff33b4, #ff7e29 !default;
+$gradient-neon-green: #4ae17b, #11d181 !default;
+$gradient-cyan: #0adeff, #0a81ff !default;
+$gradient-marathon: #391a41, #a51957, #f5536b !default;
+$gradient-database: #c11ceb, #6f19b5, #25007a !default;
+$gradient-gold: #875919, #a87732, #dbaa64, #f0c588 !default;
+$gradient-heat: #c20ea1, #dd2d7f, #ee4c5e, #f46d41 !default;
+$gradient-energy: #8eb309, #d8ff4a !default;
+$gradient-honey: #ffe572, #c28333 !default;
+$gradient-crimson: #e91e63, #d81557, #aa1145 !default;
+$gradient-majestic: #148ade, #116ab8 !default;
+$gradient-shadow: #404040, #212121 !default;
+$gradient-pure: #f5f7fa, #f0f6ff !default;
+$gradient-ghost: #715cff, #6851ff !default;
+$gradient-ghost-emphasized: #150a62, #6851ff !default;
+$gradient-amethyst: #8200e7, #bf3eff !default;
+$gradient-forest: #33d655, #29ac4a, #21823e !default;
+$gradient-galaxy: $accent, #715cff, #bf3eff, #ee5aaf, $accent !default;
+
+$gradient-body-primary: var(--theme-on-primary), $primary !default;
+$gradient-body-secondary: var(--theme-on-primary), $secondary !default;
+$gradient-body-success: var(--theme-on-primary), $success !default;
+$gradient-body-warning: var(--theme-on-primary), $warning !default;
+$gradient-body-danger: var(--theme-on-primary), $danger !default;
+
+$gradient-background-primary: transparent, $primary 180% !default;
+$gradient-background-secondary: transparent, $secondary 180% !default;
+$gradient-background-accent: transparent, $accent 180% !default;
+$gradient-background-success: transparent, $success 180% !default;
+$gradient-background-warning: transparent, $warning 180% !default;
+$gradient-background-danger: transparent, $danger 180% !default;
+$gradient-background-shadow: transparent, #404040 180% !default;
+
+// Color wheel scheme colors
+$scheme-colors: (
+        'Red': hsl(0, 100%, 50%),
+        'Red-Orange': hsl(30, 100%, 50%),
+        'Orange': hsl(39, 100%, 50%),
+        'Yellow-Orange': hsl(45, 100%, 50%),
+        'Yellow': hsl(60, 100%, 50%),
+        'Yellow-Green': hsl(80, 61%, 50%),
+        'Green': hsl(120, 100%, 25%),
+        'Blue-Green': hsl(147, 50%, 47%),
+        'Blue': hsl(240, 100%, 50%),
+        'Blue-Violet': hsl(271, 76%, 53%),
+        'Violet': hsl(274, 100%, 25%),
+        'Red-Violet': hsl(322, 81%, 43%),
+);
+
+// Fonts
+
+// For title and headings
+$font-primary: var(--font-primary);
+// For buttons, body, and text
+$font-secondary: var(--font-secondary);
+$font-icons: var(--font-icons);
+
+// Font weights
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+$fw-800: 800;
+
+// Type scale
+$type-h1: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-800,
+        font-size: var(--fs-100),
+        letter-spacing: 0px,
+        line-height: 1
+);
+
+$type-h2: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-400,
+        font-size: var(--fs-200),
+        letter-spacing: 0px,
+);
+
+$type-h3: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-500,
+        font-size: var(--fs-300),
+        letter-spacing: 0px,
+);
+
+$type-h4: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-500,
+        font-size: var(--fs-400),
+        letter-spacing: .25px,
+);
+
+$type-h5: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-500,
+        font-size: var(--fs-500),
+        letter-spacing: .20px,
+);
+
+$type-h6: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-500,
+        font-size: var(--fs-600),
+        letter-spacing: .15px,
+);
+
+$type-body1: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-400,
+        font-size: var(--fs-600),
+        letter-spacing: .5px,
+        line-height: 1.5
+);
+
+$type-subtitle1: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-400,
+        font-size: var(--fs-sm-100),
+        letter-spacing: .45px,
+);
+
+$type-subtitle2: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-400,
+        font-size: var(--fs-sm-300),
+        letter-spacing: .35px,
+);
+
+$type-button: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-600,
+        font-size: 12px,
+        letter-spacing: 0.16px,
+);
+
+$type-caption: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-500,
+        font-size: var(--fs-sm-500),
+        letter-spacing: .5px,
+);
+
+$type-label: (
+        font-family: (var(--font-secondary)),
+        font-weight: $fw-600,
+        font-size: var(--fs-sm-400),
+        letter-spacing: -0.01em,
+);
+
+$type-overline: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-800,
+        font-size: var(--fs-sm-200),
+        letter-spacing: -0.01em,
+);
+
+
+// Fs table
+$fs-table: clamp(0.75rem, 2.5cqw, 0.80rem);
+
+// Border radius
+$border-radius: (
+        0: 0px,
+        4: 4px,
+        6: 6px,
+        8: 8px,
+        12: 12px,
+        25: 25px,
+        50: 50px
+);
+
+$rounded-none: map.get($border-radius, 0);
+$rounded-sm: map.get($border-radius, 6);
+$rounded-md: map.get($border-radius, 8);
+$rounded-lg: map.get($border-radius, 12);
+$rounded-xl: map.get($border-radius, 25);
+$rounded-full: map.get($border-radius, 50);
+
+$card-border-radius: $rounded-lg !default;
+$form-border-radius: $rounded-md !default;
+$button-border-radius: $rounded-md !default;
+$dialog-border-radius: $rounded-lg !default;
+
+// Borders
+$form-border: 1px;
+$border-sm: 1px;
+$border-md: 2px;
+
+// Spaces
+$space-1: 1rem;
+$space-2: 2rem;
+$space-3: 3rem;
+
+$spacing-sizes: (
+        0: 0,
+        1: 0.25rem,
+        2: 0.5rem,
+        3: 1rem,
+        4: 1.5rem,
+        5: 3rem,
+        6: 4.5rem,
+        7: 6rem,
+        8: 7.5rem,
+        9: 9rem,
+        10: 12rem
+);
+
+// Gaps
+$gaps: (
+        0: 0,
+        1: 0.25rem,
+        2: 0.5rem,
+        3: 0.75rem,
+        4: 1rem,
+        5: 1.25rem,
+        6: 1.5rem,
+        7: 1.75rem,
+        8: 2rem,
+        9: 2.25rem,
+        10: 2.5rem
+);
+
+// Breakpoints
+$breakpoints: (
+        1155: 1155px,
+        1024: 1024px,
+        992: 992px,
+        960: 960px,
+        768: 768px,
+        600: 600px,
+        320: 320px,
+);
+
+$grid-breakpoints: (
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1400px
+);
+
+$media-breakpoints: sm md lg xl xxl;
+
+// Opacity
+$opacity: (
+        0: 0,
+        5: 0.05,
+        10: 0.1,
+        20: 0.2,
+        30: 0.3,
+        40: 0.4,
+        50: 0.5,
+        60: 0.6,
+        70: 0.7,
+        80: 0.8,
+        90: 0.9,
+        100: 1
+);
+
+// Degrees
+$degrees: (
+        0: 0deg,
+        45: 45deg,
+        90: 90deg,
+        135: 135deg,
+        180: 180deg,
+        225: 225deg,
+        270: 270deg,
+        315: 315deg,
+        360: 360deg
+);
+
+// Scales
+$scales: (
+        0: 0,
+        1: 0.25,
+        2: 0.5,
+        3: 0.75,
+        4: 1,
+        5: 1.25
+);
+
+// z-index
+$z-index-navigation: 998;
+$z-index-fab: 999;
+$z-index-menu: 999;
+$z-index-navbar: 999;
+$z-index-fullscreen: 999;
+
+// Spinner
+$spinner-offset: 187;
+$spinner-duration: 1.4s;
+
+// Easing linear functions
+$easing-in-fallback: cubic-bezier(0.05, 0.7, 0.1, 1);
+$easing-out-fallback: cubic-bezier(0.4, 0, 1, 1);
+
+$easing-spring: linear(
+                0, 0.00217 0.5%, 0.00866 1.01%, 0.0346 2.07%, 0.0782 3.2%, 0.14066 4.43%,
+                0.28086 6.651%, 0.72289 12.911%, 0.84164 14.861%, 0.93834 16.722%,
+                1.01676 18.572%, 1.07743 20.432%, 1.12131 22.332%, 1.1373 23.312%,
+                1.14934 24.312%, 1.15904 25.603%, 1.16294 26.953%, 1.16113 28.383%,
+                1.15356 29.933%, 1.14335 31.273%, 1.12887 32.783%, 1.05059 39.614%,
+                1.01677 43.094%, 1.00206, 0.99057 46.975%, 0.98215 48.945%, 0.9766 50.995%,
+                0.9735 53.835%, 0.97488 57.056%, 0.9966 69.827%, 1.00329 76.878%,
+                1.00417 83.808%, 0.99996
+);
+
+$easing-overshoot-soft: linear(0, 0.178 3.8%, 0.341 7.8%, 0.485 11.9%, 0.609 16.1%, 0.666 18.3%, 0.717 20.5%, 0.764 22.7%, 0.807 25%, 0.847 27.4%, 0.882 29.8%, 0.914 32.3%, 0.941 34.8%, 0.961 37%, 0.979 39.3%, 0.995 41.6%, 1.007 44%, 1.018 46.5%, 1.026 49.1%, 1.032 51.8%, 1.035 54.6%, 1.037 58.7%, 1.035 63.2%, 1.03 68.1%, 1.013 80.3%, 1.006 86.3%, 1.001 92.9%, 1);
+
+$easing-emphasized: linear(
+                0, 0.00245 1.753%, 0.00994 3.55%, 0.01966 4.916%, 0.03415 6.402%,
+                0.05334 7.836%, 0.07376 9.061%, 0.10031 10.32%, 0.12808 11.414%,
+                0.19399 13.366%, 0.27138 14.974%, 0.34403 16.052%, 0.47679 17.475%,
+                0.54434 18.338%, 0.60689 19.389%, 0.66036 20.609%, 0.71671 22.4%,
+                0.76532 24.589%, 0.78755 25.874%, 0.80828 27.285%, 0.84475 30.42%,
+                0.86492 32.632%, 0.88332 35.056%, 0.9002 37.721%, 0.91554 40.622%,
+                0.9295 43.795%, 0.94208 47.239%, 0.95333 50.97%, 0.96327 54.986%,
+                0.9795 64.011%, 0.99095 74.434%, 0.99774 86.373%, 1
+);
+
+$easing-bounce: linear(
+                0, 0.00097 1.13%, 0.0039 2.27%, 0.01566 4.55%, 0.03518, 0.0625 9.091%,
+                0.09779 11.371%, 0.14073, 0.19147, 0.25 18.182%, 0.31664 20.462%, 0.3908,
+                0.47275, 0.5625 27.273%, 0.76538 31.813%, 1 36.364%, 0.94147, 0.89073,
+                0.84779 43.174%, 0.8125 45.455%, 0.78518, 0.76566, 0.75393 52.265%, 0.75098,
+                0.75, 0.75098 55.686%, 0.7539 56.816%, 0.76566 59.096%, 0.78518, 0.8125,
+                0.84761, 0.89052 68.177%, 0.94147 70.457%, 1, 0.97268, 0.95316 77.268%,
+                0.9414 79.548%, 0.93848 80.678%, 0.9375, 0.93848 82.958%, 0.9414 84.088%,
+                0.95309, 0.97258 88.629%, 1 90.909%, 0.98829 93.179%, 0.98537 94.309%,
+                0.98438 95.45%, 0.98533 96.58%, 0.98826 97.72%, 1
+);
+
+$easing-power-in: linear(
+                0 0%, 0.0035 5.34%, 0.0141 10.7%,
+                0.0318 16.09%, 0.0566 21.51%,
+                0.0885 26.98%, 0.1278 32.53%,
+                0.2288 43.93%, 0.3563 55.48%,
+                0.5171 67.92%, 0.7139 81.53%, 1 100%
+);
+
+$easing-power-in-out: linear(
+                0 0%, 0.0027 3.64%, 0.0106 7.29%,
+                0.0425 14.58%, 0.0957 21.87%,
+                0.1701 29.16%, 0.2477 35.19%,
+                0.3401 41.23%, 0.5982 55.18%,
+                0.7044 61.56%, 0.7987 68.28%, 0.875 75%,
+                0.9297 81.25%, 0.9687 87.5%,
+                0.9922 93.75%, 1 100%
+);
+
+$easing-sine-in-out: linear(
+                0 0%, 0.007 5.35%, 0.0282 10.75%,
+                0.0638 16.26%, 0.1144 21.96%,
+                0.1833 28.16%, 0.2717 34.9%,
+                0.6868 62.19%, 0.775 68.54%,
+                0.8457 74.3%, 0.9141 81.07%,
+                0.9621 87.52%, 0.9905 93.8%, 1 100%
+);

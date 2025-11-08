@@ -1,0 +1,441 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer components.prime {
+  // Multiselect
+  .p-multiselect {
+    --p-multiselect-background: transparent;
+    --p-multiselect-border-color: var(--theme-outline-text-field);
+    --p-multiselect-border-radius: #{v.$form-border-radius};
+    --p-multiselect-shadow: none;
+
+    background: inherit;
+    border: inherit;
+    border-radius: inherit;
+
+    .p-multiselect-label-container {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-size: 14px;
+
+      .p-multiselect-label {
+        --p-multiselect-padding-y: .35rem;
+        --p-multiselect-padding-x: .35rem;
+      }
+
+      .p-placeholder {
+        --p-multiselect-placeholder-color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%);
+      }
+    }
+
+    .p-multiselect-trigger {
+      display: none;
+    }
+  }
+
+  .p-multiselect-overlay {
+    --p-multiselect-overlay-background: var(--theme-surface-overlay);
+    --p-multiselect-overlay-color: var(--theme-on-primary);
+    --p-multiselect-overlay-border-color: var(--theme-outline-surface);
+    --p-multiselect-overlay-border-radius: #{v.$form-border-radius};
+    --p-multiselect-overlay-shadow: var(--shadow-md);
+
+    margin-top: .35rem;
+
+    & .p-multiselect-header {
+      --p-multiselect-list-header-padding: .15rem;
+      display: none;
+
+      & .p-checkbox {
+        --p-checkbox-width: fit-content;
+        --p-checkbox-height: fit-content;
+        display: none !important;
+      }
+
+      & .p-multiselect-filter-container {
+        --p-form-field-padding-x: .5rem;
+        --p-icon-size: .75rem;
+        --p-iconfield-icon-color: var(--theme-muted-a10);
+
+        & .p-inputtext {
+          --p-inputtext-color: var(--theme-on-primary);
+          --p-inputtext-background: transparent;
+          --p-inputtext-border-color: transparent;
+          --p-inputtext-padding-y: .35rem;
+          --p-inputtext-padding-x: .35rem;
+          --p-inputtext-border-radius: calc(#{v.$rounded-sm} / 1.25);
+          --p-inputtext-shadow: none;
+
+          font-size: var(--fs-sm-300) !important;
+
+          &::placeholder {
+            color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%) !important;
+          }
+        }
+      }
+    }
+
+    & .p-multiselect-list-container {
+      .p-multiselect-list {
+        --p-multiselect-list-gap: .35rem;
+        --p-multiselect-list-padding: .15rem;
+
+        .p-multiselect-option-group {
+          --p-multiselect-option-group-padding: .25rem .05rem;
+          --p-multiselect-option-group-color: var(--theme-muted-a10);
+          --p-multiselect-option-group-font-weight: #{v.$fw-800};
+
+          font-size: var(--fs-sm-400);
+        }
+
+        .p-multiselect-option {
+          --p-multiselect-option-gap: .25rem;
+          --p-multiselect-option-padding: .35rem;
+          --p-multiselect-option-color: var(--theme-on-primary);
+          --p-multiselect-option-border-radius: #{v.$rounded-sm};
+
+          // Remove the checkbox from the multiselect options
+          & .p-checkbox {
+            display: none !important;
+          }
+
+          &:is(:hover) {
+            background: var(--theme-surface-container-high);
+          }
+
+          &.p-focus {
+            --p-multiselect-option-focus-background: var(--theme-surface-container-high);
+            --p-multiselect-option-focus-color: var(--theme-primary-a30);
+          }
+
+          &:has(.p-checkbox-checked) {
+            color: var(--theme-primary-a90) !important;
+            background: var(--theme-surface-container-highest) !important;
+          }
+
+          & span {
+            font-size: var(--fs-sm-400);
+          }
+        }
+
+        .p-multiselect-empty-message {
+          --p-multiselect-empty-message-padding: .35rem;
+
+          color: var(--theme-muted-a10);
+          font-size: var(--fs-sm-300);
+        }
+      }
+    }
+  }
+
+  // Select
+  .p-select {
+    --p-select-background: transparent;
+    --p-select-border-color: var(--theme-outline-text-field);
+    --p-select-border-radius: #{v.$form-border-radius};
+    --p-select-shadow: none;
+
+    .p-select-label {
+      --p-select-padding-y: .35rem;
+      --p-select-padding-x: .35rem;
+    }
+
+    .p-placeholder {
+      --p-select-placeholder-color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%);
+    }
+
+    &.p-disabled {
+      --p-select-disabled-background: var(--theme-surface-disabled);
+      --p-select-disabled-color: var(--theme-muted-a10);
+    }
+  }
+
+  .p-select-overlay {
+    --p-select-overlay-background: var(--theme-surface-overlay);
+    --p-select-overlay-color: var(--theme-on-primary);
+    --p-select-overlay-border-color: var(--theme-outline-surface);
+    --p-select-overlay-border-radius: #{v.$form-border-radius};
+    --p-select-overlay-shadow: var(--shadow-md);
+
+    margin-top: .35rem;
+
+    & .p-select-header {
+      --p-select-list-header-padding: .15rem;
+
+      & .p-iconfield {
+        --p-form-field-padding-x: .5rem;
+        --p-icon-size: .75rem;
+        --p-iconfield-icon-color: var(--theme-muted-a10);
+
+        & .p-inputtext {
+          --p-inputtext-color: var(--theme-on-primary);
+          --p-inputtext-background: transparent;
+          --p-inputtext-border-color: transparent;
+          --p-inputtext-padding-y: .35rem;
+          --p-inputtext-padding-x: .35rem;
+          --p-inputtext-border-radius: calc(#{v.$rounded-sm} / 1.25);
+          --p-inputtext-shadow: none;
+
+          font-size: var(--fs-sm-300) !important;
+
+          &::placeholder {
+            color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%) !important;
+          }
+        }
+      }
+    }
+
+    .p-select-list-container {
+      .p-select-list {
+        --p-select-list-gap: .35rem;
+        --p-select-list-padding: .15rem;
+
+        .p-select-option {
+          --p-select-option-gap: .25rem;
+          --p-select-option-padding: .35rem;
+          --p-select-option-color: var(--theme-on-primary);
+          --p-select-option-border-radius: #{v.$rounded-sm};
+
+          &:is(:hover) {
+            background: var(--theme-surface-container-high);
+          }
+
+          &.p-select-option-selected {
+            --p-select-option-selected-background: var(--theme-surface-container-highest);
+            --p-select-option-selected-color: var(--theme-on-primary);
+
+            &.p-focus {
+              --p-select-option-selected-focus-background: var(--theme-surface-container-high);
+              --p-select-option-selected-focus-color: var(--theme-primary-a30);
+            }
+          }
+
+          &.p-focus {
+            --p-select-option-focus-background: var(--theme-surface-container-high);
+            --p-select-option-focus-color: var(--theme-primary-a30);
+          }
+
+          & .p-select-option-label {
+            font-size: var(--fs-sm-400);
+          }
+        }
+      }
+    }
+  }
+
+  // Color picker
+  .p-colorpicker {
+    --_size: 1.75rem;
+
+    &.p-colorpicker-overlay {
+      display: inline-flex;
+      width: auto;
+    }
+
+    .p-colorpicker-preview {
+      width: var(--_size);
+      height: var(--_size);
+      border-radius: v.$rounded-sm;
+      border: v.$border-sm solid transparent;
+    }
+  }
+
+  .p-colorpicker-panel {
+    background: var(--theme-surface-container-highest);
+    border-radius: calc(#{v.$rounded-sm} + 8px);
+    padding: v.$space-1;
+    box-shadow: var(--shadow-md);
+
+    .p-colorpicker-color-selector {
+      border-radius: v.$rounded-sm;
+
+      .p-colorpicker-color {
+        border-radius: inherit;
+      }
+    }
+
+    .p-colorpicker-hue {
+      border-radius: v.$rounded-xl;
+    }
+  }
+
+  // Toast
+  .p-toast {
+    --_margin: .5rem;
+
+    .p-toast-message {
+      background: var(--theme-surface-toast);
+      border-radius: v.$rounded-md;
+      padding: .85rem;
+
+      .p-toast-message-content {
+        display: flex;
+        align-items: flex-start;
+
+        .p-toast-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          flex: 1 1 auto;
+
+          p {
+            color: var(--theme-on-primary-inverse);
+
+            &.subtitle-1 {
+              font-weight: v.$fw-800;
+              font-family: v.$font-secondary;
+              font-size: var(--fs-500);
+              margin-bottom: var(--_margin);
+            }
+
+            &.subtitle-2 {
+              margin-bottom: var(--_margin);
+            }
+          }
+
+          .btn {
+            align-self: inherit;
+          }
+        }
+      }
+
+      .p-toast-icon-close {
+        fill: var(--theme-on-primary-inverse);
+      }
+    }
+  }
+
+  // Dialog
+  .p-confirm-dialog {
+    background-color: var(--theme-surface-container-highest);
+    border-radius: calc(#{v.$rounded-xl} + 3px);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    //min-width: calc(100vw - 30vw);
+    //max-width: calc(100vw - 50vw);
+    width: calc(100vh - 50vh);
+    min-width: calc(100vh - 60vh);
+    max-height: calc(100vh - 30vh);
+
+    .p-dialog-header {
+      display: flex;
+
+      .p-dialog-title {
+        font-family: v.$font-secondary;
+        font-weight: v.$fw-800;
+        font-size: var(--fs-500);
+        color: var(--theme-on-primary);
+        margin-bottom: 0;
+      }
+
+      .p-dialog-header-close-icon {
+        filter: var(--theme-img-logo);
+      }
+    }
+
+    .p-dialog-content {
+      .p-confirm-dialog-message {
+        font-weight: v.$fw-500;
+        color: var(--theme-muted-a10);
+        margin-bottom: 0;
+        letter-spacing: 0.15px;
+
+        @include m.text-wrap-pretty;
+      }
+    }
+
+    .p-dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .p-dialog-mask {
+    background: rgba(var(--theme-overlay-fixed), 50%);
+  }
+
+  // Input Switch
+  .p-inputswitch {
+    --_p-switch-easing-in: #{v.$easing-in-fallback};
+    --_p-switch-easing-duration: 600ms;
+    --_p-switch-slider-easing-in: #{v.$easing-in-fallback};
+    --_p-switch-slider-easing-duration: 300ms;
+
+    width: 3rem;
+    height: 1.75rem;
+    display: block;
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_p-switch-slider-easing-in: #{v.$easing-spring};
+      --_p-switch-slider-easing-duration: 800ms;
+    }
+
+    & .p-inputswitch-input {
+      appearance: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      z-index: 1;
+      outline: 0 none;
+      border-radius: 30px;
+    }
+
+    & .p-inputswitch-slider {
+      display: flex;
+      align-items: center;
+      background-color: var(--theme-surface-a10);
+      border-radius: v.$rounded-full;
+      border: 0.115625em solid var(--theme-surface-a60);
+
+      transition: background-color var(--_p-switch-easing-duration) var(--_p-switch-easing-in),
+      color var(--_p-switch-easing-duration) var(--_p-switch-easing-in),
+      border-color var(--_p-switch-easing-duration) var(--_p-switch-easing-in),
+      box-shadow var(--_p-switch-easing-duration) var(--_p-switch-easing-in);
+
+      &:before {
+        background-color: var(--theme-surface-a60);
+        width: .85rem;
+        height: .85rem;
+        left: 0.25rem;
+        top: auto;
+        //margin-top: unset;
+        border-radius: v.$rounded-full;
+
+        display: grid;
+        place-content: center;
+
+        transition: background-color var(--_p-switch-slider-easing-duration) var(--_p-switch-slider-easing-in),
+        translate var(--_p-switch-slider-easing-duration) var(--_p-switch-slider-easing-in);
+      }
+    }
+
+    &.p-highlight {
+      .p-inputswitch-slider {
+        background-color: var(--theme-success-a10);
+        border-color: var(--theme-success-a10);
+
+        &:before {
+          background-color: var(--theme-on-primary-inverse);
+          translate: 1.15rem 0;
+          width: 1.25rem;
+          height: 1.25rem;
+          content: 'check';
+          font-family: v.$font-icons;
+          font-variation-settings: var(--iw-semi-bold);
+          color: var(--theme-success-a10);
+        }
+      }
+    }
+  }
+}

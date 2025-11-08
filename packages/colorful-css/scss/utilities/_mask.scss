@@ -1,0 +1,74 @@
+@use "../abstracts/variables" as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.mask {
+  .mask-shape {
+    --_mask-size: 115% 115%;
+
+    mask-size: var(--_mask-size);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+
+    // Shapes
+    &.shape-arch {
+      -webkit-mask-image: url("/assets/images/icons/shape-arch.svg");
+      mask-image: url("/assets/images/icons/shape-arch.svg");
+    }
+
+    &.shape-pill {
+      -webkit-mask-image: url("/assets/images/icons/shape-pill.svg");
+      mask-image: url("/assets/images/icons/shape-pill.svg");
+    }
+
+    &.shape-sunny {
+      -webkit-mask-image: url("/assets/images/icons/shape-sunny.svg");
+      mask-image: url("/assets/images/icons/shape-sunny.svg");
+    }
+
+    &.shape-gem {
+      -webkit-mask-image: url("/assets/images/icons/shape-gem.svg");
+      mask-image: url("/assets/images/icons/shape-gem.svg");
+    }
+
+    // Cookies
+    &.shape-cookie-6 {
+      -webkit-mask-image: url("/assets/images/icons/shape-cookie-6.svg");
+      mask-image: url("/assets/images/icons/shape-cookie-6.svg");
+    }
+
+    &.shape-cookie-9 {
+      -webkit-mask-image: url("/assets/images/icons/shape-cookie-9.svg");
+      mask-image: url("/assets/images/icons/shape-cookie-9.svg");
+    }
+
+    &.shape-cookie-12 {
+      -webkit-mask-image: url("/assets/images/icons/shape-cookie-12.svg");
+      mask-image: url("/assets/images/icons/shape-cookie-12.svg");
+    }
+
+    // Clover
+    &.shape-clover-4 {
+      -webkit-mask-image: url("/assets/images/icons/shape-clover-4.svg");
+      mask-image: url("/assets/images/icons/shape-clover-4.svg");
+    }
+
+    &.shape-clover-8 {
+      --_mask-size: 100% 100%;
+
+      -webkit-mask-image: url("/assets/images/icons/shape-clover-8.svg");
+      mask-image: url("/assets/images/icons/shape-clover-8.svg");
+    }
+  }
+
+  .mask-inline {
+    @supports (mask-image: linear-gradient(90deg, #000, transparent)) {
+      mask: linear-gradient(to right, #000 95%, transparent);
+    }
+  }
+
+  .mask-block {
+    @supports (mask-image: linear-gradient(to bottom, #000, transparent)) {
+      mask: linear-gradient(to bottom, #000 95%, transparent);
+    }
+  }
+}

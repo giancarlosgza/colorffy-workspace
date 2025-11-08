@@ -1,0 +1,328 @@
+@use "sass:map";
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer components.progress {
+   @property --shape-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+  
+  // Progress bar
+  .progress {
+    --_progress-bg-color: var(--theme-surface-container);
+    --_progress-color: var(--theme-primary-a10);
+    --_progress-on-bg-color: var(--theme-on-primary-container);
+    --_progress-height: 0.85rem;
+    --_progress-radius: #{v.$rounded-md};
+    --_progress-easing-in: #{v.$easing-in-fallback};
+
+    display: flex;
+    overflow: hidden;
+    height: var(--_progress-height);
+    font-size: var(--fs-sm-500);
+    font-weight: v.$fw-600;
+    background: var(--_progress-bg-color);
+    border-radius: var(--_progress-radius);
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_progress-easing-in: #{v.$easing-emphasized};
+      --_progress-easing-duration: 800ms;
+    }
+
+    &.progress-sm {
+      --_progress-height: 0.5rem;
+    }
+
+    &.progress-lg {
+      --_progress-height: 2rem;
+      --_progress-radius: #{v.$rounded-xl};
+    }
+
+    // Progress bar
+    & .progress-bar {
+      --_progress-bg-color: var(--theme-primary-a10);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+
+      width: var(--_progress-width, 50%);
+      max-width: 100%;
+      height: var(--_progress-height);
+
+      text-align: center;
+      white-space: nowrap;
+      color: var(--_progress-on-bg-color);
+
+      background-color: var(--_progress-bg-color);
+      border-radius: inherit;
+      transition: width var(--_progress-easing-duration) var(--_progress-easing-in);
+
+      // Progress bar with animation
+      &.progress-animated {
+        animation: progress-bar-stripes 3s ease-in-out infinite both;
+      }
+
+      &.progress-gradient {
+        @include m.gradient-variants;
+      }
+    }
+  }
+
+  // Progress icon
+  .progress-icon {
+    --_progress-icon-color: var(--theme-muted-a10);
+    --_progress-icon-size: 1.25rem;
+
+    position: relative;
+    display: flex;
+    margin-bottom: .75rem;
+
+    width: var(--_progress-icon-size);
+    height: var(--_progress-icon-size);
+
+    &:after {
+      content: '';
+      inline-size: var(--_progress-icon-size);
+      block-size: var(--_progress-icon-size);
+      background-color: var(--_progress-icon-color);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+            
+      position: absolute;
+      animation: spin 2s linear infinite;
+    }
+  }
+
+  // Placeholder
+  .placeholder-list {
+    position: relative;
+    height: 13rem;
+    width: 100%;
+    background-color: var(--theme-surface-container);
+    z-index: 44;
+    overflow: hidden;
+    border-radius: v.$card-border-radius;
+
+    .placeholder-loader {
+      position: absolute;
+      left: -45%;
+      height: 100%;
+      width: 45%;
+      background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+      background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+      background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+      animation: placeholderLoading 1s infinite;
+      z-index: 45;
+    }
+  }
+
+  .skeleton {
+    display: inline-block;
+    border-radius: v.$rounded-md;
+    background-color: var(--theme-muted-a10);
+    width: 5rem;
+    height: .5rem;
+    opacity: 0.85;
+    animation: 2s skeleton-loading both ease-in-out infinite;
+
+    &.skeleton-sm {
+      --_skeleton-thumbnail-size: 25px;
+      min-height: .5rem;
+      width: 3rem;
+    }
+
+    &.skeleton-md {
+      --_skeleton-thumbnail-size: 100px;
+      min-height: .75rem;
+    }
+
+    &.skeleton-lg {
+      --_skeleton-thumbnail-size: 150px;
+      min-height: 2.5rem;
+    }
+
+    &.skeleton-thumbnail {
+      --_skeleton-thumbnail-size: 35px;
+
+      aspect-ratio: 1;
+      @include m.make-image(var(--_skeleton-thumbnail-size));
+    }
+
+    &.skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        var(--theme-muted-a10) 25%,
+        var(--theme-muted-a5) 50%,
+        var(--theme-muted-a10) 75%
+      );
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite linear;
+    }
+
+    &.skeleton-ai-generation {
+      --_skeleton-thumbnail-size: 200px;
+
+      border-radius: v.$rounded-xl;
+      min-height: 1rem;
+      width: 100%;
+      background-color: #444;
+      background-image: linear-gradient(
+          90deg,
+          rgba(67, 46, 215, 0.75) 0%,
+          rgba(0, 121, 219, 0.75) 40%,
+          rgba(0, 121, 219, 0.75) 60%,
+          rgba(67, 46, 215, 0.75) 100%
+      );
+      background-size: 300% 100%;
+      animation: skeleton-shimmer 3.5s infinite linear both;
+    }
+  }
+
+  // Spinner
+  .spinner {
+    animation: rotator v.$spinner-duration linear infinite;
+  }
+
+  .path {
+    stroke-dasharray: v.$spinner-offset;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    animation: dash v.$spinner-duration ease-in-out infinite,
+    colors (v.$spinner-duration * 4) ease-in-out infinite;
+  }
+
+  // Shapes loading
+  .loading-shapes-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    place-items: center;
+    min-height: 15rem;
+    margin-block: 5rem;
+
+    & .loading-label-wrapper {
+      grid-area: 1 / 1;
+
+      & p {
+        mix-blend-mode: luminosity;
+        color: var(--theme-on-primary-inverse);
+      }
+    }
+
+    & .shapes-wrapper {
+      grid-area: 1 / 1;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      filter: blur(30px);
+
+      & .shape {
+        --_shape-bg-alpha: 1;
+        --_shape-bg-color: var(--theme-primary-a10);
+        --_shape-size: 15rem;
+        --_shape-offset: 5rem;
+
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: var(--_shape-size);
+        height: var(--_shape-size);
+        aspect-ratio: 1;
+        border-radius: 100%;
+        opacity: var(--_shape-bg-alpha);
+        background-color: var(--_shape-bg-color);
+        animation: shape-loading 5s linear infinite;
+        transform: translate(
+                        calc(cos(var(--shape-angle)) * 3rem),
+                        calc(sin(var(--shape-angle)) * 3rem)
+        );
+
+        &:nth-child(2) {
+          --_shape-bg-alpha: 0.75;
+          animation-delay: -2s;
+        }
+
+        &:nth-child(3) {
+          --_shape-bg-alpha: 0.75;
+          animation-delay: -4s;
+        }
+      }
+    }
+  }
+
+  // Spinner keyframes
+  @keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes colors {
+    0% {
+      stroke: map.get(v.$primary-colors, primary);
+    }
+    25% {
+      stroke: map.get(v.$primary-colors, secondary);
+    }
+    50% {
+      stroke: map.get(v.$primary-colors, accent);
+    }
+    75% {
+      stroke: map.get(v.$primary-colors, warning);
+    }
+    100% {
+      stroke: map.get(v.$primary-colors, success);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: v.$spinner-offset;
+    }
+    50% {
+      stroke-dashoffset: v.$spinner-offset * 0.25;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: v.$spinner-offset;
+      transform: rotate(450deg);
+    }
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      opacity: 0.85;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes shape-loading {
+    to {
+      --shape-angle: 360deg;
+    }
+  }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+@use '../abstracts/variables' as v;
+
+@layer utilities.display {
+  .d-none {
+    display: none;
+  }
+
+  .d-block {
+    display: block;
+  }
+
+  .d-inline-block {
+    display: inline-block;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .d-inline-flex {
+    display: inline-flex;
+  }
+
+  .d-grid {
+    display: grid;
+  }
+
+  /*
+  * Display
+  * Generate display utilities for each breakpoint
+  */
+  @each $breakpoint, $size in v.$grid-breakpoints {
+    @media (min-width: $size) {
+      .d-#{$breakpoint}-none {
+        display: none;
+      }
+
+      .d-#{$breakpoint}-block {
+        display: block;
+      }
+
+      .d-#{$breakpoint}-inline-block {
+        display: inline-block;
+      }
+
+      .d-#{$breakpoint}-flex {
+        display: flex;
+      }
+
+      .d-#{$breakpoint}-inline-flex {
+        display: inline-flex;
+      }
+
+      .d-#{$breakpoint}-grid {
+        display: grid;
+      }
+    }
+  }
+}

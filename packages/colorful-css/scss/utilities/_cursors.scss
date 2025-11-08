@@ -1,0 +1,29 @@
+@layer utilities.cursors {
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .cursor-default {
+    cursor: default;
+  }
+
+  .cursor-help {
+    cursor: help;
+  }
+
+  .cursor-wait {
+    cursor: wait;
+  }
+
+  .cursor-grab {
+    cursor: grab;
+  }
+
+  .cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  .cursor-not-allowed {
+    cursor: not-allowed;
+  }
+}

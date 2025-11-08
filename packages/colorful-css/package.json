@@ -1,0 +1,70 @@
+{
+  "name": "@giancarlosgza/colorfulcss",
+  "version": "2.8.0",
+  "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. ColorfulCSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
+  "main": "dist/colorfulcss.css",
+  "style": "dist/colorfulcss.css",
+  "sass": "scss/main.scss",
+  "exports": {
+    ".": {
+      "sass": "./scss/main.scss",
+      "style": "./dist/colorfulcss.css",
+      "default": "./dist/colorfulcss.css"
+    },
+    "./scss": "./scss/main.scss",
+    "./scss/*": "./scss/*",
+    "./css": "./dist/colorfulcss.css",
+    "./css/min": "./dist/colorfulcss.min.css"
+  },
+  "files": [
+    "dist",
+    "scss",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:expanded && npm run build:minified",
+    "build:expanded": "sass scss/main.scss dist/colorfulcss.css --style=expanded --source-map",
+    "build:minified": "sass scss/main.scss dist/colorfulcss.min.css --style=compressed --source-map --no-error-css",
+    "watch": "sass scss/main.scss dist/colorfulcss.css --watch --style=expanded --source-map",
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "keywords": [
+    "css",
+    "scss",
+    "sass",
+    "framework",
+    "colorful",
+    "design-system",
+    "ui",
+    "components",
+    "gradient",
+    "theming",
+    "tonal-colors",
+    "vue",
+    "nuxt",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giancarlosgza/colorful-ui.git",
+    "directory": "packages/colorfulcss"
+  },
+  "homepage": "https://github.com/giancarlosgza/colorful-ui#readme",
+  "bugs": {
+    "url": "https://github.com/giancarlosgza/colorful-ui/issues"
+  },
+  "author": "Giancarlos Garza",
+  "license": "MIT",
+  "peerDependencies": {
+    "floating-vue": "^5.2.0",
+    "@material-symbols/font-700": "^0.39.1"
+  },
+  "devDependencies": {
+    "sass": "^1.93.0"
+  }
+}

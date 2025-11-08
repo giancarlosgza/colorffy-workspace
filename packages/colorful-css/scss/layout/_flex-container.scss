@@ -1,0 +1,48 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer layout.flex-container {
+  // Containers
+  .container {
+    @include m.container;
+  }
+
+  .container-fluid {
+    @include m.container-fluid;
+  }
+
+  /*
+   * Flexbox system
+   */
+  // Row
+  .row {
+    @include m.make-row;
+
+    > * {
+      @include m.make-col-ready;
+    }
+  }
+
+  // Cols
+  .col {
+    @include m.make-col(1);
+  }
+
+  // Generate columns from 1 through 12
+  @for $i from 1 through 12 {
+    .col-#{$i} {
+      @include m.make-col($i);
+    }
+  }
+
+  // Generate columns classes for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @for $i from 1 through 12 {
+      @include m.media-breakpoint-up($breakpoint) {
+        .col-#{$breakpoint}-#{$i} {
+          @include m.make-col($i);
+        }
+      }
+    }
+  }
+}

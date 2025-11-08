@@ -1,0 +1,195 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer utilities.spacing {
+  /*
+  * Spacing
+  * Generate margin and padding utilities for each size
+  */
+  @each $size, $value in v.$spacing-sizes {
+    // Margin
+    .m-#{$size} {
+      @include m.make-margin(all, $size);
+    }
+
+    .mx-#{$size} {
+      @include m.make-margin(left, $size);
+      @include m.make-margin(right, $size);
+    }
+
+    .my-#{$size} {
+      @include m.make-margin(top, $size);
+      @include m.make-margin(bottom, $size);
+    }
+
+    .mt-#{$size} {
+      @include m.make-margin(top, $size);
+    }
+
+    .me-#{$size} {
+      @include m.make-margin(right, $size);
+    }
+
+    .mb-#{$size} {
+      @include m.make-margin(bottom, $size);
+    }
+
+    .ms-#{$size} {
+      @include m.make-margin(left, $size);
+    }
+
+    // Padding
+    .p-#{$size} {
+      @include m.make-padding(all, $size);
+    }
+
+    .px-#{$size} {
+      @include m.make-padding(left, $size);
+      @include m.make-padding(right, $size);
+    }
+
+    .py-#{$size} {
+      @include m.make-padding(top, $size);
+      @include m.make-padding(bottom, $size);
+    }
+
+    .pt-#{$size} {
+      @include m.make-padding(top, $size);
+    }
+
+    .pe-#{$size} {
+      @include m.make-padding(right, $size);
+    }
+
+    .pb-#{$size} {
+      @include m.make-padding(bottom, $size);
+    }
+
+    .ps-#{$size} {
+      @include m.make-padding(left, $size);
+    }
+  }
+
+  // Generate margin and padding utilities for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @each $size, $value in v.$spacing-sizes {
+      @include m.media-breakpoint-up($breakpoint) {
+        // Margin
+        .m-#{$breakpoint}-#{$size} {
+          @include m.make-margin(all, $size);
+        }
+
+        .mx-#{$breakpoint}-#{$size} {
+          @include m.make-margin(left, $size);
+          @include m.make-margin(right, $size);
+        }
+
+        .my-#{$breakpoint}-#{$size} {
+          @include m.make-margin(top, $size);
+          @include m.make-margin(bottom, $size);
+        }
+
+        .mt-#{$breakpoint}-#{$size} {
+          @include m.make-margin(top, $size);
+        }
+
+        .me-#{$breakpoint}-#{$size} {
+          @include m.make-margin(right, $size);
+        }
+
+        .mb-#{$breakpoint}-#{$size} {
+          @include m.make-margin(bottom, $size);
+        }
+
+        .ms-#{$breakpoint}-#{$size} {
+          @include m.make-margin(left, $size);
+        }
+
+        // Padding
+        .p-#{$breakpoint}-#{$size} {
+          @include m.make-padding(all, $size);
+        }
+
+        .px-#{$breakpoint}-#{$size} {
+          @include m.make-padding(left, $size);
+          @include m.make-padding(right, $size);
+        }
+
+        .py-#{$breakpoint}-#{$size} {
+          @include m.make-padding(top, $size);
+          @include m.make-padding(bottom, $size);
+        }
+
+        .pt-#{$breakpoint}-#{$size} {
+          @include m.make-padding(top, $size);
+        }
+
+        .pe-#{$breakpoint}-#{$size} {
+          @include m.make-padding(right, $size);
+        }
+
+        .pb-#{$breakpoint}-#{$size} {
+          @include m.make-padding(bottom, $size);
+        }
+
+        .ps-#{$breakpoint}-#{$size} {
+          @include m.make-padding(left, $size);
+        }
+      }
+    }
+  }
+
+  .mx-auto {
+    margin-inline: auto;
+  }
+
+  .my-auto {
+    margin-block: auto;
+  }
+
+  .m-auto {
+    margin: auto;
+  }
+
+  .mt-custom {
+    margin-top: var(--_custom-margin, 0);
+  }
+
+  .mb-custom {
+    margin-bottom: var(--_custom-margin, 0);
+  }
+
+  .mx-custom {
+    margin-inline: var(--_custom-margin, 0);
+  }
+
+  .my-custom {
+    margin-block: var(--_custom-margin, 0);
+  }
+
+  // Block spacing
+  @each $size, $value in v.$spacing-sizes {
+    .block-spacing-#{$size} {
+      padding-block: #{$size}rem calc(#{$size}rem * 2);
+      scroll-margin-top: calc(#{$size}rem * 3.5);
+    }
+  }
+
+  // Block spacing for subheadings
+  .spacing {
+    --_spacing-top: 1.5rem;
+    margin-top: var(--_spacing-top);
+
+    &.spacing-heading {
+      --_spacing-top: 5rem;
+    }
+
+    &.spacing-subheading {
+      --_spacing-top: 2.5rem;
+    }
+
+    &.spacing-condensed {
+      --_spacing-top: .85rem;
+    }
+  }
+}

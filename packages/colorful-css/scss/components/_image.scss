@@ -1,0 +1,102 @@
+@use "../abstracts/variables" as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.image {
+  .img-fluid {
+    border-radius: v.$rounded-sm;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .img-avatar {
+    --_img-avatar-radius: #{v.$rounded-full};
+    --_img-avatar-easing-in: #{v.$easing-in-fallback};
+    --_img-avatar-easing-duration: 200ms;
+
+    aspect-ratio: 1;
+    border-radius: var(--_img-avatar-radius);
+    object-fit: cover;
+    transition: border-radius var(--_img-avatar-easing-duration) var(--_img-avatar-easing-in),
+    translate var(--_img-avatar-easing-duration) var(--_img-avatar-easing-in);
+
+    @include m.make-image(100px);
+    @supports (transition: linear(0, 0, 0)) {
+      --_img-avatar-easing-in: #{v.$easing-spring};
+      --_img-avatar-easing-duration: 600ms;
+    }
+
+    // Avatar placeholder
+    &.avatar-placeholder {
+      display: inline-block;
+      @include m.bg-gradient(45deg, v.$gradient-amethyst);
+      @include m.make-image(35px);
+    }
+
+    // Avatar sizes
+    &.avatar-sm {
+      position: relative;
+      @include m.make-image(24px);
+    }
+
+    &.avatar-md {
+      position: relative;
+      //border: calc(#{v.$border-md} * 3) solid var(--theme-background);
+      @include m.make-image(100px);
+    }
+
+    &.avatar-lg {
+      position: relative;
+      @include m.make-image(150px);
+    }
+
+    // Custom avatar sizes
+    &.avatar-navbar {
+      @include m.make-image(35px);
+    }
+
+    &.avatar-menu {
+      @include m.make-image(50px);
+    }
+  }
+
+  .initials-avatar {
+    display: inline-grid;
+    place-items: center;
+    height: 24px;
+    width: 24px;
+    aspect-ratio: 1;
+    margin-block: auto;
+    margin-inline: 0 0.25rem;
+    border-radius: v.$rounded-full;
+    background: rgba(var(--theme-accent-fixed), 0.25);
+    font-size: var(--fs-sm-500);
+    font-weight: v.$fw-600;
+
+    &.initials-navbar {
+      --_initials-alpha: 0.35;
+      --_initials-base-color: var(--theme-primary-a10);
+
+      padding: .25rem;
+      margin-inline: 0;
+      border-radius: v.$rounded-sm;
+      font-size: var(--fs-sm-500) !important;
+      background-color: var(--_initials-base-color);
+      @supports (color: hsl(from white h s l)) {
+        background-color: oklch(from var(--_initials-base-color) l c h / var(--_initials-alpha));
+      }
+    }
+  }
+
+  // Object-fit
+  .img-fit-cover {
+    object-fit: cover;
+  }
+
+  .img-fit-contain {
+    object-fit: contain;
+  }
+
+  .img-fit-fill {
+    object-fit: fill;
+  }
+}

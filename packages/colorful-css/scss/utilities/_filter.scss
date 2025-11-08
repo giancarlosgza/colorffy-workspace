@@ -1,0 +1,160 @@
+@layer utilities.filter {
+  // Invert
+  .filter-invert {
+    filter: var(--theme-img-filter-invert);
+  }
+
+  // Hue rotate
+  .filter-hue-rotate-0 {
+    filter: hue-rotate(0deg);
+  }
+
+  .filter-hue-rotate-15 {
+    filter: hue-rotate(15deg);
+  }
+
+  .filter-hue-rotate-30 {
+    filter: hue-rotate(30deg);
+  }
+
+  .filter-hue-rotate-45 {
+    filter: hue-rotate(45deg);
+  }
+
+  .filter-hue-rotate-60 {
+    filter: hue-rotate(60deg);
+  }
+
+  .filter-hue-rotate-90 {
+    filter: hue-rotate(90deg);
+  }
+
+  .filter-hue-rotate-180 {
+    filter: hue-rotate(180deg);
+  }
+
+  .filter-hue-rotate-270 {
+    filter: hue-rotate(270deg);
+  }
+
+  // Grayscale
+  .filter-grayscale-0 {
+    filter: grayscale(0%);
+  }
+
+  .filter-grayscale-25 {
+    filter: grayscale(25%);
+  }
+
+  .filter-grayscale-50 {
+    filter: grayscale(50%);
+  }
+
+  .filter-grayscale-75 {
+    filter: grayscale(75%);
+  }
+
+  .filter-grayscale {
+    filter: grayscale(100%);
+  }
+
+  // Sepia
+  .filter-sepia-0 {
+    filter: sepia(0%);
+  }
+
+  .filter-sepia-25 {
+    filter: sepia(25%);
+  }
+
+  .filter-sepia-50 {
+    filter: sepia(50%);
+  }
+
+  .filter-sepia-75 {
+    filter: sepia(75%);
+  }
+
+  .filter-sepia {
+    filter: sepia(100%);
+  }
+
+  .filter-sepia-200 {
+    filter: sepia(200%);
+  }
+
+  // Saturate
+  .filter-saturate-0 {
+    filter: saturate(0%);
+  }
+
+  .filter-saturate-25 {
+    filter: saturate(25%);
+  }
+
+  .filter-saturate-50 {
+    filter: saturate(50%);
+  }
+
+  .filter-saturate-75 {
+    filter: saturate(75%);
+  }
+
+  .filter-saturate {
+    filter: saturate(100%);
+  }
+
+  .filter-saturate-200 {
+    filter: saturate(200%);
+  }
+
+  // Brightness
+  .filter-brightness-0 {
+    filter: brightness(0%);
+  }
+
+  .filter-brightness-25 {
+    filter: brightness(25%);
+  }
+
+  .filter-brightness-50 {
+    filter: brightness(50%);
+  }
+
+  .filter-brightness-75 {
+    filter: brightness(75%);
+  }
+
+  .filter-brightness {
+    filter: brightness(100%);
+  }
+
+  .filter-brightness-200 {
+    filter: brightness(200%);
+  }
+
+  // Contrast
+  .filter-contrast-0 {
+    filter: contrast(0%);
+  }
+
+  .filter-contrast-25 {
+    filter: contrast(25%);
+  }
+
+  .filter-contrast-50 {
+    filter: contrast(50%);
+  }
+
+  .filter-contrast-75 {
+    filter: contrast(75%);
+  }
+
+  .filter-contrast {
+    filter: contrast(100%);
+  }
+
+  .filter-contrast-200 {
+    filter: contrast(200%);
+  }
+}

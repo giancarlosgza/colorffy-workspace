@@ -1,0 +1,426 @@
+@use "sass:map";
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer layout.form-control {
+  .form-group,
+  .input-group {
+    --_form-group-gutter-y: .85rem;
+
+    margin-bottom: var(--_form-group-gutter-y);
+
+    & label,
+    & .form-label {
+      display: block;
+      font-family: map.get(v.$type-label, font-family);
+      font-size: map.get(v.$type-label, font-size);
+      font-weight: map.get(v.$type-label, font-weight);
+      letter-spacing: map.get(v.$type-label, letter-spacing);
+      margin-bottom: calc(var(--_form-group-gutter-y) / 1.5);
+    }
+
+    &:has(label:empty) {
+      margin-bottom: 0;
+
+      & label {
+        display: none;
+      }
+    }
+
+    & .form-control,
+    & .form-select {
+      --_form-width: 100%;
+      --_form-height: 2.5rem;
+      --_form-padding-x: .5rem;
+      --_form-padding-y: .25rem;
+      --_form-radius: #{v.$form-border-radius};
+      --_form-bg-color: transparent;
+      --_form-color: var(--theme-on-primary);
+      --_form-border-width: #{v.$form-border};
+      --_form-border-color: var(--theme-outline-text-field);
+
+      --_form-easing-in: #{v.$easing-in-fallback};
+      --_form-easing-duration: 200ms;
+
+      position: relative;
+      display: inline-block;
+      width: var(--_form-width);
+      height: var(--_form-height);
+      padding: var(--_form-padding-y) var(--_form-padding-x);
+
+      appearance: none;
+      -webkit-appearance: none;
+
+      border-radius: var(--_form-radius);
+      border: var(--_form-border-width) solid var(--_form-border-color);
+
+      box-shadow: var(--shadow-xs);
+      background-color: var(--_form-bg-color);
+      color: var(--_form-color);
+
+      //font-size: 1rem;
+      font-weight: v.$fw-400;
+      font-family: v.$font-secondary;
+      line-height: 1.5;
+
+      transition: background-color var(--_form-easing-duration) var(--_form-easing-in),
+      border-color var(--_form-easing-duration) var(--_form-easing-in),
+      box-shadow var(--_form-easing-duration) var(--_form-easing-in);
+
+      @supports (transition: all 100ms linear(1, 1, 1)) {
+        --_form-easing-in: #{v.$easing-emphasized};
+        --_form-easing-duration: 300ms;
+      }
+      // Placeholder
+      @include m.form-placeholder(35%);
+
+      // Form control variants
+      &:is(.form-filled) {
+        --_form-bg-color: var(--theme-surface-container-high);
+      }
+
+      &:is(.form-outline) {
+        --_form-border-width: #{v.$form-border * 2};
+      }
+
+      &:is(.form-rounded) {
+        --_form-padding-x: .75rem;
+        --_form-radius: #{v.$rounded-full};
+      }
+
+      &:is(.form-transparent) {
+        --_form-bg-color: transparent;
+        --_form-border-color: transparent;
+
+        box-shadow: none;
+      }
+
+      // Form control states
+      &:is(:hover) {
+        --_form-border-color: var(--theme-on-primary);
+      }
+
+      &:is(:focus, :active, :focus-visible) {
+        --_form-bg-color: var(--theme-surface-container-high);
+        --_form-border-color: var(--theme-primary-a10);
+
+        outline-offset: 0.1em;
+        //outline: var(--_form-border-color) solid thin;
+        outline: 0;
+        box-shadow: 0 0 0 .15rem rgba(var(--theme-primary-fixed), .25);
+      }
+
+      // Disabled state
+      &:is(:disabled) {
+        --_form-bg-color: var(--theme-surface-disabled);
+        --_form-color: var(--theme-muted-a10);
+        --_form-border-color: var(--theme-surface-disabled);
+
+        &:is(:hover) {
+          --_form-border-color: var(--theme-surface-disabled);
+        }
+
+        &:is(:focus, :active, :focus-visible) {
+          --_form-border-color: var(--theme-surface-disabled);
+
+          box-shadow: 0 0 0 .15rem rgba(var(--theme-muted-fixed), .25);
+        }
+      }
+
+      // Hide invalid feedback by default
+      & + .invalid-feedback {
+        display: none;
+      }
+
+      // Textarea
+      &:is(textarea) {
+        min-block-size: 4rlh;
+        min-inline-size: 20ch;
+        // max-inline-size: 50ch;
+      }
+
+      &[type="datetime-local"],
+      &[type="date"] {
+        &::-webkit-calendar-picker-indicator {
+          filter: var(--theme-img-filter-invert);
+        }
+      }
+    }
+
+    // Select arrow icon image
+    & .form-select {
+      background-image: var(--theme-form-select-icon);
+      background-repeat: no-repeat;
+      background-position: right .75rem center;
+      background-size: 1.25rem;
+      background-blend-mode: luminosity;
+    }
+
+    // Range input
+    .form-range {
+      --_form-border-color: transparent;
+      --_form-range-bg-color: var(--theme-surface-container-high);
+      --_form-range-thumb-bg-color: color-mix(in srgb, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%);
+      --_form-range-track-size: 0.75rem;
+      --_form-range-slider-height: 1.95rem;
+      --_form-range-slider-width: 0.30rem;
+      --_form-range-slider-margin: calc(var(--_form-range-track-size) - 1.45rem);
+      --_form-range-padding-x: .5rem;
+      --_form-range-padding-y: .25rem;
+      --_form-range-easing-in: #{v.$easing-in-fallback};
+
+      &:is([type="range"]) {
+        padding: var(--_form-range-padding-y) var(--_form-range-padding-x);
+        box-shadow: none;
+
+        /* Chromium */
+        &::-webkit-slider-runnable-track {
+          background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
+          height: var(--_form-range-track-size);
+          border-radius: v.$rounded-full;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: var(--_form-range-slider-width);
+          height: var(--_form-range-slider-height);
+          background-color: var(--_form-range-thumb-bg-color);
+          outline: 5px solid var(--theme-surface-body-pane);
+          margin-top: var(--_form-range-slider-margin);
+          border-radius: v.$rounded-full;
+          transition: width 100ms var(--_form-range-easing-in);
+        }
+
+        &:is(:focus)::-webkit-slider-thumb {
+          --_form-range-slider-width: 0.20rem;
+
+          outline: 5px solid var(--theme-surface-body-pane);
+          transition: width 100ms var(--_form-range-easing-in);
+        }
+
+        /* Firefox */
+        &::-moz-range-track {
+          background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
+          height: var(--_form-range-track-size);
+          border-radius: v.$rounded-full;
+        }
+
+        &::-moz-range-thumb {
+          border: none;
+          outline: 5px solid var(--theme-surface-body-pane);
+          background-color: var(--_form-range-thumb-bg-color);
+          height: var(--_form-range-slider-height);
+          width: var(--_form-range-slider-width);
+          border-radius: v.$rounded-full;
+        }
+
+        &:is(:focus)::-moz-range-thumb {
+          --_form-range-slider-width: 0.20rem;
+
+          outline: 5px solid var(--theme-surface-body-pane);
+          transition: width 100ms var(--_form-range-easing-in);
+        }
+
+        &:is(:hover) {
+          --_form-border-color: transparent;
+          --_form-range-bg-color: var(--theme-surface-container-high);
+
+          cursor: pointer;
+        }
+
+        &:is(:focus, :active, :focus-visible) {
+          --_form-bg-color: transparent;
+          --_form-border-color: transparent;
+          --_form-range-bg-color: var(--theme-surface-container-high);
+
+          cursor: grabbing;
+        }
+      }
+    }
+
+    // Color input
+    .form-color-group {
+      --_form-group-bg-color: transparent;
+      --_form-group-border-color: var(--theme-outline-text-field);
+      --_form-group-border-width: #{v.$form-border};
+      --_form-group-radius: #{v.$form-border-radius};
+
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-radius: var(--_form-group-radius);
+      background-color: var(--_form-group-bg-color);
+      border: var(--_form-group-border-width) solid var(--_form-group-border-color);
+
+      .form-control {
+        --_form-border-color: transparent;
+      }
+
+      .form-color {
+        --_form-radius: #{v.$rounded-md};
+        --_form-bg-color: transparent;
+        --_form-color: var(--theme-on-primary);
+        --_form-border-color: transparent;
+        --_form-border-width: #{v.$form-border};
+
+        display: inline-block;
+        border: var(--_form-border-width) solid var(--_form-border-color);
+        border-radius: var(--_form-radius);
+        background-color: var(--_form-bg-color);
+        width: 3rem;
+        height: 2.5rem;
+        padding: .375rem;
+        cursor: pointer;
+
+        &::-moz-color-swatch {
+          border: 0;
+          border-radius: calc(var(--_form-radius) / 2);
+        }
+
+        &::-webkit-color-swatch {
+          border: 0;
+          border-radius: calc(var(--_form-radius) / 2);
+        }
+
+        &:is(.color-swatch) {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border: v.$border-sm solid var(--theme-outline-surface);
+          aspect-ratio: 1;
+          border-radius: v.$rounded-sm;
+          padding: 14px;
+          margin-inline-start: 6px;
+          background-color: #0000ff;
+          transition: transform 0.1s ease;
+
+          &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(0.3);
+            pointer-events: none;
+          }
+        }
+      }
+
+      // Add focus styles to the form group when the form control is focused
+      &:is(:focus-within) {
+        --_form-group-border-color: var(--theme-primary-a10);
+        --_form-group-bg-color: var(--theme-surface-container-high);
+      }
+    }
+
+    // Invalid form control
+    &.form-invalid {
+      .form-control,
+      .form-range {
+        --_form-border-color: var(--theme-danger-a10);
+
+        &:is(:focus, :active, :focus-visible) {
+          box-shadow: 0 0 0 .15rem rgba(var(--theme-danger-fixed), .25);
+        }
+
+        // Show invalid feedback if form control is invalid
+        + .invalid-feedback {
+          display: block;
+          margin-top: .45rem;
+          font-size: var(--fs-sm-400);
+          color: var(--theme-danger-a10);
+        }
+      }
+    }
+  }
+
+  .form-color-picker-wrapper {
+    position: relative;
+    display: block;
+
+    & .v-popper {
+      width: 100%;
+    }
+  }
+
+  // Dropbox file input
+  .input-file-group {
+    --_file-group-gutter-y: .85rem;
+
+    margin-bottom: var(--_file-group-gutter-y);
+
+    .input-file-dropbox {
+      --_file-bg-color: var(--theme-surface-body-pane);
+      --_file-color: var(--theme-on-primary);
+      --_file-border-width: #{v.$border-md};
+      --_file-border-color: var(--theme-outline-text-field);
+      --_file-gutter: .25rem 0;
+      --_file-radius: #{v.$rounded-md};
+      --_file-easing-in: #{v.$easing-in-fallback};
+      --_file-easing-duration: 100ms;
+      --_file-height: 5rem;
+
+      display: grid;
+      place-items: center;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+
+      border: var(--_file-border-width) dashed var(--_file-border-color);
+      background: var(--_file-bg-color);
+      color: var(--theme-on-primary);
+
+      padding: var(--_file-gutter);
+      height: 100%;
+      min-height: var(--_file-height);
+      max-height: var(--_file-height);
+
+      border-radius: var(--_file-radius);
+      transition: all var(--_file-easing-duration) var(--_file-easing-in);
+
+      &:is(:hover) {
+        --_file-bg-color: var(--theme-surface-container-high);
+        --_file-color: var(--theme-on-primary);
+      }
+
+      &:is(:focus, :active) {
+        --_file-bg-color: var(--theme-surface-container-highest);
+      }
+
+      &:is(.dropbox-lg) {
+        --_file-height: 10rem;
+      }
+
+      &.valid-file {
+        --_file-border-color: var(--theme-success-a10);
+        --_file-bg-color: rgba(var(--theme-success-fixed), 10%);
+        --_file-color: var(--theme-success-a90);
+      }
+
+      :where(.input-file-text) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--_file-gutter);
+
+        & p {
+          font-weight: v.$fw-500;
+          font-size: var(--fs-sm-400);
+          color: var(--_file-color);
+          margin-bottom: 0;
+        }
+
+        & i {
+          font-variation-settings: var(--iw-semi-bold);
+          color: var(--_file-color);
+        }
+      }
+
+      :where(.input-file) {
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+    }
+  }
+}

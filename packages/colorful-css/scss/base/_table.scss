@@ -1,0 +1,274 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer base.table {
+  /*
+   * Responsive table
+   */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+
+    // For smooth scrolling on iOS
+    -webkit-overflow-scrolling: touch;
+  }
+
+  // Optional: Hide table horizontal scrollbar if it's not needed
+  .table-responsive::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*
+   * Table
+   */
+  .table {
+    --_table-bg-color: var(--theme-surface-container);
+    --_table-color: var(--theme-on-primary);
+    --_table-border-color: var(--theme-outline-surface);
+    --_table-border-width: #{v.$border-sm};
+    --_table-gutter-x: 0.55rem;
+    --_table-gutter-y: 0.55rem;
+    --_table-font-size: 12px;
+    --_table-border-radius: #{v.$rounded-none};
+
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: var(--_table-font-size);
+
+    thead {
+      background-color: var(--theme-surface-a10);
+
+      tr {
+        th {
+          font-size: var(--fs-sm-500);
+          font-weight: v.$fw-600;
+          font-family: v.$font-primary;
+          color: var(--theme-muted-a10);
+          letter-spacing: 0.0727em;
+          text-align: start;
+          padding: calc(var(--_table-gutter-y) * 1.5) var(--_table-gutter-x);
+          vertical-align: middle;
+          border-top: var(--_table-border-width) solid var(--theme-outline-surface);
+
+          &:first-child {
+            border-top-left-radius: var(--_table-border-radius);
+          }
+
+          &:last-child {
+            border-top-right-radius: var(--_table-border-radius);
+          }
+        }
+      }
+    }
+
+    tbody {
+      td {
+        font-size: var(--_table-font-size);
+        line-height: 1.5;
+
+        border-top: var(--_table-border-width) solid var(--theme-outline-surface);
+        padding-inline: var(--_table-gutter-x);
+        padding-block: var(--_table-gutter-y);
+        vertical-align: middle;
+
+        @include m.text-wrap-pretty;
+
+        .td-text {
+          font-size: 12px;
+        }
+
+        .td-name {
+          display: inline-flex;
+          gap: .45rem;
+          align-items: center;
+
+          i {
+            font-variation-settings: var(--iw-semi-bold);
+            color: var(--theme-muted-a10);
+            font-size: 20px;
+
+            &:is(.text-gradient) {
+              font-variation-settings: var(--iw-bold);
+            }
+          }
+
+        }
+
+        &.td-actions {
+          .btn {
+            margin-right: .35rem;
+          }
+        }
+      }
+    }
+
+    // Table bordered
+    &.table-bordered {
+      --_table-border-radius: #{v.$rounded-md};
+
+      & thead {
+        background-color: var(--theme-surface-container-lowest);
+
+        & tr th {
+          border-block: none;
+
+          &:not(:first-child, :last-child) {
+            border-inline: var(--_table-border-width) solid var(--theme-outline-surface);
+          }
+
+          &:first-child {
+            border-left: none;
+          }
+
+          &:last-child {
+            border-right: none;
+          }
+        }
+      }
+
+      & tbody {
+        & tr td {
+          border: var(--_table-border-width) solid var(--theme-outline-surface);
+
+          &:first-child {
+            border-left: none;
+          }
+
+          &:last-child {
+            border-right: none;
+          }
+        }
+      }
+    }
+
+    // Table borderless
+    &.table-borderless {
+      --_table-border-radius: #{v.$rounded-md};
+
+      & thead {
+        & tr th {
+          border-block: none;
+        }
+      }
+
+      & tbody {
+        th, td {
+          border: var(--_table-border-width) solid transparent;
+        }
+      }
+    }
+
+    // Table striped
+    &.table-striped {
+      tbody {
+        tr:nth-child(odd) {
+          background-color: var(--theme-surface-container);
+        }
+      }
+    }
+
+    // Table hover
+    &.table-hover {
+      tbody {
+        tr {
+          transition: background-color 100ms ease-in-out;
+
+          &:is(:hover) {
+            background-color: var(--theme-surface-a10);
+          }
+        }
+      }
+    }
+
+    // Table pricing
+    &.table-pricing {
+      --_table-pricing-pro-opacity: 0.15;
+
+      thead {
+        position: sticky;
+        top: 4rem;
+        padding: 1rem;
+        background-color: var(--theme-surface-body-pane);
+
+        tr {
+          td {
+            padding: var(--_table-gutter-x);
+            background-color: var(--theme-surface-container-low);
+
+            &:is(.font-secondary) {
+              font-size: var(--fs-500);
+              font-weight: v.$fw-800;
+              line-height: 2;
+            }
+          }
+
+          > :nth-child(3) {
+            background-color: rgba(var(--theme-accent-fixed), var(--_table-pricing-pro-opacity));
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td:not(.font-secondary) {
+            color: var(--theme-muted-a10);
+          }
+
+          td:is(.font-secondary) {
+            font-size: var(--fs-500);
+            font-weight: v.$fw-800;
+            line-height: 2;
+          }
+
+          > :nth-child(3) {
+            background-color: rgba(var(--theme-accent-fixed), var(--_table-pricing-pro-opacity));
+          }
+        }
+      }
+    }
+
+    // Table small
+    &.table-sm {
+      --_table-gutter-x: 0.25rem;
+      --_table-gutter-y: 0.25rem;
+    }
+  }
+
+  // Table for colors
+  .table-scrollable {
+    container-type: scroll-state;
+    scroll-snap-type: both mandatory;
+
+    & table {
+      & thead tr th:is(.highlight),
+      & tbody tr td:is(.highlight) {
+        position: sticky;
+        left: 0;
+
+        @supports (container-type: scroll-state) {
+          @container scroll-state(scrollable: left) {
+            background: var(--theme-surface-body-pane);
+            transition: background-color 100ms v.$easing-in-fallback,
+            border 100ms v.$easing-in-fallback;
+
+            &:after {
+              content: '';
+              position: absolute;
+              top: 0;
+              right: 0;
+              height: 100%;
+              border-right: var(--_table-border-width) solid var(--theme-outline-surface);
+            }
+          }
+        }
+      }
+
+      :where(th, td) {
+        scroll-snap-align: start;
+      }
+    }
+  }
+}

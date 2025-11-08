@@ -1,0 +1,135 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer utilities.border-radius {
+  .rounded-none {
+    border-radius: v.$rounded-none;
+  }
+
+  .rounded-sm {
+    border-radius: v.$rounded-sm;
+  }
+
+  .rounded-md {
+    border-radius: v.$rounded-md;
+  }
+
+  .rounded-lg {
+    border-radius: v.$rounded-lg;
+  }
+
+  .rounded-xl {
+    border-radius: v.$rounded-xl;
+  }
+
+  .rounded-full {
+    border-radius: v.$rounded-full;
+  }
+
+  // Individual border radius
+  .rounded-t-none {
+    @include m.make-radius(t, v.$rounded-none);
+  }
+
+  .rounded-r-none {
+    @include m.make-radius(r, v.$rounded-none);
+  }
+
+  .rounded-b-none {
+    @include m.make-radius(b, v.$rounded-none);
+  }
+
+  .rounded-l-none {
+    @include m.make-radius(l, v.$rounded-none);
+  }
+
+  .rounded-t-sm {
+    @include m.make-radius(t, v.$rounded-sm);
+  }
+
+  .rounded-r-sm {
+    @include m.make-radius(r, v.$rounded-sm);
+  }
+
+  .rounded-b-sm {
+    @include m.make-radius(b, v.$rounded-sm);
+  }
+
+  .rounded-l-sm {
+    @include m.make-radius(l, v.$rounded-sm);
+  }
+
+  .rounded-t-md {
+    @include m.make-radius(t, v.$rounded-md);
+  }
+
+  .rounded-r-md {
+    @include m.make-radius(r, v.$rounded-md);
+  }
+
+  .rounded-b-md {
+    @include m.make-radius(b, v.$rounded-md);
+  }
+
+  .rounded-l-md {
+    @include m.make-radius(l, v.$rounded-md);
+  }
+
+  .rounded-t-lg {
+    @include m.make-radius(t, v.$rounded-lg);
+  }
+
+  .rounded-r-lg {
+    @include m.make-radius(r, v.$rounded-lg);
+  }
+
+  .rounded-b-lg {
+    @include m.make-radius(b, v.$rounded-lg);
+  }
+
+  .rounded-l-lg {
+    @include m.make-radius(l, v.$rounded-lg);
+  }
+
+  .rounded-t-xl {
+    @include m.make-radius(t, v.$rounded-xl);
+  }
+
+  .rounded-r-xl {
+    @include m.make-radius(r, v.$rounded-xl);
+  }
+
+  .rounded-b-xl {
+    @include m.make-radius(b, v.$rounded-xl);
+  }
+
+  .rounded-l-xl {
+    @include m.make-radius(l, v.$rounded-xl);
+  }
+
+  .rounded-t-full {
+    @include m.make-radius(t, v.$rounded-full);
+  }
+
+  .rounded-r-full {
+    @include m.make-radius(r, v.$rounded-full);
+  }
+
+  .rounded-b-full {
+    @include m.make-radius(b, v.$rounded-full);
+  }
+
+  .rounded-l-full {
+    @include m.make-radius(l, v.$rounded-full);
+  }
+
+  /*
+  * Border radius
+  * Generate border radius utilities for each value
+  */
+  @each $value, $radius in v.$border-radius {
+    .border-radius-#{$value} {
+      border-radius: $radius;
+    }
+  }
+}

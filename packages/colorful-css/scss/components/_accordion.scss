@@ -1,0 +1,171 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+@use '../base/typography';
+
+@layer components.accordion {
+  .accordion-group {
+    display: grid;
+    grid-template-rows: auto;
+    gap: .25rem;
+
+    & .accordion {
+      --_accordion-bg-color: var(--theme-surface-accordion);
+      --_accordion-color: var(--theme-on-primary);
+      --_accordion-radius: #{v.$rounded-lg};
+      --_accordion-border-color: transparent;
+      --_accordion-padding: 0.85rem;
+      --_accordion-easing-in: #{v.$easing-in-fallback};
+      --_accordion-easing-duration: 200ms;
+
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      gap: 0;
+      background-color: var(--_accordion-bg-color);
+      border-radius: var(--_accordion-radius);
+      border: v.$border-sm solid var(--_accordion-border-color);
+      block-size: 100%;
+      inline-size: 100%;
+
+      // Allow to animate height if there is not motion preference
+      @media (prefers-reduced-motion: no-preference) {
+        interpolate-size: allow-keywords;
+      }
+
+      @supports (transition: linear(1, 1, 1)) {
+        --_accordion-easing-in: #{v.$easing-overshoot-soft};
+        --_accordion-easing-duration: 600ms;
+      }
+
+      // Border radius
+      &:is(:first-child) {
+        --_accordion-radius: #{v.$rounded-lg} #{v.$rounded-lg} #{v.$rounded-sm} #{v.$rounded-sm};
+      }
+
+      &:is(:last-child) {
+        --_accordion-radius: #{v.$rounded-sm} #{v.$rounded-sm} #{v.$rounded-lg} #{v.$rounded-lg};
+      }
+
+      &:not(:first-child, :last-child) {
+        --_accordion-radius: #{v.$rounded-md};
+      }
+
+      // Details content
+      summary {
+        border-radius: var(--_accordion-radius);
+        padding: var(--_accordion-padding);
+
+        &.accordion-header {
+          --_accordion-trailing-icon-deg: 0deg;
+
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          cursor: pointer;
+          background-color: transparent;
+
+          .accordion-title {
+            font-size: var(--fs-sm-200);
+            font-weight: v.$fw-700;
+            font-family: v.$font-primary;
+            color: var(--_accordion-color);
+            line-height: 1.5;
+            margin-bottom: 0;
+          }
+
+          &:is(:hover) {
+            .accordion-title {
+              color: var(--theme-primary-a10);
+            }
+          }
+
+          // Toggle arrow icon
+          &:after {
+            content: '';
+            inline-size: 28px;
+            block-size: 28px;
+            background-color: var(--theme-muted-a10);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+            
+            position: absolute;
+            top: 0.65rem;
+            right: 0.65rem;
+            rotate: var(--_accordion-trailing-icon-deg);
+            transition: rotate var(--_accordion-easing-duration) var(--_accordion-easing-in);
+          }
+        }
+      }
+
+      &::details-content {
+        opacity: 0;
+        height: 0;
+        min-height: 0;
+        overflow-y: clip;
+        transition: content-visibility var(--_accordion-easing-duration) allow-discrete,
+        opacity, height, min-height;
+        transition-duration: var(--_accordion-easing-duration);
+        transition-timing-function: var(--_accordion-easing-in);
+      }
+
+      &[open] {
+        summary {
+          &.accordion-header {
+            --_accordion-trailing-icon-deg: 180deg;
+          }
+        }
+
+        &::details-content {
+          opacity: 1;
+          min-height: 1rem;
+          height: auto;
+          margin-bottom: 1rem;
+        }
+      }
+
+      // States
+      &:is(:hover) {
+        summary {
+          background-color: var(--theme-surface-container-high);
+        }
+      }
+
+      // Content
+      .accordion-body {
+        padding-inline: var(--_accordion-padding);
+
+        p {
+          color: var(--theme-muted-a10);
+          line-height: 1.75;
+          margin-bottom: var(--_accordion-padding);
+          @extend .subtitle-2;
+        }
+      }
+
+      @media (prefers-reduced-motion) {
+        &::details-content {
+          transition-timing-function: step-start;
+        }
+      }
+    }
+
+    &:not(:has(.accordion:nth-child(2))) {
+      .accordion:nth-child(1) {
+        --_accordion-radius: #{v.$rounded-lg};
+      }
+    }
+
+    &.accordion-transparent {
+      & .accordion {
+        --_accordion-bg-color: transparent;
+        --_accordion-border-color: var(--theme-outline-surface);
+      }
+    }
+
+    &.accordion-pane {
+      & .accordion {
+        --_accordion-bg-color: var(--theme-surface-body-pane);
+      }
+    }
+  }
+}

@@ -1,0 +1,189 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.cards {
+  .card {
+    --_card-gutter-x: 1rem;
+    --_card-gutter-y: 1rem;
+    --_card-bg-color: var(--theme-surface-a0);
+    --_card-color: var(--theme-on-primary);
+    --_card-border: #{v.$border-sm};
+    --_card-border-color: transparent;
+    --_card-radius: #{v.$card-border-radius};
+    --_card-shadow: none;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+    word-wrap: break-word;
+    background-clip: border-box;
+    background-color: var(--_card-bg-color);
+    color: var(--_card-color);
+    box-shadow: var(--_card-shadow);
+    border: var(--_card-border) solid var(--_card-border-color);
+    border-radius: var(--_card-radius);
+    transition: all 300ms v.$easing-in-fallback;
+
+    .card-header {
+      padding-block: var(--_card-gutter-y) calc(var(--_card-gutter-y) - .55rem);
+      padding-inline: var(--_card-gutter-x);
+      margin-bottom: 0;
+      border-radius: v.$card-border-radius v.$card-border-radius 0 0;
+
+      .card-title {
+        font-size: var(--fs-600);
+        font-weight: v.$fw-700;
+        font-family: v.$font-secondary;
+        margin-bottom: 0;
+      }
+
+      // Hide header if empty
+      &:is(:empty) {
+        display: none;
+      }
+    }
+
+    .card-body {
+      color: var(--_card-color);
+      flex: 1 1 auto;
+      padding-block: var(--_card-gutter-y) var(--_card-gutter-y);
+      padding-inline: var(--_card-gutter-x);
+
+      p:is(.card-text) {
+        color: var(--theme-muted-a10);
+      }
+    }
+
+    .card-footer {
+      padding-block: calc(var(--_card-gutter-y) / 3) var(--_card-gutter-y);
+      padding-inline: var(--_card-gutter-x);
+      margin-top: 0;
+      border-radius: 0 0 v.$card-border-radius v.$card-border-radius;
+
+      // Add flex wrap if card has flex display
+      &:is(.d-flex, .d-inline-flex) {
+        flex-wrap: wrap;
+      }
+
+      // Hide footer if empty
+      &:is(:empty) {
+        display: none;
+      }
+    }
+
+    // Card variants
+    &.card-outline {
+      --_card-border-color: var(--theme-outline-surface);
+    }
+
+    &.card-elevated {
+      --_card-shadow: var(--shadow-sm);
+
+      &:is(:hover) {
+        --_card-shadow: var(--shadow-md);
+      }
+
+      &:is(:active, :focus) {
+        --_card-shadow: var(--shadow-lg);
+      }
+    }
+
+    &.card-pane {
+      --_card-bg-color: var(--theme-surface-body-pane);
+    }
+
+    &.card-frosted {
+      --_card-bg-color: var(--theme-frosted-glass-bg);
+      --_card-border-color: var(--theme-outline-surface);
+      --_card-shadow: var(--shadow-md);
+
+      backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+    }
+
+    // Card selectable
+    &.card-selectable {
+      --_card-border: #{v.$border-md};
+      --_card-border-color: transparent;
+      --_card-selectable-translate: 0 -.5rem;
+
+      cursor: pointer;
+      transition: background-color 300ms var(--_card-easing-in),
+      border 300ms var(--_card-easing-in),
+      border-radius 300ms var(--_card-easing-in),
+      translate 600ms var(--_card-easing-in);
+
+      & > * {
+        user-select: none;
+      }
+
+      &:is(:hover) {
+        --_card-bg-color: var(--theme-surface-a30);
+
+        translate: var(--_card-selectable-translate);
+      }
+
+      &:is(:active, :focus) {
+        --_card-bg-color: var(--theme-surface-a40);
+        --_card-border-color: var(--theme-primary-a10);
+        --_card-radius: #{v.$rounded-xl};
+      }
+
+      &:is(.selected) {
+        --_card-border-color: var(--theme-primary-a10);
+        --_card-radius: #{v.$rounded-lg};
+      }
+
+      @supports (transition: linear(1, 1, 1)) {
+        --_card-easing-in: #{v.$easing-emphasized};
+      }
+    }
+
+    // Card sizes
+    &.card-sm {
+      --_card-gutter-x: .5rem;
+      --_card-gutter-y: .5rem;
+
+      .card-body {
+        padding-block: var(--_card-gutter-y);
+      }
+
+      &:is(.card-selectable) {
+        --_card-selectable-translate: 0 -.25rem;
+      }
+    }
+
+    &.card-xs {
+      --_card-gutter-x: .75rem;
+      --_card-gutter-y: .55rem;
+
+      display: inline-flex;
+
+      .card-body {
+        display: flex;
+        align-items: center;
+        gap: .35rem;
+
+        i {
+          font-size: 18px;
+          font-variation-settings: var(--iw-semi-bold);
+        }
+
+        p {
+          font-weight: v.$fw-800;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    /** Use it for swiper color tools */
+    &.card-md {
+      min-height: 7.5rem;
+
+      & .card-body {
+        height: 100%;
+        align-content: center;
+      }
+    }
+  }
+}

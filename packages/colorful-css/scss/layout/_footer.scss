@@ -1,0 +1,158 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer components.footer {
+  footer,
+  .footer {
+    --_footer-bg-color: var(--theme-surface-body-pane);
+    --_footer-color: var(--theme-on-primary);
+    --_footer-gutter-x: 0;
+    --_footer-gutter-y: 2.5rem;
+    --_footer-gap: 1rem;
+    --_footer-top-radius: #{v.$rounded-xl};
+    --_footer-radius: var(--_footer-top-radius) var(--_footer-top-radius) #{v.$rounded-none} #{v.$rounded-none};
+    --_footer-gradient-line-position: 1rem;
+    --_footer-easing-in: #{v.$easing-in-fallback};
+    --_footer-easing-in-duration: 200ms;
+
+    position: relative;
+    background: var(--_footer-bg-color);
+    color: var(--_footer-color);
+    margin-top: var(--_footer-gutter-y);
+    padding-block: var(--_footer-gutter-y);
+    padding-inline: var(--_footer-gutter-x);
+    border-radius: var(--_footer-radius);
+    overflow-x: clip;
+
+    transition: border-radius 200ms var(--_footer-easing-in);
+
+    @supports (transition: linear(0,0,0)) {
+      --_footer-easing-in: #{v.$easing-power-in-out};
+      --_footer-easing-in-duration: 400ms;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -.25rem;
+      inset-inline: 0;
+      height: 5rem;
+      z-index: -1;
+      border-radius: var(--_footer-top-radius);
+
+      scale: 0 1;
+      transition: scale var(--_footer-easing-in-duration) var(--_footer-easing-in),
+      border-radius var(--_footer-easing-in-duration) var(--_footer-easing-in);
+      @include m.bg-gradient(45deg, v.$gradient-ghost);
+    }
+
+    &:is(:hover) {
+      --_footer-top-radius: #{v.$rounded-none};
+      --_footer-gradient-line-position: -.25rem;
+
+      &:before {
+        scale: 1 1;
+      }
+    }
+
+    & p {
+      color: var(--_footer-color);
+
+      &:is(.footer-title) {
+        font-size: var(--fs-500);
+        font-weight: v.$fw-800;
+        font-family: v.$font-primary;
+        margin-bottom: .25rem;
+      }
+
+      &:is(.footer-subtitle) {
+        font-size: var(--fs-sm-300);
+        font-weight: v.$fw-400;
+        font-family: v.$font-secondary;
+        margin-bottom: 0;
+        color: var(--theme-muted-a10);
+      }
+    }
+
+    & .footer-group {
+      --_footer-group-direction: column;
+
+      display: flex;
+      align-items: baseline;
+      gap: var(--_footer-gap);
+      margin-bottom: calc(var(--_footer-gap) / 1.5);
+
+      &:is(.footer-col) {
+        flex-direction: var(--_footer-group-direction);
+
+        & svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      &:is(.footer-row) {
+        --_footer-group-direction: row;
+        --_footer-gap: 1.5rem;
+      }
+
+      // Title paragraph
+      & p {
+        color: var(--_footer-color);
+        font-size: var(--fs-sm-200);
+        font-weight: v.$fw-700;
+        font-family: v.$font-secondary;
+        margin-bottom: 0.5rem;
+      }
+
+      // Links
+      & a,
+      .anchor-link {
+        display: inline-block;
+        color: var(--theme-muted-a10);
+        font-size: var(--fs-sm-300);
+        font-weight: v.$fw-500;
+        font-family: v.$font-secondary;
+
+        &:is(:hover) {
+          color: var(--theme-primary-a10);
+          font-weight: v.$fw-700;
+        }
+      }
+
+      // Icons
+      & i {
+        font-size: var(--fs-sm-100);
+        font-variation-settings: var(--iw-semi-bold);
+        color: var(--theme-secondary-a90);
+        margin-inline-end: 0.25rem;
+      }
+    }
+
+    & .footer-name-xl {
+      font-size: clamp(2.3328rem, -2.9019rem + 26.1736vw, 14rem);
+      font-family: #{v.$font-primary};
+      margin-bottom: 0;
+      word-break: break-word;
+
+      & span {
+        cursor: pointer;
+        font-variation-settings: 'wght' 400, 'GRAD' 0, 'wdth' 125;
+        transition: all 800ms v.$easing-spring;
+        transition-delay: 100ms;
+
+        color: var(--theme-primary-a10);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @include m.text-gradient(45deg, v.$gradient-ghost);
+
+        &:is(:hover) {
+          font-variation-settings: var(--vfs-heading);
+          transition: all 800ms v.$easing-bounce;
+          @include m.text-gradient(45deg, v.$gradient-galaxy);
+        }
+      }
+    }
+  }
+}

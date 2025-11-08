@@ -1,0 +1,174 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer utilities.borders {
+  .border {
+    --_border-bg-color: var(--theme-outline-surface);
+    --_border-size: #{v.$border-sm};
+
+    border: var(--_border-size) solid var(--_border-bg-color);
+
+    // Border sizes
+    &.border-md {
+      --_border-size: #{v.$border-md};
+    }
+
+    &.border-lg {
+      --_border-size: #{v.$border-md + 1};
+    }
+
+    &.border-xl {
+      --_border-size: #{v.$border-md + 2};
+    }
+
+    &.border-xxl {
+      --_border-size: #{v.$border-md + 3};
+    }
+
+    // Border styles
+    &.border-dashed {
+      border-style: dashed;
+    }
+
+    &.border-dotted {
+      border-style: dotted;
+    }
+
+    // Border sides
+    &.border-top {
+      border-bottom: none;
+      border-inline: none;
+    }
+    
+    &.border-bottom {
+      border-top: none;
+      border-inline: none;
+    }
+
+    &.border-right {
+      border-left: none;
+      border-block: none;
+    }
+
+    &.border-left {
+      border-right: none;
+      border-block: none;
+    }
+
+    &.border-inline {
+      border-block: none;
+    }
+
+    &.border-block {
+      border-inline: none;
+    }
+
+    // Border primary colors
+    &.border-primary {
+      --_border-bg-color: var(--theme-primary-a10);
+    }
+
+    &.border-secondary {
+      --_border-bg-color: var(--theme-secondary-a10);
+    }
+
+    &.border-accent {
+      --_border-bg-color: var(--theme-accent-a10);
+    }
+
+    // Border semantic colors
+    &.border-success {
+      --_border-bg-color: var(--theme-success-a10);
+    }
+
+    &.border-warning {
+      --_border-bg-color: var(--theme-warning-a10);
+    }
+
+    &.border-danger {
+      --_border-bg-color: var(--theme-danger-a10);
+    }
+
+    &.border-muted {
+      --_border-bg-color: var(--theme-muted-a10);
+    }
+
+    &.border-white {
+      --_border-bg-color: #{v.$white};
+    }
+
+    &.border-dark {
+      --_border-bg-color: #{v.$dark};
+    }
+
+    &.border-transparent {
+      --_border-bg-color: transparent;
+    }
+
+    // Gradient borders
+    &.border-gradient {
+      --_border-bg-color: transparent;
+      --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);
+
+      background: linear-gradient(var(--theme-background), var(--theme-background)) padding-box,
+      linear-gradient(120deg, var(--_border-gradient)) border-box;
+
+      @include m.gradient-variants(true);
+    }
+
+    // Animated borders
+    &.border-animated {
+      position: relative;
+      @include m.gradient-glow-border(var(--_border-gradient));
+      @include m.gradient-variants(true);
+    }
+
+    &.border-gradient-spin {
+      --_border-gradient: #{v.$gradient-heat};
+
+      position: relative;
+      isolation: isolate;
+      border: var(--_border-size) solid transparent;
+      background: linear-gradient(var(--theme-background, canvas) 0 0) padding-box,
+      conic-gradient(from var(--gradient-angle), var(--_border-gradient)) border-box;
+      animation: angle-glow 5s linear infinite both;
+      @include m.gradient-variants(true);
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        border-radius: inherit;
+      }
+
+      &:before {
+        z-index: -1;
+        background: var(--theme-background, canvas);
+        inset: .15rem;
+        scale: 1.2 1;
+        transform-origin: center;
+        filter: blur(1rem);
+      }
+
+      &:after {
+        z-index: -2;
+        inset: -1.5rem;
+        background: conic-gradient(from var(--gradient-angle), var(--_border-gradient));
+        filter: blur(1rem);
+        opacity: 0.125;
+      }
+
+      &.spin-card {
+        &:before {
+          background: var(--theme-surface-body-pane);
+          inset: .5rem;
+          scale: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+}

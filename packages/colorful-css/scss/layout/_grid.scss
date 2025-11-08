@@ -1,0 +1,47 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer layout.grid {
+  // Containers
+  .container {
+    @include m.container;
+  }
+
+  .container-fluid {
+    @include m.container-fluid;
+  }
+
+  // Row
+  .row {
+    @include m.make-row;
+
+    > * {
+      @include m.make-col-ready;
+    }
+  }
+
+  // Cols
+  .col {
+    @include m.make-col(1);
+  }
+
+  // Generate columns from 1 through 12
+  @for $i from 1 through 12 {
+    .col-#{$i} {
+      @include m.make-col($i);
+    }
+  }
+
+  // Generate columns for each breakpoint
+  $media-breakpoints: sm md lg xl xxl;
+
+  @each $breakpoint in $media-breakpoints {
+    @for $i from 1 through 12 {
+      @include m.media-breakpoint-up($breakpoint) {
+        .col-#{$breakpoint}-#{$i} {
+          @include m.make-col($i);
+        }
+      }
+    }
+  }
+}

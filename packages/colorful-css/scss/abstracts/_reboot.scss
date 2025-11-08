@@ -1,0 +1,469 @@
+@use 'variables' as v;
+
+@layer reset.reboot {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    @media (prefers-reduced-motion: no-preference) {
+      &:focus-visible {
+        transition: outline-offset 75ms ease-out;
+        outline-offset: .2rem;
+        outline: var(--theme-on-primary) auto;
+      }
+
+      &:not(:active):focus-visible {
+        transition-duration: .25s;
+      }
+    }
+
+    &:not(:active):focus-visible {
+      outline-offset: .3rem;
+      outline: var(--theme-on-primary) auto;
+    }
+  }
+
+  html {
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+    line-height: 1.15;
+
+    &:is(.dark-mode) {
+      :where(.form-color) {
+        color-scheme: dark light;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth
+    }
+  }
+
+  // Sections
+  body {
+    margin: 0;
+
+    font-family: v.$font-secondary;
+    font-weight: v.$fw-400;
+
+    color: var(--theme-on-primary);
+    background-color: var(--theme-background);
+    font-size: 14px;
+
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+
+    // Prevents overflow when a dialog is open
+    &:has(.dialog[open]) {
+      overflow-y: hidden;
+    }
+
+    // Prevent an overflow issue when the page has a transition
+    &:has(.slide-enter-active, .slide-leave-active) {
+      overflow-x: hidden;
+    }
+
+    // Prevent an overflow when a mobile menu is open
+    &:has(.v-popper__popper--no-positioning) {
+      overflow-y: hidden;
+    }
+  }
+
+  main {
+    display: block;
+  }
+
+  // Line rules
+  hr {
+    box-sizing: content-box;
+    overflow: visible;
+    height: 1px;
+    border: 0;
+    border-top: v.$border-sm solid var(--theme-outline-button);
+    opacity: 0.95;
+    margin: 1rem 0;
+  }
+
+  .vr {
+    display: inline-block;
+    width: 1px;
+    min-height: 1em;
+    background: var(--theme-outline-button);
+    opacity: 0.85;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: monospace;
+    font-size: 1em;
+  }
+
+  // Add a wrap to the pre element
+  pre {
+    white-space: pre-wrap;
+  }
+
+  // Abbreviations
+  abbr[title] {
+    text-decoration: underline dotted; // 1
+    cursor: help; // 2
+    text-decoration-skip-ink: none; // 3
+  }
+
+  // Address
+  address {
+    margin-bottom: 1rem;
+    font-style: normal;
+    line-height: inherit;
+  }
+
+  // Lists
+  ol,
+  ul {
+    padding-left: 2rem;
+  }
+
+  ol,
+  ul,
+  dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin-bottom: 0;
+  }
+
+  dt {
+    font-weight: v.$fw-500;
+  }
+
+  // Undo browser default
+  dd {
+    margin-bottom: .5rem;
+    margin-left: 0;
+  }
+
+
+  // Blockquote
+  blockquote {
+    margin: 0 0 1rem;
+  }
+
+  // Strong
+  b,
+  strong {
+    font-weight: v.$fw-800;
+  }
+
+  /**
+  * Prevent `sub` and `sup` elements from affecting the line height in
+  * all browsers.
+  */
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -.25em;
+  }
+
+  sup {
+    top: -.5em;
+  }
+
+  // Embedded content
+  img {
+    border-style: none;
+  }
+
+  // Forms
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  a:not([href]):not([class]) {
+    &,
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  // Figures
+  figure {
+    margin: 0 0 1rem;
+  }
+
+  // Images and content
+  img,
+  svg {
+    vertical-align: middle;
+  }
+
+  // Buttons
+  button,
+  input {
+    overflow: visible;
+  }
+
+  button,
+  select {
+    text-transform: none;
+  }
+
+  button:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+  }
+
+  // Labels
+  label {
+    display: inline-block;
+  }
+
+  // Remove the margin in Firefox and Safari
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  // Set the cursor for non-`<button>` buttons
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  select {
+    // Remove the inheritance of word-wrap in Safari.
+    word-wrap: normal;
+
+    // Undo the opacity change from Chrome
+    &:disabled {
+      opacity: 1;
+    }
+  }
+
+  // Remove the dropdown arrow only from text type inputs built with datalists in Chrome.
+  [list]:not([type="date"]):not([type="datetime-local"]):not([type="month"]):not([type="week"]):not([type="time"])::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
+
+  // Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
+  ::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+  }
+
+  // Textarea
+  textarea {
+    resize: vertical;
+  }
+
+  // Fieldset
+  fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  // Fix height of inputs with a type of datetime-local, date, month, week, or time
+  ::-webkit-datetime-edit-fields-wrapper,
+  ::-webkit-datetime-edit-text,
+  ::-webkit-datetime-edit-minute,
+  ::-webkit-datetime-edit-hour-field,
+  ::-webkit-datetime-edit-day-field,
+  ::-webkit-datetime-edit-month-field,
+  ::-webkit-datetime-edit-year-field {
+    padding: 0;
+  }
+
+  ::-webkit-inner-spin-button {
+    height: auto;
+  }
+
+  // Correct the outline style in Safari
+  [type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+
+  // Remove the inner padding in Chrome and Safari on macOS.
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  // Remove padding around color pickers in webkit browsers
+  ::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  // 1. Inherit font family and line height for file input buttons
+  // 2. Correct the inability to style clickable types in iOS and Safari.
+  ::file-selector-button {
+    font: inherit;
+    -webkit-appearance: button;
+  }
+
+  // Correct element displays
+  output {
+    display: inline-block;
+  }
+
+  // Remove border from iframe
+  iframe {
+    border: 0;
+  }
+
+  // Summary
+  summary {
+    display: list-item;
+    cursor: pointer;
+  }
+
+  // Progress
+  progress {
+    vertical-align: baseline;
+  }
+
+  // Hidden attribute
+  [hidden] {
+    display: none !important;
+  }
+
+  details {
+    display: block;
+  }
+
+  // Add the correct display in all browsers
+  summary {
+    display: list-item;
+  }
+
+  // Table
+  table {
+    caption-side: bottom;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-weight: v.$fw-500;
+    text-align: inherit;
+    text-align: -webkit-match-parent;
+  }
+
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+  }
+
+  /* Scrollbar */
+  * {
+    // New Chromium-based & Firefox* browsers scrollbar properties
+    @supports (scrollbar-color: auto) {
+      scrollbar-width: thin;
+      scrollbar-color: var(--theme-surface-container-highest) var(--theme-surface-container-low);
+      scrollbar-gutter: auto;
+    }
+
+    // Old webkit-based browsers scrollbar properties
+    @supports selector(::-webkit-scrollbar) {
+      &::-webkit-scrollbar {
+        --_scrollbar-size: 10px;
+
+        width: var(--_scrollbar-size);
+        height: var(--_scrollbar-size);
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--theme-surface-container-low);
+        border-radius: v.$rounded-full;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--theme-surface-container-highest);
+        border-radius: v.$rounded-full;
+      }
+    }
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    --_scrollbar-size: 10px;
+
+    width: var(--_scrollbar-size);
+    height: var(--_scrollbar-size);
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--theme-surface-container-low);
+    border-radius: v.$rounded-full;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--theme-surface-container-highest);
+    border-radius: v.$rounded-full;
+  }
+
+  details {
+    summary {
+      color: var(--theme-muted-a10);
+      list-style: none;
+      user-select: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    &[open] {
+      background: var(--theme-surface-container);
+      padding: .5rem;
+      border-radius: v.$rounded-lg;
+    }
+  }
+
+  // Browser mouse selection color
+  ::selection {
+    background-color: rgba(var(--theme-primary-fixed), .45);
+  }
+}

@@ -1,0 +1,180 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer layout.grid-container {
+  // Containers queries
+  .grid-list {
+    container: list-columns / inline-size;
+  }
+
+  /*
+  * Grid system
+  */
+  @for $i from 1 through 12 {
+    .grid-repeat-cols-#{$i} {
+      @include m.make-grid-cols($i);
+    }
+
+    .grid-repeat-rows-#{$i} {
+      @include m.make-grid-rows($i);
+    }
+  }
+
+  // Generate repeat columns and rows classes for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @for $i from 1 through 12 {
+      @include m.media-breakpoint-up($breakpoint) {
+        .grid-repeat-cols-#{$breakpoint}-#{$i} {
+          @include m.make-grid-cols($i);
+        }
+
+        .grid-repeat-rows-#{$breakpoint}-#{$i} {
+          @include m.make-grid-rows($i);
+        }
+      }
+    }
+  }
+
+  // Span columns
+  @for $i from 1 through 12 {
+    .grid-span-col-#{$i} {
+      @include m.make-grid-span($i);
+    }
+  }
+
+  // Generate span columns classes for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @for $i from 1 through 12 {
+      @include m.media-breakpoint-up($breakpoint) {
+        .grid-span-col-#{$breakpoint}-#{$i} {
+          @include m.make-grid-span($i);
+        }
+      }
+    }
+  }
+
+  // Start and end columns
+  @for $i from 1 through 12 {
+    .grid-start-col-#{$i} {
+      @include m.make-grid-position(column, start, $i);
+    }
+
+    .grid-end-col-#{$i} {
+      @include m.make-grid-position(column, end, $i);
+    }
+  }
+
+  // Start and end rows
+  @for $i from 1 through 12 {
+    .grid-start-row-#{$i} {
+      @include m.make-grid-position(row, start, $i);
+    }
+
+    .grid-end-row-#{$i} {
+      @include m.make-grid-position(row, end, $i);
+    }
+  }
+
+  /*
+  * Auto columns
+  */
+  // Expand the cols when there's more space available
+  .grid-auto-fit-cols {
+    --_min-col-size: 200px;
+
+    @include m.make-grid-auto(fit, var(--_min-col-size));
+
+    /* Change the min columns size with the @container */
+    @container list-columns (width <= 400px) {
+      --_min-col-size: 1fr;
+    }
+  }
+
+  // Doesn't auto expand the cols when there's more space available
+  .grid-auto-fill-cols {
+    --_min-col-size: 200px;
+
+    @include m.make-grid-auto(fill, var(--_min-col-size));
+
+    /* Change the min columns size with the @container */
+    @container list-columns (width <= 400px) {
+      --_min-col-size: 1fr;
+    }
+  }
+
+  .grid-auto-cols {
+    grid-auto-columns: auto;
+  }
+
+  .grid-min-cols {
+    grid-auto-columns: min-content;
+  }
+
+  .grid-max-cols {
+    grid-auto-columns: max-content;
+  }
+
+  .grid-fr-cols {
+    grid-auto-columns: minmax(0, 1fr);
+  }
+
+  /*
+  * Auto rows
+  */
+  .grid-auto-rows {
+    grid-auto-rows: auto;
+  }
+
+  .grid-min-rows {
+    grid-auto-rows: min-content;
+  }
+
+  .grid-max-rows {
+    grid-auto-rows: max-content;
+  }
+
+  .grid-fr-rows {
+    grid-auto-rows: minmax(0, 1fr);
+  }
+
+  /*
+  * Auto flow
+  */
+  .grid-auto-flow-dense {
+    grid-auto-flow: dense;
+  }
+
+  .grid-auto-flow-column {
+    grid-auto-flow: column;
+  }
+
+  .grid-auto-flow-column-dense {
+    grid-auto-flow: column dense;
+  }
+
+  .grid-auto-flow-row {
+    grid-auto-flow: row;
+  }
+
+  .grid-auto-flow-row-dense {
+    grid-auto-flow: row dense;
+  }
+
+  // Subgrid
+  .grid-subgrid-cols {
+    grid-template-columns: subgrid;
+  }
+
+  .grid-subgrid-rows {
+    grid-template-rows: subgrid;
+  }
+
+  /*
+   * Grid main content
+   */
+  .grid-main-content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr;
+  }
+}
