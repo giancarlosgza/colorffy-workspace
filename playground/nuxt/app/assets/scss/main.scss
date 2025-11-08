@@ -1,0 +1,19 @@
+@use 'variables' as *;
+@use '@giancarlosgza/colorfulcss/scss/main';
+
+:root {
+    --theme-primary-base: #00DC82;
+    --theme-secondary-base: #020420;
+    --theme-accent-base: #0ea5e9;
+    --theme-surface-base: #ffffff;
+
+    --font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dark-mode {
+    --theme-primary-base: #7efcc8;
+    --theme-secondary-base: #fd98cc;
+    --theme-accent-base: #6ad2ff;
+    --theme-surface-base: #000000;
+}

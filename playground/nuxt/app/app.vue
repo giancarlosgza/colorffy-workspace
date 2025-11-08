@@ -1,9 +1,8 @@
 <script setup lang="ts">
-// Manual Component Registration
-import { UiButton, UiCard, UiAlert, UiBadge, UiIconMaterial, UiBadgeGroup, UiHeaderContent, UiAccordionGroup, UiAccordion, UiPaneContent, UiButtonTooltip, UiAlertToast, UiModal, UiInputText, UiDrawerLink, UiButtonMenu, UiButtonMenuItem, UiButtonMenuText } from '@giancarlosgza/colorful-ui'
-import { ref } from 'vue';
+import { UiButton, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect } from '@giancarlosgza/colorful-ui'
 
 /** Data */
+const colorMode = useColorMode();
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null);
 
@@ -28,6 +27,8 @@ function closeDialog() {
 
 <template>
   <div class="grid-main-content">
+    <NuxtRouteAnnouncer />
+
     <div class="navigation-drawer drawer-bordered">
       <div class="drawer-content">
         <header class="drawer-header">
@@ -44,8 +45,8 @@ function closeDialog() {
     <main>
       <div class="container mt-5">
         <!-- Header -->
-        <UiHeaderContent title="Welcome to Vue Colorful UI"
-          subtitle="A beautiful and customizable UI component library for Vue.js" />
+        <UiHeaderContent title="Welcome to Nuxt Colorful UI"
+          subtitle="A beautiful and customizable UI component library for Nuxt" />
 
 
         <!-- Content -->
@@ -53,7 +54,7 @@ function closeDialog() {
           <div class="col-md-12">
             <UiCard variant="pane">
               <template #body>
-                <h2 class="fs-400 fw-800">Testing <span class="text-gradient g-secondary">Components</span></h2>
+                <h2 class="fs-400 fw-800">Testing <span class="text-gradient g-primary">Components</span></h2>
                 <p class="subtitle-1 text-muted mb-0">This is a test of your colorful-ui library!</p>
                 <div
                   class="bg-success-fixed bg-opacity-20 border border-xxl border-inline border-success rounded-md p-2 mt-3">
@@ -147,7 +148,7 @@ function closeDialog() {
             </UiPaneContent>
           </div>
           <div class="col-md-6">
-            <UiCard variant="outline" class="bg-gradient g-secondary" style="--gradient-angle: 45deg;">
+            <UiCard variant="outline" class="bg-gradient g-primary" style="--gradient-angle: 45deg;">
               <template #body>
                 <p class="subtitle-1 font-primary fw-800 mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
@@ -157,7 +158,7 @@ function closeDialog() {
             <UiCard variant="outline" class="border border-xl border-gradient g-secondary mt-3"
               style="--gradient-angle: 45deg;">
               <template #body>
-                <p class="subtitle-1 font-primary fw-800 mb-0">
+                <p class="subtitle-1 mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
                 </p>
               </template>
@@ -183,6 +184,16 @@ function closeDialog() {
           <template #body>
             <UiAlert message="This is an alert inside the modal dialog!" type="tonal" variant="accent" />
             <hr class="mt-1">
+            <UiInputSelect label="Theme Mode" v-model="colorMode.preference" id="theme" option-label="label" option-value="value" :options="[
+              {
+                label: 'Light',
+                value: 'light'
+              },
+              {
+                label: 'Dark',
+                value: 'dark'
+              }
+            ]" />
             <UiInputText label="Sample Input" placeholder="Enter some text..." id="input-sample" class="mb-3" />
             <p class="subtitle-1 fw-500">This is the content of the modal dialog.</p>
             <p class="subtitle-2 text-muted">Additional content can go here.</p>
