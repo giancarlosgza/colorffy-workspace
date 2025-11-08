@@ -1,17 +1,20 @@
 # @giancarlosgza/colorful-ui
 
-A modern Vue 3 component library built with TypeScript and ColorfulCSS. Features a comprehensive collection of UI components with built-in styling and full TypeScript support.
+A modern Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **ColorfulCSS** (optional) or your own custom styles.
 
 ## Features
 
 ✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more  
-🎨 **ColorfulCSS Integration** - Beautiful, consistent styling out of the box  
+🎨 **Style-Agnostic** - Use with ColorfulCSS or bring your own styles  
 📘 **Full TypeScript Support** - Complete type definitions for all components  
 🔌 **Flexible Installation** - Use globally or import individually  
 🚀 **Tree-shakeable** - Import only what you need  
-⚡ **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications
+⚡ **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications  
+🎯 **Headless Architecture** - Full control over styling and behavior
 
 ## Installation
+
+### Install ColorfulUI
 
 ```bash
 # npm
@@ -24,15 +27,100 @@ yarn add @giancarlosgza/colorful-ui
 pnpm add @giancarlosgza/colorful-ui
 ```
 
-### Peer Dependencies
+### Install Peer Dependencies
 
-This library requires the following peer dependencies:
+ColorfulUI requires the following peer dependencies:
 
 ```bash
-npm install @giancarlosgza/colorfulcss @vueuse/components floating-vue vue
+npm install @vueuse/components floating-vue vue
 ```
 
-> **Note:** ColorfulCSS styles are automatically imported with the library, no need to import separately!
+### Install ColorfulCSS (Optional, Recommended)
+
+For pre-built, beautiful styling that works out of the box:
+
+```bash
+npm install @giancarlosgza/colorfulcss
+```
+
+> **Note:** ColorfulUI components are **unstyled by default**. You can use ColorfulCSS for instant styling, or provide your own custom styles.
+
+## Styling Options
+
+### Option 1: Use ColorfulCSS (Recommended)
+
+Import the compiled CSS in your `main.ts`:
+
+```typescript
+import { createApp } from 'vue'
+import '@giancarlosgza/colorfulcss' // Import styles
+import ColorfulUI from '@giancarlosgza/colorful-ui'
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(ColorfulUI)
+app.mount('#app')
+```
+
+### Option 2: Customize ColorfulCSS with SCSS
+
+For full customization, use SCSS to override variables:
+
+```scss
+// src/assets/variables.scss
+// Override ColorfulCSS variables
+@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+  $primary: #4f46e5,
+  $secondary: #ec4899,
+  $accent: #0ea5e9,
+);
+
+// Import the framework
+@use '@giancarlosgza/colorfulcss/scss/main';
+```
+
+```scss
+// src/assets/main.scss
+@use 'variables' as *;
+
+// Your custom styles
+:root {
+  --custom-var: value;
+}
+```
+
+```typescript
+// main.ts
+import { createApp } from 'vue'
+import './assets/main.scss' // Import customized styles
+import ColorfulUI from '@giancarlosgza/colorful-ui'
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(ColorfulUI)
+app.mount('#app')
+```
+
+### Option 3: Custom Styles
+
+Use ColorfulUI components without any styling framework. Components use semantic class names like `.btn`, `.card`, `.alert`, etc. that you can style however you want:
+
+```css
+/* your-custom-styles.css */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  /* Your custom button styles */
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  /* Your custom card styles */
+}
+```
+
+For more details on ColorfulCSS customization, see the [ColorfulCSS README](https://www.npmjs.com/package/@giancarlosgza/colorfulcss).
 
 ## Usage
 
@@ -112,6 +200,22 @@ app.mount('#app')
 
 ## Nuxt 3 Usage
 
+### Install Dependencies
+
+```bash
+npm install @giancarlosgza/colorful-ui @giancarlosgza/colorfulcss
+```
+
+### Setup with ColorfulCSS
+
+Add ColorfulCSS to your `nuxt.config.ts`:
+
+```typescript
+export default defineNuxtConfig({
+  css: ['@giancarlosgza/colorfulcss'],
+})
+```
+
 ### Global Registration with Nuxt Plugin
 
 Create a plugin file `plugins/colorful-ui.ts`:
@@ -124,7 +228,38 @@ export default defineNuxtPlugin((nuxtApp) => {
 })
 ```
 
-Then use components anywhere in your Nuxt app without imports:
+### Customize with SCSS (Advanced)
+
+For full SCSS customization in Nuxt:
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  css: ['~/assets/scss/main.scss'],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/scss/variables.scss" as *;'
+        }
+      }
+    }
+  }
+})
+```
+
+```scss
+// assets/scss/variables.scss
+@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+  $primary: #4f46e5,
+  $secondary: #ec4899,
+  $accent: #0ea5e9,
+);
+
+@use '@giancarlosgza/colorfulcss/scss/main';
+```
+
+Then use components anywhere in your Nuxt app:
 
 ```vue
 <template>
@@ -175,8 +310,6 @@ export default defineNuxtConfig({
   ]
 })
 ```
-
-> **Note:** With Nuxt, the CSS is automatically handled. No need for additional configuration!
 
 ## Component Categories
 
@@ -415,13 +548,62 @@ const color: ButtonColor = 'primary'
 
 ## Styling
 
-The library uses ColorfulCSS for styling, which is automatically imported. The CSS includes:
-- Modern, responsive design
-- Consistent color palette
-- Utility classes
-- Customizable themes
+### With ColorfulCSS (Recommended)
 
-No additional CSS imports are needed - everything is bundled with the library!
+ColorfulUI is designed to work seamlessly with ColorfulCSS, which provides:
+- Modern, responsive design system
+- Consistent color palette with tonal variants
+- Pre-built component styles
+- Utility classes for rapid development
+- Customizable themes with SCSS variables
+
+Install ColorfulCSS and import it in your app:
+
+```bash
+npm install @giancarlosgza/colorfulcss
+```
+
+```typescript
+// main.ts
+import '@giancarlosgza/colorfulcss'
+```
+
+### Custom Styling
+
+All components use semantic class names that you can style:
+
+```css
+/* Component classes */
+.btn { /* Button styles */ }
+.btn.btn-filled { /* Filled variant */ }
+.btn.btn-primary { /* Primary color */ }
+
+.card { /* Card styles */ }
+.card.card-pane { /* Pane variant */ }
+
+.alert { /* Alert styles */ }
+.alert.alert-success { /* Success variant */ }
+
+/* And more... */
+```
+
+### CSS Variable Overrides
+
+Override CSS custom properties for runtime theming:
+
+```css
+:root {
+  /* Theme colors */
+  --theme-primary-base: #4f46e5;
+  --theme-secondary-base: #ec4899;
+  
+  /* Component variables */
+  --_btn-radius: 50px;
+  --_card-bg-color: #ffffff;
+}
+```
+
+For complete styling documentation, see the [ColorfulCSS README](https://www.npmjs.com/package/@giancarlosgza/colorfulcss).
 
 ## Browser Support
 

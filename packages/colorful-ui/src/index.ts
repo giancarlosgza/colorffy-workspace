@@ -1,6 +1,3 @@
-// Import ColorfulCSS styles
-import '@giancarlosgza/colorfulcss'
-
 // Export all components
 export * from './components'
 
