@@ -1,3 +1,6 @@
+@use 'variables' as *;
+@use '@giancarlosgza/colorfulcss/scss/main';
+
 :root {
     --theme-primary-base: #4f46e5;
     --theme-secondary-base: #ec4899;
@@ -21,8 +24,4 @@
     --theme-danger-base: #fd8585;
     --theme-on-success: #000000;
     --theme-surface-base: #121212;
-}
-
-.dialog {
-    --_dialog-radius: 25px;
 }

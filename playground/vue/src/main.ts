@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-// import ColorfulUI from '@giancarlosgza/colorful-ui' // Global Registration //
-import './assets/main.css'
+
+// Import CSS 
+import './assets/external-deps.css'
+import './assets/main.scss'
 
 const app = createApp(App)
 
