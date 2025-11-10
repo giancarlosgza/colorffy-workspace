@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Manual Component Registration
-import { UiButton, UiCard, UiAlert, UiBadge, UiIconMaterial, UiBadgeGroup, UiHeaderContent, UiAccordionGroup, UiAccordion, UiPaneContent, UiButtonTooltip, UiAlertToast, UiModal, UiInputText, UiDrawerLink, UiButtonMenu, UiButtonMenuItem, UiButtonMenuText } from '@giancarlosgza/colorful-ui'
+import { UiButton, UiCard, UiAlert, UiBadge, UiIconMaterial, UiBadgeGroup, UiHeaderContent, UiAccordionGroup, UiAccordion, UiPaneContent, UiButtonTooltip, UiAlertToast, UiModal, UiInputText, UiDrawerLink, UiButtonMenu, UiButtonMenuItem, UiButtonMenuText } from '@colorful/ui'
 import { ref } from 'vue';
 
 /** Data */

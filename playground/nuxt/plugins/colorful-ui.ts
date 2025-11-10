@@ -1,4 +1,4 @@
-// import ColorfulUI from '@giancarlosgza/colorful-ui'
+// import ColorfulUI from '@colorful/ui'
 // import { defineNuxtPlugin } from 'nuxt/app'
 
 // export default defineNuxtPlugin((nuxtApp) => {

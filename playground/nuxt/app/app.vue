@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UiButton, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect } from '@giancarlosgza/colorful-ui'
+import { UiButton, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode();
@@ -75,7 +75,7 @@ function closeDialog() {
         <hr>
 
         <div class="btn-group spacing">
-          <UiButton variant="filled" text="Primary Button" @on-click="showToast"></UiButton>
+          <UiButton variant="filled" text="Primary Button" rounded @on-click="showToast"></UiButton>
           <UiButton variant="filled" color="secondary" text="Secondary Button"></UiButton>
           <UiButton variant="filled" color="accent" text="Accent Button"></UiButton>
 
@@ -95,7 +95,7 @@ function closeDialog() {
         </div>
 
         <div class="btn-group spacing">
-          <UiButton variant="tonal" text="Tonal Primary Button" @on-click="showDialog"></UiButton>
+          <UiButton variant="tonal" text="Tonal Primary Button" rounded @on-click="showDialog"></UiButton>
           <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button"></UiButton>
           <UiButton variant="tonal" color="accent" text="Tonal Accent Button"></UiButton>
 
@@ -117,16 +117,29 @@ function closeDialog() {
           <UiButton variant="chip" text="Chip Button"></UiButton>
           <UiButton variant="outline" text="Small Button" size="sm"></UiButton>
           <UiButton variant="outline" text="Large Button" size="lg"></UiButton>
-          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary"></UiButton>
+          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white"></UiButton>
           <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta"></UiButton>
         </div>
         <hr>
 
         <UiBadgeGroup class="spacing">
-          <UiBadge variant="outline" text="Default"></UiBadge>
           <UiBadge variant="primary" text="Primary"></UiBadge>
+          <UiBadge variant="secondary" text="Secondary"></UiBadge>
+          <UiBadge variant="accent" text="Accent"></UiBadge>
           <UiBadge variant="success" text="Success"></UiBadge>
+          <UiBadge variant="warning" text="Warning"></UiBadge>
           <UiBadge variant="danger" text="Danger"></UiBadge>
+          <UiBadge variant="outline" text="Outline" icon-code="&#xe061;" icon-class="text-danger-fixed"></UiBadge>
+          <UiBadge variant="default" text="Default"></UiBadge>
+          <UiBadge variant="neutral" text="Neutral"></UiBadge>
+        </UiBadgeGroup>
+        <UiBadgeGroup class="spacing">
+          <UiBadge variant="tonal tonal-primary" text="Tonal Primary"></UiBadge>
+          <UiBadge variant="tonal tonal-secondary" text="Tonal Secondary"></UiBadge>
+          <UiBadge variant="tonal tonal-accent" text="Tonal Accent"></UiBadge>
+          <UiBadge variant="tonal tonal-success" text="Tonal Success"></UiBadge>
+          <UiBadge variant="tonal tonal-warning" text="Tonal Warning"></UiBadge>
+          <UiBadge variant="tonal tonal-danger" text="Tonal Danger"></UiBadge>
         </UiBadgeGroup>
         <hr>
 
@@ -150,7 +163,7 @@ function closeDialog() {
           <div class="col-md-6">
             <UiCard variant="outline" class="bg-gradient g-primary" style="--gradient-angle: 45deg;">
               <template #body>
-                <p class="subtitle-1 font-primary fw-800 mb-0">
+                <p class="subtitle-1 font-primary fw-800 text-dark mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
                 </p>
               </template>

@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/vue3'
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 
 const preview: Preview = {
   parameters: {

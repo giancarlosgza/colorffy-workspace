@@ -1,4 +1,4 @@
-# @giancarlosgza/colorful-ui
+# @colorful/ui
 
 A modern Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **ColorfulCSS** (optional) or your own custom styles.
 
@@ -18,13 +18,13 @@ A modern Vue 3 component library built with TypeScript. Features a comprehensive
 
 ```bash
 # npm
-npm install @giancarlosgza/colorful-ui
+npm install @colorful/ui
 
 # yarn
-yarn add @giancarlosgza/colorful-ui
+yarn add @colorful/ui
 
 # pnpm
-pnpm add @giancarlosgza/colorful-ui
+pnpm add @colorful/ui
 ```
 
 ### Install Peer Dependencies
@@ -40,7 +40,7 @@ npm install @vueuse/components floating-vue vue
 For pre-built, beautiful styling that works out of the box:
 
 ```bash
-npm install @giancarlosgza/colorfulcss
+npm install @colorful/css
 ```
 
 > **Note:** ColorfulUI components are **unstyled by default**. You can use ColorfulCSS for instant styling, or provide your own custom styles.
@@ -53,8 +53,8 @@ Import the compiled CSS in your `main.ts`:
 
 ```typescript
 import { createApp } from 'vue'
-import '@giancarlosgza/colorfulcss' // Import styles
-import ColorfulUI from '@giancarlosgza/colorful-ui'
+import '@colorful/css' // Import styles
+import ColorfulUI from '@colorful/ui'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -69,14 +69,14 @@ For full customization, use SCSS to override variables:
 ```scss
 // src/assets/variables.scss
 // Override ColorfulCSS variables
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
 // Import the framework
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 ```scss
@@ -93,7 +93,7 @@ For full customization, use SCSS to override variables:
 // main.ts
 import { createApp } from 'vue'
 import './assets/main.scss' // Import customized styles
-import ColorfulUI from '@giancarlosgza/colorful-ui'
+import ColorfulUI from '@colorful/ui'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -120,7 +120,7 @@ Use ColorfulUI components without any styling framework. Components use semantic
 }
 ```
 
-For more details on ColorfulCSS customization, see the [ColorfulCSS README](https://www.npmjs.com/package/@giancarlosgza/colorfulcss).
+For more details on ColorfulCSS customization, see the [ColorfulCSS README](https://www.npmjs.com/package/@colorful/css).
 
 ## Usage
 
@@ -131,7 +131,7 @@ Register all components globally in your `main.ts`:
 ```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
-import ColorfulUI from '@giancarlosgza/colorful-ui'
+import ColorfulUI from '@colorful/ui'
 
 const app = createApp(App)
 app.use(ColorfulUI)
@@ -186,7 +186,7 @@ Register only specific components globally:
 ```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
-import { UiButton, UiCard, UiAlert } from '@giancarlosgza/colorful-ui'
+import { UiButton, UiCard, UiAlert } from '@colorful/ui'
 
 const app = createApp(App)
 
@@ -203,7 +203,7 @@ app.mount('#app')
 ### Install Dependencies
 
 ```bash
-npm install @giancarlosgza/colorful-ui @giancarlosgza/colorfulcss
+npm install @colorful/ui @colorful/css
 ```
 
 ### Setup with ColorfulCSS
@@ -212,7 +212,7 @@ Add ColorfulCSS to your `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
-  css: ['@giancarlosgza/colorfulcss'],
+  css: ['@colorful/css'],
 })
 ```
 
@@ -221,7 +221,7 @@ export default defineNuxtConfig({
 Create a plugin file `plugins/colorful-ui.ts`:
 
 ```typescript
-import ColorfulUI from '@giancarlosgza/colorful-ui'
+import ColorfulUI from '@colorful/ui'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(ColorfulUI)
@@ -250,13 +250,13 @@ export default defineNuxtConfig({
 
 ```scss
 // assets/scss/variables.scss
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 Then use components anywhere in your Nuxt app:
@@ -303,7 +303,7 @@ To enable auto-imports in Nuxt, add to your `nuxt.config.ts`:
 export default defineNuxtConfig({
   components: [
     {
-      path: 'node_modules/@giancarlosgza/colorful-ui/dist',
+      path: 'node_modules/@colorful/ui/dist',
       pattern: '**/*.vue',
       pathPrefix: false,
     }
@@ -399,7 +399,7 @@ export default defineNuxtConfig({
 The library also exports useful composables:
 
 ```typescript
-import { useToast, useDateUtils, useTextUtils } from '@giancarlosgza/colorful-ui'
+import { useToast, useDateUtils, useTextUtils } from '@colorful/ui'
 
 // Show toast notification
 const toast = useToast()
@@ -539,7 +539,7 @@ import type {
   ButtonColor, 
   AlertType,
   AlertVariant 
-} from '@giancarlosgza/colorful-ui'
+} from '@colorful/ui'
 
 // Use in your components
 const variant: ButtonVariant = 'filled'
@@ -560,12 +560,12 @@ ColorfulUI is designed to work seamlessly with ColorfulCSS, which provides:
 Install ColorfulCSS and import it in your app:
 
 ```bash
-npm install @giancarlosgza/colorfulcss
+npm install @colorful/css
 ```
 
 ```typescript
 // main.ts
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 ```
 
 ### Custom Styling
@@ -603,7 +603,7 @@ Override CSS custom properties for runtime theming:
 }
 ```
 
-For complete styling documentation, see the [ColorfulCSS README](https://www.npmjs.com/package/@giancarlosgza/colorfulcss).
+For complete styling documentation, see the [ColorfulCSS README](https://www.npmjs.com/package/@colorful/css).
 
 ## Browser Support
 
@@ -626,8 +626,8 @@ Giancarlos Garza
 
 ## Links
 
-- [npm Package](https://www.npmjs.com/package/@giancarlosgza/colorful-ui)
-- [ColorfulCSS](https://www.npmjs.com/package/@giancarlosgza/colorfulcss)
+- [npm Package](https://www.npmjs.com/package/@colorful/ui)
+- [ColorfulCSS](https://www.npmjs.com/package/@colorful/css)
 
 ---
 

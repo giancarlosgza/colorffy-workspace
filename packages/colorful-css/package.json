@@ -1,7 +1,7 @@
 {
-  "name": "@giancarlosgza/colorfulcss",
-  "version": "2.8.0",
-  "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. ColorfulCSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
+  "name": "@colorful/css",
+  "version": "1.0.0",
+  "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorful CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
   "main": "dist/colorfulcss.css",
   "style": "dist/colorfulcss.css",
   "sass": "scss/main.scss",
@@ -59,7 +59,7 @@
     "url": "https://github.com/giancarlosgza/colorful-ui/issues"
   },
   "author": "Giancarlos Garza",
-  "license": "MIT",
+  "license": "ISC",
   "peerDependencies": {
     "floating-vue": "^5.2.0",
     "@material-symbols/font-700": "^0.39.1"

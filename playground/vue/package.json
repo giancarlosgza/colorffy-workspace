@@ -14,8 +14,8 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@giancarlosgza/colorful-ui": "workspace:*",
-    "@giancarlosgza/colorfulcss": "workspace:*",
+    "@colorful/ui": "workspace:*",
+    "@colorful/css": "workspace:*",
     "@material-symbols/font-700": "^0.39.1",
     "floating-vue": "^5.2.2",
     "vue": "^3.5.22",

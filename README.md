@@ -12,7 +12,7 @@ A monorepo containing the Colorful UI component library and Nuxt template.
 
 ## 🚀 Publishing a New Package Version
 
-Follow these steps in order to update and publish a new version of the `@giancarlosgza/colorful-ui` package:
+Follow these steps in order to update and publish a new version of the `@colorful/ui` package:
 
 ### 1. Build the Library
 

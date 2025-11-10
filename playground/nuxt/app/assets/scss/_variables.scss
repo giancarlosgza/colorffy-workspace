@@ -1,21 +1,25 @@
 /**
- * Override ColorfulCSS variables
+ * Override Colorful CSS variables
  */
 $rounded-sm: 4px;
 $rounded-md: 12px;
 $rounded-lg: 25px;
 $rounded-xl: 35px;
 
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
     /** Overrides primaries colors and gradients */
     $primary: #00DC82,
     $secondary: #020420,
     $accent: #0ea5e9,
-    
+
     /** Extra overrides */
     $card-border-radius: $rounded-sm,
     $form-border-radius: $rounded-sm,
     $button-border-radius: $rounded-sm,
-    $dialog-border-radius: $rounded-sm
-);
+    $dialog-border-radius: $rounded-sm);
 
+.btn {
+    &:is(.btn-rounded) {
+        --_btn-radius: #{$rounded-md};
+    }
+}

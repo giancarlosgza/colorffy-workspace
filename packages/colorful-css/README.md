@@ -1,8 +1,8 @@
-# @giancarlosgza/colorfulcss
+# @colorful/css
 
-[![npm version](https://img.shields.io/npm/v/@giancarlosgza/colorfulcss?color=blue&label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/@giancarlosgza/colorfulcss)
-[![install size](https://packagephobia.com/badge?p=@giancarlosgza/colorfulcss)](https://packagephobia.com/result?p=@giancarlosgza/colorfulcss)
-[![license](https://img.shields.io/npm/l/@giancarlosgza/colorfulcss?style=flat-square)](https://github.com/giancarlosgza/colorful-ui/blob/main/packages/colorfulcss/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@colorful/css?color=blue&label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/@colorful/css)
+[![install size](https://packagephobia.com/badge?p=@colorful/css)](https://packagephobia.com/result?p=@colorful/css)
+[![license](https://img.shields.io/npm/l/@colorful/css?style=flat-square)](https://github.com/giancarlosgza/colorful-ui/blob/main/packages/colorfulcss/LICENSE)
 
 An expressive SCSS framework for building vibrant and beautiful user interfaces. ColorfulCSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.
 
@@ -22,19 +22,19 @@ An expressive SCSS framework for building vibrant and beautiful user interfaces.
 ### NPM
 
 ```bash
-npm install @giancarlosgza/colorfulcss
+npm install @colorful/css
 ```
 
 ### PNPM
 
 ```bash
-pnpm add @giancarlosgza/colorfulcss
+pnpm add @colorful/css
 ```
 
 ### Yarn
 
 ```bash
-yarn add @giancarlosgza/colorfulcss
+yarn add @colorful/css
 ```
 
 ## 🚀 Usage
@@ -45,12 +45,12 @@ The easiest way to use ColorfulCSS is to import the compiled CSS file:
 
 ```javascript
 // In your main JavaScript file
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 ```
 
 ```css
 /* In your CSS file */
-@import '@giancarlosgza/colorfulcss';
+@import '@colorful/css';
 ```
 
 ### Use Minified Version
@@ -58,7 +58,7 @@ import '@giancarlosgza/colorfulcss'
 For production builds, use the minified version:
 
 ```javascript
-import '@giancarlosgza/colorfulcss/css/min'
+import '@colorful/css/css/min'
 ```
 
 ### Import SCSS Source
@@ -67,7 +67,7 @@ Import the full SCSS framework:
 
 ```scss
 // Import the complete framework
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 ### Customize SCSS Variables
@@ -77,14 +77,14 @@ Use `@forward` to override variables before importing:
 ```scss
 // your-variables.scss
 // Override variables using @forward
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
 // Then import the full framework
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 ### Import Specific SCSS Modules
@@ -93,16 +93,16 @@ Import only the modules you need:
 
 ```scss
 // Import specific components
-@use '@giancarlosgza/colorfulcss/scss/components/button';
-@use '@giancarlosgza/colorfulcss/scss/components/card';
+@use '@colorful/css/scss/components/button';
+@use '@colorful/css/scss/components/card';
 
 // Import specific utilities
-@use '@giancarlosgza/colorfulcss/scss/utilities/colors';
-@use '@giancarlosgza/colorfulcss/scss/utilities/spacing';
+@use '@colorful/css/scss/utilities/colors';
+@use '@colorful/css/scss/utilities/spacing';
 
 // Import abstracts (variables, mixins, functions)
-@use '@giancarlosgza/colorfulcss/scss/abstracts/variables' as vars;
-@use '@giancarlosgza/colorfulcss/scss/abstracts/mixins' as mix;
+@use '@colorful/css/scss/abstracts/variables' as vars;
+@use '@colorful/css/scss/abstracts/mixins' as mix;
 
 // Use them in your styles
 .custom-button {
@@ -119,7 +119,7 @@ Import only the modules you need:
 ```javascript
 // main.js
 import { createApp } from 'vue'
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 import App from './App.vue'
 
 createApp(App).mount('#app')
@@ -129,14 +129,14 @@ createApp(App).mount('#app')
 ```scss
 // src/assets/variables.scss
 // Override ColorfulCSS variables
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
 // Import the full framework
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 ```scss
@@ -164,7 +164,7 @@ createApp(App).mount('#app')
 ```javascript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  css: ['@giancarlosgza/colorfulcss'],
+  css: ['@colorful/css'],
 })
 ```
 
@@ -189,14 +189,14 @@ export default defineNuxtConfig({
 
 ```javascript
 // main.js
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 ```
 
 #### React
 
 ```javascript
 // index.js or App.js
-import '@giancarlosgza/colorfulcss'
+import '@colorful/css'
 ```
 
 ## 🎨 Components & Utilities
@@ -274,14 +274,14 @@ The recommended way to customize ColorfulCSS is using `@forward` to override SCS
 ```scss
 // variables.scss
 // Step 1: Forward variables with your custom values
-@forward '@giancarlosgza/colorfulcss/scss/abstracts/variables' with (
+@forward '@colorful/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
 // Step 2: Import the main framework
-@use '@giancarlosgza/colorfulcss/scss/main';
+@use '@colorful/css/scss/main';
 ```
 
 **Available Variables to Override:**
@@ -302,8 +302,8 @@ $font-secondary: 'Your Font Family';
 ### Use Mixins & Functions
 
 ```scss
-@use '@giancarlosgza/colorfulcss/scss/abstracts/mixins' as mix;
-@use '@giancarlosgza/colorfulcss/scss/abstracts/functions' as fn;
+@use '@colorful/css/scss/abstracts/mixins' as mix;
+@use '@colorful/css/scss/abstracts/functions' as fn;
 
 .your-element {
   @include mix.flex-center;
@@ -348,15 +348,15 @@ Override CSS custom properties at runtime:
 ```
 
 **What you can import:**
-- `@giancarlosgza/colorfulcss` - Compiled CSS (default)
-- `@giancarlosgza/colorfulcss/scss` - Main SCSS entry point
-- `@giancarlosgza/colorfulcss/scss/main` - Main SCSS file
-- `@giancarlosgza/colorfulcss/scss/abstracts/variables` - Variables module
-- `@giancarlosgza/colorfulcss/scss/abstracts/mixins` - Mixins module
-- `@giancarlosgza/colorfulcss/scss/components/*` - Individual components
-- `@giancarlosgza/colorfulcss/scss/utilities/*` - Individual utilities
-- `@giancarlosgza/colorfulcss/css` - Compiled CSS (expanded)
-- `@giancarlosgza/colorfulcss/css/min` - Compiled CSS (minified)
+- `@colorful/css` - Compiled CSS (default)
+- `@colorful/css/scss` - Main SCSS entry point
+- `@colorful/css/scss/main` - Main SCSS file
+- `@colorful/css/scss/abstracts/variables` - Variables module
+- `@colorful/css/scss/abstracts/mixins` - Mixins module
+- `@colorful/css/scss/components/*` - Individual components
+- `@colorful/css/scss/utilities/*` - Individual utilities
+- `@colorful/css/css` - Compiled CSS (expanded)
+- `@colorful/css/css/min` - Compiled CSS (minified)
 
 ## 🏗️ Build
 

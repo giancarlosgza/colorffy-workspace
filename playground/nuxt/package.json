@@ -1,5 +1,6 @@
 {
-  "name": "nuxt",
+  "name": "playground-nuxt",
+  "version": "0.0.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -10,8 +11,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@giancarlosgza/colorful-ui": "workspace:*",
-    "@giancarlosgza/colorfulcss": "workspace:*",
+    "@colorful/ui": "workspace:*",
+    "@colorful/css": "workspace:*",
     "@material-symbols/font-700": "^0.39.1",
     "@nuxtjs/color-mode": "3.5.2",
     "floating-vue": "^5.2.2",
