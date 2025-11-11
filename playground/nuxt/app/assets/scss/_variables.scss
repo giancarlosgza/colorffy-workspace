@@ -2,9 +2,10 @@
  * Override Colorful CSS variables
  */
 $rounded-sm: 4px;
-$rounded-md: 12px;
-$rounded-lg: 25px;
-$rounded-xl: 35px;
+$rounded-md: 8px;
+$rounded-lg: 12px;
+$rounded-xl: 25px;
+$rounded-xxl: 35px;
 
 @forward '@colorful/css/scss/abstracts/variables' with (
     /** Overrides primaries colors and gradients */
@@ -15,7 +16,7 @@ $rounded-xl: 35px;
     /** Extra overrides */
     $card-border-radius: $rounded-sm,
     $form-border-radius: $rounded-sm,
-    $button-border-radius: $rounded-sm,
+    $button-border-radius: $rounded-md,
     $dialog-border-radius: $rounded-sm);
 
 .btn {
@@ -23,3 +24,7 @@ $rounded-xl: 35px;
         --_btn-radius: #{$rounded-md};
     }
 }
+
+// .v-popper__popper {
+//     --_dropdown-radius: #{$rounded-lg};
+// }

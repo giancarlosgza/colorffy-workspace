@@ -20,7 +20,7 @@
   .v-popper__popper {
     --_dropdown-bg-color: var(--theme-surface-overlay);
     --_dropdown-color: var(--theme-on-primary);
-    --_dropdown-padding: 12px 0;
+    --_dropdown-padding: 4px;
     --_dropdown-shadow: var(--shadow-lg);
     --_dropdown-radius: #{v.$rounded-lg};
 
@@ -28,7 +28,7 @@
     --_dropdown-easing-out: #{v.$easing-out-fallback};
     --_dropdown-easing-duration: 400ms;
 
-    --_dropdown-item-gutter-x: 1rem;
+    --_dropdown-item-gutter-x: .5rem;
     --_dropdown-item-gutter-y: .5rem;
 
     @supports (transition: all 100ms linear(1, 1, 1)) {
@@ -49,8 +49,8 @@
           padding: var(--_dropdown-padding);
           box-shadow: var(--shadow-lg);
           border-radius: var(--_dropdown-radius);
-          border: v.$border-sm solid transparent;
-          min-width: 10rem;
+          border: v.$border-sm solid var(--theme-outline-surface);
+          min-width: 12rem;
 
           & kbd {
             background-color: var(--theme-surface-kbd);
@@ -69,34 +69,46 @@
               list-style: none;
 
               & .v-dropdown-item {
-                font-weight: v.$fw-600;
+                display: flex;
+                align-items: center;
+                gap: .35rem;
+                font-weight: v.$fw-400;
                 background: inherit;
                 color: var(--_dropdown-color);
 
                 padding-block: var(--_dropdown-item-gutter-y);
-                padding-left: var(--_dropdown-item-gutter-x);
-                padding-right: calc(var(--_dropdown-item-gutter-x) * 1.5);
+                padding-inline: var(--_dropdown-item-gutter-x);
 
                 border: none;
-                border-radius: v.$rounded-none;
+                border-radius: calc(var(--_dropdown-radius) / 2);
 
                 font-family: v.$font-primary;
-                font-size: var(--fs-sm-500);
-                text-align: left;
+                font-size: var(--fs-sm-400);
+                text-align: start;
 
                 width: 100%;
                 cursor: pointer;
 
+                & .v-dropdown-item-primary, 
+                & .v-dropdown-item-secondary {
+                  display: flex;
+                  align-items: center;
+                  gap: inherit;
+                }
+
+                &:has(.v-dropdown-item-secondary) {
+                  justify-content: space-between;
+                }
+
                 &.v-text-item {
                   display: inline-block;
-                  color: var(--theme-muted-a10);
-                  padding-block: 8px;
-                  border-radius: v.$rounded-none;
-                  font-size: var(--fs-sm-500);
+                  letter-spacing: 0.45px;
+                  font-weight: v.$fw-700;
+                  font-family: v.$font-primary;
 
                   &:is(:hover, :focus, :active) {
                     background-color: inherit;
-                    color: var(--theme-muted-a10);
+                    color: inherit;
                     cursor: default;
                   }
                 }
@@ -118,7 +130,6 @@
                 i {
                   font-size: 16px;
                   font-variation-settings: var(--iw-semi-bold);
-                  margin-right: 0.35rem;
                 }
 
                 &:is(.v-danger) {
@@ -131,6 +142,10 @@
                   background-color: var(--theme-surface-container-highest);
                   color: var(--theme-on-primary);
                   font-weight: v.$fw-700;
+
+                  & i {
+                    font-variation-settings: var(--iw-bold);
+                  }
                 }
 
                 &:is(.v-disabled) {
@@ -171,6 +186,7 @@
           }
         }
 
+        // Color Picker Popover
         & .v-popper__inner {
           &:has(.color-picker-popper) {
             --_dropdown-padding: 12px;
@@ -309,8 +325,8 @@
       &.v-popper__popper--hidden {
         visibility: hidden;
         opacity: 0;
-        translate: 0 -3rem;
-        transition: translate calc(var(--_dropdown-easing-duration) / 3) var(--_dropdown-easing-out),
+        translate: 0 -2rem;
+        transition: translate calc(var(--_dropdown-easing-duration) / 2) var(--_dropdown-easing-out),
         opacity calc(var(--_dropdown-easing-duration) / 2),
         visibility calc(var(--_dropdown-easing-duration) / 2);
         transform-origin: center;

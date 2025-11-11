@@ -468,16 +468,77 @@
 
   // Button Group
   .btn-group {
+    --_btn-group-gap: .75rem .55rem;
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.75rem .55rem;
+    gap: var(--_btn-group-gap);
 
     .btn {
       margin: 0;
     }
-  }
 
+    // Group Variants
+    &:is(.btn-group-vertical) {
+      flex-direction: column;
+    }
+
+    &:is(.btn-group-connected) {
+      --_btn-group-gap: 0.25rem;
+
+      .btn {
+        --_btn-connected-radius: #{v.$rounded-full};
+
+        &:first-child {
+          border-top-left-radius: var(--_btn-connected-radius);
+          border-bottom-left-radius: var(--_btn-connected-radius);
+        }
+
+        &:last-child {
+          border-top-right-radius: var(--_btn-connected-radius);
+          border-bottom-right-radius: var(--_btn-connected-radius);
+        }
+      }
+
+      &:is(.btn-group-joined) {
+        --_btn-group-gap: 0;
+
+        .btn {
+          &:not(:first-child):not(:last-child) {
+            border-radius: 0;
+          }
+        }
+      }
+
+      &:is(.btn-group-vertical) {
+        .btn {
+          &:first-child {
+            border-top-left-radius: var(--_btn-connected-radius);
+            border-top-right-radius: var(--_btn-connected-radius);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
+          &:last-child {
+            border-bottom-left-radius: var(--_btn-connected-radius);
+            border-bottom-right-radius: var(--_btn-connected-radius);
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+          }
+        }
+
+        &:is(.btn-group-joined) {
+          .btn {
+            &:not(:first-child):not(:last-child) {
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+  }  
+  
   // FAB Group
   .fab-group {
     --_btn-fab-position-y: 1.75rem;
@@ -492,6 +553,17 @@
     gap: 1rem;
     isolation: isolate;
     z-index: v.$z-index-fab;
+
+    &:is(.fab-top) {
+      top: var(--_btn-fab-position-y);
+      bottom: auto;
+    }
+
+    &:is(.fab-start) {
+      left: var(--_btn-fab-position-x);
+      right: auto;
+      align-items: flex-start;
+    }
   }
 
   // Segment Control

@@ -167,6 +167,28 @@
     margin-block: var(--_custom-margin, 0);
   }
 
+  /*
+  * Flow
+  * Generate flow spacing utilities for content layout
+  * Adds consistent spacing between sibling elements
+  */
+  @each $flow, $value in v.$spacing-sizes {
+    .flow-#{$flow} > * + * {
+      margin-top: $value;
+    }
+  }
+
+  // Generate flow utilities for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @each $flow, $value in v.$spacing-sizes {
+      @include m.media-breakpoint-up($breakpoint) {
+        .flow-#{$breakpoint}-#{$flow} > * + * {
+          margin-top: $value;
+        }
+      }
+    }
+  }
+
   // Block spacing
   @each $size, $value in v.$spacing-sizes {
     .block-spacing-#{$size} {
@@ -175,21 +197,33 @@
     }
   }
 
-  // Block spacing for subheadings
-  .spacing {
-    --_spacing-top: 1.5rem;
-    margin-top: var(--_spacing-top);
+  /*
+  * Section margin-top
+  * Semantic top margin for content hierarchy
+  * Previous naming: .spacing, .spacing-heading, .spacing-subheading, .spacing-condensed
+  */
+  .mt-section {
+    --_mt-section: 1.5rem;
+    margin-top: var(--_mt-section);
 
-    &.spacing-heading {
-      --_spacing-top: 5rem;
+    // Condensed
+    &.mt-section-sm {
+      --_mt-section: 0.85rem;
     }
 
-    &.spacing-subheading {
-      --_spacing-top: 2.5rem;
+    // Medium
+    &.mt-section-md {
+      --_mt-section: 2rem;
     }
 
-    &.spacing-condensed {
-      --_spacing-top: .85rem;
+    // Subheading
+    &.mt-section-lg {
+      --_mt-section: 2.5rem;
+    }
+
+    // Heading
+    &.mt-section-xl {
+      --_mt-section: 5rem;
     }
   }
 }

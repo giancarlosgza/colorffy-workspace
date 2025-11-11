@@ -2,65 +2,35 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.colors {
-  // Primary colors
+  // Default text colors
   .text-primary {
     @include m.text-color(var(--theme-primary-a10));
-  }
-
-  .text-primary-high-contrast {
-    @include m.text-color(var(--theme-primary-a90));
   }
 
   .text-secondary {
     @include m.text-color(var(--theme-secondary-a10));
   }
 
-  .text-secondary-high-contrast {
-    @include m.text-color(var(--theme-secondary-a90));
-  }
-
   .text-accent {
     @include m.text-color(var(--theme-accent-a10));
   }
 
-  .text-accent-high-contrast {
-    @include m.text-color(var(--theme-accent-a90));
-  }
-
-  // Semantic colors
   .text-success {
     @include m.text-color(var(--theme-success-a10));
-  }
-
-  .text-success-high-contrast {
-    @include m.text-color(var(--theme-success-a90));
   }
 
   .text-warning {
     @include m.text-color(var(--theme-warning-a10));
   }
 
-  .text-warning-high-contrast {
-    @include m.text-color(var(--theme-warning-a90));
-  }
-
   .text-danger {
     @include m.text-color(var(--theme-danger-a10));
-  }
-
-  .text-danger-high-contrast {
-    @include m.text-color(var(--theme-danger-a90));
   }
 
   .text-muted {
     @include m.text-color(var(--theme-muted-a10));
   }
 
-  .text-muted-high-contrast {
-    @include m.text-color(var(--theme-muted-a90));
-  }
-
-  // Basic colors
   .text-white {
     @include m.text-color(v.$white);
   }
@@ -69,8 +39,79 @@
     @include m.text-color(v.$black);
   }
 
-  .text-red {
-    @include m.text-color(v.$danger);
+  // Emphasis text colors
+  .text-primary-emphasis {
+    @include m.text-color(var(--theme-primary-a90));
+  }
+
+  .text-secondary-emphasis {
+    @include m.text-color(var(--theme-secondary-a90));
+  }
+
+  .text-accent-emphasis {
+    @include m.text-color(var(--theme-accent-a90));
+  }
+
+  .text-success-emphasis {
+    @include m.text-color(var(--theme-success-a90));
+  }
+
+  .text-warning-emphasis {
+    @include m.text-color(var(--theme-warning-a90));
+  }
+
+  .text-danger-emphasis {
+    @include m.text-color(var(--theme-danger-a90));
+  }
+
+  .text-muted-emphasis {
+    @include m.text-color(var(--theme-muted-a90));
+  }
+
+  // Fixed text colors
+  .text-primary-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-primary-fixed), var(--_text-opacity));
+  }
+
+  .text-secondary-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-secondary-fixed), var(--_text-opacity));
+  }
+
+  .text-accent-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-accent-fixed), var(--_text-opacity));
+  }
+
+  .text-success-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-success-fixed), var(--_text-opacity));
+  }
+
+  .text-warning-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-warning-fixed), var(--_text-opacity));
+  }
+
+  .text-danger-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-danger-fixed), var(--_text-opacity));
+  }
+
+  .text-muted-fixed {
+    --_text-opacity: 1;
+    color: rgba(var(--theme-muted-fixed), var(--_text-opacity));
+  }
+
+  /*
+  * Fixed opacity
+  * Generate fixed opacity text utilities for each value
+  */
+  @each $value, $opacity in v.$opacity {
+    .text-opacity-#{$value} {
+      --_text-opacity: #{$opacity};
+    }
   }
 
   // On surface colors
@@ -83,7 +124,7 @@
   }
 
   .text-on-accent {
-    @include m.text-color(var(--theme-on-secondary));
+    @include m.text-color(var(--theme-on-accent));
   }
 
   .text-on-success {

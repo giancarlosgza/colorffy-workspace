@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UiButton, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect } from '@colorful/ui'
+import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode();
@@ -35,6 +35,9 @@ function closeDialog() {
           <UiIconMaterial icon-code="&#xe88a;" />
         </header>
         <nav class="drawer-body">
+          <p class="drawer-text">
+            Platform
+          </p>
           <a href="/" class="drawer-item router-link-exact-active">
             <UiIconMaterial icon-code="&#xe88a;" />
             Home
@@ -74,7 +77,7 @@ function closeDialog() {
         </div>
         <hr>
 
-        <div class="btn-group spacing">
+        <UiButtonGroup class="mt-section">
           <UiButton variant="filled" text="Primary Button" rounded @on-click="showToast"></UiButton>
           <UiButton variant="filled" color="secondary" text="Secondary Button"></UiButton>
           <UiButton variant="filled" color="accent" text="Accent Button"></UiButton>
@@ -92,37 +95,83 @@ function closeDialog() {
               <UiIconMaterial icon-code="&#xe000;"></UiIconMaterial>
             </template>
           </UiButtonTooltip>
-        </div>
+        </UiButtonGroup>
 
-        <div class="btn-group spacing">
-          <UiButton variant="tonal" text="Tonal Primary Button" rounded @on-click="showDialog"></UiButton>
+        <UiButtonGroup connected class="mt-section">
+          <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog"></UiButton>
           <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button"></UiButton>
           <UiButton variant="tonal" color="accent" text="Tonal Accent Button"></UiButton>
 
           <UiButton variant="tonal" color="success" text="Tonal Success Button"></UiButton>
           <UiButton variant="tonal" color="warning" text="Tonal Warning Button"></UiButton>
           <UiButton variant="tonal" color="danger" text="Tonal Danger Button"></UiButton>
+        </UiButtonGroup>
+
+        <div class="row mt-section">
+          <div class="col-md-6">
+            <UiButtonGroup connected joined vertical>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe145;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xf77b;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe15b;" />
+                </template>
+              </UiButton>
+            </UiButtonGroup>
+          </div>
+          <div class="col-md-6">
+            <UiButtonGroup connected>
+              <UiButton variant="tonal" color="danger" text="Archive">
+              </UiButton>
+              <UiButton variant="tonal" color="danger" text="Report">
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe160;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="danger" text="Snooze">
+              </UiButton>
+            </UiButtonGroup>
+          </div>
         </div>
         <hr>
 
-        <div class="btn-group spacing">
-          <UiButtonMenu variant="outline" text="Outline Menu Button">
+        <UiButtonGroup class="mt-section">
+          <UiButtonMenu id="demo" variant="outline" text="Menu Button" icon-trailing>
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe5c5;" />
+            </template>
             <template #menu>
-              <UiButtonMenuText item-text="Header" />
-              <UiButtonMenuItem item-text="Item 1" icon="&#xe5c3;" />
-              <UiButtonMenuItem item-text="Item 2" icon="&#xe5c4;" />
-              <UiButtonMenuItem item-text="Item 3" icon="&#xe5c5;" />
+              <UiButtonMenuText item-text="My account" />
+              <UiButtonMenuItem item-text="Profile" icon="&#xe853;" />
+              <UiButtonMenuItem item-text="Billing" icon="&#xf041;" />
+              <UiButtonMenuItem item-text="Settings" icon="&#xe8b8;" />
+              <UiButtonMenuDivider />
+              <UiButtonMenuText item-text="Resources" />
+              <UiButtonMenuItem item-text="Github" />
+              <UiButtonMenuItem item-text="Support" />
+              <UiButtonMenuItem item-text="API" disabled />
+              <UiButtonMenuDivider />
+              <UiButtonMenuItem item-text="Log Out" icon="&#xe9ba;" is-destructive />
             </template>
           </UiButtonMenu>
           <UiButton variant="chip" text="Chip Button"></UiButton>
           <UiButton variant="outline" text="Small Button" size="sm"></UiButton>
           <UiButton variant="outline" text="Large Button" size="lg"></UiButton>
-          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white"></UiButton>
+          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white">
+          </UiButton>
           <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta"></UiButton>
-        </div>
+        </UiButtonGroup>
         <hr>
 
-        <UiBadgeGroup class="spacing">
+        <UiBadgeGroup class="mt-section">
           <UiBadge variant="primary" text="Primary"></UiBadge>
           <UiBadge variant="secondary" text="Secondary"></UiBadge>
           <UiBadge variant="accent" text="Accent"></UiBadge>
@@ -133,7 +182,7 @@ function closeDialog() {
           <UiBadge variant="default" text="Default"></UiBadge>
           <UiBadge variant="neutral" text="Neutral"></UiBadge>
         </UiBadgeGroup>
-        <UiBadgeGroup class="spacing">
+        <UiBadgeGroup class="mt-section">
           <UiBadge variant="tonal tonal-primary" text="Tonal Primary"></UiBadge>
           <UiBadge variant="tonal tonal-secondary" text="Tonal Secondary"></UiBadge>
           <UiBadge variant="tonal tonal-accent" text="Tonal Accent"></UiBadge>
@@ -143,7 +192,7 @@ function closeDialog() {
         </UiBadgeGroup>
         <hr>
 
-        <div class="row spacing">
+        <div class="row mt-section mt-section-lg">
           <div class="col-md-6">
             <UiPaneContent>
               <UiAccordionGroup is-transparent>
@@ -179,6 +228,19 @@ function closeDialog() {
           </div>
         </div>
 
+        <UiButtonFabGroup>
+          <UiButton variant="tonal" color="primary" class="btn-fab" text="Add" @on-click="showDialog">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+          <UiButton variant="tonal" color="warning" class="btn-fab">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe0b0;" />
+            </template>
+          </UiButton>
+        </UiButtonFabGroup>
+
         <UiAlert message="Your library is working correctly!" type="snackbar" variant="success" />
 
         <UiAlertToast ref="toastRef" />
@@ -197,16 +259,17 @@ function closeDialog() {
           <template #body>
             <UiAlert message="This is an alert inside the modal dialog!" type="tonal" variant="accent" />
             <hr class="mt-1">
-            <UiInputSelect label="Theme Mode" v-model="colorMode.preference" id="theme" option-label="label" option-value="value" :options="[
-              {
-                label: 'Light',
-                value: 'light'
-              },
-              {
-                label: 'Dark',
-                value: 'dark'
-              }
-            ]" />
+            <UiInputSelect label="Theme Mode" v-model="colorMode.preference" id="theme" option-label="label"
+              option-value="value" :options="[
+                {
+                  label: 'Light',
+                  value: 'light'
+                },
+                {
+                  label: 'Dark',
+                  value: 'dark'
+                }
+              ]" />
             <UiInputText label="Sample Input" placeholder="Enter some text..." id="input-sample" class="mb-3" />
             <p class="subtitle-1 fw-500">This is the content of the modal dialog.</p>
             <p class="subtitle-2 text-muted">Additional content can go here.</p>

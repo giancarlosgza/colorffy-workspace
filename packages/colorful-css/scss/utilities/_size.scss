@@ -16,7 +16,7 @@
   }
 
   .h-fixed {
-    height: var(--fixed-size, fit-content);
+    height: var(--h-fixed, fit-content);
   }
 
   .h-50 {
@@ -72,7 +72,7 @@
   }
 
   .w-fixed {
-    width: var(--fixed-size, fit-content);
+    width: var(--w-fixed, fit-content);
   }
 
   .w-50 {
