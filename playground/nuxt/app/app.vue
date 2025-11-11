@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider } from '@colorful/ui'
+import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider, UiSidebar, UiSidebarHeader, UiSidebarBody, UiSidebarFooter, UiSidebarText, UiSidebarLink, UiSidebarDropdown } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode();
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null);
+const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false);
 
 /** Methods */
 function showToast() {
@@ -29,22 +30,52 @@ function closeDialog() {
   <div class="grid-main-content">
     <NuxtRouteAnnouncer />
 
-    <div class="navigation-drawer drawer-bordered">
-      <div class="drawer-content">
-        <header class="drawer-header">
-          <UiIconMaterial icon-code="&#xe88a;" />
-        </header>
-        <nav class="drawer-body">
-          <p class="drawer-text">
-            Platform
-          </p>
-          <a href="/" class="drawer-item router-link-exact-active">
-            <UiIconMaterial icon-code="&#xe88a;" />
-            Home
-          </a>
-        </nav>
-      </div>
-    </div>
+    <!-- Sidebar -->
+    <UiSidebar bordered :rail="sidebarCollapse">
+      <UiSidebarHeader>
+        <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
+        <img src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
+          alt="Avatar Image">
+        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="!sidebarCollapse">
+          <UiButtonMenuText item-text="Workspace" />
+          <UiButtonMenuItem item-text="Personal" icon="&#xe853;" />
+          <UiButtonMenuItem item-text="Enterprise" icon="&#xf041;" />
+        </UiSidebarDropdown>
+      </UiSidebarHeader>
+
+      <UiSidebarBody>
+        <UiSidebarText text="Platform" />
+        <UiSidebarLink to="/" icon="&#xe88a;" text="Home" active tooltip-text="Go to home page" tooltip-placement="top">
+          <template #link="{ linkTarget, linkClasses, }">
+            <NuxtLink :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe88a;" aria-hidden="true" />
+              <span>Home</span>
+            </NuxtLink>
+          </template>
+        </UiSidebarLink>
+
+        <UiSidebarLink to="/components" icon="&#xe5c3;" text="Components" tooltip-text="View components">
+          <template #link="{ linkTarget, linkClasses }">
+            <NuxtLink :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe5c3;" aria-hidden="true" />
+              <span>Components</span>
+            </NuxtLink>
+          </template>
+        </UiSidebarLink>
+      </UiSidebarBody>
+
+      <UiSidebarFooter>
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+          <UiSidebarDropdown title="Gian" subtitle="giancarlosgza@gmail.com" :interactive="false">
+          </UiSidebarDropdown>
+        </div>
+        <div class="mt-2">
+          <UiBadge text="v1.0.0" variant="outline" size="sm" icon-code="&#xf5f4;" icon-class="text-accent-fixed" />
+        </div>
+      </UiSidebarFooter>
+    </UiSidebar>
+
+    <!-- Content -->
     <main>
       <div class="container mt-5">
         <!-- Header -->
@@ -56,6 +87,11 @@ function closeDialog() {
         <div class="row">
           <div class="col-md-12">
             <UiCard variant="pane">
+              <template #header>
+                <UiButton variant="filled" text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse">
+
+                </UiButton>
+              </template>
               <template #body>
                 <h2 class="fs-400 fw-800">Testing <span class="text-gradient g-primary">Components</span></h2>
                 <p class="subtitle-1 text-muted mb-0">This is a test of your colorful-ui library!</p>
@@ -158,7 +194,8 @@ function closeDialog() {
               <UiButtonMenuDivider />
               <UiButtonMenuText item-text="Resources" />
               <UiButtonMenuItem item-text="Github" />
-              <UiButtonMenuItem item-text="Support" :badge="{ text: 'NEW', variant: 'gradient', customClass: 'g-accent'}" />
+              <UiButtonMenuItem item-text="Support"
+                :badge="{ text: 'NEW', variant: 'gradient', customClass: 'g-accent' }" />
               <UiButtonMenuItem item-text="API" disabled />
               <UiButtonMenuDivider />
               <UiButtonMenuItem item-text="Log Out" icon="&#xe9ba;" is-destructive />

@@ -63,6 +63,15 @@ export { default as UiPopoverMenu } from './components/ui/navigation/PopoverMenu
 export { default as UiSegmentedControls } from './components/ui/navigation/SegmentedControls.vue'
 export { default as UiTabs } from './components/ui/navigation/Tabs.vue'
 
+// Components - Sidebar
+export { default as UiSidebar } from './components/ui/sidebar/Sidebar.vue'
+export { default as UiSidebarHeader } from './components/ui/sidebar/SidebarHeader.vue'
+export { default as UiSidebarBody } from './components/ui/sidebar/SidebarBody.vue'
+export { default as UiSidebarFooter } from './components/ui/sidebar/SidebarFooter.vue'
+export { default as UiSidebarText } from './components/ui/sidebar/SidebarText.vue'
+export { default as UiSidebarLink } from './components/ui/sidebar/SidebarLink.vue'
+export { default as UiSidebarDropdown } from './components/ui/sidebar/SidebarDropdown.vue'
+
 // Components - Table
 export { default as UiDatatable } from './components/ui/datatable/Datatable.vue'
 

@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use '../base/typography';
+@use '../utilities/text' as t;
 
 @layer layout.sidebar {
   .navigation-drawer {
@@ -33,7 +34,7 @@
 
     // Easing linear function transition
     transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
-    translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
+      translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
 
     @supports (transition: all 100ms linear(1, 1, 1)) {
       --_drawer-easing-in: #{v.$easing-emphasized};
@@ -45,7 +46,7 @@
     &.drawer-closed {
       width: calc(var(--theme-nav-drawer-width) / 2);
       transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
-      translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
+        translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
     }
 
     &.drawer-bordered {
@@ -64,46 +65,15 @@
 
       .drawer-header {
         display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: calc(var(--_drawer-gutter) / 1.5);
+        flex-wrap: nowrap;
         word-break: break-all;
         align-items: center;
         padding: calc(var(--_drawer-gutter) / 1.5);
 
-        // Transition
-        will-change: flex-direction, align-items;
-        transition: flex-direction var(--_drawer-easing-duration) var(--_drawer-easing-in),
-        align-items var(--_drawer-easing-duration) var(--_drawer-easing-in);
-
-        p {
-          font-family: v.$font-secondary;
-          font-weight: v.$fw-800;
-          font-size: var(--fs-600);
-          margin-bottom: 0;
-          transition: opacity 300ms ease-in-out, display ease-in-out 300ms var(--_discrete);
-
-          /* Before changes */
-          @starting-style {
-            opacity: 0;
-          }
-
-          /* Changing state */
-          & {
-            opacity: 1;
-          }
-        }
-
-        .sidebar-username {
-          margin-top: 10px;
-          padding: 15px 0 5px 0;
-          border-bottom: v.$border-sm solid var(--theme-on-primary);
-        }
-
-        :where(img, i) {
-          --_drawer-brand-size: 7rem;
-
-          // Icons
-          font-size: var(--_drawer-brand-size);
+        :where(img) {
+          --_drawer-brand-size: 2.5rem;
 
           // Images
           width: var(--_drawer-brand-size);
@@ -112,8 +82,18 @@
 
           will-change: width, font-size;
           transition: width var(--_drawer-easing-duration) var(--_drawer-easing-in),
-          max-height var(--_drawer-easing-duration) var(--_drawer-easing-in),
-          font-size var(--_drawer-easing-duration) var(--_drawer-easing-in);
+            max-height var(--_drawer-easing-duration) var(--_drawer-easing-in),
+            font-size var(--_drawer-easing-duration) var(--_drawer-easing-in),
+            translate var(--_drawer-easing-duration) var(--_drawer-easing-in);
+        }
+
+        :where(i:is(.drawer-brand-icon)) {
+          --_drawer-brand-size: 2rem;
+
+          font-size: var(--_drawer-brand-size);
+          background: rgba(var(--theme-primary-fixed), 1);
+          border-radius: v.$rounded-md;
+          padding: .25rem;
         }
       }
 
@@ -141,12 +121,16 @@
           // Transition
           will-change: background-color, flex-direction, align-items, font-size;
           transition: background-color var(--_drawer-easing-duration) var(--_drawer-easing-in),
-          flex-direction var(--_drawer-easing-duration) var(--_drawer-easing-in),
-          align-items var(--_drawer-easing-duration) var(--_drawer-easing-in),
-          font-size var(--_drawer-easing-duration) var(--_drawer-easing-in);
+            flex-direction var(--_drawer-easing-duration) var(--_drawer-easing-in),
+            align-items var(--_drawer-easing-duration) var(--_drawer-easing-in),
+            font-size var(--_drawer-easing-duration) var(--_drawer-easing-in);
 
           &:not(.router-link-exact-active) {
             color: var(--theme-muted-a10);
+
+            @supports (color: color-mix(in srgb, red, blue)) {
+              color: color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%);
+            }
           }
 
           &:is(a) {
@@ -166,8 +150,8 @@
             }
           }
 
-          &:is(.router-link-exact-active) {
-             color: var(--_drawer-color);
+          &:is(.router-link-exact-active, .active) {
+            color: var(--_drawer-color);
             background-color: var(--theme-surface-body-pane);
             box-shadow: var(--shadow-sm);
             font-weight: v.$fw-800;
@@ -183,6 +167,12 @@
             opacity: 0.55;
             cursor: not-allowed;
           }
+
+          &.drawer-item-child {
+            padding-left: calc(var(--_drawer-gutter) * 2 + .25rem);
+            border-radius: 0 v.$button-border-radius v.$button-border-radius 0;
+            border-left: v.$border-sm solid var(--theme-outline-surface);
+          }
         }
 
         .drawer-text {
@@ -190,42 +180,99 @@
           color: var(--theme-muted-a10);
           padding-inline: .5rem;
           margin-block: .5rem;
+
+          @supports (color: color-mix(in srgb, red, blue)) {
+            color: color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%);
+          }
         }
       }
 
       .drawer-footer {
-        display: inline-flex;
-        flex-wrap: wrap;
-        flex-direction: row;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
         justify-content: flex-start;
         gap: calc(var(--_drawer-gutter) / 2);
         padding: calc(var(--_drawer-gutter) / 1.5);
+      }
 
-        p {
-          font-weight: v.$fw-500;
-          margin-bottom: 0;
+      // Dropdown / Static content
+      .drawer-dropdown-content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: calc(var(--_drawer-gutter) / 2);
+        align-items: center;
+        translate: 0;
+        transform-origin: left bottom;
+        transition: opacity 150ms ease-in-out,
+          display 150ms ease-in-out var(--_discrete),
+          translate 150ms ease-in-out;
+
+        &:is(.dropdown-switcher) {
+          justify-content: space-between;
+          align-self: center;
+          flex-grow: 1;
+          opacity: 1;
+
+          &:is(:hover) {
+            background-color: var(--theme-surface-container);
+            border-radius: v.$rounded-sm;
+            cursor: pointer;
+          }
+
+          .drawer-dropdown-switcher-icon {
+            font-size: var(--fs-500);
+            color: var(--theme-muted-a10);
+          }
         }
 
-        .btn {
-          flex-grow: 1;
+        & .drawer-dropdown-text {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          gap: 0;
+
+          & .drawer-dropdown-title {
+            font-family: v.$font-primary;
+            font-size: var(--fs-sm-100);
+            font-weight: v.$fw-800;
+          }
+
+          & .drawer-dropdown-subtitle {
+            font-size: var(--fs-sm-300);
+            font-weight: v.$fw-500;
+            color: var(--theme-muted-a10);
+          }
+
+          & p {
+            margin-bottom: 0;
+            max-width: 20ch;
+            @extend .text-truncate;
+          }
+        }
+
+        /* Initial state when paragraph first appears */
+        @starting-style {
+          & {
+            opacity: 0;
+            translate: -1rem;
+          }
         }
       }
     }
 
     // Container query for drawer
-    @container DrawerContainer (width <= 9rem) {
+    @container DrawerContainer (width <=9rem) {
       & .drawer-content {
         & .drawer-header {
-          flex-direction: column;
+          // justify-content: center;
+          flex-wrap: nowrap;
           align-items: center;
-
-          p {
-            display: none;
-            opacity: 0;
-          }
 
           :where(img, i) {
             --_drawer-brand-size: 3.5rem;
+            translate: 1rem;
           }
         }
 
@@ -243,6 +290,16 @@
             span {
               display: none;
             }
+          }
+        }
+
+        // Footer and Header dropdown text hide
+        & .drawer-header,
+        & .drawer-footer {
+          & .drawer-dropdown-content {
+            display: none;
+            opacity: 0;
+            translate: -3rem;
           }
         }
       }
