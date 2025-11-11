@@ -132,3 +132,40 @@ export interface ISidebarDropdownProps {
    */
   customClass?: string | null
 }
+
+/**
+ * Interface props for the SidebarGroup component.
+ * Groups sidebar links together with an optional label.
+ */
+export interface ISidebarGroupProps {
+  /**
+   * Optional group label/text displayed above the grouped links.
+   */
+  text?: string
+
+  /**
+   * Optional Material icon code for the group header.
+   * Only displayed when collapsible is true.
+   * @default null
+   */
+  icon?: string | null
+
+  /**
+   * Enable collapsible behavior with expand/collapse functionality.
+   * When true, the group label becomes a clickable trigger with an arrow icon.
+   * @default false
+   */
+  collapsible?: boolean
+
+  /**
+   * Default open state for collapsible groups.
+   * Only applies when collapsible is true.
+   * @default true
+   */
+  defaultOpen?: boolean
+
+  /**
+   * Optional custom CSS classes to apply to the group container.
+   */
+  customClass?: SidebarClassName | null
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider, UiSidebar, UiSidebarHeader, UiSidebarBody, UiSidebarFooter, UiSidebarText, UiSidebarLink, UiSidebarDropdown } from '@colorful/ui'
+import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider, UiSidebar, UiSidebarHeader, UiSidebarBody, UiSidebarFooter, UiSidebarText, UiSidebarLink, UiSidebarGroup, UiSidebarDropdown } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode();
@@ -36,32 +36,115 @@ function closeDialog() {
         <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
         <img src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
           alt="Avatar Image">
-        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="!sidebarCollapse">
+        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="true">
           <UiButtonMenuText item-text="Workspace" />
-          <UiButtonMenuItem item-text="Personal" icon="&#xe853;" />
-          <UiButtonMenuItem item-text="Enterprise" icon="&#xf041;" />
+          <UiButtonMenuItem item-text="Switch to Personal" icon="&#xe853;"
+            icon-class="bg-primary-fixed rounded-sm p-1" />
+          <UiButtonMenuItem item-text="Switch to Enterprise" icon="&#xe70e;"
+            icon-class="bg-accent-fixed rounded-sm p-1" />
         </UiSidebarDropdown>
       </UiSidebarHeader>
 
       <UiSidebarBody>
         <UiSidebarText text="Platform" />
-        <UiSidebarLink to="/" icon="&#xe88a;" text="Home" active tooltip-text="Go to home page" tooltip-placement="top">
+        <UiSidebarLink to="/" icon="&#xe88a;" active tooltip-text="Go to home page" tooltip-placement="top">
           <template #link="{ linkTarget, linkClasses, }">
             <NuxtLink :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe88a;" aria-hidden="true" />
+              <UiIconMaterial icon-code="&#xe88a;" />
               <span>Home</span>
             </NuxtLink>
           </template>
         </UiSidebarLink>
-
-        <UiSidebarLink to="/components" icon="&#xe5c3;" text="Components" tooltip-text="View components">
+        <UiSidebarLink to="/components" icon="&#xe5c3;" tooltip-text="View components">
           <template #link="{ linkTarget, linkClasses }">
             <NuxtLink :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe5c3;" aria-hidden="true" />
+              <UiIconMaterial icon-code="&#xe5c3;" />
               <span>Components</span>
             </NuxtLink>
           </template>
         </UiSidebarLink>
+        <UiSidebarLink to="/templates" icon="&#xe866;" tooltip-text="View templates">
+          <template #link="{ linkTarget, linkClasses }">
+            <NuxtLink :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe866;" />
+              <span>Templates</span>
+            </NuxtLink>
+          </template>
+        </UiSidebarLink>
+
+        <!-- Group -->
+        <UiSidebarGroup text="Documentation">
+          <UiSidebarLink to="/docs" icon="&#xe873;" child tooltip-text="View docs">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe873;" />
+                <span>Documentation</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/api" icon="&#xe8ef;" text="API Reference" child tooltip-text="API docs">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe8ef;" />
+                <span>API Reference</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/guides" icon="&#xe866;" text="Guides" child tooltip-text="View guides">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe866;" />
+                <span>Guides</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+        </UiSidebarGroup>
+
+        <!-- Collapsible Group -->
+        <UiSidebarText text="Resources" />
+        <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
+          <UiSidebarLink to="/settings/profile" icon="&#xe853;" child tooltip-text="User profile">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe853;" />
+                <span>Profile</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/account" icon="&#xe8b8;" child tooltip-text="Account">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe8b8;" />
+                <span>Account</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/security" icon="&#xe32a;" child tooltip-text="Security">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe32a;" />
+                <span>Security</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/notifications" icon="&#xe7f4;" child tooltip-text="Notifications">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe7f4;" />
+                <span>Notifications</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/billing" icon="&#xf041;" child tooltip-text="Billing">
+            <template #link="{ linkTarget, linkClasses }">
+              <NuxtLink :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xf041;" />
+                <span>Billing</span>
+              </NuxtLink>
+            </template>
+          </UiSidebarLink>
+        </UiSidebarGroup>
+
       </UiSidebarBody>
 
       <UiSidebarFooter>
