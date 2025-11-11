@@ -12,6 +12,8 @@ export { default as UiBadgeGroup } from './components/ui/badge/BadgeGroup.vue'
 
 // Components - Button
 export { default as UiButton } from './components/ui/button/Button.vue'
+export { default as UiButtonFabGroup } from './components/ui/button/ButtonFabGroup.vue'
+export { default as UiButtonGroup } from './components/ui/button/ButtonGroup.vue'
 export { default as UiButtonMenu } from './components/ui/button/ButtonMenu.vue'
 export { default as UiButtonMenuDivider } from './components/ui/button/ButtonMenuDivider.vue'
 export { default as UiButtonMenuItem } from './components/ui/button/ButtonMenuItem.vue'

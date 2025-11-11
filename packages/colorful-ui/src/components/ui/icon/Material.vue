@@ -17,7 +17,7 @@ const ariaLabel = computed(() => (props.decorative ? undefined : props.ariaLabel
 
 <template>
   <i
-    class="material-symbols-rounded ui-icon"
+    class="material-symbols-rounded"
     :aria-hidden="ariaHidden"
     :role="ariaRole"
     :aria-label="ariaLabel"

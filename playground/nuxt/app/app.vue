@@ -151,12 +151,14 @@ function closeDialog() {
             <template #menu>
               <UiButtonMenuText item-text="My account" />
               <UiButtonMenuItem item-text="Profile" icon="&#xe853;" />
-              <UiButtonMenuItem item-text="Billing" icon="&#xf041;" />
-              <UiButtonMenuItem item-text="Settings" icon="&#xe8b8;" />
+              <UiButtonMenuItem item-text="Billing" icon="&#xf041;"
+                :badge="{ text: 'Issue', variant: 'tonal tonal-danger' }" />
+              <UiButtonMenuItem item-text="Settings" icon="&#xe8b8;" shortcut="⌘ + P"
+                :badge="{ text: '1', pill: true, variant: 'danger' }" />
               <UiButtonMenuDivider />
               <UiButtonMenuText item-text="Resources" />
               <UiButtonMenuItem item-text="Github" />
-              <UiButtonMenuItem item-text="Support" />
+              <UiButtonMenuItem item-text="Support" :badge="{ text: 'NEW', variant: 'gradient', customClass: 'g-accent'}" />
               <UiButtonMenuItem item-text="API" disabled />
               <UiButtonMenuDivider />
               <UiButtonMenuItem item-text="Log Out" icon="&#xe9ba;" is-destructive />

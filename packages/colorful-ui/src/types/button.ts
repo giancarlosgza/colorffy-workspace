@@ -83,3 +83,53 @@ export interface IButtonProps {
    */
   rounded?: boolean
 }
+
+/**
+ * Interface props for the ButtonGroup component.
+ */
+export interface IButtonGroupProps {
+  /**
+   * Applies connected button styling with rounded outer corners.
+   * When true, buttons will have reduced gap and only first/last buttons have rounded corners.
+   */
+  connected?: boolean
+
+  /**
+   * Removes gap completely between buttons. Only works when `connected` is also true.
+   * Creates a seamless joined button group with no spacing.
+   */
+  joined?: boolean
+
+  /**
+   * Arranges buttons vertically instead of horizontally.
+   * Changes which corners are rounded (top corners for first, bottom for last).
+   */
+  vertical?: boolean
+
+  /**
+   * Optional custom CSS classes to apply to the button group container.
+   */
+  customClass?: string | null
+}
+
+/**
+ * Interface props for the ButtonFabGroup component (Floating Action Button Group).
+ */
+export interface IButtonFabGroupProps {
+  /**
+   * Positions the FAB group at the top of the viewport instead of bottom.
+   * Default position is bottom-right. Combine with `start` for top-left.
+   */
+  top?: boolean
+
+  /**
+   * Positions the FAB group at the start (left) of the viewport instead of end (right).
+   * Default position is bottom-right. Combine with `top` for top-left.
+   */
+  start?: boolean
+
+  /**
+   * Optional custom CSS classes to apply to the FAB group container.
+   */
+  customClass?: string | null
+}
