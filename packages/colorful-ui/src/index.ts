@@ -10,6 +10,7 @@ export type * from './types/card'
 export type * from './types/dialog'
 export type * from './types/icon'
 export type * from './types/list'
+export type * from './types/navbar'
 export type * from './types/sidebar'
 
 // Composables

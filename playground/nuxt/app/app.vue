@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider, UiSidebar, UiSidebarHeader, UiSidebarBody, UiSidebarFooter, UiSidebarText, UiSidebarLink, UiSidebarGroup, UiSidebarDropdown } from '@colorful/ui'
+import { UiButton, UiButtonGroup, UiCard, UiAlert, UiButtonMenu, UiButtonMenuText, UiButtonMenuItem, UiBadge, UiBadgeGroup, UiPaneContent, UiAccordionGroup, UiAccordion, UiAlertToast, UiModal, UiIconMaterial, UiInputText, UiButtonTooltip, UiHeaderContent, UiInputSelect, UiButtonFabGroup, UiButtonMenuDivider, UiSidebar, UiSidebarHeader, UiSidebarBody, UiSidebarFooter, UiSidebarText, UiSidebarLink, UiSidebarGroup, UiSidebarDropdown, UiNavbar, UiNavbarBrand, UiNavbarTitle, UiNavbarToggle, UiNavbarAvatar, UiNavbarMobileMenu, UiNavbarCollapse, UiNavbarNav, UiNavbarItem, UiNavbarLink } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode();
+const route = useRoute();
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null);
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false);
+const user = {
+  displayName: 'Giancarlos',
+  email: 'giancarlosgza@gmail.com',
+  photoURL: 'https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg'
+}
 
 /** Methods */
 function showToast() {
@@ -36,7 +42,7 @@ function closeDialog() {
         <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
         <img src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
           alt="Avatar Image">
-        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="true">
+        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="false">
           <UiButtonMenuText item-text="Workspace" />
           <UiButtonMenuItem item-text="Switch to Personal" icon="&#xe853;"
             icon-class="bg-primary-fixed rounded-sm p-1" />
@@ -160,6 +166,57 @@ function closeDialog() {
 
     <!-- Content -->
     <main>
+      <!-- Navbar -->
+      <UiNavbar sticky fluid>
+        <UiNavbarToggle 
+          :collapsed="sidebarCollapse"
+          @toggle="sidebarCollapse = !sidebarCollapse" 
+        />
+        <UiNavbarTitle :title="(route.meta.pageTitle as string) || 'Dashboard'">
+          <template #brand>
+            <UiNavbarBrand text="Admin" initials="A">
+              <template #link="{ linkTarget, brandText }">
+                <NuxtLink :to="linkTarget" class="navbar-logo">
+                  {{ brandText }}
+                </NuxtLink>
+              </template>
+            </UiNavbarBrand>
+          </template>
+        </UiNavbarTitle>
+
+        <UiNavbarMobileMenu>
+          <UiNavbarAvatar 
+            v-if="user"
+            :src="user.photoURL"
+            :alt="`${user.displayName} photo`"
+            size="sm"
+          />
+        </UiNavbarMobileMenu>
+
+        <UiNavbarCollapse>
+          <template #start>
+            <UiNavbarItem>
+              <UiBadge 
+                text="ADMIN" 
+                variant="outline" 
+                custom-class="my-0"
+                icon-code="&#xef3d;"
+                icon-class="text-gradient g-violet"
+              />
+            </UiNavbarItem>
+            <UiNavbarItem>
+              <UiNavbarAvatar 
+                v-if="user"
+                :src="user.photoURL"
+                :alt="`${user.displayName} photo`"
+                size="navbar"
+              />
+            </UiNavbarItem>
+          </template>
+        </UiNavbarCollapse>
+      </UiNavbar>
+
+
       <div class="container mt-5">
         <!-- Header -->
         <UiHeaderContent title="Welcome to Nuxt Colorful UI"

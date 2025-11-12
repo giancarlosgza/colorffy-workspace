@@ -56,12 +56,22 @@ export { default as UiListGroup } from './components/ui/list/ListGroup.vue'
 export { default as UiListItem } from './components/ui/list/ListItem.vue'
 
 // Components - Navigation
-export { default as UiDrawerLink } from './components/ui/navigation/DrawerLink.vue'
-export { default as UiNavbarLink } from './components/ui/navigation/NavbarLink.vue'
 export { default as UiNavigationBar } from './components/ui/navigation/NavigationBar.vue'
 export { default as UiPopoverMenu } from './components/ui/navigation/PopoverMenu.vue'
 export { default as UiSegmentedControls } from './components/ui/navigation/SegmentedControls.vue'
 export { default as UiTabs } from './components/ui/navigation/Tabs.vue'
+
+// Components - Navbar
+export { default as UiNavbar } from './components/ui/navbar/Navbar.vue'
+export { default as UiNavbarBrand } from './components/ui/navbar/NavbarBrand.vue'
+export { default as UiNavbarTitle } from './components/ui/navbar/NavbarTitle.vue'
+export { default as UiNavbarToggle } from './components/ui/navbar/NavbarToggle.vue'
+export { default as UiNavbarAvatar } from './components/ui/navbar/NavbarAvatar.vue'
+export { default as UiNavbarMobileMenu } from './components/ui/navbar/NavbarMobileMenu.vue'
+export { default as UiNavbarCollapse } from './components/ui/navbar/NavbarCollapse.vue'
+export { default as UiNavbarNav } from './components/ui/navbar/NavbarNav.vue'
+export { default as UiNavbarItem } from './components/ui/navbar/NavbarItem.vue'
+export { default as UiNavbarLink } from './components/ui/navbar/NavbarLink.vue'
 
 // Components - Sidebar
 export { default as UiSidebar } from './components/ui/sidebar/Sidebar.vue'
