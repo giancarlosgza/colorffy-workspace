@@ -6,8 +6,8 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+        date: /Date$/i
+      }
     },
     options: {
       storySort: {
@@ -26,14 +26,14 @@ const preview: Preview = {
             'Link',
             'List',
             'Modal',
-            'Icon',
+            'Icon'
           ],
-          'UI',
+          'UI'
         ],
-        method: 'alphabetical',
-      },
-    },
-  },
+        method: 'alphabetical'
+      }
+    }
+  }
 }
 
 export default preview

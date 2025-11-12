@@ -9,14 +9,14 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [null, 'flush', 'horizontal'],
+      options: [null, 'flush', 'horizontal']
     },
     size: {
       control: 'select',
-      options: [null, 'sm', 'lg'],
+      options: [null, 'sm', 'lg']
     },
-    isInteractive: { control: 'boolean' },
-  },
+    isInteractive: { control: 'boolean' }
+  }
 } satisfies Meta<typeof UiListGroup>
 
 export default meta
@@ -31,8 +31,8 @@ export const Default: Story = {
         <UiListItem title="Second Item" text="This is the second item" />
         <UiListItem title="Third Item" text="This is the third item" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const WithIcons: Story = {
@@ -45,8 +45,8 @@ export const WithIcons: Story = {
         <UiListItem title="Profile" icon="&#xe7fd;" text="View your profile" />
         <UiListItem title="Logout" icon="&#xe9ba;" text="Sign out of your account" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const ActiveItem: Story = {
@@ -59,8 +59,8 @@ export const ActiveItem: Story = {
         <UiListItem title="Tasks" text="Pending tasks" />
         <UiListItem title="Reports" text="View reports" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const DisabledItem: Story = {
@@ -72,8 +72,8 @@ export const DisabledItem: Story = {
         <UiListItem title="Disabled Item" text="This item is disabled" :disabled="true" />
         <UiListItem title="Another Available Item" text="This item is also clickable" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const Interactive: Story = {
@@ -85,8 +85,8 @@ export const Interactive: Story = {
         <UiListItem title="Clickable Item 2" text="Click me" />
         <UiListItem title="Clickable Item 3" text="I'm interactive" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const Flush: Story = {
@@ -98,8 +98,8 @@ export const Flush: Story = {
         <UiListItem title="Flush List Item 2" />
         <UiListItem title="Flush List Item 3" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const Small: Story = {
@@ -111,8 +111,8 @@ export const Small: Story = {
         <UiListItem title="Small Item 2" text="Compact size" />
         <UiListItem title="Small Item 3" text="Compact size" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const Large: Story = {
@@ -124,8 +124,8 @@ export const Large: Story = {
         <UiListItem title="Large Item 2" text="More spacing" />
         <UiListItem title="Large Item 3" text="More spacing" />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const ComplexList: Story = {
@@ -156,6 +156,6 @@ export const ComplexList: Story = {
           :disabled="true"
         />
       </UiListGroup>
-    `,
-  }),
+    `
+  })
 }

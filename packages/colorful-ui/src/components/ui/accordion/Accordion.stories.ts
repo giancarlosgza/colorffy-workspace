@@ -10,8 +10,8 @@ const meta = {
     title: { control: 'text' },
     text: { control: 'text' },
     open: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-  },
+    disabled: { control: 'boolean' }
+  }
 } satisfies Meta<typeof UiAccordion>
 
 export default meta
@@ -20,28 +20,28 @@ type Story = StoryObj<typeof meta>
 export const Single: Story = {
   args: {
     title: 'Accordion Title',
-    text: 'This is the accordion content.',
-  },
+    text: 'This is the accordion content.'
+  }
 }
 
 export const Open: Story = {
   args: {
     title: 'Open Accordion',
     text: 'This accordion is open by default.',
-    open: true,
-  },
+    open: true
+  }
 }
 
 export const Disabled: Story = {
   args: {
     title: 'Disabled Accordion',
     text: 'This accordion is disabled.',
-    disabled: true,
-  },
+    disabled: true
+  }
 }
 
 export const WithCustomContent: Story = {
-  render: (args) => ({
+  render: args => ({
     components: { UiAccordion },
     setup() {
       return { args }
@@ -60,8 +60,8 @@ export const WithCustomContent: Story = {
           </div>
         </template>
       </UiAccordion>
-    `,
-  }),
+    `
+  })
 }
 
 export const AccordionGroup: Story = {
@@ -85,8 +85,8 @@ export const AccordionGroup: Story = {
           </template>
         </UiAccordion>
       </UiAccordionGroup>
-    `,
-  }),
+    `
+  })
 }
 
 export const TransparentGroup: Story = {
@@ -105,6 +105,6 @@ export const TransparentGroup: Story = {
           </template>
         </UiAccordion>
       </UiAccordionGroup>
-    `,
-  }),
+    `
+  })
 }

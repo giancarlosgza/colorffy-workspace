@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { ISidebarGroupProps } from '@/types/sidebar'
+import { ref } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<ISidebarGroupProps>(), {
   icon: null,
   collapsible: false,
   defaultOpen: true,
-  customClass: '',
+  customClass: ''
 })
 
 /** State */
@@ -24,7 +24,7 @@ function toggleGroup() {
 </script>
 
 <template>
-  <div :class="['drawer-group', customClass]">
+  <div class="drawer-group" :class="[customClass]">
     <!-- Collapsible header -->
     <div
       v-if="collapsible && text"
@@ -40,7 +40,9 @@ function toggleGroup() {
     </div>
 
     <!-- Non-collapsible label -->
-    <p v-else-if="text" class="drawer-text">{{ text }}</p>
+    <p v-else-if="text" class="drawer-text">
+      {{ text }}
+    </p>
 
     <!-- Group content -->
     <div

@@ -2,7 +2,7 @@
 import type { INavbarItemProps } from '@/types/navbar'
 
 /** Props */
-const props = withDefaults(defineProps<INavbarItemProps>(), {
+const _props = withDefaults(defineProps<INavbarItemProps>(), {
   customClass: null
 })
 </script>

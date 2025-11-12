@@ -4,12 +4,12 @@ A modern Vue 3 component library built with TypeScript. Features a comprehensive
 
 ## Features
 
-✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more  
-🎨 **Style-Agnostic** - Use with ColorfulCSS or bring your own styles  
-📘 **Full TypeScript Support** - Complete type definitions for all components  
-🔌 **Flexible Installation** - Use globally or import individually  
-🚀 **Tree-shakeable** - Import only what you need  
-⚡ **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications  
+✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more
+🎨 **Style-Agnostic** - Use with ColorfulCSS or bring your own styles
+📘 **Full TypeScript Support** - Complete type definitions for all components
+🔌 **Flexible Installation** - Use globally or import individually
+🚀 **Tree-shakeable** - Import only what you need
+⚡ **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications
 🎯 **Headless Architecture** - Full control over styling and behavior
 
 ## Installation
@@ -52,10 +52,10 @@ npm install @colorful/css
 Import the compiled CSS in your `main.ts`:
 
 ```typescript
-import { createApp } from 'vue'
-import '@colorful/css' // Import styles
 import ColorfulUI from '@colorful/ui'
+import { createApp } from 'vue'
 import App from './App.vue'
+import '@colorful/css' // Import styles
 
 const app = createApp(App)
 app.use(ColorfulUI)
@@ -90,11 +90,11 @@ For full customization, use SCSS to override variables:
 ```
 
 ```typescript
+import ColorfulUI from '@colorful/ui'
 // main.ts
 import { createApp } from 'vue'
-import './assets/main.scss' // Import customized styles
-import ColorfulUI from '@colorful/ui'
 import App from './App.vue'
+import './assets/main.scss' // Import customized styles
 
 const app = createApp(App)
 app.use(ColorfulUI)
@@ -129,9 +129,9 @@ For more details on ColorfulCSS customization, see the [ColorfulCSS README](http
 Register all components globally in your `main.ts`:
 
 ```typescript
+import ColorfulUI from '@colorful/ui'
 import { createApp } from 'vue'
 import App from './App.vue'
-import ColorfulUI from '@colorful/ui'
 
 const app = createApp(App)
 app.use(ColorfulUI)
@@ -159,7 +159,7 @@ Import only the components you need:
 
 ```vue
 <script setup lang="ts">
-import { UiButton, UiCard, UiAlert } from '@giancarlosgza/colorful-ui'
+import { UiAlert, UiButton, UiCard } from '@giancarlosgza/colorful-ui'
 </script>
 
 <template>
@@ -170,10 +170,10 @@ import { UiButton, UiCard, UiAlert } from '@giancarlosgza/colorful-ui'
         <h2>Card Content</h2>
       </template>
     </UiCard>
-    <UiAlert 
-      type="banner" 
-      variant="success" 
-      message="Operation successful!" 
+    <UiAlert
+      type="banner"
+      variant="success"
+      message="Operation successful!"
     />
   </div>
 </template>
@@ -184,9 +184,9 @@ import { UiButton, UiCard, UiAlert } from '@giancarlosgza/colorful-ui'
 Register only specific components globally:
 
 ```typescript
+import { UiAlert, UiButton, UiCard } from '@colorful/ui'
 import { createApp } from 'vue'
 import App from './App.vue'
-import { UiButton, UiCard, UiAlert } from '@colorful/ui'
 
 const app = createApp(App)
 
@@ -212,7 +212,7 @@ Add ColorfulCSS to your `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
-  css: ['@colorful/css'],
+  css: ['@colorful/css']
 })
 ```
 
@@ -280,7 +280,7 @@ Import components directly in your pages/components:
 
 ```vue
 <script setup lang="ts">
-import { UiButton, UiCard, UiAlert } from '@giancarlosgza/colorful-ui'
+import { UiAlert, UiButton, UiCard } from '@giancarlosgza/colorful-ui'
 </script>
 
 <template>
@@ -305,7 +305,7 @@ export default defineNuxtConfig({
     {
       path: 'node_modules/@colorful/ui/dist',
       pattern: '**/*.vue',
-      pathPrefix: false,
+      pathPrefix: false
     }
   ]
 })
@@ -399,7 +399,7 @@ export default defineNuxtConfig({
 The library also exports useful composables:
 
 ```typescript
-import { useToast, useDateUtils, useTextUtils } from '@colorful/ui'
+import { useDateUtils, useTextUtils, useToast } from '@colorful/ui'
 
 // Show toast notification
 const toast = useToast()
@@ -422,25 +422,25 @@ const textUtils = useTextUtils()
   <UiButton variant="filled" text="Primary" />
   <UiButton variant="filled" color="success" text="Success" />
   <UiButton variant="filled" color="danger" text="Danger" />
-  
+
   <!-- Tonal buttons -->
   <UiButton variant="tonal" color="primary" text="Tonal" />
-  
+
   <!-- Outline buttons -->
   <UiButton variant="outline" text="Outline" />
-  
+
   <!-- With icon -->
   <UiButton variant="filled" text="With Icon">
     <template #icon>
       <UiIconMaterial icon-code="&#xe000;" />
     </template>
   </UiButton>
-  
+
   <!-- Sizes -->
   <UiButton variant="filled" size="sm" text="Small" />
   <UiButton variant="filled" size="md" text="Medium" />
   <UiButton variant="filled" size="lg" text="Large" />
-  
+
   <!-- Loading state -->
   <UiButton variant="filled" :loading="true" text="Loading" />
 </template>
@@ -450,20 +450,20 @@ const textUtils = useTextUtils()
 
 ```vue
 <template>
-  <UiAlert 
+  <UiAlert
     type="banner"
     variant="success"
     title="Success!"
     message="Your operation completed successfully."
   />
-  
-  <UiAlert 
+
+  <UiAlert
     type="snackbar"
     variant="warning"
     message="Warning message"
   />
-  
-  <UiAlert 
+
+  <UiAlert
     type="tonal"
     variant="danger"
     title="Error"
@@ -496,7 +496,7 @@ const textUtils = useTextUtils()
         <p>Content for section 1</p>
       </template>
     </UiAccordion>
-    
+
     <UiAccordion title="Section 2" name="accordion-demo">
       <template #content>
         <p>Content for section 2</p>
@@ -510,18 +510,18 @@ const textUtils = useTextUtils()
 
 ```vue
 <template>
-  <UiInputText 
+  <UiInputText
     v-model="name"
     label="Name"
     placeholder="Enter your name"
   />
-  
+
   <UiInputSelect
     v-model="selected"
     :options="options"
     label="Choose option"
   />
-  
+
   <UiInputCheck
     v-model="agree"
     label="I agree to terms"
@@ -534,11 +534,11 @@ const textUtils = useTextUtils()
 All components come with full TypeScript support. Import types as needed:
 
 ```typescript
-import type { 
-  ButtonVariant, 
-  ButtonColor, 
+import type {
   AlertType,
-  AlertVariant 
+  AlertVariant,
+  ButtonColor,
+  ButtonVariant
 } from '@colorful/ui'
 
 // Use in your components
@@ -596,7 +596,7 @@ Override CSS custom properties for runtime theming:
   /* Theme colors */
   --theme-primary-base: #4f46e5;
   --theme-secondary-base: #ec4899;
-  
+
   /* Component variables */
   --_btn-radius: 50px;
   --_card-bg-color: #ffffff;

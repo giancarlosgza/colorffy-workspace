@@ -2,7 +2,7 @@
 import type { INavbarCollapseProps } from '@/types/navbar'
 
 /** Props */
-const props = withDefaults(defineProps<INavbarCollapseProps>(), {
+const _props = withDefaults(defineProps<INavbarCollapseProps>(), {
   customClass: null
 })
 </script>

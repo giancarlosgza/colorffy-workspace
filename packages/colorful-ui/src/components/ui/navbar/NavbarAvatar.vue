@@ -2,7 +2,7 @@
 import type { INavbarAvatarProps } from '@/types/navbar'
 
 /** Props */
-const props = withDefaults(defineProps<INavbarAvatarProps>(), {
+const _props = withDefaults(defineProps<INavbarAvatarProps>(), {
   src: null,
   alt: 'User avatar',
   size: 'navbar',
@@ -20,7 +20,7 @@ defineEmits<{
     class="nav-link avatar-link"
     :class="[
       { 'p-2': size === 'sm' },
-      customClass
+      customClass,
     ]"
     role="button"
     @click="$emit('click')"
@@ -31,7 +31,7 @@ defineEmits<{
       class="img-fluid img-avatar"
       :class="{
         'avatar-sm': size === 'sm',
-        'avatar-navbar': size === 'navbar'
+        'avatar-navbar': size === 'navbar',
       }"
       :alt="alt"
     >
@@ -40,7 +40,7 @@ defineEmits<{
       class="img-avatar avatar-placeholder"
       :class="{
         'avatar-sm': size === 'sm',
-        'avatar-navbar': size === 'navbar'
+        'avatar-navbar': size === 'navbar',
       }"
     />
   </span>

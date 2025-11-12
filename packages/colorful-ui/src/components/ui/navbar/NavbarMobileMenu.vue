@@ -2,7 +2,7 @@
 import type { INavbarMobileMenuProps } from '@/types/navbar'
 
 /** Props */
-const props = withDefaults(defineProps<INavbarMobileMenuProps>(), {
+const _props = withDefaults(defineProps<INavbarMobileMenuProps>(), {
   customClass: null
 })
 </script>

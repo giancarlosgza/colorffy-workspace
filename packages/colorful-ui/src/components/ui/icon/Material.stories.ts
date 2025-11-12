@@ -9,8 +9,8 @@ const meta = {
     iconCode: { control: 'text' },
     color: { control: 'text' },
     decorative: { control: 'boolean' },
-    ariaLabel: { control: 'text' },
-  },
+    ariaLabel: { control: 'text' }
+  }
 } satisfies Meta<typeof UiIconMaterial>
 
 export default meta
@@ -18,55 +18,55 @@ type Story = StoryObj<typeof meta>
 
 export const Search: Story = {
   args: {
-    iconCode: '&#xe8b6;', // search icon
-  },
+    iconCode: '&#xe8b6;' // search icon
+  }
 }
 
 export const Home: Story = {
   args: {
-    iconCode: '&#xe88a;', // home icon
-  },
+    iconCode: '&#xe88a;' // home icon
+  }
 }
 
 export const Settings: Story = {
   args: {
-    iconCode: '&#xe8b8;', // settings icon
-  },
+    iconCode: '&#xe8b8;' // settings icon
+  }
 }
 
 export const Favorite: Story = {
   args: {
-    iconCode: '&#xe87d;', // favorite icon
-  },
+    iconCode: '&#xe87d;' // favorite icon
+  }
 }
 
 export const Delete: Story = {
   args: {
-    iconCode: '&#xe872;', // delete icon
-  },
+    iconCode: '&#xe872;' // delete icon
+  }
 }
 
 export const Edit: Story = {
   args: {
-    iconCode: '&#xe3c9;', // edit icon
-  },
+    iconCode: '&#xe3c9;' // edit icon
+  }
 }
 
 export const Check: Story = {
   args: {
-    iconCode: '&#xe5ca;', // check icon
-  },
+    iconCode: '&#xe5ca;' // check icon
+  }
 }
 
 export const Close: Story = {
   args: {
-    iconCode: '&#xe5cd;', // close icon
-  },
+    iconCode: '&#xe5cd;' // close icon
+  }
 }
 
 export const AllIcons: Story = {
   args: {
-    iconCode: '&#xe88a;',
+    iconCode: '&#xe88a;'
   },
   render: () => ({
     components: { UiIconMaterial },
@@ -121,17 +121,17 @@ export const AllIcons: Story = {
           <p style="font-size: 0.75rem; margin-top: 0.5rem;">Error</p>
         </div>
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const WithAccessibility: Story = {
   args: {
     iconCode: '&#xe88a;',
     decorative: false,
-    ariaLabel: 'Home icon',
+    ariaLabel: 'Home icon'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiIconMaterial },
     setup() {
       return { args }
@@ -152,6 +152,6 @@ export const WithAccessibility: Story = {
           />
         </div>
       </div>
-    `,
-  }),
+    `
+  })
 }

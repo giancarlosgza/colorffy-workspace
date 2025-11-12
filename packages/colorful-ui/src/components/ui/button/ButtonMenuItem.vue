@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { IBadgeProps } from '@/types/badge'
-import UiIconMaterial from '../icon/Material.vue'
+import { computed } from 'vue'
 import UiBadge from '../badge/Badge.vue'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Interfaces */
 interface IButtonMenuItemProps {

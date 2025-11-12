@@ -7,8 +7,8 @@ const meta: Meta<typeof UiInputCheck> = {
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
-    type: { control: 'text' },
-  },
+    type: { control: 'text' }
+  }
 }
 
 export default meta
@@ -16,16 +16,16 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'Accept terms and conditions',
-  },
+    label: 'Accept terms and conditions'
+  }
 }
 
 export const Checked: Story = {
   args: {
     label: 'I agree',
-    modelValue: true,
+    modelValue: true
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiInputCheck },
     setup() {
       return { args }
@@ -35,21 +35,21 @@ export const Checked: Story = {
         label="I agree" 
         :model-value="true"
       />
-    `,
-  }),
+    `
+  })
 }
 
 export const Disabled: Story = {
   args: {
-    label: 'Disabled checkbox',
-  },
+    label: 'Disabled checkbox'
+  }
 }
 
 export const Multiple: Story = {
   args: {
-    label: 'Option 1',
+    label: 'Option 1'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiInputCheck },
     setup() {
       return { args }
@@ -61,6 +61,6 @@ export const Multiple: Story = {
         <UiInputCheck label="Option 3" />
         <UiInputCheck label="Option 4" />
       </div>
-    `,
-  }),
+    `
+  })
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /** Props */
-const props = withDefaults(defineProps<{
+const _props = withDefaults(defineProps<{
   text?: string
   customClass?: string | null
 }>(), {

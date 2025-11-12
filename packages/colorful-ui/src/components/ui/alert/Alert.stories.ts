@@ -8,16 +8,16 @@ const meta = {
   argTypes: {
     type: {
       control: 'select',
-      options: ['banner', 'tonal', 'snackbar'],
+      options: ['banner', 'tonal', 'snackbar']
     },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'accent', 'neutral', 'success', 'warning', 'danger', 'transparent', 'default'],
+      options: ['primary', 'secondary', 'accent', 'neutral', 'success', 'warning', 'danger', 'transparent', 'default']
     },
     title: { control: 'text' },
     message: { control: 'text' },
-    critical: { control: 'boolean' },
-  },
+    critical: { control: 'boolean' }
+  }
 } satisfies Meta<typeof UiAlert>
 
 export default meta
@@ -28,8 +28,8 @@ export const SuccessBanner: Story = {
     type: 'banner',
     variant: 'success',
     title: 'Success!',
-    message: 'Your operation completed successfully.',
-  },
+    message: 'Your operation completed successfully.'
+  }
 }
 
 export const WarningBanner: Story = {
@@ -37,8 +37,8 @@ export const WarningBanner: Story = {
     type: 'banner',
     variant: 'warning',
     title: 'Warning',
-    message: 'Please review the following information.',
-  },
+    message: 'Please review the following information.'
+  }
 }
 
 export const DangerBanner: Story = {
@@ -46,8 +46,8 @@ export const DangerBanner: Story = {
     type: 'banner',
     variant: 'danger',
     title: 'Error',
-    message: 'Something went wrong. Please try again.',
-  },
+    message: 'Something went wrong. Please try again.'
+  }
 }
 
 export const InfoBanner: Story = {
@@ -55,24 +55,24 @@ export const InfoBanner: Story = {
     type: 'banner',
     variant: 'primary',
     title: 'Information',
-    message: 'Here is some important information for you.',
-  },
+    message: 'Here is some important information for you.'
+  }
 }
 
 export const TonalAlert: Story = {
   args: {
     type: 'tonal',
     variant: 'success',
-    message: 'This is a tonal alert.',
-  },
+    message: 'This is a tonal alert.'
+  }
 }
 
 export const SnackbarAlert: Story = {
   args: {
     type: 'snackbar',
     variant: 'success',
-    message: 'Action completed successfully!',
-  },
+    message: 'Action completed successfully!'
+  }
 }
 
 export const CriticalAlert: Story = {
@@ -81,6 +81,6 @@ export const CriticalAlert: Story = {
     variant: 'danger',
     title: 'Critical Error',
     message: 'This is a critical error that requires immediate attention.',
-    critical: true,
-  },
+    critical: true
+  }
 }

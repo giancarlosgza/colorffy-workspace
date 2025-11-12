@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IButtonProps } from '@/types/button'
 import type { RouteLocationRaw } from 'vue-router'
+import type { IButtonProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
 

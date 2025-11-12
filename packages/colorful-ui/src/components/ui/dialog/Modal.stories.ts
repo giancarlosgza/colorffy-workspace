@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiModal from './Modal.vue'
 import UiButton from '../button/Button.vue'
+import UiModal from './Modal.vue'
 
 const meta = {
   title: 'Components/Modal',
@@ -11,24 +11,24 @@ const meta = {
     title: { control: 'text' },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg', 'xl', 'full'],
-    },
-  },
+      options: ['sm', 'md', 'lg', 'xl', 'full']
+    }
+  }
 } satisfies Meta<typeof UiModal>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: (args) => ({
+  render: _args => ({
     components: { UiModal, UiButton },
     setup() {
       const modalRef = ref<InstanceType<typeof UiModal> | null>(null)
-      
+
       const openModal = () => {
         modalRef.value?.showDialog()
       }
-      
+
       return { modalRef, openModal }
     },
     template: `
@@ -43,24 +43,24 @@ export const Default: Story = {
           </template>
         </UiModal>
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const WithFooter: Story = {
-  render: (args) => ({
+  render: _args => ({
     components: { UiModal, UiButton },
     setup() {
       const modalRef = ref<InstanceType<typeof UiModal> | null>(null)
-      
+
       const openModal = () => {
         modalRef.value?.showDialog()
       }
-      
+
       const closeModal = () => {
         modalRef.value?.closeDialog()
       }
-      
+
       return { modalRef, openModal, closeModal }
     },
     template: `
@@ -79,20 +79,20 @@ export const WithFooter: Story = {
           </template>
         </UiModal>
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const LargeModal: Story = {
-  render: (args) => ({
+  render: _args => ({
     components: { UiModal, UiButton },
     setup() {
       const modalRef = ref<InstanceType<typeof UiModal> | null>(null)
-      
+
       const openModal = () => {
         modalRef.value?.showDialog()
       }
-      
+
       return { modalRef, openModal }
     },
     template: `
@@ -108,20 +108,20 @@ export const LargeModal: Story = {
           </template>
         </UiModal>
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const SmallModal: Story = {
-  render: (args) => ({
+  render: _args => ({
     components: { UiModal, UiButton },
     setup() {
       const modalRef = ref<InstanceType<typeof UiModal> | null>(null)
-      
+
       const openModal = () => {
         modalRef.value?.showDialog()
       }
-      
+
       return { modalRef, openModal }
     },
     template: `
@@ -136,6 +136,6 @@ export const SmallModal: Story = {
           </template>
         </UiModal>
       </div>
-    `,
-  }),
+    `
+  })
 }

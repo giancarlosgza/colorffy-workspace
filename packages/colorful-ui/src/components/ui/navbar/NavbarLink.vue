@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { INavbarLinkProps } from '@/types/navbar'
+import { computed } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<INavbarLinkProps>(), {
@@ -33,8 +33,8 @@ const linkTarget = computed(() => {
         :href="disabled ? undefined : linkTarget"
         class="nav-link"
         :class="[
-          { 'active': active, 'disabled': disabled },
-          customClass
+          { active, disabled },
+          customClass,
         ]"
         :aria-current="active ? 'page' : undefined"
         :aria-disabled="disabled || undefined"

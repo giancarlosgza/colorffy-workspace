@@ -7,8 +7,8 @@ const meta: Meta<typeof UiInputColorPicker> = {
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
-    maxLength: { control: 'number' },
-  },
+    maxLength: { control: 'number' }
+  }
 }
 
 export default meta
@@ -17,22 +17,22 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Choose a color',
-    modelValue: '#3b82f6',
-  },
+    modelValue: '#3b82f6'
+  }
 }
 
 export const WithoutLabel: Story = {
   args: {
-    modelValue: '#ef4444',
-  },
+    modelValue: '#ef4444'
+  }
 }
 
 export const CustomColors: Story = {
   args: {
     label: 'Pick your favorite color',
-    modelValue: '#8b5cf6',
+    modelValue: '#8b5cf6'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiInputColorPicker },
     setup() {
       return { args }
@@ -45,16 +45,16 @@ export const CustomColors: Story = {
         <UiInputColorPicker label="Warning Color" model-value="#f59e0b" />
         <UiInputColorPicker label="Danger Color" model-value="#ef4444" />
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const Interactive: Story = {
   args: {
     label: 'Pick a color',
-    modelValue: '#6366f1',
+    modelValue: '#6366f1'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiInputColorPicker },
     setup() {
       return { args }
@@ -69,6 +69,6 @@ export const Interactive: Story = {
           This text uses the selected color
         </p>
       </div>
-    `,
-  }),
+    `
+  })
 }

@@ -10,8 +10,8 @@ const meta: Meta<typeof UiInputRange> = {
     min: { control: 'number' },
     max: { control: 'number' },
     step: { control: 'number' },
-    optionalLabel: { control: 'boolean' },
-  },
+    optionalLabel: { control: 'boolean' }
+  }
 }
 
 export default meta
@@ -23,8 +23,8 @@ export const Default: Story = {
     min: 0,
     max: 100,
     step: 1,
-    modelValue: 50,
-  },
+    modelValue: 50
+  }
 }
 
 export const WithoutLabel: Story = {
@@ -32,8 +32,8 @@ export const WithoutLabel: Story = {
     min: 0,
     max: 10,
     step: 0.5,
-    modelValue: 5,
-  },
+    modelValue: 5
+  }
 }
 
 export const Percentage: Story = {
@@ -42,8 +42,8 @@ export const Percentage: Story = {
     min: 0,
     max: 100,
     step: 5,
-    modelValue: 75,
-  },
+    modelValue: 75
+  }
 }
 
 export const Temperature: Story = {
@@ -52,8 +52,8 @@ export const Temperature: Story = {
     min: -10,
     max: 40,
     step: 1,
-    modelValue: 22,
-  },
+    modelValue: 22
+  }
 }
 
 export const DecimalSteps: Story = {
@@ -62,8 +62,8 @@ export const DecimalSteps: Story = {
     min: 0,
     max: 1,
     step: 0.01,
-    modelValue: 0.5,
-  },
+    modelValue: 0.5
+  }
 }
 
 export const Multiple: Story = {
@@ -72,9 +72,9 @@ export const Multiple: Story = {
     min: 0,
     max: 100,
     step: 1,
-    modelValue: 50,
+    modelValue: 50
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiInputRange },
     setup() {
       return { args }
@@ -86,8 +86,8 @@ export const Multiple: Story = {
         <UiInputRange label="Saturation" :min="0" :max="100" :step="1" :model-value="50" />
         <UiInputRange label="Blur" :min="0" :max="10" :step="0.5" :model-value="0" />
       </div>
-    `,
-  }),
+    `
+  })
 }
 
 export const WithOptionalLabel: Story = {
@@ -97,6 +97,6 @@ export const WithOptionalLabel: Story = {
     max: 100,
     step: 1,
     modelValue: 30,
-    optionalLabel: true,
-  },
+    optionalLabel: true
+  }
 }

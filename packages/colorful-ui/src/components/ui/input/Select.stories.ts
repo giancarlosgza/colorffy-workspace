@@ -10,8 +10,8 @@ const meta: Meta<typeof UiInputSelect> = {
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     required: { control: 'boolean' },
-    optionalLabel: { control: 'boolean' },
-  },
+    optionalLabel: { control: 'boolean' }
+  }
 }
 
 export default meta
@@ -23,7 +23,7 @@ const objectOptions = [
   { id: 1, name: 'John Doe', role: 'Admin' },
   { id: 2, name: 'Jane Smith', role: 'User' },
   { id: 3, name: 'Bob Johnson', role: 'Editor' },
-  { id: 4, name: 'Alice Brown', role: 'User' },
+  { id: 4, name: 'Alice Brown', role: 'User' }
 ]
 
 const countryOptions = [
@@ -31,23 +31,23 @@ const countryOptions = [
   { code: 'uk', name: 'United Kingdom' },
   { code: 'ca', name: 'Canada' },
   { code: 'au', name: 'Australia' },
-  { code: 'mx', name: 'Mexico' },
+  { code: 'mx', name: 'Mexico' }
 ]
 
 export const Default: Story = {
   args: {
     label: 'Select an option',
     options: simpleOptions,
-    placeholder: 'Choose one...',
-  },
+    placeholder: 'Choose one...'
+  }
 }
 
 export const WithValue: Story = {
   args: {
     label: 'Country',
     options: simpleOptions,
-    modelValue: 'Option 2',
-  },
+    modelValue: 'Option 2'
+  }
 }
 
 export const WithObjectOptions: Story = {
@@ -56,8 +56,8 @@ export const WithObjectOptions: Story = {
     options: objectOptions,
     optionLabel: 'name',
     optionValue: 'id',
-    placeholder: 'Select a user...',
-  },
+    placeholder: 'Select a user...'
+  }
 }
 
 export const WithCountries: Story = {
@@ -66,8 +66,8 @@ export const WithCountries: Story = {
     options: countryOptions,
     optionLabel: 'name',
     optionValue: 'code',
-    placeholder: 'Select your country...',
-  },
+    placeholder: 'Select your country...'
+  }
 }
 
 export const Required: Story = {
@@ -75,8 +75,8 @@ export const Required: Story = {
     label: 'Required Field',
     options: simpleOptions,
     required: true,
-    placeholder: 'You must select an option',
-  },
+    placeholder: 'You must select an option'
+  }
 }
 
 export const Disabled: Story = {
@@ -84,8 +84,8 @@ export const Disabled: Story = {
     label: 'Disabled Select',
     options: simpleOptions,
     disabled: true,
-    modelValue: 'Option 1',
-  },
+    modelValue: 'Option 1'
+  }
 }
 
 export const WithOptionalLabel: Story = {
@@ -93,21 +93,21 @@ export const WithOptionalLabel: Story = {
     label: 'Optional Field',
     options: simpleOptions,
     optionalLabel: true,
-    placeholder: 'This field is optional',
-  },
+    placeholder: 'This field is optional'
+  }
 }
 
 export const Multiple: Story = {
   args: {
     label: 'Category',
-    options: simpleOptions,
+    options: simpleOptions
   },
-  render: (args) => ({
+  render: _args => ({
     components: { UiInputSelect },
     setup() {
-      return { 
+      return {
         simpleOptions,
-        countryOptions,
+        countryOptions
       }
     },
     template: `
@@ -131,6 +131,6 @@ export const Multiple: Story = {
           placeholder="Select country..."
         />
       </div>
-    `,
-  }),
+    `
+  })
 }

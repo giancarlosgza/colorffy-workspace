@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ISidebarLinkProps } from '@/types/sidebar'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
-import type { ISidebarLinkProps } from '@/types/sidebar'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */

@@ -119,8 +119,8 @@ Import only the modules you need:
 ```javascript
 // main.js
 import { createApp } from 'vue'
-import '@colorful/css'
 import App from './App.vue'
+import '@colorful/css'
 
 createApp(App).mount('#app')
 ```
@@ -152,8 +152,8 @@ createApp(App).mount('#app')
 ```javascript
 // main.js
 import { createApp } from 'vue'
-import './assets/main.scss'
 import App from './App.vue'
+import './assets/main.scss'
 
 createApp(App).mount('#app')
 ```
@@ -164,7 +164,7 @@ createApp(App).mount('#app')
 ```javascript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  css: ['@colorful/css'],
+  css: ['@colorful/css']
 })
 ```
 
@@ -309,7 +309,7 @@ $font-secondary: 'Your Font Family';
   @include mix.flex-center;
   @include mix.glass-effect;
   @include mix.text-gradient(45deg, (#ff0080, #ff8c00));
-  
+
   // Use color functions
   background: fn.tonal-color($primary, 10);
 }
@@ -324,7 +324,7 @@ Override CSS custom properties at runtime:
   /* Override theme colors */
   --theme-primary-base: #your-color;
   --theme-secondary-base: #your-color;
-  
+
   /* Override component variables */
   --_btn-radius: 50px;
   --_card-bg-color: #your-bg;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { INavbarBrandProps } from '@/types/navbar'
+import { computed } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<INavbarBrandProps>(), {

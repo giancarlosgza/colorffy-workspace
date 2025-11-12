@@ -24,5 +24,5 @@ export default defineNuxtConfig({
     '@/assets/scss/main.scss'
   ],
 
-  modules: ['@nuxtjs/color-mode'],
+  modules: ['@nuxtjs/color-mode']
 })

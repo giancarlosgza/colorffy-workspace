@@ -6,7 +6,9 @@ import { computed, ref } from 'vue'
 const props = withDefaults(defineProps<IAvatarProps>(), {
   src: '',
   size: 'sm',
-  initials: null
+  initials: null,
+  maskShape: null,
+  maskStretch: false
 })
 
 /** Data */
@@ -18,6 +20,12 @@ const avatarClasses = computed(() => {
   if (props.size) {
     classes.push(`avatar-${props.size}`)
   }
+  if (props.maskShape) {
+    classes.push('mask-shape', `shape-${props.maskShape}`)
+    if (props.maskStretch) {
+      classes.push('shape-stretch')
+    }
+  }
   return classes
 })
 const placeholderClasses = computed(() => {
@@ -25,12 +33,24 @@ const placeholderClasses = computed(() => {
   if (props.size) {
     classes.push(`avatar-${props.size}`)
   }
+  if (props.maskShape) {
+    classes.push('mask-shape', `shape-${props.maskShape}`)
+    if (props.maskStretch) {
+      classes.push('shape-stretch')
+    }
+  }
   return classes
 })
 const initialsAvatarClasses = computed(() => {
   const classes = ['img-avatar', 'initials-avatar']
   if (props.size) {
     classes.push(`avatar-${props.size}`)
+  }
+  if (props.maskShape) {
+    classes.push('mask-shape', `shape-${props.maskShape}`)
+    if (props.maskStretch) {
+      classes.push('shape-stretch')
+    }
   }
   return classes
 })

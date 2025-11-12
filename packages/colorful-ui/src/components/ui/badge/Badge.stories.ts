@@ -8,16 +8,16 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'primary', 'secondary', 'accent', 'success', 'warning', 'danger', 'outline'],
+      options: ['default', 'primary', 'secondary', 'accent', 'success', 'warning', 'danger', 'outline']
     },
     text: { control: 'text' },
     iconCode: { control: 'text' },
     size: {
       control: 'select',
-      options: ['sm'],
+      options: ['sm']
     },
-    pill: { control: 'boolean' },
-  },
+    pill: { control: 'boolean' }
+  }
 } satisfies Meta<typeof UiBadge>
 
 export default meta
@@ -25,57 +25,57 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    text: 'Default',
-  },
+    text: 'Default'
+  }
 }
 
 export const Primary: Story = {
   args: {
     variant: 'primary',
-    text: 'Primary',
-  },
+    text: 'Primary'
+  }
 }
 
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
-    text: 'Secondary',
-  },
+    text: 'Secondary'
+  }
 }
 
 export const Success: Story = {
   args: {
     variant: 'success',
-    text: 'Success',
-  },
+    text: 'Success'
+  }
 }
 
 export const Warning: Story = {
   args: {
     variant: 'warning',
-    text: 'Warning',
-  },
+    text: 'Warning'
+  }
 }
 
 export const Danger: Story = {
   args: {
     variant: 'danger',
-    text: 'Danger',
-  },
+    text: 'Danger'
+  }
 }
 
 export const Outline: Story = {
   args: {
     variant: 'outline',
-    text: 'Outline',
-  },
+    text: 'Outline'
+  }
 }
 
 export const AllVariants: Story = {
   args: {
-    text: 'Badge',
+    text: 'Badge'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiBadge },
     setup() {
       return { args }
@@ -91,6 +91,6 @@ export const AllVariants: Story = {
         <UiBadge variant="danger" text="Danger" />
         <UiBadge variant="outline" text="Outline" />
       </div>
-    `,
-  }),
+    `
+  })
 }

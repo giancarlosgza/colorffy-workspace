@@ -9,10 +9,10 @@ const meta: Meta<typeof UiAvatar> = {
     src: { control: 'text' },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg', 'navbar', 'menu'],
+      options: ['sm', 'md', 'lg', 'navbar', 'menu']
     },
-    initials: { control: 'text' },
-  },
+    initials: { control: 'text' }
+  }
 }
 
 export default meta
@@ -20,44 +20,44 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    src: 'https://i.pravatar.cc/150?img=1',
-  },
+    src: 'https://i.pravatar.cc/150?img=1'
+  }
 }
 
 export const Small: Story = {
   args: {
     src: 'https://i.pravatar.cc/150?img=2',
-    size: 'sm',
-  },
+    size: 'sm'
+  }
 }
 
 export const Medium: Story = {
   args: {
     src: 'https://i.pravatar.cc/150?img=3',
-    size: 'md',
-  },
+    size: 'md'
+  }
 }
 
 export const Large: Story = {
   args: {
     src: 'https://i.pravatar.cc/150?img=4',
-    size: 'lg',
-  },
+    size: 'lg'
+  }
 }
 
 export const WithInitials: Story = {
   args: {
     initials: 'JD',
-    size: 'lg',
-  },
+    size: 'lg'
+  }
 }
 
 export const Multiple: Story = {
   args: {
     src: 'https://i.pravatar.cc/150?img=10',
-    size: 'sm',
+    size: 'sm'
   },
-  render: (args) => ({
+  render: args => ({
     components: { UiAvatar },
     setup() {
       return { args }
@@ -70,6 +70,6 @@ export const Multiple: Story = {
         <UiAvatar initials="AB" size="md" />
         <UiAvatar initials="XY" size="lg" />
       </div>
-    `,
-  }),
+    `
+  })
 }
