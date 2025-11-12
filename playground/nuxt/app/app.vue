@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiAvatar, UiBadge, UiBadgeGroup, UiButton, UiButtonFabGroup, UiButtonGroup, UiButtonMenu, UiButtonMenuDivider, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputSelect, UiInputText, UiModal, UiNavbar, UiNavbarAvatar, UiNavbarBrand, UiNavbarCollapse, UiNavbarItem, UiNavbarMobileMenu, UiNavbarTitle, UiNavbarToggle, UiPaneContent, UiSidebar, UiSidebarBody, UiSidebarDropdown, UiSidebarFooter, UiSidebarGroup, UiSidebarHeader, UiSidebarLink, UiSidebarText } from '@colorful/ui'
+// Global Component Registration
+import type { UiAlertToast, UiModal } from '@colorful/ui'
 
 /** Data */
 const colorMode = useColorMode()
@@ -217,6 +218,14 @@ function closeDialog() {
         <!-- Content -->
         <div class="row">
           <div class="col-md-12">
+            <UiCard variant="pane" size="sm" class="mb-3">
+              <template #body>
+                <UiListGroup variant="flush" size="lg">
+                  <UiListItem text="List Item 1" icon="&#xe88a;" />
+                </UiListGroup>
+              </template>
+            </UiCard>
+
             <UiCard variant="pane">
               <template #header>
                 <UiButton variant="filled" text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse" />

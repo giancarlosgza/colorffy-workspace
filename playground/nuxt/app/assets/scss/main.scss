@@ -2,9 +2,9 @@
 @use '@colorful/css/scss/main';
 
 :root {
-    --theme-primary-base: #00DC82;
-    --theme-secondary-base: #1e1e1e;
-    --theme-accent-base: #0ea5e9;
+    --theme-primary-base: #002662;
+    --theme-secondary-base: #22cbff;
+    --theme-accent-base: #0ee9a0;
     --theme-surface-base: #ffffff;
     --theme-on-secondary: #ffffff;
 
@@ -13,9 +13,9 @@
 }
 
 .dark-mode {
-    --theme-primary-base: #7efcc8;
-    --theme-secondary-base: #eeeeee;
-    --theme-accent-base: #6ad2ff;
+    --theme-primary-base: #c4dbff;
+    --theme-secondary-base: #90deff;
+    --theme-accent-base: #90ffda;
     --theme-surface-base: #000000;
     --theme-on-secondary: #000000;
 }

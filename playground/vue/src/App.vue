@@ -1,11 +1,17 @@
 <script setup lang="ts">
 // Manual Component Registration
-import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiBadge, UiBadgeGroup, UiButton, UiButtonMenu, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputText, UiModal, UiPaneContent } from '@colorful/ui'
+import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiAvatar, UiBadge, UiBadgeGroup, UiButton, UiButtonFabGroup, UiButtonGroup, UiButtonMenu, UiButtonMenuDivider, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputText, UiListGroup, UiListItem, UiModal, UiNavbar, UiNavbarAvatar, UiNavbarBrand, UiNavbarCollapse, UiNavbarItem, UiNavbarMobileMenu, UiNavbarTitle, UiNavbarToggle, UiPaneContent, UiSidebar, UiSidebarBody, UiSidebarDropdown, UiSidebarGroup, UiSidebarHeader, UiSidebarLink, UiSidebarText } from '@colorful/ui'
 import { ref } from 'vue'
 
 /** Data */
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null)
+const sidebarCollapse = ref<boolean>(false)
+const user = {
+  displayName: 'Giancarlos',
+  email: 'giancarlosgza@gmail.com',
+  photoURL: 'https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg'
+}
 
 /** Methods */
 function showToast() {
@@ -31,34 +37,199 @@ function closeDialog() {
 
 <template>
   <div class="grid-main-content">
-    <div class="navigation-drawer drawer-bordered">
-      <div class="drawer-content">
-        <header class="drawer-header">
-          <UiIconMaterial icon-code="&#xe88a;" />
-        </header>
-        <nav class="drawer-body">
-          <a href="/" class="drawer-item router-link-exact-active">
-            <UiIconMaterial icon-code="&#xe88a;" />
-            Home
-          </a>
-        </nav>
-      </div>
-    </div>
+    <!-- Sidebar -->
+    <UiSidebar bordered :rail="sidebarCollapse">
+      <UiSidebarHeader>
+        <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
+        <img
+          src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
+          alt="Avatar Image"
+        >
+        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="false">
+          <UiButtonMenuText item-text="Workspace" />
+          <UiButtonMenuItem
+            item-text="Switch to Personal" icon="&#xe853;"
+            icon-class="bg-primary-fixed rounded-sm p-1"
+          />
+          <UiButtonMenuItem
+            item-text="Switch to Enterprise" icon="&#xe70e;"
+            icon-class="bg-accent-fixed rounded-sm p-1"
+          />
+        </UiSidebarDropdown>
+      </UiSidebarHeader>
+
+      <UiSidebarBody>
+        <UiSidebarText text="Platform" />
+        <UiSidebarLink to="/" icon="&#xe88a;" active tooltip-text="Go to home page" tooltip-placement="top">
+          <template #link="{ linkTarget, linkClasses }">
+            <router-link :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe88a;" />
+              <span>Home</span>
+            </router-link>
+          </template>
+        </UiSidebarLink>
+        <UiSidebarLink to="/components" icon="&#xe5c3;" tooltip-text="View components">
+          <template #link="{ linkTarget, linkClasses }">
+            <router-link :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe5c3;" />
+              <span>Components</span>
+            </router-link>
+          </template>
+        </UiSidebarLink>
+        <UiSidebarLink to="/templates" icon="&#xe866;" tooltip-text="View templates">
+          <template #link="{ linkTarget, linkClasses }">
+            <router-link :to="linkTarget" :class="linkClasses">
+              <UiIconMaterial icon-code="&#xe866;" />
+              <span>Templates</span>
+            </router-link>
+          </template>
+        </UiSidebarLink>
+
+        <!-- Group -->
+        <UiSidebarGroup text="Documentation">
+          <UiSidebarLink to="/docs" icon="&#xe873;" child tooltip-text="View docs">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe873;" />
+                <span>Documentation</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/api" icon="&#xe8ef;" text="API Reference" child tooltip-text="API docs">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe8ef;" />
+                <span>API Reference</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/guides" icon="&#xe866;" text="Guides" child tooltip-text="View guides">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe866;" />
+                <span>Guides</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+        </UiSidebarGroup>
+
+        <!-- Collapsible Group -->
+        <UiSidebarText text="Resources" />
+        <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
+          <UiSidebarLink to="/settings/profile" icon="&#xe853;" child tooltip-text="User profile">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe853;" />
+                <span>Profile</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/account" icon="&#xe8b8;" child tooltip-text="Account">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe8b8;" />
+                <span>Account</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/security" icon="&#xe32a;" child tooltip-text="Security">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe32a;" />
+                <span>Security</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/notifications" icon="&#xe7f4;" child tooltip-text="Notifications">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xe7f4;" />
+                <span>Notifications</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+          <UiSidebarLink to="/settings/billing" icon="&#xf041;" child tooltip-text="Billing">
+            <template #link="{ linkTarget, linkClasses }">
+              <router-link :to="linkTarget" :class="linkClasses">
+                <UiIconMaterial icon-code="&#xf041;" />
+                <span>Billing</span>
+              </router-link>
+            </template>
+          </UiSidebarLink>
+        </UiSidebarGroup>
+      </UiSidebarBody>
+
+      <UiSidebarFooter>
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+          <UiSidebarDropdown title="Gian" subtitle="giancarlosgza@gmail.com" :interactive="false" />
+        </div>
+        <div class="mt-2">
+          <UiBadge text="v1.0.0" variant="outline" size="sm" icon-code="&#xf5f4;" icon-class="text-accent-fixed" />
+        </div>
+      </UiSidebarFooter>
+    </UiSidebar>
+
+    <!-- Content -->
     <main>
-      <div class="container mt-5">
+      <!-- Navbar -->
+      <UiNavbar sticky fluid>
+        <UiNavbarToggle :collapsed="sidebarCollapse" @toggle="sidebarCollapse = !sidebarCollapse" />
+        <UiNavbarTitle title="Dashboard">
+          <template #brand>
+            <UiNavbarBrand text="Admin" initials="A">
+              <template #link="{ linkTarget, brandText }">
+                <router-link :to="linkTarget" class="navbar-logo">
+                  {{ brandText }}
+                </router-link>
+              </template>
+            </UiNavbarBrand>
+          </template>
+        </UiNavbarTitle>
+
+        <UiNavbarMobileMenu>
+          <UiNavbarAvatar v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="sm" />
+        </UiNavbarMobileMenu>
+
+        <UiNavbarCollapse>
+          <template #start>
+            <UiNavbarItem>
+              <UiBadge
+                text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
+                icon-class="text-gradient g-violet"
+              />
+            </UiNavbarItem>
+            <UiNavbarItem>
+              <UiNavbarAvatar v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar" />
+            </UiNavbarItem>
+          </template>
+        </UiNavbarCollapse>
+      </UiNavbar>
+
+      <div class="container mt-3">
         <!-- Header -->
         <UiHeaderContent
           title="Welcome to Vue Colorful UI"
-          subtitle="A beautiful and customizable UI component library for Vue.js"
+          subtitle="A beautiful and customizable UI component library for Vue "
         />
 
         <!-- Content -->
         <div class="row">
           <div class="col-md-12">
+            <UiCard variant="pane" size="sm" class="mb-3">
+              <template #body>
+                <UiListGroup variant="flush" size="lg">
+                  <UiListItem text="List Item 1" icon="&#xe88a;" />
+                </UiListGroup>
+              </template>
+            </UiCard>
+
             <UiCard variant="pane">
+              <template #header>
+                <UiButton variant="filled" text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse" />
+              </template>
               <template #body>
                 <h2 class="fs-400 fw-800">
-                  Testing <span class="text-gradient g-secondary">Components</span>
+                  Testing <span class="text-gradient g-primary">Components</span>
                 </h2>
                 <p class="subtitle-1 text-muted mb-0">
                   This is a test of your colorful-ui library!
@@ -77,14 +248,57 @@ function closeDialog() {
                     Text Red
                   </p>
                 </div>
+
+                <hr>
+
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="bum"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="arch"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="pill"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="sunny"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="gem"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="clover-4"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="clover-8"
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="cookie-6" mask-stretch
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="cookie-9" mask-stretch
+                />
+                <UiAvatar
+                  src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
+                  mask-shape="cookie-12" mask-stretch
+                />
               </template>
             </UiCard>
           </div>
         </div>
         <hr>
 
-        <div class="btn-group spacing">
-          <UiButton variant="filled" text="Primary Button" @on-click="showToast" />
+        <UiButtonGroup class="mt-section">
+          <UiButton variant="filled" text="Primary Button" rounded @on-click="showToast" />
           <UiButton variant="filled" color="secondary" text="Secondary Button" />
           <UiButton variant="filled" color="accent" text="Accent Button" />
 
@@ -101,45 +315,110 @@ function closeDialog() {
               <UiIconMaterial icon-code="&#xe000;" />
             </template>
           </UiButtonTooltip>
-        </div>
+        </UiButtonGroup>
 
-        <div class="btn-group spacing">
-          <UiButton variant="tonal" text="Tonal Primary Button" @on-click="showDialog" />
+        <UiButtonGroup connected class="mt-section">
+          <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog" />
           <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" />
           <UiButton variant="tonal" color="accent" text="Tonal Accent Button" />
 
           <UiButton variant="tonal" color="success" text="Tonal Success Button" />
           <UiButton variant="tonal" color="warning" text="Tonal Warning Button" />
           <UiButton variant="tonal" color="danger" text="Tonal Danger Button" />
+        </UiButtonGroup>
+
+        <div class="row mt-section">
+          <div class="col-md-6">
+            <UiButtonGroup connected joined vertical>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe145;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xf77b;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="accent" icon>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe15b;" />
+                </template>
+              </UiButton>
+            </UiButtonGroup>
+          </div>
+          <div class="col-md-6">
+            <UiButtonGroup connected>
+              <UiButton variant="tonal" color="danger" text="Archive" />
+              <UiButton variant="tonal" color="danger" text="Report">
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe160;" />
+                </template>
+              </UiButton>
+              <UiButton variant="tonal" color="danger" text="Snooze" />
+            </UiButtonGroup>
+          </div>
         </div>
         <hr>
 
-        <div class="btn-group spacing">
-          <UiButtonMenu variant="outline" text="Outline Menu Button">
+        <UiButtonGroup class="mt-section">
+          <UiButtonMenu id="demo" variant="outline" text="Menu Button" icon-trailing>
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe5c5;" />
+            </template>
             <template #menu>
-              <UiButtonMenuText item-text="Header" />
-              <UiButtonMenuItem item-text="Item 1" icon="&#xe5c3;" />
-              <UiButtonMenuItem item-text="Item 2" icon="&#xe5c4;" />
-              <UiButtonMenuItem item-text="Item 3" icon="&#xe5c5;" />
+              <UiButtonMenuText item-text="My account" />
+              <UiButtonMenuItem item-text="Profile" icon="&#xe853;" />
+              <UiButtonMenuItem
+                item-text="Billing" icon="&#xf041;"
+                :badge="{ text: 'Issue', variant: 'tonal tonal-danger' }"
+              />
+              <UiButtonMenuItem
+                item-text="Settings" icon="&#xe8b8;" shortcut="⌘ + P"
+                :badge="{ text: '1', pill: true, variant: 'danger' }"
+              />
+              <UiButtonMenuDivider />
+              <UiButtonMenuText item-text="Resources" />
+              <UiButtonMenuItem item-text="Github" />
+              <UiButtonMenuItem
+                item-text="Support"
+                :badge="{ text: 'NEW', variant: 'gradient', customClass: 'g-accent' }"
+              />
+              <UiButtonMenuItem item-text="API" disabled />
+              <UiButtonMenuDivider />
+              <UiButtonMenuItem item-text="Log Out" icon="&#xe9ba;" is-destructive />
             </template>
           </UiButtonMenu>
           <UiButton variant="chip" text="Chip Button" />
           <UiButton variant="outline" text="Small Button" size="sm" />
           <UiButton variant="outline" text="Large Button" size="lg" />
-          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary" />
+          <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white" />
           <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta" />
-        </div>
+        </UiButtonGroup>
         <hr>
 
-        <UiBadgeGroup class="spacing">
-          <UiBadge variant="outline" text="Default" />
+        <UiBadgeGroup class="mt-section">
           <UiBadge variant="primary" text="Primary" />
+          <UiBadge variant="secondary" text="Secondary" />
+          <UiBadge variant="accent" text="Accent" />
           <UiBadge variant="success" text="Success" />
+          <UiBadge variant="warning" text="Warning" />
           <UiBadge variant="danger" text="Danger" />
+          <UiBadge variant="outline" text="Outline" icon-code="&#xe061;" icon-class="text-danger-fixed" />
+          <UiBadge variant="default" text="Default" />
+          <UiBadge variant="neutral" text="Neutral" />
+        </UiBadgeGroup>
+        <UiBadgeGroup class="mt-section">
+          <UiBadge variant="tonal tonal-primary" text="Tonal Primary" />
+          <UiBadge variant="tonal tonal-secondary" text="Tonal Secondary" />
+          <UiBadge variant="tonal tonal-accent" text="Tonal Accent" />
+          <UiBadge variant="tonal tonal-success" text="Tonal Success" />
+          <UiBadge variant="tonal tonal-warning" text="Tonal Warning" />
+          <UiBadge variant="tonal tonal-danger" text="Tonal Danger" />
         </UiBadgeGroup>
         <hr>
 
-        <div class="row spacing">
+        <div class="row mt-section mt-section-lg">
           <div class="col-md-6">
             <UiPaneContent>
               <UiAccordionGroup is-transparent>
@@ -157,9 +436,9 @@ function closeDialog() {
             </UiPaneContent>
           </div>
           <div class="col-md-6">
-            <UiCard variant="outline" class="bg-gradient g-secondary" style="--gradient-angle: 45deg;">
+            <UiCard variant="outline" class="bg-gradient g-primary" style="--gradient-angle: 45deg;">
               <template #body>
-                <p class="subtitle-1 font-primary fw-800 mb-0">
+                <p class="subtitle-1 font-primary fw-800 text-dark mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
                 </p>
               </template>
@@ -169,13 +448,26 @@ function closeDialog() {
               style="--gradient-angle: 45deg;"
             >
               <template #body>
-                <p class="subtitle-1 font-primary fw-800 mb-0">
+                <p class="subtitle-1 mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
                 </p>
               </template>
             </UiCard>
           </div>
         </div>
+
+        <UiButtonFabGroup>
+          <UiButton variant="tonal" color="primary" class="btn-fab" text="Add" @on-click="showDialog">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+          <UiButton variant="tonal" color="warning" class="btn-fab">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe0b0;" />
+            </template>
+          </UiButton>
+        </UiButtonFabGroup>
 
         <UiAlert message="Your library is working correctly!" type="snackbar" variant="success" />
 

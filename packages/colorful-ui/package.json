@@ -9,8 +9,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./nuxt": {
+      "types": "./dist/nuxt.d.ts",
+      "import": "./dist/nuxt.js",
+      "require": "./dist/nuxt.cjs"
     }
   },
   "files": [
@@ -36,6 +41,8 @@
   },
   "devDependencies": {
     "@colorful/css": "workspace:*",
+    "@nuxt/kit": "^4.2.1",
+    "@nuxt/schema": "^4.2.1",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-links": "^8.6.14",
     "@storybook/vue3": "^8.6.14",
