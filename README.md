@@ -6,7 +6,6 @@ A monorepo containing the Colorffy UI component library and Nuxt template.
 
 - **`packages/colorffy-css`** - Standalone CSS framework with SCSS source files
 - **`packages/colorffy-ui`** - Vue 3 component library with TypeScript
-- **`packages/nuxt-template`** - Nuxt application template
 - **`playground/vue`** - Vue playground for testing components
 - **`playground/nuxt`** - Nuxt playground for testing components
 
@@ -131,18 +130,10 @@ cd playground/nuxt
 pnpm dev
 ```
 
-### Run Nuxt Template
-
-```bash
-cd packages/nuxt-template
-pnpm dev
-```
-
 ## 📚 Documentation
 
 - **Component Library README**: `packages/colorffy-ui/README.md`
 - **Storybook**: Run `pnpm storybook` to view component documentation
-- **GitHub Repository**: [nuxt--template-starter](https://github.com/giancarlosgza/nuxt--template-starter)
 
 ## 📄 License
 
