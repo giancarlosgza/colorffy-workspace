@@ -9,6 +9,6 @@ import './assets/main.scss'
 const app = createApp(App)
 
 app.use(router)
-// app.use(ColorfulUI) // Global Registration //
+// app.use(ColorffyUI) // Global Registration //
 
 app.mount('#app')

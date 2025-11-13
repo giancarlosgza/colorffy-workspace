@@ -18,12 +18,12 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         nuxt: resolve(__dirname, 'src/nuxt.ts')
       },
-      name: 'ColorfulUI',
+      name: 'ColorffyUI',
       formats: ['es', 'cjs']
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['vue', 'floating-vue', '@colorful/css', '@nuxt/kit', '@nuxt/schema'],
+      external: ['vue', 'floating-vue', '@colorffy/css', '@nuxt/kit', '@nuxt/schema'],
       output: {
         exports: 'named',
         globals: {

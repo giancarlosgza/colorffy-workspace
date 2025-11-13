@@ -1,7 +1,7 @@
 import type { App, Component, Plugin } from 'vue'
 import * as Components from './components'
 
-const ColorfulUI: Plugin = {
+const ColorffyUI: Plugin = {
   install(app: App): void {
     Object.entries(Components).forEach(([name, component]) => {
       if (name.startsWith('Ui') && typeof component === 'object') {
@@ -11,4 +11,4 @@ const ColorfulUI: Plugin = {
   }
 }
 
-export default ColorfulUI
+export default ColorffyUI

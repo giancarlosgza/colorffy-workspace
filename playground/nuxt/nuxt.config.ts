@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     }
   },
 
-  // Import ColorfulCSS styles
+  // Import Colorffy CSS styles
   css: [
     '@/assets/scss/integrations.scss',
     '@/assets/scss/main.scss'
@@ -26,6 +26,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/color-mode',
-    '@colorful/ui/nuxt'
+    '@colorffy/ui/nuxt'
   ]
 })

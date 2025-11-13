@@ -1,7 +1,7 @@
 {
-  "name": "@colorful/ui",
+  "name": "@colorffy/ui",
   "version": "1.0.0",
-  "description": "A modern Vue 3 component library built with TypeScript and Colorful CSS",
+  "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -40,7 +40,7 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@colorful/css": "workspace:*",
+    "@colorffy/css": "workspace:*",
     "@nuxt/kit": "^4.2.1",
     "@nuxt/schema": "^4.2.1",
     "@storybook/addon-essentials": "^8.6.14",

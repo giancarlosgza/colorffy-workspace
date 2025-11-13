@@ -1,5 +1,5 @@
 {
-  "name": "colorful-workspace",
+  "name": "colorffy-workspace",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:ui": "eslint packages/colorful-ui",
+    "lint:ui": "eslint packages/colorffy-ui",
     "lint:playground": "eslint playground"
   },
   "keywords": [],

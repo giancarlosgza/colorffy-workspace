@@ -3,8 +3,8 @@ import * as allExports from './components'
 
 export default defineNuxtModule({
   meta: {
-    name: '@colorful/ui',
-    configKey: 'colorfulUI'
+    name: '@colorffy/ui',
+    configKey: 'colorffyUI'
   },
   setup() {
     // Automatically register all Ui* components
@@ -13,7 +13,7 @@ export default defineNuxtModule({
         addComponent({
           name,
           export: name,
-          filePath: '@colorful/ui'
+          filePath: '@colorffy/ui'
         })
       }
     })

@@ -1,20 +1,20 @@
 {
-  "name": "@colorful/css",
+  "name": "@colorffy/css",
   "version": "1.0.0",
-  "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorful CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
-  "main": "dist/colorfulcss.css",
-  "style": "dist/colorfulcss.css",
+  "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
+  "main": "dist/colorffy.css",
+  "style": "dist/colorffy.css",
   "sass": "scss/main.scss",
   "exports": {
     ".": {
       "sass": "./scss/main.scss",
-      "style": "./dist/colorfulcss.css",
-      "default": "./dist/colorfulcss.css"
+      "style": "./dist/colorffy.css",
+      "default": "./dist/colorffy.css"
     },
     "./scss": "./scss/main.scss",
     "./scss/*": "./scss/*",
-    "./css": "./dist/colorfulcss.css",
-    "./css/min": "./dist/colorfulcss.min.css"
+    "./css": "./dist/colorffy.css",
+    "./css/min": "./dist/colorffy.min.css"
   },
   "files": [
     "dist",
@@ -24,9 +24,9 @@
   ],
   "scripts": {
     "build": "npm run build:expanded && npm run build:minified",
-    "build:expanded": "sass scss/main.scss dist/colorfulcss.css --style=expanded --source-map",
-    "build:minified": "sass scss/main.scss dist/colorfulcss.min.css --style=compressed --source-map --no-error-css",
-    "watch": "sass scss/main.scss dist/colorfulcss.css --watch --style=expanded --source-map",
+    "build:expanded": "sass scss/main.scss dist/colorffy.css --style=expanded --source-map",
+    "build:minified": "sass scss/main.scss dist/colorffy.min.css --style=compressed --source-map --no-error-css",
+    "watch": "sass scss/main.scss dist/colorffy.css --watch --style=expanded --source-map",
     "prepublishOnly": "npm run build",
     "publish": "npm publish --access public",
     "version:patch": "npm version patch",
@@ -39,6 +39,7 @@
     "sass",
     "framework",
     "colorful",
+    "colorffy",
     "design-system",
     "ui",
     "components",
@@ -51,12 +52,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/giancarlosgza/colorful-ui.git",
-    "directory": "packages/colorfulcss"
+    "url": "https://github.com/giancarlosgza/colorffy-workspace.git",
+    "directory": "packages/colorffy-css"
   },
-  "homepage": "https://github.com/giancarlosgza/colorful-ui#readme",
+  "homepage": "https://github.com/giancarlosgza/colorffy-workspace#readme",
   "bugs": {
-    "url": "https://github.com/giancarlosgza/colorful-ui/issues"
+    "url": "https://github.com/giancarlosgza/colorffy-workspace/issues"
   },
   "author": "Giancarlos Garza",
   "license": "ISC",

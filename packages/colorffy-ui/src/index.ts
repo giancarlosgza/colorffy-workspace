@@ -7,7 +7,7 @@ export { useTextUtils } from './composables/useTextUtils'
 export { useToast } from './composables/useToast'
 
 // Global Registration - Export both as named and default
-export { default as ColorfulUI } from './plugin'
+export { default as ColorffyUI } from './plugin'
 export { default } from './plugin'
 
 // Types

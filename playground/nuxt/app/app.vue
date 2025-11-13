@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Global Component Registration
-import type { UiAlertToast, UiModal } from '@colorful/ui'
+import type { UiAlertToast, UiModal } from '@colorffy/ui'
 
 /** Data */
 const colorMode = useColorMode()
@@ -48,7 +48,7 @@ function closeDialog() {
           src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
           alt="Avatar Image"
         >
-        <UiSidebarDropdown title="Nuxt" subtitle="Colorful UI" placement="right-start" :interactive="false">
+        <UiSidebarDropdown title="Nuxt" subtitle="Colorffy UI" placement="right-start" :interactive="false">
           <UiButtonMenuText item-text="Workspace" />
           <UiButtonMenuItem
             item-text="Switch to Personal" icon="&#xe853;"
@@ -211,7 +211,7 @@ function closeDialog() {
       <div class="container mt-3">
         <!-- Header -->
         <UiHeaderContent
-          title="Welcome to Nuxt Colorful UI"
+          title="Welcome to Nuxt Colorffy UI"
           subtitle="A beautiful and customizable UI component library for Nuxt"
         />
 
@@ -235,7 +235,7 @@ function closeDialog() {
                   Testing <span class="text-gradient g-primary">Components</span>
                 </h2>
                 <p class="subtitle-1 text-muted mb-0">
-                  This is a test of your colorful-ui library!
+                  This is a test of your colorffy-ui library!
                 </p>
                 <div
                   class="bg-success-fixed bg-opacity-20 border border-xxl border-inline border-success rounded-md p-2 mt-3"
@@ -463,7 +463,7 @@ function closeDialog() {
             <UiCard variant="outline" class="bg-gradient g-primary" style="--gradient-angle: 45deg;">
               <template #body>
                 <p class="subtitle-1 font-primary fw-800 text-dark mb-0">
-                  This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
+                  This is a sample card component to demonstrate the usage of UiCard in Colorffy UI.
                 </p>
               </template>
             </UiCard>
@@ -473,7 +473,7 @@ function closeDialog() {
             >
               <template #body>
                 <p class="subtitle-1 mb-0">
-                  This is a sample card component to demonstrate the usage of UiCard in Colorful UI.
+                  This is a sample card component to demonstrate the usage of UiCard in Colorffy UI.
                 </p>
               </template>
             </UiCard>

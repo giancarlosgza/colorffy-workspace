@@ -55,7 +55,7 @@ export const Default: Story = {
         <UiSidebarHeader>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
-            <p class="drawer-header-title">Colorful UI</p>
+            <p class="drawer-header-title">Colorffy UI</p>
             <p class="drawer-header-subtitle">v1.0.0</p>
           </div>
         </UiSidebarHeader>
@@ -99,7 +99,7 @@ export const WithGroups: Story = {
         <UiSidebarHeader>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
-            <p class="drawer-header-title">Colorful UI</p>
+            <p class="drawer-header-title">Colorffy UI</p>
           </div>
         </UiSidebarHeader>
 
@@ -144,7 +144,7 @@ export const WithCollapsibleGroups: Story = {
         <UiSidebarHeader>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
-            <p class="drawer-header-title">Colorful UI</p>
+            <p class="drawer-header-title">Colorffy UI</p>
           </div>
         </UiSidebarHeader>
 
@@ -276,7 +276,7 @@ export const Bordered: Story = {
         <UiSidebarHeader>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
-            <p class="drawer-header-title">Colorful UI</p>
+            <p class="drawer-header-title">Colorffy UI</p>
           </div>
         </UiSidebarHeader>
 
@@ -316,7 +316,7 @@ export const CustomWidth: Story = {
         <UiSidebarHeader>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
-            <p class="drawer-header-title">Colorful UI</p>
+            <p class="drawer-header-title">Colorffy UI</p>
             <p class="drawer-header-subtitle">Custom Width: 320px</p>
           </div>
         </UiSidebarHeader>

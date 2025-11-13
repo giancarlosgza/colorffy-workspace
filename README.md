@@ -1,26 +1,26 @@
-# Colorful Workspace
+# Colorffy Workspace
 
-A monorepo containing the Colorful UI component library and Nuxt template.
+A monorepo containing the Colorffy UI component library and Nuxt template.
 
 ## 📦 Packages
 
-- **`packages/colorful-css`** - Standalone CSS framework with SCSS source files
-- **`packages/colorful-ui`** - Vue 3 component library with TypeScript
+- **`packages/colorffy-css`** - Standalone CSS framework with SCSS source files
+- **`packages/colorffy-ui`** - Vue 3 component library with TypeScript
 - **`packages/nuxt-template`** - Nuxt application template
 - **`playground/vue`** - Vue playground for testing components
 - **`playground/nuxt`** - Nuxt playground for testing components
 
 ## 🚀 Publishing a New Package Version
 
-Follow these steps in order to update and publish a new version of the `@colorful/ui` package:
+Follow these steps in order to update and publish a new version of the `@colorffy/ui` package:
 
 ### 1. Build the Library
 
 Build the library to generate the distribution files:
 
 ```bash
-# From colorful-ui directory
-cd packages/colorful-ui
+# From colorffy-ui directory
+cd packages/colorffy-ui
 pnpm build
 ```
 
@@ -48,7 +48,7 @@ This updates `package.json` and creates a git tag.
 Publish the package to npm registry:
 
 ```bash
-# From colorful-ui directory
+# From colorffy-ui directory
 pnpm publish
 ```
 
@@ -81,7 +81,7 @@ git push --tags
 
 ```bash
 # 1. Build the library
-cd packages/colorful-ui
+cd packages/colorffy-ui
 pnpm build
 
 # 2. Bump version (patch/minor/major)
@@ -113,7 +113,7 @@ pnpm install
 ### Run Storybook
 
 ```bash
-cd packages/colorful-ui
+cd packages/colorffy-ui
 pnpm storybook
 ```
 
@@ -140,7 +140,7 @@ pnpm dev
 
 ## 📚 Documentation
 
-- **Component Library README**: `packages/colorful-ui/README.md`
+- **Component Library README**: `packages/colorffy-ui/README.md`
 - **Storybook**: Run `pnpm storybook` to view component documentation
 - **GitHub Repository**: [nuxt--template-starter](https://github.com/giancarlosgza/nuxt--template-starter)
 

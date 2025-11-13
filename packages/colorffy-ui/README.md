@@ -1,11 +1,11 @@
-# @colorful/ui
+# @colorffy/ui
 
-A modern Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **ColorfulCSS** (optional) or your own custom styles.
+A modern Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **ColorffyCSS** (optional) or your own custom styles.
 
 ## Features
 
 ✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more
-🎨 **Style-Agnostic** - Use with ColorfulCSS or bring your own styles
+🎨 **Style-Agnostic** - Use with ColorffyCSS or bring your own styles
 📘 **Full TypeScript Support** - Complete type definitions for all components
 🔌 **Flexible Installation** - Use globally or import individually
 🚀 **Tree-shakeable** - Import only what you need
@@ -14,69 +14,69 @@ A modern Vue 3 component library built with TypeScript. Features a comprehensive
 
 ## Installation
 
-### Install ColorfulUI
+### Install ColorffyUI
 
 ```bash
 # npm
-npm install @colorful/ui
+npm install @colorffy/ui
 
 # yarn
-yarn add @colorful/ui
+yarn add @colorffy/ui
 
 # pnpm
-pnpm add @colorful/ui
+pnpm add @colorffy/ui
 ```
 
 ### Install Peer Dependencies
 
-ColorfulUI requires the following peer dependencies:
+ColorffyUI requires the following peer dependencies:
 
 ```bash
 npm install @vueuse/components floating-vue vue
 ```
 
-### Install ColorfulCSS (Optional, Recommended)
+### Install ColorffyCSS (Optional, Recommended)
 
 For pre-built, beautiful styling that works out of the box:
 
 ```bash
-npm install @colorful/css
+npm install @colorffy/css
 ```
 
-> **Note:** ColorfulUI components are **unstyled by default**. You can use ColorfulCSS for instant styling, or provide your own custom styles.
+> **Note:** ColorffyUI components are **unstyled by default**. You can use ColorffyCSS for instant styling, or provide your own custom styles.
 
 ## Styling Options
 
-### Option 1: Use ColorfulCSS (Recommended)
+### Option 1: Use ColorffyCSS (Recommended)
 
 Import the compiled CSS in your `main.ts`:
 
 ```typescript
-import ColorfulUI from '@colorful/ui'
+import ColorffyUI from '@colorffy/ui'
 import { createApp } from 'vue'
 import App from './App.vue'
-import '@colorful/css' // Import styles
+import '@colorffy/css' // Import styles
 
 const app = createApp(App)
-app.use(ColorfulUI)
+app.use(ColorffyUI)
 app.mount('#app')
 ```
 
-### Option 2: Customize ColorfulCSS with SCSS
+### Option 2: Customize ColorffyCSS with SCSS
 
 For full customization, use SCSS to override variables:
 
 ```scss
 // src/assets/variables.scss
-// Override ColorfulCSS variables
-@forward '@colorful/css/scss/abstracts/variables' with (
+// Override ColorffyCSS variables
+@forward '@colorffy/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
 // Import the framework
-@use '@colorful/css/scss/main';
+@use '@colorffy/css/scss/main';
 ```
 
 ```scss
@@ -90,20 +90,20 @@ For full customization, use SCSS to override variables:
 ```
 
 ```typescript
-import ColorfulUI from '@colorful/ui'
+import ColorffyUI from '@colorffy/ui'
 // main.ts
 import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/main.scss' // Import customized styles
 
 const app = createApp(App)
-app.use(ColorfulUI)
+app.use(ColorffyUI)
 app.mount('#app')
 ```
 
 ### Option 3: Custom Styles
 
-Use ColorfulUI components without any styling framework. Components use semantic class names like `.btn`, `.card`, `.alert`, etc. that you can style however you want:
+Use ColorffyUI components without any styling framework. Components use semantic class names like `.btn`, `.card`, `.alert`, etc. that you can style however you want:
 
 ```css
 /* your-custom-styles.css */
@@ -120,7 +120,7 @@ Use ColorfulUI components without any styling framework. Components use semantic
 }
 ```
 
-For more details on ColorfulCSS customization, see the [ColorfulCSS README](https://www.npmjs.com/package/@colorful/css).
+For more details on ColorffyCSS customization, see the [ColorffyCSS README](https://www.npmjs.com/package/@colorffy/css).
 
 ## Usage
 
@@ -129,12 +129,12 @@ For more details on ColorfulCSS customization, see the [ColorfulCSS README](http
 Register all components globally in your `main.ts`:
 
 ```typescript
-import ColorfulUI from '@colorful/ui'
+import ColorffyUI from '@colorffy/ui'
 import { createApp } from 'vue'
 import App from './App.vue'
 
 const app = createApp(App)
-app.use(ColorfulUI)
+app.use(ColorffyUI)
 app.mount('#app')
 ```
 
@@ -159,7 +159,7 @@ Import only the components you need:
 
 ```vue
 <script setup lang="ts">
-import { UiAlert, UiButton, UiCard } from '@giancarlosgza/colorful-ui'
+import { UiAlert, UiButton, UiCard } from '@colorffy/ui'
 </script>
 
 <template>
@@ -184,7 +184,7 @@ import { UiAlert, UiButton, UiCard } from '@giancarlosgza/colorful-ui'
 Register only specific components globally:
 
 ```typescript
-import { UiAlert, UiButton, UiCard } from '@colorful/ui'
+import { UiAlert, UiButton, UiCard } from '@colorffy/ui'
 import { createApp } from 'vue'
 import App from './App.vue'
 
@@ -203,28 +203,28 @@ app.mount('#app')
 ### Install Dependencies
 
 ```bash
-npm install @colorful/ui @colorful/css
+npm install @colorffy/ui @colorffy/css
 ```
 
-### Setup with ColorfulCSS
+### Setup with ColorffyCSS
 
-Add ColorfulCSS to your `nuxt.config.ts`:
+Add ColorffyCSS to your `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
-  css: ['@colorful/css']
+  css: ['@colorffy/css']
 })
 ```
 
 ### Global Registration with Nuxt Plugin
 
-Create a plugin file `plugins/colorful-ui.ts`:
+Create a plugin file `plugins/colorffy-ui.ts`:
 
 ```typescript
-import ColorfulUI from '@colorful/ui'
+import ColorffyUI from '@colorffy/ui'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(ColorfulUI)
+  nuxtApp.vueApp.use(ColorffyUI)
 })
 ```
 
@@ -250,13 +250,13 @@ export default defineNuxtConfig({
 
 ```scss
 // assets/scss/variables.scss
-@forward '@colorful/css/scss/abstracts/variables' with (
+@forward '@colorffy/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
   $accent: #0ea5e9,
 );
 
-@use '@colorful/css/scss/main';
+@use '@colorffy/css/scss/main';
 ```
 
 Then use components anywhere in your Nuxt app:
@@ -280,7 +280,7 @@ Import components directly in your pages/components:
 
 ```vue
 <script setup lang="ts">
-import { UiAlert, UiButton, UiCard } from '@giancarlosgza/colorful-ui'
+import { UiAlert, UiButton, UiCard } from '@colorffy/ui'
 </script>
 
 <template>
@@ -303,7 +303,7 @@ To enable auto-imports in Nuxt, add to your `nuxt.config.ts`:
 export default defineNuxtConfig({
   components: [
     {
-      path: 'node_modules/@colorful/ui/dist',
+      path: 'node_modules/@colorffy/ui/dist',
       pattern: '**/*.vue',
       pathPrefix: false
     }
@@ -399,7 +399,7 @@ export default defineNuxtConfig({
 The library also exports useful composables:
 
 ```typescript
-import { useDateUtils, useTextUtils, useToast } from '@colorful/ui'
+import { useDateUtils, useTextUtils, useToast } from '@colorffy/ui'
 
 // Show toast notification
 const toast = useToast()
@@ -539,7 +539,7 @@ import type {
   AlertVariant,
   ButtonColor,
   ButtonVariant
-} from '@colorful/ui'
+} from '@colorffy/ui'
 
 // Use in your components
 const variant: ButtonVariant = 'filled'
@@ -548,24 +548,24 @@ const color: ButtonColor = 'primary'
 
 ## Styling
 
-### With ColorfulCSS (Recommended)
+### With ColorffyCSS (Recommended)
 
-ColorfulUI is designed to work seamlessly with ColorfulCSS, which provides:
+ColorffyUI is designed to work seamlessly with ColorffyCSS, which provides:
 - Modern, responsive design system
 - Consistent color palette with tonal variants
 - Pre-built component styles
 - Utility classes for rapid development
 - Customizable themes with SCSS variables
 
-Install ColorfulCSS and import it in your app:
+Install ColorffyCSS and import it in your app:
 
 ```bash
-npm install @colorful/css
+npm install @colorffy/css
 ```
 
 ```typescript
 // main.ts
-import '@colorful/css'
+import '@colorffy/css'
 ```
 
 ### Custom Styling
@@ -603,7 +603,7 @@ Override CSS custom properties for runtime theming:
 }
 ```
 
-For complete styling documentation, see the [ColorfulCSS README](https://www.npmjs.com/package/@colorful/css).
+For complete styling documentation, see the [ColorffyCSS README](https://www.npmjs.com/package/@colorffy/css).
 
 ## Browser Support
 
@@ -626,8 +626,8 @@ Giancarlos Garza
 
 ## Links
 
-- [npm Package](https://www.npmjs.com/package/@colorful/ui)
-- [ColorfulCSS](https://www.npmjs.com/package/@colorful/css)
+- [npm Package](https://www.npmjs.com/package/@colorffy/ui)
+- [ColorffyCSS](https://www.npmjs.com/package/@colorffy/css)
 
 ---
 
