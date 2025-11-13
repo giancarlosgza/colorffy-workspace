@@ -4,7 +4,6 @@ import { computed } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<IMaterialIconProps>(), {
-  color: null,
   decorative: true,
   ariaLabel: null
 })

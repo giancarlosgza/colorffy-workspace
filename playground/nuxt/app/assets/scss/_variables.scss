@@ -1,6 +1,7 @@
 /**
  * Override Colorful CSS variables
  */
+$rounded-none: 0;
 $rounded-sm: 4px;
 $rounded-md: 8px;
 $rounded-lg: 12px;
@@ -14,9 +15,9 @@ $rounded-xxl: 35px;
     $accent: #0ee9a0,
 
     /** Extra overrides */
-    $card-border-radius: $rounded-sm,
+    $card-border-radius: $rounded-none,
     $form-border-radius: $rounded-sm,
-    $button-border-radius: $rounded-sm,
+    $button-border-radius: $rounded-none,
     $dialog-border-radius: $rounded-sm);
 
 .btn {

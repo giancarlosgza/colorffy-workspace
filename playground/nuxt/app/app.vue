@@ -294,6 +294,27 @@ function closeDialog() {
                   src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" size="md"
                   mask-shape="cookie-12" mask-stretch
                 />
+
+                <hr>
+                <div class="d-flex gap-3">
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-primary icon-wrap-bordered" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-secondary icon-wrap-bordered" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-accent" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-success" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-warning icon-wrap-bordered" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-danger" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-outline" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-surface icon-wrap-bordered" />
+                  <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-gradient g-secondary" />
+                </div>
+                <hr>
+                <div class="d-flex gap-3">
+                  <UiIconMaterial icon-code="&#xe71c;" class="icon-wrap icon-wrap-primary icon-wrap-lg" />
+                  <UiIconMaterial icon-code="&#xe3b8;" class="icon-wrap icon-wrap-primary" />
+                  <UiIconMaterial icon-code="&#xe14e;" class="icon-wrap icon-wrap-success icon-wrap-sm icon-wrap-bordered" />
+                  <UiIconMaterial icon-code="&#xe23c;" class="icon-wrap icon-wrap-danger icon-wrap-xs icon-wrap-bordered" />
+                </div>
               </template>
             </UiCard>
           </div>
