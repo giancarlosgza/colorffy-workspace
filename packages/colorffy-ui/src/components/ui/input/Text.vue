@@ -17,6 +17,8 @@ interface ITextInputProps {
   optionalLabel?: boolean
   min?: number | null
   max?: number | null
+  variant?: 'filled' | 'outline' | 'transparent' | null
+  rounded?: boolean
 }
 interface ITextInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
@@ -38,7 +40,9 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
   autofocus: false,
   optionalLabel: false,
   min: null,
-  max: null
+  max: null,
+  variant: null,
+  rounded: false
 })
 
 /** Emits */
@@ -54,6 +58,16 @@ const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}
 const placeholderText = computed(() => props.placeholder ?? undefined)
 const minValue = computed(() => (props.type === 'number' ? props.min ?? undefined : undefined))
 const maxValue = computed(() => (props.type === 'number' ? props.max ?? undefined : undefined))
+const inputClasses = computed(() => {
+  const classes = ['form-control']
+  if (props.variant) {
+    classes.push(`form-${props.variant}`)
+  }
+  if (props.rounded) {
+    classes.push('form-rounded')
+  }
+  return classes
+})
 
 /** Watchers */
 watch(model, (value) => {
@@ -75,7 +89,7 @@ watch(model, (value) => {
     <input
       :id="inputId"
       v-model="model"
-      class="form-control"
+      :class="inputClasses"
       :type="type"
       :maxlength="maxlength"
       :placeholder="placeholderText"

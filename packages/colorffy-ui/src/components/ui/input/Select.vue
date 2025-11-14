@@ -14,6 +14,8 @@ interface ISelectInputProps {
   disabled?: boolean
   required?: boolean
   optionalLabel?: boolean
+  variant?: 'filled' | 'outline' | 'transparent' | null
+  rounded?: boolean
 }
 interface ISelectInputEmits {
   (e: 'update:modelValue', value: string | number | Record<string, unknown> | null): void
@@ -32,7 +34,9 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   placeholder: 'Clic para seleccionar',
   disabled: false,
   required: false,
-  optionalLabel: false
+  optionalLabel: false,
+  variant: null,
+  rounded: false
 })
 
 /** Emits */
@@ -46,6 +50,16 @@ const hasErrors = computed(() => props.errorMessages?.length > 0)
 const selectId = computed(() => (props.id ? `${props.id}-select` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
+const selectClasses = computed(() => {
+  const classes = ['form-control', 'form-select']
+  if (props.variant) {
+    classes.push(`form-${props.variant}`)
+  }
+  if (props.rounded) {
+    classes.push('form-rounded')
+  }
+  return classes
+})
 
 /** Watchers */
 watch(model, (value) => {
@@ -67,7 +81,7 @@ watch(model, (value) => {
     <select
       :id="selectId"
       v-model="model"
-      class="form-control form-select"
+      :class="selectClasses"
       :placeholder="placeholderText"
       :disabled="disabled"
       :required="required"

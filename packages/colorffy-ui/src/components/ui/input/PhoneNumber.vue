@@ -14,6 +14,8 @@ interface IPhoneNumberInputProps {
   required?: boolean
   autofocus?: boolean
   optionalLabel?: boolean
+  variant?: 'filled' | 'outline' | 'transparent' | null
+  rounded?: boolean
 }
 interface IPhoneNumberInputEmits {
   (e: 'update:modelValue', value: string | null): void
@@ -31,7 +33,9 @@ const props = withDefaults(defineProps<IPhoneNumberInputProps>(), {
   disabled: false,
   required: false,
   autofocus: false,
-  optionalLabel: false
+  optionalLabel: false,
+  variant: null,
+  rounded: false
 })
 
 /** Emits */
@@ -64,6 +68,16 @@ const value = computed({
   }
 })
 const placeholderText = computed(() => props.placeholder ?? undefined)
+const inputClasses = computed(() => {
+  const classes = ['form-control']
+  if (props.variant) {
+    classes.push(`form-${props.variant}`)
+  }
+  if (props.rounded) {
+    classes.push('form-rounded')
+  }
+  return classes
+})
 </script>
 
 <template>
@@ -80,7 +94,7 @@ const placeholderText = computed(() => props.placeholder ?? undefined)
     <input
       :id="inputId"
       v-model="value"
-      class="form-control"
+      :class="inputClasses"
       :maxlength="maxlength"
       :placeholder="placeholderText"
       :disabled="disabled"

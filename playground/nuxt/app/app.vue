@@ -513,6 +513,7 @@ function closeDialog() {
             <hr class="mt-1">
             <UiInputSelect
               id="theme" v-model="colorMode.preference" label="Theme Mode" option-label="label"
+              rounded variant="filled"
               option-value="value" :options="[
                 {
                   label: 'Light',
@@ -524,7 +525,11 @@ function closeDialog() {
                 },
               ]"
             />
-            <UiInputText id="input-sample" label="Sample Input" placeholder="Enter some text..." class="mb-3" />
+            <UiInputText
+              id="input-sample"
+              label="Sample Input" placeholder="Enter some text..." class="mb-3"
+              variant="outline"
+            />
             <p class="subtitle-1 fw-500">
               This is the content of the modal dialog.
             </p>
