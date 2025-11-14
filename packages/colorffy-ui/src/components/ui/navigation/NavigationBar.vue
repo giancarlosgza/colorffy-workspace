@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Interfaces */
@@ -13,6 +12,8 @@ interface INavigationItem {
 }
 interface INavigationBarProps {
   items?: INavigationItem[]
+  activeItem?: string | null
+  as?: string | object
 }
 
 /** Props */
@@ -24,62 +25,75 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
       icon: '&#xe66b;',
       label: 'Home',
       ariaLabel: 'Navigate to home page'
-    },
-    {
-      id: 'nav-components',
-      path: '/components',
-      icon: '&#xe5c3;',
-      label: 'Components',
-      ariaLabel: 'Navigate to UI components'
-    },
-    {
-      id: 'nav-about',
-      path: '/about',
-      icon: '&#xe88e;',
-      label: 'About',
-      ariaLabel: 'Navigate to about page'
     }
-  ]
+  ],
+  activeItem: null,
+  as: 'a'
 })
-
-/** Data */
-const route = useRoute()
 
 /** Computed */
 const navigationItems = computed(() => props.items)
 
 /** Methods */
-function getActiveIconClass(path: string): string {
-  return route.path === path ? 'iw-bold' : ''
-}
 function isActivePath(path: string): boolean {
-  return route.path === path
+  return props.activeItem === path
+}
+function isExternalLink(path: string): boolean {
+  return /^(?:https?:|mailto:|tel:|\/\/)/.test(path)
+}
+function getLinkProps(path: string, ariaLabel: string, isActive: boolean) {
+  const isExternal = isExternalLink(path)
+
+  const baseProps = {
+    'aria-label': ariaLabel,
+    'aria-current': isActive ? 'page' : undefined,
+    'class': 'navigation-bar-link'
+  }
+
+  // For anchor tags or external links
+  if (props.as === 'a' || isExternal) {
+    return {
+      ...baseProps,
+      href: path,
+      ...(isExternal && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.)
+  return {
+    ...baseProps,
+    to: path
+  }
 }
 </script>
 
 <template>
-  <nav class="navigation-bar" role="navigation" aria-label="Main navigation">
+  <nav
+    class="navigation-bar"
+    role="navigation"
+    aria-label="Main navigation"
+  >
     <div
       v-for="item in navigationItems"
       :key="item.id"
       class="navigation-bar-item"
     >
-      <NuxtLink
-        :to="item.path"
-        class="navigation-bar-link"
-        :aria-label="item.ariaLabel"
-        :aria-current="isActivePath(item.path) ? 'page' : undefined"
+      <component
+        :is="props.as"
+        v-bind="getLinkProps(item.path, item.ariaLabel, isActivePath(item.path))"
       >
         <UiIconMaterial
           :icon-code="item.icon"
-          :class="getActiveIconClass(item.path)"
-          aria-hidden="true"
+          :class="{ 'iw-bold': isActivePath(item.path) }"
         />
         <div class="indicator" />
         <p class="typography-headline-sm">
           {{ item.label }}
         </p>
-      </NuxtLink>
+      </component>
     </div>
   </nav>
 </template>
