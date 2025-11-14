@@ -17,6 +17,8 @@ interface ITextareaInputProps {
   rows?: number
   cols?: number
   resize?: 'none' | 'both' | 'horizontal' | 'vertical'
+  variant?: 'filled' | 'outline' | 'transparent' | null
+  rounded?: boolean
 }
 interface ITextareaInputEmits {
   (e: 'update:modelValue', value: string | null): void
@@ -38,7 +40,9 @@ const props = withDefaults(defineProps<ITextareaInputProps>(), {
   optionalLabel: false,
   rows: 4,
   cols: undefined,
-  resize: 'vertical'
+  resize: 'vertical',
+  variant: null,
+  rounded: false
 })
 
 /** Emits */
@@ -55,6 +59,16 @@ const placeholderText = computed(() => props.placeholder ?? undefined)
 const textareaStyle = computed(() => ({
   resize: props.resize
 }))
+const textareaClasses = computed(() => {
+  const classes = ['form-control']
+  if (props.variant) {
+    classes.push(`form-${props.variant}`)
+  }
+  if (props.rounded) {
+    classes.push('form-rounded')
+  }
+  return classes
+})
 
 /** Watchers */
 watch(model, (value) => {
@@ -76,7 +90,7 @@ watch(model, (value) => {
     <textarea
       :id="inputId"
       v-model="model"
-      class="form-control"
+      :class="textareaClasses"
       :maxlength="maxlength"
       :placeholder="placeholderText"
       :rows="rows"

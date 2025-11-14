@@ -11,6 +11,8 @@ interface IRangeInputProps {
   modelValue?: string | number | null
   errorMessages?: string[]
   optionalLabel?: boolean
+  variant?: 'filled' | 'outline' | 'transparent' | null
+  rounded?: boolean
 }
 interface IRangeInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
@@ -26,7 +28,9 @@ const props = withDefaults(defineProps<IRangeInputProps>(), {
   step: 0.01,
   modelValue: null,
   errorMessages: () => [],
-  optionalLabel: false
+  optionalLabel: false,
+  variant: null,
+  rounded: false
 })
 
 /** Emits */
@@ -39,6 +43,16 @@ const model = defineModel<string | number | null>('modelValue', { default: null 
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => (props.id ? `${props.id}-input-range` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
+const rangeClasses = computed(() => {
+  const classes = ['form-control', 'form-range']
+  if (props.variant) {
+    classes.push(`form-${props.variant}`)
+  }
+  if (props.rounded) {
+    classes.push('form-rounded')
+  }
+  return classes
+})
 
 /** Watchers */
 watch(model, (value) => {
@@ -60,7 +74,7 @@ watch(model, (value) => {
     <input
       :id="inputId"
       v-model="model"
-      class="form-control form-range"
+      :class="rangeClasses"
       type="range"
       :min="min"
       :max="max"
