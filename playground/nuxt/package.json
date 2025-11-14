@@ -11,10 +11,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@colorffy/ui": "workspace:*",
     "@colorffy/css": "workspace:*",
+    "@colorffy/ui": "workspace:*",
     "@material-symbols/font-700": "^0.39.1",
     "@nuxtjs/color-mode": "3.5.2",
+    "@vueuse/components": "^14.0.0",
     "floating-vue": "^5.2.2",
     "nuxt": "^4.2.1",
     "vue": "^3.5.22",
