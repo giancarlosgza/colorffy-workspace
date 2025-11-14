@@ -7,6 +7,7 @@ interface IColorPickerProps {
   label?: string | null
   maxLength?: number
   modelValue?: string | null
+  customClass?: string | null
 }
 
 /** Props */
@@ -14,7 +15,8 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
   id: null,
   label: null,
   maxLength: 7,
-  modelValue: null
+  modelValue: null,
+  customClass: null
 })
 
 /** Emits */
@@ -26,6 +28,20 @@ const model = defineModel<string | null>('modelValue', { default: null })
 /** Computed */
 const inputIdColor = computed(() => props.id ? `${props.id}-input-text` : undefined)
 const inputIdText = computed(() => props.id ? `${props.id}-input-color` : undefined)
+const colorClasses = computed(() => {
+  const classes = ['form-color']
+  if (props.customClass) {
+    classes.push(props.customClass)
+  }
+  return classes
+})
+const textClasses = computed(() => {
+  const classes = ['form-control']
+  if (props.customClass) {
+    classes.push(props.customClass)
+  }
+  return classes
+})
 </script>
 
 <template>
@@ -50,7 +66,7 @@ const inputIdText = computed(() => props.id ? `${props.id}-input-color` : undefi
         :id="inputIdColor"
         v-model="model"
         type="color"
-        class="form-color"
+        :class="colorClasses"
         @change="emit('onUpdate')"
       >
       <!-- Color text -->
@@ -58,7 +74,7 @@ const inputIdText = computed(() => props.id ? `${props.id}-input-color` : undefi
         :id="inputIdText"
         v-model.lazy="model"
         type="text"
-        class="form-control"
+        :class="textClasses"
         @change="emit('onUpdate')"
       >
     </div>

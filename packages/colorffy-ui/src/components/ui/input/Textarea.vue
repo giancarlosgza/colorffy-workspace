@@ -19,6 +19,7 @@ interface ITextareaInputProps {
   resize?: 'none' | 'both' | 'horizontal' | 'vertical'
   variant?: 'filled' | 'outline' | 'transparent' | null
   rounded?: boolean
+  customClass?: string | null
 }
 interface ITextareaInputEmits {
   (e: 'update:modelValue', value: string | null): void
@@ -42,7 +43,8 @@ const props = withDefaults(defineProps<ITextareaInputProps>(), {
   cols: undefined,
   resize: 'vertical',
   variant: null,
-  rounded: false
+  rounded: false,
+  customClass: null
 })
 
 /** Emits */
@@ -66,6 +68,9 @@ const textareaClasses = computed(() => {
   }
   if (props.rounded) {
     classes.push('form-rounded')
+  }
+  if (props.customClass) {
+    classes.push(props.customClass)
   }
   return classes
 })

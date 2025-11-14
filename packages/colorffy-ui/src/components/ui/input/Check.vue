@@ -8,6 +8,7 @@ interface ICheckProps {
   type?: string
   modelValue?: string | boolean | null
   errorMessages?: string[]
+  customClass?: string | null
 }
 
 /** Props */
@@ -15,7 +16,8 @@ const props = withDefaults(defineProps<ICheckProps>(), {
   id: null,
   type: 'checkbox',
   modelValue: null,
-  errorMessages: () => []
+  errorMessages: () => [],
+  customClass: null
 })
 
 /** Model */
@@ -25,6 +27,13 @@ const model = defineModel<string | boolean | null>('modelValue', { default: null
 const hasError = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasError.value && props.id ? `${props.id}-error-0` : undefined))
+const checkClasses = computed(() => {
+  const classes = ['form-check-input']
+  if (props.customClass) {
+    classes.push(props.customClass)
+  }
+  return classes
+})
 </script>
 
 <template>
@@ -35,7 +44,7 @@ const describedById = computed(() => (hasError.value && props.id ? `${props.id}-
     <input
       :id="inputId"
       v-model="model"
-      class="form-check-input"
+      :class="checkClasses"
       :type="type"
       :aria-invalid="hasError || undefined"
       :aria-describedby="describedById"
