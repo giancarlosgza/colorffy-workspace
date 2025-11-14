@@ -16,6 +16,7 @@ interface IPhoneNumberInputProps {
   optionalLabel?: boolean
   variant?: 'filled' | 'outline' | 'transparent' | null
   rounded?: boolean
+  customClass?: string | null
 }
 interface IPhoneNumberInputEmits {
   (e: 'update:modelValue', value: string | null): void
@@ -35,7 +36,8 @@ const props = withDefaults(defineProps<IPhoneNumberInputProps>(), {
   autofocus: false,
   optionalLabel: false,
   variant: null,
-  rounded: false
+  rounded: false,
+  customClass: null
 })
 
 /** Emits */
@@ -75,6 +77,9 @@ const inputClasses = computed(() => {
   }
   if (props.rounded) {
     classes.push('form-rounded')
+  }
+  if (props.customClass) {
+    classes.push(props.customClass)
   }
   return classes
 })

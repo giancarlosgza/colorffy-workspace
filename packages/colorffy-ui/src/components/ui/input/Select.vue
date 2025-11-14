@@ -16,6 +16,7 @@ interface ISelectInputProps {
   optionalLabel?: boolean
   variant?: 'filled' | 'outline' | 'transparent' | null
   rounded?: boolean
+  customClass?: string | null
 }
 interface ISelectInputEmits {
   (e: 'update:modelValue', value: string | number | Record<string, unknown> | null): void
@@ -36,7 +37,8 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   required: false,
   optionalLabel: false,
   variant: null,
-  rounded: false
+  rounded: false,
+  customClass: null
 })
 
 /** Emits */
@@ -57,6 +59,9 @@ const selectClasses = computed(() => {
   }
   if (props.rounded) {
     classes.push('form-rounded')
+  }
+  if (props.customClass) {
+    classes.push(props.customClass)
   }
   return classes
 })

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
+import UiButtonGroup from '../button/ButtonGroup.vue'
 import UiButtonMenu from '../button/ButtonMenu.vue'
 import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
 import UiButtonTooltip from '../button/ButtonTooltip.vue'
@@ -114,48 +115,53 @@ function isLastVisibleColumn(header: string) {
     <!-- Table Controls -->
     <div
       v-if="(hiddenColumns && hiddenColumns.length > 0) || columnManager"
-      class="d-flex justify-content-end gap-2 mb-2"
+      class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
-      <UiButtonTooltip
-        v-if="hiddenColumns && hiddenColumns.length > 0"
-        id="columns-toggle"
-        variant="outline"
-        size="sm"
-        icon icon-variant="shape-sm"
-        :tooltip-text="!areAllColumnsVisible ? 'Show all columns' : 'Hide default columns'"
-        @on-click="toggleShowAllColumns"
-      >
-        <template #icon>
-          <UiIconMaterial
-            :icon-code="!areAllColumnsVisible ? '&#xe946;' : '&#xe944;'"
-            class="rotate-90"
-          />
-        </template>
-      </UiButtonTooltip>
-      <UiButtonMenu
-        v-if="columnManager"
-        id="column-manager"
-        variant="outline"
-        size="sm"
-        text="Columns"
-        tooltip-text="Manage columns"
-        icon-trailing
-      >
-        <template #icon>
-          <UiIconMaterial icon-code="&#xe5c5;" />
-        </template>
-        <template #menu>
-          <UiButtonMenuItem
-            v-for="header in headers"
-            :id="`column-${toCamelCase(header)}`"
-            :key="header"
-            :item-text="header"
-            :icon="isColumnVisible(header) ? '&#xe834;' : '&#xe835;'"
-            :disabled="isLastVisibleColumn(header)"
-            @click="toggleColumnVisibility(header)"
-          />
-        </template>
-      </UiButtonMenu>
+      <div>
+        <slot name="controls" />
+      </div>
+      <UiButtonGroup>
+        <UiButtonTooltip
+          v-if="hiddenColumns && hiddenColumns.length > 0"
+          id="columns-toggle"
+          variant="outline"
+          size="sm"
+          icon icon-variant="shape-sm"
+          :tooltip-text="!areAllColumnsVisible ? 'Show all columns' : 'Hide default columns'"
+          @on-click="toggleShowAllColumns"
+        >
+          <template #icon>
+            <UiIconMaterial
+              :icon-code="!areAllColumnsVisible ? '&#xe946;' : '&#xe944;'"
+              class="rotate-90"
+            />
+          </template>
+        </UiButtonTooltip>
+        <UiButtonMenu
+          v-if="columnManager"
+          id="column-manager"
+          variant="outline"
+          size="sm"
+          text="Columns"
+          tooltip-text="Manage columns"
+          icon-trailing
+        >
+          <template #icon>
+            <UiIconMaterial icon-code="&#xe5c5;" />
+          </template>
+          <template #menu>
+            <UiButtonMenuItem
+              v-for="header in headers"
+              :id="`column-${toCamelCase(header)}`"
+              :key="header"
+              :item-text="header"
+              :icon="isColumnVisible(header) ? '&#xe834;' : '&#xe835;'"
+              :disabled="isLastVisibleColumn(header)"
+              @click="toggleColumnVisibility(header)"
+            />
+          </template>
+        </UiButtonMenu>
+      </UiButtonGroup>
     </div>
 
     <!-- Table -->

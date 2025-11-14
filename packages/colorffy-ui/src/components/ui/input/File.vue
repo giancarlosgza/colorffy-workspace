@@ -8,6 +8,7 @@ interface IFileInputProps {
   inputLabel?: string | null
   large?: boolean
   modelValue?: File | null
+  customClass?: string | null
 }
 interface IFileInputEmits {
   (e: 'update:modelValue', value: File | null): void
@@ -20,7 +21,8 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
   label: null,
   inputLabel: null,
   large: false,
-  modelValue: null
+  modelValue: null,
+  customClass: null
 })
 
 /** Emits */
@@ -32,6 +34,13 @@ const model = defineModel<File | null>('modelValue', { default: null })
 /** Refs */
 const { label, inputLabel, large } = toRefs(props)
 const inputId = computed(() => props.id ?? undefined)
+const fileClasses = computed(() => {
+  const classes = ['form-control', 'input-file']
+  if (props.customClass) {
+    classes.push(props.customClass)
+  }
+  return classes
+})
 
 /** Methods */
 function handleInput(event: Event) {
@@ -53,7 +62,7 @@ function handleInput(event: Event) {
       >
         <input
           :id="inputId"
-          class="form-control input-file"
+          :class="fileClasses"
           type="file"
           @input="handleInput"
         >

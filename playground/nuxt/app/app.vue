@@ -13,6 +13,20 @@ const user = {
   email: 'giancarlosgza@gmail.com',
   photoURL: 'https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg'
 }
+const datatableHeaders = ['ID', 'Name', 'Description', 'Status', 'Requests', 'Created At', 'Actions']
+const datatableItems = [
+  { id: 1, name: 'Proyecto Atlas', description: 'Sistema de monitoreo geoespacial.', status: 'Activo', requests: 234, createdAt: '2025-10-01' },
+  { id: 2, name: 'Proyecto Nébula', description: 'Pipeline de datos en tiempo real.', status: 'Pendiente', requests: 567, createdAt: '2025-10-03' },
+  { id: 3, name: 'Proyecto Aurora', description: 'Portal de visualización de métricas.', status: 'Activo', requests: 891, createdAt: '2025-10-05' },
+  { id: 4, name: 'Proyecto Horizonte', description: 'API pública para integración externa.', status: 'Inactivo', requests: 5123, createdAt: '2025-10-07' },
+  { id: 5, name: 'Proyecto Vertex', description: 'Motor de recomendaciones personalizadas.', status: 'Activo', requests: 1456, createdAt: '2025-10-10' },
+  { id: 6, name: 'Proyecto Ícaro', description: 'Servicio de autenticación y OAuth.', status: 'Activo', requests: 789, createdAt: '2025-10-12' },
+  { id: 7, name: 'Proyecto Océano', description: 'Archivador de documentos históricos.', status: 'Archivado', requests: 345, createdAt: '2025-10-14' },
+  { id: 8, name: 'Proyecto Quántico', description: 'Módulo de cálculo distribuido.', status: 'Pendiente', requests: 2678, createdAt: '2025-10-16' },
+  { id: 9, name: 'Proyecto Eclipse', description: 'Programador de tareas y jobs.', status: 'Activo', requests: 912, createdAt: '2025-10-18' },
+  { id: 10, name: 'Proyecto Brisa', description: 'Servicio de notificaciones multicanal.', status: 'Inactivo', requests: 2145, createdAt: '2025-10-20' },
+  { id: 11, name: 'Proyecto Orion', description: 'Design System con componentes y CSS para las plataformas', status: 'Activo', requests: 1345, createdAt: '2025-10-22' }
+]
 
 /** Methods */
 function showToast() {
@@ -296,7 +310,7 @@ function closeDialog() {
                 />
 
                 <hr>
-                <div class="d-flex gap-3">
+                <div class="d-flex flex-wrap gap-3">
                   <UiIconMaterial icon-code="&#xe000;" class="icon-wrap" />
                   <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-primary icon-wrap-bordered" />
                   <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-secondary icon-wrap-bordered" />
@@ -309,7 +323,7 @@ function closeDialog() {
                   <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-gradient g-secondary" />
                 </div>
                 <hr>
-                <div class="d-flex gap-3">
+                <div class="d-flex flex-wrap gap-3">
                   <UiIconMaterial icon-code="&#xe71c;" class="icon-wrap icon-wrap-primary icon-wrap-lg" />
                   <UiIconMaterial icon-code="&#xe3b8;" class="icon-wrap icon-wrap-primary" />
                   <UiIconMaterial icon-code="&#xe14e;" class="icon-wrap icon-wrap-success icon-wrap-sm icon-wrap-bordered" />
@@ -475,6 +489,95 @@ function closeDialog() {
                 <p class="subtitle-1 mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorffy UI.
                 </p>
+              </template>
+            </UiCard>
+          </div>
+        </div>
+
+        <div class="row mt-section mb-3">
+          <div class="col-md-12">
+            <UiCard variant="outline" class="card-pane">
+              <template #body>
+                <div>
+                  <UiDatatable
+                    :hidden-columns="['ID']" column-manager
+                    :headers="datatableHeaders"
+                    :items="datatableItems"
+                    table-class="table-bordered scroll-fade-inline-effect"
+                  >
+                    <template #controls>
+                      <div class="d-flex align-items-center gap-3">
+                        <UiInputText
+                          id="search"
+                          placeholder="Search..."
+                        />
+                        <UiButton
+                          variant="outline"
+                          size="sm" icon
+                          icon-variant="shape-sm"
+                        >
+                          <template #icon>
+                            <UiIconMaterial icon-code="&#xe2c4;" />
+                          </template>
+                        </UiButton>
+                      </div>
+                    </template>
+                    <template #cell-name="{ item }">
+                      <span class="fw-500">
+                        <UiAvatar
+                          :initials="item.name.charAt(0) + item.name.charAt(9)"
+                          mask-shape="pill" mask-stretch
+                          class="bg-secondary-fixed"
+                        />
+                        {{ item.name }}
+                      </span>
+                    </template>
+                    <template #cell-status="{ item }">
+                      <UiBadge
+                        variant="outline"
+                        :text="item.status"
+                        icon-code="&#xe061;"
+                        :icon-class="
+                          item.status === 'Activo' ? 'text-success-fixed'
+                          : item.status === 'Pendiente' ? 'text-warning-fixed'
+                            : item.status === 'Inactivo' ? 'text-danger-fixed'
+                              : item.status === 'Archivado' ? 'text-muted' : 'text-muted'"
+                        size="sm"
+                      />
+                    </template>
+                    <template #cell-requests="{ item }">
+                      <div class="text-muted text-end tabular-numbers">
+                        {{ item.requests }}
+                      </div>
+                    </template>
+                    <template #cell-actions="{ item }">
+                      <UiButtonMenu
+                        :id="`actions-menu-${item.id}`"
+                        variant="outline"
+                        size="sm"
+                        text="Acciones"
+                        tooltip-text="Ver acciones"
+                        icon-trailing
+                      >
+                        <template #icon>
+                          <UiIconMaterial icon-code="&#xe5c5;" />
+                        </template>
+                        <template #menu>
+                          <UiButtonMenuText :item-text="item.name" />
+                          <UiButtonMenuItem icon="&#xe89e;" item-text="Ver detalles" />
+                          <UiButtonMenuItem
+                            icon="&#xe7f4;"
+                            item-text="Alertas"
+                            :badge="{ text: '10', variant: 'danger', size: 'sm', pill: true }"
+                          />
+                          <UiButtonMenuItem icon="&#xe3c9;" item-text="Editar" />
+                          <UiButtonMenuDivider />
+                          <UiButtonMenuItem icon="&#xe872;" item-text="Eliminar" is-destructive />
+                        </template>
+                      </UiButtonMenu>
+                    </template>
+                  </UiDatatable>
+                </div>
               </template>
             </UiCard>
           </div>

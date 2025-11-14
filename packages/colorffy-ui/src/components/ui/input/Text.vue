@@ -19,6 +19,7 @@ interface ITextInputProps {
   max?: number | null
   variant?: 'filled' | 'outline' | 'transparent' | null
   rounded?: boolean
+  customClass?: string | null
 }
 interface ITextInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
@@ -42,7 +43,8 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
   min: null,
   max: null,
   variant: null,
-  rounded: false
+  rounded: false,
+  customClass: null
 })
 
 /** Emits */
@@ -65,6 +67,9 @@ const inputClasses = computed(() => {
   }
   if (props.rounded) {
     classes.push('form-rounded')
+  }
+  if (props.customClass) {
+    classes.push(props.customClass)
   }
   return classes
 })
