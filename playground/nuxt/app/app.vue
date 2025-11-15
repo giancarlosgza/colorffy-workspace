@@ -68,102 +68,100 @@ function handleMenuItemClick(path: string) {
 
       <UiSidebarBody>
         <UiSidebarText text="Platform" />
-        <UiSidebarLink to="/" icon="&#xe88a;" tooltip-text="Go to home page" tooltip-placement="top">
-          <template #link="{ linkTarget, linkClasses }">
-            <NuxtLink :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe88a;" />
-              <span>Home</span>
-            </NuxtLink>
-          </template>
-        </UiSidebarLink>
-        <UiSidebarLink to="/components" icon="&#xe5c3;" tooltip-text="View components">
-          <template #link="{ linkTarget, linkClasses }">
-            <NuxtLink :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe5c3;" />
-              <span>Components</span>
-            </NuxtLink>
-          </template>
-        </UiSidebarLink>
-        <UiSidebarLink to="/about" icon="&#xe866;" tooltip-text="View about page">
-          <template #link="{ linkTarget, linkClasses }">
-            <NuxtLink :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe866;" />
-              <span>About</span>
-            </NuxtLink>
-          </template>
-        </UiSidebarLink>
+        <UiSidebarLink
+          :as="NuxtLink"
+          to="/"
+          text="Home"
+          icon="&#xe88a;"
+          tooltip-text="Go to home page"
+          tooltip-placement="top"
+        />
+        <UiSidebarLink
+          :as="NuxtLink"
+          to="/components"
+          text="Components"
+          icon="&#xe5c3;"
+          tooltip-text="View components"
+        />
+        <UiSidebarLink
+          :as="NuxtLink"
+          to="/about"
+          text="About"
+          icon="&#xe866;"
+          tooltip-text="View about page"
+        />
 
         <!-- Group -->
         <UiSidebarGroup text="Documentation">
-          <UiSidebarLink to="/docs" icon="&#xe873;" child tooltip-text="View docs">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe873;" />
-                <span>Documentation</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/api" icon="&#xe8ef;" text="API Reference" child tooltip-text="API docs">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe8ef;" />
-                <span>API Reference</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/guides" icon="&#xe866;" text="Guides" child tooltip-text="View guides">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe866;" />
-                <span>Guides</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/docs"
+            text="Documentation"
+            icon="&#xe873;"
+            child
+            tooltip-text="View docs"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/api"
+            text="API Reference"
+            icon="&#xe8ef;"
+            child
+            tooltip-text="API docs"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/guides"
+            text="Guides"
+            icon="&#xe866;"
+            child
+            tooltip-text="View guides"
+          />
         </UiSidebarGroup>
 
         <!-- Collapsible Group -->
         <UiSidebarText text="Resources" />
         <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
-          <UiSidebarLink to="/settings/profile" icon="&#xe853;" child tooltip-text="User profile">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe853;" />
-                <span>Profile</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/account" icon="&#xe8b8;" child tooltip-text="Account">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe8b8;" />
-                <span>Account</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/security" icon="&#xe32a;" child tooltip-text="Security">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe32a;" />
-                <span>Security</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/notifications" icon="&#xe7f4;" child tooltip-text="Notifications">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe7f4;" />
-                <span>Notifications</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/billing" icon="&#xf041;" child tooltip-text="Billing">
-            <template #link="{ linkTarget, linkClasses }">
-              <NuxtLink :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xf041;" />
-                <span>Billing</span>
-              </NuxtLink>
-            </template>
-          </UiSidebarLink>
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/settings/profile"
+            text="Profile"
+            icon="&#xe853;"
+            child
+            tooltip-text="User profile"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/settings/account"
+            text="Account"
+            icon="&#xe8b8;"
+            child
+            tooltip-text="Account"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/settings/security"
+            text="Security"
+            icon="&#xe32a;"
+            child
+            tooltip-text="Security"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/settings/notifications"
+            text="Notifications"
+            icon="&#xe7f4;"
+            child
+            tooltip-text="Notifications"
+          />
+          <UiSidebarLink
+            :as="NuxtLink"
+            to="/settings/billing"
+            text="Billing"
+            icon="&#xf041;"
+            child
+            tooltip-text="Billing"
+          />
         </UiSidebarGroup>
       </UiSidebarBody>
 
@@ -209,19 +207,37 @@ function handleMenuItemClick(path: string) {
         </UiNavbarMobileMenu>
 
         <UiNavbarCollapse>
+          <template #end>
+            <UiNavbarNav>
+              <UiNavbarLink
+                :as="NuxtLink"
+                text="Home"
+                to="/"
+                :active="route.path === '/'"
+              />
+              <UiNavbarLink
+                :as="NuxtLink"
+                text="About"
+                :to="{ name: 'about' }"
+                :active="route.path === '/about'"
+              />
+            </UiNavbarNav>
+          </template>
           <template #start>
-            <UiNavbarItem>
-              <UiBadge
-                text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
-                icon-class="text-gradient g-violet"
-              />
-            </UiNavbarItem>
-            <UiNavbarItem>
-              <UiNavbarAvatar
-                v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar"
-                @click="toggleUserMenu"
-              />
-            </UiNavbarItem>
+            <UiNavbarNav>
+              <UiNavbarItem>
+                <UiBadge
+                  text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
+                  icon-class="text-gradient g-violet"
+                />
+              </UiNavbarItem>
+              <UiNavbarItem>
+                <UiNavbarAvatar
+                  v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar"
+                  @click="toggleUserMenu"
+                />
+              </UiNavbarItem>
+            </UiNavbarNav>
           </template>
         </UiNavbarCollapse>
 

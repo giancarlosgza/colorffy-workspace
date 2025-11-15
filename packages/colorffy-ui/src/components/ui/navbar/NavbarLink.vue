@@ -9,39 +9,55 @@ const props = withDefaults(defineProps<INavbarLinkProps>(), {
   href: '',
   active: false,
   disabled: false,
-  customClass: ''
+  customClass: '',
+  as: 'a'
 })
 
 /** Computed */
 const linkTarget = computed(() => {
-  const target = props.to || props.href
-  return typeof target === 'string' ? target : ''
+  return props.to || props.href
+})
+const isExternalLink = computed(() => {
+  const target = linkTarget.value
+  return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
+const linkProps = computed(() => {
+  const baseProps = {
+    'class': ['nav-link', { disabled: props.disabled }, props.customClass],
+    'aria-disabled': props.disabled || undefined
+  }
+
+  // For anchor tags or external links
+  if (props.as === 'a' || isExternalLink.value) {
+    const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
+    return {
+      ...baseProps,
+      'class': ['nav-link', { active: props.active, disabled: props.disabled }, props.customClass],
+      'aria-current': props.active ? 'page' : undefined,
+      'href': props.disabled ? undefined : href,
+      ...(isExternalLink.value && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
+  return {
+    ...baseProps,
+    to: linkTarget.value
+  }
 })
 </script>
 
 <template>
   <li class="nav-item">
-    <!-- With custom link component slot -->
-    <slot
-      name="link"
-      :link-target="linkTarget"
-      :is-active="active"
-      :is-disabled="disabled"
+    <component
+      :is="props.as"
+      v-bind="linkProps"
     >
-      <!-- Default: use <a> tag for framework-agnostic -->
-      <a
-        :href="disabled ? undefined : linkTarget"
-        class="nav-link"
-        :class="[
-          { active, disabled },
-          customClass,
-        ]"
-        :aria-current="active ? 'page' : undefined"
-        :aria-disabled="disabled || undefined"
-      >
-        <slot name="icon" />
-        {{ text }}
-      </a>
-    </slot>
+      <slot name="icon" />
+      {{ text }}
+    </component>
   </li>
 </template>

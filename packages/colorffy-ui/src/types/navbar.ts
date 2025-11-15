@@ -210,4 +210,10 @@ export interface INavbarLinkProps {
    * Optional custom CSS classes.
    */
   customClass?: NavbarClassName | null
+
+  /**
+   * Component to use for the link (e.g., 'a', NuxtLink, RouterLink).
+   * @default 'a'
+   */
+  as?: string | object
 }
