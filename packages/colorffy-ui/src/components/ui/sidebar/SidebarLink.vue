@@ -17,23 +17,64 @@ const props = withDefaults(defineProps<ISidebarLinkProps>(), {
   disabled: false,
   child: false,
   customClass: '',
-  ariaLabelledby: ''
+  ariaLabelledby: '',
+  as: 'a'
 })
 
 /** Computed */
-const linkClasses = computed(() => [
-  'drawer-item',
-  {
-    'drawer-item-disabled': props.disabled,
-    'drawer-item-child': props.child,
-    'active': props.active
-  },
-  props.customClass
-])
 const tooltipId = computed(() => `${props.id}-tooltip`)
 const linkTarget = computed(() => {
-  const target = props.to || props.href
-  return typeof target === 'string' ? target : ''
+  return props.to || props.href
+})
+const isExternalLink = computed(() => {
+  const target = linkTarget.value
+  return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
+const linkProps = computed(() => {
+  const baseClasses = [
+    'drawer-item',
+    {
+      'drawer-item-disabled': props.disabled,
+      'drawer-item-child': props.child
+    },
+    props.customClass
+  ]
+
+  const baseProps = {
+    'class': baseClasses,
+    'aria-disabled': props.disabled || undefined,
+    'aria-labelledby': props.ariaLabelledby || undefined,
+    'aria-label': props.ariaLabelledby ? undefined : props.text
+  }
+
+  // For anchor tags or external links
+  if (props.as === 'a' || isExternalLink.value) {
+    const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
+    return {
+      ...baseProps,
+      'class': [
+        'drawer-item',
+        {
+          'drawer-item-disabled': props.disabled,
+          'drawer-item-child': props.child,
+          'active': props.active
+        },
+        props.customClass
+      ],
+      'aria-current': props.active ? 'page' : undefined,
+      'href': props.disabled ? undefined : href,
+      ...(isExternalLink.value && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
+  return {
+    ...baseProps,
+    to: linkTarget.value
+  }
 })
 </script>
 
@@ -44,28 +85,14 @@ const linkTarget = computed(() => {
     class="d-inline-block"
     :placement="tooltipPlacement"
   >
-    <!-- With custom link component slot -->
-    <slot
-      name="link"
-      :link-target="linkTarget"
-      :link-classes="linkClasses"
-      :is-disabled="disabled"
-      :aria-labelledby="ariaLabelledby"
-      :aria-label="ariaLabelledby ? undefined : text"
+    <component
+      :is="props.as"
+      v-bind="linkProps"
     >
-      <!-- Default: use <a> tag for framework-agnostic -->
-      <a
-        :href="disabled ? undefined : linkTarget"
-        :class="linkClasses"
-        :aria-labelledby="ariaLabelledby || undefined"
-        :aria-label="ariaLabelledby ? undefined : text"
-        :aria-disabled="disabled"
-      >
-        <UiIconMaterial v-if="icon" :icon-code="icon" aria-hidden="true" />
-        <span>{{ text }}</span>
-        <slot name="badge" />
-      </a>
-    </slot>
+      <UiIconMaterial v-if="icon" :icon-code="icon" />
+      <span>{{ text }}</span>
+      <slot name="badge" />
+    </component>
 
     <!-- Tooltip popper -->
     <template #popper>
@@ -74,25 +101,13 @@ const linkTarget = computed(() => {
   </VTooltip>
 
   <!-- Without tooltip -->
-  <slot
+  <component
+    :is="props.as"
     v-else
-    name="link"
-    :link-target="linkTarget"
-    :link-classes="linkClasses"
-    :is-disabled="disabled"
-    :aria-labelledby="ariaLabelledby"
-    :aria-label="ariaLabelledby ? undefined : text"
+    v-bind="linkProps"
   >
-    <a
-      :href="disabled ? undefined : linkTarget"
-      :class="linkClasses"
-      :aria-labelledby="ariaLabelledby || undefined"
-      :aria-label="ariaLabelledby ? undefined : text"
-      :aria-disabled="disabled"
-    >
-      <UiIconMaterial v-if="icon" :icon-code="icon" aria-hidden="true" />
-      <span>{{ text }}</span>
-      <slot name="badge" />
-    </a>
-  </slot>
+    <UiIconMaterial v-if="icon" :icon-code="icon" />
+    <span>{{ text }}</span>
+    <slot name="badge" />
+  </component>
 </template>

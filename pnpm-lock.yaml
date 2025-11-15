@@ -188,6 +188,9 @@ importers:
       '@nuxtjs/color-mode':
         specifier: 3.5.2
         version: 3.5.2(magicast@0.5.1)
+      '@vueuse/components':
+        specifier: ^14.0.0
+        version: 14.0.0(vue@3.5.22(typescript@5.9.3))
       floating-vue:
         specifier: ^5.2.2
         version: 5.2.2(@nuxt/kit@3.20.0(magicast@0.5.1))(vue@3.5.22(typescript@5.9.3))

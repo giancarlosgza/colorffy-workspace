@@ -96,6 +96,12 @@ export interface ISidebarLinkProps {
    * ARIA labelledby attribute for accessibility.
    */
   ariaLabelledby?: string
+
+  /**
+   * Component to use for the link (e.g., 'a', NuxtLink, RouterLink).
+   * @default 'a'
+   */
+  as?: string | object
 }
 
 /**
