@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -66,5 +66,5 @@
     "typescript"
   ],
   "author": "Giancarlos Garza",
-  "license": "ISC"
+  "license": "MIT"
 }

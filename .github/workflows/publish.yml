@@ -1,4 +1,4 @@
-name: Publish to npm 🚀
+name: Publish to NPM 🚀
 
 on:
   workflow_dispatch:
