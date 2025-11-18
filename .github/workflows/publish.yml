@@ -50,9 +50,9 @@ jobs:
       - name: Publish @colorffy/css
         if: github.event.inputs.package == '@colorffy/css' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-css
-        run: pnpm publish --access public --provenance --no-git-checks
+        run: pnpm publish --access public --provenance
       
       - name: Publish @colorffy/ui
         if: github.event.inputs.package == '@colorffy/ui' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-ui
-        run: pnpm publish --access public --provenance --no-git-checks
+        run: pnpm publish --access public --provenance
