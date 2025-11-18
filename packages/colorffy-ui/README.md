@@ -1,20 +1,24 @@
 # @colorffy/ui
 
-A modern Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **ColorffyCSS** (optional) or your own custom styles.
+[![npm version](https://img.shields.io/npm/v/@colorffy/ui?color=blue&label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/@colorffy/ui)
+[![install size](https://packagephobia.com/badge?p=@colorffy/ui)](https://packagephobia.com/result?p=@colorffy/ui)
+[![license](https://img.shields.io/npm/l/@colorffy/ui?style=flat-square)](https://github.com/giancarlosgza/colorffy-ui/blob/main/packages/ColorffyCSS/LICENSE)
 
-## Features
+A modern Nuxt / Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **Colorffy CSS** (optional) or your own custom styles.
 
-✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more
-🎨 **Style-Agnostic** - Use with ColorffyCSS or bring your own styles
-📘 **Full TypeScript Support** - Complete type definitions for all components
-🔌 **Flexible Installation** - Use globally or import individually
-🚀 **Tree-shakeable** - Import only what you need
-⚡ **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications
-🎯 **Headless Architecture** - Full control over styling and behavior
+## ✨ Features
 
-## Installation
+- ✨ **70+ Vue 3 Components** - Accordion, Alerts, Buttons, Cards, Dialogs, Forms, Navigation, and more
+- 🎨 **Style-Agnostic** - Use with Colorffy CSS or bring your own styles
+- 📘 **Full TypeScript Support** - Complete type definitions for all components
+- 🔌 **Flexible Installation** - Use globally or import individually
+- 🚀 **Tree-shakeable** - Import only what you need
+- ⚡  **Nuxt 3 Compatible** - Works seamlessly with Nuxt applications
+- 🎯 **Headless Architecture** - Full control over styling and behavior
 
-### Install ColorffyUI
+## 📦 Installation
+
+### Install Colorffy UI
 
 ```bash
 # npm
@@ -29,13 +33,13 @@ pnpm add @colorffy/ui
 
 ### Install Peer Dependencies
 
-ColorffyUI requires the following peer dependencies:
+Colorffy UI requires the following peer dependencies:
 
 ```bash
 npm install @vueuse/components floating-vue vue
 ```
 
-### Install ColorffyCSS (Optional, Recommended)
+### Install Colorffy CSS (Optional, Recommended)
 
 For pre-built, beautiful styling that works out of the box:
 
@@ -43,11 +47,11 @@ For pre-built, beautiful styling that works out of the box:
 npm install @colorffy/css
 ```
 
-> **Note:** ColorffyUI components are **unstyled by default**. You can use ColorffyCSS for instant styling, or provide your own custom styles.
+> **Note:** Colorffy UI components are **unstyled by default**. You can use Colorffy CSS for instant styling, or provide your own custom styles.
 
-## Styling Options
+## 🎨 Styling Options
 
-### Option 1: Use ColorffyCSS (Recommended)
+### Option 1: Use Colorffy CSS (Recommended)
 
 Import the compiled CSS in your `main.ts`:
 
@@ -62,13 +66,13 @@ app.use(ColorffyUI)
 app.mount('#app')
 ```
 
-### Option 2: Customize ColorffyCSS with SCSS
+### Option 2: Customize Colorffy CSS with SCSS
 
 For full customization, use SCSS to override variables:
 
 ```scss
 // src/assets/variables.scss
-// Override ColorffyCSS variables
+// Override Colorffy CSS variables
 @forward '@colorffy/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
@@ -103,7 +107,7 @@ app.mount('#app')
 
 ### Option 3: Custom Styles
 
-Use ColorffyUI components without any styling framework. Components use semantic class names like `.btn`, `.card`, `.alert`, etc. that you can style however you want:
+Use Colorffy UI components without any styling framework. Components use semantic class names like `.btn`, `.card`, `.alert`, etc. that you can style however you want:
 
 ```css
 /* your-custom-styles.css */
@@ -120,9 +124,9 @@ Use ColorffyUI components without any styling framework. Components use semantic
 }
 ```
 
-For more details on ColorffyCSS customization, see the [ColorffyCSS README](https://www.npmjs.com/package/@colorffy/css).
+For more details on Colorffy CSS customization, see the [Colorffy CSS README](https://www.npmjs.com/package/@colorffy/css).
 
-## Usage
+## 🚀 Usage
 
 ### Option 1: Global Registration (Recommended for most cases)
 
@@ -198,7 +202,7 @@ app.component('UiAlert', UiAlert)
 app.mount('#app')
 ```
 
-## Nuxt 3 Usage
+## 🚀 Nuxt 3 Usage
 
 ### Install Dependencies
 
@@ -206,9 +210,9 @@ app.mount('#app')
 npm install @colorffy/ui @colorffy/css
 ```
 
-### Setup with ColorffyCSS
+### Setup with Colorffy CSS
 
-Add ColorffyCSS to your `nuxt.config.ts`:
+Add Colorffy CSS to your `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
@@ -311,7 +315,7 @@ export default defineNuxtConfig({
 })
 ```
 
-## Component Categories
+## 💻 Component Categories
 
 ### Layout Components
 - `UiHeaderContent` - Page header with title and subtitle
@@ -394,7 +398,7 @@ export default defineNuxtConfig({
 - `UiShapeLoading` - Shape loading animation
 - `UiTableSkeleton` - Table skeleton loader
 
-## Composables
+## 💻 Composables
 
 The library also exports useful composables:
 
@@ -412,7 +416,7 @@ const dateUtils = useDateUtils()
 const textUtils = useTextUtils()
 ```
 
-## Component Examples
+## 💻 Component Examples
 
 ### Button
 
@@ -529,7 +533,7 @@ const textUtils = useTextUtils()
 </template>
 ```
 
-## TypeScript Support
+## 🏗️ TypeScript Support
 
 All components come with full TypeScript support. Import types as needed:
 
@@ -546,18 +550,18 @@ const variant: ButtonVariant = 'filled'
 const color: ButtonColor = 'primary'
 ```
 
-## Styling
+## 🎨 Styling
 
-### With ColorffyCSS (Recommended)
+### With Colorffy CSS (Recommended)
 
-ColorffyUI is designed to work seamlessly with ColorffyCSS, which provides:
+Colorffy UI is designed to work seamlessly with Colorffy CSS, which provides:
 - Modern, responsive design system
 - Consistent color palette with tonal variants
 - Pre-built component styles
 - Utility classes for rapid development
 - Customizable themes with SCSS variables
 
-Install ColorffyCSS and import it in your app:
+Install Colorffy CSS and import it in your app:
 
 ```bash
 npm install @colorffy/css
@@ -603,32 +607,38 @@ Override CSS custom properties for runtime theming:
 }
 ```
 
-For complete styling documentation, see the [ColorffyCSS README](https://www.npmjs.com/package/@colorffy/css).
+For complete styling documentation, see the [Colorffy CSS README](https://www.npmjs.com/package/@colorffy/css).
 
-## Browser Support
+## 🔍 Browser Support
 
 - Chrome (latest)
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
+Contributions, issues, and feature requests are welcome!
 
-## License
+Feel free to check the [issues page](https://github.com/giancarlosgza/colorffy-workspace/issues).
 
-ISC
+## 📄 License
+
+MIT © [Giancarlos Garza](https://github.com/giancarlosgza)
 
 ## Author
 
 Giancarlos Garza
 
-## Links
+## ⭐ Show your support
 
-- [npm Package](https://www.npmjs.com/package/@colorffy/ui)
-- [ColorffyCSS](https://www.npmjs.com/package/@colorffy/css)
+- [Colorffy UI](https://www.npmjs.com/package/@colorffy/ui)
+- [Colorffy CSS](https://www.npmjs.com/package/@colorffy/css)
+
+Give a ⭐️ if this project helped you!
 
 ---
 
-Made with ❤️ using Vue 3 and TypeScript
+Made with ❤️ by [Giancarlos Garza](https://github.com/giancarlosgza) using Vue 3 and TypeScript.
+
+Powered by [Colorffy](https://colorffy.com) 🎨

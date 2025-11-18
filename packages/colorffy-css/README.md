@@ -4,7 +4,7 @@
 [![install size](https://packagephobia.com/badge?p=@colorffy/css)](https://packagephobia.com/result?p=@colorffy/css)
 [![license](https://img.shields.io/npm/l/@colorffy/css?style=flat-square)](https://github.com/giancarlosgza/colorffy-ui/blob/main/packages/ColorffyCSS/LICENSE)
 
-An expressive SCSS framework for building vibrant and beautiful user interfaces. ColorffyCSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.
+An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.
 
 ## ✨ Features
 
@@ -41,7 +41,7 @@ yarn add @colorffy/css
 
 ### Import Compiled CSS
 
-The easiest way to use ColorffyCSS is to import the compiled CSS file:
+The easiest way to use Colorffy CSS is to import the compiled CSS file:
 
 ```javascript
 // In your main JavaScript file
@@ -128,7 +128,7 @@ createApp(App).mount('#app')
 **Option 2: Customize with SCSS**
 ```scss
 // src/assets/variables.scss
-// Override ColorffyCSS variables
+// Override Colorffy CSS variables
 @forward '@colorffy/css/scss/abstracts/variables' with (
   $primary: #4f46e5,
   $secondary: #ec4899,
@@ -201,7 +201,7 @@ import '@colorffy/css'
 
 ## 🎨 Components & Utilities
 
-ColorffyCSS includes styles for:
+Colorffy CSS includes styles for:
 
 ### Components
 - Accordion
@@ -241,7 +241,7 @@ ColorffyCSS includes styles for:
 
 ## 🎨 Color System
 
-ColorffyCSS includes a powerful tonal color system:
+Colorffy CSS includes a powerful tonal color system:
 
 ```html
 <!-- Primary colors -->
@@ -269,7 +269,7 @@ For complete documentation, examples, and API reference, visit:
 
 ### Override Variables with @forward
 
-The recommended way to customize ColorffyCSS is using `@forward` to override SCSS variables:
+The recommended way to customize Colorffy CSS is using `@forward` to override SCSS variables:
 
 ```scss
 // variables.scss
@@ -337,13 +337,13 @@ Override CSS custom properties at runtime:
 {
   ".": {
     "sass": "./scss/main.scss",
-    "style": "./dist/ColorffyCSS.css",
-    "default": "./dist/ColorffyCSS.css"
+    "style": "./dist/colorffy.css",
+    "default": "./dist/colorffy.css"
   },
-  "./scss": "./scss/main.scss",
-  "./scss/*": "./scss/*",
-  "./css": "./dist/ColorffyCSS.css",
-  "./css/min": "./dist/ColorffyCSS.min.css"
+    "./scss": "./scss/main.scss",
+    "./scss/*": "./scss/*",
+    "./css": "./dist/colorffy.css",
+    "./css/min": "./dist/colorffy.min.css"
 }
 ```
 
@@ -384,12 +384,17 @@ MIT © [Giancarlos Garza](https://github.com/giancarlosgza)
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/giancarlosgza/colorffy-ui/issues).
+Feel free to check the [issues page](https://github.com/giancarlosgza/colorffy-workspace/issues).
 
 ## ⭐ Show your support
+
+- [Colorffy UI](https://www.npmjs.com/package/@colorffy/ui)
+- [Colorffy CSS](https://www.npmjs.com/package/@colorffy/css)
 
 Give a ⭐️ if this project helped you!
 
 ---
 
-Made with ❤️ by [Giancarlos Garza](https://github.com/giancarlosgza)
+Made with ❤️ by [Giancarlos Garza](https://github.com/giancarlosgza) using Vue 3 and TypeScript.
+
+Powered by [Colorffy](https://colorffy.com) 🎨

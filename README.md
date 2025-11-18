@@ -1,140 +1,62 @@
 # Colorffy Workspace
 
-A monorepo containing the Colorffy UI component library and Nuxt template.
+A monorepo containing the Colorffy UI component library and Colorffy CSS framework.
 
 ## 📦 Packages
 
-- **`packages/colorffy-css`** - Standalone CSS framework with SCSS source files
-- **`packages/colorffy-ui`** - Vue 3 component library with TypeScript
+| Name | Version | Description |
+|------|---------|-------------|
+| [Colorffy Workspace](https://github.com/giancarlosgza/colorffy-workspace) | [![GitHub](https://img.shields.io/badge/GitHub-Monorepo-blue?style=flat-square&logo=github)](https://github.com/giancarlosgza/colorffy-workspace) | Monorepo containing all Colorffy packages |
+| [@colorffy/css](https://www.npmjs.com/package/@colorffy/css) | [![npm](https://img.shields.io/npm/v/@colorffy/css?style=flat-square&logo=npm&label=npm)](https://www.npmjs.com/package/@colorffy/css) | Standalone CSS framework with SCSS source files |
+| [@colorffy/ui](https://www.npmjs.com/package/@colorffy/ui) | [![npm](https://img.shields.io/npm/v/@colorffy/ui?style=flat-square&logo=npm&label=npm)](https://www.npmjs.com/package/@colorffy/ui) | Vue 3 component library with TypeScript |
+
+## 🎮 Playgrounds
+
 - **`playground/vue`** - Vue playground for testing components
 - **`playground/nuxt`** - Nuxt playground for testing components
-
-## 🚀 Publishing a New Package Version
-
-Follow these steps in order to update and publish a new version of the `@colorffy/ui` package:
-
-### 1. Build the Library
-
-Build the library to generate the distribution files:
-
-```bash
-# From colorffy-ui directory
-cd packages/colorffy-ui
-pnpm build
-```
-
-This creates the `dist/` folder with compiled `.mjs`, `.cjs`, and `.d.ts` files.
-
-### 2. Update Version
-
-Bump the package version using semantic versioning:
-
-```bash
-# For bug fixes (1.0.0 → 1.0.1)
-pnpm version:patch
-
-# For new features (1.0.0 → 1.1.0)
-pnpm version:minor
-
-# For breaking changes (1.0.0 → 2.0.0)
-pnpm version:major
-```
-
-This updates `package.json` and creates a git tag.
-
-### 3. Publish to npm
-
-Publish the package to npm registry:
-
-```bash
-# From colorffy-ui directory
-pnpm publish
-```
-
-This runs `prepublishOnly` (builds automatically) and publishes with `--access public`.
-
-### 4. Update Storybook (Optional)
-
-If you've added or updated component stories:
-
-```bash
-# Run Storybook locally
-pnpm storybook
-
-# Build static Storybook for deployment
-pnpm build-storybook
-```
-
-The static build is created in `storybook-static/` and can be deployed to any hosting service.
-
-### 5. Commit & Push Changes
-
-```bash
-git add .
-git commit -m "chore: release v1.0.x"
-git push
-git push --tags
-```
-
-## 📝 Complete Workflow Example
-
-```bash
-# 1. Build the library
-cd packages/colorffy-ui
-pnpm build
-
-# 2. Bump version (patch/minor/major)
-pnpm version:patch
-
-# 3. Publish to npm
-pnpm publish
-
-# 4. Update Storybook (optional)
-pnpm build-storybook
-
-# 5. Commit and push
-cd ../..
-git add .
-git commit -m "chore: release v1.0.x"
-git push
-git push --tags
-```
 
 ## 🛠️ Development
 
 ### Install Dependencies
 
 ```bash
-# From root
 pnpm install
 ```
 
-### Run Storybook
+### Run Development Server
 
 ```bash
+# Vue playground
+cd playground/vue
+pnpm dev
+
+# Nuxt playground
+cd playground/nuxt
+pnpm dev
+
+# Storybook
 cd packages/colorffy-ui
 pnpm storybook
 ```
 
-### Test in Vue Playground
+### Build Packages
 
 ```bash
-cd playground/vue
-pnpm dev
-```
+# Build colorffy-ui
+cd packages/colorffy-ui
+pnpm build
 
-### Test in Nuxt Playground
-
-```bash
-cd playground/nuxt
-pnpm dev
+# Build colorffy-css
+cd packages/colorffy-css
+pnpm build
 ```
 
 ## 📚 Documentation
 
-- **Component Library README**: `packages/colorffy-ui/README.md`
-- **Storybook**: Run `pnpm storybook` to view component documentation
+- [@colorffy/css Documentation](./packages/colorffy-css/README.md)
+- [@colorffy/ui Documentation](./packages/colorffy-ui/README.md)
+- [Storybook](https://giancarlosgza.github.io/colorffy-ui) - Component showcase
 
 ## 📄 License
 
-ISC © Giancarlos Garza
+MIT © [Giancarlos Garza](https://github.com/giancarlosgza)
