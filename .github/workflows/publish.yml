@@ -11,17 +11,13 @@ on:
           - '@colorffy/css'
           - '@colorffy/ui'
           - 'both'
-      otp:
-        description: 'npm OTP (one-time password from authenticator)'
-        required: true
-        type: string
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write  # Required for npm provenance
+      id-token: write  # Required for OIDC
     
     steps:
       - name: Checkout code
@@ -54,13 +50,9 @@ jobs:
       - name: Publish @colorffy/css
         if: github.event.inputs.package == '@colorffy/css' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-css
-        run: pnpm publish --access public --provenance --no-git-checks --otp=${{ github.event.inputs.otp }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm publish --access public --provenance --no-git-checks
       
       - name: Publish @colorffy/ui
         if: github.event.inputs.package == '@colorffy/ui' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-ui
-        run: pnpm publish --access public --provenance --no-git-checks --otp=${{ github.event.inputs.otp }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm publish --access public --provenance --no-git-checks
