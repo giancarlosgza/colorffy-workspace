@@ -43,6 +43,7 @@ const linkProps = computed(() => {
   const baseProps = {
     'class': baseClasses,
     'aria-disabled': props.disabled || undefined,
+    'disabled': props.disabled || undefined,
     'aria-labelledby': props.ariaLabelledby || undefined,
     'aria-label': props.ariaLabelledby ? undefined : props.text
   }

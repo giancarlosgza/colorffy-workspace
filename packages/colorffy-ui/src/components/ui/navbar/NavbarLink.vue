@@ -24,7 +24,8 @@ const isExternalLink = computed(() => {
 const linkProps = computed(() => {
   const baseProps = {
     'class': ['nav-link', { disabled: props.disabled }, props.customClass],
-    'aria-disabled': props.disabled || undefined
+    'aria-disabled': props.disabled || undefined,
+    'disabled': props.disabled || undefined
   }
 
   // For anchor tags or external links

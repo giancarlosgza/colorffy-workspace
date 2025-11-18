@@ -17,11 +17,11 @@ interface IPopoverMenuProps {
   isOpened?: boolean
   menuItems?: IMenuItem[]
   activeItem?: string | null
-  // Header props (fallback if no slot/user provided)
   title?: string | null
   subtitle?: string | null
   avatarUrl?: string | null
-  // Legacy user support (optional)
+  showVerifiedIcon?: boolean
+  verifiedIconCode?: string
   user?: any
   auth?: any | null
 }
@@ -51,6 +51,8 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
   title: null,
   subtitle: null,
   avatarUrl: null,
+  showVerifiedIcon: false,
+  verifiedIconCode: '&#xef76;',
   user: null,
   auth: null
 })
@@ -112,11 +114,11 @@ function isActiveMenuItem(path: string): boolean {
               class="img-avatar avatar-placeholder avatar-menu mb-2"
             />
 
-            <!-- Pro icon (only show if user prop exists) -->
+            <!-- Verified icon -->
             <UiIconMaterial
-              v-if="user"
+              v-if="showVerifiedIcon && user"
               class="avatar-pro-icon"
-              icon-code=" &#xef76;"
+              :icon-code="verifiedIconCode"
             />
           </div>
 
