@@ -730,7 +730,7 @@
   -webkit-background-clip: text;
   text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
-  @include text-gradient(45deg, v.$gradient-amethyst);
+  @include text-gradient(45deg, v.$gradient-accent);
 }
 
 @mixin gradient-variants($isBordered: false, $isBg: false) {

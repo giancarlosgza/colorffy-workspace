@@ -187,6 +187,7 @@
             color: var(--theme-muted-a10);
             opacity: 0.55;
             cursor: not-allowed;
+            pointer-events: none;
           }
 
           &.drawer-item-child {

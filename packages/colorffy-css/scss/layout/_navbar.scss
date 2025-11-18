@@ -187,7 +187,7 @@
           .nav-link {
             position: relative;
             display: block;
-            border-radius: calc(var(--_nav-border-radius) + 0.5rem);
+            border-radius: calc(var(--_nav-radius) + 0.5rem);
             padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
 
             background-color: transparent;
@@ -214,6 +214,13 @@
               svg {
                 animation: spin 1s ease-in-out both;
               }
+            }
+
+            &:is(.disabled) {
+              color: var(--theme-muted-a10);
+              pointer-events: none;
+              cursor: not-allowed;
+              opacity: 0.65;
             }
 
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
@@ -257,7 +264,6 @@
 
             &:is(.upgrade-link) {
               & .nav-upgrade-icon {
-                // xf8ce -> Arrow outward icon
                 @include m.absolute-icon(.25rem, 35px);
                 left: unset;
                 right: .25rem;
