@@ -3,6 +3,8 @@ import { NuxtLink } from '#components'
 import { vOnClickOutside } from '@vueuse/components'
 
 /** Data */
+const colors = ['system', 'light', 'dark']
+const activeMode = useState()
 const route = useRoute()
 const router = useRouter()
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
@@ -82,6 +84,7 @@ function handleMenuItemClick(path: string) {
           text="Components"
           icon="&#xe5c3;"
           tooltip-text="View components"
+          disabled
         />
         <UiSidebarLink
           :as="NuxtLink"
@@ -95,7 +98,7 @@ function handleMenuItemClick(path: string) {
         <UiSidebarGroup text="Documentation">
           <UiSidebarLink
             :as="NuxtLink"
-            to="/docs"
+            to="/components"
             text="Documentation"
             icon="&#xe873;"
             child
@@ -103,7 +106,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/api"
+            to="/components"
             text="API Reference"
             icon="&#xe8ef;"
             child
@@ -111,7 +114,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/guides"
+            to="/components"
             text="Guides"
             icon="&#xe866;"
             child
@@ -124,7 +127,7 @@ function handleMenuItemClick(path: string) {
         <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
           <UiSidebarLink
             :as="NuxtLink"
-            to="/settings/profile"
+            to="/components"
             text="Profile"
             icon="&#xe853;"
             child
@@ -132,7 +135,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/settings/account"
+            to="/components"
             text="Account"
             icon="&#xe8b8;"
             child
@@ -140,7 +143,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/settings/security"
+            to="/components"
             text="Security"
             icon="&#xe32a;"
             child
@@ -148,7 +151,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/settings/notifications"
+            to="/components"
             text="Notifications"
             icon="&#xe7f4;"
             child
@@ -156,7 +159,7 @@ function handleMenuItemClick(path: string) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/settings/billing"
+            to="/components"
             text="Billing"
             icon="&#xf041;"
             child
@@ -221,6 +224,13 @@ function handleMenuItemClick(path: string) {
                 :to="{ name: 'about' }"
                 :active="route.path === '/about'"
               />
+              <UiNavbarLink
+                :as="NuxtLink"
+                text="Components"
+                :to="{ name: 'components' }"
+                :active="route.path === '/components'"
+                disabled
+              />
             </UiNavbarNav>
           </template>
           <template #start>
@@ -228,7 +238,7 @@ function handleMenuItemClick(path: string) {
               <UiNavbarItem>
                 <UiBadge
                   text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
-                  icon-class="text-gradient g-violet"
+                  icon-class="text-gradient g-accent"
                 />
               </UiNavbarItem>
               <UiNavbarItem>
@@ -247,9 +257,31 @@ function handleMenuItemClick(path: string) {
           :is-opened="isMenuActive"
           :menu-items="menuItems"
           :active-item="route.path"
+          show-verified-icon
+          verified-icon-code="&#xe838;"
           @hide-dropdown="isMenuActive = false"
           @menu-item-click="handleMenuItemClick"
         >
+          <template #body-extra>
+            <hr>
+            <UiButtonGroup connected joined class="justify-content-center">
+              <UiButton
+                v-for="(color, index) in colors"
+                :key="`color-${index}`"
+                :variant="color === activeMode ? 'filled' : 'outline'"
+                :color="color === activeMode ? 'primary' : ''"
+                :text="color === 'system' ? 'Sistema' : color === 'light' ? 'Claro' : 'Oscuro'"
+                size="sm"
+                @click="$colorMode.preference = color; activeMode = color"
+              >
+                <template #icon>
+                  <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
+                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-gradient g-orange" />
+                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-gradient g-blue" />
+                </template>
+              </UiButton>
+            </UiButtonGroup>
+          </template>
           <template #footer>
             <UiButton
               variant="outline"
