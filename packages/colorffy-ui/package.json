@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/ui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -26,7 +26,6 @@
     "build": "vite build",
     "prepublishOnly": "pnpm run build",
     "fix:imports": "node scripts/fix-imports.js",
-    "publish": "npm publish --access public",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
     "version:major": "npm version major",

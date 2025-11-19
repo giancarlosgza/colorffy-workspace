@@ -1,8 +1,9 @@
 # @colorffy/ui
 
 [![npm version](https://img.shields.io/npm/v/@colorffy/ui?color=blue&label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/@colorffy/ui)
-[![install size](https://packagephobia.com/badge?p=@colorffy/ui)](https://packagephobia.com/result?p=@colorffy/ui)
-[![license](https://img.shields.io/npm/l/@colorffy/ui?style=flat-square)](https://github.com/giancarlosgza/colorffy-ui/blob/main/packages/ColorffyCSS/LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/giancarlosgza/colorffy-workspace/ci.yml?branch=main&label=CI&logo=github&style=flat-square)](https://github.com/giancarlosgza/colorffy-workspace/actions/workflows/ci.yml)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@colorffy/ui?style=flat-square)](https://bundlephobia.com/package/@colorffy/ui)
+[![license](https://img.shields.io/npm/l/@colorffy/ui?style=flat-square)](https://github.com/giancarlosgza/colorffy-workspace/blob/main/LICENSE)
 
 A modern Nuxt / Vue 3 component library built with TypeScript. Features a comprehensive collection of **unstyled, headless UI components** with full TypeScript support. Designed to work seamlessly with **Colorffy CSS** (optional) or your own custom styles.
 

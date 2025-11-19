@@ -1,8 +1,9 @@
 # @colorffy/css
 
 [![npm version](https://img.shields.io/npm/v/@colorffy/css?color=blue&label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/@colorffy/css)
-[![install size](https://packagephobia.com/badge?p=@colorffy/css)](https://packagephobia.com/result?p=@colorffy/css)
-[![license](https://img.shields.io/npm/l/@colorffy/css?style=flat-square)](https://github.com/giancarlosgza/colorffy-ui/blob/main/packages/ColorffyCSS/LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/giancarlosgza/colorffy-workspace/ci.yml?branch=main&label=CI&logo=github&style=flat-square)](https://github.com/giancarlosgza/colorffy-workspace/actions/workflows/ci.yml)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@colorffy/css?style=flat-square)](https://bundlephobia.com/package/@colorffy/css)
+[![license](https://img.shields.io/npm/l/@colorffy/css?style=flat-square)](https://github.com/giancarlosgza/colorffy-workspace/blob/main/LICENSE)
 
 An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.
 
