@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/css",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
   "main": "dist/colorffy.css",
   "style": "dist/colorffy.css",
@@ -60,7 +60,7 @@
     "url": "https://github.com/giancarlosgza/colorffy-workspace/issues"
   },
   "author": "Giancarlos Garza",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "floating-vue": "^5.2.0",
     "@material-symbols/font-700": "^0.39.1"
