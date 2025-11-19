@@ -9,13 +9,42 @@ const props = withDefaults(defineProps<INavbarBrandProps>(), {
   href: '',
   logo: null,
   initials: null,
-  customClass: null
+  customClass: null,
+  as: 'a'
 })
 
 /** Computed */
 const linkTarget = computed(() => {
-  const target = props.to || props.href
-  return typeof target === 'string' ? target : ''
+  return props.to || props.href
+})
+const isExternalLink = computed(() => {
+  const target = linkTarget.value
+  return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
+const linkProps = computed(() => {
+  const baseProps = {
+    'class': 'navbar-logo',
+    'aria-label': props.text
+  }
+
+  // For anchor tags or external links
+  if (props.as === 'a' || isExternalLink.value) {
+    const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
+    return {
+      ...baseProps,
+      href,
+      ...(isExternalLink.value && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
+  return {
+    ...baseProps,
+    to: linkTarget.value
+  }
 })
 </script>
 
@@ -42,13 +71,12 @@ const linkTarget = computed(() => {
       :link-target="linkTarget"
       :brand-text="text"
     >
-      <a
-        :href="linkTarget"
-        class="navbar-logo"
-        :aria-label="text"
+      <component
+        :is="props.as"
+        v-bind="linkProps"
       >
         {{ text }}
-      </a>
+      </component>
     </slot>
   </div>
 </template>

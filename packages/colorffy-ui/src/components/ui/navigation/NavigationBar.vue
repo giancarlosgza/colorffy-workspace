@@ -5,9 +5,9 @@ import UiIconMaterial from '../icon/Material.vue'
 /** Interfaces */
 interface INavigationItem {
   id: string
-  path: string
+  to: string | object
   icon: string
-  label: string
+  text: string
   ariaLabel: string
 }
 interface INavigationBarProps {
@@ -21,9 +21,9 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
   items: () => [
     {
       id: 'nav-home',
-      path: '/',
+      to: '/',
       icon: '&#xe66b;',
-      label: 'Home',
+      text: 'Home',
       ariaLabel: 'Navigate to home page'
     }
   ],
@@ -35,14 +35,18 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
 const navigationItems = computed(() => props.items)
 
 /** Methods */
-function isActivePath(path: string): boolean {
-  return props.activeItem === path
+function isActivePath(path: string | object): boolean {
+  if (typeof path === 'string') {
+    return props.activeItem === path
+  }
+  // For object paths, you might need custom logic based on your routing needs
+  return false
 }
-function isExternalLink(path: string): boolean {
-  return /^(?:https?:|mailto:|tel:|\/\/)/.test(path)
+function isExternalLink(to: string | object): boolean {
+  return typeof to === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(to)
 }
-function getLinkProps(path: string, ariaLabel: string, isActive: boolean) {
-  const isExternal = isExternalLink(path)
+function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean) {
+  const isExternal = isExternalLink(to)
 
   const baseProps = {
     'aria-label': ariaLabel,
@@ -52,9 +56,10 @@ function getLinkProps(path: string, ariaLabel: string, isActive: boolean) {
 
   // For anchor tags or external links
   if (props.as === 'a' || isExternal) {
+    const href = typeof to === 'string' ? to : ''
     return {
       ...baseProps,
-      href: path,
+      href,
       ...(isExternal && {
         target: '_blank',
         rel: 'noopener noreferrer'
@@ -62,10 +67,10 @@ function getLinkProps(path: string, ariaLabel: string, isActive: boolean) {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.)
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
-    to: path
+    to
   }
 }
 </script>
@@ -83,15 +88,15 @@ function getLinkProps(path: string, ariaLabel: string, isActive: boolean) {
     >
       <component
         :is="props.as"
-        v-bind="getLinkProps(item.path, item.ariaLabel, isActivePath(item.path))"
+        v-bind="getLinkProps(item.to, item.ariaLabel, isActivePath(item.to))"
       >
         <UiIconMaterial
           :icon-code="item.icon"
-          :class="{ 'iw-bold': isActivePath(item.path) }"
+          :class="{ 'iw-bold': isActivePath(item.to) }"
         />
         <div class="indicator" />
         <p class="typography-headline-sm">
-          {{ item.label }}
+          {{ item.text }}
         </p>
       </component>
     </div>

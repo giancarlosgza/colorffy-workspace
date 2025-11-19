@@ -17,17 +17,24 @@ const isMenuActive = ref<boolean>(false)
 const menuItems = [
   {
     id: 'home',
-    path: '/',
+    to: '/',
     icon: '&#xe66b;',
-    label: 'Home',
+    text: 'Home',
     ariaLabel: 'Navigate to home page'
   },
   {
     id: 'about',
-    path: '/about',
+    to: '/about',
     icon: '&#xe853;',
-    label: 'About',
+    text: 'About',
     ariaLabel: 'Go to about page'
+  },
+  {
+    id: 'components',
+    to: { name: 'components', query: { ref: 'bottom-bar' } },
+    icon: '&#xe5c3;',
+    text: 'Components',
+    ariaLabel: 'Go to components page'
   }
 ]
 
@@ -38,8 +45,8 @@ function toggleUserMenu(): void {
 function closeMenu(): void {
   isMenuActive.value = false
 }
-function handleMenuItemClick(path: string) {
-  router.push(path)
+function handleMenuItemClick(to: string | object) {
+  router.push(to)
 }
 </script>
 
@@ -186,16 +193,18 @@ function handleMenuItemClick(path: string) {
         sticky
         fluid
       >
-        <UiNavbarToggle :collapsed="sidebarCollapse" @toggle="sidebarCollapse = !sidebarCollapse" />
+        <UiNavbarToggle
+          :collapsed="sidebarCollapse"
+          @toggle="sidebarCollapse = !sidebarCollapse"
+        />
         <UiNavbarTitle :title="(route.meta.pageTitle as string) || 'Dashboard'">
           <template #brand>
-            <UiNavbarBrand text="Admin" initials="A">
-              <template #link="{ linkTarget, brandText }">
-                <NuxtLink :to="linkTarget" class="navbar-logo">
-                  {{ brandText }}
-                </NuxtLink>
-              </template>
-            </UiNavbarBrand>
+            <UiNavbarBrand
+              text="Admin"
+              initials="A"
+              :as="NuxtLink"
+              :to="{ name: 'index' }"
+            />
           </template>
         </UiNavbarTitle>
 
@@ -210,45 +219,34 @@ function handleMenuItemClick(path: string) {
         </UiNavbarMobileMenu>
 
         <UiNavbarCollapse>
-          <template #end>
-            <UiNavbarNav>
-              <UiNavbarLink
-                :as="NuxtLink"
-                text="Home"
-                to="/"
-                :active="route.path === '/'"
-              />
-              <UiNavbarLink
-                :as="NuxtLink"
-                text="About"
-                :to="{ name: 'about' }"
-                :active="route.path === '/about'"
-              />
-              <UiNavbarLink
-                :as="NuxtLink"
-                text="Components"
-                :to="{ name: 'components' }"
-                :active="route.path === '/components'"
-                disabled
-              />
-            </UiNavbarNav>
-          </template>
-          <template #start>
-            <UiNavbarNav>
-              <UiNavbarItem>
-                <UiBadge
-                  text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
-                  icon-class="text-gradient g-accent"
+          <UiNavbarNav position="start">
+            <UiNavbarItem>
+              <div class="input-group">
+                <div class="input-group-prefix border border-transparent px-0">
+                  <UiIconMaterial icon-code="&#xe8b6;" />
+                </div>
+                <UiInputText
+                  placeholder="Search for anything..."
+                  variant="transparent"
+                  rounded custom-class="px-2"
                 />
-              </UiNavbarItem>
-              <UiNavbarItem>
-                <UiNavbarAvatar
-                  v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar"
-                  @click="toggleUserMenu"
-                />
-              </UiNavbarItem>
-            </UiNavbarNav>
-          </template>
+              </div>
+            </UiNavbarItem>
+          </UiNavbarNav>
+          <UiNavbarNav position="start">
+            <UiNavbarItem>
+              <UiBadge
+                text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
+                icon-class="text-gradient g-accent"
+              />
+            </UiNavbarItem>
+            <UiNavbarItem>
+              <UiNavbarAvatar
+                v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar"
+                @click="toggleUserMenu"
+              />
+            </UiNavbarItem>
+          </UiNavbarNav>
         </UiNavbarCollapse>
 
         <!-- Popover Menu -->
@@ -256,7 +254,7 @@ function handleMenuItemClick(path: string) {
           :user="user"
           :is-opened="isMenuActive"
           :menu-items="menuItems"
-          :active-item="route.path"
+          :current-route="route"
           show-verified-icon
           verified-icon-code="&#xe838;"
           @hide-dropdown="isMenuActive = false"

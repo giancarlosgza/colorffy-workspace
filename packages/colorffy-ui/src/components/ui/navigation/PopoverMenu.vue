@@ -8,15 +8,15 @@ import UiListItem from '../list/ListItem.vue'
 /** Interfaces */
 interface IMenuItem {
   id: string
-  path: string
+  to: string | object
   icon: string
-  label: string
+  text: string
   ariaLabel: string
 }
 interface IPopoverMenuProps {
   isOpened?: boolean
   menuItems?: IMenuItem[]
-  activeItem?: string | null
+  currentRoute?: any
   title?: string | null
   subtitle?: string | null
   avatarUrl?: string | null
@@ -27,7 +27,7 @@ interface IPopoverMenuProps {
 }
 interface IPopoverMenuEmits {
   (e: 'hideDropdown'): void
-  (e: 'menuItemClick', path: string): void
+  (e: 'menuItemClick', to: string | object): void
 }
 interface IUserData {
   displayName: string | null
@@ -41,13 +41,13 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
   menuItems: () => [
     {
       id: 'home',
-      path: '/',
+      to: '/',
       icon: '&#xe66b;',
-      label: 'Home',
+      text: 'Home',
       ariaLabel: 'Navigate to home page'
     }
   ],
-  activeItem: null,
+  currentRoute: null,
   title: null,
   subtitle: null,
   avatarUrl: null,
@@ -80,12 +80,25 @@ const userPhotoAlt = computed(() => `${userDisplayName.value} Profile Photo`)
 function handleHideDropdown() {
   emit('hideDropdown')
 }
-function handleMenuItemClick(path: string): void {
-  emit('menuItemClick', path)
+function handleMenuItemClick(to: string | object): void {
+  emit('menuItemClick', to)
   handleHideDropdown()
 }
-function isActiveMenuItem(path: string): boolean {
-  return props.activeItem === path
+function isActiveMenuItem(to: string | object): boolean {
+  if (!props.currentRoute)
+    return false
+
+  // String path comparison
+  if (typeof to === 'string') {
+    return props.currentRoute.path === to
+  }
+
+  // Object route comparison
+  if (typeof to === 'object' && 'name' in to) {
+    return props.currentRoute.name === to.name
+  }
+
+  return false
 }
 </script>
 
@@ -168,11 +181,11 @@ function isActiveMenuItem(path: string): boolean {
           <UiListItem
             v-for="item in listItems"
             :key="item.id"
-            :title="item.label"
+            :title="item.text"
             :icon="item.icon"
-            :active="isActiveMenuItem(item.path)"
+            :active="isActiveMenuItem(item.to)"
             :aria-label="item.ariaLabel"
-            @click="handleMenuItemClick(item.path)"
+            @click="handleMenuItemClick(item.to)"
           />
         </UiListGroup>
 
