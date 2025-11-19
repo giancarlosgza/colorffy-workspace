@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -50,9 +50,9 @@ jobs:
       - name: Publish @colorffy/css
         if: github.event.inputs.package == '@colorffy/css' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-css
-        run: pnpm publish --access public --provenance
+        run: npm publish --access public --provenance
       
       - name: Publish @colorffy/ui
         if: github.event.inputs.package == '@colorffy/ui' || github.event.inputs.package == 'both'
         working-directory: ./packages/colorffy-ui
-        run: pnpm publish --access public --provenance
+        run: npm publish --access public --provenance
