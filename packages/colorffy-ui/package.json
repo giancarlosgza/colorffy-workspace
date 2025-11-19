@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/ui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -61,10 +61,21 @@
   },
   "keywords": [
     "vue",
+    "vue3",
+    "nuxt",
     "components",
     "ui",
     "typescript"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giancarlosgza/colorffy-workspace.git",
+    "directory": "packages/colorffy-ui"
+  },
+  "homepage": "https://github.com/giancarlosgza/colorffy-workspace#readme",
+  "bugs": {
+    "url": "https://github.com/giancarlosgza/colorffy-workspace/issues"
+  },
   "author": "Giancarlos Garza",
   "license": "MIT"
 }
