@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/css",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
   "main": "dist/colorffy.css",
   "style": "dist/colorffy.css",
