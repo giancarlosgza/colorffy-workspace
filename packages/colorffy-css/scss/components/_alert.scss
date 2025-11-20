@@ -242,50 +242,65 @@
   .pwa-alert-container {
     --_pwa-alert-position-x: 1rem;
     --_pwa-alert-position-y: 1rem;
+    --_pwa-alert-padding: #{v.$space-1};
+    --_pwa-alert-gap: .75rem;
+    --_pwa-border-radius: #{v.$card-border-radius};
 
     position: fixed;
     right: var(--_pwa-alert-position-x);
     bottom: var(--_pwa-alert-position-y);
     display: grid;
-    gap: .75rem;
-    grid-template-columns: 1fr;
+    gap: var(--_pwa-alert-gap);
+    grid-template-columns: 1fr auto;
     width: fit-content;
-    max-width: 30%;
+    max-width: 40%;
     margin: auto;
-    z-index: 999;
-    padding-block: v.$space-1;
-    padding-inline: v.$space-1;
+    z-index: v.$z-index-navigation;
+    padding-block: var(--_pwa-alert-padding);
+    padding-inline: var(--_pwa-alert-padding);
     background: var(--theme-surface-overlay);
     border: v.$border-sm solid var(--theme-outline-surface);
     box-shadow: var(--shadow-lg);
-    border-radius: calc(#{v.$dialog-border-radius} / 1.5);
-    animation: fade-in-down 300ms ease-in-out;
+    border-radius: var(--_pwa-border-radius);
 
-    i {
-      font-variation-settings: var(--iw-semi-bold);
-      color: var(--theme-on-primary);
-      margin-bottom: .35rem;
-    }
-
-    p {
-      &:is(.subtitle-1) {
-        font-size: var(--fs-600);
-        font-weight: v.$fw-800;
-        font-family: v.$font-primary;
-        margin-bottom: .25rem;
-      }
-
-      &:is(.subtitle-2) {
-        color: var(--theme-muted-a10);
-        max-inline-size: 50ch;
-        margin-bottom: 0;
-        @include m.text-wrap-pretty;
-      }
-    }
-
-    .pwa-actions {
+    // Content area
+    & .pwa-content {
       display: flex;
-      gap: .5rem;
+      align-items: center;
+      gap: var(--_pwa-alert-gap);
+
+      i {
+        font-variation-settings: var(--iw-semi-bold);
+        color: var(--theme-muted-a10);
+      }
+
+      & .pwa-content-text-wrapper {
+        display: grid;
+        gap: calc(var(--_pwa-alert-gap) / 2);
+
+        p {
+          margin-bottom: 0;
+
+          &:is(.subtitle-1) {
+            font-weight: v.$fw-600;
+            font-family: v.$font-primary;
+          }
+
+          &:is(.subtitle-2) {
+            color: var(--theme-muted-a10);
+            max-inline-size: 40ch;
+            @include m.text-wrap-pretty;
+          }
+        }
+      }
+    }
+
+    // CTA actions
+    & .pwa-actions {
+      place-content: flex-end;
+      display: flex;
+      align-items: center;
+      gap: calc(var(--_pwa-alert-gap) / 2);
 
       .btn {
         margin: 0;
