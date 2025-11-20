@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import type { RouteLocationRaw } from 'vue-router'
 import type { IButtonProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
 
 /** Interfaces */
 interface ILinkTooltipProps extends Omit<IButtonProps, 'onClick'> {
-  linkTo: RouteLocationRaw
+  to?: string | object
+  href?: string
   tooltipText?: string
+  as?: string | object
 }
 
 /** Props */
@@ -15,6 +16,8 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   id: '',
   title: '',
   text: '',
+  to: '',
+  href: '',
   tooltipText: '',
   variant: 'filled',
   color: '',
@@ -25,10 +28,18 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   disabled: false,
   loading: false,
   customClass: '',
-  rounded: false
+  rounded: false,
+  as: 'a'
 })
 
 /** Computed */
+const linkTarget = computed(() => {
+  return props.to || props.href
+})
+const isExternalLink = computed(() => {
+  const target = linkTarget.value
+  return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
 const buttonClasses = computed(() => {
   const classes = []
 
@@ -76,6 +87,33 @@ const buttonClasses = computed(() => {
 
   return classes
 })
+const linkProps = computed(() => {
+  const baseProps = {
+    id: props.id ? `link-${props.id}` : undefined,
+    title: props.title || undefined,
+    class: ['btn', ...buttonClasses.value],
+    disabled: props.disabled
+  }
+
+  // For anchor tags or external links
+  if (props.as === 'a' || isExternalLink.value) {
+    const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
+    return {
+      ...baseProps,
+      href: props.disabled ? undefined : href,
+      ...(isExternalLink.value && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
+  return {
+    ...baseProps,
+    to: linkTarget.value
+  }
+})
 </script>
 
 <template>
@@ -83,17 +121,13 @@ const buttonClasses = computed(() => {
     :aria-id="id ? `${id}-tooltip` : undefined"
     class="d-inline-block"
   >
-    <NuxtLink
-      :id="id ? `link-${id}` : undefined"
-      :title="title || undefined"
-      :to="linkTo"
-      class="btn"
-      :class="buttonClasses"
-      :disabled="disabled"
+    <component
+      :is="props.as"
+      v-bind="linkProps"
     >
       <slot name="icon" />
       {{ text }}
-    </NuxtLink>
+    </component>
 
     <template #popper>
       {{ tooltipText }}

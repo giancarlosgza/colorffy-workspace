@@ -148,12 +148,10 @@
   }
 
   .text-link {
-    border-bottom: 1.5px solid var(--theme-secondary-a20);
-    @include m.text-color(var(--theme-secondary-a20));
+    border-bottom: 1.5px solid currentColor;
 
-    &.text-link-high-contrast {
-      border-color: var(--theme-secondary-a90);
-      @include m.text-color(var(--theme-secondary-a90));
+    &.text-link-emphasis {
+      border-bottom-width: 2px;
     }
   }
 
