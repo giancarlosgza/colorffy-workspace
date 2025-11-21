@@ -110,6 +110,7 @@ export type IconBrandName
     | 'buy-coffee'
     | 'apple'
     | 'google'
+    | 'facebook'
 
 /**
  * Interface props for the Material Symbol implementation.

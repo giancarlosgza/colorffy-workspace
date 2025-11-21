@@ -140,6 +140,24 @@ function closeDialog() {
 
               <hr>
               <div class="d-flex flex-wrap gap-3">
+                <UiIconApp brand="apple" size="md" />
+                <UiIconApp brand="google" size="md" />
+                <UiIconApp brand="facebook" size="md" />
+                <UiIconApp brand="instagram" size="md" />
+                <UiIconApp brand="discord" size="md" />
+              </div>
+
+              <hr>
+              <div class="d-flex flex-wrap gap-3">
+                <UiIconTool tool="Search Console" />
+                <UiIconTool tool="Google Analytics" />
+                <UiIconTool tool="Google Ads" />
+                <UiIconTool tool="Firebase Console" />
+                <UiIconTool tool="Plausible Analytics" />
+              </div>
+
+              <hr>
+              <div class="d-flex flex-wrap gap-3">
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap" />
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-primary icon-wrap-bordered" />
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-secondary icon-wrap-bordered" />

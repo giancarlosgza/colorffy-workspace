@@ -42,7 +42,8 @@ const iconMeta: Record<IconBrandName, IIconMeta> = {
   'buy-coffee': { class: 'filter-invert', supportsColorOverride: false },
   'stripe': { defaultColor: '#6772E5', supportsColorOverride: true },
   'apple': { class: 'filter-invert', defaultColor: '#000000', supportsColorOverride: true },
-  'google': { supportsColorOverride: false }
+  'google': { supportsColorOverride: false },
+  'facebook': { class: '', defaultColor: '#0866ff', supportsColorOverride: false }
 }
 
 /** Computed */
@@ -273,6 +274,23 @@ const iconAppearance = computed(() => {
       <path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" />
       <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" />
       <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" />
+    </svg>
+
+    <svg
+      v-else-if="currentIcon === 'facebook'"
+      :width="resolvedSize"
+      :height="resolvedSize"
+      :aria-hidden="ariaHidden"
+      :role="ariaRole"
+      :aria-label="ariaLabel"
+      focusable="false"
+      :class="iconAppearance.class"
+      viewBox="0 0 666.667 666.667"
+    >
+      <defs>
+        <clipPath id="facebook_icon__a" clipPathUnits="userSpaceOnUse"><path d="M0 700h700V0H0Z" /></clipPath>
+      </defs>
+      <g clip-path="url(#facebook_icon__a)" transform="matrix(1.33333 0 0 -1.33333 -133.333 800)"><path d="M0 0c0 138.071-111.929 250-250 250S-500 138.071-500 0c0-117.245 80.715-215.622 189.606-242.638v166.242h-51.552V0h51.552v32.919c0 85.092 38.508 124.532 122.048 124.532 15.838 0 43.167-3.105 54.347-6.211V81.986c-5.901.621-16.149.932-28.882.932-40.993 0-56.832-15.528-56.832-55.9V0h81.659l-14.028-76.396h-67.631v-171.773C-95.927-233.218 0-127.818 0 0" style="fill:#0866ff;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(600 350)" /><path d="m0 0 14.029 76.396H-67.63v27.019c0 40.372 15.838 55.899 56.831 55.899 12.733 0 22.981-.31 28.882-.931v69.253c-11.18 3.106-38.509 6.212-54.347 6.212-83.539 0-122.048-39.441-122.048-124.533V76.396h-51.552V0h51.552v-166.242a250.559 250.559 0 0 1 60.394-7.362c10.254 0 20.358.632 30.288 1.831V0Z" style="fill:#fff;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(447.918 273.604)" /></g>
     </svg>
 
     <svg
