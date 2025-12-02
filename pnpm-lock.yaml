@@ -18,8 +18,8 @@ importers:
   packages/colorffy-css:
     dependencies:
       '@material-symbols/font-700':
-        specifier: ^0.39.1
-        version: 0.39.1
+        specifier: ^0.40.0
+        version: 0.40.0
       floating-vue:
         specifier: ^5.2.0
         version: 5.2.2(@nuxt/kit@3.20.0(magicast@0.3.5))(vue@3.5.24(typescript@5.9.3))
@@ -31,7 +31,7 @@ importers:
   packages/colorffy-ui:
     dependencies:
       '@vueuse/components':
-        specifier: 14.0.0
+        specifier: ^14.0.0
         version: 14.0.0(vue@3.5.22(typescript@5.9.3))
       floating-vue:
         specifier: ^5.2.0
@@ -839,6 +839,9 @@ packages:
 
   '@material-symbols/font-700@0.39.1':
     resolution: {integrity: sha512-D1MnKpYkJ8ZwfaMs+pmdQtdsGNzrRPBegK0JTqO3R0YBhTLdCwoiS+YaoAVTFNypYopOT+j2Yv4bxBnbk4jOrg==}
+
+  '@material-symbols/font-700@0.40.0':
+    resolution: {integrity: sha512-zC5BpZxuys4uXNBJIZ+pa3/yax+gl/QmSj/uZLBPlDehcmaKJivD4B3qInZCdCWKv4dfY1qWtl1F2Bz5qZoYpA==}
 
   '@mdx-js/react@3.1.1':
     resolution: {integrity: sha512-f++rKLQgUVYDAtECQ6fn/is15GkEH9+nZPM3MS0RcxVqoTfawHvDlSCH7JbMhAM6uJ32v3eXLvLmLvjGu7PTQw==}
@@ -5132,8 +5135,8 @@ packages:
   vue-component-type-helpers@2.2.12:
     resolution: {integrity: sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw==}
 
-  vue-component-type-helpers@3.1.4:
-    resolution: {integrity: sha512-Uws7Ew1OzTTqHW8ZVl/qLl/HB+jf08M0NdFONbVWAx0N4gMLK8yfZDgeB77hDnBmaigWWEn5qP8T9BG59jIeyQ==}
+  vue-component-type-helpers@3.1.5:
+    resolution: {integrity: sha512-7V3yJuNWW7/1jxCcI1CswnpDsvs02Qcx/N43LkV+ZqhLj2PKj50slUflHAroNkN4UWiYfzMUUUXiNuv9khmSpQ==}
 
   vue-devtools-stub@0.1.0:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
@@ -5923,6 +5926,8 @@ snapshots:
       - supports-color
 
   '@material-symbols/font-700@0.39.1': {}
+
+  '@material-symbols/font-700@0.40.0': {}
 
   '@mdx-js/react@3.1.1(@types/react@19.2.2)(react@19.2.0)':
     dependencies:
@@ -7142,7 +7147,7 @@ snapshots:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.22(typescript@5.9.3)
-      vue-component-type-helpers: 3.1.4
+      vue-component-type-helpers: 3.1.5
 
   '@stylistic/eslint-plugin@5.5.0(eslint@9.39.1(jiti@2.6.1))':
     dependencies:
@@ -11388,7 +11393,7 @@ snapshots:
 
   vue-component-type-helpers@2.2.12: {}
 
-  vue-component-type-helpers@3.1.4: {}
+  vue-component-type-helpers@3.1.5: {}
 
   vue-devtools-stub@0.1.0: {}
 
