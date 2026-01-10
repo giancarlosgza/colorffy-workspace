@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Global Component Registration
-import type { UiAlertToast, UiModal } from '@colorffy/ui'
+import type { UiAlertToast, UiConfirmModal, UiModal } from '@colorffy/ui'
 
 /** Data */
 const sidebarCollapse = useState<boolean>('sidebarCollapse')
@@ -8,20 +8,22 @@ const sidebarCollapse = useState<boolean>('sidebarCollapse')
 const colorMode = useColorMode()
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null)
+const confirmModalRef = ref<InstanceType<typeof UiConfirmModal> | null>(null)
+const rangeValue = ref<number>(50)
 
-const datatableHeaders = ['ID', 'Name', 'Description', 'Status', 'Requests', 'Created At', 'Actions']
+const datatableHeaders = ['ID', 'Nombre', 'Descripción', 'Estado', 'Solicitudes', 'Fecha De Creación', 'Acciones']
 const datatableItems = [
-  { id: 1, name: 'Proyecto Atlas', description: 'Sistema de monitoreo geoespacial.', status: 'Activo', requests: 234, createdAt: '2025-10-01' },
-  { id: 2, name: 'Proyecto Nébula', description: 'Pipeline de datos en tiempo real.', status: 'Pendiente', requests: 567, createdAt: '2025-10-03' },
-  { id: 3, name: 'Proyecto Aurora', description: 'Portal de visualización de métricas.', status: 'Activo', requests: 891, createdAt: '2025-10-05' },
-  { id: 4, name: 'Proyecto Horizonte', description: 'API pública para integración externa.', status: 'Inactivo', requests: 5123, createdAt: '2025-10-07' },
-  { id: 5, name: 'Proyecto Vertex', description: 'Motor de recomendaciones personalizadas.', status: 'Activo', requests: 1456, createdAt: '2025-10-10' },
-  { id: 6, name: 'Proyecto Ícaro', description: 'Servicio de autenticación y OAuth.', status: 'Activo', requests: 789, createdAt: '2025-10-12' },
-  { id: 7, name: 'Proyecto Océano', description: 'Archivador de documentos históricos.', status: 'Archivado', requests: 345, createdAt: '2025-10-14' },
-  { id: 8, name: 'Proyecto Quántico', description: 'Módulo de cálculo distribuido.', status: 'Pendiente', requests: 2678, createdAt: '2025-10-16' },
-  { id: 9, name: 'Proyecto Eclipse', description: 'Programador de tareas y jobs.', status: 'Activo', requests: 912, createdAt: '2025-10-18' },
-  { id: 10, name: 'Proyecto Brisa', description: 'Servicio de notificaciones multicanal.', status: 'Inactivo', requests: 2145, createdAt: '2025-10-20' },
-  { id: 11, name: 'Proyecto Orion', description: 'Design System con componentes y CSS para las plataformas', status: 'Activo', requests: 1345, createdAt: '2025-10-22' }
+  { id: 1, nombre: 'Proyecto Atlas', descripcion: 'Sistema de monitoreo geoespacial.', estado: 'Activo', solicitudes: 234, creado: '2025-10-01' },
+  { id: 2, nombre: 'Proyecto Nébula', descripcion: 'Pipeline de datos en tiempo real.', estado: 'Pendiente', solicitudes: 567, creado: '2025-10-03' },
+  { id: 3, nombre: 'Proyecto Aurora', descripcion: 'Portal de visualización de métricas.', estado: 'Activo', solicitudes: 891, creado: '2025-10-05' },
+  { id: 4, nombre: 'Proyecto Horizonte', descripcion: 'API pública para integración externa.', estado: 'Inactivo', solicitudes: 5123, creado: '2025-10-07' },
+  { id: 5, nombre: 'Proyecto Vertex', descripcion: 'Motor de recomendaciones personalizadas.', estado: 'Activo', solicitudes: 1456, creado: '2025-10-10' },
+  { id: 6, nombre: 'Proyecto Ícaro', descripcion: 'Servicio de autenticación y OAuth.', estado: 'Activo', solicitudes: 789, creado: '2025-10-12' },
+  { id: 7, nombre: 'Proyecto Océano', descripcion: 'Archivador de documentos históricos.', estado: 'Archivado', solicitudes: 345, creado: '2025-10-14' },
+  { id: 8, nombre: 'Proyecto Quántico', descripcion: 'Módulo de cálculo distribuido.', estado: 'Pendiente', solicitudes: 2678, creado: '2025-10-16' },
+  { id: 9, nombre: 'Proyecto Eclipse', descripcion: 'Programador de tareas y jobs.', estado: 'Activo', solicitudes: 912, creado: '2025-10-18' },
+  { id: 10, nombre: 'Proyecto Brisa', descripcion: 'Servicio de notificaciones multicanal.', estado: 'Inactivo', solicitudes: 2145, creado: '2025-10-20' },
+  { id: 11, nombre: 'Proyecto Orion', descripcion: 'Design System con componentes y CSS para las plataformas', estado: 'Activo', solicitudes: 1345, creado: '2025-10-22' }
 ]
 
 /** Methods */
@@ -43,6 +45,15 @@ function closeDialog() {
   if (!dialogRef.value)
     return
   dialogRef.value?.closeDialog()
+}
+function showConfirmModal() {
+  if (!confirmModalRef.value)
+    return
+  confirmModalRef.value?.showDialog()
+}
+function handleConfirm() {
+  console.log('Confirmed!')
+  confirmModalRef.value?.closeDialog()
 }
 </script>
 
@@ -277,7 +288,7 @@ function closeDialog() {
         <UiButton variant="chip" text="Chip Button" />
         <UiButton variant="outline" text="Small Button" size="sm" />
         <UiButton variant="outline" text="Large Button" size="lg" />
-        <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white" />
+        <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white" @on-click="showConfirmModal" />
         <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta" />
       </UiButtonGroup>
       <hr>
@@ -347,10 +358,16 @@ function closeDialog() {
             <template #body>
               <div>
                 <UiDatatable
-                  :hidden-columns="['ID']" column-manager
+                  :hidden-columns="['ID']"
                   :headers="datatableHeaders"
                   :items="datatableItems"
                   table-class="table-bordered scroll-fade-inline-effect"
+                  column-manager
+                  column-manager-text="Columnas"
+                  column-manager-tooltip="Organizar columnas"
+                  :columns-toggle-tooltip="{ showAll: 'Mostrar todas las columnas', hideDefault: 'Ocultar columnas' }"
+                  empty-state-title="No se encontraron proyectos."
+                  empty-state-subtitle="Intenta ajustar tus filtros o agregar nuevos proyectos."
                 >
                   <template #controls>
                     <div class="d-flex align-items-center gap-3">
@@ -369,35 +386,45 @@ function closeDialog() {
                       </UiButton>
                     </div>
                   </template>
-                  <template #cell-name="{ item }">
+                  <template #cell-nombre="{ item }">
                     <span class="fw-500">
                       <UiAvatar
-                        :initials="item.name.charAt(0) + item.name.charAt(9)"
+                        :initials="item.nombre.charAt(0) + item.nombre.charAt(9)"
                         mask-shape="pill" mask-stretch
                         class="bg-secondary-fixed"
                       />
-                      {{ item.name }}
+                      {{ item.nombre }}
                     </span>
                   </template>
-                  <template #cell-status="{ item }">
+                  <template #cell-descripcion="{ item }">
+                    <span class="text-muted">
+                      {{ item.descripcion }}
+                    </span>
+                  </template>
+                  <template #cell-estado="{ item }">
                     <UiBadge
                       variant="outline"
-                      :text="item.status"
+                      :text="item.estado"
                       icon-code="&#xe061;"
                       :icon-class="
-                        item.status === 'Activo' ? 'text-success-fixed'
-                        : item.status === 'Pendiente' ? 'text-warning-fixed'
-                          : item.status === 'Inactivo' ? 'text-danger-fixed'
-                            : item.status === 'Archivado' ? 'text-muted' : 'text-muted'"
+                        item.estado === 'Activo' ? 'text-success-fixed'
+                        : item.estado === 'Pendiente' ? 'text-warning-fixed'
+                          : item.estado === 'Inactivo' ? 'text-danger-fixed'
+                            : item.estado === 'Archivado' ? 'text-muted' : 'text-muted'"
                       size="sm"
                     />
                   </template>
-                  <template #cell-requests="{ item }">
+                  <template #cell-solicitudes="{ item }">
                     <div class="text-muted text-end tabular-numbers">
-                      {{ item.requests }}
+                      {{ item.solicitudes }}
                     </div>
                   </template>
-                  <template #cell-actions="{ item }">
+                  <template #cell-fechaDeCreacion="{ item }">
+                    <span class="text-success">
+                      {{ item.creado }}
+                    </span>
+                  </template>
+                  <template #cell-acciones="{ item }">
                     <UiButtonMenu
                       :id="`actions-menu-${item.id}`"
                       variant="outline"
@@ -410,7 +437,7 @@ function closeDialog() {
                         <UiIconMaterial icon-code="&#xe5c5;" />
                       </template>
                       <template #menu>
-                        <UiButtonMenuText :item-text="item.name" />
+                        <UiButtonMenuText :item-text="item.nombre" />
                         <UiButtonMenuItem icon="&#xe89e;" item-text="Ver detalles" />
                         <UiButtonMenuItem
                           icon="&#xe7f4;"
@@ -480,6 +507,13 @@ function closeDialog() {
             label="Sample Input" placeholder="Enter some text..." class="mb-3"
             variant="outline"
           />
+          <UiInputRange
+            id="range-sample"
+            v-model="rangeValue"
+            variant="transparent"
+            :label="`Sample Range: ${rangeValue}`"
+            :min="0" :max="100" :step="10"
+          />
           <p class="subtitle-1 fw-500">
             This is the content of the modal dialog.
           </p>
@@ -491,6 +525,17 @@ function closeDialog() {
           <UiButton variant="text" text="Close" @on-click="closeDialog" />
         </template>
       </UiModal>
+
+      <!-- Confirm Modal -->
+      <UiConfirmModal
+        ref="confirmModalRef"
+        title="Confirm Action"
+        message="Are you sure you want to proceed with this action?"
+        confirm-label="Confirmar"
+        cancel-label="Cancelar"
+        variant="danger"
+        @confirm="handleConfirm"
+      />
     </div>
   </div>
 </template>

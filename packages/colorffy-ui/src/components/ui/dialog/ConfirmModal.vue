@@ -9,6 +9,7 @@ import UiIconMaterial from '../icon/Material.vue'
 interface IConfirmModalProps extends IDialogProps {
   isLoading?: boolean
   loadingLabel?: string
+  cancelLabel?: string
 }
 
 /** Props */
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<IConfirmModalProps>(), {
   title: null,
   message: null,
   confirmLabel: 'Delete',
+  cancelLabel: 'Cancel',
   isLoading: false,
   loadingLabel: 'Deleting...',
   variant: 'danger',
@@ -162,7 +164,7 @@ defineExpose({
       <div class="dialog-footer">
         <UiButton
           variant="text"
-          text="Cancel"
+          :text="cancelLabel"
           @click="closeDialog"
         />
         <UiButton

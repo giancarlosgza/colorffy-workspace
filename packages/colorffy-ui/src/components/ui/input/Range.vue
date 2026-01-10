@@ -14,6 +14,7 @@ interface IRangeInputProps {
   variant?: 'filled' | 'outline' | 'transparent' | null
   rounded?: boolean
   customClass?: string | null
+  disabled?: boolean
 }
 interface IRangeInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
@@ -24,15 +25,16 @@ interface IRangeInputEmits {
 const props = withDefaults(defineProps<IRangeInputProps>(), {
   id: null,
   label: null,
-  min: 7,
-  max: 1,
-  step: 0.01,
+  min: 0,
+  max: 100,
+  step: 1,
   modelValue: null,
   errorMessages: () => [],
   optionalLabel: false,
   variant: null,
   rounded: false,
-  customClass: null
+  customClass: null,
+  disabled: false
 })
 
 /** Emits */
@@ -57,6 +59,11 @@ const rangeClasses = computed(() => {
     classes.push(props.customClass)
   }
   return classes
+})
+const valueAsPercent = computed(() => {
+  const currentValue = Number(model.value) || props.min
+  const percent = ((currentValue - props.min) / (props.max - props.min)) * 100
+  return Math.round(percent)
 })
 
 /** Watchers */
@@ -86,6 +93,8 @@ watch(model, (value) => {
       :step="step"
       :aria-invalid="hasErrors || undefined"
       :aria-describedby="describedById"
+      :style="`--_form-range-track-fill: ${valueAsPercent}%;`"
+      :disabled="disabled"
     >
 
     <p

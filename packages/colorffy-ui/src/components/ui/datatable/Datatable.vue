@@ -9,6 +9,11 @@ import UiButtonTooltip from '../button/ButtonTooltip.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Interfaces */
+interface IColumnsToggleTooltip {
+  showAll: string
+  hideDefault: string
+}
+
 interface IDatatableProps {
   tableClass?: 'table-bordered' | 'table-striped' | 'table-borderless' | string
   isLoading?: boolean
@@ -24,6 +29,11 @@ interface IDatatableProps {
   sortable?: boolean
   hiddenColumns?: string[]
   columnManager?: boolean
+  columnsToggleTooltip?: string | IColumnsToggleTooltip
+  columnManagerText?: string
+  columnManagerTooltip?: string
+  emptyStateTitle?: string
+  emptyStateSubtitle?: string
 }
 
 /** Props */
@@ -39,7 +49,12 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   unsortableColumns: () => ['Actions'],
   sortable: true,
   hiddenColumns: () => [],
-  columnManager: false
+  columnManager: false,
+  columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
+  columnManagerText: 'Columns',
+  columnManagerTooltip: 'Manage columns',
+  emptyStateTitle: 'No data available',
+  emptyStateSubtitle: 'Try may want to try using different filters or check back later.'
 })
 
 /** Data */
@@ -49,6 +64,14 @@ const managedHiddenColumns = ref([...props.hiddenColumns])
 
 /** Computed */
 const areAllColumnsVisible = computed(() => managedHiddenColumns.value.length === 0)
+const columnsToggleTooltipText = computed(() => {
+  if (typeof props.columnsToggleTooltip === 'string') {
+    return props.columnsToggleTooltip
+  }
+  return areAllColumnsVisible.value
+    ? props.columnsToggleTooltip.hideDefault
+    : props.columnsToggleTooltip.showAll
+})
 const visibleHeaders = computed(() => {
   return props.headers.filter(header => !managedHiddenColumns.value.includes(header))
 })
@@ -84,7 +107,9 @@ function sortBy(key: string) {
   }
 }
 function toCamelCase(str: string) {
-  const newStr = str.toLowerCase().replace(/[^a-z0-9]+(.)/gi, (m, chr) => chr.toUpperCase())
+  // Normalize accented characters to ASCII equivalents
+  const normalized = str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
+  const newStr = normalized.toLowerCase().replace(/[^a-z0-9]+(.)/gi, (m, chr) => chr.toUpperCase())
   return newStr.charAt(0).toLowerCase() + newStr.slice(1)
 }
 function toggleShowAllColumns() {
@@ -127,7 +152,7 @@ function isLastVisibleColumn(header: string) {
           variant="outline"
           size="sm"
           icon icon-variant="shape-sm"
-          :tooltip-text="!areAllColumnsVisible ? 'Show all columns' : 'Hide default columns'"
+          :tooltip-text="columnsToggleTooltipText"
           @on-click="toggleShowAllColumns"
         >
           <template #icon>
@@ -142,8 +167,8 @@ function isLastVisibleColumn(header: string) {
           id="column-manager"
           variant="outline"
           size="sm"
-          text="Columns"
-          tooltip-text="Manage columns"
+          :text="columnManagerText"
+          :tooltip-text="columnManagerTooltip"
           icon-trailing
         >
           <template #icon>
@@ -218,8 +243,8 @@ function isLastVisibleColumn(header: string) {
           <tr>
             <td :colspan="visibleHeaders.length">
               <StateEmpty
-                title="No data available"
-                subtitle="Try may want to try using different filters or check back later."
+                :title="emptyStateTitle"
+                :subtitle="emptyStateSubtitle"
               />
             </td>
           </tr>
