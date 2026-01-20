@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Interfaces */
 interface IFileInputProps {
