@@ -212,7 +212,6 @@ function handleConfirm() {
           </template>
         </UiButtonTooltip>
       </UiButtonGroup>
-
       <UiButtonGroup connected class="mt-section">
         <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog" />
         <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" />
@@ -415,13 +414,25 @@ function handleConfirm() {
                     />
                   </template>
                   <template #cell-solicitudes="{ item }">
-                    <div class="text-muted text-end tabular-numbers">
-                      {{ item.solicitudes }}
+                    <div class="d-grid gap-1">
+                      <div class="text-muted text-end tabular-numbers">
+                        {{ item.solicitudes }}
+                      </div>
+                      <UiProgressBar
+                        :value="(item.solicitudes % 1000) / 10"
+                        size="sm"
+                        :aria-valuemin="0"
+                        :aria-valuemax="100"
+                        :bar-class="
+                          item.solicitudes < 1000 ? 'bg-success-fixed bg-opacity-90'
+                          : item.solicitudes >= 1000 && item.solicitudes < 2000 ? 'bg-warning-fixed bg-opacity-90'
+                            : 'bg-danger-fixed bg-opacity-90'"
+                      />
                     </div>
                   </template>
                   <template #cell-fechaDeCreacion="{ item }">
-                    <span class="text-success">
-                      {{ item.creado }}
+                    <span class="text-muted text-end d-block">
+                      {{ new Date(item.creado).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: '2-digit' }) }}
                     </span>
                   </template>
                   <template #cell-acciones="{ item }">

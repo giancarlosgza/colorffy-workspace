@@ -20,7 +20,7 @@ const spinnerClasses = computed(() => {
 })
 const spinnerStyles = computed(() => {
   const styles: Record<string, any> = {
-    '--_progress-icon-size': props.size
+    '--_progress-spinner-size': props.size
   }
 
   if (props.customStyles) {
