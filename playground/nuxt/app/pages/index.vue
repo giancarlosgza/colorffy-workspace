@@ -212,30 +212,56 @@ function handleConfirm() {
           </template>
         </UiButtonTooltip>
       </UiButtonGroup>
-      <UiButtonGroup connected class="mt-section">
+      <UiButtonGroup connected joined class="mt-section">
         <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog" />
         <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" />
-        <UiButton variant="tonal" color="accent" text="Tonal Accent Button" />
+        <UiButtonTooltip variant="tonal" color="accent" text="Tonal Accent Button" tooltip-text="Example" />
 
         <UiButton variant="tonal" color="success" text="Tonal Success Button" />
         <UiButton variant="tonal" color="warning" text="Tonal Warning Button" />
-        <UiButton variant="tonal" color="danger" text="Tonal Danger Button" />
+        <UiButtonTooltip variant="tonal" color="danger" text="Tonal Danger Button" tooltip-text="Example" />
       </UiButtonGroup>
 
       <div class="row mt-section">
-        <div class="col-md-6">
-          <UiButtonGroup connected joined vertical>
-            <UiButton variant="tonal" color="accent" icon>
+        <div class="col-md-6 d-flex gap-3">
+          <UiButtonGroup connected vertical>
+            <UiButtonTooltip
+              variant="tonal" color="accent" icon
+              tooltip-text="SUM"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe145;" />
+              </template>
+            </UiButtonTooltip>
+            <UiButtonTooltip
+              variant="tonal" color="accent" icon
+              tooltip-text="MULTIPLY"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xf77b;" />
+              </template>
+            </UiButtonTooltip>
+            <UiButtonTooltip
+              variant="tonal" color="accent" icon
+              tooltip-text="SUBTRACT"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe15b;" />
+              </template>
+            </UiButtonTooltip>
+          </UiButtonGroup>
+          <UiButtonGroup connected vertical>
+            <UiButton variant="tonal" color="success" icon>
               <template #icon>
                 <UiIconMaterial icon-code="&#xe145;" />
               </template>
             </UiButton>
-            <UiButton variant="tonal" color="accent" icon>
+            <UiButton variant="tonal" color="primary" icon>
               <template #icon>
                 <UiIconMaterial icon-code="&#xf77b;" />
               </template>
             </UiButton>
-            <UiButton variant="tonal" color="accent" icon>
+            <UiButton variant="tonal" color="danger" icon>
               <template #icon>
                 <UiIconMaterial icon-code="&#xe15b;" />
               </template>

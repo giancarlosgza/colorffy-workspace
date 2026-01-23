@@ -469,7 +469,7 @@
   // Button Group
   .btn-group {
     --_btn-group-gap: .75rem .55rem;
-    
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -486,10 +486,21 @@
 
     &:is(.btn-group-connected) {
       --_btn-group-gap: 0.25rem;
+      --_btn-connected-radius: #{v.$rounded-full};
 
-      .btn {
-        --_btn-connected-radius: #{v.$rounded-full};
+      // Handle v-popper wrapped buttons
+      div:has(.v-popper):first-child .btn {
+        border-top-left-radius: var(--_btn-connected-radius);
+        border-bottom-left-radius: var(--_btn-connected-radius);
+      }
 
+      div:has(.v-popper):last-child .btn {
+        border-top-right-radius: var(--_btn-connected-radius);
+        border-bottom-right-radius: var(--_btn-connected-radius);
+      }
+
+      // Direct button children
+      > .btn {
         &:first-child {
           border-top-left-radius: var(--_btn-connected-radius);
           border-bottom-left-radius: var(--_btn-connected-radius);
@@ -501,44 +512,60 @@
         }
       }
 
+      // Joined variant
       &:is(.btn-group-joined) {
         --_btn-group-gap: 0;
 
-        .btn {
-          &:not(:first-child):not(:last-child) {
-            border-radius: 0;
-          }
+        div:has(.v-popper):not(:first-child):not(:last-child) .btn {
+          --_btn-radius: 0;
+        }
+
+        .btn:not(:first-child):not(:last-child) {
+          --_btn-radius: 0;
         }
       }
 
+      // Vertical variant
       &:is(.btn-group-vertical) {
-        .btn {
+        div:has(.v-popper) {
+          & .btn {
+            border-radius: v.$button-border-radius;
+          }
+
+          &:first-child .btn {
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) 0 0;
+          }
+
+          &:last-child .btn {
+            border-radius: 0 0 var(--_btn-connected-radius) var(--_btn-connected-radius);
+          }
+        }
+
+        > .btn {
+          border-radius: v.$button-border-radius;
+
           &:first-child {
-            border-top-left-radius: var(--_btn-connected-radius);
-            border-top-right-radius: var(--_btn-connected-radius);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) 0 0;
           }
 
           &:last-child {
-            border-bottom-left-radius: var(--_btn-connected-radius);
-            border-bottom-right-radius: var(--_btn-connected-radius);
-            border-top-right-radius: 0;
-            border-top-left-radius: 0;
+            border-radius: 0 0 var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
 
         &:is(.btn-group-joined) {
-          .btn {
-            &:not(:first-child):not(:last-child) {
-              border-radius: 0;
-            }
+          div:has(.v-popper):not(:first-child):not(:last-child) .btn {
+            border-radius: 0;
+          }
+
+          > .btn:not(:first-child):not(:last-child) {
+            border-radius: 0;
           }
         }
       }
     }
-  }  
-  
+  }
+
   // FAB Group
   .fab-group {
     --_btn-fab-position-y: 1.75rem;
