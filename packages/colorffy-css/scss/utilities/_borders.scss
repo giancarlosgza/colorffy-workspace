@@ -39,7 +39,7 @@
       border-bottom: none;
       border-inline: none;
     }
-    
+
     &.border-bottom {
       border-top: none;
       border-inline: none;
@@ -168,6 +168,39 @@
 
       @media (prefers-reduced-motion: reduce) {
         animation: none;
+      }
+    }
+
+    // Corner borders
+    &.border-gradient-corners {
+      --_border-gradient-start: var(--_border-bg-color);
+      --_border-gradient-end: color-mix(in oklab, var(--_border-bg-color), var(--theme-background) 40%);
+
+      position: relative;
+      border-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        border-radius: inherit;
+        border: var(--_border-size) solid transparent;
+        background: conic-gradient(
+                        from 135deg at 50% 50%,
+                        transparent 0%,
+                        transparent 35%,
+                        var(--_border-gradient-start) 40%,
+                        transparent 45%,
+                        transparent 85%,
+                        var(--_border-gradient-end) 90%,
+                        transparent 95%,
+                        transparent 100%
+        ) border-box;
+
+        mask: linear-gradient(black, black) border-box,
+        linear-gradient(black, black) padding-box;
+        mask-composite: subtract;
       }
     }
   }

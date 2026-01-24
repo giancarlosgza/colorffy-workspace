@@ -124,7 +124,7 @@
     }
   }
 
-  // Custom wrapper backgrounds
+  // Custom wrapper background
   .pane-content {
     --_pane-content-gutter-inline: 1rem;
     --_pane-content-gutter-block: 1rem;
@@ -146,6 +146,16 @@
     }
   }
 
+  // Gradient
+  .bg-gradient {
+    @include m.bg-gradient(45deg, v.$gradient-database);
+    @include m.gradient-variants(false, true);
+  }
+
+  /**
+  * Enhanced Background
+  * Utilities that use modern CSS color functions
+  **/
   // Color Mix
   .bg-color-mix {
     --_bg-color-one: var(--theme-primary-a10);
@@ -169,9 +179,24 @@
     }
   }
 
-  // Gradient backgrounds
-  .bg-gradient {
-    @include m.bg-gradient(45deg, v.$gradient-database);
-    @include m.gradient-variants(false, true);
+  // Bordered gradient
+  .bg-bordered-gradient {
+    --_bg-color: var(--theme-secondary-a10);
+    --_bg-border-size: 2px;
+    --_bg-bg-gradient: linear-gradient(
+                    to bottom,
+                    color-mix(in oklab, var(--_bg-color), var(--theme-background) 70%),
+                    color-mix(in oklab, var(--_bg-color), var(--theme-background) 95%)
+    );
+    --_bg-border-gradient: linear-gradient(
+                    to bottom,
+                    oklch(from var(--_bg-color) l c h / 0.25),
+                    oklch(from var(--_bg-color) l c h / 0.5)
+    );
+
+    border: var(--_bg-border-size) solid transparent;
+    box-shadow: 0 0 2px 2px var(--theme-surface-base) inset;
+    background: var(--_bg-bg-gradient) no-repeat padding-box,
+    var(--_bg-border-gradient) no-repeat border-box;
   }
 }

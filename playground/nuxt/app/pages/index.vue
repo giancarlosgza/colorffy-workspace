@@ -68,21 +68,42 @@ function handleConfirm() {
 
       <!-- Content -->
       <div class="row">
-        <NuxtLink class="btn btn-link" to="/about">
-          Go to About Page
-        </NuxtLink>
         <div class="col-md-12">
-          <UiCard variant="pane" size="sm" class="mb-3">
+          <UiCard
+            variant="pane" size="sm"
+            class="bg-bordered-gradient rounded-lg mb-3"
+          >
             <template #body>
               <UiListGroup variant="flush" size="lg">
                 <UiListItem text="List Item 1" icon="&#xe88a;" />
               </UiListGroup>
             </template>
           </UiCard>
-
+        </div>
+        <div class="col-md-12">
+          <UiCard
+            variant="pane"
+            class="border border-gradient-corners bg-frosted border-muted rounded-lg p-3 mb-3"
+          >
+            <template #body>
+              <h4 class="fs-600 mb-0">
+                Bordered Gradient Corners
+              </h4>
+            </template>
+          </UiCard>
+        </div>
+        <div class="col-md-12">
           <UiCard variant="pane">
             <template #header>
-              <UiButton variant="filled" text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse" />
+              <div class="d-flex gap-3">
+                <UiButton
+                  variant="filled"
+                  text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse"
+                />
+                <NuxtLink class="btn btn-link" to="/about">
+                  Go to About Page
+                </NuxtLink>
+              </div>
             </template>
             <template #body>
               <h2 class="fs-400 fw-800">
