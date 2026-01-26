@@ -51,7 +51,7 @@
     --theme-surface-kbd: #636367;
     --theme-surface-toast: #212121;
     --theme-surface-overlay: var(--theme-surface-body-pane);
-    --theme-surface-navigation: var(--theme-surface-container);
+    --theme-surface-navigation: var(--theme-surface-body-pane);
     --theme-surface-accordion: var(--theme-surface-container-low);
 
     /* outline colors */
@@ -203,7 +203,7 @@
     --theme-surface-kbd: #c2c2c2;
     --theme-surface-toast: var(--theme-surface-a70);
     --theme-surface-overlay: var(--theme-surface-a30);
-    --theme-surface-navigation: var(--theme-surface-container-high);
+    --theme-surface-navigation: var(--theme-surface-body-pane);
     --theme-surface-accordion: var(--theme-surface-container);
 
     /* outline colors */

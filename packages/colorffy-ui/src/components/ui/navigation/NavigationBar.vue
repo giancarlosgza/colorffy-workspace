@@ -14,6 +14,10 @@ interface INavigationBarProps {
   items?: INavigationItem[]
   activeItem?: string | null
   as?: string | object
+  frosted?: boolean
+  island?: boolean
+  indicatorTab?: boolean
+  indicatorFrosted?: boolean
 }
 
 /** Props */
@@ -28,11 +32,23 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
     }
   ],
   activeItem: null,
-  as: 'a'
+  as: 'a',
+  frosted: false,
+  island: false,
+  indicatorTab: false,
+  indicatorFrosted: false
 })
 
 /** Computed */
 const navigationItems = computed(() => props.items)
+const navigationBarClasses = computed(() => ({
+  'navigation-bar-frosted': props.frosted,
+  'navigation-bar-island': props.island
+}))
+const indicatorClasses = computed(() => ({
+  'indicator-tab': props.indicatorTab,
+  'indicator-frosted': props.indicatorFrosted
+}))
 
 /** Methods */
 function isActivePath(path: string | object): boolean {
@@ -78,6 +94,7 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
 <template>
   <nav
     class="navigation-bar"
+    :class="navigationBarClasses"
     role="navigation"
     aria-label="Main navigation"
   >
@@ -94,11 +111,15 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
           :icon-code="item.icon"
           :class="{ 'iw-bold': isActivePath(item.to) }"
         />
-        <div class="indicator" />
         <p class="typography-headline-sm">
           {{ item.text }}
         </p>
       </component>
     </div>
+
+    <div
+      class="indicator"
+      :class="indicatorClasses"
+    />
   </nav>
 </template>

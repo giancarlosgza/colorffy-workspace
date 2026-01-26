@@ -343,6 +343,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    overflow: clip;
 
     position: fixed;
     bottom: 0;
@@ -358,9 +359,22 @@
     box-shadow: var(--shadow-md);
     z-index: v.$z-index-navigation;
 
+    &:is(.navigation-bar-frosted) {
+      background-color: var(--theme-frosted-glass-bg);
+      backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+    }
+
+    &:is(.navigation-bar-island) {
+      inset-inline: 0;
+      bottom: .5rem;
+      margin: auto;
+      width: calc(100vw - 2rem);
+      border-radius: 50px;
+    }
+
     @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_navigation-bar-easing-in: #{v.$easing-spring};
-      --_navigation-bar-easing-duration: 800ms;
+      --_navigation-bar-easing-in: #{v.$easing-overshoot-soft};
+      --_navigation-bar-easing-duration: 600ms;
     }
 
     & .navigation-bar-item {
@@ -397,54 +411,16 @@
           color: var(--theme-muted-a10);
         }
 
-        // Indicator
-        .indicator {
-          position: absolute;
-          top: -.2rem;
-          inset-inline: 0;
-          margin: auto;
-          padding-inline: 1.8rem;
-          width: 50%;
-          max-width: 80px;
-          height: 1.75rem;
-          border-radius: v.$rounded-full;
-          z-index: 10;
-          scale: 0 1;
-          opacity: 0;
-
-          will-change: scale, opacity, background-color;
-          transition: opacity var(--_navigation-bar-easing-out-duration) var(--_navigation-bar-easing-out),
-          scale var(--_navigation-bar-easing-out-duration) var(--_navigation-bar-easing-out),
-          background-color var(--_navigation-bar-easing-out-duration) var(--_navigation-bar-easing-out);
-        }
-
         // Nuxt link active class
         &.router-link-exact-active {
+          anchor-name: --active-item;
+
           p, i {
-            color: var(--theme-on-primary);
+            color: var(--theme-primary-a10);
           }
 
           p {
             font-weight: v.$fw-800;
-          }
-
-          // Active indicator
-          .indicator {
-            // Fallback background color
-            background-color: rgba(var(--theme-primary-fixed), 50%);
-
-            // Active indicator transition
-            scale: 1 1;
-            opacity: 1;
-            transform-origin: center;
-            transition: opacity var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-            scale var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-            background-color calc(var(--_navigation-bar-easing-duration) - 600ms) var(--_navigation-bar-easing-out);
-
-            // Background color with color-mix support
-            @supports (color: color-mix(in srgb, red, blue)) {
-              background-color: color-mix(in srgb, var(--theme-primary-a10), var(--theme-surface-navigation) 85%);
-            }
           }
         }
       }
@@ -453,6 +429,50 @@
         p, i {
           color: var(--theme-primary-a10);
         }
+      }
+    }
+
+    // Active indicator
+    & .indicator {
+      display: none;
+
+      @supports (anchor-name: --foo) {
+        display: block;
+        position: absolute;
+        margin: auto;
+        border-radius: v.$rounded-xl;
+        width: auto;
+        max-width: 100%;
+        height: calc(100% - 1rem);
+        z-index: 1;
+        transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
+        left var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
+        right var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
+
+        position-anchor: --active-item;
+        top: anchor(top);
+        bottom: anchor(bottom);
+        left: anchor(left);
+        right: anchor(right);
+
+        background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
+        //@include m.bg-gradient(180deg, color-mix(in srgb, v.$white, var(--theme-surface-base) 85%), color-mix(in srgb, v.$dark, var(--theme-surface-base) 85%))
+        //box-shadow: 0 2px 8px var(--theme-surface-base) inset;
+      }
+
+      &:is(.indicator-tab) {
+        @supports (anchor-name: --foo) {
+          border-radius: v.$rounded-sm;
+          height: .25rem;
+          background-color: var(--theme-primary-a10);
+          top: calc(anchor(top) - 1rem);
+          bottom: unset;
+        }
+      }
+
+      &:is(.indicator-frosted) {
+        border: v.$border-sm solid var(--theme-outline-surface);
+        background-color: var(--theme-frosted-glass-bg);
       }
     }
   }
