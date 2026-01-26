@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import UiIconMaterial from '../ui/icon/Material.vue'
 
 /** Interfaces */
 interface IEmptyProps {
@@ -11,6 +12,8 @@ interface IEmptyProps {
   role?: string
   ariaLabel?: string
   ariaLive?: 'off' | 'polite' | 'assertive'
+  useCustomIcon?: boolean
+  iconCode?: string
 }
 
 /** Props */
@@ -21,7 +24,9 @@ const props = withDefaults(defineProps<IEmptyProps>(), {
   emptyStyles: null,
   role: 'status',
   ariaLabel: 'Empty state',
-  ariaLive: 'polite'
+  ariaLive: 'polite',
+  useCustomIcon: false,
+  iconCode: '&#xeb83;'
 })
 
 /** Computed */
@@ -55,11 +60,18 @@ const ariaAttributes = computed(() => {
     v-bind="ariaAttributes"
   >
     <!-- Icon State -->
-    <div class="icon-state-wrapper">
+    <div v-if="!useCustomIcon" class="icon-state-wrapper">
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
     </div>
+
+    <!-- Custom Icon -->
+    <UiIconMaterial
+      v-else
+      :icon-code="iconCode"
+      class="fs-100 text-muted mb-3"
+    />
 
     <!-- Title -->
     <h3

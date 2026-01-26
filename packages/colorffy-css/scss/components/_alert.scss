@@ -63,6 +63,7 @@
       color: var(--_alert-color);
       line-height: 1.5;
       margin-bottom: 0;
+      word-break: break-word;
     }
 
     &:has(i) {

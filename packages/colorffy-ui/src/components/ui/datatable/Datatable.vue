@@ -34,6 +34,8 @@ interface IDatatableProps {
   columnManagerTooltip?: string
   emptyStateTitle?: string
   emptyStateSubtitle?: string
+  emptyStateUseCustomIcon?: boolean
+  emptyStateIconCode?: string
 }
 
 /** Props */
@@ -54,7 +56,9 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   columnManagerText: 'Columns',
   columnManagerTooltip: 'Manage columns',
   emptyStateTitle: 'No data available',
-  emptyStateSubtitle: 'Try may want to try using different filters or check back later.'
+  emptyStateSubtitle: 'Try may want to try using different filters or check back later.',
+  emptyStateUseCustomIcon: false,
+  emptyStateIconCode: '&#xeb83;'
 })
 
 /** Data */
@@ -245,6 +249,8 @@ function isLastVisibleColumn(header: string) {
               <StateEmpty
                 :title="emptyStateTitle"
                 :subtitle="emptyStateSubtitle"
+                :use-custom-icon="emptyStateUseCustomIcon"
+                :icon-code="emptyStateIconCode"
               />
             </td>
           </tr>

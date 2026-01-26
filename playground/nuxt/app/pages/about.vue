@@ -1,8 +1,18 @@
-<script></script>
+<script>
+</script>
 
 <template>
-  <div class="about-page">
-    <h1>About Page</h1>
-    <p>This is the about page of the Nuxt application.</p>
+  <div class="container mt-3">
+    <!-- Header -->
+    <UiHeaderContent
+      title="About Page"
+      subtitle="This is the about page of the Nuxt application"
+    />
+
+    <UiEmpty
+      title="No Data Available"
+      subtitle="There is currently no data to display."
+      use-custom-icon
+    />
   </div>
 </template>
