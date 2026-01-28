@@ -1,0 +1,21 @@
+# Development files
+node_modules/
+*.log
+*.lock
+pnpm-lock.yaml
+
+# Source maps (keep only in dist)
+scss/**/*.map
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/

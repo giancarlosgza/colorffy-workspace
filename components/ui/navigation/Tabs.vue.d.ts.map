@@ -1,0 +1,1 @@
+{"version":3,"file":"Tabs.vue.d.ts","sourceRoot":"","sources":["../../../../src/components/ui/navigation/Tabs.vue"],"names":[],"mappings":"AA0DA,iBAAiB;AACjB,UAAU,QAAQ;IAChB,EAAE,EAAE,MAAM,CAAA;IACV,KAAK,EAAE,MAAM,CAAA;CACd;AACD,UAAU,UAAU;IAClB,IAAI,EAAE,QAAQ,EAAE,CAAA;IAChB,QAAQ,CAAC,EAAE,OAAO,CAAA;IAClB,YAAY,CAAC,EAAE,OAAO,CAAA;CACvB;;cAFY,OAAO;kBACH,OAAO;;AAmFxB,wBAQG"}
