@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiAccordion from './Accordion.vue'
 import UiAccordionGroup from './AccordionGroup.vue'
 

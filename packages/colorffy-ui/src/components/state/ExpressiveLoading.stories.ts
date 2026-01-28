@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import StateExpressiveLoading from './ExpressiveLoading.vue'
 
 const meta: Meta<typeof StateExpressiveLoading> = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiInputColorPicker from './ColorPicker.vue'
 
 const meta: Meta<typeof UiInputColorPicker> = {

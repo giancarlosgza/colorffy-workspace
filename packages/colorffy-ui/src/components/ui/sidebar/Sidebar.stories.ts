@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiBadge from '../badge/Badge.vue'
 import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
 import UiButtonMenuText from '../button/ButtonMenuText.vue'

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiButton from '../ui/button/Button.vue'
+import UiButtonGroup from '../ui/button/ButtonGroup.vue'
 import HeaderContent from './HeaderContent.vue'
 
 const meta = {
@@ -43,15 +44,17 @@ export const WithActions: Story = {
     actions: true
   },
   render: args => ({
-    components: { HeaderContent, UiButton },
+    components: { HeaderContent, UiButton, UiButtonGroup },
     setup() {
       return { args }
     },
     template: `
       <HeaderContent v-bind="args">
         <template #actions>
-          <UiButton text="Save" variant="filled" color="primary" />
-          <UiButton text="Cancel" variant="outline" />
+          <UiButtonGroup>
+            <UiButton text="Save" variant="filled" color="primary" />
+            <UiButton text="Cancel" variant="outline" />
+          </UiButtonGroup>
         </template>
       </HeaderContent>
     `
@@ -67,17 +70,17 @@ export const WithBackButtonAndActions: Story = {
     actions: true
   },
   render: args => ({
-    components: { HeaderContent, UiButton },
+    components: { HeaderContent, UiButton, UiButtonGroup },
     setup() {
       return { args }
     },
     template: `
       <HeaderContent v-bind="args">
         <template #actions>
-          <ButtonGroup>
-              <UiButton text="Edit" variant="filled" color="secondary" />
-              <UiButton text="Delete" variant="outline" color="danger" />
-          </ButtonGroup>
+          <UiButtonGroup>
+            <UiButton text="Edit" variant="filled" color="secondary" />
+            <UiButton text="Delete" variant="outline" color="danger" />
+          </UiButtonGroup>
         </template>
       </HeaderContent>
     `

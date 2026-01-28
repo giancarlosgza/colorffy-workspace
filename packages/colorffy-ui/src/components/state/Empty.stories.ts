@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiButton from '../ui/button/Button.vue'
 import StateEmpty from './Empty.vue'
 

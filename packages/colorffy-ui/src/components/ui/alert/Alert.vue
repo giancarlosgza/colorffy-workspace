@@ -62,7 +62,7 @@ const alertClasses = computed(() => {
           <p v-if="message">
             {{ message }}
           </p>
-          <slot name="message" />
+          <slot name="content" />
         </div>
       </div>
 
