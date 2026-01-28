@@ -18,11 +18,11 @@ declare const __VLS_component: import('vue').DefineComponent<ISidebarLinkProps, 
     customClass: import('../../../types/sidebar').SidebarClassName | null;
     ariaLabelledby: string;
     active: boolean;
-    child: boolean;
     to: string | object;
     href: string;
     as: string | object;
     tooltipPlacement: "top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end";
+    child: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
 export default _default;
