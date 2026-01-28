@@ -31,7 +31,7 @@
     "version:major": "npm version major",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "deploy-storybook": "npm run build-storybook && gh-pages -d storybook-static"
+    "deploy-storybook": "npm run build-storybook && touch ./storybook-static/.nojekyll && gh-pages -d storybook-static -t true"
   },
   "peerDependencies": {
     "@vueuse/components": "^14.0.0",
