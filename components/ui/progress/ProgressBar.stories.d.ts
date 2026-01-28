@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiProgressBar } from './ProgressBar.vue';
 declare const meta: Meta<typeof UiProgressBar>;
 export default meta;

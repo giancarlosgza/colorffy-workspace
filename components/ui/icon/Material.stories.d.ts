@@ -1,4 +1,4 @@
-import { StoryObj } from '@storybook/vue3';
+import { StoryObj } from '@storybook/vue3-vite';
 declare const meta: {
     title: string;
     component: import('vue').DefineComponent<import('../../..').IMaterialIconProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<import('../../..').IMaterialIconProps> & Readonly<{}>, {

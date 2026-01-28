@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiInputSelect } from './Select.vue';
 declare const meta: Meta<typeof UiInputSelect>;
 export default meta;

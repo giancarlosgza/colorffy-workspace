@@ -1,44 +1,4 @@
-/**
- * HeaderContent Component
- *
- * A flexible header component with support for back buttons, actions, and featured badges.
- * Designed for page headers with navigation and action controls.
- *
- * @component
- * @example
- * ```vue
- * <HeaderContent
- *   title="Gradient Generator"
- *   subtitle="Create beautiful gradients"
- *   :is-featured="true"
- *   :actions="true"
- *   :back-button="true"
- *   back-button-label="Back to tools"
- *   @click="handleBack"
- * >
- *   <template #actions>
- *     <UiButton text="Save" />
- *   </template>
- * </HeaderContent>
- * ```
- */
-/** Interfaces */
-interface IHeaderContentProps {
-    /** Main title text to display */
-    title?: string | null;
-    /** Subtitle text to display below the title */
-    subtitle?: string | null;
-    /** Whether to show actions slot */
-    actions?: boolean;
-    /** Whether to hide actions on mobile devices */
-    hideActionsOnMobile?: boolean;
-    /** Whether to show back button */
-    backButton?: boolean;
-    /** Tooltip text for the back button */
-    backButtonLabel?: string;
-    /** Additional CSS classes for the header container */
-    containerClass?: string | string[];
-}
+import { IHeaderContentProps } from '../../types/layout';
 declare function __VLS_template(): {
     attrs: Partial<{}>;
     slots: {

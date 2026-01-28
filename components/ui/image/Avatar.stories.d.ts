@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiAvatar } from './Avatar.vue';
 declare const meta: Meta<typeof UiAvatar>;
 export default meta;

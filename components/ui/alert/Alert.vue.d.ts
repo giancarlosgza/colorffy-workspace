@@ -2,7 +2,7 @@ import { IAlertProps } from '../../../types/alert';
 declare function __VLS_template(): {
     attrs: Partial<{}>;
     slots: {
-        message?(_: {}): any;
+        content?(_: {}): any;
         actions?(_: {}): any;
     };
     refs: {};

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiInputCheck } from './Check.vue';
 declare const meta: Meta<typeof UiInputCheck>;
 export default meta;

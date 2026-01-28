@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiProgressSpinner } from './ProgressSpinner.vue';
 declare const meta: Meta<typeof UiProgressSpinner>;
 export default meta;

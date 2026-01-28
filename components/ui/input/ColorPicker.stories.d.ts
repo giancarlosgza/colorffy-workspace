@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiInputColorPicker } from './ColorPicker.vue';
 declare const meta: Meta<typeof UiInputColorPicker>;
 export default meta;

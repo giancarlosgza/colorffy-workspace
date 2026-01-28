@@ -11,8 +11,10 @@ export type * from './types/button';
 export type * from './types/card';
 export type * from './types/dialog';
 export type * from './types/icon';
+export type * from './types/layout';
 export type * from './types/list';
 export type * from './types/navbar';
+export type * from './types/navigation';
 export type * from './types/progress';
 export type * from './types/sidebar';
 //# sourceMappingURL=index.d.ts.map

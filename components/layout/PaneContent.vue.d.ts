@@ -1,13 +1,4 @@
-/** Interfaces */
-interface IPaneContentProps {
-    customClass?: string | string[] | null;
-    containerClass?: string | string[] | null;
-    isFullHeight?: boolean;
-    ariaLabel?: string;
-    ariaLabelledby?: string;
-    ariaDescribedby?: string;
-    id?: string;
-}
+import { IPaneContentProps } from '../../types/layout';
 declare function __VLS_template(): {
     attrs: Partial<{}>;
     slots: {

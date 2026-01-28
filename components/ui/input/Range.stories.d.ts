@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiInputRange } from './Range.vue';
 declare const meta: Meta<typeof UiInputRange>;
 export default meta;

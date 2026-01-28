@@ -1,13 +1,4 @@
-/** Interfaces */
-interface ITabItem {
-    id: string;
-    label: string;
-}
-interface ITabsProps {
-    tabs: ITabItem[];
-    pillTabs?: boolean;
-    contrastTabs?: boolean;
-}
+import { ITabsProps } from '../../../types/navigation';
 declare const _default: import('vue').DefineComponent<ITabsProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ITabsProps> & Readonly<{}>, {
     pillTabs: boolean;
     contrastTabs: boolean;

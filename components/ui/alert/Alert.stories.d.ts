@@ -1,4 +1,4 @@
-import { StoryObj } from '@storybook/vue3';
+import { StoryObj } from '@storybook/vue3-vite';
 declare const meta: {
     title: string;
     component: {
@@ -33,7 +33,7 @@ declare const meta: {
         critical: boolean;
     }, {}, string, {}, import('vue').GlobalComponents, import('vue').GlobalDirectives, string, import('vue').ComponentProvideOptions> & import('vue').VNodeProps & import('vue').AllowedComponentProps & import('vue').ComponentCustomProps & (new () => {
         $slots: {
-            message?(_: {}): any;
+            content?(_: {}): any;
             actions?(_: {}): any;
         };
     });
@@ -67,4 +67,7 @@ export declare const InfoBanner: Story;
 export declare const TonalAlert: Story;
 export declare const SnackbarAlert: Story;
 export declare const CriticalAlert: Story;
+export declare const WithMessageSlot: Story;
+export declare const WithActionsSlot: Story;
+export declare const WithBothSlots: Story;
 //# sourceMappingURL=Alert.stories.d.ts.map

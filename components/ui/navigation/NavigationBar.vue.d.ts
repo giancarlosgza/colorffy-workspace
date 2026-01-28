@@ -1,23 +1,7 @@
-/** Interfaces */
-interface INavigationItem {
-    id: string;
-    to: string | object;
-    icon: string;
-    text: string;
-    ariaLabel: string;
-}
-interface INavigationBarProps {
-    items?: INavigationItem[];
-    activeItem?: string | null;
-    as?: string | object;
-    frosted?: boolean;
-    island?: boolean;
-    indicatorTab?: boolean;
-    indicatorFrosted?: boolean;
-}
+import { INavigationBarProps } from '../../../types/navigation';
 declare const _default: import('vue').DefineComponent<INavigationBarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<INavigationBarProps> & Readonly<{}>, {
     frosted: boolean;
-    items: INavigationItem[];
+    items: import('../../../types/navigation').INavigationItem[];
     as: string | object;
     activeItem: string | null;
     island: boolean;

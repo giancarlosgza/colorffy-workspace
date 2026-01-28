@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiDatatable } from './Datatable.vue';
 declare const meta: Meta<typeof UiDatatable>;
 export default meta;

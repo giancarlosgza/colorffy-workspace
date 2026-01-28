@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3';
+import { Meta, StoryObj } from '@storybook/vue3-vite';
 import { default as UiInputTextArea } from './Textarea.vue';
 declare const meta: Meta<typeof UiInputTextArea>;
 export default meta;
