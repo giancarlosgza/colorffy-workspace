@@ -1,24 +1,7 @@
 <script setup lang="ts">
+import type { INavigationBarProps } from '@/types/navigation'
 import { computed } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface INavigationItem {
-  id: string
-  to: string | object
-  icon: string
-  text: string
-  ariaLabel: string
-}
-interface INavigationBarProps {
-  items?: INavigationItem[]
-  activeItem?: string | null
-  as?: string | object
-  frosted?: boolean
-  island?: boolean
-  indicatorTab?: boolean
-  indicatorFrosted?: boolean
-}
 
 /** Props */
 const props = withDefaults(defineProps<INavigationBarProps>(), {

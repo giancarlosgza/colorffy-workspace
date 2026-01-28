@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { IHeaderContentEmits, IHeaderContentProps } from '@/types/layout'
 import { computed } from 'vue'
 import UiButtonTooltip from '../ui/button/ButtonTooltip.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
@@ -27,27 +28,6 @@ import UiIconMaterial from '../ui/icon/Material.vue'
  * </HeaderContent>
  * ```
  */
-
-/** Interfaces */
-interface IHeaderContentProps {
-  /** Main title text to display */
-  title?: string | null
-  /** Subtitle text to display below the title */
-  subtitle?: string | null
-  /** Whether to show actions slot */
-  actions?: boolean
-  /** Whether to hide actions on mobile devices */
-  hideActionsOnMobile?: boolean
-  /** Whether to show back button */
-  backButton?: boolean
-  /** Tooltip text for the back button */
-  backButtonLabel?: string
-  /** Additional CSS classes for the header container */
-  containerClass?: string | string[]
-}
-interface IHeaderContentEmits {
-  (e: 'click'): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<IHeaderContentProps>(), {

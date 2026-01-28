@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import type { ITabsProps } from '@/types/navigation'
 import { ref, toRef } from 'vue'
-
-/** Interfaces */
-interface ITabItem {
-  id: string
-  label: string
-}
-interface ITabsProps {
-  tabs: ITabItem[]
-  pillTabs?: boolean
-  contrastTabs?: boolean
-}
 
 /** Props */
 const props = withDefaults(defineProps<ITabsProps>(), {

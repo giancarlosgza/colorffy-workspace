@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/vue3'
-import '@colorffy/css'
+import '@colorffy/css/scss/main.scss'
 
 const preview: Preview = {
   parameters: {
@@ -12,6 +12,11 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          'Layouts',
+          [
+            'HeaderContent',
+            'PaneContent'
+          ],
           'Components',
           [
             'Accordion',
@@ -26,9 +31,23 @@ const preview: Preview = {
             'Link',
             'List',
             'Modal',
+            'Navigation',
+            ['NavigationBar', 'Tabs'],
+            'Progress',
+            ['ProgressBar', 'ProgressSpinner'],
+            'Sidebar',
             'Icon'
           ],
-          'UI'
+          'States',
+          [
+            'Empty',
+            'Loading',
+            'ExpressiveLoading',
+            'ShapeLoading',
+            'BaseSkeleton',
+            'GridSkeleton',
+            'TableSkeleton'
+          ]
         ],
         method: 'alphabetical'
       }

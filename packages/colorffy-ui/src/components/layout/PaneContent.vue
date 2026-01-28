@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import type { IPaneContentProps } from '@/types/layout'
 import { computed, ref } from 'vue'
-
-/** Interfaces */
-interface IPaneContentProps {
-  customClass?: string | string[] | null
-  containerClass?: string | string[] | null
-  isFullHeight?: boolean
-  ariaLabel?: string
-  ariaLabelledby?: string
-  ariaDescribedby?: string
-  id?: string
-}
 
 /** Props */
 const props = withDefaults(defineProps<IPaneContentProps>(), {
