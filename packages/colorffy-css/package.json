@@ -65,6 +65,6 @@
     "@material-symbols/font-700": "^0.40.0"
   },
   "devDependencies": {
-    "sass": "^1.93.0"
+    "sass": "^1.97.3"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "playground-nuxt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -13,12 +13,12 @@
   "dependencies": {
     "@colorffy/css": "workspace:*",
     "@colorffy/ui": "workspace:*",
-    "@material-symbols/font-700": "^0.39.1",
-    "@nuxtjs/color-mode": "3.5.2",
-    "@vueuse/components": "^14.0.0",
+    "@material-symbols/font-700": "^0.40.2",
+    "@nuxtjs/color-mode": "4.0.0",
+    "@vueuse/components": "^14.1.0",
     "floating-vue": "^5.2.2",
-    "nuxt": "^4.2.1",
-    "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "nuxt": "^4.3.0",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4"
   }
 }

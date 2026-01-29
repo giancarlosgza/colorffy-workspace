@@ -29,5 +29,11 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/color-mode',
     '@colorffy/ui/nuxt'
-  ]
+  ],
+
+  // Color mode
+  colorMode: {
+    preference: 'system',
+    classSuffix: '-mode'
+  }
 })
