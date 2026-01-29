@@ -32,7 +32,8 @@ export default antfu({
     'models/*.ts',
     'models/**/*.js',
     'models/**/*.d.ts',
-    'packages/colorffy-ui/scripts/**'
+    'packages/colorffy-ui/scripts/**',
+    '**/.storybook/**'
   ],
 
   // Eslint rules

@@ -1,3 +1,4 @@
+import type { NuxtModule } from '@nuxt/schema'
 import { addComponent, defineNuxtModule } from '@nuxt/kit'
 import * as allExports from './components'
 
@@ -18,4 +19,4 @@ export default defineNuxtModule({
       }
     })
   }
-})
+}) satisfies NuxtModule
