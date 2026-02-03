@@ -94,6 +94,7 @@ export interface ITabItem {
  * - Use `tabs` to define the tab items.
  * - Use `pillTabs` for pill-styled tabs.
  * - Use `contrastTabs` for contrast variant styling.
+ * - Use `activeTab` to set the initially active tab by id.
  */
 export interface ITabsProps {
   /**
@@ -110,4 +111,9 @@ export interface ITabsProps {
    * When true, applies contrast styling to tabs.
    */
   contrastTabs?: boolean
+
+  /**
+   * The id of the tab that should be active. If not provided, defaults to the first tab.
+   */
+  activeTab?: string
 }

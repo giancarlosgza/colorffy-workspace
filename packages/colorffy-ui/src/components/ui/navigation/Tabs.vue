@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import type { ITabsProps } from '@/types/navigation'
-import { ref, toRef } from 'vue'
+import { ref, toRef, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ITabsProps>(), {
   pillTabs: false,
-  contrastTabs: false
+  contrastTabs: false,
+  activeTab: undefined
 })
+
+/** Emits */
+const emit = defineEmits<{
+  (e: 'updateActiveTab', tabId: string): void
+}>()
 
 /** Data */
 const tabs = toRef(props, 'tabs')
-const activeTabName = ref<string>(tabs.value?.[0]?.id ?? '')
+const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
+
+/** Watchers */
+watch(() => props.activeTab, (newVal) => {
+  if (newVal) {
+    activeTabName.value = newVal
+  }
+})
 
 /** Methods */
 function handleSelectedTab(tab: string) {
   activeTabName.value = tab
+  emit('updateActiveTab', tab)
 }
 </script>
 
