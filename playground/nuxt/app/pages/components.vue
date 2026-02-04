@@ -10,11 +10,25 @@ const tabs = ref([
   { id: 'about', label: 'About', route: '/about' },
   { id: 'components', label: 'Components', route: '/components' }
 ])
+const segmentedTabs = ref([
+  { id: 'overview', label: 'Overview', position: 0 },
+  { id: 'features', label: 'Features', position: 1 },
+  { id: 'settings', label: 'Settings', position: 2 }
+])
 
 /** Computed */
 const currentActiveTab = computed(() => {
   const currentTab = tabs.value.find(tab => tab.route === route.path)
   return currentTab?.id ?? tabs.value[0]?.id
+})
+const currentActiveSegmentedTab = computed(() => {
+  const queryTab = route.query.activeTab?.toString()
+
+  if (queryTab) {
+    const foundTab = segmentedTabs.value.find(tab => tab.id === queryTab)
+    return foundTab?.id ?? segmentedTabs.value[0]?.id
+  }
+  return segmentedTabs.value[0]?.id
 })
 
 /** Methods */
@@ -23,6 +37,13 @@ function handleTabChange(tabId: string) {
 
   if (selectedTab?.route) {
     router.push(selectedTab.route)
+  }
+}
+function handleSegmentedTabChange(tabId: string) {
+  const selectedTab = segmentedTabs.value.find(tab => tab.id === tabId)
+
+  if (selectedTab) {
+    router.replace({ query: { activeTab: tabId } })
   }
 }
 </script>
@@ -41,6 +62,18 @@ function handleTabChange(tabId: string) {
         :tabs="tabs"
         :active-tab="currentActiveTab"
         @update-active-tab="handleTabChange"
+      />
+    </div>
+
+    <!-- Segmented Controls -->
+    <div class="mt-4">
+      <h3 class="subtitle-1 mb-2">
+        Segmented Controls
+      </h3>
+      <UiSegmentedControls
+        :tabs="segmentedTabs"
+        :active-tab="currentActiveSegmentedTab"
+        @update-active-tab="handleSegmentedTabChange"
       />
     </div>
   </div>

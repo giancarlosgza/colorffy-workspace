@@ -10,9 +10,7 @@ const props = withDefaults(defineProps<ITabsProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits<{
-  (e: 'updateActiveTab', tabId: string): void
-}>()
+const emit = defineEmits<{ (e: 'updateActiveTab', tabId: string): void }>()
 
 /** Data */
 const tabs = toRef(props, 'tabs')

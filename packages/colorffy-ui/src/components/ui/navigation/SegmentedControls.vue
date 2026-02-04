@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, ref, toRef, watch } from 'vue'
 
 /** Interfaces */
 interface ISegmentedTab {
@@ -10,27 +9,33 @@ interface ISegmentedTab {
 }
 interface ISegmentedControlsProps {
   tabs: ISegmentedTab[]
+  activeTab?: string
 }
 
 /** Props */
-const props = withDefaults(defineProps<ISegmentedControlsProps>(), {})
+const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
+  activeTab: undefined
+})
 
 /** Emits */
-const emit = defineEmits(['onTabChange'])
+const emit = defineEmits<{ (e: 'updateActiveTab', tabId: string): void }>()
 
 /** Data */
-const router = useRouter()
-const route = useRoute()
 const tabs = toRef(props, 'tabs')
-
-const activeTabName = ref<string>(route.query?.tab?.toString() ?? (tabs.value?.[0]?.id ?? ''))
+const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const activeTabPosition = computed(() => tabs.value.find(t => t.id === activeTabName.value)?.position ?? 0)
+
+/** Watchers */
+watch(() => props.activeTab, (newVal) => {
+  if (newVal) {
+    activeTabName.value = newVal
+  }
+})
 
 /** Methods */
 function handleSelectedTab(tab: string) {
   activeTabName.value = tab
-  router.push({ query: { tab } })
-  emit('onTabChange', tab)
+  emit('updateActiveTab', tab)
 }
 </script>
 
