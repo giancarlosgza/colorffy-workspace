@@ -232,6 +232,19 @@ function handleMenuItemClick(to: string | object) {
                 />
               </div>
             </UiNavbarItem>
+            <UiNavbarLink
+              :as="NuxtLink"
+              :to="{ name: 'components' }"
+              text="Components"
+              class="nav-dropdown"
+            >
+              <template #icon>
+                <UiIconMaterial
+                  icon-code="&#xe313;"
+                  :class="{ 'rotate-180': isMenuActive }"
+                />
+              </template>
+            </UiNavbarLink>
           </UiNavbarNav>
           <UiNavbarNav position="start">
             <UiNavbarItem>

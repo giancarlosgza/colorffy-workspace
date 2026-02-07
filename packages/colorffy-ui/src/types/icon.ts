@@ -111,6 +111,7 @@ export type IconBrandName
     | 'apple'
     | 'google'
     | 'facebook'
+    | 'nuxt'
 
 /**
  * Interface props for the Material Symbol implementation.

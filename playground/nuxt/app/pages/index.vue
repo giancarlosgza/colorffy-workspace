@@ -177,6 +177,7 @@ function handleConfirm() {
                 <UiIconApp brand="facebook" size="md" />
                 <UiIconApp brand="instagram" size="md" />
                 <UiIconApp brand="discord" size="md" />
+                <UiIconApp brand="nuxt" size="md" />
               </div>
 
               <hr>

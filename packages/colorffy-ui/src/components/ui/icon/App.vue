@@ -43,7 +43,8 @@ const iconMeta: Record<IconBrandName, IIconMeta> = {
   'stripe': { defaultColor: '#6772E5', supportsColorOverride: true },
   'apple': { class: 'filter-invert', defaultColor: '#000000', supportsColorOverride: true },
   'google': { supportsColorOverride: false },
-  'facebook': { class: '', defaultColor: '#0866ff', supportsColorOverride: false }
+  'facebook': { class: '', defaultColor: '#0866ff', supportsColorOverride: false },
+  'nuxt': { class: 'filter-invert', defaultColor: '#00DC82', supportsColorOverride: true }
 }
 
 /** Computed */
@@ -274,6 +275,21 @@ const iconAppearance = computed(() => {
       <path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" />
       <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" />
       <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" />
+    </svg>
+
+    <svg
+      v-else-if="currentIcon === 'nuxt'"
+      :width="resolvedSize"
+      :height="resolvedSize"
+      :aria-hidden="ariaHidden"
+      :role="ariaRole"
+      :aria-label="ariaLabel"
+      focusable="false"
+      :class="iconAppearance.class"
+      :style="iconAppearance.fill ? { fill: iconAppearance.fill } : undefined"
+      viewBox="0 0 256 168"
+      preserveAspectRatio="xMidYMid"
+    ><path fill="#00DC82" d="M143.618 167.029h95.166c3.023 0 5.992-.771 8.61-2.237a16.963 16.963 0 0 0 6.302-6.115 16.324 16.324 0 0 0 2.304-8.352c0-2.932-.799-5.811-2.312-8.35L189.778 34.6a16.966 16.966 0 0 0-6.301-6.113 17.626 17.626 0 0 0-8.608-2.238c-3.023 0-5.991.772-8.609 2.238a16.964 16.964 0 0 0-6.3 6.113l-16.342 27.473-31.95-53.724a16.973 16.973 0 0 0-6.304-6.112A17.638 17.638 0 0 0 96.754 0c-3.022 0-5.992.772-8.61 2.237a16.973 16.973 0 0 0-6.303 6.112L2.31 141.975A16.302 16.302 0 0 0 0 150.325c0 2.932.793 5.813 2.304 8.352a16.964 16.964 0 0 0 6.302 6.115 17.628 17.628 0 0 0 8.61 2.237h59.737c23.669 0 41.123-10.084 53.134-29.758l29.159-48.983 15.618-26.215 46.874 78.742h-62.492l-15.628 26.214Zm-67.64-26.24-41.688-.01L96.782 35.796l31.181 52.492-20.877 35.084c-7.976 12.765-17.037 17.416-31.107 17.416Z" />
     </svg>
 
     <svg
