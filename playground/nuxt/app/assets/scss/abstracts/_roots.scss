@@ -1,0 +1,20 @@
+@use '@colorffy/css/scss/main';
+
+:root {
+    --theme-primary-base: #002662;
+    --theme-secondary-base: #22cbff;
+    --theme-accent-base: #0ee9a0;
+    --theme-surface-base: #ffffff;
+    --theme-on-secondary: #ffffff;
+
+    --font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dark-mode {
+    --theme-primary-base: #c4dbff;
+    --theme-secondary-base: #90deff;
+    --theme-accent-base: #90ffda;
+    --theme-surface-base: #000000;
+    --theme-on-secondary: #000000;
+}
