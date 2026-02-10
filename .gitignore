@@ -43,3 +43,6 @@ temp/
 # Lock files (optional - uncomment if you want to ignore)
 # pnpm-lock.yaml
 node_modules
+
+# Skills
+*.skill
