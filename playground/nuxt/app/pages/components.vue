@@ -76,5 +76,22 @@ function handleSegmentedTabChange(tabId: string) {
         @update-active-tab="handleSegmentedTabChange"
       />
     </div>
+
+    <!-- List Group -->
+    <div class="mt-4">
+      <h3 class="subtitle-1 mb-2">
+        List Group
+      </h3>
+      <UiListGroup
+        variant="flush"
+        size="md"
+        is-interactive
+      >
+        <UiListItem text="Item 1" />
+        <UiListItem text="Item 2" />
+        <UiListItem text="Item 3" />
+        <UiListItem text="Item 4" />
+      </UiListGroup>
+    </div>
   </div>
 </template>

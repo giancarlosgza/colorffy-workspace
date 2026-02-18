@@ -30,6 +30,12 @@ export interface IListGroupProps {
   isInteractive?: boolean
 
   /**
+   * Removes the arrow indicator for interactive items, making them appear undecorated.
+   * Useful for cases where the list item should not visually indicate interactivity.
+   */
+  isUndecorated?: boolean
+
+  /**
    * Optional custom classes for the root element.
    * Accepts a string, an array of strings, or a map of class names to booleans.
    */

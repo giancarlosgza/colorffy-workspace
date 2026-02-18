@@ -7,6 +7,7 @@ const props = withDefaults(defineProps<IListGroupProps>(), {
   variant: null,
   size: null,
   isInteractive: false,
+  isUndecorated: false,
   customClass: null
 })
 
@@ -29,6 +30,9 @@ const listClasses = computed(() => {
 
   if (props.isInteractive)
     classes.push('list-group-interactive')
+
+  if (props.isUndecorated)
+    classes.push('list-group-undecorated')
 
   return classes
 })
