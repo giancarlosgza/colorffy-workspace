@@ -32,7 +32,7 @@
       flex-direction: column;
       flex-basis: auto;
       flex-wrap: nowrap;
-      height: 100%;
+      height: auto; // Fix for Safari's dialog content height issue
       min-height: 100%;
       padding: calc(var(--_dialog-gutter) / 1.25);
       overscroll-behavior: contain;

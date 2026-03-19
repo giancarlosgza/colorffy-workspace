@@ -190,11 +190,6 @@
     font-size: var(--fs-sm-400);
     color: var(--_code-color);
     cursor: pointer;
-
-    @supports (font-feature-settings: 'colr') {
-      font-family: "Monaspace", monospace;
-      font-feature-settings: "colr", "calt";
-    }
   }
 
   kbd {
