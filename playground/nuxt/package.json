@@ -13,12 +13,12 @@
   "dependencies": {
     "@colorffy/css": "workspace:*",
     "@colorffy/ui": "workspace:*",
-    "@material-symbols/font-700": "^0.40.2",
-    "@nuxtjs/color-mode": "4.0.0",
-    "@vueuse/components": "^14.1.0",
+    "@material-symbols/font-700": "^0.42.3",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@vueuse/components": "^14.2.1",
     "floating-vue": "^5.2.2",
-    "nuxt": "^4.3.0",
-    "vue": "^3.5.27",
-    "vue-router": "^4.6.4"
+    "nuxt": "^4.4.2",
+    "vue": "^3.5.30",
+    "vue-router": "^5.0.4"
   }
 }
