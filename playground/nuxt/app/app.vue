@@ -57,7 +57,7 @@ function handleMenuItemClick(to: string | object) {
     <!-- Sidebar -->
     <UiSidebar bordered :rail="sidebarCollapse">
       <UiSidebarHeader>
-        <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
+        <UiIconMaterial v-if="false" icon-code="&#xe88a;" class="drawer-brand-icon" />
         <img
           src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
           alt="Avatar Image"

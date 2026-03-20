@@ -305,7 +305,13 @@ function handleConfirm() {
       <hr>
 
       <UiButtonGroup class="mt-section">
-        <UiButtonMenu id="demo" variant="outline" text="Menu Button" icon-trailing>
+        <UiButtonMenu
+          id="demo"
+          variant="outline"
+          text="Menu Button"
+          icon-trailing
+          :is-mobile="true"
+        >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5c5;" />
           </template>
