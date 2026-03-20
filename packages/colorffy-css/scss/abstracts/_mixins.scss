@@ -814,9 +814,9 @@
     @if ($isBordered == true) {
       --_border-gradient: #{v.$gradient-heat};
     } @else if ($isBg == true) {
-      @include bg-gradient(var(--gradient-angle), v.$gradient-heat);
+      @include bg-gradient(45deg, v.$gradient-heat);
     } @else {
-      @include text-gradient(var(--gradient-angle), v.$gradient-heat);
+      @include text-gradient(45deg, v.$gradient-heat);
     }
   }
 
@@ -847,6 +847,16 @@
       @include bg-gradient(45deg, v.$gradient-majestic);
     } @else {
       @include text-gradient(45deg, v.$gradient-majestic);
+    }
+  }
+
+  &.g-darkblue {
+    @if ($isBordered == true) {
+      --_border-gradient: #{v.$gradient-darkblue};
+    } @else if ($isBg == true) {
+      @include bg-gradient(45deg, v.$gradient-darkblue);
+    } @else {
+      @include text-gradient(45deg, v.$gradient-darkblue);
     }
   }
 
@@ -904,9 +914,9 @@
     @if ($isBordered == true) {
       --_border-gradient: #{v.$gradient-galaxy};
     } @else if ($isBg == true) {
-      @include bg-gradient(var(--gradient-angle), v.$gradient-galaxy);
+      @include bg-gradient(45deg, v.$gradient-galaxy);
     } @else {
-      @include text-gradient(var(--gradient-angle), v.$gradient-galaxy);
+      @include text-gradient(45deg, v.$gradient-galaxy);
     }
   }
 

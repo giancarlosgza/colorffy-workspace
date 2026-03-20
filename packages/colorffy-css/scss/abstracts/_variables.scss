@@ -55,6 +55,7 @@ $gradient-ghost-emphasized: #150a62, #6851ff !default;
 $gradient-amethyst: #8200e7, #bf3eff !default;
 $gradient-forest: #33d655, #29ac4a, #21823e !default;
 $gradient-galaxy: $accent, #715cff, #bf3eff, #ee5aaf, $accent !default;
+$gradient-darkblue: #292a4b, #47497a, #8587b0, #c4c5d9 !default;
 
 $gradient-body-primary: var(--theme-on-primary), $primary !default;
 $gradient-body-secondary: var(--theme-on-primary), $secondary !default;
@@ -87,12 +88,10 @@ $scheme-colors: (
 );
 
 // Fonts
-
-// For title and headings
-$font-primary: var(--font-primary);
-// For buttons, body, and text
-$font-secondary: var(--font-secondary);
-$font-icons: var(--font-icons);
+$font-primary: var(--font-primary) !default;
+$font-secondary: var(--font-secondary) !default;
+$font-code: var(--font-code) !default;
+$font-icons: var(--font-icons) !default;
 
 // Font weights
 $fw-400: 400;
