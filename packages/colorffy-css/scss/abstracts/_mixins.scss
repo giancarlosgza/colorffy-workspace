@@ -456,17 +456,17 @@
   }
 
   /* Modern */
-  --theme-primary-base-fixed: #002678;
-  --theme-secondary-base-fixed: #0075d6;
-  --theme-accent-base-fixed: #fda001;
-  --theme-success-base-fixed: #009f42;
-  --theme-warning-base-fixed: #ffbb14;
-  --theme-danger-base-fixed: #b41c2b;
-  --theme-info-base-fixed: hsl(190, 71%, 50%);
-  --theme-muted-base-fixed: #52595f;
-  --theme-white-base-fixed: hsl(0, 0%, 100%);
-  --theme-black-base-fixed: hsl(0, 0%, 0%);
-  --theme-dark-base-fixed: hsl(0, 0%, 7.1%);
+  --theme-primary-base-fixed: var(--color-brand-primary-500);
+  --theme-secondary-base-fixed: var(--color-brand-secondary-500);
+  --theme-accent-base-fixed: var(--color-brand-accent-500);
+  --theme-success-base-fixed: var(--color-brand-success-500);
+  --theme-warning-base-fixed: var(--color-brand-warning-500);
+  --theme-danger-base-fixed: var(--color-brand-danger-500);
+  --theme-info-base-fixed: var(--color-brand-info-500);
+  --theme-muted-base-fixed: var(--color-brand-muted-500);
+  --theme-white-base-fixed: var(--color-brand-white-500);
+  --theme-black-base-fixed: var(--color-brand-black-500);
+  --theme-dark-base-fixed: var(--color-brand-dark-500);
 }
 
 /*

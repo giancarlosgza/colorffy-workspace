@@ -53,8 +53,8 @@
 
     &.badge-default {
       --_badge-color: var(--theme-on-background);
-      --_badge-bg-color: var(--theme-default);
-      --_badge-border-color: var(--theme-default-active);
+      --_badge-bg-color: var(--theme-surface-a30);
+      --_badge-border-color: var(--theme-outline-button);
     }
 
     &.badge-outline {

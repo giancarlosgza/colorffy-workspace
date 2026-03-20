@@ -193,13 +193,19 @@
   }
 
   kbd {
-    font-weight: v.$fw-600;
-    font-size: var(--fs-sm-300);
-    padding: .1875rem .375rem;
-    color: var(--theme-on-primary-container);
-    background-color: var(--theme-surface-toast);
-    border: v.$border-sm solid var(--theme-surface-toast);
-    box-shadow: var(--shadow-sm);
-    border-radius: v.$rounded-sm;
+    font-weight: v.$fw-400;
+    font-size: var(--fs-sm-500);
+    color: var(--theme-on-background);
+    background-color: var(--theme-surface-kbd);
+    border: v.$border-sm solid var(--theme-surface-kbd);
+    box-shadow: var(--shadow-xs);
+    border-radius: v.$rounded-md;
+    padding: .25rem;
+
+    &:is(.kbd-dark) {
+      color: var(--theme-white-base);
+      background-color: var(--theme-dark-base);
+      border-color: var(--theme-dark-base);
+    }
   }
 }

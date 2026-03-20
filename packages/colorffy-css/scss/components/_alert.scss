@@ -11,10 +11,8 @@
     &:has(.alert-snackbar) {
       position: fixed;
       bottom: 1.85rem;
-      inset-inline: 0;
-      margin: auto;
+      left: 0;
       width: 100%;
-      max-width: calc(100% - 10%);
       z-index: v.$z-index-fab;
     }
   }
@@ -37,15 +35,12 @@
     grid-template-columns: var(--_alert-columns);
     padding-block: var(--_alert-padding-block);
     padding-inline: var(--_alert-padding-inline);
-
     font-size: var(--_alert-font-size);
     font-weight: var(--_alert-font-weight);
     line-height: 1.5;
-
     white-space: normal;
     align-items: center;
     gap: var(--_alert-gap);
-
     border-radius: var(--_alert-radius);
     color: var(--_alert-color);
     background-color: var(--_alert-bg-color);
@@ -179,7 +174,7 @@
       margin: auto;
       width: fit-content;
       max-width: calc(100% - 10%);
-      box-shadow: rgba(255, 255, 255, 0.2) 0 2px 3.1px inset;
+      box-shadow: color-mix(in oklab, var(--theme-white-base-fixed) 50%, transparent) 0 2px 3px inset;
 
       &.show {
         display: flex;
