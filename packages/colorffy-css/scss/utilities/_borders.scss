@@ -112,15 +112,16 @@
 
       background: linear-gradient(var(--theme-background), var(--theme-background)) padding-box,
       linear-gradient(120deg, var(--_border-gradient)) border-box;
-
-      @include m.gradient-variants(true);
+      @include m.generate-static-gradients(v.$static-gradients, true, false);
+      @include m.generate-gradients(v.$dynamic-gradients, true, false);
     }
 
     // Animated borders
     &.border-animated {
       position: relative;
       @include m.gradient-glow-border(var(--_border-gradient));
-      @include m.gradient-variants(true);
+      @include m.generate-static-gradients(v.$static-gradients, true, false);
+      @include m.generate-gradients(v.$dynamic-gradients, true, false);
     }
 
     &.border-gradient-spin {
@@ -128,11 +129,12 @@
 
       position: relative;
       isolation: isolate;
+      animation: angle-glow 5s linear infinite both;
       border: var(--_border-size) solid transparent;
       background: linear-gradient(var(--theme-background, canvas) 0 0) padding-box,
       conic-gradient(from var(--gradient-angle), var(--_border-gradient)) border-box;
-      animation: angle-glow 5s linear infinite both;
-      @include m.gradient-variants(true);
+      @include m.generate-static-gradients(v.$static-gradients, true, false);
+      @include m.generate-gradients(v.$dynamic-gradients, true, false);
 
       &:before,
       &:after {

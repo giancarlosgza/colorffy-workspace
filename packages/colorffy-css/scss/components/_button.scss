@@ -163,8 +163,8 @@
 
         background: linear-gradient(var(--_btn-bg-gradient)) padding-box,
         linear-gradient(120deg, var(--_border-gradient)) border-box;
-
-        @include m.gradient-variants(true);
+        @include m.generate-static-gradients(v.$static-gradients, true, false);
+        @include m.generate-gradients(v.$dynamic-gradients, true, false);
 
         &:is(.bg-gradient-pane) {
           --_btn-bg-gradient: var(--theme-surface-body-pane), var(--theme-surface-body-pane);
@@ -264,6 +264,7 @@
 
       // Gradient
       &.btn-gradient {
+        --angle: var(--gradient-angle);
         --_btn-shadow: rgba(255, 255, 255, 0.2) 0px 2px 3.1px inset;
         --_btn-border-color: transparent;
         --_btn-bg-gradient: var(--theme-primary-a30), var(--theme-primary-base);
@@ -280,30 +281,8 @@
           --gradient-angle: 360deg;
         }
 
-        // Semantic
-        @include m.gradient-variants(false, true);
-
-        &.gradient-secondary {
-          --_btn-border-color: var(--theme-secondary-base);
-          --_btn-bg-gradient: var(--theme-secondary-a30), var(--theme-secondary-base);
-        }
-
-        &.gradient-success {
-          --_btn-border-color: var(--theme-success-base);
-          --_btn-bg-gradient: var(--theme-success-a30), var(--theme-success-base);
-        }
-
-        &.gradient-warning {
-          --_btn-border-color: var(--theme-warning-base);
-          --_btn-bg-gradient: var(--theme-warning-a30), var(--theme-warning-base);
-
-          color: v.$black;
-        }
-
-        &.gradient-danger {
-          --_btn-border-color: var(--theme-danger-base);
-          --_btn-bg-gradient: var(--theme-danger-a30), var(--theme-danger-base);
-        }
+        @include m.generate-static-gradients(v.$static-gradients, false, true);
+        @include m.generate-gradients(v.$dynamic-gradients, false, true);
       }
 
       &.btn-frosted {

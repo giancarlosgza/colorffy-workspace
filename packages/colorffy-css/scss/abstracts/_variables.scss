@@ -3,12 +3,10 @@
 
 $property-prefix: theme- !default;
 
-// Primary colors
+// Colors
 $primary: #002678 !default;
 $secondary: #0075d6 !default;
 $accent: #fda001 !default;
-
-// Semantic colors
 $success: hsl(145, 100%, 39%) !default;
 $muted: hsl(210, 7.3%, 35%) !default;
 $warning: hsl(40, 100%, 50%) !default;
@@ -33,9 +31,23 @@ $primary-colors: (
 );
 
 // Gradients
-$gradient-primary: $primary, color.scale($primary, $lightness: -20%) !default;
-$gradient-secondary: $secondary, color.scale($secondary, $lightness: -20%) !default;
-$gradient-accent: $accent, color.scale($accent, $lightness: -20%) !default;
+$gradient-primary: var(--theme-primary-base-fixed), oklch(from var(--theme-primary-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-secondary: var(--theme-secondary-base-fixed), oklch(from var(--theme-secondary-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-accent: var(--theme-accent-base-fixed), oklch(from var(--theme-accent-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-success: var(--theme-success-base-fixed), oklch(from var(--theme-success-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-warning: var(--theme-warning-base-fixed), oklch(from var(--theme-warning-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-danger: var(--theme-danger-base-fixed), oklch(from var(--theme-danger-base-fixed) calc(l - 0.25) c h) !default;
+
+// Dynamic gradient map
+$dynamic-gradients: (
+  'primary':   $gradient-primary,
+  'secondary': $gradient-secondary,
+  'accent':    $gradient-accent,
+  'success':   $gradient-success,
+  'warning':   $gradient-warning,
+  'danger':    $gradient-danger
+) !default;
+
 $gradient-pink: #5300fa, #ab068e, #ee5aaf !default;
 $gradient-sunset: #7319fa, #ff33b4, #ff7e29 !default;
 $gradient-neon-green: #4ae17b, #11d181 !default;
@@ -57,19 +69,29 @@ $gradient-forest: #33d655, #29ac4a, #21823e !default;
 $gradient-galaxy: $accent, #715cff, #bf3eff, #ee5aaf, $accent !default;
 $gradient-darkblue: #292a4b, #47497a, #8587b0, #c4c5d9 !default;
 
-$gradient-body-primary: var(--theme-on-primary), $primary !default;
-$gradient-body-secondary: var(--theme-on-primary), $secondary !default;
-$gradient-body-success: var(--theme-on-primary), $success !default;
-$gradient-body-warning: var(--theme-on-primary), $warning !default;
-$gradient-body-danger: var(--theme-on-primary), $danger !default;
-
-$gradient-background-primary: transparent, $primary 180% !default;
-$gradient-background-secondary: transparent, $secondary 180% !default;
-$gradient-background-accent: transparent, $accent 180% !default;
-$gradient-background-success: transparent, $success 180% !default;
-$gradient-background-warning: transparent, $warning 180% !default;
-$gradient-background-danger: transparent, $danger 180% !default;
-$gradient-background-shadow: transparent, #404040 180% !default;
+// Static gradient map (SCSS compile-time values, not CSS tokens)
+$static-gradients: (
+  'pink':             $gradient-pink,
+  'magenta':          $gradient-sunset,
+  'emerald':          $gradient-neon-green,
+  'cyan':             $gradient-cyan,
+  'rose':             $gradient-marathon,
+  'purple':           $gradient-database,
+  'yellow':           $gradient-gold,
+  'orange':           $gradient-heat,
+  'lime':             $gradient-energy,
+  'amber':            $gradient-honey,
+  'red':              $gradient-crimson,
+  'blue':             $gradient-majestic,
+  'gray':             $gradient-shadow,
+  'white':            $gradient-pure,
+  'indigo':           $gradient-ghost,
+  'indigo-dark':      $gradient-ghost-emphasized,
+  'violet':           $gradient-amethyst,
+  'green':            $gradient-forest,
+  'fuchsia':          $gradient-galaxy,
+  'navy':             $gradient-darkblue,
+) !default;
 
 // Color wheel scheme colors
 $scheme-colors: (

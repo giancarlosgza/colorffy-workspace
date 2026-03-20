@@ -745,223 +745,38 @@
   @include text-gradient(45deg, v.$gradient-accent);
 }
 
-@mixin gradient-variants($isBordered: false, $isBg: false) {
-  &.g-primary {
-    --_badge-gradient-color: #{v.$white};
-
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-primary};
-    } @else if ($isBg == true) {
-      @include bg-gradient(var(--gradient-angle), v.$gradient-primary);
-    } @else {
-      @include text-gradient(var(--gradient-angle), v.$gradient-primary);
+/*
+ * Dynamic gradients variants
+ * Generate flat utility classes from CSS token-based runtime values (theme colors)
+ */
+@mixin generate-gradients($colors, $isBordered: false, $isBg: false) {
+  @each $name, $gradient in $colors {
+    &.gradient-#{$name} {
+      @if ($isBordered == true) {
+        --_border-gradient: #{$gradient};
+      } @else if ($isBg == true) {
+        @include bg-gradient(var(--angle, 45deg), $gradient);
+      } @else {
+        @include text-gradient(var(--angle, 45deg), $gradient);
+      }
     }
   }
+}
 
-  &.g-secondary {
-    --_badge-gradient-color: #{v.$dark};
-
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-secondary};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-secondary);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-secondary);
-    }
-  }
-
-  &.g-accent {
-    --_badge-gradient-color: #{v.$white};
-
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-accent};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-accent);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-accent);
-    }
-  }
-
-  &.g-gold {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-gold};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-gold);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-gold);
-    }
-  }
-
-  &.g-green {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-neon-green};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-neon-green);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-neon-green);
-    }
-  }
-
-  &.g-cyan {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-cyan};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-cyan);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-cyan);
-    }
-  }
-
-  &.g-yellow {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-honey};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-honey);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-honey);
-    }
-  }
-
-  &.g-orange {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-heat};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-heat);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-heat);
-    }
-  }
-
-  &.g-purple {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-database};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-database);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-database);
-    }
-  }
-
-  &.g-red {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-crimson};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-crimson);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-crimson);
-    }
-  }
-
-  &.g-blue {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-majestic};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-majestic);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-majestic);
-    }
-  }
-
-  &.g-darkblue {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-darkblue};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-darkblue);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-darkblue);
-    }
-  }
-
-  &.g-black {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-shadow};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-shadow);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-shadow);
-    }
-  }
-
-  &.g-indigo {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-ghost};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-ghost);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-ghost);
-    }
-  }
-
-  &.g-violet {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-amethyst};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-amethyst);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-amethyst);
-    }
-  }
-
-  &.g-pink {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-pink};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-pink);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-pink);
-    }
-  }
-
-  &.g-white {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-pure};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-pure);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-pure);
-    }
-  }
-
-  &.g-galaxy {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-galaxy};
-    } @else if ($isBg == true) {
-      @include bg-gradient(45deg, v.$gradient-galaxy);
-    } @else {
-      @include text-gradient(45deg, v.$gradient-galaxy);
-    }
-  }
-
-  // Gradient to text body color to semantic color
-  &.g-body-primary {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-body-primary};
-    } @else {
-      @include text-gradient(0deg, v.$gradient-body-primary);
-    }
-  }
-
-  &.g-body-secondary {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-body-secondary};
-    } @else {
-      @include text-gradient(45deg, v.$gradient-body-secondary);
-    }
-  }
-
-  &.g-body-success {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-body-success};
-    } @else {
-      @include text-gradient(0deg, v.$gradient-body-success);
-    }
-  }
-
-  &.g-body-danger {
-    @if ($isBordered == true) {
-      --_border-gradient: #{v.$gradient-body-danger};
-    } @else {
-      @include text-gradient(45deg, v.$gradient-body-danger);
+/*
+ * Static gradient variants
+ * Generate flat utility classes from SCSS compile-time values ($static-gradients map)
+ */
+@mixin generate-static-gradients($colors, $isBordered: false, $isBg: false) {
+  @each $name, $gradient in $colors {
+    &.gradient-#{$name} {
+      @if ($isBordered == true) {
+        --_border-gradient: #{$gradient};
+      } @else if ($isBg == true) {
+        @include bg-gradient(var(--angle, 45deg), $gradient);
+      } @else {
+        @include text-gradient(var(--angle, 45deg), $gradient);
+      }
     }
   }
 }

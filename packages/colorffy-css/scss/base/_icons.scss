@@ -87,7 +87,8 @@
     &.icon-wrap-gradient {
       color: v.$white;
       @include m.bg-gradient(45deg, v.$gradient-primary);
-      @include m.gradient-variants(false, true);
+      @include m.generate-static-gradients(v.$static-gradients, false, true);
+      @include m.generate-gradients(v.$dynamic-gradients, false, true);
 
       i {
         font-variation-settings: var(--iw-bold);

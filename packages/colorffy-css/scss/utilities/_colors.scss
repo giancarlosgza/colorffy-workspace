@@ -169,6 +169,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     @include m.text-gradient(45deg, v.$gradient-sunset);
-    @include m.gradient-variants;
+    @include m.generate-static-gradients(v.$static-gradients, false, false);
+    @include m.generate-gradients(v.$dynamic-gradients, false, false);
   }
 }

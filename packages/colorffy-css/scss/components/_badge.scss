@@ -124,12 +124,9 @@
     }
 
     &.badge-gradient {
-      --_badge-gradient-color: #{v.$black};
-
-      color: var(--_badge-gradient-color);
-      font-weight: v.$fw-800;
       @include m.text-gradient(45deg, v.$gradient-neon-green);
-      @include m.gradient-variants;
+      @include m.generate-static-gradients(v.$static-gradients, false, true);
+      @include m.generate-gradients(v.$dynamic-gradients, false, true);
     }
 
     &:has(i) {

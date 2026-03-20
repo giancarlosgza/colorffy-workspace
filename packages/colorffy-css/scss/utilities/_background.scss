@@ -178,8 +178,18 @@
 
   // Gradient
   .bg-gradient {
-    @include m.bg-gradient(45deg, v.$gradient-database);
-    @include m.gradient-variants(false, true);
+    --angle: 90deg;
+
+    @include m.bg-gradient(var(--angle), v.$gradient-database);
+    @include m.generate-static-gradients(v.$static-gradients, false, true);
+    @include m.generate-gradients(v.$dynamic-gradients, false, true);
+  }
+
+  // Angles
+  @each $value, $deg in v.$degrees {
+    .angle-#{$value} {
+      --angle: #{$deg};
+    }
   }
 
   /**

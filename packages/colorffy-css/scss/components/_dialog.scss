@@ -310,58 +310,9 @@
             border-radius: v.$rounded-lg;
             color: v.$white;
             @include m.bg-gradient(45deg, v.$gradient-ghost);
-            @include m.gradient-variants(false, true);
+            @include m.generate-static-gradients(v.$static-gradients, false, true);
+            @include m.generate-gradients(v.$dynamic-gradients, false, true);
             @extend .mask-shape !optional;
-          }
-        }
-      }
-    }
-
-    &.dialog-cols-2 {
-      @include m.bg-gradient(var(--gradient-angle), v.$gradient-ghost-emphasized);
-
-      & .dialog-content {
-        display: grid;
-        grid-template-columns: .75fr 1fr;
-        grid-template-rows: 100%;
-        gap: var(--_dialog-gutter);
-
-        & svg {
-          animation: scale-in 900ms v.$easing-spring both;
-          animation-delay: 100ms;
-        }
-
-        & h2 {
-          animation: fade-in-down 900ms v.$easing-spring both;
-        }
-
-        & h3 {
-          animation: fade-in-left 900ms v.$easing-spring both;
-        }
-
-        // Gradient left column
-        & .dialog-banner {
-          --gradient-angle: 135deg;
-
-          border-radius: calc(var(--_dialog-radius) / 2);
-          animation: angle-spin 10s linear infinite;
-          @include m.bg-gradient(var(--gradient-angle), v.$gradient-body-success);
-        }
-
-        // Right column
-        & .dialog-header {
-          text-align: start;
-        }
-
-        & .dialog-body {
-          flex: 1 1 auto;
-        }
-
-        & .dialog-footer {
-          display: flex;
-
-          & .btn {
-            flex: 1 1 auto;
           }
         }
       }

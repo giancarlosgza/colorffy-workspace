@@ -67,7 +67,8 @@
       }
 
       &.progress-gradient {
-        @include m.gradient-variants;
+        @include m.generate-static-gradients(v.$static-gradients, false, true);
+        @include m.generate-gradients(v.$dynamic-gradients, false, true);
       }
     }
   }
