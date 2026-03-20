@@ -88,12 +88,19 @@
         }
 
         :where(i:is(.drawer-brand-icon)) {
-          --_drawer-brand-size: 2rem;
+          --_drawer-brand-size: 2.5rem;
 
-          font-size: var(--_drawer-brand-size);
-          background: rgba(var(--theme-primary-fixed), 1);
+          display: grid;
+          place-items: center;
+          font-size: calc(var(--_drawer-brand-size) / 1.5);
+          width: var(--_drawer-brand-size);
+          height: var(--_drawer-brand-size);
           border-radius: v.$rounded-md;
           padding: .25rem;
+          background-color: var(--theme-primary-a10);
+          @supports (color: hsl(from white h s l)) {
+            background-color: oklab(from var(--theme-primary-a10) l a b / 35%);
+          }
         }
       }
 

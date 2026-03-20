@@ -215,7 +215,7 @@
           font-weight var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
 
           &:is(:hover) {
-            background: rgba(var(--theme-primary-fixed), 0.35);
+            background-color: color-mix(in oklab, var(--theme-primary-base-fixed) 35%, transparent);
           }
 
           &:is(.active) {

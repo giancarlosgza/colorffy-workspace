@@ -223,9 +223,8 @@
 
   // Text side lines
   .text-decoration-side-lines {
-    --_side-lines-opacity: .35;
+    --_side-lines-opacity: 35%;
     --_side-lines-height: 1px;
-    --_side-lines-bg-color: var(--theme-muted-fixed);
     --_side-lines-radius: #{v.$rounded-full};
 
     display: grid;
@@ -238,7 +237,7 @@
       content: '';
       height: var(--_side-lines-height);
       border-radius: var(--_side-lines-radius);
-      background-color: rgba(var(--_side-lines-bg-color), var(--_side-lines-opacity));
+      background-color: color-mix(in oklab, var(--theme-muted-base-fixed) var(--_side-lines-opacity), transparent);
     }
 
     &.decoration-single-line {
@@ -369,7 +368,7 @@
         width: 100%;
         height: 100%;
         border-radius: v.$rounded-sm;
-        background-color: rgba(var(--theme-secondary-fixed), 20%);
+        background-color: color-mix(in oklab, var(--theme-muted-base-fixed) 20%, transparent);
         transform-origin: left;
 
         scale: 0 1;

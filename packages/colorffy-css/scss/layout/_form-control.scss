@@ -105,9 +105,8 @@
         --_form-border-color: var(--theme-primary-a10);
 
         outline-offset: 0.1em;
-        //outline: var(--_form-border-color) solid thin;
         outline: 0;
-        box-shadow: 0 0 0 .15rem rgba(var(--theme-primary-fixed), .25);
+        box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-primary-base-fixed) 25%, transparent);
       }
 
       // Disabled state
@@ -123,7 +122,7 @@
         &:is(:focus, :active, :focus-visible) {
           --_form-border-color: var(--theme-surface-disabled);
 
-          box-shadow: 0 0 0 .15rem rgba(var(--theme-muted-fixed), .25);
+          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-muted-base-fixed) 25%, transparent);
         }
       }
 
@@ -160,7 +159,7 @@
     .form-range {
       --_form-border-color: transparent;
       --_form-range-bg-color: var(--theme-surface-container-high);
-      --_form-range-thumb-bg-color: color-mix(in srgb, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%);
+      --_form-range-thumb-bg-color: color-mix(in oklab, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%);
       --_form-range-track-size: 0.75rem;
       --_form-range-slider-height: 1.95rem;
       --_form-range-slider-width: 0.30rem;
@@ -318,7 +317,7 @@
         --_form-border-color: var(--theme-danger-a10);
 
         &:is(:focus, :active, :focus-visible) {
-          box-shadow: 0 0 0 .15rem rgba(var(--theme-danger-fixed), .25);
+          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
         }
 
         // Show invalid feedback if form control is invalid
@@ -391,7 +390,7 @@
 
       &.valid-file {
         --_file-border-color: var(--theme-success-a10);
-        --_file-bg-color: rgba(var(--theme-success-fixed), 10%);
+        --_file-bg-color: color-mix(in oklab, var(--theme-success-base-fixed) 25%, transparent);
         --_file-color: var(--theme-success-a90);
       }
 

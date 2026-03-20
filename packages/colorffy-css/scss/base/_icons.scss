@@ -17,6 +17,8 @@
     --_icon-wrap-color: var(--theme-primary-a10);
     --_icon-wrap-border-size: none;
     --_icon-wrap-border-color: transparent;
+    --_icon-wrap-space: oklab;
+    --_icon-wrap-opacity: 10%;
 
     padding: var(--_icon-wrap-padding);
     background-color: var(--_icon-wrap-bg-color);
@@ -27,33 +29,38 @@
 
     // Semantic
     &.icon-wrap-primary {
-      --_icon-wrap-bg-color: rgba(var(--theme-primary-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-primary-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-primary-a10);
     }
 
     &.icon-wrap-secondary {
-      --_icon-wrap-bg-color: rgba(var(--theme-secondary-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-secondary-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-secondary-a10);
     }
 
     &.icon-wrap-accent {
-      --_icon-wrap-bg-color: rgba(var(--theme-accent-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-accent-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-accent-a10);
     }
 
     &.icon-wrap-success {
-      --_icon-wrap-bg-color: rgba(var(--theme-success-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-success-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-success-a10);
     }
 
     &.icon-wrap-warning {
-      --_icon-wrap-bg-color: rgba(var(--theme-warning-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-warning-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-warning-a10);
     }
 
     &.icon-wrap-danger {
-      --_icon-wrap-bg-color: rgba(var(--theme-danger-fixed), 10%);
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-danger-base-fixed) var(--_icon-wrap-opacity), transparent);
       --_icon-wrap-color: var(--theme-danger-a10);
+    }
+
+    &.icon-wrap-info {
+      --_icon-wrap-bg-color: color-mix(in var(--_icon-wrap-space), var(--theme-info-base-fixed) var(--_icon-wrap-opacity), transparent);
+      --_icon-wrap-color: var(--theme-info-a10);
     }
 
     // Surface
@@ -67,7 +74,7 @@
       --_icon-wrap-color: var(--theme-on-primary);
       --_icon-wrap-border-size: #{v.$border-sm};
       --_icon-wrap-border-color: var(--theme-outline-surface);
-      
+
       border-color: var(--_icon-wrap-border-color);
     }
 
@@ -138,7 +145,7 @@
     gap: var(--_icon-state-gap);
     isolation: isolate;
 
-    &>* {
+    & > * {
       grid-area: 1/1;
     }
 
@@ -164,8 +171,8 @@
       border-radius: var(--_icon-state-radius);
       transform-origin: center bottom;
       transition: translate var(--_icon-state-easing-duration) var(--_icon-state-easing-in),
-        rotate var(--_icon-state-easing-duration) var(--_icon-state-easing-in),
-        border-radius var(--_icon-state-easing-duration) var(--_icon-state-easing-in);
+      rotate var(--_icon-state-easing-duration) var(--_icon-state-easing-in),
+      border-radius var(--_icon-state-easing-duration) var(--_icon-state-easing-in);
 
       &:nth-child(1) {
         @include m.bg-gradient(45deg, v.$gradient-cyan);

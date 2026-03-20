@@ -183,57 +183,15 @@
       }
     }
 
-    // Table pricing
-    &.table-pricing {
-      --_table-pricing-pro-opacity: 0.15;
-
-      thead {
-        position: sticky;
-        top: 4rem;
-        padding: 1rem;
-        background-color: var(--theme-surface-body-pane);
-
-        tr {
-          td {
-            padding: var(--_table-gutter-x);
-            background-color: var(--theme-surface-container-low);
-
-            &:is(.font-secondary) {
-              font-size: var(--fs-500);
-              font-weight: v.$fw-800;
-              line-height: 2;
-            }
-          }
-
-          > :nth-child(3) {
-            background-color: rgba(var(--theme-accent-fixed), var(--_table-pricing-pro-opacity));
-          }
-        }
-      }
-
-      tbody {
-        tr {
-          td:not(.font-secondary) {
-            color: var(--theme-muted-a10);
-          }
-
-          td:is(.font-secondary) {
-            font-size: var(--fs-500);
-            font-weight: v.$fw-800;
-            line-height: 2;
-          }
-
-          > :nth-child(3) {
-            background-color: rgba(var(--theme-accent-fixed), var(--_table-pricing-pro-opacity));
-          }
-        }
-      }
-    }
-
     // Table small
     &.table-sm {
       --_table-gutter-x: 0.25rem;
       --_table-gutter-y: 0.25rem;
+    }
+
+    &.table-lg {
+      --_table-gutter-x: 0.85rem;
+      --_table-gutter-y: 0.85rem;
     }
   }
 

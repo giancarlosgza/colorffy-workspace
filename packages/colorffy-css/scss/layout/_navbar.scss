@@ -454,10 +454,7 @@
         bottom: anchor(bottom);
         left: anchor(left);
         right: anchor(right);
-
         background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
-        //@include m.bg-gradient(180deg, color-mix(in srgb, v.$white, var(--theme-surface-base) 85%), color-mix(in srgb, v.$dark, var(--theme-surface-base) 85%))
-        //box-shadow: 0 2px 8px var(--theme-surface-base) inset;
       }
 
       &:is(.indicator-tab) {
@@ -597,10 +594,7 @@
           }
 
           &:is(:hover) {
-            background-color: rgba(var(--theme-primary-fixed), 10%);
-            @supports (color: color-mix(in srgb, red, blue)) {
-              background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 90%);
-            }
+            background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 90%);
 
             :where(p, i) {
               color: var(--theme-primary-a30);
@@ -608,8 +602,6 @@
           }
 
           &:is(.router-link-exact-active) {
-            background-color: rgba(var(--theme-primary-fixed), 20%);
-
             :where(p, i) {
               color: var(--theme-primary-a90);
             }
@@ -618,9 +610,7 @@
               font-weight: v.$fw-800;
             }
 
-            @supports (color: color-mix(in srgb, red, blue)) {
-              background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 85%);
-            }
+            background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 85%);
           }
         }
       }

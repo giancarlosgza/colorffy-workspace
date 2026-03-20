@@ -20,19 +20,27 @@
     --theme-on-danger: #ffffff;
 
     /* surfaces base colors */
-    --#{v.$property-prefix}primary-base: #002678;
-    --#{v.$property-prefix}surface-base: #ffffff;
-    --#{v.$property-prefix}secondary-base: #0075d6;
-    --#{v.$property-prefix}accent-base: #fda001;
+    --theme-surface-base: #ffffff;
+    --theme-surface-base-inverse: #000000;
+
+    /* fixed base colors */
+    @include m.primary-fixed-colors();
 
     /* semantic base colors */
-    --#{v.$property-prefix}success-base: #009f42;
-    --#{v.$property-prefix}warning-base: #ffbb14;
-    --#{v.$property-prefix}danger-base: #b41c2b;
-    --#{v.$property-prefix}muted-base: #52595f;
+    --theme-primary-base: var(--theme-primary-base-fixed);
+    --theme-secondary-base: var(--theme-secondary-base-fixed);
+    --theme-accent-base: var(--theme-accent-base-fixed);
+    --theme-success-base: var(--theme-success-base-fixed);
+    --theme-warning-base: var(--theme-warning-base-fixed);
+    --theme-danger-base: var(--theme-danger-base-fixed);
+    --theme-info-base: var(--theme-info-base-fixed);
+    --theme-muted-base: var(--theme-muted-base-fixed);
+    --theme-white-base: var(--theme-white-base-fixed);
+    --theme-black-base: var(--theme-black-base-fixed);
+    --theme-dark-base: var(--theme-dark-base-fixed);
 
-    --#{v.$property-prefix}tonal-dark-intensity: 80%;
-    --#{v.$property-prefix}tonal-light-intensity: 40%;
+    --theme-tonal-dark-intensity: 80%;
+    --theme-tonal-light-intensity: 40%;
 
     /* default colors */
     --theme-default: var(--theme-surface-a30);
@@ -172,20 +180,21 @@
     --theme-on-danger: #000000;
 
     /* surfaces base colors */
-    --#{v.$property-prefix}primary-base: #d5ebff; // #ffffff
-    --#{v.$property-prefix}surface-base: #121212;
-    --#{v.$property-prefix}surface-base-inverse: #ffffff;
-    --#{v.$property-prefix}secondary-base: #c4e3ff;
-    --#{v.$property-prefix}accent-base: #ffeccc;
+    --theme-surface-base: #121212;
+    --theme-surface-base-inverse: #ffffff;
 
     /* semantic base colors */
-    --#{v.$property-prefix}success-base: #c1ffdb;
-    --#{v.$property-prefix}warning-base: #fbe9c5;
-    --#{v.$property-prefix}danger-base: #f8d4d7;
-    --#{v.$property-prefix}muted-base: #c0c5c9;
+    --theme-primary-base: #d5ebff;
+    --theme-secondary-base: #c4e3ff;
+    --theme-accent-base: #ffeccc;
+    --theme-success-base: #c1ffdb;
+    --theme-warning-base: #fbe9c5;
+    --theme-danger-base: #f8d4d7;
+    --theme-info-base: #bfe9f2;
+    --theme-muted-base: #c0c5c9;
 
-    --#{v.$property-prefix}tonal-dark-intensity: 70%;
-    --#{v.$property-prefix}tonal-light-intensity: 15%;
+    --theme-tonal-dark-intensity: 70%;
+    --theme-tonal-light-intensity: 15%;
 
     /* default colors */
     --theme-default: var(--theme-surface-a30);

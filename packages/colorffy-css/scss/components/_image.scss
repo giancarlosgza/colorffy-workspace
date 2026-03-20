@@ -73,7 +73,7 @@
     font-weight: v.$fw-600;
 
     &.initials-navbar {
-      --_initials-alpha: 0.35;
+      --_initials-alpha: 35%;
       --_initials-base-color: var(--theme-primary-a10);
 
       padding: .25rem;
@@ -82,7 +82,7 @@
       font-size: var(--fs-sm-500) !important;
       background-color: var(--_initials-base-color);
       @supports (color: hsl(from white h s l)) {
-        background-color: oklch(from var(--_initials-base-color) l c h / var(--_initials-alpha));
+        background-color: oklab(from var(--_initials-base-color) l a b / var(--_initials-alpha));
       }
     }
   }

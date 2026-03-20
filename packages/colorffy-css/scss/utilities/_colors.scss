@@ -70,38 +70,45 @@
 
   // Fixed text colors
   .text-primary-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-primary-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-primary-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-secondary-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-secondary-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-secondary-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-accent-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-accent-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-accent-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-success-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-success-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-success-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-warning-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-warning-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-warning-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-danger-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-danger-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-danger-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-muted-fixed {
-    --_text-opacity: 1;
-    color: rgba(var(--theme-muted-fixed), var(--_text-opacity));
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-muted-base-fixed) var(--_text-opacity), transparent);
   }
 
   /*

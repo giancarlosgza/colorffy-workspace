@@ -89,7 +89,7 @@
                 width: 100%;
                 cursor: pointer;
 
-                & .v-dropdown-item-primary, 
+                & .v-dropdown-item-primary,
                 & .v-dropdown-item-secondary {
                   display: flex;
                   align-items: center;
@@ -148,7 +148,9 @@
                   }
                 }
 
-                &:is(.v-disabled) {
+                &:is(.v-disabled),
+                &:is(:disabled) {
+                  background-color: color-mix(in oklab, var(--theme-muted-base-fixed) 15%, transparent);
                   color: var(--theme-muted-a10);
                   cursor: not-allowed;
                   opacity: 0.75;
@@ -168,18 +170,13 @@
                   background-color: var(--theme-surface-container-highest);
                   color: var(--theme-on-primary);
                 }
-
-                &:is(.disabled) {
-                  background-color: rgba(var(--theme-muted-fixed), 15%);
-                  color: var(--theme-muted-a10);
-                }
               }
 
               &.v-dropdown-divider {
                 height: 0;
                 margin: .25rem;
                 overflow: hidden;
-                border-top: v.$border-sm solid rgba(var(--theme-muted-fixed), 50%);
+                border-top: v.$border-sm solid color-mix(in oklab, var(--theme-muted-base-fixed) 50%, transparent);
                 opacity: 1;
               }
             }
@@ -363,7 +360,7 @@
 
         & .v-popper__backdrop {
           display: block;
-          background: rgba(var(--theme-overlay-fixed), 50%);
+          background-color: color-mix(in oklab, var(--theme-black-base-fixed) 50%, transparent);
         }
 
         & .v-popper__wrapper {
@@ -372,8 +369,8 @@
 
           & .v-popper__inner {
             border-radius: v.$rounded-xl;
-            //padding-block: 12px 24px;
             margin: .5rem;
+            //padding-block: 12px 24px;
 
             .color-picker-popper {
               --_color-pickerp-width: 100%;

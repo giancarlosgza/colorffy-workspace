@@ -464,6 +464,9 @@
 
   // Browser mouse selection color
   ::selection {
-    background-color: rgba(var(--theme-primary-fixed), .45);
+    --_selection-opacity: 45%;
+    --_selection-space: oklab;
+
+    background: color-mix(in var(--_selection-space), var(--theme-primary-base-fixed) var(--_selection-opacity), transparent);
   }
 }

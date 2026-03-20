@@ -85,33 +85,63 @@
 
   // Fixed background color
   .bg-primary-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-primary-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-primary-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-secondary-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-secondary-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-secondary-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-accent-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-accent-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-accent-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-success-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-success-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-success-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-warning-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-warning-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-warning-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-danger-fixed {
-    --_bg-opacity: .35;
-    background: rgba(var(--theme-danger-fixed), var(--_bg-opacity));
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-danger-base-fixed) var(--_bg-opacity), transparent);
+  }
+
+  .bg-info-fixed {
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-info-base-fixed) var(--_bg-opacity), transparent);
+  }
+
+  .bg-white-fixed {
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-white-base-fixed) var(--_bg-opacity), transparent);
+  }
+
+  .bg-dark-fixed {
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-dark-base-fixed) var(--_bg-opacity), transparent);
+  }
+
+  .bg-muted-fixed {
+    --_bg-opacity: 35%;
+    --_bg-space: oklab;
+    background: color-mix(in var(--_bg-space), var(--theme-muted-base-fixed) var(--_bg-opacity), transparent);
   }
 
   /*
