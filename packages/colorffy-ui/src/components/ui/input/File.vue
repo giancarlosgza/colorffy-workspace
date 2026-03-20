@@ -59,7 +59,7 @@ function handleInput(event: Event) {
       <label :for="inputId" v-text="label" />
       <div
         class="input-file-dropbox"
-        :class="[model ? 'valid-file' : '', large ? 'dropbox-xl' : '']"
+        :class="[model ? 'valid-file' : '', large ? 'dropbox-lg' : '']"
       >
         <input
           :id="inputId"
