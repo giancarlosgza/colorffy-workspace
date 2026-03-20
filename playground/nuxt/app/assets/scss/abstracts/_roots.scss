@@ -1,22 +1,20 @@
 @use '@colorffy/css/scss/main';
 
 :root {
-    --theme-primary-base-fixed: #002662;
-    --theme-secondary-base-fixed: #22cbff;
-    --theme-accent-base-fixed: #0ee9a0;
+    /** Override default palette */
+    --color-brand-primary-500: #1d0062;
+    --color-brand-primary-50: #d5c4ff;
+    --color-brand-secondary-500: #22cbff;
+    --color-brand-secondary-50: #90deff;
+    --color-brand-accent-500: #0ee9a0;
+    --color-brand-accent-50: #90ffda;
 
-    --theme-surface-base: #ffffff;
-    --theme-on-secondary: #ffffff;
+    --theme-on-secondary: #000000;
 
     --font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
     --font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dark-mode {
-    --theme-primary-base: #c4dbff;
-    --theme-secondary-base: #90deff;
-    --theme-accent-base: #90ffda;
-
     --theme-surface-base: #000000;
-    --theme-on-secondary: #000000;
 }

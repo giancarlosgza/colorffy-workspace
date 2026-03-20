@@ -107,7 +107,7 @@ function handleConfirm() {
             </template>
             <template #body>
               <h2 class="fs-400 fw-800">
-                Testing <span class="text-gradient g-primary">Components</span>
+                Testing <span class="text-gradient gradient-primary">Components</span>
               </h2>
               <p class="subtitle-1 text-muted mb-0">
                 This is a test of your colorffy-ui library!
@@ -200,7 +200,7 @@ function handleConfirm() {
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-danger" />
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-outline" />
                 <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-surface icon-wrap-bordered" />
-                <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-gradient g-secondary" />
+                <UiIconMaterial icon-code="&#xe000;" class="icon-wrap icon-wrap-gradient gradient-secondary angle-90" />
               </div>
               <hr>
               <div class="d-flex flex-wrap gap-3">
@@ -331,7 +331,7 @@ function handleConfirm() {
             <UiButtonMenuItem item-text="Github" />
             <UiButtonMenuItem
               item-text="Support"
-              :badge="{ text: 'NEW', variant: 'gradient', customClass: 'g-accent' }"
+              :badge="{ text: 'NEW', variant: 'gradient', customClass: 'gradient-accent' }"
             />
             <UiButtonMenuItem item-text="API" disabled />
             <UiButtonMenuDivider />
@@ -341,7 +341,7 @@ function handleConfirm() {
         <UiButton variant="chip" text="Chip Button" />
         <UiButton variant="outline" text="Small Button" size="sm" />
         <UiButton variant="outline" text="Large Button" size="lg" />
-        <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient g-secondary text-white" @on-click="showConfirmModal" />
+        <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient gradient-secondary text-white" @on-click="showConfirmModal" />
         <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta" />
       </UiButtonGroup>
       <hr>
@@ -385,7 +385,7 @@ function handleConfirm() {
           </UiPaneContent>
         </div>
         <div class="col-md-6">
-          <UiCard variant="outline" class="bg-gradient g-primary" style="--gradient-angle: 45deg;">
+          <UiCard variant="outline" class="bg-gradient gradient-primary" style="--gradient-angle: 45deg;">
             <template #body>
               <p class="subtitle-1 font-primary fw-800 text-dark mb-0">
                 This is a sample card component to demonstrate the usage of UiCard in Colorffy UI.
@@ -393,7 +393,7 @@ function handleConfirm() {
             </template>
           </UiCard>
           <UiCard
-            variant="outline" class="border border-xl border-gradient g-secondary mt-3"
+            variant="outline" class="border border-xl border-gradient gradient-secondary mt-3"
             style="--gradient-angle: 45deg;"
           >
             <template #body>

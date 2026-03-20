@@ -182,10 +182,10 @@ export const WithBadges: Story = {
         <UiNavbarCollapse>
           <template #end>
             <UiNavbarItem>
-              <UiBadge text="PRO" variant="gradient" custom-class="g-primary" />
+              <UiBadge text="PRO" variant="gradient" custom-class="gradient-primary" />
             </UiNavbarItem>
             <UiNavbarItem>
-              <UiBadge text="ADMIN" variant="outline" icon-code="&#xef3d;" icon-class="text-gradient g-violet" />
+              <UiBadge text="ADMIN" variant="outline" icon-code="&#xef3d;" icon-class="text-gradient gradient-violet" />
             </UiNavbarItem>
             <UiNavbarItem>
               <UiBadge text="3" variant="danger" pill />

@@ -250,7 +250,7 @@ function handleMenuItemClick(to: string | object) {
             <UiNavbarItem>
               <UiBadge
                 text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
-                icon-class="text-gradient g-accent"
+                icon-class="text-gradient gradient-accent"
               />
             </UiNavbarItem>
             <UiNavbarItem>
@@ -287,8 +287,8 @@ function handleMenuItemClick(to: string | object) {
               >
                 <template #icon>
                   <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
-                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-gradient g-orange" />
-                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-gradient g-blue" />
+                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-gradient gradient-orange" />
+                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-gradient gradient-blue" />
                 </template>
               </UiButton>
             </UiButtonGroup>
