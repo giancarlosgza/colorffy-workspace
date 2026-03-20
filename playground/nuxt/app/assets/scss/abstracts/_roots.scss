@@ -1,9 +1,10 @@
 @use '@colorffy/css/scss/main';
 
 :root {
-    --theme-primary-base: #002662;
-    --theme-secondary-base: #22cbff;
-    --theme-accent-base: #0ee9a0;
+    --theme-primary-base-fixed: #002662;
+    --theme-secondary-base-fixed: #22cbff;
+    --theme-accent-base-fixed: #0ee9a0;
+
     --theme-surface-base: #ffffff;
     --theme-on-secondary: #ffffff;
 
@@ -15,6 +16,7 @@
     --theme-primary-base: #c4dbff;
     --theme-secondary-base: #90deff;
     --theme-accent-base: #90ffda;
+
     --theme-surface-base: #000000;
     --theme-on-secondary: #000000;
 }
