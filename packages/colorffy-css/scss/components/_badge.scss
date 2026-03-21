@@ -124,7 +124,10 @@
     }
 
     &.badge-gradient {
-      @include m.text-gradient(45deg, v.$gradient-neon-green);
+      --angle: 45deg;
+      --_gradient-stops: #{v.$gradient-neon-green};
+      
+      @include m.text-gradient(var(--angle), var(--_gradient-stops));
       @include m.generate-static-gradients(v.$static-gradients, false, true);
       @include m.generate-gradients(v.$dynamic-gradients, false, true);
     }

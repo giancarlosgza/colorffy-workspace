@@ -268,8 +268,9 @@
         --_btn-shadow: rgba(255, 255, 255, 0.2) 0px 2px 3.1px inset;
         --_btn-border-color: transparent;
         --_btn-bg-gradient: var(--theme-primary-a30), var(--theme-primary-base);
+        --_gradient-stops: var(--_btn-bg-gradient);
 
-        background: linear-gradient(var(--gradient-angle), var(--_btn-bg-gradient)) border-box;
+        background: linear-gradient(var(--gradient-angle), var(--_gradient-stops)) border-box;
         color: var(--theme-on-primary-inverse);
         transition: all 800ms v.$easing-emphasized, --gradient-angle 800ms v.$easing-emphasized;
 

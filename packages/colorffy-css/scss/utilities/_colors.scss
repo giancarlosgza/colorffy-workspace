@@ -163,12 +163,16 @@
   }
 
   // Gradient
-  .text-gradient {
+  .text-gradient {   
+    --angle: 45deg;
+    --_gradient-stops: #{v.$gradient-sunset};
+
     color: var(--theme-primary-a10);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    @include m.text-gradient(45deg, v.$gradient-sunset);
+  
+    @include m.text-gradient(var(--angle), var(--_gradient-stops));
     @include m.generate-static-gradients(v.$static-gradients, false, false);
     @include m.generate-gradients(v.$dynamic-gradients, false, false);
   }

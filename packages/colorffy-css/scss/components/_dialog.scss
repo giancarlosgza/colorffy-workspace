@@ -305,11 +305,15 @@
           padding-top: calc(var(--_dialog-gutter) - .55rem);
 
           & i {
+            --angle: 45deg;
+            --_gradient-stops: #{v.$gradient-ghost};
+
             padding: 15px;
             font-size: var(--fs-400);
             border-radius: v.$rounded-lg;
             color: v.$white;
-            @include m.bg-gradient(45deg, v.$gradient-ghost);
+            
+            @include m.bg-gradient(var(--angle), var(--_gradient-stops));
             @include m.generate-static-gradients(v.$static-gradients, false, true);
             @include m.generate-gradients(v.$dynamic-gradients, false, true);
             @extend .mask-shape !optional;

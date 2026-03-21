@@ -747,17 +747,15 @@
 
 /*
  * Dynamic gradients variants
- * Generate flat utility classes from CSS token-based runtime values (theme colors)
+ * Outputs lightweight CSS custom properties
  */
 @mixin generate-gradients($colors, $isBordered: false, $isBg: false) {
   @each $name, $gradient in $colors {
     &.gradient-#{$name} {
       @if ($isBordered == true) {
         --_border-gradient: #{$gradient};
-      } @else if ($isBg == true) {
-        @include bg-gradient(var(--angle, 45deg), $gradient);
       } @else {
-        @include text-gradient(var(--angle, 45deg), $gradient);
+        --_gradient-stops: #{$gradient};
       }
     }
   }
@@ -765,17 +763,15 @@
 
 /*
  * Static gradient variants
- * Generate flat utility classes from SCSS compile-time values ($static-gradients map)
+ * Outputs lightweight CSS custom properties
  */
 @mixin generate-static-gradients($colors, $isBordered: false, $isBg: false) {
   @each $name, $gradient in $colors {
     &.gradient-#{$name} {
       @if ($isBordered == true) {
         --_border-gradient: #{$gradient};
-      } @else if ($isBg == true) {
-        @include bg-gradient(var(--angle, 45deg), $gradient);
       } @else {
-        @include text-gradient(var(--angle, 45deg), $gradient);
+        --_gradient-stops: #{$gradient};
       }
     }
   }

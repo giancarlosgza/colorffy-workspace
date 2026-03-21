@@ -86,7 +86,10 @@
     // Gradient
     &.icon-wrap-gradient {
       color: v.$white;
-      @include m.bg-gradient(45deg, v.$gradient-primary);
+      --angle: 45deg;
+      --_gradient-stops: #{v.$gradient-primary};
+
+      @include m.bg-gradient(var(--angle), var(--_gradient-stops));
       @include m.generate-static-gradients(v.$static-gradients, false, true);
       @include m.generate-gradients(v.$dynamic-gradients, false, true);
 

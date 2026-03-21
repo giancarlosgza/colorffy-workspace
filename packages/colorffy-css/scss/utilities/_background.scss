@@ -179,8 +179,9 @@
   // Gradient
   .bg-gradient {
     --angle: 90deg;
+    --_gradient-stops: #{v.$gradient-database};
 
-    @include m.bg-gradient(var(--angle), v.$gradient-database);
+    @include m.bg-gradient(var(--angle), var(--_gradient-stops));
     @include m.generate-static-gradients(v.$static-gradients, false, true);
     @include m.generate-gradients(v.$dynamic-gradients, false, true);
   }
