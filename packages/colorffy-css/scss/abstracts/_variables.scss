@@ -31,12 +31,13 @@ $primary-colors: (
 );
 
 // Gradients
-$gradient-primary: var(--theme-primary-base-fixed), oklch(from var(--theme-primary-base-fixed) calc(l - 0.25) c h) !default;
-$gradient-secondary: var(--theme-secondary-base-fixed), oklch(from var(--theme-secondary-base-fixed) calc(l - 0.25) c h) !default;
-$gradient-accent: var(--theme-accent-base-fixed), oklch(from var(--theme-accent-base-fixed) calc(l - 0.25) c h) !default;
-$gradient-success: var(--theme-success-base-fixed), oklch(from var(--theme-success-base-fixed) calc(l - 0.25) c h) !default;
-$gradient-warning: var(--theme-warning-base-fixed), oklch(from var(--theme-warning-base-fixed) calc(l - 0.25) c h) !default;
-$gradient-danger: var(--theme-danger-base-fixed), oklch(from var(--theme-danger-base-fixed) calc(l - 0.25) c h) !default;
+// $gradient-primary: var(--theme-primary-base-fixed), oklch(from var(--theme-primary-base-fixed) calc(l - 0.25) c h) !default;
+$gradient-primary: var(--theme-primary-base-fixed), color-mix(in oklab, var(--theme-primary-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-secondary: var(--theme-secondary-base-fixed), color-mix(in oklab, var(--theme-secondary-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-accent: var(--theme-accent-base-fixed), color-mix(in oklab, var(--theme-accent-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-success: var(--theme-success-base-fixed), color-mix(in oklab, var(--theme-success-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-warning: var(--theme-warning-base-fixed), color-mix(in oklab, var(--theme-warning-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-danger: var(--theme-danger-base-fixed), color-mix(in oklab, var(--theme-danger-base-fixed) 75%, oklch(0% 0 0)) !default;
 
 // Dynamic gradient map
 $dynamic-gradients: (
