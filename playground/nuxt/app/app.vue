@@ -249,13 +249,20 @@ function handleMenuItemClick(to: string | object) {
           <UiNavbarNav position="start">
             <UiNavbarItem>
               <UiBadge
-                text="ADMIN" variant="outline" custom-class="my-0" icon-code="&#xef3d;"
+                text="ADMIN"
+                variant="outline"
+                custom-class="my-0"
+                icon-code="&#xef3d;"
                 icon-class="text-gradient gradient-accent"
               />
             </UiNavbarItem>
             <UiNavbarItem>
               <UiNavbarAvatar
-                v-if="user" :src="user.photoURL" :alt="`${user.displayName} photo`" size="navbar"
+                v-if="user"
+                :src="user.photoURL"
+                :alt="`${user.displayName} photo`"
+                size="navbar"
+                class="border border-md border-accent rounded-full p-px"
                 @click="toggleUserMenu"
               />
             </UiNavbarItem>
@@ -268,9 +275,7 @@ function handleMenuItemClick(to: string | object) {
           :is-opened="isMenuActive"
           :menu-items="menuItems"
           :current-route="route"
-          show-verified-icon
-          verified-icon-code="&#xe838;"
-          avatar-custom-class="border border-md border-accent p-1"
+          avatar-custom-class="border border-md border-accent p-px"
           @hide-dropdown="isMenuActive = false"
           @menu-item-click="handleMenuItemClick"
         >
