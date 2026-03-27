@@ -60,8 +60,8 @@ const emit = defineEmits<IPopoverMenuEmits>()
 /** Computed */
 const listItems = computed(() => props.menuItems)
 const menuClasses = computed(() => [
-  'menu-user',
-  { 'menu-user-visible': props.isOpened }
+  'popover-menu',
+  { 'popover-menu-visible': props.isOpened }
 ])
 
 const userData = computed((): IUserData => ({
@@ -100,7 +100,7 @@ function isActiveMenuItem(to: string | object): boolean {
 </script>
 
 <template>
-  <div class="menu-user-container">
+  <div class="popover-menu-container">
     <div
       id="user-navigation-menu"
       :class="menuClasses"
@@ -109,20 +109,20 @@ function isActiveMenuItem(to: string | object): boolean {
       tabindex="0"
     >
       <!-- Header -->
-      <div class="menu-user-header">
+      <div class="popover-menu-header">
         <!-- User related data -->
         <div v-if="user">
           <div class="avatar-container">
             <img
               v-if="userData.photoURL"
               :src="userData.photoURL"
-              class="img-fluid img-avatar avatar-menu mb-2"
+              class="img-fluid img-avatar avatar-menu"
               :class="avatarCustomClass"
               :alt="userPhotoAlt"
             >
             <span
               v-else
-              class="img-avatar avatar-placeholder avatar-menu mb-2"
+              class="img-avatar avatar-placeholder avatar-menu"
               :class="avatarCustomClass"
             />
           </div>
@@ -152,6 +152,7 @@ function isActiveMenuItem(to: string | object): boolean {
           </p>
         </div>
 
+        <!-- Close button -->
         <UiButton
           variant="outline"
           icon
@@ -165,9 +166,10 @@ function isActiveMenuItem(to: string | object): boolean {
       </div>
 
       <!-- Body -->
-      <div class="menu-user-body">
+      <div class="popover-menu-body">
         <UiListGroup
           variant="low-contrast"
+          size="sm"
           is-interactive
         >
           <UiListItem
@@ -185,7 +187,7 @@ function isActiveMenuItem(to: string | object): boolean {
       </div>
 
       <!-- Footer -->
-      <div class="menu-user-footer">
+      <div class="popover-menu-footer">
         <slot name="footer" />
       </div>
     </div>

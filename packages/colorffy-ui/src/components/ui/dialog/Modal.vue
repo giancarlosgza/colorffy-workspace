@@ -37,8 +37,12 @@ const dialogClasses = computed(() => {
   if (props.size) {
     if (props.size === 'sm')
       classes.push('dialog-sm')
+    if (props.size === 'md')
+      classes.push('dialog-md')
     if (props.size === 'lg')
       classes.push('dialog-lg')
+    if (props.size === 'fullscreen')
+      classes.push('dialog-fullscreen')
   }
 
   if (props.customClass) {

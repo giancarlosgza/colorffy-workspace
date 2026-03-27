@@ -341,7 +341,13 @@ function handleConfirm() {
         <UiButton variant="chip" text="Chip Button" />
         <UiButton variant="outline" text="Small Button" size="sm" />
         <UiButton variant="outline" text="Large Button" size="lg" />
-        <UiButton variant="outline" text="CTA Button" size="lg" class="btn-cta btn-gradient gradient-secondary text-white" @on-click="showConfirmModal" />
+        <UiButton
+          variant="outline"
+          text="CTA Button"
+          size="lg"
+          class="btn-cta btn-gradient gradient-secondary text-white"
+          @on-click="showConfirmModal"
+        />
         <UiButton variant="gradient" text="Gradient Button" size="lg" class="btn-cta" />
       </UiButtonGroup>
       <hr>
@@ -538,7 +544,12 @@ function handleConfirm() {
       <UiAlert message="Your library is working correctly!" type="snackbar" variant="success" />
 
       <UiAlertToast ref="toastRef" />
-      <UiModal ref="dialogRef" mode="headless" size="sm">
+      <UiModal
+        ref="dialogRef"
+        mode="headless"
+        size="sm"
+        class="dialog-backdrop-blur"
+      >
         <template #header>
           <UiIconMaterial icon-code="&#xe838;" />
           <div>
@@ -572,6 +583,16 @@ function handleConfirm() {
             label="Sample Input" placeholder="Enter some text..." class="mb-3"
             variant="outline"
           />
+          <UiInputText
+            id="input-sample-2"
+            label="Sample Input" placeholder="Enter some text..." class="mb-3"
+            variant="outline"
+          />
+          <UiInputText
+            id="input-sample-3"
+            label="Sample Input" placeholder="Enter some text..." class="mb-3"
+            variant="filled"
+          />
           <UiInputRange
             id="range-sample"
             v-model="rangeValue"
@@ -594,8 +615,8 @@ function handleConfirm() {
       <!-- Confirm Modal -->
       <UiConfirmModal
         ref="confirmModalRef"
-        title="Confirm Action"
-        message="Are you sure you want to proceed with this action?"
+        title="Remove Admin Privileges to the user Giancarlos?"
+        message="This action cannot be undone. Are you sure you want to proceed with this action?"
         confirm-label="Confirmar"
         cancel-label="Cancelar"
         variant="danger"
