@@ -8,15 +8,11 @@
   color: $color;
 }
 
-@mixin text-gradient($deg, $colors...) {
-  $deg: 45deg !default;
-
+@mixin text-gradient($deg: 45deg, $colors...) {
   background-image: linear-gradient($deg, $colors);
-  background-image: -webkit-linear-gradient($deg, $colors);
 
   @supports (background: linear-gradient(45deg in oklch, red, blue)) {
-    background-image: linear-gradient($deg in oklch, $colors);
-    background-image: -webkit-linear-gradient($deg in oklch, $colors);
+    background: linear-gradient($deg in oklch, $colors);
   }
 }
 
@@ -55,10 +51,7 @@
   background-color: $color;
 }
 
-@mixin bg-gradient($deg, $colors...) {
-  $deg: 45deg !default;
-
-  background: -webkit-linear-gradient($deg, $colors);
+@mixin bg-gradient($deg: 45deg, $colors...) {
   background: linear-gradient($deg, $colors);
 
   @supports (background: linear-gradient(45deg in oklch, red, blue)) {

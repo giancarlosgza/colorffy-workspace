@@ -170,6 +170,7 @@
       --_alert-bg-color: var(--theme-surface-toast);
       --_alert-border-color: var(--theme-surface-toast);
       --_alert-color: var(--theme-on-primary-inverse);
+      --_alert-icon-color: var(--theme-on-primary-inverse);
 
       margin: auto;
       width: fit-content;
@@ -184,23 +185,19 @@
       // Variants
       & i {
         font-variation-settings: var(--iw-bold);
-        color: var(--theme-on-primary-inverse);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        @include m.text-gradient(45deg, v.$gradient-pure);
+        color: var(--_alert-icon-color);
       }
 
       &.snackbar-success i {
-        @include m.text-gradient(45deg, v.$gradient-neon-green)
+        --_alert-icon-color: var(--theme-success-base-fixed);
       }
 
       &.snackbar-warning i {
-        @include m.text-gradient(45deg, v.$gradient-honey)
+        --_alert-icon-color: var(--theme-warning-base-fixed);
       }
 
       &.snackbar-danger i {
-        @include m.text-gradient(45deg, v.$gradient-crimson)
+        --_alert-icon-color: var(--theme-danger-base-fixed);
       }
     }
 
