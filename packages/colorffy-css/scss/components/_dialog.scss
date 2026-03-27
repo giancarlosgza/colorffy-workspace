@@ -4,11 +4,11 @@
 
 @layer components.dialog {
   .dialog {
+    --_dialog-border-color: var(--theme-outline-overlay);
     --_dialog-radius: #{v.$dialog-border-radius};
     --_dialog-gutter: calc(#{v.$space-1} * 1.25);
     --_dialog-max-size: 90%;
     --_discrete: allow-discrete;
-
     --_dialog-easing-in: #{v.$easing-in-fallback};
     --_dialog-easing-out: #{v.$easing-out-fallback};
     --_dialog-easing-duration: 600ms;
@@ -21,8 +21,7 @@
     height: calc(100vh - 30vh);
     max-width: var(--_dialog-max-size);
     max-height: var(--_dialog-max-size);
-
-    border: none;
+    border: v.$border-sm solid var(--_dialog-border-color);
     background-color: var(--theme-surface-container);
     box-shadow: var(--shadow-xl);
 
@@ -32,7 +31,7 @@
       flex-direction: column;
       flex-basis: auto;
       flex-wrap: nowrap;
-      height: auto; // Fix for Safari's dialog content height issue
+      height: 100%;
       min-height: 100%;
       padding: calc(var(--_dialog-gutter) / 1.25);
       overscroll-behavior: contain;
@@ -253,9 +252,8 @@
     // Confirm
     &.dialog-confirm {
       border-radius: var(--_dialog-radius);
-
-      width: clamp(20rem, 90%, 25rem);
-      height: fit-content;
+      width: clamp(18rem, 90vw, 25rem);
+      height: max-content;
 
       & .dialog-body {
         display: grid;
@@ -279,18 +277,27 @@
 
     // Sizes
     &.dialog-sm {
-      width: calc(100vh - 50vh);
-      height: fit-content;
+      width: clamp(18rem, 90vw, 26rem);
+      height: max-content; // Content-driven height, avoids Safari issues
     }
 
     &.dialog-md {
-      width: calc(100vh - 30vh);
-      height: calc(100vh - 40vh);
+      width: clamp(26rem, 90vw, 40rem);
     }
 
     &.dialog-lg {
-      width: 100vw;
-      height: 100vh;
+      width: clamp(40rem, 95vw, 60rem);
+    }
+
+    &.dialog-fullscreen {
+      width: calc(100vw - 3rem);
+      height: calc(100vh - 3rem);
+      max-width: none;
+      max-height: none;
+
+      @supports (height: 100dvh) {
+        height: calc(100dvh - 3rem);
+      }
     }
 
     // Headless
@@ -323,6 +330,12 @@
     // Backdrop
     &::backdrop {
       background: rgba(0, 0, 0, 50%);
+    }
+
+    &.dialog-backdrop-blur {
+      &::backdrop {
+        backdrop-filter: blur(5px);
+      }
     }
 
     // Reduced motion

@@ -107,10 +107,10 @@
       }
     }
 
-    .menu-user-container {
+    .popover-menu-container {
       position: absolute;
 
-      .menu-user {
+      .popover-menu {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -206,18 +206,14 @@
       &:is(.dialog-confirm) {
         --_dialog-radius: #{v.$rounded-xl};
 
-        height: fit-content;
-        max-height: 40vh;
+        width: clamp(18rem, 90vw, 25rem);
+        height: max-content;
         inset: 0;
         margin: auto;
         transform-origin: center;
-        max-width: 80%;
 
-        @supports (height: 100lvh) {
-          max-height: 40lvh;
-        }
-
-        :where(.dialog-content .dialog-footer) {
+        .dialog-content 
+        .dialog-footer {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
 
@@ -291,13 +287,13 @@
 
   @include m.media-query(768) {
     .navbar {
-      &:has(.menu-user-visible) {
+      &:has(.popover-menu-visible) {
         background-color: var(--theme-surface-body-pane);
       }
     }
 
-    .menu-user-container {
-      & .menu-user {
+    .popover-menu-container {
+      & .popover-menu {
         top: 3.45rem;
         width: 100%;
         height: 100%;

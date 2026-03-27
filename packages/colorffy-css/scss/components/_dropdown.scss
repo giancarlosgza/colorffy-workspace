@@ -23,11 +23,9 @@
     --_dropdown-padding: 4px;
     --_dropdown-shadow: var(--shadow-lg);
     --_dropdown-radius: #{v.$rounded-lg};
-
     --_dropdown-easing-in: #{v.$easing-in-fallback};
     --_dropdown-easing-out: #{v.$easing-out-fallback};
     --_dropdown-easing-duration: 400ms;
-
     --_dropdown-item-gutter-x: .5rem;
     --_dropdown-item-gutter-y: .5rem;
 
@@ -49,7 +47,7 @@
           padding: var(--_dropdown-padding);
           box-shadow: var(--shadow-lg);
           border-radius: var(--_dropdown-radius);
-          border: v.$border-sm solid var(--theme-outline-surface);
+          border: v.$border-sm solid var(--theme-outline-overlay);
           min-width: 12rem;
 
           & kbd {

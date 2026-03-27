@@ -88,6 +88,7 @@
     --theme-outline-button: var(--theme-surface-a60);
     --theme-outline-text-field: var(--theme-surface-a60);
     --theme-outline-surface: var(--theme-surface-a40);
+    --theme-outline-overlay: var(--theme-surface-a40);
 
     /* image filters */
     --theme-img-filter-invert: none;
@@ -225,6 +226,7 @@
     --theme-outline-button: var(--theme-surface-a60);
     --theme-outline-text-field: var(--theme-surface-a60);
     --theme-outline-surface: var(--theme-surface-a60);
+    --theme-outline-overlay: var(--theme-surface-a60);
 
     /* image filters */
     --theme-img-filter-invert: brightness(0) invert(1);
