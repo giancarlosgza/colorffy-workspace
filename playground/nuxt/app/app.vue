@@ -270,6 +270,7 @@ function handleMenuItemClick(to: string | object) {
           :current-route="route"
           show-verified-icon
           verified-icon-code="&#xe838;"
+          avatar-custom-class="border border-md border-accent p-1"
           @hide-dropdown="isMenuActive = false"
           @menu-item-click="handleMenuItemClick"
         >
