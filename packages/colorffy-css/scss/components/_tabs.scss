@@ -45,7 +45,7 @@
             --_btn-padding-inline: 1.75rem;
             --_btn-shadow: var(--shadow-md);
 
-            color: var(--theme-on-primary);
+            color: var(--theme-on-background);
             background: var(--theme-surface-body-pane);
             border-bottom: none;
           }
@@ -56,7 +56,7 @@
     .tab-item {
       .tab-link {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--theme-on-primary);
+        --_btn-color: var(--theme-on-background);
         --_btn-gap: .25rem;
         --_btn-radius: #{v.$rounded-md} #{v.$rounded-md} #{v.$rounded-none} #{v.$rounded-none};
         --_btn-padding-inline: 0.75rem;
@@ -83,14 +83,14 @@
 
         &:is(:hover) {
           background: var(--theme-surface-container);
-          color: var(--theme-on-primary);
+          color: var(--theme-on-background);
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {
           --_btn-padding-inline: 1.25rem;
 
           font-weight: v.$fw-800;
-          color: var(--theme-on-primary);
+          color: var(--theme-on-background);
           border-bottom: calc(#{v.$border-md} + 1px) solid var(--theme-primary-a10);
         }
       }
@@ -156,7 +156,7 @@
             width: inherit;
 
             &:is(.active) {
-              color: var(--theme-on-primary);
+              color: var(--theme-on-background);
             }
           }
         }
@@ -220,7 +220,7 @@
 
           &:is(.active) {
             font-weight: v.$fw-600;
-            color: var(--theme-on-primary-inverse);
+            color: var(--theme-on-background-inverse);
           }
         }
       }

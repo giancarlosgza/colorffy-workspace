@@ -35,7 +35,7 @@
       --_form-padding-y: .25rem;
       --_form-radius: #{v.$form-border-radius};
       --_form-bg-color: transparent;
-      --_form-color: var(--theme-on-primary);
+      --_form-color: var(--theme-on-background);
       --_form-border-width: #{v.$form-border};
       --_form-border-color: var(--theme-outline-text-field);
 
@@ -47,22 +47,16 @@
       width: var(--_form-width);
       height: var(--_form-height);
       padding: var(--_form-padding-y) var(--_form-padding-x);
-
       appearance: none;
       -webkit-appearance: none;
-
       border-radius: var(--_form-radius);
       border: var(--_form-border-width) solid var(--_form-border-color);
-
       box-shadow: var(--shadow-xs);
       background-color: var(--_form-bg-color);
       color: var(--_form-color);
-
-      //font-size: 1rem;
       font-weight: v.$fw-400;
-      font-family: v.$font-secondary;
+      font-family: var(--font-secondary);
       line-height: 1.5;
-
       transition: background-color var(--_form-easing-duration) var(--_form-easing-in),
       border-color var(--_form-easing-duration) var(--_form-easing-in),
       box-shadow var(--_form-easing-duration) var(--_form-easing-in);
@@ -97,7 +91,7 @@
 
       // Form control states
       &:is(:hover) {
-        --_form-border-color: var(--theme-on-primary);
+        --_form-border-color: var(--theme-on-background);
       }
 
       &:is(:focus, :active, :focus-visible) {
@@ -259,7 +253,7 @@
       .form-color {
         --_form-radius: #{v.$rounded-md};
         --_form-bg-color: transparent;
-        --_form-color: var(--theme-on-primary);
+        --_form-color: var(--theme-on-background);
         --_form-border-color: transparent;
         --_form-border-width: #{v.$form-border};
 
@@ -348,7 +342,7 @@
 
     .input-file-dropbox {
       --_file-bg-color: var(--theme-surface-body-pane);
-      --_file-color: var(--theme-on-primary);
+      --_file-color: var(--theme-on-background);
       --_file-border-width: #{v.$border-md};
       --_file-border-color: var(--theme-outline-text-field);
       --_file-gutter: .25rem 0;
@@ -365,7 +359,7 @@
 
       border: var(--_file-border-width) dashed var(--_file-border-color);
       background: var(--_file-bg-color);
-      color: var(--theme-on-primary);
+      color: var(--theme-on-background);
 
       padding: var(--_file-gutter);
       height: 100%;
@@ -377,7 +371,7 @@
 
       &:is(:hover) {
         --_file-bg-color: var(--theme-surface-container-high);
-        --_file-color: var(--theme-on-primary);
+        --_file-color: var(--theme-on-background);
       }
 
       &:is(:focus, :active) {

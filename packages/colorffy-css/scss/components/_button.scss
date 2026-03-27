@@ -6,7 +6,7 @@
     @layer base {
       --_btn-columns: 1fr;
       --_btn-bg-color: var(--theme-surface-container);
-      --_btn-color: var(--theme-on-primary);
+      --_btn-color: var(--theme-on-background);
       --_btn-border: #{v.$border-sm};
       --_btn-border-color: transparent;
       --_btn-gap: 0;
@@ -26,7 +26,7 @@
       // Filled
       &.btn-filled {
         --_btn-bg-color: var(--theme-primary-a10);
-        --_btn-color: var(--theme-on-primary-container);
+        --_btn-color: var(--theme-on-primary);
 
         &:is(:hover) {
           --_btn-bg-color: var(--theme-primary-a20);
@@ -182,7 +182,7 @@
         --_btn-shadow: none;
 
         &:is(.text-neutral) {
-          --_btn-color: var(--theme-on-primary);
+          --_btn-color: var(--theme-on-background);
         }
 
         &:is(:hover) {
@@ -198,7 +198,7 @@
 
       &.btn-link {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--theme-on-primary);
+        --_btn-color: var(--theme-on-background);
         --_btn-shadow: none;
 
         text-decoration-style: solid;
@@ -271,7 +271,7 @@
         --_gradient-stops: var(--_btn-bg-gradient);
 
         background: linear-gradient(var(--gradient-angle), var(--_gradient-stops)) border-box;
-        color: var(--theme-on-primary-inverse);
+        color: var(--theme-on-primary);
         transition: all 800ms v.$easing-emphasized, --gradient-angle 800ms v.$easing-emphasized;
 
         &:is(:hover) {
@@ -643,7 +643,7 @@
       --_toggle-btn-padding: .75rem;
       --_toggle-btn-radius: #{v.$button-border-radius};
       --_toggle-btn-bg-color: transparent;
-      --_toggle-btn-color: var(--theme-on-primary);
+      --_toggle-btn-color: var(--theme-on-background);
       --_toggle-btn-subtitle-color: var(--theme-muted-a10);
       --_toggle-btn-border-size: #{v.$border-md};
       --_toggle-btn-border-color: var(--theme-outline-button);
@@ -700,7 +700,7 @@
             &.subtitle-1 {
               font-size: var(--fs-sm-200);
               font-weight: v.$fw-600;
-              font-family: v.$font-primary;
+              font-family: var(--font-primary);
               margin-bottom: 0.25rem;
 
               &:not(:has(~ p)) {

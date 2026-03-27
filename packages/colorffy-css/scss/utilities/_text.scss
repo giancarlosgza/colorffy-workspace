@@ -4,11 +4,15 @@
 @layer utilities.text {
   // Font families
   .font-primary {
-    font-family: v.$font-primary;
+    font-family: var(--font-primary);
   }
 
   .font-secondary {
-    font-family: v.$font-secondary;
+    font-family: var(--font-secondary);
+  }
+
+  .font-code {
+    font-family: var(--font-code);
   }
 
   // Font xl sizes
@@ -398,7 +402,7 @@
 
   // Font variations
   .tabular-numbers {
-    font-family: v.$font-primary;
+    font-family: var(--font-primary);
     font-variant-numeric: tabular-nums;
   }
 }

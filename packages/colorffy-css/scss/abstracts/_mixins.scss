@@ -28,12 +28,12 @@
   $bold: false !default;
 
   @supports not (font-variation-settings: 'wght' 500) {
-    font-family: v.$font-secondary;
+    font-family: var(--font-secondary);
   }
 
   /* Add support for variable font settings */
   @supports (font-variation-settings: 'wght' 500) {
-    font-family: v.$font-primary;
+    font-family: var(--font-primary);
     font-optical-sizing: auto;
     letter-spacing: -.15px;
     transition: font-variation-settings 500ms v.$easing-spring;
@@ -70,7 +70,7 @@
 * Generate badge tonal background colors
 */
 @mixin container-tonal($tonal, $color, $isDark, $isBordered, $prefix) {
-  $mix-color: var(--theme-on-primary-inverse);
+  $mix-color: var(--theme-on-background-inverse);
   $mix-intensity: 70%;
   $isDark: false !default;
   $isBordered: false !default;
@@ -174,7 +174,7 @@
 * Generate button tonal states
 */
 @mixin btn-tonal($tonal, $color, $isDark) {
-  $mix-color: var(--theme-on-primary-inverse);
+  $mix-color: var(--theme-on-background-inverse);
   $mix-intensity: 70%;
   $isDark: false !default;
 
@@ -263,9 +263,10 @@
   }
 }
 
-/*
-* Color tones
+/**
+* Color tones 
 * Generate colors tones method using color-mix() css function
+* @author Giancarlos Garza
 */
 
 // Light tones
@@ -279,77 +280,96 @@
     --theme-surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
     --theme-surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
     --theme-surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
-
-    /* surfaces darker */
-    --theme-surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 60%);
-    --theme-surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 50%);
-    --theme-surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 40%);
+    --theme-surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 60%);
+    --theme-surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 50%);
+    --theme-surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 40%);
 
     /* surfaces states */
-    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-primary-container), var(--theme-muted-a10) 20%);
+    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-background-inverse), var(--theme-muted-a10) 20%);
 
     /* primaries */
-    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 15%);
-    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 20%);
-    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 25%);
-
-    /* primaries darker */
-    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 80%);
+    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 15%);
+    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 20%);
+    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 25%);
+    --theme-primary-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 35%);
+    --theme-primary-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 45%);
+    --theme-primary-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 55%);
+    --theme-primary-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 65%);
+    --theme-primary-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 75%);
+    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 80%);
 
     /* primaries states */
     --theme-primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
 
     /* secondaries */
-    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 5%);
-    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 10%);
-    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 15%);
-
-    /* secondaries darker */
-    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 80%);
+    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 5%);
+    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 10%);
+    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 15%);
+    --theme-secondary-a40: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 25%);
+    --theme-secondary-a50: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 35%);
+    --theme-secondary-a60: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 45%);
+    --theme-secondary-a70: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 55%);
+    --theme-secondary-a80: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 65%);
+    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 80%);
 
     /* accents */
-    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 5%);
-    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 10%);
-    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 15%);
-
-    /* accent darker */
-    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 80%);
+    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 5%);
+    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 10%);
+    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 15%);
+    --theme-accent-a40: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 25%);
+    --theme-accent-a50: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 35%);
+    --theme-accent-a60: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 45%);
+    --theme-accent-a70: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 55%);
+    --theme-accent-a80: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 65%);
+    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 80%);
   }
 }
 
 @mixin semantic-light-tones() {
   @supports (color: color-mix(in srgb, white, gray)) {
     /* success */
-    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 15%);
-    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 20%);
-    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 25%);
-
-    /* success darker */
-    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 80%);
+    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 15%);
+    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 20%);
+    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 25%);
+    --theme-success-a40: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 35%);
+    --theme-success-a50: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 45%);
+    --theme-success-a60: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 55%);
+    --theme-success-a70: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 65%);
+    --theme-success-a80: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 75%);
+    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 80%);
 
     /* warning */
-    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 15%);
-    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 20%);
-    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 25%);
-
-    /* warning darker */
-    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 80%);
+    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 15%);
+    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 20%);
+    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 25%);
+    --theme-warning-a40: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 35%);
+    --theme-warning-a50: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 45%);
+    --theme-warning-a60: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 55%);
+    --theme-warning-a70: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 65%);
+    --theme-warning-a80: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 75%);
+    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 80%);
 
     /* danger */
-    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 15%);
-    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 20%);
-    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 25%);
-
-    /* danger darker */
-    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 80%);
+    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 15%);
+    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 20%);
+    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 25%);
+    --theme-danger-a40: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 35%);
+    --theme-danger-a50: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 45%);
+    --theme-danger-a60: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 55%);
+    --theme-danger-a70: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 65%);
+    --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 75%);
+    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 80%);
 
     /* muted */
-    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 15%);
-    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 20%);
-    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 25%);
-
-    /* muted darker */
-    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 80%);
+    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 15%);
+    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 20%);
+    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 25%);
+    --theme-muted-a40: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 35%);
+    --theme-muted-a50: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 45%);
+    --theme-muted-a60: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 55%);
+    --theme-muted-a70: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 65%);
+    --theme-muted-a80: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 75%);
+    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 80%);
   }
 }
 
@@ -364,77 +384,96 @@
     --theme-surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
     --theme-surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
     --theme-surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
-
-    /* surfaces lighter */
     --theme-surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 60%);
     --theme-surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 50%);
     --theme-surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 40%);
 
     /* surfaces states */
-    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-primary-container), var(--theme-muted-a10) 30%);
+    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-background-inverse), var(--theme-muted-a10) 30%);
 
     /* primaries */
-    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 5%);
-    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 10%);
-    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary-inverse) 15%);
-
-    /* primaries lighter */
-    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-primary) 50%);
+    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 5%);
+    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 10%);
+    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 15%);
+    --theme-primary-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 25%);
+    --theme-primary-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 35%);
+    --theme-primary-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 45%);
+    --theme-primary-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 55%);
+    --theme-primary-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 65%);
+    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 50%);
 
     /* primaries states */
     --theme-primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
 
     /* secondaries */
-    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 5%);
-    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 10%);
-    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary-inverse) 15%);
-
-    /* secondaries lighter */
-    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-primary) 50%);
+    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 5%);
+    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 10%);
+    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 15%);
+    --theme-secondary-a40: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 25%);
+    --theme-secondary-a50: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 35%);
+    --theme-secondary-a60: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 45%);
+    --theme-secondary-a70: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 55%);
+    --theme-secondary-a80: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 65%);
+    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 50%);
 
     /* accents */
-    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 5%);
-    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 10%);
-    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary-inverse) 15%);
-
-    /* accent lighter */
-    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-primary) 50%);
+    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 5%);
+    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 10%);
+    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 15%);
+    --theme-accent-a40: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 25%);
+    --theme-accent-a50: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 35%);
+    --theme-accent-a60: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 45%);
+    --theme-accent-a70: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 55%);
+    --theme-accent-a80: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 65%);
+    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 50%);
   }
 }
 
 @mixin semantic-dark-tones() {
   @supports (color: color-mix(in srgb, black, gray)) {
     /* success */
-    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 5%);
-    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 10%);
-    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 15%);
-
-    /* success lighter */
-    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-primary) 50%);
+    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 5%);
+    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 10%);
+    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 15%);
+    --theme-success-a40: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 25%);
+    --theme-success-a50: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 35%);
+    --theme-success-a60: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 45%);
+    --theme-success-a70: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 55%);
+    --theme-success-a80: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 65%);
+    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 50%);
 
     /* warning */
-    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 5%);
-    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 10%);
-    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 15%);
-
-    /* warning lighter */
-    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-primary) 50%);
+    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 5%);
+    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 10%);
+    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 15%);
+    --theme-warning-a40: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 25%);
+    --theme-warning-a50: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 35%);
+    --theme-warning-a60: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 45%);
+    --theme-warning-a70: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 55%);
+    --theme-warning-a80: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 65%);
+    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 50%);
 
     /* danger */
-    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 5%);
-    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 10%);
-    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 15%);
-
-    /* danger lighter */
-    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-primary) 50%);
+    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 5%);
+    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 10%);
+    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 15%);
+    --theme-danger-a40: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 25%);
+    --theme-danger-a50: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 35%);
+    --theme-danger-a60: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 45%);
+    --theme-danger-a70: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 55%);
+    --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 65%);
+    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 50%);
 
     /* muted */
-    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 5%);
-    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 10%);
-    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 15%);
-
-    /* muted lighter */
-    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-primary) 50%);
+    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 5%);
+    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 10%);
+    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 15%);
+    --theme-muted-a40: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 25%);
+    --theme-muted-a50: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 35%);
+    --theme-muted-a60: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 45%);
+    --theme-muted-a70: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 55%);
+    --theme-muted-a80: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 65%);
+    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 50%);
   }
 }
 

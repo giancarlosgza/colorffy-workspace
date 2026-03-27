@@ -13,7 +13,7 @@
   .progress {
     --_progress-bg-color: var(--theme-surface-container-high);
     --_progress-color: var(--theme-primary-a10);
-    --_progress-on-bg-color: var(--theme-on-primary-container);
+    --_progress-on-bg-color: var(--theme-on-primary);
     --_progress-height: 0.85rem;
     --_progress-radius: #{v.$rounded-md};
     --_progress-easing-in: #{v.$easing-in-fallback};
@@ -48,15 +48,12 @@
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
-
       width: var(--_progress-width, 50%);
       max-width: 100%;
       height: var(--_progress-height);
-
       text-align: center;
       white-space: nowrap;
       color: var(--_progress-on-bg-color);
-
       background-color: var(--_progress-bg-color);
       border-radius: inherit;
       transition: width var(--_progress-easing-duration) var(--_progress-easing-in);
@@ -85,7 +82,6 @@
     position: relative;
     display: flex;
     margin-bottom: .75rem;
-
     width: var(--_progress-spinner-size);
     height: var(--_progress-spinner-size);
 
@@ -215,7 +211,7 @@
 
       & p {
         mix-blend-mode: luminosity;
-        color: var(--theme-on-primary-inverse);
+        color: var(--theme-on-background-inverse);
       }
     }
 

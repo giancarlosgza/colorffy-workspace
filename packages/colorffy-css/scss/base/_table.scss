@@ -24,7 +24,7 @@
    */
   .table {
     --_table-bg-color: var(--theme-surface-container);
-    --_table-color: var(--theme-on-primary);
+    --_table-color: var(--theme-on-background);
     --_table-border-color: var(--theme-outline-surface);
     --_table-border-width: #{v.$border-sm};
     --_table-gutter-x: 0.55rem;
@@ -45,7 +45,7 @@
         th {
           font-size: var(--fs-sm-500);
           font-weight: v.$fw-600;
-          font-family: v.$font-primary;
+          font-family: var(--font-primary);
           color: var(--theme-muted-a10);
           letter-spacing: 0.0727em;
           text-align: start;

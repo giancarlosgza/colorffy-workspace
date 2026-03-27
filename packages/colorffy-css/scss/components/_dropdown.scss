@@ -19,7 +19,7 @@
 
   .v-popper__popper {
     --_dropdown-bg-color: var(--theme-surface-overlay);
-    --_dropdown-color: var(--theme-on-primary);
+    --_dropdown-color: var(--theme-on-background);
     --_dropdown-padding: 4px;
     --_dropdown-shadow: var(--shadow-lg);
     --_dropdown-radius: #{v.$rounded-lg};
@@ -55,7 +55,7 @@
           & kbd {
             background-color: var(--theme-surface-kbd);
             border: v.$border-sm solid var(--theme-surface-kbd);
-            color: var(--theme-on-primary-inverse);
+            color: var(--theme-on-background-inverse);
             font-weight: v.$fw-800;
           }
 
@@ -82,7 +82,7 @@
                 border: none;
                 border-radius: calc(var(--_dropdown-radius) / 2);
 
-                font-family: v.$font-primary;
+                font-family: var(--font-primary);
                 font-size: var(--fs-sm-400);
                 text-align: start;
 
@@ -104,7 +104,7 @@
                   display: inline-block;
                   letter-spacing: 0.45px;
                   font-weight: v.$fw-700;
-                  font-family: v.$font-primary;
+                  font-family: var(--font-primary);
 
                   &:is(:hover, :focus, :active) {
                     background-color: inherit;
@@ -140,7 +140,7 @@
 
                 &:is(.v-active) {
                   background-color: var(--theme-surface-container-highest);
-                  color: var(--theme-on-primary);
+                  color: var(--theme-on-background);
                   font-weight: v.$fw-700;
 
                   & i {
@@ -163,12 +163,12 @@
                 // States
                 &:is(:hover) {
                   background-color: var(--theme-surface-container-high);
-                  color: var(--theme-on-primary);
+                  color: var(--theme-on-background);
                 }
 
                 &:is(:focus, :active, .active) {
                   background-color: var(--theme-surface-container-highest);
-                  color: var(--theme-on-primary);
+                  color: var(--theme-on-background);
                 }
               }
 

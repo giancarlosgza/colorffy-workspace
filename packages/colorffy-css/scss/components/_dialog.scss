@@ -46,8 +46,8 @@
 
         :where(p) {
           &:is(.dialog-title) {
-            color: var(--theme-on-primary);
-            font-family: v.$font-primary;
+            color: var(--theme-on-background);
+            font-family: var(--font-primary);
             font-weight: v.$fw-700;
             font-size: var(--fs-600);
             margin-bottom: .25rem;
@@ -71,17 +71,17 @@
         overflow-y: auto;
         overflow-x: hidden;
         margin-block: calc(var(--_dialog-gutter) * 1);
-        color: var(--theme-on-primary);
+        color: var(--theme-on-background);
 
         & p {
           :not(.alert, .badge) {
-            color: var(--theme-on-primary);
+            color: var(--theme-on-background);
           }
 
           &:is(.dialog-highlight) {
             position: relative;
             padding-left: .75rem;
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             font-weight: v.$fw-800;
             margin-block: 1.25rem;
 
@@ -269,7 +269,7 @@
 
         & p:not(.text-muted) {
           font-size: var(--fs-500);
-          font-family: v.$font-primary;
+          font-family: var(--font-primary);
           font-weight: v.$fw-700;
           line-height: 1.35;
           margin-bottom: 1rem;
@@ -311,7 +311,7 @@
             padding: 15px;
             font-size: var(--fs-400);
             border-radius: v.$rounded-lg;
-            color: var(--theme-on-primary-container);
+            color: var(--theme-on-primary);
             background-color: var(--theme-primary-a10);
 
             @extend .mask-shape !optional;

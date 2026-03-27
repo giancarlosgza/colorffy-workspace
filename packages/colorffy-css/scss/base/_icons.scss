@@ -66,12 +66,12 @@
     // Surface
     &.icon-wrap-default {
       --_icon-wrap-bg-color: var(--theme-surface-container);
-      --_icon-wrap-color: var(--theme-on-primary);
+      --_icon-wrap-color: var(--theme-on-background);
     }
 
     &.icon-wrap-outline {
       --_icon-wrap-bg-color: transparent;
-      --_icon-wrap-color: var(--theme-on-primary);
+      --_icon-wrap-color: var(--theme-on-background);
       --_icon-wrap-border-size: #{v.$border-sm};
       --_icon-wrap-border-color: var(--theme-outline-surface);
 
@@ -80,7 +80,7 @@
 
     &.icon-wrap-surface {
       --_icon-wrap-bg-color: var(--theme-surface-body-pane);
-      --_icon-wrap-color: var(--theme-on-primary);
+      --_icon-wrap-color: var(--theme-on-background);
     }
 
     // Gradient

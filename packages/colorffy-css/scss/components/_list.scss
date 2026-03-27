@@ -5,10 +5,10 @@
   .list-group {
     --_list-group-item-bg-color: var(--theme-surface-container);
     --_list-group-item-border-color: transparent;
-    --_list-group-item-color: var(--theme-on-primary);
+    --_list-group-item-color: var(--theme-on-background);
     --_list-group-item-color-subtitle: var(--theme-muted-a10);
     --_list-group-item-icon-bg-color: var(--theme-surface-container-lowest);
-    --_list-group-item-icon-color: var(--theme-on-primary);
+    --_list-group-item-icon-color: var(--theme-on-background);
     --_list-group-item-radius: #{v.$rounded-md};
 
     display: grid;
@@ -56,7 +56,7 @@
         // Text
         & p {
           &:is(.subtitle-1) {
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             font-weight: v.$fw-600;
             font-size: var(--fs-sm-400);
             color: var(--_list-group-item-color);
@@ -93,7 +93,7 @@
         --_list-group-item-bg-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
         --_list-group-item-border-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
         --_list-group-item-icon-bg-color: var(--theme-primary-a90);
-        --_list-group-item-icon-color: var(--theme-on-primary-inverse);
+        --_list-group-item-icon-color: var(--theme-on-background-inverse);
 
         z-index: 2;
         border-width: v.$border-md;

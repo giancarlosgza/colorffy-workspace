@@ -11,7 +11,7 @@
     --_drawer-gutter: calc(#{v.$space-1} - 6px);
     --_discrete: allow-discrete;
     --_drawer-bg-color: var(--theme-background);
-    --_drawer-color: var(--theme-on-primary);
+    --_drawer-color: var(--theme-on-background);
 
     container: DrawerContainer / inline-size;
     position: sticky;
@@ -130,7 +130,7 @@
           gap: var(--_drawer-gutter);
           font-size: var(--fs-sm-400);
           font-weight: v.$fw-500;
-          font-family: v.$font-primary;
+          font-family: var(--font-primary);
           border-radius: v.$button-border-radius;
           padding: .5rem;
           letter-spacing: 0.55px;
@@ -264,7 +264,7 @@
           gap: 0;
 
           & .drawer-dropdown-title {
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             font-size: var(--fs-sm-100);
             font-weight: v.$fw-800;
           }

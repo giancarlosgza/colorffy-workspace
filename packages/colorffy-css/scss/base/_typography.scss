@@ -14,7 +14,7 @@
     font-weight: v.$fw-500;
     font-style: normal;
     line-height: 1.2;
-    color: var(--theme-on-primary);
+    color: var(--theme-on-background);
   }
 
   // Type scale system
@@ -180,7 +180,7 @@
     font-weight: map.get(v.$type-label, font-weight);
     font-size: map.get(v.$type-label, font-size);
     letter-spacing: map.get(v.$type-label, letter-spacing);
-    color: var(--theme-on-primary);
+    color: var(--theme-on-background);
     margin-bottom: .75rem;
   }
 

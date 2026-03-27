@@ -28,7 +28,7 @@
         kbd {
           background-color: var(--theme-surface-kbd);
           border: v.$border-sm solid var(--theme-surface-kbd);
-          color: var(--theme-on-primary-inverse);
+          color: var(--theme-on-background-inverse);
           font-weight: v.$fw-800;
         }
       }

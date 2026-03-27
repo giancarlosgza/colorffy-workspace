@@ -36,7 +36,7 @@
 
   .p-multiselect-overlay {
     --p-multiselect-overlay-background: var(--theme-surface-overlay);
-    --p-multiselect-overlay-color: var(--theme-on-primary);
+    --p-multiselect-overlay-color: var(--theme-on-background);
     --p-multiselect-overlay-border-color: var(--theme-outline-surface);
     --p-multiselect-overlay-border-radius: #{v.$form-border-radius};
     --p-multiselect-overlay-shadow: var(--shadow-md);
@@ -59,7 +59,7 @@
         --p-iconfield-icon-color: var(--theme-muted-a10);
 
         & .p-inputtext {
-          --p-inputtext-color: var(--theme-on-primary);
+          --p-inputtext-color: var(--theme-on-background);
           --p-inputtext-background: transparent;
           --p-inputtext-border-color: transparent;
           --p-inputtext-padding-y: .35rem;
@@ -92,7 +92,7 @@
         .p-multiselect-option {
           --p-multiselect-option-gap: .25rem;
           --p-multiselect-option-padding: .35rem;
-          --p-multiselect-option-color: var(--theme-on-primary);
+          --p-multiselect-option-color: var(--theme-on-background);
           --p-multiselect-option-border-radius: #{v.$rounded-sm};
 
           // Remove the checkbox from the multiselect options
@@ -153,7 +153,7 @@
 
   .p-select-overlay {
     --p-select-overlay-background: var(--theme-surface-overlay);
-    --p-select-overlay-color: var(--theme-on-primary);
+    --p-select-overlay-color: var(--theme-on-background);
     --p-select-overlay-border-color: var(--theme-outline-surface);
     --p-select-overlay-border-radius: #{v.$form-border-radius};
     --p-select-overlay-shadow: var(--shadow-md);
@@ -169,7 +169,7 @@
         --p-iconfield-icon-color: var(--theme-muted-a10);
 
         & .p-inputtext {
-          --p-inputtext-color: var(--theme-on-primary);
+          --p-inputtext-color: var(--theme-on-background);
           --p-inputtext-background: transparent;
           --p-inputtext-border-color: transparent;
           --p-inputtext-padding-y: .35rem;
@@ -194,7 +194,7 @@
         .p-select-option {
           --p-select-option-gap: .25rem;
           --p-select-option-padding: .35rem;
-          --p-select-option-color: var(--theme-on-primary);
+          --p-select-option-color: var(--theme-on-background);
           --p-select-option-border-radius: #{v.$rounded-sm};
 
           &:is(:hover) {
@@ -203,7 +203,7 @@
 
           &.p-select-option-selected {
             --p-select-option-selected-background: var(--theme-surface-container-highest);
-            --p-select-option-selected-color: var(--theme-on-primary);
+            --p-select-option-selected-color: var(--theme-on-background);
 
             &.p-focus {
               --p-select-option-selected-focus-background: var(--theme-surface-container-high);
@@ -281,11 +281,11 @@
           flex: 1 1 auto;
 
           p {
-            color: var(--theme-on-primary-inverse);
+            color: var(--theme-on-background-inverse);
 
             &.subtitle-1 {
               font-weight: v.$fw-800;
-              font-family: v.$font-secondary;
+              font-family: var(--font-secondary);
               font-size: var(--fs-500);
               margin-bottom: var(--_margin);
             }
@@ -302,7 +302,7 @@
       }
 
       .p-toast-icon-close {
-        fill: var(--theme-on-primary-inverse);
+        fill: var(--theme-on-background-inverse);
       }
     }
   }
@@ -327,10 +327,10 @@
       display: flex;
 
       .p-dialog-title {
-        font-family: v.$font-secondary;
+        font-family: var(--font-secondary);
         font-weight: v.$fw-800;
         font-size: var(--fs-500);
-        color: var(--theme-on-primary);
+        color: var(--theme-on-background);
         margin-bottom: 0;
       }
 
@@ -426,12 +426,12 @@
         border-color: var(--theme-success-a10);
 
         &:before {
-          background-color: var(--theme-on-primary-inverse);
+          background-color: var(--theme-on-background-inverse);
           translate: 1.15rem 0;
           width: 1.25rem;
           height: 1.25rem;
           content: 'check';
-          font-family: v.$font-icons;
+          font-family: var(--font-icons);
           font-variation-settings: var(--iw-semi-bold);
           color: var(--theme-success-a10);
         }

@@ -10,7 +10,7 @@
 
     & .accordion {
       --_accordion-bg-color: var(--theme-surface-accordion);
-      --_accordion-color: var(--theme-on-primary);
+      --_accordion-color: var(--theme-on-background);
       --_accordion-radius: #{v.$rounded-lg};
       --_accordion-border-color: transparent;
       --_accordion-padding: 0.85rem;
@@ -67,7 +67,7 @@
           .accordion-title {
             font-size: var(--fs-sm-200);
             font-weight: v.$fw-700;
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             color: var(--_accordion-color);
             line-height: 1.5;
             margin-bottom: 0;

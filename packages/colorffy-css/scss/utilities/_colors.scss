@@ -32,11 +32,15 @@
   }
 
   .text-white {
-    @include m.text-color(v.$white);
+    @include m.text-color(var(--color-brand-white-500));
+  }
+
+  .text-black {
+    @include m.text-color(var(--color-brand-black-500));
   }
 
   .text-dark {
-    @include m.text-color(v.$black);
+    @include m.text-color(var(--color-brand-dark-500));
   }
 
   // Emphasis text colors
@@ -135,23 +139,23 @@
   }
 
   .text-on-success {
-    @include m.text-color(v.$black);
+    @include m.text-color(var(--theme-on-success));
   }
 
   .text-on-warning {
-    @include m.text-color(v.$black);
+    @include m.text-color(var(--theme-on-warning));
   }
 
   .text-on-danger {
-    @include m.text-color(var(--theme-on-primary-inverse));
+    @include m.text-color(var(--theme-on-danger));
   }
 
   .text-on-body {
-    @include m.text-color(var(--theme-on-primary));
+    @include m.text-color(var(--theme-on-background));
   }
 
   .text-on-body-inverse {
-    @include m.text-color(var(--theme-on-primary-inverse));
+    @include m.text-color(var(--theme-on-background-inverse));
   }
 
   .text-link {

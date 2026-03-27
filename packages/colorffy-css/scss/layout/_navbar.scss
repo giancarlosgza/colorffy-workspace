@@ -42,7 +42,7 @@
   // Top navbar
   .navbar {
     --_nav-bg-color: var(--theme-background);
-    --_nav-color: var(--theme-on-primary);
+    --_nav-color: var(--theme-on-background);
     --_nav-shadow: none;
     --_nav-gutter-x: 0;
     --_nav-gutter-y: 0.5rem;
@@ -82,7 +82,7 @@
 
       span, a {
         font-size: var(--fs-sm-100);
-        font-family: v.$font-secondary;
+        font-family: var(--font-secondary);
         font-weight: v.$fw-800;
         line-height: 0;
         color: inherit;
@@ -93,15 +93,6 @@
         width: 100%;
         max-width: 50px;
         max-height: 50px;
-
-        &:is(.img-seasonal) {
-          position: absolute;
-          top: -20px;
-          left: -10px;
-          transform: rotateX(0deg) rotateY(180deg) rotateZ(25deg);
-          max-width: 28px;
-          max-height: 28px;
-        }
       }
 
       &:is(:hover) {
@@ -122,10 +113,9 @@
       .page-title {
         font-size: var(--fs-sm-100);
         font-weight: v.$fw-600;
-        color: var(--theme-on-primary);
+        color: var(--theme-on-background);
         letter-spacing: .5px;
         margin-bottom: 0;
-
         opacity: 0;
         visibility: hidden;
         translate: 0 .5rem;
@@ -145,10 +135,6 @@
     & .navbar-sm-avatar-wrapper {
       display: none;
       position: relative;
-
-      & i:is(.avatar-pro-icon) {
-        @include m.absolute-icon(5px, 25px)
-      }
     }
 
     // Avatar for mobile screens
@@ -189,12 +175,10 @@
             display: block;
             border-radius: calc(var(--_nav-radius) + 0.5rem);
             padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
-
             background-color: transparent;
             color: var(--theme-muted-a10);
             border: v.$border-sm solid transparent;
-
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             font-size: 14px;
             font-weight: v.$fw-600;
             text-transform: none;
@@ -223,6 +207,7 @@
               opacity: 0.65;
             }
 
+            // Nuxt and Vue Router active link
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
               font-weight: v.$fw-800;
               padding-inline: v.$space-1;
@@ -238,37 +223,15 @@
               gap: .5rem;
             }
 
-            &:has(i) {
-              position: relative;
-
-              & > i:not(.avatar-pro-icon) {
-                position: absolute;
-                top: 0.30lh;
-                right: -13.5px;
-              }
-            }
-
+            // Use cases links
             &:is(.avatar-link) {
               position: relative;
               cursor: pointer;
-
-              i:is(.avatar-pro-icon) {
-                @include m.absolute-icon(2px, 30px)
-              }
             }
 
             &:is(.button-link) {
               background-color: var(--theme-primary-a10);
-              color: var(--theme-on-primary-container);
-            }
-
-            &:is(.upgrade-link) {
-              & .nav-upgrade-icon {
-                @include m.absolute-icon(.25rem, 35px);
-                left: unset;
-                right: .25rem;
-                font-size: 10px;
-              }
+              color: var(--theme-on-primary);
             }
           }
 
@@ -278,6 +241,9 @@
 
             & .nav-link {
               & i {
+                position: absolute;
+                top: .5rem;
+                right: -.75rem;
                 font-size: var(--fs-500);
                 color: var(--theme-muted-a10);
               }
@@ -355,7 +321,7 @@
     padding-bottom: var(--_navigation-bar-padding-bottom);
 
     background-color: var(--_navigation-bar-bg-color);
-    color: var(--theme-on-primary);
+    color: var(--theme-on-background);
     box-shadow: var(--shadow-md);
     z-index: v.$z-index-navigation;
 
@@ -392,7 +358,7 @@
         p {
           position: relative;
           font-size: var(--_navigation-bar-font-size);
-          font-family: v.$font-primary;
+          font-family: var(--font-primary);
           margin-bottom: 0;
           font-weight: v.$fw-500;
           z-index: 11;
@@ -499,7 +465,7 @@
       overflow-y: auto;
 
       background-color: var(--theme-surface-overlay);
-      color: var(--theme-on-primary);
+      color: var(--theme-on-background);
       box-shadow: var(--shadow-xl);
       border-radius: v.$dialog-border-radius;
       z-index: v.$z-index-menu;
@@ -536,8 +502,8 @@
 
           &.subtitle-1 {
             font-weight: v.$fw-800;
-            font-family: v.$font-secondary;
-            color: var(--theme-on-primary);
+            font-family: var(--font-secondary);
+            color: var(--theme-on-background);
             margin-bottom: 0;
           }
 
@@ -579,7 +545,7 @@
           @extend .undecorated;
 
           & p {
-            font-family: v.$font-secondary;
+            font-family: var(--font-secondary);
             font-size: var(--fs-sm-400);
             color: var(--theme-muted-a10);
 
@@ -789,7 +755,7 @@
 
               & p {
                 &:is(.subtitle-1) {
-                  color: var(--theme-on-primary);
+                  color: var(--theme-on-background);
 
                   // Arrow icon
                   & i {
@@ -888,7 +854,7 @@
         & p {
           &:is(.subtitle-1) {
             font-size: var(--fs-sm-300);
-            font-family: v.$font-primary;
+            font-family: var(--font-primary);
             font-weight: v.$fw-700;
             margin-bottom: 0.25rem;
           }

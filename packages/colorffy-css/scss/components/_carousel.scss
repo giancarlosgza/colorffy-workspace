@@ -13,7 +13,7 @@
     &::scroll-button(*) {
       position: fixed;
       position-anchor: --carousel;
-      font-family: v.$font-icons;
+      font-family: var(--font-icons);
       font-size: 16px;
       inline-size: 44px;
       aspect-ratio: 1;
@@ -22,7 +22,7 @@
       place-content: center;
       border-color: transparent;
       background: var(--theme-surface-body-pane);
-      color: var(--theme-on-primary);
+      color: var(--theme-on-background);
       box-shadow: var(--shadow-sm);
       border-radius: v.$rounded-full;
     }

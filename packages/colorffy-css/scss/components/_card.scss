@@ -6,7 +6,7 @@
     --_card-gutter-x: 1rem;
     --_card-gutter-y: 1rem;
     --_card-bg-color: var(--theme-surface-a0);
-    --_card-color: var(--theme-on-primary);
+    --_card-color: var(--theme-on-background);
     --_card-border: #{v.$border-sm};
     --_card-border-color: transparent;
     --_card-radius: #{v.$card-border-radius};
@@ -34,7 +34,7 @@
       .card-title {
         font-size: var(--fs-600);
         font-weight: v.$fw-700;
-        font-family: v.$font-secondary;
+        font-family: var(--font-secondary);
         margin-bottom: 0;
       }
 

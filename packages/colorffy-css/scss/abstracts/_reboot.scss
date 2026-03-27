@@ -12,7 +12,7 @@
       &:focus-visible {
         transition: outline-offset 75ms ease-out;
         outline-offset: .2rem;
-        outline: var(--theme-on-primary) auto;
+        outline: var(--theme-on-background) auto;
       }
 
       &:not(:active):focus-visible {
@@ -22,7 +22,7 @@
 
     &:not(:active):focus-visible {
       outline-offset: .3rem;
-      outline: var(--theme-on-primary) auto;
+      outline: var(--theme-on-background) auto;
     }
   }
 
@@ -47,14 +47,11 @@
   // Sections
   body {
     margin: 0;
-
-    font-family: v.$font-secondary;
+    font-family: var(--font-secondary);
     font-weight: v.$fw-400;
-
-    color: var(--theme-on-primary);
+    color: var(--theme-on-background);
     background-color: var(--theme-background);
     font-size: 14px;
-
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
 
