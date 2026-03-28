@@ -1,26 +1,24 @@
+import type { IBaseLinkProps } from '@/types/shared'
+
 /**
- * Interface for navigation items used in NavigationBar component.
+ * Shared interface for navigation and menu items.
+ * Used across NavigationBar, PopoverMenu, and other navigation components.
  */
-export interface INavigationItem {
+export interface INavItem extends IBaseLinkProps {
   /**
-   * Unique identifier for the navigation item.
+   * Unique identifier for the item.
    */
   id: string
 
   /**
-   * Navigation destination. Can be a string path or router object.
+   * Navigation destination. Required for navigation items.
    */
   to: string | object
 
   /**
-   * Material icon code for the navigation item.
+   * Material icon code for the item.
    */
   icon: string
-
-  /**
-   * Display text label for the navigation item.
-   */
-  text: string
 
   /**
    * ARIA label for accessibility.
@@ -30,19 +28,21 @@ export interface INavigationItem {
 
 /**
  * Interface props for the NavigationBar component.
- * Notes:
- * - Use `items` to define navigation links with icons and labels.
- * - Use `frosted` or `island` for different visual styles.
- * - Use `indicatorTab` or `indicatorFrosted` for active item indicators.
+ * @deprecated Use INavItem for individual items.
+ */
+export interface INavigationItem extends INavItem {}
+
+/**
+ * Interface props for the NavigationBar component.
  */
 export interface INavigationBarProps {
   /**
    * Array of navigation items to display.
    */
-  items?: INavigationItem[]
+  items?: INavItem[]
 
   /**
-   * Currently active navigation item path.
+   * Currently active navigation item identifier or path.
    */
   activeItem?: string | null
 
@@ -74,7 +74,7 @@ export interface INavigationBarProps {
 }
 
 /**
- * Interface for tab items used in Tabs component.
+ * Base interface for tab-like items.
  */
 export interface ITabItem {
   /**
@@ -91,17 +91,7 @@ export interface ITabItem {
 /**
  * Interface for segmented tab items used in SegmentedControls component.
  */
-export interface ISegmentedTab {
-  /**
-   * Unique identifier for the tab.
-   */
-  id: string
-
-  /**
-   * Display label for the tab.
-   */
-  label: string
-
+export interface ISegmentedTab extends ITabItem {
   /**
    * Numerical position of the tab for the indicator offset calculation.
    */
@@ -118,18 +108,13 @@ export interface ISegmentedControlsProps {
   tabs: ISegmentedTab[]
 
   /**
-   * The id of the tab that should be active. If not provided, defaults to the first tab.
+   * The id of the tab that should be active.
    */
   activeTab?: string
 }
 
 /**
  * Interface props for the Tabs component.
- * Notes:
- * - Use `tabs` to define the tab items.
- * - Use `pillTabs` for pill-styled tabs.
- * - Use `contrastTabs` for contrast variant styling.
- * - Use `activeTab` to set the initially active tab by id.
  */
 export interface ITabsProps {
   /**
@@ -148,15 +133,15 @@ export interface ITabsProps {
   contrastTabs?: boolean
 
   /**
-   * The id of the tab that should be active. If not provided, defaults to the first tab.
+   * The id of the tab that should be active.
    */
   activeTab?: string
 }
 
 /**
- * Interface for the Tabs component emits.
+ * Shared interface for tab-related emits.
  */
-export interface ITabsEmits {
+export interface ITabEmits {
   /**
    * Emitted when a tab is selected.
    */
@@ -164,44 +149,16 @@ export interface ITabsEmits {
 }
 
 /**
- * Interface for the SegmentedControls component emits.
+ * Aliases for specific component emits to maintain compatibility.
  */
-export interface ISegmentedControlsEmits {
-  /**
-   * Emitted when a tab is selected.
-   */
-  (e: 'updateActiveTab', tabId: string): void
-}
+export interface ITabsEmits extends ITabEmits {}
+export interface ISegmentedControlsEmits extends ITabEmits {}
 
 /**
  * Interface for menu items used in PopoverMenu component.
+ * @deprecated Use INavItem instead.
  */
-export interface IMenuItem {
-  /**
-   * Unique identifier for the menu item.
-   */
-  id: string
-
-  /**
-   * Navigation destination. Can be a string path or router object.
-   */
-  to: string | object
-
-  /**
-   * Material icon code for the menu item.
-   */
-  icon: string
-
-  /**
-   * Display text label for the menu item.
-   */
-  text: string
-
-  /**
-   * ARIA label for accessibility.
-   */
-  ariaLabel: string
-}
+export interface IMenuItem extends INavItem {}
 
 /**
  * Interface props for the PopoverMenu component.
@@ -215,7 +172,7 @@ export interface IPopoverMenuProps {
   /**
    * Array of menu items to display.
    */
-  menuItems?: IMenuItem[]
+  menuItems?: INavItem[]
 
   /**
    * Current route object for active state checking.
@@ -269,7 +226,7 @@ export interface IPopoverMenuEmits {
 }
 
 /**
- * Internal interface for user metadata mapping in the menu.
+ * Interface for user metadata mapping in the menu.
  */
 export interface IUserData {
   displayName: string | null

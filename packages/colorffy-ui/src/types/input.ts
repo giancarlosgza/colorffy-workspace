@@ -1,29 +1,15 @@
-/**
- * Type for input variants.
- */
-export type InputVariant = 'filled' | 'outline' | 'transparent' | null
+import type { IBaseInputProps } from '@/types/shared'
 
 /**
  * Interface props for the TextInput component.
  */
-export interface ITextInputProps {
-  id?: string | null
-  label?: string | null
+export interface ITextInputProps extends IBaseInputProps {
   modelValue?: string | number | null
-  errorMessages?: string[]
   type?: string
   maxlength?: string | number
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
-  readonly?: boolean
   autofocus?: boolean
-  optionalLabel?: boolean
   min?: number | null
   max?: number | null
-  variant?: InputVariant
-  rounded?: boolean
-  customClass?: string | null
 }
 
 /**
@@ -37,24 +23,13 @@ export interface ITextInputEmits {
 /**
  * Interface props for the TextareaInput component.
  */
-export interface ITextareaInputProps {
-  id?: string | null
-  label?: string | null
+export interface ITextareaInputProps extends IBaseInputProps {
   modelValue?: string | null
-  errorMessages?: string[]
   maxlength?: string | number
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
-  readonly?: boolean
   autofocus?: boolean
-  optionalLabel?: boolean
   rows?: number
   cols?: number
   resize?: 'none' | 'both' | 'horizontal' | 'vertical'
-  variant?: InputVariant
-  rounded?: boolean
-  customClass?: string | null
 }
 
 /**
@@ -68,21 +43,11 @@ export interface ITextareaInputEmits {
 /**
  * Interface props for the SelectInput component.
  */
-export interface ISelectInputProps {
-  id?: string | null
-  label?: string | null
+export interface ISelectInputProps extends IBaseInputProps {
   modelValue?: string | number | Record<string, unknown> | null
-  errorMessages?: string[]
   options?: any[]
   optionLabel?: string | null
   optionValue?: string | null
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
-  optionalLabel?: boolean
-  variant?: InputVariant
-  rounded?: boolean
-  customClass?: string | null
 }
 
 /**
@@ -96,19 +61,11 @@ export interface ISelectInputEmits {
 /**
  * Interface props for the RangeInput component.
  */
-export interface IRangeInputProps {
-  id?: string | null
-  label?: string | null
+export interface IRangeInputProps extends IBaseInputProps {
   min?: number
   max?: number
   step?: number
   modelValue?: string | number | null
-  errorMessages?: string[]
-  optionalLabel?: boolean
-  variant?: InputVariant
-  rounded?: boolean
-  customClass?: string | null
-  disabled?: boolean
 }
 
 /**
@@ -142,20 +99,10 @@ export interface IRadioInputEmits {
 /**
  * Interface props for the PhoneNumberInput component.
  */
-export interface IPhoneNumberInputProps {
-  id?: string | null
-  label?: string | null
+export interface IPhoneNumberInputProps extends IBaseInputProps {
   modelValue?: string | null
-  errorMessages?: string[]
   maxlength?: number
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
   autofocus?: boolean
-  optionalLabel?: boolean
-  variant?: InputVariant
-  rounded?: boolean
-  customClass?: string | null
 }
 
 /**

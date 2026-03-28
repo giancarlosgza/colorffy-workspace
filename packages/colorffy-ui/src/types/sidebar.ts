@@ -1,3 +1,5 @@
+import type { IBaseLinkProps } from '@/types/shared'
+
 export type SidebarClassName = string | string[] | Record<string, boolean>
 
 /**
@@ -42,38 +44,16 @@ export interface ISidebarEmits {
 /**
  * Interface props for the SidebarLink component.
  */
-export interface ISidebarLinkProps {
+export interface ISidebarLinkProps extends IBaseLinkProps {
   /**
    * Optional ID for the link element.
    */
   id?: string
 
   /**
-   * Link text content.
-   */
-  text?: string
-
-  /**
    * Tooltip text shown on hover.
    */
   tooltipText?: string
-
-  /**
-   * Link href (standard <a> tag).
-   */
-  href?: string
-
-  /**
-   * Link target (for router-link or NuxtLink).
-   * Can be string or route object.
-   */
-  to?: string | object
-
-  /**
-   * Material icon code for the link icon.
-   * Optional - link can be text-only without an icon.
-   */
-  icon?: string | null
 
   /**
    * Tooltip placement position.
@@ -82,36 +62,14 @@ export interface ISidebarLinkProps {
   tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
 
   /**
-   * Marks link as active (applies .active class).
-   * Useful when not using router auto-detection.
-   */
-  active?: boolean
-
-  /**
-   * Disables the link.
-   */
-  disabled?: boolean
-
-  /**
    * Marks as child/nested link (applies .drawer-item-child class with indentation).
    */
   child?: boolean
 
   /**
-   * Optional custom CSS classes to apply to the link.
-   */
-  customClass?: SidebarClassName | null
-
-  /**
    * ARIA labelledby attribute for accessibility.
    */
   ariaLabelledby?: string
-
-  /**
-   * Component to use for the link (e.g., 'a', NuxtLink, RouterLink).
-   * @default 'a'
-   */
-  as?: string | object
 }
 
 /**

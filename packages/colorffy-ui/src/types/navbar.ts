@@ -1,3 +1,5 @@
+import type { IBaseLinkProps } from '@/types/shared'
+
 export type NavbarClassName = string | string[] | Record<string, boolean>
 
 /**
@@ -25,22 +27,7 @@ export interface INavbarProps {
 /**
  * Interface props for the NavbarBrand component.
  */
-export interface INavbarBrandProps {
-  /**
-   * Brand text to display.
-   */
-  text?: string
-
-  /**
-   * Link target (for NuxtLink/router-link).
-   */
-  to?: string | object
-
-  /**
-   * Standard href for <a> tag.
-   */
-  href?: string
-
+export interface INavbarBrandProps extends IBaseLinkProps {
   /**
    * Brand logo image URL.
    */
@@ -50,17 +37,6 @@ export interface INavbarBrandProps {
    * Initials to show in avatar (if no logo).
    */
   initials?: string | null
-
-  /**
-   * Optional custom CSS classes.
-   */
-  customClass?: NavbarClassName | null
-
-  /**
-   * Component to use for the link (e.g., 'a', NuxtLink, RouterLink).
-   * @default 'a'
-   */
-  as?: string | object
 }
 
 /**
@@ -212,40 +188,4 @@ export interface INavbarItemProps {
 /**
  * Interface props for the NavbarLink component.
  */
-export interface INavbarLinkProps {
-  /**
-   * Link text content.
-   */
-  text?: string
-
-  /**
-   * Link target (for router-link or NuxtLink).
-   */
-  to?: string | object
-
-  /**
-   * Standard href for <a> tag.
-   */
-  href?: string
-
-  /**
-   * Mark link as active.
-   */
-  active?: boolean
-
-  /**
-   * Disable the link.
-   */
-  disabled?: boolean
-
-  /**
-   * Optional custom CSS classes.
-   */
-  customClass?: NavbarClassName | null
-
-  /**
-   * Component to use for the link (e.g., 'a', NuxtLink, RouterLink).
-   * @default 'a'
-   */
-  as?: string | object
-}
+export interface INavbarLinkProps extends IBaseLinkProps {}
