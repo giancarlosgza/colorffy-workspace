@@ -28,12 +28,8 @@
     padding: 1.2rem;
     border-top-right-radius: v.$rounded-xl;
     border-bottom-right-radius: v.$rounded-xl;
-
-    // Move sidebar to the right and hide it
     will-change: translate, width;
     translate: 0;
-
-    // Easing linear function transition
     transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
       translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
 
@@ -44,7 +40,7 @@
     }
 
     // Closed sidebar only with icons shown
-    &.drawer-closed {
+    &.drawer-rail {
       width: calc(var(--theme-nav-drawer-width) / 2);
       transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
         translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
@@ -363,10 +359,40 @@
     }
   }
 
+  // Overlay
+  .drawer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: color-mix(in srgb, var(--color-brand-black-500) 25%, transparent);
+    z-index: calc(#{v.$z-index-fullscreen} - 1);
+    backdrop-filter: blur(2px);
+    animation: fade-in 200ms ease-out forwards;
+  }
+
   @include m.media-query(1024) {
-    .navigation-drawer,
-    .navigation-drawer.drawer-closed {
-      display: none;
+    .drawer-overlay {
+      display: block;
+    }
+
+    .navigation-drawer {
+      position: fixed;
+      z-index: calc(#{v.$z-index-fullscreen} + 1); // To show above navbar
+      inset-block: 0;
+      left: 0;
+      margin: 0;
+      height: 100vh;
+      translate: -100% 0;
+      
+      &.drawer-rail {
+        width: var(--theme-nav-drawer-width);
+      }
+
+      &.drawer-open {
+        translate: 0 0;
+      }
     }
   }
 }

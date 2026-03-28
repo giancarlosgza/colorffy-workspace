@@ -734,8 +734,12 @@
 
   // Media queries
   @include m.media-query(1024) {
-    .sidebar-collapse {
+    .sidebar-collapse-button {
       display: none;
+
+      &.sidebar-collapse-visible-mobile {
+        display: inline-flex;
+      }
     }
   }
 
@@ -748,6 +752,10 @@
       > :where(.container, .container-fluid) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+
+        &:has(.sidebar-collapse-visible-mobile) {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
 
       & .navbar-brand {

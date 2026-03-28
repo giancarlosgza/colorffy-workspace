@@ -10,12 +10,18 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
   customClass: ''
 })
 
+/** Emits */
+const emit = defineEmits<{
+  (e: 'update:rail', value: boolean): void
+}>()
+
 /** Computed */
 const sidebarClasses = computed(() => [
   'navigation-drawer',
   {
     'drawer-bordered': props.bordered,
-    'drawer-closed': props.rail
+    'drawer-rail': props.rail,
+    'drawer-open': props.rail
   },
   props.customClass
 ])
@@ -28,6 +34,12 @@ const sidebarStyles = computed(() => {
 </script>
 
 <template>
+  <div
+    v-if="props.rail"
+    class="drawer-overlay"
+    @click="emit('update:rail', false)"
+  />
+
   <div
     :class="sidebarClasses"
     :style="sidebarStyles"

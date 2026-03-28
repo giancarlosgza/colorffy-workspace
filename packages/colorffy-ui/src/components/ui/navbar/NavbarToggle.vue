@@ -9,7 +9,8 @@ const props = withDefaults(defineProps<INavbarToggleProps>(), {
   collapsed: false,
   collapseText: 'Collapse sidebar',
   expandText: 'Expand sidebar',
-  customClass: null
+  customClass: null,
+  showToggleButton: false
 })
 
 /** Emits */
@@ -20,6 +21,13 @@ defineEmits<{
 /** Computed */
 const tooltipText = computed(() => props.collapsed ? props.expandText : props.collapseText)
 const iconCode = computed(() => props.collapsed ? '&#xf7e4;' : '&#xe9e2;')
+const toggleClasses = computed(() => [
+  'sidebar-collapse-button',
+  {
+    'sidebar-collapse-visible-mobile': props.showToggleButton
+  },
+  props.customClass
+])
 </script>
 
 <template>
@@ -29,8 +37,7 @@ const iconCode = computed(() => props.collapsed ? '&#xf7e4;' : '&#xe9e2;')
     icon
     icon-variant="compact"
     custom-class="text-neutral"
-    class="sidebar-collapse"
-    :class="customClass"
+    :class="toggleClasses"
     :tooltip-text="tooltipText"
     @click="$emit('toggle')"
   >

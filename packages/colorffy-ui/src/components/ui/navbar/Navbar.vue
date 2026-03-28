@@ -14,7 +14,10 @@ const containerClass = computed(() => props.fluid ? 'container-fluid' : 'contain
 </script>
 
 <template>
-  <component :is="sticky ? 'div' : 'nav'" :class="sticky ? 'nav-sticky' : ['navbar', customClass]">
+  <component
+    :is="sticky ? 'div' : 'nav'"
+    :class="sticky ? 'nav-sticky' : ['navbar', customClass]"
+  >
     <nav
       v-if="sticky"
       class="navbar"

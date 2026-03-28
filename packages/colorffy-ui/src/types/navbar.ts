@@ -105,6 +105,12 @@ export interface INavbarToggleProps {
    * Optional custom CSS classes.
    */
   customClass?: NavbarClassName | null
+
+  /**
+   * Show the toggle button on mobile.
+   * @default false
+   */
+  showToggleButton?: boolean
 }
 
 /**
