@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "jsx": "preserve",
     "strict": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
