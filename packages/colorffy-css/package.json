@@ -62,7 +62,7 @@
   "license": "MIT",
   "peerDependencies": {
     "floating-vue": "^5.2.0",
-    "@material-symbols/font-700": "^0.40.0 || ^0.41.0 || ^0.42.0"
+    "@material-symbols/font-700": "^0.40.0 || ^0.41.0 || ^0.42.0 || ^0.43.0"
   },
   "devDependencies": {
     "sass": "^1.98.0"
