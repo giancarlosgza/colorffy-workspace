@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import type { IButtonProps } from '@/types/button'
+import type { IButtonEmits, IButtonProps } from '@/types/button'
 import { computed } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IButtonEmits {
-  (e: 'onClick'): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<IButtonProps>(), {

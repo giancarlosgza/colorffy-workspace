@@ -1,16 +1,7 @@
 <script setup lang="ts">
-import type { IButtonProps } from '@/types/button'
+import type { IButtonMenuEmits, IButtonMenuProps } from '@/types/button'
 import { Dropdown as VDropdown, Tooltip as VTooltip } from 'floating-vue'
 import UiButton from './Button.vue'
-
-/** Interfaces */
-interface IButtonMenuProps extends IButtonProps {
-  isMobile?: boolean
-  tooltipText?: string
-}
-interface IButtonMenuEmits {
-  (e: 'onClick'): void
-}
 
 /** Props */
 withDefaults(defineProps<IButtonMenuProps>(), {

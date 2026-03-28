@@ -1,15 +1,7 @@
 <script setup lang="ts">
-import type { IButtonProps } from '@/types/button'
+import type { IButtonTooltipEmits, IButtonTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import UiButton from './Button.vue'
-
-/** Interfaces */
-interface IButtonTooltipProps extends IButtonProps {
-  tooltipText?: string
-}
-interface IButtonTooltipEmits {
-  (e: 'onClick'): void
-}
 
 /** Props */
 withDefaults(defineProps<IButtonTooltipProps>(), {

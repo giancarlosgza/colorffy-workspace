@@ -30,6 +30,16 @@ export interface ISidebarProps {
 }
 
 /**
+ * Interface for the Sidebar (NavigationDrawer) component emits.
+ */
+export interface ISidebarEmits {
+  /**
+   * Emitted when the rail state changes.
+   */
+  (e: 'update:rail', value: boolean): void
+}
+
+/**
  * Interface props for the SidebarLink component.
  */
 export interface ISidebarLinkProps {
@@ -135,6 +145,51 @@ export interface ISidebarDropdownProps {
 
   /**
    * Optional custom CSS classes to apply to the dropdown content.
+   */
+  customClass?: string | null
+}
+
+/**
+ * Interface props for the SidebarHeader component.
+ */
+export interface ISidebarHeaderProps {
+  /**
+   * Optional custom CSS class for the header container.
+   */
+  customClass?: string | null
+}
+
+/**
+ * Interface props for the SidebarBody component.
+ */
+export interface ISidebarBodyProps {
+  /**
+   * Optional custom CSS class for the body container.
+   */
+  customClass?: string | null
+}
+
+/**
+ * Interface props for the SidebarFooter component.
+ */
+export interface ISidebarFooterProps {
+  /**
+   * Optional custom CSS class for the footer container.
+   */
+  customClass?: string | null
+}
+
+/**
+ * Interface props for the SidebarText component.
+ */
+export interface ISidebarTextProps {
+  /**
+   * Text context to display.
+   */
+  text?: string
+
+  /**
+   * Optional custom CSS class for the text element.
    */
   customClass?: string | null
 }

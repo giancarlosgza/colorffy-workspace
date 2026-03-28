@@ -1,21 +1,8 @@
 <script setup lang="ts">
-import type { IBadgeProps } from '@/types/badge'
+import type { IButtonMenuItemProps } from '@/types/button'
 import { computed } from 'vue'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IButtonMenuItemProps {
-  itemText?: string
-  icon?: string | null
-  iconStyle?: string | Record<string, any> | null
-  iconClass?: string | string[] | null
-  isDestructive?: boolean
-  disabled?: boolean
-  customClass?: string | string[] | null
-  badge?: Partial<IBadgeProps> | null
-  shortcut?: string | null
-}
 
 /** Props */
 const props = withDefaults(defineProps<IButtonMenuItemProps>(), {

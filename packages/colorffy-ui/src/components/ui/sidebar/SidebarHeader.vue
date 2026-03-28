@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { ISidebarHeaderProps } from '@/types/sidebar'
+
 /** Props */
-defineProps<{
-  customClass?: string | null
-}>()
+defineProps<ISidebarHeaderProps>()
 </script>
 
 <template>

@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import type { AlertVariant } from '@/types/alert'
+import type { AlertVariant, IAlertToastProps } from '@/types/alert'
 import { ref } from 'vue'
 import UiAlert from './Alert.vue'
-
-/** Interfaces */
-interface IAlertToastProps {
-  snackbarTitle?: string | null
-  snackbarMessage?: string | null
-  snackbarVariant?: AlertVariant
-}
 
 /** Props */
 const props = withDefaults(defineProps<IAlertToastProps>(), {

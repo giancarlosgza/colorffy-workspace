@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { ISidebarFooterProps } from '@/types/sidebar'
+
 /** Props */
-defineProps<{
-  customClass?: string | null
-}>()
+defineProps<ISidebarFooterProps>()
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { IDatatableProps } from '@/types/datatable'
 import { computed, ref } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
@@ -7,36 +8,6 @@ import UiButtonMenu from '../button/ButtonMenu.vue'
 import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
 import UiButtonTooltip from '../button/ButtonTooltip.vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IColumnsToggleTooltip {
-  showAll: string
-  hideDefault: string
-}
-
-interface IDatatableProps {
-  tableClass?: 'table-bordered' | 'table-striped' | 'table-borderless' | string
-  isLoading?: boolean
-  skeletonRows?: number
-  skeletonCols?: number
-  skeletonColExpanded?: number
-  isExpanded?: boolean
-  headers: string[]
-  items: any[]
-  defaultSortKey?: string
-  defaultSortOrder?: 'asc' | 'desc'
-  unsortableColumns?: string[]
-  sortable?: boolean
-  hiddenColumns?: string[]
-  columnManager?: boolean
-  columnsToggleTooltip?: string | IColumnsToggleTooltip
-  columnManagerText?: string
-  columnManagerTooltip?: string
-  emptyStateTitle?: string
-  emptyStateSubtitle?: string
-  emptyStateUseCustomIcon?: boolean
-  emptyStateIconCode?: string
-}
 
 /** Props */
 const props = withDefaults(defineProps<IDatatableProps>(), {

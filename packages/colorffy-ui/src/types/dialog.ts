@@ -76,3 +76,33 @@ export interface IDialogDisplay {
    */
   closeDialog: () => void
 }
+
+/**
+ * Interface props for the ConfirmModal component.
+ */
+export interface IConfirmModalProps extends IDialogProps {
+  /**
+   * When true, shows a loading state in the confirm button.
+   */
+  isLoading?: boolean
+
+  /**
+   * Text to display when loading.
+   */
+  loadingLabel?: string
+
+  /**
+   * Text for the cancel button.
+   */
+  cancelLabel?: string
+}
+
+/**
+ * Interface emits for the ConfirmModal component.
+ */
+export interface IConfirmModalEmits {
+  /**
+   * Emitted when the confirm button is clicked.
+   */
+  (e: 'confirm'): void
+}

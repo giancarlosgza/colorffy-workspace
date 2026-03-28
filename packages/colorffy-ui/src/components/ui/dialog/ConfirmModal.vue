@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import type { IDialogProps } from '@/types/dialog'
+import type { IConfirmModalEmits, IConfirmModalProps } from '@/types/dialog'
 import { vOnClickOutside } from '@vueuse/components'
 import { computed, ref } from 'vue'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IConfirmModalProps extends IDialogProps {
-  isLoading?: boolean
-  loadingLabel?: string
-  cancelLabel?: string
-}
 
 /** Props */
 const props = withDefaults(defineProps<IConfirmModalProps>(), {
@@ -28,7 +21,7 @@ const props = withDefaults(defineProps<IConfirmModalProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits(['confirm'])
+const emit = defineEmits<IConfirmModalEmits>()
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)

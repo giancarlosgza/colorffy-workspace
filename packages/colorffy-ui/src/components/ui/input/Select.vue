@@ -1,27 +1,6 @@
 <script setup lang="ts">
+import type { ISelectInputEmits, ISelectInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
-
-/** Interfaces */
-interface ISelectInputProps {
-  id?: string | null
-  label?: string | null
-  modelValue?: string | number | Record<string, unknown> | null
-  errorMessages?: string[]
-  options?: any[]
-  optionLabel?: string | null
-  optionValue?: string | null
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
-  optionalLabel?: boolean
-  variant?: 'filled' | 'outline' | 'transparent' | null
-  rounded?: boolean
-  customClass?: string | null
-}
-interface ISelectInputEmits {
-  (e: 'update:modelValue', value: string | number | Record<string, unknown> | null): void
-  (e: 'onUpdate', value: string | number | Record<string, unknown> | null): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<ISelectInputProps>(), {

@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import type { ISegmentedControlsEmits, ISegmentedControlsProps } from '@/types/navigation'
 import { computed, ref, toRef, watch } from 'vue'
-
-/** Interfaces */
-interface ISegmentedTab {
-  id: string
-  label: string
-  position: number
-}
-interface ISegmentedControlsProps {
-  tabs: ISegmentedTab[]
-  activeTab?: string
-}
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
@@ -18,7 +8,7 @@ const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits<{ (e: 'updateActiveTab', tabId: string): void }>()
+const emit = defineEmits<ISegmentedControlsEmits>()
 
 /** Data */
 const tabs = toRef(props, 'tabs')

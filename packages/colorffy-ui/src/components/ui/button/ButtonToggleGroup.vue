@@ -1,30 +1,11 @@
 <script setup lang="ts">
-import type { IBadgeProps } from '@/types/badge'
+import type {
+  IButtonToggleGroupEmits,
+  IButtonToggleGroupProps,
+  IButtonToggleOption
+} from '@/types/button'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IButtonToggleOption {
-  id: string
-  icon?: string
-  iconClass?: string
-  title: string
-  text?: string
-  badge?: {
-    variant?: IBadgeProps['variant']
-    text?: string
-  }
-  active?: boolean
-  disabled?: boolean
-}
-interface IButtonToggleGroupProps {
-  options: IButtonToggleOption[]
-  ariaLabel?: string
-  groupLabel?: string
-}
-interface IButtonToggleGroupEmits {
-  onOptionClick: [event: MouseEvent, item: IButtonToggleOption]
-}
 
 /** Props */
 const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {

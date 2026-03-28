@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITabsProps } from '@/types/navigation'
+import type { ITabsEmits, ITabsProps } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
 
 /** Props */
@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<ITabsProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits<{ (e: 'updateActiveTab', tabId: string): void }>()
+const emit = defineEmits<ITabsEmits>()
 
 /** Data */
 const tabs = toRef(props, 'tabs')

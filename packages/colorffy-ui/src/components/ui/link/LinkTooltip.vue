@@ -1,15 +1,7 @@
 <script setup lang="ts">
-import type { IButtonProps } from '@/types/button'
+import type { ILinkTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
-
-/** Interfaces */
-interface ILinkTooltipProps extends Omit<IButtonProps, 'onClick'> {
-  to?: string | object
-  href?: string
-  tooltipText?: string
-  as?: string | object
-}
 
 /** Props */
 const props = withDefaults(defineProps<ILinkTooltipProps>(), {

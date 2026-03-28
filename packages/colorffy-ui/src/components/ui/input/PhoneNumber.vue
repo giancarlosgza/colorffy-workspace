@@ -1,27 +1,7 @@
 <script setup lang="ts">
+import type { IPhoneNumberInputEmits, IPhoneNumberInputProps } from '@/types/input'
 import { computed } from 'vue'
 import { useTextUtils } from '@/composables/useTextUtils'
-
-/** Interfaces */
-interface IPhoneNumberInputProps {
-  id?: string | null
-  label?: string | null
-  modelValue?: string | null
-  errorMessages?: string[]
-  maxlength?: number
-  placeholder?: string | null
-  disabled?: boolean
-  required?: boolean
-  autofocus?: boolean
-  optionalLabel?: boolean
-  variant?: 'filled' | 'outline' | 'transparent' | null
-  rounded?: boolean
-  customClass?: string | null
-}
-interface IPhoneNumberInputEmits {
-  (e: 'update:modelValue', value: string | null): void
-  (e: 'onUpdate', value: string | null): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<IPhoneNumberInputProps>(), {

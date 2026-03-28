@@ -1,8 +1,5 @@
 <script setup lang="ts">
-/** Interfaces */
-interface IButtonMenuTextProps {
-  itemText?: string
-}
+import type { IButtonMenuTextProps } from '@/types/button'
 
 /** Props */
 withDefaults(defineProps<IButtonMenuTextProps>(), {

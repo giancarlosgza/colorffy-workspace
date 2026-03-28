@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import type { ISidebarTextProps } from '@/types/sidebar'
+
 /** Props */
-const _props = withDefaults(defineProps<{
-  text?: string
-  customClass?: string | null
-}>(), {
+withDefaults(defineProps<ISidebarTextProps>(), {
   text: '',
   customClass: ''
 })

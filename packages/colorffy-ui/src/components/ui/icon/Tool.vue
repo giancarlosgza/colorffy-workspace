@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { IconSize, IconToolName, IToolIconProps } from '@/types/icon'
+import type {
+  IconSize,
+  IconToolName,
+  IToolIconDefinition,
+  IToolIconProps
+} from '@/types/icon'
 import { computed } from 'vue'
-
-/** Interfaces */
-interface IToolIconDefinition {
-  viewBox: string
-  defaultColor?: string
-  paths?: Array<{ d: string }>
-}
 
 /** Props */
 const props = withDefaults(defineProps<IToolIconProps>(), {

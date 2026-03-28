@@ -162,6 +162,26 @@ export interface IToolIconProps extends IIconBaseProps {
 }
 
 /**
+ * Internal definition for tool icons.
+ */
+export interface IToolIconDefinition {
+  /**
+   * SVG viewBox attribute.
+   */
+  viewBox: string
+
+  /**
+   * Default fill color.
+   */
+  defaultColor?: string
+
+  /**
+   * SVG path data.
+   */
+  paths?: Array<{ d: string }>
+}
+
+/**
  * Interface props for brand glyphs.
  * Notes:
  * - `brand` is required and must match a literal in IconBrandName.
@@ -173,6 +193,41 @@ export interface IBrandIconProps extends IIconBaseProps {
    * Must match a value in IconBrandName.
    */
   brand: IconBrandName
+}
+
+/**
+ * Interface props for the IconApp component.
+ */
+export interface IIconAppProps extends IIconBaseProps {
+  /**
+   * Icon brand name.
+   */
+  icon?: IconBrandName | null
+
+  /**
+   * Explicit brand name (overrides icon).
+   */
+  brand?: IconBrandName | null
+}
+
+/**
+ * Internal metadata for app/brand icons.
+ */
+export interface IIconMeta {
+  /**
+   * CSS class to apply to the SVG.
+   */
+  class?: string | null
+
+  /**
+   * Default fill color.
+   */
+  defaultColor?: string | null
+
+  /**
+   * Whether the icon supports manual color override.
+   */
+  supportsColorOverride?: boolean
 }
 
 /**

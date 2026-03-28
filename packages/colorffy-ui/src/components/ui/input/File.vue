@@ -1,20 +1,7 @@
 <script setup lang="ts">
+import type { IFileInputEmits, IFileInputProps } from '@/types/input'
 import { computed, toRefs } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
-
-/** Interfaces */
-interface IFileInputProps {
-  id?: string | null
-  label?: string | null
-  inputLabel?: string | null
-  large?: boolean
-  modelValue?: File | null
-  customClass?: string | null
-}
-interface IFileInputEmits {
-  (e: 'update:modelValue', value: File | null): void
-  (e: 'onUpdate', value: File | null): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<IFileInputProps>(), {

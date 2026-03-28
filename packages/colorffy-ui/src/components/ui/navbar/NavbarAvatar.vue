@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INavbarAvatarProps } from '@/types/navbar'
+import type { INavbarAvatarEmits, INavbarAvatarProps } from '@/types/navbar'
 
 /** Props */
 const _props = withDefaults(defineProps<INavbarAvatarProps>(), {
@@ -10,9 +10,7 @@ const _props = withDefaults(defineProps<INavbarAvatarProps>(), {
 })
 
 /** Emits */
-defineEmits<{
-  click: []
-}>()
+defineEmits<INavbarAvatarEmits>()
 </script>
 
 <template>

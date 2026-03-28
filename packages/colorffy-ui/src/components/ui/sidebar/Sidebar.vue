@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ISidebarProps } from '@/types/sidebar'
+import type { ISidebarEmits, ISidebarProps } from '@/types/sidebar'
 import { computed } from 'vue'
 
 /** Props */
@@ -11,9 +11,7 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits<{
-  (e: 'update:rail', value: boolean): void
-}>()
+const emit = defineEmits<ISidebarEmits>()
 
 /** Computed */
 const sidebarClasses = computed(() => [

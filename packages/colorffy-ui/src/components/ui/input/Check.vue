@@ -1,15 +1,6 @@
 <script setup lang="ts">
+import type { ICheckProps } from '@/types/input'
 import { computed } from 'vue'
-
-/** Interfaces */
-interface ICheckProps {
-  id?: string | null
-  label: string
-  type?: string
-  modelValue?: string | boolean | null
-  errorMessages?: string[]
-  customClass?: string | null
-}
 
 /** Props */
 const props = withDefaults(defineProps<ICheckProps>(), {

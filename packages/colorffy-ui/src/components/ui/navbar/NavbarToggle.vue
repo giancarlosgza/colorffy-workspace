@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INavbarToggleProps } from '@/types/navbar'
+import type { INavbarToggleEmits, INavbarToggleProps } from '@/types/navbar'
 import { computed } from 'vue'
 import UiButtonTooltip from '../button/ButtonTooltip.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -14,9 +14,7 @@ const props = withDefaults(defineProps<INavbarToggleProps>(), {
 })
 
 /** Emits */
-defineEmits<{
-  toggle: []
-}>()
+defineEmits<INavbarToggleEmits>()
 
 /** Computed */
 const tooltipText = computed(() => props.collapsed ? props.expandText : props.collapseText)

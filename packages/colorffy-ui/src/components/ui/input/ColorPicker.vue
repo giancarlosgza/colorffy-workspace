@@ -1,14 +1,6 @@
 <script setup lang="ts">
+import type { IColorPickerEmits, IColorPickerProps } from '@/types/input'
 import { computed } from 'vue'
-
-/** Interfaces */
-interface IColorPickerProps {
-  id?: string | null
-  label?: string | null
-  maxLength?: number
-  modelValue?: string | null
-  customClass?: string | null
-}
 
 /** Props */
 const props = withDefaults(defineProps<IColorPickerProps>(), {
@@ -20,7 +12,7 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits(['onUpdate'])
+const emit = defineEmits<IColorPickerEmits>()
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })

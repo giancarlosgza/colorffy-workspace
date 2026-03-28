@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import type { IconBrandName, IconSize, IIconBaseProps } from '@/types/icon'
+import type {
+  IconBrandName,
+  IconSize,
+  IIconAppProps,
+  IIconMeta
+} from '@/types/icon'
 import { computed } from 'vue'
-
-/** Interfaces */
-interface IIconAppProps extends IIconBaseProps {
-  icon?: IconBrandName | null
-  brand?: IconBrandName | null
-}
-interface IIconMeta {
-  class?: string | null
-  defaultColor?: string | null
-  supportsColorOverride?: boolean
-}
 
 /** Props */
 const props = withDefaults(defineProps<IIconAppProps>(), {

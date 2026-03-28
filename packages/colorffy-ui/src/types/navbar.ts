@@ -114,6 +114,16 @@ export interface INavbarToggleProps {
 }
 
 /**
+ * Interface props for the NavbarToggle component emits.
+ */
+export interface INavbarToggleEmits {
+  /**
+   * Emitted when the toggle button is clicked.
+   */
+  toggle: []
+}
+
+/**
  * Interface props for the NavbarAvatar component.
  */
 export interface INavbarAvatarProps {
@@ -139,6 +149,16 @@ export interface INavbarAvatarProps {
    * Optional custom CSS classes.
    */
   customClass?: NavbarClassName | null
+}
+
+/**
+ * Interface props for the NavbarAvatar component emits.
+ */
+export interface INavbarAvatarEmits {
+  /**
+   * Emitted when the avatar is clicked.
+   */
+  click: []
 }
 
 /**

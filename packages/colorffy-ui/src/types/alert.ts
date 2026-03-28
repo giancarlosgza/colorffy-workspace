@@ -50,3 +50,23 @@ export interface IAlertProps {
    */
   customClass?: AlertClassName
 }
+
+/**
+ * Interface props for the AlertToast component.
+ */
+export interface IAlertToastProps {
+  /**
+   * Optional title of the toast.
+   */
+  snackbarTitle?: string | null
+
+  /**
+   * Optional message of the toast.
+   */
+  snackbarMessage?: string | null
+
+  /**
+   * Optional variant of the toast.
+   */
+  snackbarVariant?: AlertVariant
+}

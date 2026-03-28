@@ -1,19 +1,6 @@
 <script setup lang="ts">
+import type { IRadioInputEmits, IRadioInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
-
-/** Interfaces */
-interface IRadioInputProps {
-  id?: string | null
-  labelDefaultOption: string
-  labelOption: string
-  type?: string
-  modelValue?: string | number | null
-  customClass?: string | null
-}
-interface IRadioInputEmits {
-  (e: 'update:modelValue', value: string | number | null): void
-  (e: 'onUpdate', value: string | number | null): void
-}
 
 /** Props */
 const props = withDefaults(defineProps<IRadioInputProps>(), {

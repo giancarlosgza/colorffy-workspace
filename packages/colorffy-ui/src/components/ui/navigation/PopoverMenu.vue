@@ -1,38 +1,14 @@
 <script setup lang="ts">
+import type {
+  IPopoverMenuEmits,
+  IPopoverMenuProps,
+  IUserData
+} from '@/types/navigation'
 import { computed } from 'vue'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiListGroup from '../list/ListGroup.vue'
 import UiListItem from '../list/ListItem.vue'
-
-/** Interfaces */
-interface IMenuItem {
-  id: string
-  to: string | object
-  icon: string
-  text: string
-  ariaLabel: string
-}
-interface IPopoverMenuProps {
-  isOpened?: boolean
-  menuItems?: IMenuItem[]
-  currentRoute?: any
-  title?: string | null
-  subtitle?: string | null
-  avatarUrl?: string | null
-  avatarCustomClass?: string | null
-  user?: any
-  auth?: any | null
-}
-interface IPopoverMenuEmits {
-  (e: 'hideDropdown'): void
-  (e: 'menuItemClick', to: string | object): void
-}
-interface IUserData {
-  displayName: string | null
-  email: string | null
-  photoURL: string | null
-}
 
 /** Props */
 const props = withDefaults(defineProps<IPopoverMenuProps>(), {
