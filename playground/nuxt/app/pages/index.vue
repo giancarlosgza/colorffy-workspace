@@ -8,6 +8,7 @@ const sidebarCollapse = useState<boolean>('sidebarCollapse')
 const colorMode = useColorMode()
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 const dialogRef = ref<InstanceType<typeof UiModal> | null>(null)
+const dialogSideSheetRef = ref<InstanceType<typeof UiModal> | null>(null)
 const confirmModalRef = ref<InstanceType<typeof UiConfirmModal> | null>(null)
 const rangeValue = ref<number>(50)
 
@@ -39,11 +40,13 @@ function showToast() {
 function showDialog() {
   if (!dialogRef.value)
     return
+
   dialogRef.value?.showDialog()
 }
 function closeDialog() {
   if (!dialogRef.value)
     return
+
   dialogRef.value?.closeDialog()
 }
 function showConfirmModal() {
@@ -236,7 +239,7 @@ function handleConfirm() {
       </UiButtonGroup>
       <UiButtonGroup connected joined class="mt-section">
         <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog" />
-        <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" />
+        <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" @on-click="dialogSideSheetRef?.showDialog()" />
         <UiButtonTooltip variant="tonal" color="accent" text="Tonal Accent Button" tooltip-text="Example" />
 
         <UiButton variant="tonal" color="success" text="Tonal Success Button" />
@@ -365,7 +368,9 @@ function handleConfirm() {
       </UiBadgeGroup>
       <UiBadgeGroup class="mt-section">
         <UiBadge variant="tonal tonal-primary" text="Tonal Primary" />
-        <UiBadge variant="tonal tonal-secondary" text="Tonal Secondary" />
+        <UiBadge
+          variant="tonal tonal-secondary" text="Tonal Secondary"
+        />
         <UiBadge variant="tonal tonal-accent" text="Tonal Accent" />
         <UiBadge variant="tonal tonal-success" text="Tonal Success" />
         <UiBadge variant="tonal tonal-warning" text="Tonal Warning" />
@@ -609,6 +614,49 @@ function handleConfirm() {
         </template>
         <template #footer>
           <UiButton variant="text" text="Close" @on-click="closeDialog" />
+        </template>
+      </UiModal>
+
+      <UiModal
+        ref="dialogSideSheetRef"
+        mode="side-sheet"
+      >
+        <template #header>
+          <div>
+            <p id="filters-dialog-title" class="dialog-title">
+              Filters
+            </p>
+            <span id="filters-dialog-description" class="dialog-subtitle">
+              Filter options for browsing content by color, scheme, sort order, and category
+            </span>
+          </div>
+          <UiButton
+            variant="outline"
+            title="Close filters dialog"
+            aria-label="Close filters dialog"
+            icon
+            @on-click="dialogSideSheetRef?.closeDialog()"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe5cd;" />
+            </template>
+          </UiButton>
+        </template>
+        <template #body>
+          <UiInputRange
+            id="range-sample-2"
+            v-model="rangeValue"
+            variant="transparent"
+            :label="`Sample Range: ${rangeValue}`"
+            :min="0" :max="100" :step="10"
+          />
+        </template>
+        <template #footer>
+          <UiButton
+            variant="text"
+            text="Close"
+            @on-click="dialogSideSheetRef?.closeDialog()"
+          />
         </template>
       </UiModal>
 

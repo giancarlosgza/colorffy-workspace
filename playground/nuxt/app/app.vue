@@ -55,7 +55,11 @@ function handleMenuItemClick(to: string | object) {
     <NuxtRouteAnnouncer />
 
     <!-- Sidebar -->
-    <UiSidebar bordered :rail="sidebarCollapse">
+    <UiSidebar
+      bordered
+      :rail="sidebarCollapse"
+      @update:rail="sidebarCollapse = $event"
+    >
       <UiSidebarHeader>
         <UiIconMaterial v-if="false" icon-code="&#xe88a;" class="drawer-brand-icon" />
         <img
@@ -194,9 +198,11 @@ function handleMenuItemClick(to: string | object) {
         fluid
       >
         <UiNavbarToggle
+          :show-toggle-button="true"
           :collapsed="sidebarCollapse"
           @toggle="sidebarCollapse = !sidebarCollapse"
         />
+
         <UiNavbarTitle :title="(route.meta.pageTitle as string) || 'Dashboard'">
           <template #brand>
             <UiNavbarBrand

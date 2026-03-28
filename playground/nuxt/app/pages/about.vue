@@ -7,7 +7,20 @@
     <UiHeaderContent
       title="About Page"
       subtitle="This is the about page of the Nuxt application"
-    />
+      actions :hide-actions-on-mobile="false"
+    >
+      <template #actions>
+        <UiButton
+          text="CREATE USER"
+          variant="filled"
+          rounded
+        >
+          <template #icon>
+            <UiIconMaterial icon-code="&#xe145;" />
+          </template>
+        </UiButton>
+      </template>
+    </UiHeaderContent>
 
     <UiPaneContent>
       <UiEmpty
