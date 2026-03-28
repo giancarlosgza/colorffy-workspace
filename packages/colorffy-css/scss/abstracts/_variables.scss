@@ -344,12 +344,13 @@ $scales: (
         5: 1.25
 );
 
-// z-index
-$z-index-navigation: 998;
-$z-index-fab: 999;
-$z-index-menu: 999;
-$z-index-navbar: 999;
-$z-index-fullscreen: 999;
+// z-index hierarchy
+$z-index-navigation: 900;    // Level 0: Fixed bottom navigation
+$z-index-navbar: 1000;       // Level 1: Static/Sticky top navbar
+$z-index-fab: 1010;          // Level 2: Floating Action Buttons & Snackbars
+$z-index-menu: 1020;         // Level 3: Dropdowns, Popovers, and contextual menus
+$z-index-fullscreen: 1030;   // Level 4: Full-page takeovers (e.g., search modal)
+$z-index-toast: 1100;        // Level 5: Toasts and notifications
 
 // Spinner
 $spinner-offset: 187;
@@ -421,3 +422,11 @@ $easing-sine-in-out: linear(
                 0.8457 74.3%, 0.9141 81.07%,
                 0.9621 87.52%, 0.9905 93.8%, 1 100%
 );
+
+// Layout Navigation
+$navbar-min-height: 4.25rem !default;
+$navigation-bar-min-height: 5rem !default;
+
+// Layout Island
+$container-island-width: calc(100vw - 2rem) !default;
+$container-island-margin: .5rem !default;

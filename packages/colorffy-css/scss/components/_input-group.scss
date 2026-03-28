@@ -1,6 +1,6 @@
 @use "../abstracts/variables" as v;
 
-@layer layout.input-group {
+@layer components.input-group {
   .input-group {
     --_input-group-radius: #{v.$rounded-md};
     --_input-group-bg-color: transparent;

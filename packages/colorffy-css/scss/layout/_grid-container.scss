@@ -176,5 +176,9 @@
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr;
+
+    @include m.media-query(1024) {
+      display: block;
+    }
   }
 }

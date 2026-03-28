@@ -94,4 +94,21 @@
       }
     }
   }
+
+  // Media queries
+  @include m.media-query(992) {
+    .header {
+      :where(.col-heading h1:is(.text-title)) {
+        font-size: var(--fs-500);
+      }
+    }
+  }
+
+  @include m.media-query(768) {
+    .header {
+      & .col-actions {
+        display: none;
+      }
+    }
+  }
 }

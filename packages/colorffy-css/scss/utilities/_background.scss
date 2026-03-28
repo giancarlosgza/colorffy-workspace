@@ -54,6 +54,11 @@
     backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
   }
 
+  .bg-frosted-dark {
+    background-color: var(--theme-frosted-glass-bg-dark);
+    backdrop-filter: var(--theme-frosted-glass-backdrop-filter-dark);
+  }
+
   .bg-transparent {
     @include m.bg-color(transparent)
   }

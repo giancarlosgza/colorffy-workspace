@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use '../base/typography';
+@use '../abstracts/mixins' as m;
 @use '../utilities/text' as t;
 
 @layer layout.sidebar {
@@ -359,6 +360,13 @@
           }
         }
       }
+    }
+  }
+
+  @include m.media-query(1024) {
+    .navigation-drawer,
+    .navigation-drawer.drawer-closed {
+      display: none;
     }
   }
 }

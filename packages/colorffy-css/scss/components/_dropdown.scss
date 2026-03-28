@@ -349,7 +349,7 @@
         display: flex;
         align-items: flex-end;
         overscroll-behavior: contain;
-        z-index: v.$z-index-fullscreen;
+        z-index: v.$z-index-menu;
 
         @supports (transition: all 100ms linear(1, 1, 1)) {
           --_dropdown-easing-in: #{v.$easing-overshoot-soft};

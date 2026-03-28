@@ -61,7 +61,7 @@
     border-radius: var(--_nav-radius);
     z-index: v.$z-index-navbar;
     margin-bottom: .5rem;
-    min-height: 4.254rem;
+    min-height: v.$navbar-min-height;
     transition: background-color var(--_nav-easing-duration) var(--_nav-easing-in);
 
     > :where(.container, .container-fluid) {
@@ -293,153 +293,6 @@
     }
   }
 
-  // Bottom navigation bar
-  .navigation-bar {
-    --_navigation-bar-easing-in: #{v.$easing-in-fallback};
-    --_navigation-bar-easing-out: #{v.$easing-out-fallback};
-    --_navigation-bar-easing-duration: 300ms;
-    --_navigation-bar-easing-out-duration: 200ms;
-    --_navigation-bar-padding-top: 0;
-    --_navigation-bar-padding-bottom: 0;
-    --_navigation-bar-font-size: .65rem;
-    --_navigation-bar-icon-size: 1.35rem;
-    --_navigation-bar-bg-color: var(--theme-surface-navigation);
-
-    display: none;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    overflow: clip;
-
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    min-height: 5rem;
-
-    // Set the padding default value to 0 for Windows or Android devices
-    padding-top: var(--_navigation-bar-padding-top);
-    padding-bottom: var(--_navigation-bar-padding-bottom);
-
-    background-color: var(--_navigation-bar-bg-color);
-    color: var(--theme-on-background);
-    box-shadow: var(--shadow-md);
-    z-index: v.$z-index-navigation;
-
-    &:is(.navigation-bar-frosted) {
-      background-color: var(--theme-frosted-glass-bg);
-      backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
-    }
-
-    &:is(.navigation-bar-island) {
-      inset-inline: 0;
-      bottom: .5rem;
-      margin: auto;
-      width: calc(100vw - 2rem);
-      border-radius: 50px;
-    }
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_navigation-bar-easing-in: #{v.$easing-overshoot-soft};
-      --_navigation-bar-easing-duration: 600ms;
-    }
-
-    & .navigation-bar-item {
-      width: 25%;
-      transition: v.$easing-in-fallback;
-
-      & .navigation-bar-link {
-        position: relative;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        @extend .undecorated;
-
-        // Inactive link text
-        p {
-          position: relative;
-          font-size: var(--_navigation-bar-font-size);
-          font-family: var(--font-primary);
-          margin-bottom: 0;
-          font-weight: v.$fw-500;
-          z-index: 11;
-        }
-
-        // Inactive link icon
-        i {
-          position: relative;
-          justify-content: center;
-          margin-bottom: .25rem;
-          font-size: var(--_navigation-bar-icon-size);
-          z-index: 11;
-        }
-
-        p, i {
-          color: var(--theme-muted-a10);
-        }
-
-        // Nuxt link active class
-        &.router-link-exact-active {
-          anchor-name: --active-item;
-
-          p, i {
-            color: var(--theme-primary-a10);
-          }
-
-          p {
-            font-weight: v.$fw-800;
-          }
-        }
-      }
-
-      &:hover {
-        p, i {
-          color: var(--theme-primary-a10);
-        }
-      }
-    }
-
-    // Active indicator
-    & .indicator {
-      display: none;
-
-      @supports (anchor-name: --foo) {
-        display: block;
-        position: absolute;
-        margin: auto;
-        border-radius: v.$rounded-xl;
-        width: auto;
-        max-width: 100%;
-        height: calc(100% - 1rem);
-        z-index: 1;
-        transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-        left var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-        right var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
-
-        position-anchor: --active-item;
-        top: anchor(top);
-        bottom: anchor(bottom);
-        left: anchor(left);
-        right: anchor(right);
-        background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
-      }
-
-      &:is(.indicator-tab) {
-        @supports (anchor-name: --foo) {
-          border-radius: v.$rounded-sm;
-          height: .25rem;
-          background-color: var(--theme-primary-a10);
-          top: calc(anchor(top) - 1rem);
-          bottom: unset;
-        }
-      }
-
-      &:is(.indicator-frosted) {
-        border: v.$border-sm solid var(--theme-outline-surface);
-        background-color: var(--theme-frosted-glass-bg);
-      }
-    }
-  }
-
   // User navigation menu
   .popover-menu-container {
     --_popover-menu-bg-color: var(--theme-surface-overlay);
@@ -474,7 +327,6 @@
       box-shadow: var(--shadow-xl);
       border-radius: var(--_popover-menu-radius);
       z-index: v.$z-index-menu;
-
       will-change: translate, opacity, visibility;
       opacity: 0;
       visibility: hidden;
@@ -878,22 +730,117 @@
         }
       }
     }
+  }
 
-    .navigation-bar {
-      .navigation-bar-item {
-        .navigation-bar-link {
-          .indicator {
-            scale: 1;
-            transition: opacity 300ms var(--easing-out);
+  // Media queries
+  @include m.media-query(1024) {
+    .sidebar-collapse {
+      display: none;
+    }
+  }
+
+  @include m.media-query(992) {
+    .nav-sticky {
+      z-index: v.$z-index-fullscreen;
+    }
+
+    .navbar {
+      > :where(.container, .container-fluid) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      & .navbar-brand {
+        justify-self: center;
+      }
+
+      & .navbar-sm-avatar-wrapper {
+        display: inline-flex;
+        justify-self: flex-end;
+      }
+    }
+
+    .popover-menu-container {
+      position: absolute;
+
+      .popover-menu {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: 80%;
+        height: fit-content;
+      }
+    }
+
+    .menu-tools-container {
+      & .menu-tools {
+        --_menu-tool-grid-cols: 1fr 2fr;
+
+        & .menu-body {
+          & .menu-news {
+            display: none;
           }
+        }
+      }
+    }
+  }
 
-          &.nuxt-link-exact-active {
-            .indicator {
-              scale: 1;
-              transition: opacity 600ms var(--easing-in);
+  @include m.media-query(960) {
+    .navbar {
+      &:has(.menu-tools-visible) {
+        background-color: var(--theme-surface-body-pane);
+      }
+    }
+
+    .menu-tools-container {
+      & .menu-tools {
+        --_menu-tool-grid-cols: auto 1fr;
+        --_menu-tool-grid-tabs-cols: 1fr;
+        --_menu-tool-grid-tools-cols: 1fr;
+
+        top: v.$navbar-min-height;
+        inset-inline: 0;
+        margin: auto;
+
+        & .menu-body {
+          grid-template-rows: auto 1fr;
+          grid-template-columns: 1fr;
+
+          min-height: calc(100dvh - #{v.$navbar-min-height});
+          max-height: calc(100dvh - #{v.$navbar-min-height});
+          max-width: 100%;
+          align-self: flex-start;
+
+          & .menu-grid {
+            grid-template-rows: calc(var(--_menu-tool-grid-tools-cols) * 6);
+            grid-template-columns: var(--_menu-tool-grid-tools-cols);
+
+            & .menu-grid-title {
+              grid-column: span 1;
             }
           }
         }
+      }
+    }
+  }
+
+  @include m.media-query(768) {
+    .navbar {
+      &:has(.popover-menu-visible) {
+        background-color: var(--theme-surface-body-pane);
+      }
+    }
+
+    .popover-menu-container {
+      & .popover-menu {
+        top: v.$navbar-min-height;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100dvh - #{v.$navbar-min-height});
+        border-radius: v.$rounded-none;
       }
     }
   }

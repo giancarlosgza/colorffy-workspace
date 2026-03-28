@@ -1,44 +1,45 @@
 /**
-*** Colorffy Design System Stylesheet v1.0.0 (Orion)
+*** Colorffy Design System Stylesheet v1.5.0 (Orion)
 **/
-
-@use './abstracts/layers';
-
-@use './abstracts/reboot';
 @use './abstracts/variables';
-@use './abstracts/roots';
 @use './abstracts/functions';
 @use './abstracts/mixins';
 
+@use './base/layers';
+@use './base/roots';
+@use './base/reboot';
 @use "./base/animations";
 @use './base/icons';
-@use './base/table';
+@use './base/media-queries';
 @use './base/typography';
 
 @use './components/accordion';
 @use './components/alert';
 @use './components/badge';
 @use './components/button';
+@use './components/button-effects';
+@use './components/button-group';
 @use './components/card';
 @use './components/dialog';
 @use './components/dropdown';
+@use './components/form-check';
+@use './components/form-control';
 @use './components/image';
+@use './components/input-group';
 @use './components/list';
 @use './components/prime';
 @use './components/progress';
 @use './components/tabs';
+@use './components/table';
 @use './components/tooltip';
 
 @use './layout/flex-container';
 @use './layout/footer';
-@use './layout/form-check';
-@use './layout/form-control';
 @use './layout/grid-container';
 @use './layout/header';
-@use './layout/input-group';
 @use './layout/navbar';
+@use './layout/navigation-bar';
 @use './layout/sidebar';
-@use './layout/media-queries';
 
 @use "./utilities/aspect-ratio";
 @use "./utilities/background";

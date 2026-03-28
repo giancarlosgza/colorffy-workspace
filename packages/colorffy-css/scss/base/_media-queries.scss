@@ -1,0 +1,26 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer media-queries {
+  @include m.media-query(1024) {
+    // Prevent body from scrolling when a sheet is open
+    body {
+      &:has(.navigation-drawer.sheet.sheet-filters:is(.sheet-active)) {
+        overflow-y: hidden;
+      }
+
+      &:has(.bottom-sheet:is(.sheet-open)) {
+        overflow-y: hidden;
+      }
+    }
+
+    // Add a margin bottom to the main content to show bottom elements
+    main {
+      padding-bottom: calc(#{v.$navigation-bar-min-height} + 1rem);
+
+      &:has(footer, .footer) {
+        padding-bottom: calc(#{v.$navigation-bar-min-height} - 1.5rem);
+      }
+    }
+  }
+}

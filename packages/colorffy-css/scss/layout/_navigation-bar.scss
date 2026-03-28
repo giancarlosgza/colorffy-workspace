@@ -1,0 +1,178 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+@use '../base/typography';
+
+@layer layout.navigation-bar {
+  // Bottom navigation bar
+  .navigation-bar {
+    --_navigation-bar-easing-in: #{v.$easing-in-fallback};
+    --_navigation-bar-easing-out: #{v.$easing-out-fallback};
+    --_navigation-bar-easing-duration: 300ms;
+    --_navigation-bar-easing-out-duration: 200ms;
+    --_navigation-bar-padding-top: 0;
+    --_navigation-bar-padding-bottom: 0;
+    --_navigation-bar-font-size: .65rem;
+    --_navigation-bar-icon-size: 1.35rem;
+    --_navigation-bar-bg-color: var(--theme-surface-navigation);
+
+    display: none;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow: clip;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    min-height: v.$navigation-bar-min-height;
+    padding-top: var(--_navigation-bar-padding-top); // Set the padding default value to 0 for Windows or Android devices
+    padding-bottom: var(--_navigation-bar-padding-bottom);
+    background-color: var(--_navigation-bar-bg-color);
+    color: var(--theme-on-background);
+    box-shadow: var(--shadow-md);
+    z-index: v.$z-index-navigation;
+
+    &:is(.navigation-bar-frosted) {
+      background-color: var(--theme-frosted-glass-bg);
+      backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+    }
+
+    &:is(.navigation-bar-island) {
+      @include m.container-island($position: fixed, $edge: bottom);
+    }
+
+    @supports (transition: all 100ms linear(1, 1, 1)) {
+      --_navigation-bar-easing-in: #{v.$easing-overshoot-soft};
+      --_navigation-bar-easing-duration: 600ms;
+    }
+
+    & .navigation-bar-item {
+      width: 25%;
+      transition: v.$easing-in-fallback;
+
+      & .navigation-bar-link {
+        position: relative;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        @extend .undecorated;
+
+        // Inactive link text
+        p {
+          position: relative;
+          font-size: var(--_navigation-bar-font-size);
+          font-family: var(--font-primary);
+          margin-bottom: 0;
+          font-weight: v.$fw-500;
+          z-index: 11;
+        }
+
+        // Inactive link icon
+        i {
+          position: relative;
+          justify-content: center;
+          margin-bottom: .25rem;
+          font-size: var(--_navigation-bar-icon-size);
+          z-index: 11;
+        }
+
+        p, i {
+          color: var(--theme-muted-a10);
+        }
+
+        // Nuxt link active class
+        &.router-link-exact-active {
+          anchor-name: --active-item;
+
+          p, i {
+            color: var(--theme-primary-a10);
+          }
+
+          p {
+            font-weight: v.$fw-800;
+          }
+        }
+      }
+
+      &:hover {
+        p, i {
+          color: var(--theme-primary-a10);
+        }
+      }
+    }
+
+    // Active indicator
+    & .indicator {
+      display: none;
+
+      @supports (anchor-name: --foo) {
+        display: block;
+        position: absolute;
+        margin: auto;
+        border-radius: v.$rounded-xl;
+        width: auto;
+        max-width: 100%;
+        height: calc(100% - 1rem);
+        z-index: 1;
+        transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
+        left var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
+        right var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
+
+        position-anchor: --active-item;
+        top: anchor(top);
+        bottom: anchor(bottom);
+        left: anchor(left);
+        right: anchor(right);
+        background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
+      }
+
+      &:is(.indicator-tab) {
+        @supports (anchor-name: --foo) {
+          border-radius: v.$rounded-sm;
+          height: .25rem;
+          background-color: var(--theme-primary-a10);
+          top: calc(anchor(top) - 1rem);
+          bottom: unset;
+        }
+      }
+
+      &:is(.indicator-frosted) {
+        border: v.$border-sm solid var(--theme-outline-surface);
+        background-color: var(--theme-frosted-glass-bg);
+      }
+    }
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion) {
+    .navigation-bar {
+      .navigation-bar-item {
+        .navigation-bar-link {
+          .indicator {
+            scale: 1;
+            transition: opacity 300ms var(--easing-out);
+          }
+
+          &.nuxt-link-exact-active {
+            .indicator {
+              scale: 1;
+              transition: opacity 600ms var(--easing-in);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Breakpoints
+  @include m.media-query(1024) {
+    .navigation-bar {
+      display: flex;
+
+      // Add a padding if the user agent is iOS Safari
+      @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+        --_navigation-bar-padding-top: calc(.75rem + env(safe-area-inset-top, 0.5vh));
+        --_navigation-bar-padding-bottom: env(safe-area-inset-bottom, 0.5vh);
+      }
+    }
+  }
+}

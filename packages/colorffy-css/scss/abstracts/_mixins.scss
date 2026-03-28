@@ -808,3 +808,23 @@
     }
   }
 }
+
+/**
+* Container Island
+* Centered floating container with rounded edges
+*/
+@mixin container-island($position: absolute, $edge: top, $offset: v.$container-island-margin) {
+  position: $position;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: v.$container-island-width;
+  border-radius: #{v.$rounded-full};
+  border: v.$border-sm solid var(--theme-outline-surface);
+  box-shadow: var(--shadow-sm);
+
+  @if ($edge == top) {
+    top: $offset;
+  } @else if ($edge == bottom) {
+    bottom: $offset;
+  }
+}

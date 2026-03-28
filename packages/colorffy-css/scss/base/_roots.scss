@@ -1,7 +1,7 @@
-@use 'mixins' as m;
-@use 'variables' as v;
+@use '../abstracts/mixins' as m;
+@use '../abstracts/variables' as v;
 
-@layer abstracts.tokens {
+@layer base.tokens {
   :root {
     /*
     ** brand colors
@@ -96,6 +96,8 @@
     --theme-img-testimonial-filter-invert: grayscale(1) invert(1);
     --theme-frosted-glass-bg: rgba(255, 255, 255, 0.5);
     --theme-frosted-glass-backdrop-filter: blur(30px) saturate(100%) contrast(45%) brightness(130%);
+    --theme-frosted-glass-bg-dark: rgb(30 30 30 / 65%);
+    --theme-frosted-glass-backdrop-filter-dark: blur(30px) saturate(150%) contrast(100%) brightness(100%);
 
     /* font sizes small */
     --fs-sm-100: clamp(0.80rem, calc(0.31rem + 1.97vw), 0.9375rem);

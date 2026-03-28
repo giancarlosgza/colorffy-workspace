@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
 
-@layer layout.form-check {
+@layer components.form-check {
   .form-check {
     --_form-check-gutter-y: .85rem;
     --_form-check-gap: .75rem;
@@ -11,7 +11,6 @@
     --_form-check-input-border-width: #{v.$border-md};
     --_form-check-input-border-color: var(--theme-outline-text-field);
     --_form-check-input-checked-icon: none;
-
     --_form-check-easing-in: #{v.$easing-in-fallback};
     --_form-check-easing-duration: 200ms;
 
@@ -41,19 +40,15 @@
       vertical-align: top;
       -webkit-appearance: none;
       appearance: none;
-
       background-color: var(--_form-check-input-bg-color);
       background-image: var(--_form-check-input-checked-icon);
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
-
       border: var(--_form-check-input-border-width) solid var(--_form-check-input-border-color);
-
       -webkit-print-color-adjust: exact;
       color-adjust: exact;
       print-color-adjust: exact;
-
       transition: background-color var(--_form-check-easing-duration) var(--_form-check-easing-in),
       border-color var(--_form-check-easing-duration) var(--_form-check-easing-in);
 

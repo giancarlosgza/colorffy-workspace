@@ -2,7 +2,7 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
-@layer layout.form-control {
+@layer components.form-control {
   .form-group,
   .input-group {
     --_form-group-gutter-y: .85rem;
@@ -38,7 +38,6 @@
       --_form-color: var(--theme-on-background);
       --_form-border-width: #{v.$form-border};
       --_form-border-color: var(--theme-outline-text-field);
-
       --_form-easing-in: #{v.$easing-in-fallback};
       --_form-easing-duration: 200ms;
 
@@ -356,11 +355,9 @@
       position: relative;
       text-align: center;
       cursor: pointer;
-
       border: var(--_file-border-width) dashed var(--_file-border-color);
       background: var(--_file-bg-color);
       color: var(--theme-on-background);
-
       padding: var(--_file-gutter);
       height: 100%;
       min-height: var(--_file-height);
