@@ -6,13 +6,13 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 const tabs = ref([
-  { id: 'index', label: 'Home', route: '/' },
-  { id: 'about', label: 'About', route: '/about' },
+  { id: 'index', label: 'Home', route: '/', disabled: true },
+  { id: 'about', label: 'About', route: '/about', disabled: true },
   { id: 'components', label: 'Components', route: '/components' }
 ])
 const segmentedTabs = ref([
   { id: 'overview', label: 'Overview', position: 0 },
-  { id: 'features', label: 'Features', position: 1 },
+  { id: 'features', label: 'Features', position: 1, disabled: true },
   { id: 'settings', label: 'Settings', position: 2 }
 ])
 

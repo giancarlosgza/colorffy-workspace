@@ -86,6 +86,11 @@ export interface ITabItem {
    * Display label for the tab.
    */
   label: string
+
+  /**
+   * When true, the tab is disabled and cannot be selected.
+   */
+  disabled?: boolean
 }
 
 /**
@@ -96,6 +101,11 @@ export interface ISegmentedTab extends ITabItem {
    * Numerical position of the tab for the indicator offset calculation.
    */
   position: number
+
+  /**
+   * When true, the tab is disabled and cannot be selected.
+   */
+  disabled?: boolean
 }
 
 /**

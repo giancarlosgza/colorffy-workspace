@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITabsEmits, ITabsProps } from '@/types/navigation'
+import type { ITabItem, ITabsEmits, ITabsProps } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
 
 /** Props */
@@ -24,9 +24,12 @@ watch(() => props.activeTab, (newVal) => {
 })
 
 /** Methods */
-function handleSelectedTab(tab: string) {
-  activeTabName.value = tab
-  emit('updateActiveTab', tab)
+function handleSelectedTab(tab: ITabItem) {
+  if (tab.disabled)
+    return
+
+  activeTabName.value = tab.id
+  emit('updateActiveTab', tab.id)
 }
 </script>
 
@@ -44,10 +47,12 @@ function handleSelectedTab(tab: string) {
       <button
         class="tab-link"
         role="tab"
-        :class="[activeTabName === tab.id ? 'active' : '']"
+        :class="[activeTabName === tab.id ? 'active' : '', tab.disabled ? 'disabled' : '']"
         :aria-selected="activeTabName === tab.id"
+        :aria-disabled="tab.disabled"
         :tabindex="activeTabName === tab.id ? 0 : -1"
-        @click="handleSelectedTab(tab.id)"
+        :disabled="tab.disabled"
+        @click="handleSelectedTab(tab)"
       >
         {{ tab.label }}
       </button>
