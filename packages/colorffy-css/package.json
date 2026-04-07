@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/css",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
   "main": "dist/colorffy.css",
   "style": "dist/colorffy.css",
@@ -62,7 +62,7 @@
   "license": "MIT",
   "peerDependencies": {
     "floating-vue": "^5.2.0",
-    "@material-symbols/font-700": "^0.40.0 || ^0.41.0 || ^0.42.0 || ^0.43.0"
+    "@material-symbols/font-700": ">=0.40.0 <1.0.0"
   },
   "devDependencies": {
     "sass": "^1.98.0"
