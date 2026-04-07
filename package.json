@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:ui": "eslint packages/colorffy-ui",
-    "lint:playground": "eslint playground"
+    "lint:playground": "eslint playground",
+    "pnpm:install": "pnpm install",
+    "pnpm:prune": "pnpm prune",
+    "pnpm:build": "pnpm run build -r"
   },
   "keywords": [],
   "author": "Giancarlos Garza",
