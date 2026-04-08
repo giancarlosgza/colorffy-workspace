@@ -55,6 +55,12 @@ export interface IDialogProps {
 
   variant?: DialogVariant | null
   /**
+   * When false, clicking outside the dialog will not close it.
+   * Defaults to true.
+   */
+  closeOnClickOutside?: boolean
+
+  /**
    * Optional custom class for the dialog root.
    */
   customClass?: DialogClassName | null

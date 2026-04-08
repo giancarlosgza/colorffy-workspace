@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 /** Props */
 const props = withDefaults(defineProps<IDialogProps>(), {
   showAsModal: true,
+  closeOnClickOutside: true,
   mode: undefined,
   size: undefined,
   customClass: null,
@@ -84,13 +85,16 @@ defineExpose({
     aria-modal="true"
   >
     <div
-      v-on-click-outside="closeDialog"
+      v-on-click-outside="closeOnClickOutside ? closeDialog : () => {}"
       class="dialog-content"
     >
       <div class="dialog-header">
         <slot name="header" />
       </div>
-      <div class="dialog-body" :class="props.bodyDialogClass">
+      <div
+        class="dialog-body"
+        :class="props.bodyDialogClass"
+      >
         <slot name="body" />
       </div>
       <div class="dialog-footer">

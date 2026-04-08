@@ -25,6 +25,10 @@
     background-color: var(--theme-surface-container);
     box-shadow: var(--shadow-xl);
 
+    &[open]:not(:modal) {
+      z-index: v.$z-index-fullscreen;
+    }
+
     // Dialog content
     & .dialog-content {
       display: flex;
@@ -241,7 +245,7 @@
         & .dialog-header {
           flex-wrap: nowrap;
         }
-        
+
         & .dialog-footer {
           :nth-child(1 of .btn) {
             padding-inline: v.$space-1;
@@ -349,7 +353,6 @@
         }
       }
     }
-
   }
 
   // Media queries
@@ -430,7 +433,7 @@
         margin: auto;
         transform-origin: center;
 
-        .dialog-content 
+        .dialog-content
         .dialog-footer {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
