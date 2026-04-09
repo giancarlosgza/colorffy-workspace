@@ -106,6 +106,13 @@ function handleConfirm() {
                 <NuxtLink class="btn btn-link" to="/about">
                   Go to About Page
                 </NuxtLink>
+                <UiButton
+                  variant="filled"
+                  color="secondary"
+                  text="Toggle Popover"
+                  popovertarget="popover-demo"
+                  style="anchor-name: --demo-anchor"
+                />
               </div>
             </template>
             <template #body>
@@ -214,6 +221,51 @@ function handleConfirm() {
               </div>
             </template>
           </UiCard>
+
+          <UiPopover
+            id="popover-demo"
+            anchor-name="--demo-anchor"
+            position-block="top"
+            position-inline="left"
+            size="lg"
+          >
+            <template #header>
+              <p class="popover-title">
+                Filtros
+              </p>
+              <p class="popover-subtitle">
+                Filtra por color, esquema, orden y categoría
+              </p>
+            </template>
+            <template #body>
+              <UiInputText
+                id="search-popover"
+                label="Search"
+                placeholder="Search..."
+              />
+              <UiInputText
+                id="search-popover-2"
+                label="Name"
+                placeholder="Name..."
+              />
+              <hr>
+              <UiInputCheck
+                id="featured-check"
+                label="Featured"
+              />
+              <UiInputCheck
+                id="featured-check-3"
+                label="Featured 3"
+              />
+            </template>
+            <template #footer>
+              <UiButton
+                variant="filled"
+                text="Apply filters"
+                class="btn-block"
+              />
+            </template>
+          </UiPopover>
         </div>
       </div>
       <hr>
@@ -613,22 +665,34 @@ function handleConfirm() {
           </p>
         </template>
         <template #footer>
-          <UiButton variant="text" text="Close" @on-click="closeDialog" />
+          <UiButton
+            variant="text"
+            text="Close"
+            @on-click="closeDialog"
+          />
         </template>
       </UiModal>
 
       <UiModal
         ref="dialogSideSheetRef"
         mode="side-sheet"
+        :show-as-modal="false"
+        :close-on-click-outside="false"
       >
         <template #header>
           <div>
-            <p id="filters-dialog-title" class="dialog-title">
+            <p
+              id="filters-dialog-title"
+              class="dialog-title"
+            >
               Filters
             </p>
-            <span id="filters-dialog-description" class="dialog-subtitle">
+            <p
+              id="filters-dialog-description"
+              class="dialog-subtitle"
+            >
               Filter options for browsing content by color, scheme, sort order, and category
-            </span>
+            </p>
           </div>
           <UiButton
             variant="outline"
