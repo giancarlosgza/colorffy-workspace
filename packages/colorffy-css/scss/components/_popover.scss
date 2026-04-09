@@ -1,0 +1,156 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+@layer components.popover {
+  .popover {
+    --_popover-bg-color: var(--theme-surface-overlay);
+    --_popover-color: var(--theme-on-background);
+    --_popover-border-color: var(--theme-outline-surface);
+    --_popover-shadow: var(--shadow-lg);
+    --_popover-radius: #{v.$dialog-border-radius};
+    --_popover-width: 20rem;
+    --_popover-height: 30rem;
+    --_popover-gutter: 1rem;
+
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: max-content;
+    max-width: var(--_popover-width);
+    max-height: var(--_popover-height);
+    border-radius: var(--_popover-radius);
+    box-shadow: var(--_popover-shadow);
+    background: var(--_popover-bg-color);
+    border: v.$border-sm solid var(--_popover-border-color);
+
+    translate: 0 1rem;
+    opacity: 0;
+    transition: translate 250ms, opacity 250ms, display 250ms allow-discrete, overlay 250ms allow-discrete;
+    transition-timing-function: ease-in-out;
+
+    // Sizes
+    &.popover-sm {
+      --_popover-width: anchor-size(width);
+
+      width: anchor-size(width);
+    }
+
+    &.popover-lg {
+      --_popover-width: none;
+      --_popover-height: 40rem;
+
+      width: max(30rem, anchor-size(width));
+    }
+
+    // Anchor progressively enhancement
+    &.popover-anchor {
+      position: absolute;
+      position-anchor: --anchor-popover;
+      position-try: flip-block, flip-inline;
+      margin: 0;
+      inset: auto;
+      bottom: anchor(top);
+      left: anchor(left);
+      margin-block: 10px;
+
+      // Block axis (vertical)
+      &.popover-anchor-top {
+        top: auto;
+        bottom: anchor(top);
+      }
+
+      &.popover-anchor-bottom {
+        bottom: auto;
+        top: anchor(bottom);
+      }
+
+      // Inline axis (horizontal)
+      &.popover-anchor-left {
+        right: auto;
+        left: anchor(left);
+      }
+
+      &.popover-anchor-right {
+        left: auto;
+        right: anchor(right);
+      }
+    }
+
+    &:popover-open {
+      translate: 0;
+      opacity: 1;
+
+      @starting-style {
+        translate: 0 1rem;
+        opacity: 0;
+      }
+    }
+
+    & .popover-content {
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--_popover-gutter) / 2);
+      color: var(--_popover-color);
+      max-height: 25rem;
+
+      & .popover-header {
+        margin-bottom: var(--_popover-gutter);
+
+        & .popover-title {
+          font-size: var(--fs-sm-200);
+          font-weight: v.$fw-700;
+          color: var(--_popover-color);
+          margin-bottom: .25rem;
+        }
+
+        & .popover-subtitle {
+          font-size: var(--fs-sm-400);
+          color: var(--theme-muted-a10);
+          margin-bottom: .25rem;
+        }
+      }
+
+      & .popover-body {
+        flex-grow: 1;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+
+      & .popover-footer {
+        border-top: v.$border-sm solid var(--_popover-border-color);
+        margin-top: var(--_popover-gutter);
+        padding-top: .75rem;
+      }
+    }
+
+    // Media queries
+    @include m.media-query(768) {
+      &.popover {
+        --_popover-width: calc(100dvw - (var(--_popover-gutter) * 2));
+        --_popover-height: calc(100dvh - (var(--_popover-gutter) * 2));
+
+        left: 0;
+        right: 0;
+        margin-inline: auto;
+
+        &.popover-lg {
+          --_popover-width: calc(100dvw - (var(--_popover-gutter) * 2));
+
+          width: 100%;
+        }
+
+        &.popover-anchor {
+          &:is(.popover-anchor-left, .popover-anchor-right) {
+            inset-inline: 0;
+          }
+
+          &:is(.popover-anchor-top, .popover-anchor-bottom) {
+            position: fixed;
+            inset-block: 0;
+            margin-block: auto;
+          }
+        }
+      }
+    }
+  }
+}

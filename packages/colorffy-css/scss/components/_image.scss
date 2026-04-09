@@ -28,7 +28,7 @@
     // Avatar placeholder
     &.avatar-placeholder {
       display: inline-block;
-      @include m.bg-gradient(45deg, v.$gradient-amethyst);
+      @include m.bg-gradient(45deg, v.$gradient-primary);
       @include m.make-image(35px);
     }
 

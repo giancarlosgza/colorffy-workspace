@@ -89,6 +89,9 @@ export { default as UiPopoverMenu } from './components/ui/navigation/PopoverMenu
 export { default as UiSegmentedControls } from './components/ui/navigation/SegmentedControls.vue'
 export { default as UiTabs } from './components/ui/navigation/Tabs.vue'
 
+// Components - Popover
+export { default as UiPopover } from './components/ui/popover/Popover.vue'
+
 // Components - Progress
 export { default as UiProgressBar } from './components/ui/progress/ProgressBar.vue'
 export { default as UiProgressSpinner } from './components/ui/progress/ProgressSpinner.vue'
