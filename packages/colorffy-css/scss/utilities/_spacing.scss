@@ -208,8 +208,8 @@
   // Block spacing
   @each $size, $value in v.$spacing-sizes {
     .block-spacing-#{$size} {
-      padding-block: #{$size}rem calc(#{$size}rem * 2);
-      scroll-margin-top: calc(#{$size}rem * 3.5);
+      padding-block: $value calc(#{$value} * 2);
+      scroll-margin-top: calc(#{$value} * 3.5);
     }
   }
 
