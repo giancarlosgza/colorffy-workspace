@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/ui",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -25,7 +25,6 @@
     "dev": "vite build --watch",
     "build": "vite build",
     "prepublishOnly": "pnpm run build",
-    "fix:imports": "node scripts/fix-imports.js",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
     "version:major": "npm version major",
@@ -36,8 +35,13 @@
   "peerDependencies": {
     "@vueuse/components": "^14.0.0",
     "floating-vue": "^5.2.0",
-    "nuxt": "^4.2.0",
+    "nuxt": "^3.0.0 || ^4.0.0",
     "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "nuxt": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@colorffy/css": "workspace:*",
