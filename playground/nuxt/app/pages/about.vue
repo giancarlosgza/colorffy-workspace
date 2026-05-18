@@ -10,15 +10,50 @@
       actions :hide-actions-on-mobile="false"
     >
       <template #actions>
-        <UiButton
-          text="CREATE USER"
-          variant="filled"
-          rounded
-        >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe145;" />
-          </template>
-        </UiButton>
+        <UiButtonGroup connected>
+          <UiButton
+            text="CREATE USER"
+            variant="filled"
+            color="white"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+          <UiButton
+            text="REFRESH"
+            variant="outline"
+            class="btn-filled filled-white"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe86a;" />
+            </template>
+          </UiButton>
+          <UiButtonTooltip
+            tooltip-text="Download"
+            variant="tonal"
+            color="accent"
+            icon icon-variant="shape-sm"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xf090;" />
+            </template>
+          </UiButtonTooltip>
+          <UiButtonMenu
+            tooltip-text="Manage"
+            variant="tonal"
+            color="accent"
+            tooltip-placement="left"
+            placement="bottom"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe8b8;" />
+            </template>
+            <template #menu>
+              <UiButtonMenuItem item-text="Edit" />
+            </template>
+          </UiButtonMenu>
+        </UiButtonGroup>
       </template>
     </UiHeaderContent>
 

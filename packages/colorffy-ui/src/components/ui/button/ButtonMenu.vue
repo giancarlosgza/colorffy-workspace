@@ -19,7 +19,10 @@ withDefaults(defineProps<IButtonMenuProps>(), {
   disabled: false,
   loading: false,
   customClass: '',
-  rounded: false
+  rounded: false,
+  fluid: false,
+  placement: 'bottom' as const,
+  tooltipPlacement: 'top' as const
 })
 
 /** Emits */
@@ -27,54 +30,57 @@ defineEmits<IButtonMenuEmits>()
 </script>
 
 <template>
-  <div>
-    <VDropdown
-      :aria-id="`${id}-dropdown`"
-      :positioning-disabled="isMobile"
+  <VDropdown
+    :aria-id="`${id}-dropdown`"
+    :positioning-disabled="isMobile"
+    :placement="placement"
+    :class="{ 'w-100': fluid }"
+  >
+    <VTooltip
+      :aria-id="`${id}-tooltip`"
+      :placement="tooltipPlacement"
+      :class="{ 'w-100': fluid }"
+      class="d-inline-block"
     >
-      <VTooltip
-        :aria-id="`${id}-tooltip`"
-        class="d-inline-block"
+      <!-- Button component -->
+      <UiButton
+        :id
+        :title
+        :text
+        :variant
+        :color
+        :size
+        :icon
+        :icon-variant="iconVariant"
+        :custom-class="customClass"
+        :rounded="rounded"
+        :fluid="fluid"
+        :icon-trailing="iconTrailing"
+        :loading="loading"
+        :disabled="disabled"
+        :aria-label="text ? undefined : (title || tooltipText)"
+        @click="$emit('onClick')"
       >
-        <!-- Button component -->
-        <UiButton
-          :id
-          :title
-          :text
-          :variant
-          :color
-          :size
-          :icon
-          :icon-variant="iconVariant"
-          :custom-class="customClass"
-          :rounded="rounded"
-          :icon-trailing="iconTrailing"
-          :loading="loading"
-          :disabled="disabled"
-          :aria-label="text ? undefined : (title || tooltipText)"
-          @click="$emit('onClick')"
-        >
-          <!-- Icon slot -->
-          <template #icon>
-            <slot name="icon" />
-          </template>
-          <template #content>
-            <slot name="content" />
-          </template>
-        </UiButton>
-
-        <!-- Tooltip text slot -->
-        <template #popper>
-          {{ tooltipText }}
+        <!-- Icon slot -->
+        <template #icon>
+          <slot name="icon" />
         </template>
-      </VTooltip>
+        <template #content>
+          <slot name="content" />
+        </template>
+      </UiButton>
 
-      <!-- Dropdown menu slot -->
+      <!-- Tooltip text slot -->
       <template #popper>
-        <ul>
-          <slot name="menu" />
-        </ul>
+        {{ tooltipText }}
       </template>
-    </VDropdown>
-  </div>
+    </VTooltip>
+
+    <!-- Dropdown menu slot -->
+    <template #popper>
+      <ul>
+        <slot name="menu" />
+      </ul>
+    </template>
+  </VDropdown>
 </template>

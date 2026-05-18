@@ -18,7 +18,9 @@ withDefaults(defineProps<IButtonTooltipProps>(), {
   disabled: false,
   loading: false,
   customClass: '',
-  rounded: false
+  rounded: false,
+  fluid: false,
+  placement: 'top' as const
 })
 
 /** Emits */
@@ -26,39 +28,39 @@ defineEmits<IButtonTooltipEmits>()
 </script>
 
 <template>
-  <div>
-    <VTooltip
-      :aria-id="`${id}-tooltip`"
-      class="d-inline-block"
+  <VTooltip
+    :aria-id="`${id}-tooltip`"
+    :placement="placement"
+    :class="{ 'w-100': fluid }"
+  >
+    <!-- Button component -->
+    <UiButton
+      :id
+      :title
+      :text
+      :variant
+      :color
+      :size
+      :icon
+      :icon-variant="iconVariant"
+      :custom-class="customClass"
+      :rounded="rounded"
+      :fluid="fluid"
+      :icon-trailing="iconTrailing"
+      :loading="loading"
+      :disabled="disabled"
+      :aria-label="text ? undefined : (title || tooltipText)"
+      @click="$emit('onClick')"
     >
-      <!-- Button component -->
-      <UiButton
-        :id
-        :title
-        :text
-        :variant
-        :color
-        :size
-        :icon
-        :icon-variant="iconVariant"
-        :custom-class="customClass"
-        :rounded="rounded"
-        :icon-trailing="iconTrailing"
-        :loading="loading"
-        :disabled="disabled"
-        :aria-label="text ? undefined : (title || tooltipText)"
-        @click="$emit('onClick')"
-      >
-        <!-- Icon slot -->
-        <template #icon>
-          <slot name="icon" />
-        </template>
-      </UiButton>
-
-      <!-- Tooltip text slot -->
-      <template #popper>
-        {{ tooltipText }}
+      <!-- Icon slot -->
+      <template #icon>
+        <slot name="icon" />
       </template>
-    </VTooltip>
-  </div>
+    </UiButton>
+
+    <!-- Tooltip text slot -->
+    <template #popper>
+      {{ tooltipText }}
+    </template>
+  </VTooltip>
 </template>

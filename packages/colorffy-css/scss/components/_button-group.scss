@@ -25,12 +25,12 @@
       --_btn-connected-radius: #{v.$rounded-full};
 
       // Handle v-popper wrapped buttons
-      div:has(.v-popper):first-child .btn {
+      > :is(div:has(.v-popper), .v-popper):first-child .btn {
         border-top-left-radius: var(--_btn-connected-radius);
         border-bottom-left-radius: var(--_btn-connected-radius);
       }
 
-      div:has(.v-popper):last-child .btn {
+      > :is(div:has(.v-popper), .v-popper):last-child .btn {
         border-top-right-radius: var(--_btn-connected-radius);
         border-bottom-right-radius: var(--_btn-connected-radius);
       }
@@ -52,18 +52,18 @@
       &:is(.btn-group-joined) {
         --_btn-group-gap: 0;
 
-        div:has(.v-popper):not(:first-child):not(:last-child) .btn {
+        > :is(div:has(.v-popper), .v-popper):not(:first-child):not(:last-child) .btn {
           --_btn-radius: 0;
         }
 
-        .btn:not(:first-child):not(:last-child) {
+        > .btn:not(:first-child):not(:last-child) {
           --_btn-radius: 0;
         }
       }
 
       // Vertical variant
       &:is(.btn-group-vertical) {
-        div:has(.v-popper) {
+        > :is(div:has(.v-popper), .v-popper) {
           & .btn {
             border-radius: v.$button-border-radius;
           }
@@ -90,7 +90,7 @@
         }
 
         &:is(.btn-group-joined) {
-          div:has(.v-popper):not(:first-child):not(:last-child) .btn {
+          > :is(div:has(.v-popper), .v-popper):not(:first-child):not(:last-child) .btn {
             border-radius: 0;
           }
 
@@ -286,7 +286,7 @@
 
       & .btn-fab {
         --_btn-gap: 0;
-        
+
         aspect-ratio: 1;
 
         & span {

@@ -2,7 +2,7 @@ import type { IBadgeProps } from '@/types/badge'
 
 export type ButtonClassName = string | string[] | Record<string, boolean>
 export type ButtonVariant = 'filled' | 'tonal' | 'outline' | 'text' | 'link' | 'chip' | 'cta' | 'gradient' | 'frosted'
-export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'transparent'
+export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'white' | 'black' | 'transparent'
 export type ButtonSizeLevel = 'sm' | 'md' | 'lg'
 
 /**
@@ -78,9 +78,19 @@ export interface IBaseButtonProps {
   rounded?: boolean
 
   /**
+   * Optional fluid width style. When true, applies btn-block class for 100% width.
+   */
+  fluid?: boolean
+
+  /**
    * Optional tooltip text of the button. Can be a string or null.
    */
   tooltipText?: string | null
+
+  /**
+   * Optional placement for tooltip or dropdown.
+   */
+  placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
 }
 
 /**
@@ -268,6 +278,11 @@ export interface IButtonMenuProps extends IBaseButtonProps {
    * When true, disables certain positioning features for mobile devices.
    */
   isMobile?: boolean
+
+  /**
+   * Optional placement for the tooltip.
+   */
+  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
 }
 
 /**

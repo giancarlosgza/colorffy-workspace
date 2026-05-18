@@ -102,6 +102,33 @@
             --_btn-bg-color: var(--theme-danger-a30);
           }
         }
+
+        // Fixed
+        &.filled-white {
+          --_btn-bg-color: var(--color-brand-white-500);
+          --_btn-color: var(--color-brand-black-500);
+
+          &:is(:hover) {
+            --_btn-bg-color: color-mix(in srgb, var(--color-brand-white-500) 90%, var(--color-brand-black-500));
+          }
+
+          &:is(:focus, :active) {
+            --_btn-bg-color: color-mix(in srgb, var(--color-brand-white-500) 80%, var(--color-brand-black-500));
+          }
+        }
+
+        &.filled-black {
+          --_btn-bg-color: var(--color-brand-black-500);
+          --_btn-color: var(--color-brand-white-500);
+
+          &:is(:hover) {
+            --_btn-bg-color: color-mix(in srgb, var(--color-brand-black-500) 90%, var(--color-brand-white-500));
+          }
+
+          &:is(:focus, :active) {
+            --_btn-bg-color: color-mix(in srgb, var(--color-brand-black-500) 80%, var(--color-brand-white-500));
+          }
+        }
       }
 
       // Tonal

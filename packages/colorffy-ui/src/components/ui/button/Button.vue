@@ -17,7 +17,8 @@ const props = withDefaults(defineProps<IButtonProps>(), {
   disabled: false,
   loading: false,
   customClass: '',
-  rounded: false
+  rounded: false,
+  fluid: false
 })
 
 /** Emits */
@@ -38,7 +39,7 @@ const buttonClasses = computed(() => {
 
   // Sizes
   if (props.size) {
-    let sizeClass = ''
+    let sizeClass
 
     if (props.size === 'sm') {
       sizeClass = 'btn-sm'
@@ -65,6 +66,9 @@ const buttonClasses = computed(() => {
 
   if (props?.rounded)
     classes.push('btn-rounded')
+
+  if (props?.fluid)
+    classes.push('btn-block')
 
   if (props.customClass)
     classes.push(props.customClass)
