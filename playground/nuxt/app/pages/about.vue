@@ -92,7 +92,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <UiCard variant="pane" class="mt-3">
+        <UiCard variant="pane" class="my-3">
           <template #body>
             <p>This is a card component. You can use it to display content in a structured way.</p>
           </template>
