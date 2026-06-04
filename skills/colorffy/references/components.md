@@ -223,17 +223,57 @@ Button with dropdown menu.
 Menu item for UiButtonMenu.
 
 ```vue
-<UiButtonMenuItem icon="edit" @click="handleEdit">
+<UiButtonMenuItem 
+  icon="edit" 
+  icon-trailing="chevron_right" 
+  icon-trailing-class="text-muted"
+  @click="handleEdit"
+>
   Edit Item
 </UiButtonMenuItem>
 ```
 
 **Props:**
 - `icon` (string, optional) - Icon code
+- `iconClass` (string | string[], optional) - CSS classes for the icon
+- `iconStyle` (string | object, optional) - Inline styles for the icon
+- `iconTrailing` (string, optional) - Trailing icon code (placed on the right side)
+- `iconTrailingClass` (string | string[], optional) - CSS classes for the trailing icon
+- `iconTrailingStyle` (string | object, optional) - Inline styles for the trailing icon
 - `disabled` (boolean)
+- `badge` (object, optional) - Badge options (`text`, `variant`, etc.)
+- `shortcut` (string, optional) - Keyboard shortcut text
+- `isDestructive` (boolean, default: false) - Apply destructive styling (e.g. red)
 
 **Events:**
 - `click` - Emitted on click
+
+### UiButtonMenuSubmenu
+Submenu nested dropdown for nested menu trees. Must be placed inside a dropdown menu.
+
+```vue
+<UiButtonMenuSubmenu
+  item-text="Export to"
+  icon="folder"
+  icon-trailing="chevron_right"
+>
+  <UiButtonMenuItem item-text="PDF" />
+  <UiButtonMenuItem item-text="Word" />
+</UiButtonMenuSubmenu>
+```
+
+**Props:**
+- `id` (string, optional) - Dropdown wrapper element ID
+- `placement` (string, default: 'right') - Placement of the submenu relative to the menu item
+- `isMobile` (boolean, default: false) - Disable positioning logic on mobile screens
+- `itemText` (string) - Submenu item title
+- `icon` (string, optional) - Leading icon code
+- `iconClass` / `iconStyle` (optional) - Leading icon customization
+- `iconTrailing` (string, optional) - Trailing icon code
+- `iconTrailingClass` / `iconTrailingStyle` (optional) - Trailing icon customization
+- `disabled` (boolean, default: false) - Disable submenu trigger
+- `badge` (object, optional) - Optional badge config
+- `isDestructive` (boolean, default: false) - Apply destructive theme styling
 
 ### UiButtonMenuDivider
 Visual separator in menu.
@@ -284,6 +324,26 @@ Button with integrated tooltip.
 **Props:** Same as UiButton, plus:
 - `tooltip` (string, required) - Tooltip text
 - `tooltipPlacement` ('top' | 'bottom' | 'left' | 'right')
+
+### UiButtonGroup
+Groups multiple buttons together into a single layout group.
+
+```vue
+<UiButtonGroup connected class="flex-nowrap">
+  <UiButton text="Edit" />
+  <UiButtonMenu icon tooltip-text="More Actions" />
+</UiButtonGroup>
+```
+
+**Props:**
+- `connected` (boolean, default: false) - Groups buttons closer with a small `0.25rem` gap and rounded outer boundaries
+- `joined` (boolean, default: false) - Seamlessly joins buttons together with `0` gap, removing intermediate border-radii (forces `--_btn-radius: 0`)
+- `vertical` (boolean, default: false) - Stacks buttons vertically
+- `customClass` (string) - Custom CSS classes
+
+**SCSS Styling Behavior:**
+- Under `.btn-group-connected`, `.btn-icon` components automatically fall back to the standard `v.$button-border-radius` (instead of 100% circular shapes) to align next to neighboring buttons.
+- Under `.btn-group-joined` (horizontal & vertical), all button components are flattened by setting `--_btn-radius: 0` or `border-radius: 0` for seamless alignments.
 
 ## Cards
 
@@ -420,9 +480,9 @@ User avatar component with fallback.
 
 **Common props across all form inputs:**
 - `modelValue` - Input value (v-model)
-- `label` (string) - Field label
+- `label` (string) - Field label (when `required` is true, appends ` *` suffix)
 - `placeholder` (string)
-- `required` (boolean)
+- `required` (boolean) - Appends ` *` to label
 - `disabled` (boolean)
 - `error` (string) - Error message
 - `hint` (string) - Helper text
@@ -469,18 +529,40 @@ User avatar component with fallback.
 ### UiInputCheck
 
 ```vue
-<UiInputCheck v-model="agreed" label="I agree to the terms" />
+<UiInputCheck 
+  v-model="agreed" 
+  label="I agree to the terms" 
+  variant="switch"
+  :hide-label="false"
+/>
 ```
 
-**Props:** `modelValue` (boolean), `label`, `disabled`, `color`
+**Props:**
+- `modelValue` (boolean)
+- `label` (string)
+- `disabled` (boolean)
+- `color` (string)
+- `variant` ('switch' | null) - style variant (renders switch checkbox when set to `'switch'`)
+- `hideLabel` (boolean) - hides label text visually while keeping it accessible
 
 ### UiInputRadio
 
 ```vue
-<UiInputRadio v-model="choice" value="option1" label="Option 1" name="radio-group" />
+<UiInputRadio
+  v-model="choice"
+  label="Select Plan"
+  :options="[
+    { label: 'Basic', value: 'basic' },
+    { label: 'Premium', value: 'premium' }
+  ]"
+/>
 ```
 
-**Props:** `modelValue`, `value`, `label`, `name` (required), `disabled`
+**Props:**
+- `modelValue` (any) - Selected value
+- `label` (string) - Group label
+- `options` (array, required) - List of radio options with `label` and `value`
+- `disabled` (boolean)
 
 ### UiInputRange
 
@@ -549,11 +631,22 @@ Container for list items.
 Individual list item.
 
 ```vue
-<UiListItem active clickable @click="handleClick">
+<UiListItem 
+  active 
+  clickable 
+  has-actions
+  custom-icon-wrapper-class="bg-primary rounded-full"
+  custom-icon-class="text-white"
+  @click="handleClick"
+>
   <template #icon>
     <UiIconMaterial icon-code="&#xe8b6;" />
   </template>
   List item text
+  
+  <template #list-action>
+    <UiButton icon text="Edit" />
+  </template>
 </UiListItem>
 ```
 
@@ -561,10 +654,14 @@ Individual list item.
 - `active` (boolean) - Highlighted state
 - `clickable` (boolean) - Show hover effect
 - `disabled` (boolean)
+- `hasActions` (boolean, default: false) - Wraps list item in flex layout to support trailing action templates (and sets `is-undecorated` to true automatically)
+- `customIconClass` (string | string[], optional) - Custom CSS classes for the icon component inside list item
+- `customIconWrapperClass` (string | string[], optional) - Custom CSS classes for the list item icon wrapper container
 
 **Slots:**
 - `icon` - Prepend icon
 - `default` - Item content
+- `list-action` - Append slot after the list-item content (visible when `hasActions` is true)
 
 ## Navigation
 

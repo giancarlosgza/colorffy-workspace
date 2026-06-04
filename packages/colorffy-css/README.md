@@ -208,12 +208,12 @@ Colorffy CSS includes styles for:
 - Accordion
 - Alert / Banner / Snackbar
 - Badge
-- Button
+- Button (including icon buttons, connected & joined button groups)
 - Card
 - Dialog / Modal
-- Dropdown
+- Dropdown (including nested submenus)
 - Image / Avatar
-- List
+- List (including flex layouts and trailing list actions)
 - Progress
 - Tabs
 - Tooltip
@@ -221,7 +221,7 @@ Colorffy CSS includes styles for:
 ### Layout
 - Flex Container
 - Grid Container
-- Form Controls
+- Form Controls (validation states, switches with optional label visibility, text/number/file/color/range/radio inputs)
 - Input Groups
 - Navbar
 - Sidebar

@@ -102,6 +102,44 @@ Colorffy CSS uses semantic CSS variables for dark mode support. Toggle the `.dar
 }
 ```
 
+### Brand Tokens & Theme Mappings
+
+Colorffy maps brand tokens to semantic base theme properties depending on the active theme mode:
+
+#### Base Dark Tokens
+- **Definition**: `--color-brand-dark-500` (light mode value) and `--color-brand-dark-50` (dark mode value).
+- **Base Light Token (`:root`)**:
+  ```css
+  --theme-dark-base: var(--color-brand-dark-500);
+  ```
+- **Base Dark Token (`.dark-mode`)**:
+  ```css
+  --theme-dark-base: var(--color-brand-dark-50);
+  ```
+
+#### Primary Brand & Dynamic Tones
+- **Definition**: `--color-brand-primary-500` (light mode value) and `--color-brand-primary-50` (dark mode value).
+- **Base Light Token (`:root`)**:
+  ```css
+  --theme-primary-base: var(--color-brand-primary-500);
+  ```
+- **Base Dark Token (`.dark-mode`)**:
+  ```css
+  --theme-primary-base: var(--color-brand-primary-50);
+  ```
+
+#### Dynamic Tones (Opacity Blending)
+Colorffy generates dynamic color opacity tones (e.g. `a10` to `a90`) by blending base color tokens with background surfaces using `color-mix(in srgb)` to ensure consistent visibility and contrast:
+```css
+/* Generating a 10% opacity primary blend */
+--theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 95%);
+```
+
+#### Color Mix Best Practices
+- **Opacity utilities (e.g., `bg-primary/50`)**: Use `color-mix(in oklab, color, transparent)`.
+- **Tinted surfaces & borders**: Use `color-mix(in srgb, color, background)`.
+- **Blending two vibrant colors**: Use `color-mix(in oklch, colorA, colorB)` to avoid muddy middle tones.
+
 ### Manual Dark Mode Toggle
 
 Implement a toggle in Vue:
@@ -141,113 +179,105 @@ onMounted(() => {
 
 ```scss
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $font-family-primary: ('Inter', sans-serif),
-  $font-family-secondary: ('Georgia', serif),
-  $font-family-mono: ('Fira Code', monospace)
-);
-```
-
-### Font Sizes
-
-Colorffy uses a numeric sizing scale:
-
-```scss
-$font-sizes: (
-  100: 0.75rem,   // Extra small
-  200: 0.875rem,  // Small
-  300: 1rem,      // Base
-  400: 1.125rem,  // Medium
-  500: 1.25rem,   // Large
-  600: 1.5rem     // Extra large
-);
-```
-
-Override specific sizes:
-
-```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $fs-100: 0.625rem,
-  $fs-600: 2rem
+  $font-primary: var(--font-primary),
+  $font-secondary: var(--font-secondary),
+  $font-code: var(--font-code),
+  $font-icons: var(--font-icons)
 );
 ```
 
 ### Font Weights
 
 ```scss
-$font-weights: (
-  400: 400,  // Normal
-  500: 500,  // Medium
-  600: 600,  // Semibold
-  700: 700,  // Bold
-  800: 800   // Extrabold
-);
+$fw-400: 400; // Normal
+$fw-500: 500; // Medium
+$fw-600: 600; // Semibold
+$fw-700: 700; // Bold
+$fw-800: 800; // Extrabold
 ```
+
+### Font Sizes (CSS Custom Properties)
+Font sizes are controlled via CSS custom properties on `:root` to allow clamp-based fluid sizing:
+- Base scales: `--fs-100` to `--fs-600` (e.g. `--fs-100` for `h1` size clamp)
+- Small scales: `--fs-sm-100` to `--fs-sm-500` (used for overlines, subtitles, captions, buttons)
 
 ## Spacing Scale
 
-Customize spacing values used by margin, padding, and gap utilities:
+Spacing size utilities are defined via the `$spacing-sizes` SCSS map:
 
 ```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $spacing-0: 0,
-  $spacing-1: 0.25rem,
-  $spacing-2: 0.5rem,
-  $spacing-3: 1rem,
-  $spacing-4: 1.5rem,
-  $spacing-5: 3rem
+$spacing-sizes: (
+  px: 1px,
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  6: 4.5rem,
+  7: 6rem,
+  8: 7.5rem,
+  9: 9rem,
+  10: 12rem
 );
 ```
 
 ## Border Radius
 
-```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $rounded-none: 0,
-  $rounded-sm: 0.125rem,
-  $rounded-md: 0.375rem,
-  $rounded-lg: 0.5rem,
-  $rounded-xl: 1rem,
-  $rounded-full: 9999px
-);
-```
-
-## Shadows
+Border radius tokens are mapped from the `$border-radius` SCSS map:
 
 ```scss
-$shadows: (
-  none: none,
-  sm: 0 1px 2px rgba(0, 0, 0, 0.05),
-  md: 0 4px 6px rgba(0, 0, 0, 0.1),
-  lg: 0 10px 15px rgba(0, 0, 0, 0.1),
-  xl: 0 20px 25px rgba(0, 0, 0, 0.15)
+$border-radius: (
+  0: 0px,
+  4: 4px,
+  6: 6px,
+  8: 8px,
+  12: 12px,
+  25: 25px,
+  50: 50px
 );
+
+// Mapped helper variables:
+$rounded-none: map.get($border-radius, 0);
+$rounded-sm:   map.get($border-radius, 6);
+$rounded-md:   map.get($border-radius, 8);
+$rounded-lg:   map.get($border-radius, 12);
+$rounded-xl:   map.get($border-radius, 25);
+$rounded-full: map.get($border-radius, 50);
 ```
+
+## Shadows (CSS Custom Properties)
+
+Shadows are defined dynamically on `:root` as CSS custom properties based on active light/dark theme schemes:
+- `--shadow-xs` - Extra small shadow
+- `--shadow-sm` - Small/default shadow
+- `--shadow-md` - Medium shadow
+- `--shadow-lg` - Large shadow
+- `--shadow-xl` - Extra large shadow
 
 ## Breakpoints
 
-Customize responsive breakpoints:
+Breakpoints for media queries and grid systems are defined using SCSS maps:
 
 ```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $breakpoint-sm: 576px,
-  $breakpoint-md: 768px,
-  $breakpoint-lg: 992px,
-  $breakpoint-xl: 1200px,
-  $breakpoint-xxl: 1400px
+// Layout media breakpoints
+$breakpoints: (
+  1155: 1155px,
+  1024: 1024px,
+  992: 992px,
+  960: 960px,
+  768: 768px,
+  600: 600px,
+  320: 320px
 );
-```
 
-## Container Widths
-
-```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1140px,
-    xxl: 1320px
-  )
+// Grid system breakpoints
+$grid-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
 );
 ```
 Recommended folder structure for scalable theming:

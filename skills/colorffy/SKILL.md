@@ -161,7 +161,7 @@ const name = ref('')
 
 **Layout:** UiHeaderContent, UiPaneContent, UiCard
 **Navigation:** UiTabs, UiNavigationBar, UiDrawerLink, UiSegmentedControls
-**Buttons:** UiButton, UiButtonMenu, UiButtonToggleGroup, UiButtonTooltip
+**Buttons:** UiButton, UiButtonMenu, UiButtonMenuSubmenu, UiButtonToggleGroup, UiButtonTooltip
 **Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile
 **Dialogs:** UiModal, UiConfirmModal
 **Feedback:** UiAlert, UiAlertToast, UiLoading, UiEmpty

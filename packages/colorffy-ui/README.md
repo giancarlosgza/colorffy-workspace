@@ -341,6 +341,7 @@ export default defineNuxtConfig({
 - `UiButtonMenu` - Button with dropdown menu
 - `UiButtonMenuDivider` - Menu divider
 - `UiButtonMenuItem` - Menu item
+- `UiButtonMenuSubmenu` - Dropdown submenu item
 - `UiButtonMenuText` - Menu text item
 - `UiButtonToggleGroup` - Toggle button group
 - `UiButtonTooltip` - Button with tooltip
