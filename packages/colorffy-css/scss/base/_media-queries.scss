@@ -3,23 +3,33 @@
 
 @layer media-queries {
   @include m.media-query(1024) {
-    // Prevent body from scrolling when a sheet is open
+    // Prevent body from scrolling when sheets, mobile drawers, or menus are open
     body {
       &:has(.navigation-drawer.sheet.sheet-filters:is(.sheet-active)) {
         overflow-y: hidden;
       }
 
-      &:has(.bottom-sheet:is(.sheet-open)) {
+      &:has(.navigation-drawer:is(.drawer-open)) {
+        overflow-y: hidden;
+      }
+
+      &:has(.popover-menu:is(.popover-menu-visible)) {
+        overflow-y: hidden;
+      }
+
+      &:has(.menu-tools:is(.menu-tools-visible)) {
         overflow-y: hidden;
       }
     }
 
-    // Add a margin bottom to the main content to show bottom elements
-    main {
-      padding-bottom: calc(#{v.$navigation-bar-min-height} + 1rem);
+    // Add a margin bottom to the main content to show bottom elements when bottom navigation bar is present
+    body:has(.navigation-bar) {
+      main {
+        padding-bottom: calc(#{v.$navigation-bar-min-height} + 1rem);
 
-      &:has(footer, .footer) {
-        padding-bottom: calc(#{v.$navigation-bar-min-height} - 1.5rem);
+        &:has(footer, .footer) {
+          padding-bottom: calc(#{v.$navigation-bar-min-height} - 1.5rem);
+        }
       }
     }
   }

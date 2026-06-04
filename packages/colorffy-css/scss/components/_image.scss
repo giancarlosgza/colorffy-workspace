@@ -68,7 +68,7 @@
     margin-block: auto;
     margin-inline: 0 0.25rem;
     border-radius: v.$rounded-full;
-    background: rgba(var(--theme-accent-fixed), 0.25);
+    background: rgb(from var(--theme-accent-base-fixed) r g b / 0.25);
     font-size: var(--fs-sm-500);
     font-weight: v.$fw-600;
 

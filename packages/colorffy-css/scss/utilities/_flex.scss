@@ -314,7 +314,7 @@
   * Generate utilities for each breakpoint
   */
   @each $breakpoint, $size in v.$grid-breakpoints {
-    @media (min-width: $size) {
+    @media (width >= $size) {
       // Justify content
       .justify-content-#{$breakpoint}-start {
         justify-content: flex-start;

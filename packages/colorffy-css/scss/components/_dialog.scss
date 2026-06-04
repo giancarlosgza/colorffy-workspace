@@ -260,7 +260,12 @@
     &.dialog-confirm {
       border-radius: var(--_dialog-radius);
       width: clamp(18rem, 90vw, 25rem);
-      height: max-content;
+      height: fit-content;
+
+      & .dialog-content {
+        height: auto;
+        min-height: auto;
+      }
 
       & .dialog-body {
         display: grid;
@@ -285,7 +290,12 @@
     // Sizes
     &.dialog-sm {
       width: clamp(18rem, 90vw, 26rem);
-      height: max-content; // Content-driven height, avoids Safari issues
+      height: fit-content;
+
+      & .dialog-content {
+        height: auto;
+        min-height: auto;
+      }
     }
 
     &.dialog-md {
@@ -336,7 +346,7 @@
 
     // Backdrop
     &::backdrop {
-      background: rgba(0, 0, 0, 50%);
+      background: var(--theme-overlay-backdrop);
     }
 
     &.dialog-backdrop-blur {
@@ -428,10 +438,15 @@
         --_dialog-radius: #{v.$rounded-xl};
 
         width: clamp(18rem, 90vw, 25rem);
-        height: max-content;
+        height: fit-content;
         inset: 0;
         margin: auto;
         transform-origin: center;
+
+        & .dialog-content {
+          height: auto;
+          min-height: auto;
+        }
 
         .dialog-content
         .dialog-footer {

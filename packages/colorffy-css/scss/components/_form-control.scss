@@ -124,8 +124,25 @@
         display: none;
       }
 
+      // User-invalid state (native browser validation once interacted)
+      &:is(:user-invalid) {
+        --_form-border-color: var(--theme-danger-a10);
+
+        &:is(:focus, :active, :focus-visible) {
+          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
+        }
+
+        + .invalid-feedback {
+          display: block;
+          margin-top: .45rem;
+          font-size: var(--fs-sm-400);
+          color: var(--theme-danger-a10);
+        }
+      }
+
       // Textarea
       &:is(textarea) {
+        field-sizing: content;
         min-block-size: 4rlh;
         min-inline-size: 20ch;
         // max-inline-size: 50ch;

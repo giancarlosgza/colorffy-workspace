@@ -275,7 +275,7 @@
       --_nav-easing-in: #{v.$easing-emphasized};
       --_nav-easing-duration: 600ms;
     }
-    @media (min-width: 992px) {
+    @media (width >= 992px) {
       .navbar-collapse {
         display: flex;
         flex-basis: auto;

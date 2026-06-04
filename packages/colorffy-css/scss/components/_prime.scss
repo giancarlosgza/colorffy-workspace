@@ -357,7 +357,7 @@
   }
 
   .p-dialog-mask {
-    background: rgba(var(--theme-overlay-fixed), 50%);
+    background: var(--theme-overlay-backdrop);
   }
 
   // Input Switch

@@ -2,7 +2,6 @@
 *** Colorffy Design System Stylesheet v1.5.0 (Orion)
 **/
 @use './abstracts/variables';
-@use './abstracts/functions';
 @use './abstracts/mixins';
 
 @use './base/layers';
@@ -20,6 +19,7 @@
 @use './components/button-effects';
 @use './components/button-group';
 @use './components/card';
+@use './components/carousel';
 @use './components/dialog';
 @use './components/dropdown';
 @use './components/form-check';

@@ -258,7 +258,7 @@
 @mixin media-query($key) {
   $size: map.get(v.$breakpoints, $key);
 
-  @media only screen and (max-width: $size) {
+  @media (width < $size) {
     @content
   }
 }
@@ -478,16 +478,9 @@
 }
 
 /*
-* RGBA colors
-* Generate rgba colors method using @hexToRgb function
+* Fixed base theme colors
 */
 @mixin primary-fixed-colors() {
-  /** Fallback */
-  @each $color, $value in v.$primary-colors {
-    --theme-#{$color}-fixed: #{f.hexToRgb($value)};
-  }
-
-  /* Modern */
   --theme-primary-base-fixed: var(--color-brand-primary-500);
   --theme-secondary-base-fixed: var(--color-brand-secondary-500);
   --theme-accent-base-fixed: var(--color-brand-accent-500);
@@ -513,19 +506,19 @@
   padding-inline: calc(var(--_container-gutter-x) * .5);
   width: 100%;
 
-  @media (min-width: 576px) {
+  @media (width >= 576px) {
     max-width: 540px;
   }
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     max-width: 720px;
   }
-  @media (min-width: 992px) {
+  @media (width >= 992px) {
     max-width: 960px;
   }
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     max-width: 1140px;
   }
-  @media (min-width: 1400px) {
+  @media (width >= 1400px) {
     max-width: 1320px;
   }
 }
@@ -575,7 +568,7 @@
 
 // Media query mixin
 @mixin media-breakpoint-up($size) {
-  @media (min-width: map.get(v.$grid-breakpoints, $size)) {
+  @media (width >= map.get(v.$grid-breakpoints, $size)) {
     @content;
   }
 }

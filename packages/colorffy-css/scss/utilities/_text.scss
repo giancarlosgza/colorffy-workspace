@@ -113,7 +113,7 @@
   * Generate utilities for each breakpoint
   */
   @each $breakpoint, $size in v.$grid-breakpoints {
-    @media (min-width: $size) {
+    @media (width >= $size) {
       .text-#{$breakpoint}-left {
         text-align: left;
       }

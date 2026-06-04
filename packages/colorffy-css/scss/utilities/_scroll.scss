@@ -222,4 +222,14 @@
       --fade-right: 0px;
     }
   }
+
+  // Custom scrollbar styling
+  .scrollbar-custom {
+    scrollbar-color: var(--theme-muted-base) transparent;
+    scrollbar-width: thin;
+
+    @media (prefers-contrast: more) {
+      scrollbar-color: var(--theme-on-background) transparent;
+    }
+  }
 }

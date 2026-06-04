@@ -3,6 +3,8 @@
 
 @layer base.tokens {
   :root {
+    color-scheme: light;
+    
     /*
     ** brand colors
     ** (500) Light Mode - (50) Dark Mode
@@ -30,37 +32,37 @@
 
     /* basic colors */
     --theme-background: var(--theme-surface-a0);
-    --theme-on-background: var(--color-brand-black-500);
-    --theme-on-background-inverse: var(--color-brand-white-500);
+    --theme-on-background: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
+    --theme-on-background-inverse: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
 
     /* on background colors */
-    --theme-on-primary: var(--color-brand-white-500);
-    --theme-on-primary-inverse: var(--color-brand-black-500);
-    --theme-on-primary-container: var(--color-brand-black-500);
-    --theme-on-secondary: var(--color-brand-white-500);
-    --theme-on-secondary-inverse: var(--color-brand-black-500);
+    --theme-on-primary: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
+    --theme-on-primary-inverse: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
+    --theme-on-primary-container: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
+    --theme-on-secondary: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
+    --theme-on-secondary-inverse: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
     --theme-on-accent: var(--color-brand-black-500);
-    --theme-on-accent-inverse: var(--color-brand-black-500);
-    --theme-on-success: var(--color-brand-white-500);
+    --theme-on-accent-inverse: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
+    --theme-on-success: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
     --theme-on-warning: var(--color-brand-black-500);
-    --theme-on-danger: var(--color-brand-white-500);
+    --theme-on-danger: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
 
     /* surfaces base colors */
-    --theme-surface-base: var(--color-brand-white-500);
-    --theme-surface-base-inverse: var(--color-brand-black-500);
+    --theme-surface-base: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
+    --theme-surface-base-inverse: light-dark(var(--color-brand-black-500), var(--color-brand-white-500));
 
     /* semantic base colors */
-    --theme-primary-base: var(--color-brand-primary-500);
-    --theme-secondary-base: var(--color-brand-secondary-500);
-    --theme-accent-base: var(--color-brand-accent-500);
-    --theme-success-base: var(--color-brand-success-500);
-    --theme-warning-base: var(--color-brand-warning-500);
-    --theme-danger-base: var(--color-brand-danger-500);
-    --theme-info-base: var(--color-brand-info-500);
-    --theme-muted-base: var(--color-brand-muted-500);
+    --theme-primary-base: light-dark(var(--color-brand-primary-500), var(--color-brand-primary-50));
+    --theme-secondary-base: light-dark(var(--color-brand-secondary-500), var(--color-brand-secondary-50));
+    --theme-accent-base: light-dark(var(--color-brand-accent-500), var(--color-brand-accent-50));
+    --theme-success-base: light-dark(var(--color-brand-success-500), var(--color-brand-success-50));
+    --theme-warning-base: light-dark(var(--color-brand-warning-500), var(--color-brand-warning-50));
+    --theme-danger-base: light-dark(var(--color-brand-danger-500), var(--color-brand-danger-50));
+    --theme-info-base: light-dark(var(--color-brand-info-500), var(--color-brand-info-50));
+    --theme-muted-base: light-dark(var(--color-brand-muted-500), var(--color-brand-muted-50));
+    --theme-dark-base: light-dark(var(--color-brand-dark-500), var(--color-brand-dark-50));
     --theme-white-base: var(--color-brand-white-500);
     --theme-black-base: var(--color-brand-black-500);
-    --theme-dark-base: var(--color-brand-dark-500);
 
     /* fixed base colors */
     @include m.primary-fixed-colors();
@@ -72,29 +74,30 @@
     --theme-surface-container-lowest: var(--theme-background);
     --theme-surface-container-low: var(--theme-surface-a10);
     --theme-surface-container: var(--theme-surface-a20);
-    --theme-surface-container-high: var(--theme-surface-a30);
-    --theme-surface-container-highest: var(--theme-surface-a40);
+    --theme-surface-container-high: light-dark(var(--theme-surface-a30), var(--theme-surface-a40));
+    --theme-surface-container-highest: light-dark(var(--theme-surface-a40), var(--theme-surface-a50));
 
     --theme-surface-text-field: transparent;
     --theme-surface-tooltip: var(--theme-dark-base);
-    --theme-surface-kbd: color-mix(var(--theme-muted-base), var(--theme-white-base) 85%);
-    --theme-surface-toast: var(--theme-dark-base);
-    --theme-surface-body-pane: var(--theme-surface-base);
-    --theme-surface-overlay: var(--theme-surface-body-pane);
+    --theme-surface-kbd: light-dark(color-mix(var(--theme-muted-base), var(--theme-white-base) 85%), var(--theme-dark-base));
+    --theme-surface-toast: light-dark(var(--theme-dark-base), var(--theme-white-base));
+    --theme-surface-body-pane: light-dark(var(--theme-surface-base), var(--theme-surface-a20));
+    --theme-surface-overlay: light-dark(var(--theme-surface-body-pane), var(--theme-surface-a30));
     --theme-surface-navigation: var(--theme-surface-body-pane);
-    --theme-surface-accordion: var(--theme-surface-container-low);
+    --theme-surface-accordion: light-dark(var(--theme-surface-container-low), var(--theme-surface-container));
 
     /* outline colors */
     --theme-outline-button: var(--theme-surface-a60);
     --theme-outline-text-field: var(--theme-surface-a60);
-    --theme-outline-surface: var(--theme-surface-a40);
-    --theme-outline-overlay: var(--theme-surface-a40);
+    --theme-outline-surface: light-dark(var(--theme-surface-a40), var(--theme-surface-a60));
+    --theme-outline-overlay: light-dark(var(--theme-surface-a40), var(--theme-surface-a60));
+    --theme-overlay-backdrop: rgb(from var(--theme-black-base-fixed) r g b / 0.5);
 
     /* image filters */
     --theme-img-filter-invert: none;
     --theme-img-testimonial-filter: grayscale(1) invert(0);
     --theme-img-testimonial-filter-invert: grayscale(1) invert(1);
-    --theme-frosted-glass-bg: rgba(255, 255, 255, 0.5);
+    --theme-frosted-glass-bg: light-dark(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
     --theme-frosted-glass-backdrop-filter: blur(30px) saturate(100%) contrast(45%) brightness(130%);
     --theme-frosted-glass-bg-dark: rgb(30 30 30 / 65%);
     --theme-frosted-glass-backdrop-filter-dark: blur(30px) saturate(150%) contrast(100%) brightness(100%);
@@ -148,7 +151,7 @@
     --theme-shadow-base: 250 50% 10%;
     --theme-shadow-base-dark: 0 0% 0%;
     --theme-shadow-intensity: 1%;
-    --shadow-xs: 0 0 hsl(var(--theme-shadow-base-dark)), 0 0 hsl(var(--theme-shadow-base-dark)), 0 1px 2px 0 rgba(var(--theme-overlay-fixed), .05);
+    --shadow-xs: 0 0 hsl(var(--theme-shadow-base-dark)), 0 0 hsl(var(--theme-shadow-base-dark)), 0 1px 2px 0 rgb(from var(--theme-black-base-fixed) r g b / 0.05);
     --shadow-sm: 0 3px 5px -2px hsl(var(--theme-shadow-base) / calc(var(--theme-shadow-intensity) + 3%)),
     0 7px 14px -5px hsl(var(--theme-shadow-base) / calc(var(--theme-shadow-intensity) + 5%));
     --shadow-md: 0 -1px 3px 0 hsl(var(--theme-shadow-base) / calc(var(--theme-shadow-intensity) + 2%)),
@@ -173,79 +176,20 @@
     @include m.semantic-light-tones();
   }
 
-  .dark-mode {
-    /* basic colors */
-    --theme-background: var(--theme-surface-a0);
-    --theme-on-background: var(--color-brand-white-500);
-    --theme-on-background-inverse: var(--color-brand-black-500);
+  html.dark-mode {
+    color-scheme: dark;
 
-    /* on background colors */
-    --theme-on-primary: var(--color-brand-black-500);
-    --theme-on-primary-inverse: var(--color-brand-white-500);
-    --theme-on-primary-container: var(--color-brand-white-500);
-    --theme-on-secondary: var(--color-brand-black-500);
-    --theme-on-secondary-inverse: var(--color-brand-white-500);
-    --theme-on-accent: var(--color-brand-black-500);
-    --theme-on-accent-inverse: var(--color-brand-white-500);
-    --theme-on-success: var(--color-brand-black-500);
-    --theme-on-danger: var(--color-brand-black-500);
-
-    /* surfaces base colors */
-    --theme-surface-base: var(--color-brand-black-500);
-    --theme-surface-base-inverse: var(--color-brand-white-500);
-
-    /* semantic base colors */
-    --theme-primary-base: var(--color-brand-primary-50);
-    --theme-secondary-base: var(--color-brand-secondary-50);
-    --theme-accent-base: var(--color-brand-accent-50);
-    --theme-success-base: var(--color-brand-success-50);
-    --theme-warning-base: var(--color-brand-warning-50);
-    --theme-danger-base: var(--color-brand-danger-50);
-    --theme-info-base: var(--color-brand-info-50);
-    --theme-muted-base: var(--color-brand-muted-50);
-    --theme-dark-base: var(--color-brand-dark-50);
-
-    --theme-tonal-dark-intensity: 70%;
-    --theme-tonal-light-intensity: 15%;
-
-    /* surface containers colors */
-    --theme-surface-container-lowest: var(--theme-background);
-    --theme-surface-container-low: var(--theme-surface-a10);
-    --theme-surface-container: var(--theme-surface-a20);
-    --theme-surface-container-high: var(--theme-surface-a40);
-    --theme-surface-container-highest: var(--theme-surface-a50);
-
-    --theme-surface-text-field: transparent;
-    --theme-surface-tooltip: var(--theme-dark-base);
-    --theme-surface-kbd: var(--theme-dark-base);
-    --theme-surface-toast: var(--theme-white-base);
-    --theme-surface-body-pane: var(--theme-surface-a20);
-    --theme-surface-overlay: var(--theme-surface-a30);
-    --theme-surface-navigation: var(--theme-surface-body-pane);
-    --theme-surface-accordion: var(--theme-surface-container);
-
-    /* outline colors */
-    --theme-outline-button: var(--theme-surface-a60);
-    --theme-outline-text-field: var(--theme-surface-a60);
-    --theme-outline-surface: var(--theme-surface-a60);
-    --theme-outline-overlay: var(--theme-surface-a60);
-
-    /* image filters */
+    /* non-color variables overrides */
+    --theme-shadow-base: 0 0% 0%;
     --theme-img-filter-invert: brightness(0) invert(1);
     --theme-img-testimonial-filter: grayscale(1) invert(1);
     --theme-img-testimonial-filter-invert: grayscale(1) invert(0);
-    --theme-frosted-glass-bg: rgba(0, 0, 0, 0.50);
     --theme-frosted-glass-backdrop-filter: blur(20px) saturate(150%) contrast(100%) brightness(100%);
-
-    /* shadows */
-    --theme-shadow-base: 0 0% 0%;
-
-    /* form icons */
     --theme-form-select-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"/></svg>');
     --theme-form-checkbox-icon: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="m382-373.218 328.826-328.826q15.956-15.957 37.826-15.957t37.827 15.957q15.956 15.957 15.956 37.827 0 21.869-15.956 37.826l-366.87 366.87Q403.652-243.565 382-243.565t-37.609-15.956l-170.87-170.87q-15.956-15.957-15.739-37.826.217-21.87 16.174-37.827 15.957-15.957 37.827-15.957 21.869 0 37.826 15.957L382-373.218Z"/></svg>');
     --theme-form-radio-icon: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-60.782q-87.522 0-163.906-32.96-76.385-32.96-132.888-89.464-56.504-56.503-89.464-132.888Q60.782-392.478 60.782-480t32.96-163.906q32.96-76.385 89.464-132.888 56.503-56.504 132.888-89.464 76.384-32.96 163.906-32.96t163.906 32.96q76.385 32.96 132.888 89.464 56.504 56.503 89.464 132.888 32.96 76.384 32.96 163.906t-32.96 163.906q-32.96 76.385-89.464 132.888-56.503 56.504-132.888 89.464Q567.522-60.782 480-60.782Z"/></svg>');
 
-    /* dynamic colors tones */
+    /* dynamic colors tones overrides for dark mode */
     @include m.surface-dark-tones();
     @include m.semantic-dark-tones();
   }

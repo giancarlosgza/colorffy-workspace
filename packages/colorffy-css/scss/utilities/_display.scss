@@ -30,7 +30,7 @@
   * Generate display utilities for each breakpoint
   */
   @each $breakpoint, $size in v.$grid-breakpoints {
-    @media (min-width: $size) {
+    @media (width >= $size) {
       .d-#{$breakpoint}-none {
         display: none;
       }

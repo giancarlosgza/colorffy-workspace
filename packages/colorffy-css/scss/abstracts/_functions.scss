@@ -1,12 +1,2 @@
-@use "sass:color";
-
-/**
- * Converts a hexadecimal color value to its RGB equivalent.
- *
- * @function hexToRgb
- * @param {string} $hex - The hexadecimal color value.
- * @returns {list} A list containing the red, green, and blue components of the color.
- */
-@function hexToRgb($color) {
-  @return color.channel($color, 'red', $space: rgb), color.channel($color, 'green', $space: rgb), color.channel($color, 'blue', $space: rgb);
-}
+// Colorffy Custom SCSS Functions
+// (Currently all functions migrated to native CSS Relative Color Syntax)

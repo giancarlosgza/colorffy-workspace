@@ -358,7 +358,7 @@
 
         & .v-popper__backdrop {
           display: block;
-          background-color: color-mix(in oklab, var(--theme-black-base-fixed) 50%, transparent);
+          background-color: var(--theme-overlay-backdrop);
         }
 
         & .v-popper__wrapper {
