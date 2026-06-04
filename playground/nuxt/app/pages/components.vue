@@ -78,20 +78,152 @@ function handleSegmentedTabChange(tabId: string) {
     </div>
 
     <!-- List Group -->
-    <div class="mt-4">
-      <h3 class="subtitle-1 mb-2">
-        List Group
+    <div class="mt-4 mb-5">
+      <h3 class="subtitle-1 mb-3">
+        Communication
       </h3>
       <UiListGroup
-        variant="flush"
-        size="md"
         is-interactive
+        is-undecorated
       >
-        <UiListItem text="Item 1" />
-        <UiListItem text="Item 2" />
-        <UiListItem text="Item 3" />
-        <UiListItem text="Item 4" />
+        <UiListItem
+          text="Festivals"
+          title="Food, music, and art events happening around you"
+          icon="&#xea16;"
+          custom-class="rounded-full"
+          custom-icon-wrapper-class="bg-primary-fixed rounded-full"
+          custom-icon-class="text-primary-emphasis"
+          has-actions
+        >
+          <template #list-action>
+            <UiButtonTooltip
+              id="view-more"
+              variant="outline"
+              icon
+              tooltip-text="View More"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe5d4;" />
+              </template>
+            </UiButtonTooltip>
+          </template>
+        </UiListItem>
+        <UiListItem
+          text="Restaurants"
+          title="Food, music, and art events happening around you"
+          icon="&#xe638;"
+          custom-icon-wrapper-class="bg-accent-fixed rounded-md"
+          custom-icon-class="text-accent-emphasis"
+        />
+        <UiListItem
+          text="Outdoors"
+          title="Food, music, and art events happening around you"
+          icon="&#xebf0;"
+          custom-icon-wrapper-class="bg-secondary-fixed rounded-md"
+          custom-icon-class="text-secondary-emphasis"
+          has-actions
+        >
+          <template #list-action>
+            <UiInputCheck
+              id="settings"
+              label="Settings"
+              variant="switch"
+              size="lg"
+              hide-label
+              class="gap-0 mb-0"
+            />
+          </template>
+        </UiListItem>
+        <UiListItem
+          text="Shopping"
+          title="Food, music, and art events happening around you"
+          icon="&#xeb15;"
+          custom-class="rounded-full"
+          custom-icon-wrapper-class="bg-danger-fixed rounded-full"
+          custom-icon-class="text-danger-emphasis"
+        />
       </UiListGroup>
+
+      <hr>
+      <h3 class="subtitle-1 mb-3">
+        Settings
+      </h3>
+      <UiListGroup
+        is-interactive
+        is-undecorated
+      >
+        <UiListItem
+          text="Controls for this phone"
+          title="Set up PIN"
+          custom-class="bg-secondary-fixed rounded-full p-2"
+          has-actions
+        >
+          <template #list-action>
+            <UiInputCheck
+              id="settings"
+              label="Settings"
+              variant="switch"
+              size="lg"
+              hide-label
+              class="gap-0 mb-0"
+            />
+          </template>
+        </UiListItem>
+      </UiListGroup>
+
+      <hr>
+      <h3 class="subtitle-1 mb-3">
+        System
+      </h3>
+      <UiCard
+        variant="pane"
+        size="sm"
+        class="rounded-xl"
+      >
+        <template #body>
+          <UiListGroup
+            is-interactive
+            variant="flush"
+            size="md"
+          >
+            <UiListItem
+              title="Software update"
+              text="There is a software update available"
+              icon="&#xe8d7;"
+              custom-icon-wrapper-class="bg-transparent"
+              custom-icon-class="text-success-fixed fs-300"
+            />
+            <UiListItem
+              title="Language & region"
+              text="System language, app language, regional preferences, speech"
+              icon="&#xe8e2;"
+              custom-icon-wrapper-class="bg-transparent"
+              custom-icon-class="text-muted"
+            />
+            <UiListItem
+              title="About"
+              text="Model, storage, legal, etc"
+              icon="&#xe30c;"
+              custom-icon-wrapper-class="bg-transparent"
+              custom-icon-class="text-muted"
+            />
+            <UiListItem
+              title="Support"
+              text="Contact, warranty, legal, etc"
+              icon="&#xef73;"
+              custom-icon-wrapper-class="bg-transparent"
+              custom-icon-class="text-muted"
+            />
+            <UiListItem
+              title="Accessibility"
+              text="Voice Control, zoom, text size, etc"
+              icon="&#xe84e;"
+              custom-icon-wrapper-class="bg-transparent"
+              custom-icon-class="text-muted"
+            />
+          </UiListGroup>
+        </template>
+      </UiCard>
     </div>
   </div>
 </template>

@@ -21,6 +21,9 @@
     background: transparent;
 
     & .list-group-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
       background-color: var(--_list-group-item-bg-color);
       border: v.$border-sm solid var(--_list-group-item-border-color);
@@ -112,6 +115,10 @@
         --_list-group-item-icon-color: var(--theme-muted-a10);
 
         cursor: not-allowed;
+      }
+
+      & .list-item-actions {
+        padding-right: 1rem;
       }
     }
 

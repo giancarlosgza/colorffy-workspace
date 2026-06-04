@@ -83,4 +83,19 @@ export interface IListItemProps {
    * Accepts a string, an array of strings, or a map of class names to booleans.
    */
   customClass?: ListClassName | null
+
+  /**
+   * Optional custom classes for the list-item-icon-wrapper.
+   */
+  customIconWrapperClass?: ListClassName | null
+
+  /**
+   * Optional custom classes for the icon component.
+   */
+  customIconClass?: ListClassName | null
+
+  /**
+   * When true, layout has custom actions trailing the item content.
+   */
+  hasActions?: boolean
 }
