@@ -1,4 +1,4 @@
-import type { IBaseInputProps } from '@/types/shared'
+import type { IBaseInputProps, InputSize } from '@/types/shared'
 
 /**
  * Interface props for the TextInput component.
@@ -81,11 +81,16 @@ export interface IRangeInputEmits {
  */
 export interface IRadioInputProps {
   id?: string | null
-  labelDefaultOption: string
-  labelOption: string
-  type?: string
+  label?: string | null
+  options?: any[]
+  optionLabel?: string | null
+  optionValue?: string | null
   modelValue?: string | number | null
   customClass?: string | null
+  required?: boolean
+  size?: InputSize
+  hideLabel?: boolean
+  inline?: boolean
 }
 
 /**
@@ -123,6 +128,7 @@ export interface IFileInputProps {
   large?: boolean
   modelValue?: File | null
   customClass?: string | null
+  required?: boolean
 }
 
 /**
@@ -142,6 +148,9 @@ export interface IColorPickerProps {
   maxLength?: number
   modelValue?: string | null
   customClass?: string | null
+  size?: InputSize
+  hideLabel?: boolean
+  required?: boolean
 }
 
 /**
@@ -161,6 +170,10 @@ export interface ICheckProps {
   modelValue?: string | boolean | null
   errorMessages?: string[]
   customClass?: string | null
+  size?: InputSize
+  hideLabel?: boolean
+  variant?: 'switch' | null
+  required?: boolean
 }
 
 /**

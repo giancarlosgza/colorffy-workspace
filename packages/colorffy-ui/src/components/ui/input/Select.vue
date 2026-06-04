@@ -17,7 +17,9 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   optionalLabel: false,
   variant: null,
   rounded: false,
-  customClass: null
+  customClass: null,
+  size: null,
+  hideLabel: false
 })
 
 /** Emits */
@@ -31,10 +33,22 @@ const hasErrors = computed(() => props.errorMessages?.length > 0)
 const selectId = computed(() => (props.id ? `${props.id}-select` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
+
+const groupClasses = computed(() => [
+  'form-group',
+  { 'form-invalid': hasErrors.value }
+])
+const labelClasses = computed(() => [
+  'mb-2',
+  { 'visually-hidden': props.hideLabel }
+])
 const selectClasses = computed(() => {
   const classes = ['form-control', 'form-select']
   if (props.variant) {
     classes.push(`form-${props.variant}`)
+  }
+  if (props.size) {
+    classes.push(`form-${props.size}`)
   }
   if (props.rounded) {
     classes.push('form-rounded')
@@ -52,16 +66,14 @@ watch(model, (value) => {
 </script>
 
 <template>
-  <div
-    class="form-group"
-    :class="hasErrors ? 'form-invalid' : ''"
-  >
+  <div :class="groupClasses">
+    <!-- Input -->
     <label
       :for="selectId"
-      class="mb-2"
-      v-text="label"
-    />
-
+      :class="labelClasses"
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
     <select
       :id="selectId"
       v-model="model"
@@ -72,7 +84,10 @@ watch(model, (value) => {
       :aria-invalid="hasErrors || undefined"
       :aria-describedby="describedById"
     >
-      <option :value="null" disabled>
+      <option
+        :value="null"
+        disabled
+      >
         {{ placeholder }}
       </option>
       <option
@@ -84,6 +99,7 @@ watch(model, (value) => {
       </option>
     </select>
 
+    <!-- Feedback -->
     <p
       v-if="hasErrors"
       :id="describedById"

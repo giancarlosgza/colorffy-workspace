@@ -20,7 +20,9 @@ const props = withDefaults(defineProps<ITextareaInputProps>(), {
   resize: 'vertical',
   variant: null,
   rounded: false,
-  customClass: null
+  customClass: null,
+  size: null,
+  hideLabel: false
 })
 
 /** Emits */
@@ -37,10 +39,22 @@ const placeholderText = computed(() => props.placeholder ?? undefined)
 const textareaStyle = computed(() => ({
   resize: props.resize
 }))
+
+const groupClasses = computed(() => [
+  'form-group',
+  { 'form-invalid': hasErrors.value }
+])
+const labelClasses = computed(() => [
+  'mb-2',
+  { 'visually-hidden': props.hideLabel }
+])
 const textareaClasses = computed(() => {
   const classes = ['form-control']
   if (props.variant) {
     classes.push(`form-${props.variant}`)
+  }
+  if (props.size) {
+    classes.push(`form-${props.size}`)
   }
   if (props.rounded) {
     classes.push('form-rounded')
@@ -58,16 +72,14 @@ watch(model, (value) => {
 </script>
 
 <template>
-  <div
-    class="form-group"
-    :class="hasErrors ? 'form-invalid' : ''"
-  >
+  <div :class="groupClasses">
+    <!-- Input -->
     <label
       :for="inputId"
-      class="mb-2"
-      v-text="label"
-    />
-
+      :class="labelClasses"
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
     <textarea
       :id="inputId"
       v-model="model"
@@ -85,6 +97,7 @@ watch(model, (value) => {
       :aria-describedby="describedById"
     />
 
+    <!-- Feedback -->
     <p
       v-if="hasErrors"
       :id="describedById"

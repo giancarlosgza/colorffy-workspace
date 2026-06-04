@@ -8,7 +8,10 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
   label: null,
   maxLength: 7,
   modelValue: null,
-  customClass: null
+  customClass: null,
+  size: null,
+  hideLabel: false,
+  required: false
 })
 
 /** Emits */
@@ -20,6 +23,16 @@ const model = defineModel<string | null>('modelValue', { default: null })
 /** Computed */
 const inputIdColor = computed(() => props.id ? `${props.id}-input-text` : undefined)
 const inputIdText = computed(() => props.id ? `${props.id}-input-color` : undefined)
+
+const groupClasses = computed(() => ['form-group'])
+const labelClasses = computed(() => [
+  'mb-2',
+  { 'visually-hidden': props.hideLabel }
+])
+const colorGroupClasses = computed(() => [
+  'form-color-group',
+  props.size ? `form-${props.size}` : ''
+])
 const colorClasses = computed(() => {
   const classes = ['form-color']
   if (props.customClass) {
@@ -37,23 +50,25 @@ const textClasses = computed(() => {
 </script>
 
 <template>
-  <div class="form-group">
+  <div :class="groupClasses">
     <!-- Label -->
     <label
       :for="inputIdColor"
-      class="mb-2"
-      v-text="label"
-    />
+      :class="labelClasses"
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
     <label
       :for="inputIdText"
-      class="d-none mb-2"
+      class="d-none" :class="[labelClasses]"
       aria-hidden="true"
-      v-text="label"
-    />
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
 
-    <!-- Inputs -->
-    <div class="form-color-group">
-      <!-- Color picker -->
+    <!-- Input -->
+    <div :class="colorGroupClasses">
+      <!-- Picker -->
       <input
         :id="inputIdColor"
         v-model="model"
@@ -61,7 +76,7 @@ const textClasses = computed(() => {
         :class="colorClasses"
         @change="emit('onUpdate')"
       >
-      <!-- Color text -->
+      <!-- Text -->
       <input
         :id="inputIdText"
         v-model.lazy="model"

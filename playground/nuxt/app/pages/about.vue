@@ -72,19 +72,93 @@
             label="Image"
           />
         </div>
-        <div class="col-md-6">
-          <UiInputText
-            id="text"
-            label="Text"
-            placeholder="Enter some text"
-          />
-        </div>
-        <div class="col-md-6">
-          <UiInputText
+        <div class="col-md-12">
+          <UiInputTextarea
             id="text-disabled"
             label="Text"
             placeholder="This input is disabled"
             disabled
+          />
+        </div>
+        <div class="col-md-4">
+          <UiInputText
+            id="text"
+            label="Text"
+            placeholder="Enter some text"
+            size="sm"
+            hide-label
+            optional-label
+          />
+        </div>
+        <div class="col-md-4">
+          <UiInputText
+            id="text-disabled"
+            label="Text"
+            placeholder="This input is disabled"
+            size="lg"
+            disabled
+            required
+            optional-label
+          />
+        </div>
+        <div class="col-md-4">
+          <UiInputSelect
+            id="text-select"
+            label="Text"
+            placeholder="Select your option"
+            size="sm"
+            optional-label
+            hide-label
+            option-label="label"
+            option-value="value"
+            :options="[
+              { label: 'Option 1', value: 'option1' },
+              { label: 'Option 2', value: 'option2' },
+              { label: 'Option 3', value: 'option3' },
+            ]"
+          />
+        </div>
+        <div class="col-md-4">
+          <UiInputColorPicker
+            id="color-picker"
+            label="Color Picker"
+          />
+        </div>
+        <div class="col-md-4">
+          <UiInputRange
+            id="range"
+            label="Range"
+            size="lg"
+            :min="0" :max="10"
+            :step="1"
+          />
+        </div>
+
+        <div class="col-md-4">
+          <UiInputCheck
+            id="check"
+            label="Switch"
+            variant="switch"
+            hide-label
+            size="lg"
+          />
+          <UiInputCheck
+            id="switch"
+            label="Checkbox"
+            size="lg"
+            required
+          />
+          <UiInputRadio
+            id="radio"
+            label="Favorite Color"
+            option-label="name"
+            option-value="id"
+            required
+            :options="[
+              { name: 'Red', hex: '#ff0000', id: 'red' },
+              { name: 'Blue', hex: '#0000ff', id: 'blue' },
+              { name: 'Green', hex: '#00ff00', id: 'green' },
+            ]"
           />
         </div>
       </div>

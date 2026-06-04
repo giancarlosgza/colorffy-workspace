@@ -15,7 +15,10 @@ const props = withDefaults(defineProps<IRangeInputProps>(), {
   variant: null,
   rounded: false,
   customClass: null,
-  disabled: false
+  disabled: false,
+  size: null,
+  hideLabel: false,
+  required: false
 })
 
 /** Emits */
@@ -28,10 +31,22 @@ const model = defineModel<string | number | null>('modelValue', { default: null 
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => (props.id ? `${props.id}-input-range` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
+
+const groupClasses = computed(() => [
+  'form-group',
+  { 'form-invalid': hasErrors.value }
+])
+const labelClasses = computed(() => [
+  'mb-2',
+  { 'visually-hidden': props.hideLabel }
+])
 const rangeClasses = computed(() => {
   const classes = ['form-control', 'form-range']
   if (props.variant) {
     classes.push(`form-${props.variant}`)
+  }
+  if (props.size) {
+    classes.push(`form-${props.size}`)
   }
   if (props.rounded) {
     classes.push('form-rounded')
@@ -41,6 +56,7 @@ const rangeClasses = computed(() => {
   }
   return classes
 })
+
 const valueAsPercent = computed(() => {
   const currentValue = Number(model.value) || props.min
   const percent = ((currentValue - props.min) / (props.max - props.min)) * 100
@@ -54,16 +70,14 @@ watch(model, (value) => {
 </script>
 
 <template>
-  <div
-    class="form-group"
-    :class="hasErrors ? 'form-invalid' : ''"
-  >
+  <div :class="groupClasses">
+    <!-- Input -->
     <label
       :for="inputId"
-      class="mb-2"
-      v-text="label"
-    />
-
+      :class="labelClasses"
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
     <input
       :id="inputId"
       v-model="model"
@@ -78,6 +92,7 @@ watch(model, (value) => {
       :disabled="disabled"
     >
 
+    <!-- Feedback -->
     <p
       v-if="hasErrors"
       :id="describedById"

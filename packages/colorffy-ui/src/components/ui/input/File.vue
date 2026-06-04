@@ -10,7 +10,8 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
   inputLabel: null,
   large: false,
   modelValue: null,
-  customClass: null
+  customClass: null,
+  required: false
 })
 
 /** Emits */
@@ -22,6 +23,16 @@ const model = defineModel<File | null>('modelValue', { default: null })
 /** Refs */
 const { label, inputLabel, large } = toRefs(props)
 const inputId = computed(() => props.id ?? undefined)
+
+const groupClasses = computed(() => ['input-file-group'])
+const labelClasses = computed(() => [])
+const dropboxClasses = computed(() => [
+  'input-file-dropbox',
+  {
+    'valid-file': !!model.value,
+    'dropbox-lg': large.value
+  }
+])
 const fileClasses = computed(() => {
   const classes = ['form-control', 'input-file']
   if (props.customClass) {
@@ -42,12 +53,16 @@ function handleInput(event: Event) {
 
 <template>
   <div>
-    <div class="input-file-group">
-      <label :for="inputId" v-text="label" />
-      <div
-        class="input-file-dropbox"
-        :class="[model ? 'valid-file' : '', large ? 'dropbox-lg' : '']"
+    <div :class="groupClasses">
+      <!-- Label -->
+      <label
+        :for="inputId"
+        :class="labelClasses"
       >
+        {{ label }}{{ props.required ? ' *' : '' }}
+      </label>
+      <div :class="dropboxClasses">
+        <!-- Input -->
         <input
           :id="inputId"
           :class="fileClasses"
@@ -55,11 +70,18 @@ function handleInput(event: Event) {
           @input="handleInput"
         >
 
-        <div v-if="model" class="input-file-text">
+        <!-- File Info -->
+        <div
+          v-if="model"
+          class="input-file-text"
+        >
           <UiIconMaterial icon-code="&#xe876;" />
           <p v-text="model ? model.name : ''" />
         </div>
-        <div v-else class="input-file-text">
+        <div
+          v-else
+          class="input-file-text"
+        >
           <UiIconMaterial icon-code="&#xe2c3;" />
           <p v-text="inputLabel" />
         </div>

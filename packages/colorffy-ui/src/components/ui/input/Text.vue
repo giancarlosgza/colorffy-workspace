@@ -20,7 +20,9 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
   max: null,
   variant: null,
   rounded: false,
-  customClass: null
+  customClass: null,
+  size: null,
+  hideLabel: false
 })
 
 /** Emits */
@@ -34,12 +36,25 @@ const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => (props.id ? `${props.id}-input-text` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
+
 const minValue = computed(() => (props.type === 'number' ? props.min ?? undefined : undefined))
 const maxValue = computed(() => (props.type === 'number' ? props.max ?? undefined : undefined))
+
+const groupClasses = computed(() => [
+  'form-group',
+  { 'form-invalid': hasErrors.value }
+])
+const labelClasses = computed(() => [
+  'mb-2',
+  { 'visually-hidden': props.hideLabel }
+])
 const inputClasses = computed(() => {
   const classes = ['form-control']
   if (props.variant) {
     classes.push(`form-${props.variant}`)
+  }
+  if (props.size) {
+    classes.push(`form-${props.size}`)
   }
   if (props.rounded) {
     classes.push('form-rounded')
@@ -57,16 +72,14 @@ watch(model, (value) => {
 </script>
 
 <template>
-  <div
-    class="form-group"
-    :class="hasErrors ? 'form-invalid' : ''"
-  >
+  <div :class="groupClasses">
+    <!-- Input -->
     <label
       :for="inputId"
-      class="mb-2"
-      v-text="label"
-    />
-
+      :class="labelClasses"
+    >
+      {{ label }}{{ required ? ' *' : '' }}
+    </label>
     <input
       :id="inputId"
       v-model="model"
@@ -84,6 +97,7 @@ watch(model, (value) => {
       :aria-describedby="describedById"
     >
 
+    <!-- Feedback -->
     <p
       v-if="hasErrors"
       :id="describedById"

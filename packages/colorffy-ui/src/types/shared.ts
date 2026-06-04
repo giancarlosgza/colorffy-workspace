@@ -106,9 +106,24 @@ export interface IBaseInputProps {
    * Input visual variant.
    */
   variant?: InputVariant
+
+  /**
+   * Input size variant.
+   */
+  size?: InputSize
+
+  /**
+   * When true, hides the label visually.
+   */
+  hideLabel?: boolean
 }
 
 /**
  * Type for input variants.
  */
 export type InputVariant = 'filled' | 'outline' | 'transparent' | null
+
+/**
+ * Type for input sizes.
+ */
+export type InputSize = 'sm' | 'lg' | null

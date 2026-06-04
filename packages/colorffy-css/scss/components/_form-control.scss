@@ -9,8 +9,8 @@
 
     margin-bottom: var(--_form-group-gutter-y);
 
-    & label,
-    & .form-label {
+    & > label,
+    & > .form-label {
       display: block;
       font-family: map.get(v.$type-label, font-family);
       font-size: map.get(v.$type-label, font-size);
@@ -40,6 +40,7 @@
       --_form-border-color: var(--theme-outline-text-field);
       --_form-easing-in: #{v.$easing-in-fallback};
       --_form-easing-duration: 200ms;
+      --_form-font-size: 0.875rem;
 
       position: relative;
       display: inline-block;
@@ -55,6 +56,7 @@
       color: var(--_form-color);
       font-weight: v.$fw-400;
       font-family: var(--font-secondary);
+      font-size: var(--_form-font-size);
       line-height: 1.5;
       transition: background-color var(--_form-easing-duration) var(--_form-easing-in),
       border-color var(--_form-easing-duration) var(--_form-easing-in),
@@ -86,6 +88,31 @@
         --_form-border-color: transparent;
 
         box-shadow: none;
+      }
+
+      // Sizing variants
+      &:is(.form-sm) {
+        --_form-height: 2rem;
+        --_form-padding-x: .45rem;
+        --_form-padding-y: .15rem;
+        --_form-font-size: var(--fs-sm-400);
+
+        &.form-select {
+          background-position: right .5rem center;
+          background-size: 1rem;
+        }
+      }
+
+      &:is(.form-lg) {
+        --_form-height: 3rem;
+        --_form-padding-x: .75rem;
+        --_form-padding-y: .375rem;
+        --_form-font-size: var(--fs-600);
+
+        &.form-select {
+          background-position: right 1rem center;
+          background-size: 1.5rem;
+        }
       }
 
       // Form control states
@@ -272,14 +299,17 @@
         --_form-color: var(--theme-on-background);
         --_form-border-color: transparent;
         --_form-border-width: #{v.$form-border};
+        --_form-color-width: 3rem;
+        --_form-color-height: 2.5rem;
+        --_form-color-padding: .375rem;
 
         display: inline-block;
         border: var(--_form-border-width) solid var(--_form-border-color);
         border-radius: var(--_form-radius);
         background-color: var(--_form-bg-color);
-        width: 3rem;
-        height: 2.5rem;
-        padding: .375rem;
+        width: var(--_form-color-width);
+        height: var(--_form-color-height);
+        padding: var(--_form-color-padding);
         cursor: pointer;
 
         &::-moz-color-swatch {
@@ -317,6 +347,35 @@
       &:is(:focus-within) {
         --_form-group-border-color: var(--theme-primary-a10);
         --_form-group-bg-color: var(--theme-surface-container-high);
+      }
+
+      // Sizing variants
+      &:is(.form-sm) {
+        .form-color {
+          --_form-color-width: 2.5rem;
+          --_form-color-height: 2rem;
+          --_form-color-padding: .25rem;
+        }
+        .form-control {
+          --_form-height: 2rem;
+          --_form-padding-x: .45rem;
+          --_form-padding-y: .15rem;
+          --_form-font-size: var(--fs-sm-400);
+        }
+      }
+
+      &:is(.form-lg) {
+        .form-color {
+          --_form-color-width: 3.5rem;
+          --_form-color-height: 3rem;
+          --_form-color-padding: .5rem;
+        }
+        .form-control {
+          --_form-height: 3rem;
+          --_form-padding-x: .75rem;
+          --_form-padding-y: .375rem;
+          --_form-font-size: var(--fs-600);
+        }
       }
     }
 

@@ -8,7 +8,11 @@ const props = withDefaults(defineProps<ICheckProps>(), {
   type: 'checkbox',
   modelValue: null,
   errorMessages: () => [],
-  customClass: null
+  customClass: null,
+  size: null,
+  hideLabel: false,
+  variant: null,
+  required: false
 })
 
 /** Model */
@@ -18,6 +22,17 @@ const model = defineModel<string | boolean | null>('modelValue', { default: null
 const hasError = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasError.value && props.id ? `${props.id}-error-0` : undefined))
+
+const groupClasses = computed(() => [
+  'form-check',
+  { 'form-invalid': hasError.value },
+  props.size ? `form-${props.size}` : '',
+  props.variant ? `form-check-${props.variant}` : ''
+])
+const labelClasses = computed(() => [
+  'form-check-label',
+  { 'visually-hidden': props.hideLabel }
+])
 const checkClasses = computed(() => {
   const classes = ['form-check-input']
   if (props.customClass) {
@@ -28,10 +43,8 @@ const checkClasses = computed(() => {
 </script>
 
 <template>
-  <div
-    class="form-check"
-    :class="hasError ? 'form-invalid' : ''"
-  >
+  <div :class="groupClasses">
+    <!-- Input -->
     <input
       :id="inputId"
       v-model="model"
@@ -43,11 +56,12 @@ const checkClasses = computed(() => {
     <div>
       <label
         :for="inputId"
-        class="form-check-label"
-        v-text="label"
-      />
+        :class="labelClasses"
+      >
+        {{ label }}{{ required ? ' *' : '' }}
+      </label>
 
-      <!-- Feedback labels -->
+      <!-- Feedback -->
       <p
         v-if="hasError"
         :id="describedById"
