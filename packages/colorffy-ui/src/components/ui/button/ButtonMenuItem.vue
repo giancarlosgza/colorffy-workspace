@@ -14,7 +14,10 @@ const props = withDefaults(defineProps<IButtonMenuItemProps>(), {
   disabled: false,
   customClass: null,
   badge: null,
-  shortcut: null
+  shortcut: null,
+  iconTrailing: null,
+  iconTrailingStyle: null,
+  iconTrailingClass: null
 })
 
 /** Computed */
@@ -42,6 +45,7 @@ const itemClasses = computed(() => {
       :disabled="disabled"
     >
       <span class="v-dropdown-item-primary">
+        <!-- Leading Icon & Text -->
         <UiIconMaterial
           v-if="icon"
           :icon-code="icon"
@@ -50,7 +54,12 @@ const itemClasses = computed(() => {
         />
         {{ itemText }}
       </span>
-      <span v-if="badge || shortcut" class="v-dropdown-item-secondary">
+
+      <span
+        v-if="badge || shortcut || iconTrailing"
+        class="v-dropdown-item-secondary"
+      >
+        <!-- Badge -->
         <UiBadge
           v-if="badge"
           size="sm"
@@ -62,9 +71,19 @@ const itemClasses = computed(() => {
           :pill="badge.pill"
           :custom-class="badge.customClass"
         />
+
+        <!-- Shortcut -->
         <span v-if="shortcut">
           {{ shortcut }}
         </span>
+
+        <!-- Icon Trailing -->
+        <UiIconMaterial
+          v-if="iconTrailing"
+          :icon-code="iconTrailing"
+          :class="iconTrailingClass"
+          :style="iconTrailingStyle"
+        />
       </span>
     </button>
   </li>

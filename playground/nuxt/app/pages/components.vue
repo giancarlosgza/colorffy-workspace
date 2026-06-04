@@ -96,16 +96,80 @@ function handleSegmentedTabChange(tabId: string) {
           has-actions
         >
           <template #list-action>
-            <UiButtonTooltip
-              id="view-more"
-              variant="outline"
-              icon
-              tooltip-text="View More"
+            <UiButtonGroup
+              connected
+              class="flex-nowrap"
             >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe5d4;" />
-              </template>
-            </UiButtonTooltip>
+              <UiButton
+                id="quick"
+                text="Edit"
+                variant="filled"
+                color="primary"
+                size="sm"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe3c9;" />
+                </template>
+              </UiButton>
+              <UiButtonMenu
+                id="view-more"
+                variant="filled"
+                color="primary"
+                icon
+                size="sm"
+                tooltip-text="View More"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe313;" />
+                </template>
+                <template #menu>
+                  <UiButtonMenuItem
+                    item-text="Open in new window"
+                    icon="&#xe89e;"
+                  />
+                  <UiButtonMenuDivider />
+                  <UiButtonMenuItem
+                    item-text="Share"
+                    icon="&#xe80d;"
+                  />
+                  <UiButtonMenuItem
+                    item-text="Edit"
+                    icon="&#xe3c9;"
+                    shortcut="CTRL + E"
+                  />
+                  <UiButtonMenuDivider />
+                  <UiButtonMenuSubmenu
+                    item-text="Export to"
+                    icon="&#xe2c4;"
+                    icon-trailing="&#xf46a;"
+                    icon-trailing-class="text-muted"
+                    placement="right-start"
+                  >
+                    <UiButtonMenuItem
+                      item-text="PDF"
+                      icon-trailing="&#xf41d;"
+                      icon-trailing-class="text-muted"
+                    />
+                    <UiButtonMenuItem
+                      item-text="Word"
+                      icon-trailing="&#xf41d;"
+                      icon-trailing-class="text-muted"
+                    />
+                    <UiButtonMenuItem
+                      item-text="Excel"
+                      icon-trailing="&#xf41d;"
+                      icon-trailing-class="text-muted"
+                    />
+                  </UiButtonMenuSubmenu>
+                  <UiButtonMenuDivider />
+                  <UiButtonMenuItem
+                    item-text="Remove"
+                    icon="&#xe872;"
+                    is-destructive
+                  />
+                </template>
+              </UiButtonMenu>
+            </UiButtonGroup>
           </template>
         </UiListItem>
         <UiListItem

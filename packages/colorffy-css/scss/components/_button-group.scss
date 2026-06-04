@@ -24,6 +24,11 @@
       --_btn-group-gap: 0.25rem;
       --_btn-connected-radius: #{v.$rounded-full};
 
+      // Prevent circular icon buttons when grouped; they should match standard button shape
+      .btn-icon {
+        --_btn-radius: #{v.$button-border-radius};
+      }
+
       // Handle v-popper wrapped buttons
       > :is(div:has(.v-popper), .v-popper):first-child .btn {
         border-top-left-radius: var(--_btn-connected-radius);
@@ -52,11 +57,7 @@
       &:is(.btn-group-joined) {
         --_btn-group-gap: 0;
 
-        > :is(div:has(.v-popper), .v-popper):not(:first-child):not(:last-child) .btn {
-          --_btn-radius: 0;
-        }
-
-        > .btn:not(:first-child):not(:last-child) {
+        .btn {
           --_btn-radius: 0;
         }
       }
@@ -90,11 +91,7 @@
         }
 
         &:is(.btn-group-joined) {
-          > :is(div:has(.v-popper), .v-popper):not(:first-child):not(:last-child) .btn {
-            border-radius: 0;
-          }
-
-          > .btn:not(:first-child):not(:last-child) {
+          .btn {
             border-radius: 0;
           }
         }

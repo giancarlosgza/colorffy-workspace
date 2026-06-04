@@ -343,6 +343,21 @@ export interface IButtonMenuItemProps {
    * Optional shortcut label (e.g., "Ctrl+S").
    */
   shortcut?: string | null
+
+  /**
+   * Optional Material icon code for the trailing icon.
+   */
+  iconTrailing?: string | null
+
+  /**
+   * Inline styles for the trailing icon.
+   */
+  iconTrailingStyle?: string | Record<string, any> | null
+
+  /**
+   * CSS classes for the trailing icon.
+   */
+  iconTrailingClass?: string | string[] | null
 }
 
 /**
@@ -364,4 +379,80 @@ export interface ILinkTooltipProps extends IBaseButtonProps {
    * @default 'a'
    */
   as?: string | object
+}
+
+/**
+ * Interface props for the ButtonMenuSubmenu component.
+ */
+export interface IButtonMenuSubmenuProps {
+  /**
+   * Unique ID for the dropdown.
+   */
+  id?: string | null
+
+  /**
+   * Placement of the submenu dropdown.
+   * Defaults to 'right' for a submenu.
+   */
+  placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+
+  /**
+   * When true, disables certain positioning features on mobile devices.
+   */
+  isMobile?: boolean
+
+  /**
+   * Primary text label for the menu item.
+   */
+  itemText?: string
+
+  /**
+   * Optional Material icon code.
+   */
+  icon?: string | null
+
+  /**
+   * Inline styles for the icon.
+   */
+  iconStyle?: string | Record<string, any> | null
+
+  /**
+   * CSS classes for the icon.
+   */
+  iconClass?: string | string[] | null
+
+  /**
+   * When true, applies destructive action styling (e.g., red color).
+   */
+  isDestructive?: boolean
+
+  /**
+   * When true, disables the menu item.
+   */
+  disabled?: boolean
+
+  /**
+   * Custom CSS classes for the menu item container.
+   */
+  customClass?: string | string[] | null
+
+  /**
+   * Optional badge configuration.
+   */
+  badge?: Partial<IBadgeProps> | null
+
+  /**
+   * Optional Material icon code for the trailing icon.
+   */
+  iconTrailing?: string | null
+
+  /**
+   * Inline styles for the trailing icon.
+   */
+  iconTrailingStyle?: string | Record<string, any> | null
+
+  /**
+   * CSS classes for the trailing icon.
+   */
+  iconTrailingClass?: string | string[] | null
 }

@@ -30,6 +30,7 @@ export { default as UiButtonGroup } from './components/ui/button/ButtonGroup.vue
 export { default as UiButtonMenu } from './components/ui/button/ButtonMenu.vue'
 export { default as UiButtonMenuDivider } from './components/ui/button/ButtonMenuDivider.vue'
 export { default as UiButtonMenuItem } from './components/ui/button/ButtonMenuItem.vue'
+export { default as UiButtonMenuSubmenu } from './components/ui/button/ButtonMenuSubmenu.vue'
 export { default as UiButtonMenuText } from './components/ui/button/ButtonMenuText.vue'
 export { default as UiButtonToggleGroup } from './components/ui/button/ButtonToggleGroup.vue'
 export { default as UiButtonTooltip } from './components/ui/button/ButtonTooltip.vue'

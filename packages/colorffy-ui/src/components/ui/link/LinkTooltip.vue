@@ -62,8 +62,11 @@ const buttonClasses = computed(() => {
       classes.push(sizeClass)
   }
 
-  if (props?.icon)
-    classes.push(`btn-icon ${props.iconVariant}`)
+  if (props?.icon) {
+    classes.push('btn-icon')
+    if (props.iconVariant)
+      classes.push(props.iconVariant)
+  }
 
   if (props?.iconTrailing)
     classes.push('icon-trailing')
