@@ -1,5 +1,7 @@
 @layer utilities.scroll {
-  // Axis
+  // ==========================================================================
+  // SCROLL AXIS UTILITIES
+  // ==========================================================================
   .inline-scroll {
     --_inline-scroll-height: 100%;
 
@@ -31,7 +33,9 @@
     overflow-y: scroll;
   }
 
-  // Overflow
+  // ==========================================================================
+  // OVERFLOW UTILITIES
+  // ==========================================================================
   .overflow-hidden {
     overflow: hidden;
   }
@@ -92,7 +96,9 @@
     overflow-y: clip;
   }
 
-  // Overscroll behaviors
+  // ==========================================================================
+  // OVERSCROLL BEHAVIOR UTILITIES
+  // ==========================================================================
   .overscroll-auto {
     overscroll-behavior: auto;
   }
@@ -129,7 +135,9 @@
     overscroll-behavior-y: none;
   }
 
-  // Fadeout block scroll effect
+  // ==========================================================================
+  // SCROLL FADE UTILITIES
+  // ==========================================================================
   @property --fade-top {
     syntax: '<length>';
     initial-value: 0px;
@@ -176,7 +184,6 @@
     }
   }
 
-  // Fadeout inline scroll effect
   @property --fade-left {
     syntax: '<length>';
     initial-value: 0px;
@@ -223,7 +230,9 @@
     }
   }
 
-  // Custom scrollbar styling
+  // ==========================================================================
+  // CUSTOM SCROLLBAR UTILITIES
+  // ==========================================================================
   .scrollbar-custom {
     scrollbar-color: var(--theme-muted-base) transparent;
     scrollbar-width: thin;

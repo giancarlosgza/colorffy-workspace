@@ -1,4 +1,7 @@
 @layer utilities.filter {
+  // ==========================================================================
+  // IMAGE FILTER UTILITIES (INVERT, GRAYSCALE, SEPIA, SATURATE, ETC.)
+  // ==========================================================================
   // Invert
   .filter-invert {
     filter: var(--theme-img-filter-invert);

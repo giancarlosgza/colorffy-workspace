@@ -2,7 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.text {
-  // Font families
+  // ==========================================================================
+  // FONT FAMILY UTILITIES
+  // ==========================================================================
   .font-primary {
     font-family: var(--font-primary);
   }
@@ -15,12 +17,13 @@
     font-family: var(--font-code);
   }
 
-  // Font xl sizes
+  // ==========================================================================
+  // FONT SIZE UTILITIES (XL, REGULAR & SM SIZES)
+  // ==========================================================================
   .fs-xl-100 {
     font-size: var(--fs-xl-100);
   }
 
-  // Font sizes
   .fs-100 {
     font-size: var(--fs-100);
   }
@@ -45,7 +48,6 @@
     font-size: var(--fs-600);
   }
 
-  // Font sm sizes
   .fs-sm-100 {
     font-size: var(--fs-sm-100);
   }
@@ -66,7 +68,9 @@
     font-size: var(--fs-sm-500);
   }
 
-  // Font weights
+  // ==========================================================================
+  // FONT WEIGHT UTILITIES
+  // ==========================================================================
   .fw-400 {
     font-weight: v.$fw-400;
   }
@@ -87,7 +91,9 @@
     font-weight: v.$fw-800;
   }
 
-  // Text align
+  // ==========================================================================
+  // TEXT ALIGNMENT UTILITIES
+  // ==========================================================================
   .text-left {
     text-align: left;
   }
@@ -108,10 +114,6 @@
     text-align: end;
   }
 
-  /*
-  * Responsive text align
-  * Generate utilities for each breakpoint
-  */
   @each $breakpoint, $size in v.$grid-breakpoints {
     @media (width >= $size) {
       .text-#{$breakpoint}-left {
@@ -136,12 +138,13 @@
     }
   }
 
-  // Balance
+  // ==========================================================================
+  // TEXT WRAPPING & BREAKING UTILITIES
+  // ==========================================================================
   .text-wrap-balance {
     @include m.text-wrap-pretty
   }
 
-  // Text wrap
   .text-wrap {
     white-space: normal;
   }
@@ -150,7 +153,6 @@
     white-space: nowrap;
   }
 
-  // Text word break
   .text-break {
     word-wrap: break-word;
     word-break: break-word;
@@ -160,14 +162,15 @@
     word-break: keep-all;
   }
 
-  // Text truncate
   .text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  // Text transform
+  // ==========================================================================
+  // TEXT TRANSFORMATION UTILITIES
+  // ==========================================================================
   .text-lowercase {
     text-transform: lowercase;
   }
@@ -186,7 +189,9 @@
     }
   }
 
-  // Line height
+  // ==========================================================================
+  // LINE HEIGHT UTILITIES
+  // ==========================================================================
   .lh-1 {
     line-height: 1;
   }
@@ -207,12 +212,13 @@
     line-height: 2;
   }
 
-  // First letter capitalization
   .fl-capitalize {
     text-transform: capitalize;
   }
 
-  // Icon weight
+  // ==========================================================================
+  // ICON WEIGHT UTILITIES
+  // ==========================================================================
   .iw-semi-bold {
     font-variation-settings: var(--iw-semi-bold);
   }
@@ -225,7 +231,9 @@
     font-variation-settings: var(--ie-low) !important;
   }
 
-  // Text side lines
+  // ==========================================================================
+  // DECORATIONS, EFFECTS & HIGHLIGHTS
+  // ==========================================================================
   .text-decoration-side-lines {
     --_side-lines-opacity: 35%;
     --_side-lines-height: 1px;
@@ -257,7 +265,6 @@
     border-bottom: 2px dashed var(--theme-primary-a10);
   }
 
-  // Text selection
   .user-select-all {
     user-select: all;
   }
@@ -266,14 +273,15 @@
     user-select: none;
   }
 
-  // Text headings
+  // ==========================================================================
+  // TYPOGRAPHY HIERARCHY (HERO, HEADINGS & SUBHEADINGS)
+  // ==========================================================================
   .text-hero {
     font-size: var(--fs-xl-100);
     font-weight: v.$fw-800;
     line-height: 1.25;
   }
 
-  // Use for medium headings like colors name
   .text-heading {
     font-size: var(--fs-400);
     font-weight: v.$fw-800;
@@ -289,7 +297,6 @@
     }
   }
 
-  // Use for medium-small subheadings
   .text-subheading {
     --_text-subheading-gutter: 1rem;
 
@@ -400,7 +407,9 @@
     }
   }
 
-  // Font variations
+  // ==========================================================================
+  // FONT VARIATION UTILITIES
+  // ==========================================================================
   .tabular-numbers {
     font-family: var(--font-primary);
     font-variant-numeric: tabular-nums;

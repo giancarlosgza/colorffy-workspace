@@ -4,7 +4,9 @@
 @use '../abstracts/functions' as f;
 
 @layer utilities.background {
-  // Default background color
+  // ==========================================================================
+  // DEFAULT BACKGROUNDS
+  // ==========================================================================
   .bg-primary {
     @include m.bg-color(var(--theme-primary-a10));
   }
@@ -67,7 +69,9 @@
     @include m.bg-color(transparent)
   }
 
-  // Emphasis background color
+  // ==========================================================================
+  // EMPHASIS BACKGROUNDS
+  // ==========================================================================
   .bg-primary-emphasis {
     @include m.bg-color(var(--theme-primary-a30));
   }
@@ -96,7 +100,9 @@
     @include m.bg-color(var(--theme-info-a30));
   }
 
-  // Fixed background color
+  // ==========================================================================
+  // FIXED & OPACITY BACKGROUNDS
+  // ==========================================================================
   .bg-primary-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
@@ -167,7 +173,9 @@
     }
   }
 
-  // Custom wrapper background
+  // ==========================================================================
+  // PANE & WRAPPER LAYOUTS
+  // ==========================================================================
   .pane-content {
     --_pane-content-gutter-inline: 1rem;
     --_pane-content-gutter-block: 1rem;
@@ -189,7 +197,9 @@
     }
   }
 
-  // Gradient
+  // ==========================================================================
+  // GRADIENT UTILITIES
+  // ==========================================================================
   .bg-gradient {
     --angle: 90deg;
     --_gradient-stops: #{v.$gradient-database};
@@ -206,10 +216,9 @@
     }
   }
 
-  /**
-  * Enhanced Background
-  * Utilities that use modern CSS color functions
-  **/
+  // ==========================================================================
+  // ENHANCED & RELATIVE BACKGROUNDS
+  // ==========================================================================
   // Color Mix
   .bg-color-mix {
     --_bg-color-one: var(--theme-primary-a10);

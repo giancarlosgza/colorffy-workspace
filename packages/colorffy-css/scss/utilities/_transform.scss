@@ -1,14 +1,19 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
 
 @layer utilities.transform {
-  // Rotate
+  // ==========================================================================
+  // ROTATE UTILITIES
+  // ==========================================================================
   @each $degree, $value in v.$degrees {
     .rotate-#{$degree} {
       rotate: #{$value};
     }
   }
 
-  // Translate
+  // ==========================================================================
+  // TRANSLATE UTILITIES
+  // ==========================================================================
   @each $space, $value in v.$spacing-sizes {
     .translate-x-#{$space} {
       translate: #{$value} 0;
@@ -27,10 +32,53 @@
     }
   }
 
-  // Scale
+  // ==========================================================================
+  // SCALE UTILITIES
+  // ==========================================================================
   @each $scale, $value in v.$scales {
     .scale-#{$scale} {
       scale: #{$value};
+    }
+  }
+
+  // ==========================================================================
+  // RESPONSIVE UTILITIES GENERATION
+  // ==========================================================================
+
+  @each $breakpoint in v.$media-breakpoints {
+    @include m.media-breakpoint-up($breakpoint) {
+      // Rotate
+      @each $degree, $value in v.$degrees {
+        .rotate-#{$breakpoint}-#{$degree} {
+          rotate: #{$value};
+        }
+      }
+
+      // Translate
+      @each $space, $value in v.$spacing-sizes {
+        .translate-x-#{$breakpoint}-#{$space} {
+          translate: #{$value} 0;
+        }
+
+        .translate-x-#{$breakpoint}--#{$space} {
+          translate: -#{$value} 0;
+        }
+
+        .translate-y-#{$breakpoint}-#{$space} {
+          translate: 0 #{$value};
+        }
+
+        .translate-y-#{$breakpoint}--#{$space} {
+          translate: 0 -#{$value};
+        }
+      }
+
+      // Scale
+      @each $scale, $value in v.$scales {
+        .scale-#{$breakpoint}-#{$scale} {
+          scale: #{$value};
+        }
+      }
     }
   }
 }

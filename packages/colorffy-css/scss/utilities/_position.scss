@@ -2,6 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer utilities.position {
+  // ==========================================================================
+  // STANDARD POSITION UTILITIES
+  // ==========================================================================
   .position-static {
     position: static;
   }
@@ -22,9 +25,9 @@
     position: sticky;
   }
 
-  /**
-    * Add position utilities for top, right, bottom, and left
-   */
+  // ==========================================================================
+  // PLACEMENT COORDINATES (TOP/RIGHT/BOTTOM/LEFT)
+  // ==========================================================================
   @each $space, $value in v.$spacing-sizes {
     .top-#{$space} {
       top: #{$value};
@@ -43,7 +46,9 @@
     }
   }
 
-  // Generate position utilities for each breakpoint
+  // ==========================================================================
+  // RESPONSIVE COORDINATES & POSITION UTILITIES
+  // ==========================================================================
   @each $breakpoint in v.$media-breakpoints {
     @each $space, $value in v.$spacing-sizes {
       @include m.media-breakpoint-up($breakpoint) {
@@ -62,6 +67,31 @@
         .left-#{$breakpoint}-#{$space} {
           left: #{$value};
         }
+      }
+    }
+  }
+
+  // Generate position type utilities for each breakpoint
+  @each $breakpoint in v.$media-breakpoints {
+    @include m.media-breakpoint-up($breakpoint) {
+      .position-#{$breakpoint}-static {
+        position: static;
+      }
+
+      .position-#{$breakpoint}-relative {
+        position: relative;
+      }
+
+      .position-#{$breakpoint}-absolute {
+        position: absolute;
+      }
+
+      .position-#{$breakpoint}-fixed {
+        position: fixed;
+      }
+
+      .position-#{$breakpoint}-sticky {
+        position: sticky;
       }
     }
   }

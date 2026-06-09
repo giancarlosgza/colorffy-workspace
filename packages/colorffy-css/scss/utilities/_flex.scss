@@ -2,10 +2,10 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.flex {
-  /*
-  * Gap
-  * Generate gap utilities for each size
-  */
+  // ==========================================================================
+  // GAP UTILITIES
+  // ==========================================================================
+
   @each $gap, $value in v.$gaps {
     .gap-#{$gap} {
       gap: $value;
@@ -39,7 +39,9 @@
     }
   }
 
-  // Wrap
+  // ==========================================================================
+  // FLEX WRAP & DIRECTION UTILITIES
+  // ==========================================================================
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -52,7 +54,6 @@
     flex-wrap: nowrap;
   }
 
-  // Direction
   .flex-row {
     flex-direction: row;
   }
@@ -69,12 +70,13 @@
     flex-direction: column-reverse;
   }
 
-  // Fill
+  // ==========================================================================
+  // FLEX FILL, GROW & SHRINK UTILITIES
+  // ==========================================================================
   .flex-fill {
     flex: 1 1 auto;
   }
 
-  // Grow
   .flex-grow-0 {
     flex-grow: 0;
   }
@@ -83,7 +85,6 @@
     flex-grow: 1;
   }
 
-  // Shrink
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -92,7 +93,9 @@
     flex-shrink: 1;
   }
 
-  // Order
+  // ==========================================================================
+  // FLEX ORDER UTILITIES
+  // ==========================================================================
   .flex-order-1 {
     order: 1;
   }
@@ -113,7 +116,9 @@
     order: 5;
   }
 
-  // Align items
+  // ==========================================================================
+  // FLEX ALIGNMENT UTILITIES (ITEMS, CONTENT, SELF)
+  // ==========================================================================
   .align-items-start {
     align-items: flex-start;
   }
@@ -134,7 +139,6 @@
     align-items: stretch;
   }
 
-  // Align content
   .align-content-start {
     align-content: flex-start;
   }
@@ -155,7 +159,6 @@
     align-content: space-around;
   }
 
-  // Align self
   .align-self-auto {
     align-self: auto;
   }
@@ -180,10 +183,9 @@
     align-self: baseline;
   }
 
-  /*
-  * Justify
-  */
-  // Justify content
+  // ==========================================================================
+  // FLEX & GRID JUSTIFY UTILITIES (CONTENT, ITEMS, SELF)
+  // ==========================================================================
   .justify-content-start {
     justify-content: flex-start;
   }
@@ -208,7 +210,6 @@
     justify-content: space-evenly;
   }
 
-  // Justify items
   .justify-items-start {
     justify-items: start;
   }
@@ -225,7 +226,6 @@
     justify-items: stretch;
   }
 
-  // Justify self
   .justify-self-auto {
     justify-self: auto;
   }
@@ -246,7 +246,9 @@
     justify-self: stretch;
   }
 
-  // Grid place content
+  // ==========================================================================
+  // FLEX & GRID PLACE UTILITIES (CONTENT, ITEMS, SELF)
+  // ==========================================================================
   .place-content-center {
     place-content: center;
   }
@@ -271,7 +273,6 @@
     place-content: space-evenly;
   }
 
-  // Grid place items
   .place-items-start {
     place-items: start;
   }
@@ -288,7 +289,6 @@
     place-items: stretch;
   }
 
-  // Place self
   .place-self-auto {
     place-self: auto;
   }
@@ -309,10 +309,9 @@
     place-self: stretch;
   }
 
-  /*
-  * Responsive placement
-  * Generate utilities for each breakpoint
-  */
+  // ==========================================================================
+  // RESPONSIVE FLEX & GRID PLACEMENT
+  // ==========================================================================
   @each $breakpoint, $size in v.$grid-breakpoints {
     @media (width >= $size) {
       // Justify content
@@ -514,6 +513,61 @@
 
       .place-self-#{$breakpoint}-auto {
         place-self: auto;
+      }
+
+      // Flex direction
+      .flex-#{$breakpoint}-row {
+        flex-direction: row;
+      }
+
+      .flex-#{$breakpoint}-row-reverse {
+        flex-direction: row-reverse;
+      }
+
+      .flex-#{$breakpoint}-column {
+        flex-direction: column;
+      }
+
+      .flex-#{$breakpoint}-column-reverse {
+        flex-direction: column-reverse;
+      }
+
+      // Flex wrap
+      .flex-#{$breakpoint}-wrap {
+        flex-wrap: wrap;
+      }
+
+      .flex-#{$breakpoint}-wrap-reverse {
+        flex-wrap: wrap-reverse;
+      }
+
+      .flex-#{$breakpoint}-nowrap {
+        flex-wrap: nowrap;
+      }
+
+      // Flex order
+      @for $i from 1 through 5 {
+        .flex-order-#{$breakpoint}-#{$i} {
+          order: $i;
+        }
+      }
+
+      // Flex grow
+      .flex-grow-#{$breakpoint}-0 {
+        flex-grow: 0;
+      }
+
+      .flex-grow-#{$breakpoint}-1 {
+        flex-grow: 1;
+      }
+
+      // Flex shrink
+      .flex-shrink-#{$breakpoint}-0 {
+        flex-shrink: 0;
+      }
+
+      .flex-shrink-#{$breakpoint}-1 {
+        flex-shrink: 1;
       }
     }
   }

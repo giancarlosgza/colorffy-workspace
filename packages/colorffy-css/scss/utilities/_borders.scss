@@ -8,7 +8,9 @@
 
     border: var(--_border-size) solid var(--_border-bg-color);
 
-    // Border sizes
+    // ==========================================================================
+    // BORDER SIZES & STYLES
+    // ==========================================================================
     &.border-md {
       --_border-size: #{v.$border-md};
     }
@@ -34,24 +36,30 @@
       border-style: dotted;
     }
 
-    // Border sides
-    &.border-top {
-      border-bottom: none;
+    // ==========================================================================
+    // BORDER SIDES (LOGICAL PROPERTIES)
+    // ==========================================================================
+    &.border-top,
+    &.border-block-start {
+      border-block-end: none;
       border-inline: none;
     }
 
-    &.border-bottom {
-      border-top: none;
+    &.border-bottom,
+    &.border-block-end {
+      border-block-start: none;
       border-inline: none;
     }
 
-    &.border-right {
-      border-left: none;
+    &.border-right,
+    &.border-inline-end {
+      border-inline-start: none;
       border-block: none;
     }
 
-    &.border-left {
-      border-right: none;
+    &.border-left,
+    &.border-inline-start {
+      border-inline-end: none;
       border-block: none;
     }
 
@@ -63,7 +71,9 @@
       border-inline: none;
     }
 
-    // Border primary colors
+    // ==========================================================================
+    // BORDER COLORS (PRIMARY & SEMANTIC)
+    // ==========================================================================
     &.border-primary {
       --_border-bg-color: var(--theme-primary-a10);
     }
@@ -105,7 +115,9 @@
       --_border-bg-color: transparent;
     }
 
-    // Gradient borders
+    // ==========================================================================
+    // GRADIENT & ANIMATED BORDERS
+    // ==========================================================================
     &.border-gradient {
       --_border-bg-color: transparent;
       --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);

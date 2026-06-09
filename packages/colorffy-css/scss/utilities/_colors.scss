@@ -2,7 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.colors {
-  // Default text colors
+  // ==========================================================================
+  // DEFAULT TEXT COLORS
+  // ==========================================================================
   .text-primary {
     @include m.text-color(var(--theme-primary-a10));
   }
@@ -47,7 +49,9 @@
     @include m.text-color(var(--color-brand-dark-500));
   }
 
-  // Emphasis text colors
+  // ==========================================================================
+  // EMPHASIS TEXT COLORS
+  // ==========================================================================
   .text-primary-emphasis {
     @include m.text-color(var(--theme-primary-a90));
   }
@@ -80,7 +84,9 @@
     @include m.text-color(var(--theme-muted-a90));
   }
 
-  // Fixed text colors
+  // ==========================================================================
+  // FIXED TEXT COLORS & OPACITY
+  // ==========================================================================
   .text-primary-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
@@ -129,17 +135,15 @@
     color: color-mix(in var(--_text-space), var(--theme-muted-base-fixed) var(--_text-opacity), transparent);
   }
 
-  /*
-  * Fixed opacity
-  * Generate fixed opacity text utilities for each value
-  */
   @each $value, $opacity in v.$opacity {
     .text-opacity-#{$value} {
       --_text-opacity: #{$opacity};
     }
   }
 
-  // On surface colors
+  // ==========================================================================
+  // ON SURFACE COLORS & LINK DECORATIONS
+  // ==========================================================================
   .text-on-primary {
     @include m.text-color(var(--theme-on-primary));
   }
@@ -184,7 +188,9 @@
     }
   }
 
-  // Gradient
+  // ==========================================================================
+  // GRADIENT TEXT UTILITIES
+  // ==========================================================================
   .text-gradient {
     --angle: 45deg;
     --_gradient-stops: #{v.$gradient-sunset};

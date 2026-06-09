@@ -2,142 +2,141 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.spacing {
-  /*
-  * Spacing
-  * Generate margin and padding utilities for each size
-  */
+  // ==========================================================================
+  // SPACING GENERATION (MARGIN & PADDING)
+  // ==========================================================================
+
   @each $size, $value in v.$spacing-sizes {
     // Margin
     .m-#{$size} {
-      @include m.make-margin(all, $size);
+      margin: $value;
     }
 
     .mx-#{$size} {
-      @include m.make-margin(left, $size);
-      @include m.make-margin(right, $size);
+      margin-inline: $value;
     }
 
     .my-#{$size} {
-      @include m.make-margin(top, $size);
-      @include m.make-margin(bottom, $size);
+      margin-block: $value;
     }
 
     .mt-#{$size} {
-      @include m.make-margin(top, $size);
+      margin-block-start: $value;
     }
 
     .me-#{$size} {
-      @include m.make-margin(right, $size);
+      margin-inline-end: $value;
     }
 
     .mb-#{$size} {
-      @include m.make-margin(bottom, $size);
+      margin-block-end: $value;
     }
 
     .ms-#{$size} {
-      @include m.make-margin(left, $size);
+      margin-inline-start: $value;
     }
 
     // Padding
     .p-#{$size} {
-      @include m.make-padding(all, $size);
+      padding: $value;
     }
 
     .px-#{$size} {
-      @include m.make-padding(left, $size);
-      @include m.make-padding(right, $size);
+      padding-inline: $value;
     }
 
     .py-#{$size} {
-      @include m.make-padding(top, $size);
-      @include m.make-padding(bottom, $size);
+      padding-block: $value;
     }
 
     .pt-#{$size} {
-      @include m.make-padding(top, $size);
+      padding-block-start: $value;
     }
 
     .pe-#{$size} {
-      @include m.make-padding(right, $size);
+      padding-inline-end: $value;
     }
 
     .pb-#{$size} {
-      @include m.make-padding(bottom, $size);
+      padding-block-end: $value;
     }
 
     .ps-#{$size} {
-      @include m.make-padding(left, $size);
+      padding-inline-start: $value;
     }
   }
 
-  // Generate margin and padding utilities for each breakpoint
+  // ==========================================================================
+  // RESPONSIVE SPACING GENERATION
+  // ==========================================================================
+
   @each $breakpoint in v.$media-breakpoints {
     @each $size, $value in v.$spacing-sizes {
       @include m.media-breakpoint-up($breakpoint) {
         // Margin
         .m-#{$breakpoint}-#{$size} {
-          @include m.make-margin(all, $size);
+          margin: $value;
         }
 
         .mx-#{$breakpoint}-#{$size} {
-          @include m.make-margin(left, $size);
-          @include m.make-margin(right, $size);
+          margin-inline: $value;
         }
 
         .my-#{$breakpoint}-#{$size} {
-          @include m.make-margin(top, $size);
-          @include m.make-margin(bottom, $size);
+          margin-block: $value;
         }
 
         .mt-#{$breakpoint}-#{$size} {
-          @include m.make-margin(top, $size);
+          margin-block-start: $value;
         }
 
         .me-#{$breakpoint}-#{$size} {
-          @include m.make-margin(right, $size);
+          margin-inline-end: $value;
         }
 
         .mb-#{$breakpoint}-#{$size} {
-          @include m.make-margin(bottom, $size);
+          margin-block-end: $value;
         }
 
         .ms-#{$breakpoint}-#{$size} {
-          @include m.make-margin(left, $size);
+          margin-inline-start: $value;
         }
 
         // Padding
         .p-#{$breakpoint}-#{$size} {
-          @include m.make-padding(all, $size);
+          padding: $value;
         }
 
         .px-#{$breakpoint}-#{$size} {
-          @include m.make-padding(left, $size);
-          @include m.make-padding(right, $size);
+          padding-inline: $value;
         }
 
         .py-#{$breakpoint}-#{$size} {
-          @include m.make-padding(top, $size);
-          @include m.make-padding(bottom, $size);
+          padding-block: $value;
         }
 
         .pt-#{$breakpoint}-#{$size} {
-          @include m.make-padding(top, $size);
+          padding-block-start: $value;
         }
 
         .pe-#{$breakpoint}-#{$size} {
-          @include m.make-padding(right, $size);
+          padding-inline-end: $value;
         }
 
         .pb-#{$breakpoint}-#{$size} {
-          @include m.make-padding(bottom, $size);
+          padding-block-end: $value;
         }
 
         .ps-#{$breakpoint}-#{$size} {
-          @include m.make-padding(left, $size);
+          padding-inline-start: $value;
         }
       }
     }
   }
+
+  // ==========================================================================
+  // ALIGNMENT & AUTO MARGINS
+  // ==========================================================================
 
   .mx-auto {
     margin-inline: auto;
@@ -151,12 +150,13 @@
     margin: auto;
   }
 
+  // Custom margin hooks (CSS variables)
   .mt-custom {
-    margin-top: var(--_margin, 0);
+    margin-block-start: var(--_margin, 0);
   }
 
   .mb-custom {
-    margin-bottom: var(--_margin, 0);
+    margin-block-end: var(--_margin, 0);
   }
 
   .mx-custom {
@@ -167,12 +167,13 @@
     margin-block: var(--_margin, 0);
   }
 
+  // Custom padding hooks (CSS variables)
   .pt-custom {
-    padding-top: var(--_padding, 0);
+    padding-block-start: var(--_padding, 0);
   }
 
   .pb-custom {
-    padding-bottom: var(--_padding, 0);
+    padding-block-end: var(--_padding, 0);
   }
 
   .px-custom {
@@ -183,6 +184,10 @@
     padding-block: var(--_padding, 0);
   }
 
+  // ==========================================================================
+  // FLOW & BLOCK SPACING LAYOUTS
+  // ==========================================================================
+
   /*
   * Flow
   * Generate flow spacing utilities for content layout
@@ -190,7 +195,7 @@
   */
   @each $flow, $value in v.$spacing-sizes {
     .flow-#{$flow} > * + * {
-      margin-top: $value;
+      margin-block-start: $value;
     }
   }
 
@@ -199,7 +204,7 @@
     @each $flow, $value in v.$spacing-sizes {
       @include m.media-breakpoint-up($breakpoint) {
         .flow-#{$breakpoint}-#{$flow} > * + * {
-          margin-top: $value;
+          margin-block-start: $value;
         }
       }
     }
@@ -209,18 +214,17 @@
   @each $size, $value in v.$spacing-sizes {
     .block-spacing-#{$size} {
       padding-block: $value calc(#{$value} * 2);
-      scroll-margin-top: calc(#{$value} * 3.5);
+      scroll-margin-block-start: calc(#{$value} * 3.5);
     }
   }
 
   /*
-  * Section margin-top
+  * Section margin-block-start
   * Semantic top margin for content hierarchy
-  * Previous naming: .spacing, .spacing-heading, .spacing-subheading, .spacing-condensed
   */
   .mt-section {
     --_mt-section: 1.5rem;
-    margin-top: var(--_mt-section);
+    margin-block-start: var(--_mt-section);
 
     // Condensed
     &.mt-section-sm {

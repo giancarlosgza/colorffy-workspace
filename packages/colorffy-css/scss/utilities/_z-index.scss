@@ -1,4 +1,9 @@
+@use "../abstracts/variables" as v;
+
 @layer utilities.z-index {
+  // ==========================================================================
+  // STANDARD NUMERIC INDEXES
+  // ==========================================================================
   .z-0 {
     z-index: 0;
   }
@@ -28,6 +33,34 @@
   }
 
   .z-1000 {
-    z-index: 1000;
+    z-index: v.$z-index-navbar; // 1000
+  }
+
+  // ==========================================================================
+  // SEMANTIC LAYER INDEXES
+  // ==========================================================================
+
+  .z-navigation {
+    z-index: v.$z-index-navigation; // 900
+  }
+
+  .z-navbar {
+    z-index: v.$z-index-navbar; // 1000
+  }
+
+  .z-fab {
+    z-index: v.$z-index-fab; // 1010
+  }
+
+  .z-menu {
+    z-index: v.$z-index-menu; // 1020
+  }
+
+  .z-fullscreen {
+    z-index: v.$z-index-fullscreen; // 1030
+  }
+
+  .z-toast {
+    z-index: v.$z-index-toast; // 1100
   }
 }

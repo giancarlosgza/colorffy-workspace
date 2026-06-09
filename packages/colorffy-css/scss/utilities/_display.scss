@@ -1,6 +1,9 @@
 @use '../abstracts/variables' as v;
 
 @layer utilities.display {
+  // ==========================================================================
+  // STANDARD DISPLAY UTILITIES
+  // ==========================================================================
   .d-none {
     display: none;
   }
@@ -25,10 +28,9 @@
     display: grid;
   }
 
-  /*
-  * Display
-  * Generate display utilities for each breakpoint
-  */
+  // ==========================================================================
+  // RESPONSIVE DISPLAY UTILITIES
+  // ==========================================================================
   @each $breakpoint, $size in v.$grid-breakpoints {
     @media (width >= $size) {
       .d-#{$breakpoint}-none {

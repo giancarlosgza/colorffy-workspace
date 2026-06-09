@@ -2,7 +2,11 @@
 @use '../abstracts/mixins' as m;
 
 @layer utilities.size {
-  // Height
+
+  // ==========================================================================
+  // HEIGHT UTILITIES
+  // ==========================================================================
+
   .h-auto {
     height: auto;
   }
@@ -19,6 +23,7 @@
     height: var(--h-fixed, fit-content);
   }
 
+  // Percent Heights
   .h-50 {
     height: 50%;
   }
@@ -31,6 +36,7 @@
     height: 100%;
   }
 
+  // Viewport Heights (VH)
   .vh-50 {
     height: 50vh;
   }
@@ -43,13 +49,6 @@
     height: 100vh;
   }
 
-  .dvh-100 {
-    height: 100vh;
-    @supports (height: 100dvh) {
-      height: 100dvh;
-    }
-  }
-
   .min-vh-100 {
     min-height: 100vh;
   }
@@ -58,7 +57,26 @@
     max-height: 100vh;
   }
 
-  // Width
+  // Dynamic Viewport Heights (DVH)
+  .dvh-100 {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .min-dvh-100 {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .max-dvh-100 {
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
+
+  // ==========================================================================
+  // WIDTH UTILITIES
+  // ==========================================================================
+
   .w-auto {
     width: auto;
   }
@@ -75,6 +93,7 @@
     width: var(--w-fixed, fit-content);
   }
 
+  // Percent Widths
   .w-50 {
     width: 50%;
   }
@@ -87,6 +106,7 @@
     width: 100%;
   }
 
+  // Viewport Widths (VW)
   .vw-50 {
     width: 50vw;
   }
@@ -99,13 +119,6 @@
     width: 100vw;
   }
 
-  .dvw-100 {
-    width: 100vw;
-    @supports (width: 100dvw) {
-      width: 100dvw;
-    }
-  }
-
   .min-vw-100 {
     min-width: 100vw;
   }
@@ -114,18 +127,155 @@
     max-width: 100vw;
   }
 
+  // Dynamic Viewport Widths (DVW)
+  .dvw-100 {
+    width: 100vw;
+    width: 100dvw;
+  }
+
+  .min-dvw-100 {
+    min-width: 100vw;
+    min-width: 100dvw;
+  }
+
+  .max-dvw-100 {
+    max-width: 100vw;
+    max-width: 100dvw;
+  }
+
+  // ==========================================================================
+  // RESPONSIVE UTILITIES GENERATION
+  // ==========================================================================
+
   $percent-sizes: (
     50: 50%,
     75: 75%,
     100: 100%
   );
 
-  // Generate size utilities for each breakpoint
+  // Generate size utilities for each media breakpoint
   @each $breakpoint in v.$media-breakpoints {
+    // Percent Widths & Heights
     @each $pct, $val in $percent-sizes {
       @include m.media-breakpoint-up($breakpoint) {
-        .h-#{$breakpoint}-#{$pct} { height: $val; }
-        .w-#{$breakpoint}-#{$pct} { width: $val; }
+        .h-#{$breakpoint}-#{$pct} {
+          height: $val;
+        }
+
+        .w-#{$breakpoint}-#{$pct} {
+          width: $val;
+        }
+      }
+    }
+
+    // Dynamic layout/flow sizing per breakpoint
+    @include m.media-breakpoint-up($breakpoint) {
+      // Widths
+      .w-#{$breakpoint}-auto {
+        width: auto;
+      }
+
+      .min-w-#{$breakpoint}-auto {
+        min-width: auto;
+      }
+
+      .w-#{$breakpoint}-fit {
+        width: fit-content;
+      }
+
+      .w-#{$breakpoint}-fixed {
+        width: var(--w-fixed, fit-content);
+      }
+
+      .min-vw-#{$breakpoint}-100 {
+        min-width: 100vw;
+      }
+
+      .max-vw-#{$breakpoint}-100 {
+        max-width: 100vw;
+      }
+
+      // Heights
+      .h-#{$breakpoint}-auto {
+        height: auto;
+      }
+
+      .min-h-#{$breakpoint}-auto {
+        min-height: auto;
+      }
+
+      .h-#{$breakpoint}-fit {
+        height: fit-content;
+      }
+
+      .h-#{$breakpoint}-fixed {
+        height: var(--h-fixed, fit-content);
+      }
+
+      // Viewports (VH)
+      .vh-#{$breakpoint}-50 {
+        height: 50vh;
+      }
+
+      .vh-#{$breakpoint}-75 {
+        height: 75vh;
+      }
+
+      .vh-#{$breakpoint}-100 {
+        height: 100vh;
+      }
+
+      .min-vh-#{$breakpoint}-100 {
+        min-height: 100vh;
+      }
+
+      .max-vh-#{$breakpoint}-100 {
+        max-height: 100vh;
+      }
+
+      // Dynamic Viewports (DVH)
+      .dvh-#{$breakpoint}-100 {
+        height: 100vh;
+        height: 100dvh;
+      }
+
+      .min-dvh-#{$breakpoint}-100 {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      .max-dvh-#{$breakpoint}-100 {
+        max-height: 100vh;
+        max-height: 100dvh;
+      }
+
+      // Viewports (VW)
+      .vw-#{$breakpoint}-50 {
+        width: 50vw;
+      }
+
+      .vw-#{$breakpoint}-75 {
+        width: 75vw;
+      }
+
+      .vw-#{$breakpoint}-100 {
+        width: 100vw;
+      }
+
+      // Dynamic Viewports (DVW)
+      .dvw-#{$breakpoint}-100 {
+        width: 100vw;
+        width: 100dvw;
+      }
+
+      .min-dvw-#{$breakpoint}-100 {
+        min-width: 100vw;
+        min-width: 100dvw;
+      }
+
+      .max-dvw-#{$breakpoint}-100 {
+        max-width: 100vw;
+        max-width: 100dvw;
       }
     }
   }

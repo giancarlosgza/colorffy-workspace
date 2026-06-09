@@ -1,6 +1,9 @@
 @use '../abstracts/variables' as v;
 
 @layer utilities.shadow {
+  // ==========================================================================
+  // BOX SHADOW UTILITIES
+  // ==========================================================================
   .shadow-none {
     box-shadow: none;
   }

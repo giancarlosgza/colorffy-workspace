@@ -1,12 +1,34 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
 @layer utilities.aspect-ratio {
+  // ==========================================================================
+  // ASPECT RATIO PRESETS
+  // ==========================================================================
+
+  .aspect-auto {
+    aspect-ratio: auto;
+  }
+
+  .aspect-square,
   .aspect-1x1 {
     aspect-ratio: 1 / 1;
   }
 
+  .aspect-video,
   .aspect-16x9 {
     aspect-ratio: 16 / 9;
   }
 
+  .aspect-portrait {
+    aspect-ratio: 9 / 16;
+  }
+
+  .aspect-cinema {
+    aspect-ratio: 21 / 9;
+  }
+
+  // Custom/Legacy ratios
   .aspect-4x3 {
     aspect-ratio: 4 / 3;
   }
@@ -17,5 +39,47 @@
 
   .aspect-2x1 {
     aspect-ratio: 2 / 1;
+  }
+
+  // ==========================================================================
+  // RESPONSIVE UTILITIES GENERATION
+  // ==========================================================================
+
+  @each $breakpoint in v.$media-breakpoints {
+    @include m.media-breakpoint-up($breakpoint) {
+      .aspect-#{$breakpoint}-auto {
+        aspect-ratio: auto;
+      }
+
+      .aspect-#{$breakpoint}-square,
+      .aspect-#{$breakpoint}-1x1 {
+        aspect-ratio: 1 / 1;
+      }
+
+      .aspect-#{$breakpoint}-video,
+      .aspect-#{$breakpoint}-16x9 {
+        aspect-ratio: 16 / 9;
+      }
+
+      .aspect-#{$breakpoint}-portrait {
+        aspect-ratio: 9 / 16;
+      }
+
+      .aspect-#{$breakpoint}-cinema {
+        aspect-ratio: 21 / 9;
+      }
+
+      .aspect-#{$breakpoint}-4x3 {
+        aspect-ratio: 4 / 3;
+      }
+
+      .aspect-#{$breakpoint}-3x2 {
+        aspect-ratio: 3 / 2;
+      }
+
+      .aspect-#{$breakpoint}-2x1 {
+        aspect-ratio: 2 / 1;
+      }
+    }
   }
 }
