@@ -123,6 +123,10 @@
       &.banner-danger {
         --_alert-icon-color: var(--theme-danger-a10);
       }
+
+      &.banner-info {
+        --_alert-icon-color: var(--theme-info-a10);
+      }
     }
 
     // Tonal
@@ -152,6 +156,10 @@
 
       &.tonal-danger {
         @include m.container-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true, false, alert);
+      }
+
+      &.tonal-info {
+        @include m.container-tonal(var(--theme-info-a10), var(--theme-info-a90), true, false, alert);
       }
 
       &.tonal-default {
@@ -198,6 +206,10 @@
 
       &.snackbar-danger i {
         --_alert-icon-color: var(--theme-danger-base-fixed);
+      }
+
+      &.snackbar-info i {
+        --_alert-icon-color: var(--theme-info-base-fixed);
       }
     }
 

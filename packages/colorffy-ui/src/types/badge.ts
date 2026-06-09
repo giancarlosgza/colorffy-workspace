@@ -1,5 +1,5 @@
 export type BadgeClassName = string | string[] | Record<string, boolean>
-export type BadgeVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'gradient' | 'default' | 'outline' | `tonal tonal-${'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger'}` | string
+export type BadgeVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'gradient' | 'default' | 'outline' | `tonal tonal-${'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger' | 'info'}` | string
 export type BadgeSize = 'sm'
 
 /**

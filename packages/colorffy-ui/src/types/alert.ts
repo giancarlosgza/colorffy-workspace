@@ -1,5 +1,5 @@
 export type AlertType = 'banner' | 'tonal' | 'snackbar'
-export type AlertVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'transparent' | 'default'
+export type AlertVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'transparent' | 'default'
 export type AlertSize = 'sm'
 export type AlertClassName = string | string[] | Record<string, boolean>
 export interface IToastOptions {

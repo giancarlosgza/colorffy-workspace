@@ -2,7 +2,7 @@ import type { IBadgeProps } from '@/types/badge'
 
 export type ButtonClassName = string | string[] | Record<string, boolean>
 export type ButtonVariant = 'filled' | 'tonal' | 'outline' | 'text' | 'link' | 'chip' | 'cta' | 'gradient' | 'frosted'
-export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'white' | 'black' | 'transparent'
+export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'white' | 'black' | 'transparent'
 export type ButtonSizeLevel = 'sm' | 'md' | 'lg'
 
 /**

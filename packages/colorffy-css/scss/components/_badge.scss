@@ -83,6 +83,12 @@
       --_badge-border-color: var(--theme-danger-a30);
     }
 
+    &.badge-info {
+      --_badge-color: var(--theme-on-info);
+      --_badge-bg-color: var(--theme-info-a10);
+      --_badge-border-color: var(--theme-info-a30);
+    }
+
     // Tonal badges
     &.badge-tonal {
       &.tonal-primary {
@@ -108,6 +114,10 @@
 
       &.tonal-danger {
         @include m.container-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true, false, badge);
+      }
+
+      &.tonal-info {
+        @include m.container-tonal(var(--theme-info-a10), var(--theme-info-a90), true, false, badge);
       }
 
       &.tonal-default {

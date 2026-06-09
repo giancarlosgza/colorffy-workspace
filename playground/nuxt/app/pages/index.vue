@@ -598,7 +598,11 @@ function handleConfirm() {
         </UiButton>
       </UiButtonFabGroup>
 
-      <UiAlert message="Your library is working correctly!" type="snackbar" variant="success" />
+      <UiAlert
+        message="Your library is working correctly!"
+        type="snackbar"
+        variant="success"
+      />
 
       <UiAlertToast ref="toastRef" />
       <UiModal

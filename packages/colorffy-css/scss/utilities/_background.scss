@@ -29,6 +29,10 @@
     @include m.bg-color(var(--theme-danger-a10));
   }
 
+  .bg-info {
+    @include m.bg-color(var(--theme-info-a10));
+  }
+
   .bg-dark {
     @include m.bg-color(v.$black);
   }
@@ -86,6 +90,10 @@
 
   .bg-danger-emphasis {
     @include m.bg-color(var(--theme-danger-a30));
+  }
+
+  .bg-info-emphasis {
+    @include m.bg-color(var(--theme-info-a30));
   }
 
   // Fixed background color

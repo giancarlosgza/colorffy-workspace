@@ -360,6 +360,17 @@
     --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 75%);
     --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 80%);
 
+    /* info */
+    --theme-info-a10: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 15%);
+    --theme-info-a20: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 20%);
+    --theme-info-a30: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 25%);
+    --theme-info-a40: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 35%);
+    --theme-info-a50: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 45%);
+    --theme-info-a60: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 55%);
+    --theme-info-a70: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 65%);
+    --theme-info-a80: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 75%);
+    --theme-info-a90: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 80%);
+
     /* muted */
     --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 15%);
     --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 20%);
@@ -463,6 +474,17 @@
     --theme-danger-a70: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 55%);
     --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 65%);
     --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 50%);
+
+    /* info */
+    --theme-info-a10: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 5%);
+    --theme-info-a20: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 10%);
+    --theme-info-a30: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 15%);
+    --theme-info-a40: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 25%);
+    --theme-info-a50: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 35%);
+    --theme-info-a60: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 45%);
+    --theme-info-a70: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 55%);
+    --theme-info-a80: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 65%);
+    --theme-info-a90: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 50%);
 
     /* muted */
     --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 5%);

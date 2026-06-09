@@ -27,6 +27,10 @@
     @include m.text-color(var(--theme-danger-a10));
   }
 
+  .text-info {
+    @include m.text-color(var(--theme-info-a10));
+  }
+
   .text-muted {
     @include m.text-color(var(--theme-muted-a10));
   }
@@ -66,6 +70,10 @@
 
   .text-danger-emphasis {
     @include m.text-color(var(--theme-danger-a90));
+  }
+
+  .text-info-emphasis {
+    @include m.text-color(var(--theme-info-a90));
   }
 
   .text-muted-emphasis {
@@ -109,6 +117,12 @@
     color: color-mix(in var(--_text-space), var(--theme-danger-base-fixed) var(--_text-opacity), transparent);
   }
 
+  .text-info-fixed {
+    --_text-opacity: 100%;
+    --_text-space: oklab;
+    color: color-mix(in var(--_text-space), var(--theme-info-base-fixed) var(--_text-opacity), transparent);
+  }
+
   .text-muted-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
@@ -148,6 +162,10 @@
 
   .text-on-danger {
     @include m.text-color(var(--theme-on-danger));
+  }
+
+  .text-on-info {
+    @include m.text-color(var(--theme-on-info));
   }
 
   .text-on-body {

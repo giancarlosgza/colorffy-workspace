@@ -46,6 +46,7 @@
     --theme-on-success: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
     --theme-on-warning: var(--color-brand-black-500);
     --theme-on-danger: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
+    --theme-on-info: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
 
     /* surfaces base colors */
     --theme-surface-base: light-dark(var(--color-brand-white-500), var(--color-brand-black-500));
@@ -178,6 +179,9 @@
 
   html.dark-mode {
     color-scheme: dark;
+
+    --theme-tonal-dark-intensity: 70%;
+    --theme-tonal-light-intensity: 15%;
 
     /* non-color variables overrides */
     --theme-shadow-base: 0 0% 0%;

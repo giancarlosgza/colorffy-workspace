@@ -245,6 +245,13 @@ function handleSegmentedTabChange(tabId: string) {
         class="rounded-xl"
       >
         <template #body>
+          <UiAlert
+            message="Your library is working correctly!"
+            type="banner"
+            variant="info"
+            custom-class="rounded-full"
+          />
+
           <UiListGroup
             is-interactive
             variant="flush"

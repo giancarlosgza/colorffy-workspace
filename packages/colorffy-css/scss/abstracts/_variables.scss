@@ -38,6 +38,7 @@ $gradient-accent: var(--theme-accent-base-fixed), color-mix(in oklab, var(--them
 $gradient-success: var(--theme-success-base-fixed), color-mix(in oklab, var(--theme-success-base-fixed) 75%, oklch(0% 0 0)) !default;
 $gradient-warning: var(--theme-warning-base-fixed), color-mix(in oklab, var(--theme-warning-base-fixed) 75%, oklch(0% 0 0)) !default;
 $gradient-danger: var(--theme-danger-base-fixed), color-mix(in oklab, var(--theme-danger-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-info: var(--theme-info-base-fixed), color-mix(in oklab, var(--theme-info-base-fixed) 75%, oklch(0% 0 0)) !default;
 
 // Dynamic gradient map
 $dynamic-gradients: (
@@ -46,7 +47,8 @@ $dynamic-gradients: (
   'accent':    $gradient-accent,
   'success':   $gradient-success,
   'warning':   $gradient-warning,
-  'danger':    $gradient-danger
+  'danger':    $gradient-danger,
+  'info':      $gradient-info
 ) !default;
 
 $gradient-pink: #5300fa, #ab068e, #ee5aaf !default;

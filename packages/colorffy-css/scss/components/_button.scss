@@ -103,6 +103,19 @@
           }
         }
 
+        &.filled-info {
+          --_btn-bg-color: var(--theme-info-a10);
+          --_btn-color: var(--theme-on-info);
+
+          &:is(:hover) {
+            --_btn-bg-color: var(--theme-info-a20);
+          }
+
+          &:is(:focus, :active) {
+            --_btn-bg-color: var(--theme-info-a30);
+          }
+        }
+
         // Fixed
         &.filled-white {
           --_btn-bg-color: var(--color-brand-white-500);
@@ -159,6 +172,10 @@
 
         &.tonal-danger {
           @include m.btn-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true);
+        }
+
+        &.tonal-info {
+          @include m.btn-tonal(var(--theme-info-a10), var(--theme-info-a90), true);
         }
 
         &.tonal-neutral {

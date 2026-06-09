@@ -49,7 +49,10 @@ const alertClasses = computed(() => {
         <UiIconMaterial v-else-if="variant === 'warning'" icon-code="&#xe002;" />
         <UiIconMaterial v-else-if="variant === 'default'" icon-code="&#xe88e;" />
         <UiIconMaterial v-else-if="variant === 'danger'" icon-code="&#xe160;" />
-        <UiIconMaterial v-else-if="variant === 'primary' || variant === 'secondary' || variant === 'accent' || variant === 'neutral'" icon-code="&#xe88e;" />
+        <UiIconMaterial
+          v-else-if="variant === 'primary' || variant === 'secondary' || variant === 'accent' || variant === 'neutral' || variant === 'info'"
+          icon-code="&#xe88e;"
+        />
 
         <!-- Text -->
         <div>
