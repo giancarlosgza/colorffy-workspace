@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AlertVariant, IAlertToastProps } from '@/types/alert'
+import type { AlertPlacement, AlertVariant, IAlertToastProps, IToastOptions } from '@/types/alert'
 import { ref } from 'vue'
 import UiAlert from './Alert.vue'
 
@@ -7,16 +7,26 @@ import UiAlert from './Alert.vue'
 const props = withDefaults(defineProps<IAlertToastProps>(), {
   snackbarTitle: null,
   snackbarMessage: null,
-  snackbarVariant: 'success'
+  snackbarVariant: 'success',
+  placement: 'bottom'
 })
 
 const title = ref<string>(props.snackbarTitle ?? '')
 const message = ref<string>(props.snackbarMessage ?? '')
 const variant = ref<AlertVariant>(props.snackbarVariant as AlertVariant ?? 'success')
+const placement = ref<AlertPlacement>(props.placement ?? 'bottom')
 const isVisible = ref<boolean>(false)
 
 /** Methods */
-function showToast() {
+function showToast(options?: IToastOptions) {
+  if (options) {
+    if (options.message)
+      message.value = options.message
+    if (options.variant)
+      variant.value = options.variant
+    if (options.placement)
+      placement.value = options.placement
+  }
   isVisible.value = true
 
   setTimeout(() => {
@@ -28,6 +38,7 @@ defineExpose({
   title,
   message,
   variant,
+  placement,
   showToast
 })
 </script>
@@ -39,6 +50,7 @@ defineExpose({
       :title="title"
       :message="message"
       :variant="variant"
+      :placement="placement"
       type="snackbar"
     />
   </Transition>

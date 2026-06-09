@@ -8,11 +8,21 @@ const props = withDefaults(defineProps<IAlertProps>(), {
   type: 'banner',
   variant: 'danger',
   critical: false,
+  rounded: false,
+  placement: 'bottom',
   size: undefined,
   customClass: undefined
 })
 
 /** Computed */
+const alertContainerClasses = computed(() => {
+  const classes = []
+  if (props.type === 'snackbar' && props.placement) {
+    const p = props.placement.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+    classes.push(`placement-${p}`)
+  }
+  return classes
+})
 const alertClasses = computed(() => {
   const classes = []
 
@@ -28,6 +38,9 @@ const alertClasses = computed(() => {
   if (props.critical)
     classes.push('alert-critical')
 
+  if (props.rounded)
+    classes.push('alert-rounded')
+
   if (props.customClass)
     classes.push(props.customClass)
 
@@ -36,7 +49,10 @@ const alertClasses = computed(() => {
 </script>
 
 <template>
-  <div class="alert-container">
+  <div
+    class="alert-container"
+    :class="alertContainerClasses"
+  >
     <div
       class="alert"
       role="alert"

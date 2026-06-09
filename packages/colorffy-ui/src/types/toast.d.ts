@@ -17,4 +17,9 @@ declare interface IToastDisplay {
    * Default variant for this toast instance.
    */
   variant?: AlertVariant
+
+  /**
+   * Default placement for this toast instance.
+   */
+  placement?: AlertPlacement
 }

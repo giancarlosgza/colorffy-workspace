@@ -246,10 +246,11 @@ function handleSegmentedTabChange(tabId: string) {
       >
         <template #body>
           <UiAlert
-            message="Your library is working correctly!"
-            type="banner"
-            variant="info"
-            custom-class="rounded-full"
+            message="Theme saved successfully!"
+            type="snackbar"
+            variant="success"
+            rounded
+            placement="bottom"
           />
 
           <UiListGroup

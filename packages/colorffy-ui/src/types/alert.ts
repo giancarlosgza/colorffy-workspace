@@ -1,10 +1,12 @@
 export type AlertType = 'banner' | 'tonal' | 'snackbar'
 export type AlertVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'transparent' | 'default'
 export type AlertSize = 'sm'
+export type AlertPlacement = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right'
 export type AlertClassName = string | string[] | Record<string, boolean>
 export interface IToastOptions {
   message?: string
   variant?: AlertVariant
+  placement?: AlertPlacement
 }
 
 /**
@@ -46,6 +48,16 @@ export interface IAlertProps {
   critical?: boolean
 
   /**
+   * Optional rounded style. When true, applies a fully rounded alert style.
+   */
+  rounded?: boolean
+
+  /**
+   * Placement configuration of the alert (only applicable when type is snackbar).
+   */
+  placement?: AlertPlacement
+
+  /**
    * Custom classes to apply to the root element.
    */
   customClass?: AlertClassName
@@ -69,4 +81,9 @@ export interface IAlertToastProps {
    * Optional variant of the toast.
    */
   snackbarVariant?: AlertVariant
+
+  /**
+   * Placement of the toast (only applicable when type is snackbar).
+   */
+  placement?: AlertPlacement
 }

@@ -10,10 +10,97 @@
 
     &:has(.alert-snackbar) {
       position: fixed;
-      bottom: 1.85rem;
-      left: 0;
-      width: 100%;
       z-index: v.$z-index-toast;
+
+      // Positioning variables
+      --_alert-toast-spacing: 1.85rem;
+      --_alert-toast-min-width: 300px;
+      --_alert-toast-max-width: 90vw;
+      --_alert-toast-width: fit-content;
+      --_alert-toast-offset-bottom: var(--_alert-toast-spacing);
+
+      --_alert-toast-inset-block-start: auto;
+      --_alert-toast-inset-block-end: var(--_alert-toast-offset-bottom);
+      --_alert-toast-inset-inline-start: 0;
+      --_alert-toast-inset-inline-end: 0;
+      --_alert-toast-container-width: 100%;
+      --_alert-toast-justify: center;
+      --_alert-toast-margin-inline: auto;
+      --_alert-toast-self-width: var(--_alert-toast-width);
+      --_alert-toast-self-max-width: var(--_alert-toast-max-width);
+
+      inset-block: var(--_alert-toast-inset-block-start) var(--_alert-toast-inset-block-end);
+      inset-inline: var(--_alert-toast-inset-inline-start) var(--_alert-toast-inset-inline-end);
+      width: var(--_alert-toast-container-width);
+      display: flex;
+      justify-content: var(--_alert-toast-justify);
+      pointer-events: none;
+
+      .alert-snackbar {
+        margin-inline: var(--_alert-toast-margin-inline);
+        min-width: var(--_alert-toast-min-width);
+        max-width: var(--_alert-toast-self-max-width);
+        width: var(--_alert-toast-self-width);
+        pointer-events: auto;
+      }
+
+      &.placement-top {
+        --_alert-toast-inset-block-start: var(--_alert-toast-spacing);
+        --_alert-toast-inset-block-end: auto;
+      }
+
+      &.placement-top-left {
+        --_alert-toast-inset-block-start: var(--_alert-toast-spacing);
+        --_alert-toast-inset-block-end: auto;
+        --_alert-toast-inset-inline-start: var(--_alert-toast-spacing);
+        --_alert-toast-inset-inline-end: auto;
+        --_alert-toast-container-width: auto;
+        --_alert-toast-justify: flex-start;
+        --_alert-toast-margin-inline: 0;
+      }
+
+      &.placement-top-right {
+        --_alert-toast-inset-block-start: var(--_alert-toast-spacing);
+        --_alert-toast-inset-block-end: auto;
+        --_alert-toast-inset-inline-start: auto;
+        --_alert-toast-inset-inline-end: var(--_alert-toast-spacing);
+        --_alert-toast-container-width: auto;
+        --_alert-toast-justify: flex-end;
+        --_alert-toast-margin-inline: 0;
+      }
+
+      &.placement-bottom-left {
+        --_alert-toast-inset-block-start: auto;
+        --_alert-toast-inset-block-end: var(--_alert-toast-offset-bottom);
+        --_alert-toast-inset-inline-start: var(--_alert-toast-spacing);
+        --_alert-toast-inset-inline-end: auto;
+        --_alert-toast-container-width: auto;
+        --_alert-toast-justify: flex-start;
+        --_alert-toast-margin-inline: 0;
+      }
+
+      &.placement-bottom-right {
+        --_alert-toast-inset-block-start: auto;
+        --_alert-toast-inset-block-end: var(--_alert-toast-offset-bottom);
+        --_alert-toast-inset-inline-start: auto;
+        --_alert-toast-inset-inline-end: var(--_alert-toast-spacing);
+        --_alert-toast-container-width: auto;
+        --_alert-toast-justify: flex-end;
+        --_alert-toast-margin-inline: 0;
+      }
+
+      // Responsive adjustments for mobile viewports
+      @media (max-width: 576px) {
+        --_alert-toast-inset-inline-start: 0;
+        --_alert-toast-inset-inline-end: 0;
+        --_alert-toast-container-width: 100%;
+        --_alert-toast-justify: center;
+        --_alert-toast-margin-inline: auto;
+        --_alert-toast-self-width: 100%;
+        --_alert-toast-self-max-width: 100%;
+        
+        padding-inline: var(--_alert-toast-spacing);
+      }
     }
   }
 
@@ -103,15 +190,31 @@
       --_alert-bg-color: var(--theme-surface-body-pane);
     }
 
-    // Sizes
+    // Variants
     &.alert-sm {
       --_alert-icon-size: 1.5em;
       --_alert-padding-block: .5rem;
       --_alert-padding-inline: .5rem;
     }
 
+    &.alert-rounded {
+      --_alert-radius: #{v.$rounded-full};
+    }
+
     // Banner
     &.alert-banner {
+      &.banner-primary {
+        --_alert-icon-color: var(--theme-primary-a10);
+      }
+
+      &.banner-secondary {
+        --_alert-icon-color: var(--theme-secondary-a10);
+      }
+
+      &.banner-accent {
+        --_alert-icon-color: var(--theme-accent-a10);
+      }
+
       &.banner-success {
         --_alert-icon-color: var(--theme-success-a10);
       }
@@ -196,19 +299,31 @@
         color: var(--_alert-icon-color);
       }
 
-      &.snackbar-success i {
+      &.snackbar-primary {
+        --_alert-icon-color: var(--theme-primary-base-fixed);
+      }
+
+      &.snackbar-secondary {
+        --_alert-icon-color: var(--theme-secondary-base-fixed);
+      }
+
+      &.snackbar-accent {
+        --_alert-icon-color: var(--theme-accent-base-fixed);
+      }
+
+      &.snackbar-success {
         --_alert-icon-color: var(--theme-success-base-fixed);
       }
 
-      &.snackbar-warning i {
+      &.snackbar-warning {
         --_alert-icon-color: var(--theme-warning-base-fixed);
       }
 
-      &.snackbar-danger i {
+      &.snackbar-danger {
         --_alert-icon-color: var(--theme-danger-base-fixed);
       }
 
-      &.snackbar-info i {
+      &.snackbar-info {
         --_alert-icon-color: var(--theme-info-base-fixed);
       }
     }
@@ -325,7 +440,7 @@
 
     .alert-container {
       &:has(.alert-snackbar) {
-        bottom: calc(#{v.$navigation-bar-min-height} + 1rem + env(safe-area-inset-bottom, 0.5vh));
+        --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + 1rem + env(safe-area-inset-bottom, 0.5vh));
       }
     }
   }
