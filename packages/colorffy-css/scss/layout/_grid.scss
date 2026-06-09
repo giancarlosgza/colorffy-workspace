@@ -2,7 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer layout.grid {
-  // Containers
+  // ==========================================================================
+  // CONTAINER UTILITIES
+  // ==========================================================================
   .container {
     @include m.container;
   }
@@ -11,7 +13,9 @@
     @include m.container-fluid;
   }
 
-  // Row
+  // ==========================================================================
+  // GRID SYSTEM (ROWS & COLUMNS)
+  // ==========================================================================
   .row {
     @include m.make-row;
 
@@ -20,7 +24,6 @@
     }
   }
 
-  // Cols
   .col {
     @include m.make-col(1);
   }

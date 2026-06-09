@@ -2,6 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer components.footer {
+  // ==========================================================================
+  // FOOTER LAYOUT COMPONENT
+  // ==========================================================================
   footer,
   .footer {
     --_footer-bg-color: var(--theme-surface-body-pane);

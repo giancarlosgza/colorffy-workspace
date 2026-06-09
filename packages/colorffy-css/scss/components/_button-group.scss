@@ -2,7 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.buttons {
-  // Button Group
+  // ==========================================================================
+  // BUTTON GROUP COMPONENT
+  // ==========================================================================
   .btn-group {
     --_btn-group-gap: .75rem .55rem;
 
@@ -99,7 +101,9 @@
     }
   }
 
-  // FAB Group
+  // ==========================================================================
+  // FAB GROUP COMPONENT
+  // ==========================================================================
   .fab-group {
     --_btn-fab-position-y: 1.75rem;
     --_btn-fab-position-x: 1.75rem;
@@ -126,7 +130,9 @@
     }
   }
 
-  // Segment Control
+  // ==========================================================================
+  // SEGMENTED CONTROL COMPONENT
+  // ==========================================================================
   .segmented-control {
     --_sc_easing-in: #{v.$easing-in-fallback};
     --_sc-easing-duration: 200ms;
@@ -187,6 +193,9 @@
     }
   }
 
+  // ==========================================================================
+  // TOGGLE BUTTON GROUP COMPONENT
+  // ==========================================================================
   .toggle-btn-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
@@ -271,7 +280,9 @@
     }
   }
 
-  // Media queries
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIORS
+  // ==========================================================================
   @include m.media-query(1024) {
     .fab-group {
       --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + .85rem);

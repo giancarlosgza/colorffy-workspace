@@ -2,6 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer components.carousel {
+  // ==========================================================================
+  // CAROUSEL COMPONENT
+  // ==========================================================================
   @mixin carousel-button-base {
     position: fixed;
     font-family: var(--font-icons);
@@ -43,7 +46,9 @@
     }
   }
 
-  // Fallback DOM buttons (when native scroll buttons aren't supported)
+  // ==========================================================================
+  // FALLBACK DOM BUTTONS (WHEN NATIVE SCROLL BUTTONS AREN'T SUPPORTED)
+  // ==========================================================================
   .carousel-btn {
     @include carousel-button-base;
     position-anchor: --carousel;

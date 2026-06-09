@@ -2,6 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer components.cards {
+  // ==========================================================================
+  // CARD COMPONENT
+  // ==========================================================================
   .card {
     --_card-gutter-x: 1rem;
     --_card-gutter-y: 1rem;

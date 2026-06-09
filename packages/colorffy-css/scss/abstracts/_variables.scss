@@ -3,7 +3,9 @@
 
 $property-prefix: theme- !default;
 
-// Colors
+// ==========================================================================
+// COLOR PALETTE TOKENS
+// ==========================================================================
 $primary: #002678 !default;
 $secondary: #0075d6 !default;
 $accent: #fda001 !default;
@@ -30,8 +32,9 @@ $primary-colors: (
         'muted': $muted,
 );
 
-// Gradients
-// $gradient-primary: var(--theme-primary-base-fixed), oklch(from var(--theme-primary-base-fixed) calc(l - 0.25) c h) !default;
+// ==========================================================================
+// GRADIENT PRESETS & DYNAMIC MAPS
+// ==========================================================================
 $gradient-primary: var(--theme-primary-base-fixed), color-mix(in oklab, var(--theme-primary-base-fixed) 75%, oklch(0% 0 0)) !default;
 $gradient-secondary: var(--theme-secondary-base-fixed), color-mix(in oklab, var(--theme-secondary-base-fixed) 75%, oklch(0% 0 0)) !default;
 $gradient-accent: var(--theme-accent-base-fixed), color-mix(in oklab, var(--theme-accent-base-fixed) 75%, oklch(0% 0 0)) !default;
@@ -40,7 +43,6 @@ $gradient-warning: var(--theme-warning-base-fixed), color-mix(in oklab, var(--th
 $gradient-danger: var(--theme-danger-base-fixed), color-mix(in oklab, var(--theme-danger-base-fixed) 75%, oklch(0% 0 0)) !default;
 $gradient-info: var(--theme-info-base-fixed), color-mix(in oklab, var(--theme-info-base-fixed) 75%, oklch(0% 0 0)) !default;
 
-// Dynamic gradient map
 $dynamic-gradients: (
   'primary':   $gradient-primary,
   'secondary': $gradient-secondary,
@@ -72,7 +74,6 @@ $gradient-forest: #33d655, #29ac4a, #21823e !default;
 $gradient-galaxy: $accent, #715cff, #bf3eff, #ee5aaf, $accent !default;
 $gradient-darkblue: #292a4b, #47497a, #8587b0, #c4c5d9 !default;
 
-// Static gradient map (SCSS compile-time values, not CSS tokens)
 $static-gradients: (
   'pink':             $gradient-pink,
   'magenta':          $gradient-sunset,
@@ -112,20 +113,20 @@ $scheme-colors: (
         'Red-Violet': hsl(322, 81%, 43%),
 );
 
-// Fonts
+// ==========================================================================
+// FONTS & TYPOGRAPHY SCALE TOKENS
+// ==========================================================================
 $font-primary: var(--font-primary) !default;
 $font-secondary: var(--font-secondary) !default;
 $font-code: var(--font-code) !default;
 $font-icons: var(--font-icons) !default;
 
-// Font weights
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
 $fw-700: 700;
 $fw-800: 800;
 
-// Type scale
 $type-h1: (
         font-family: (var(--font-primary)),
         font-weight: $fw-800,
@@ -220,10 +221,11 @@ $type-overline: (
 );
 
 
-// Fs table
 $fs-table: clamp(0.75rem, 2.5cqw, 0.80rem);
 
-// Border radius
+// ==========================================================================
+// BORDER RADIUS, BORDERS & SPACES
+// ==========================================================================
 $border-radius: (
         0: 0px,
         4: 4px,
@@ -246,12 +248,10 @@ $form-border-radius: $rounded-md !default;
 $button-border-radius: $rounded-md !default;
 $dialog-border-radius: $rounded-lg !default;
 
-// Borders
 $form-border: 1px;
 $border-sm: 1px;
 $border-md: 2px;
 
-// Spaces
 $space-1: 1rem;
 $space-2: 2rem;
 $space-3: 3rem;
@@ -286,7 +286,9 @@ $gaps: (
         10: 2.5rem
 );
 
-// Breakpoints
+// ==========================================================================
+// RESPONSIVE LAYOUT BREAKPOINTS
+// ==========================================================================
 $breakpoints: (
         1155: 1155px,
         1024: 1024px,
@@ -307,7 +309,9 @@ $grid-breakpoints: (
 
 $media-breakpoints: sm md lg xl xxl;
 
-// Opacity
+// ==========================================================================
+// OPACITY, DEGREES & SCALES
+// ==========================================================================
 $opacity: (
         0: 0%,
         5: 5%,
@@ -323,7 +327,6 @@ $opacity: (
         100: 100%
 );
 
-// Degrees
 $degrees: (
         0: 0deg,
         45: 45deg,
@@ -336,7 +339,6 @@ $degrees: (
         360: 360deg
 );
 
-// Scales
 $scales: (
         0: 0,
         1: 0.25,
@@ -346,19 +348,22 @@ $scales: (
         5: 1.25
 );
 
-// z-index hierarchy
+// ==========================================================================
+// Z-INDEX HIERARCHY
+// ==========================================================================
 $z-index-navigation: 900;    // Level 0: Fixed bottom navigation
 $z-index-navbar: 1000;       // Level 1: Static/Sticky top navbar
 $z-index-fab: 1010;          // Level 2: Floating Action Buttons & Snackbars
 $z-index-menu: 1020;         // Level 3: Dropdowns, Popovers, and contextual menus
 $z-index-fullscreen: 1030;   // Level 4: Full-page takeovers (e.g., search modal)
-$z-index-toast: 1100;        // Level 5: Toasts and notifications
+$z-index-toast: 1100;
 
-// Spinner
+// ==========================================================================
+// SPINNER & EASING TRANSITION CURVES
+// ==========================================================================
 $spinner-offset: 187;
 $spinner-duration: 1.4s;
 
-// Easing linear functions
 $easing-in-fallback: cubic-bezier(0.05, 0.7, 0.1, 1);
 $easing-out-fallback: cubic-bezier(0.4, 0, 1, 1);
 
@@ -425,10 +430,11 @@ $easing-sine-in-out: linear(
                 0.9621 87.52%, 0.9905 93.8%, 1 100%
 );
 
-// Layout Navigation
+// ==========================================================================
+// NAVIGATION DRAWER & ISLAND LAYOUT CONSTANTS
+// ==========================================================================
 $navbar-min-height: 4.25rem !default;
 $navigation-bar-min-height: 5rem !default;
 
-// Layout Island
 $container-island-width: calc(100vw - 2rem) !default;
 $container-island-margin: .5rem !default;

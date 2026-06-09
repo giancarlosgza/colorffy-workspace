@@ -3,6 +3,9 @@
 @use '../base/typography';
 
 @layer components.accordion {
+  // ==========================================================================
+  // ACCORDION COMPONENT
+  // ==========================================================================
   .accordion-group {
     display: grid;
     grid-template-rows: auto;

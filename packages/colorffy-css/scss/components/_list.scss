@@ -2,6 +2,9 @@
 @use '../base/typography';
 
 @layer components.list {
+  // ==========================================================================
+  // LIST COMPONENT
+  // ==========================================================================
   .list-group {
     --_list-group-item-bg-color: var(--theme-surface-container);
     --_list-group-item-border-color: transparent;
@@ -128,7 +131,9 @@
       }
     }
 
-    // Sizes
+    // ==========================================================================
+    // LIST GROUP SIZES (SM, MD)
+    // ==========================================================================
     &.list-group-sm {
       .list-group-item {
         & .list-item {
@@ -147,7 +152,9 @@
       }
     }
 
-    // Variants
+    // ==========================================================================
+    // LIST GROUP VARIANTS (FLUSH, LOW-CONTRAST)
+    // ==========================================================================
     &.list-group-flush {
       --_list-group-item-bg-color: transparent;
       --_list-group-item-border-color: var(--theme-outline-surface);
@@ -172,7 +179,9 @@
       --_list-group-item-icon-bg-color: var(--theme-surface-body-pane);
     }
 
-    // States
+    // ==========================================================================
+    // LIST GROUP INTERACTIVE STATES
+    // ==========================================================================
     &.list-group-interactive {
       & .list-group-item {
         position: relative;

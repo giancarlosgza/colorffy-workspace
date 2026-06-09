@@ -2,9 +2,13 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.table {
-  /*
-   * Responsive table
-   */
+  // ==========================================================================
+  // TABLE COMPONENT
+  // ==========================================================================
+
+  // ==========================================================================
+  // RESPONSIVE TABLE CONTAINER
+  // ==========================================================================
   .table-responsive {
     display: block;
     width: 100%;
@@ -19,9 +23,9 @@
     display: none;
   }
 
-  /*
-   * Table
-   */
+  // ==========================================================================
+  // STANDARD TABLE COMPONENT
+  // ==========================================================================
   .table {
     --_table-bg-color: var(--theme-surface-container);
     --_table-color: var(--theme-on-background);
@@ -195,7 +199,9 @@
     }
   }
 
-  // Table for colors
+  // ==========================================================================
+  // SCROLLABLE TABLE HELPER (SCROLL-SNAP & STICKY COLUMNS)
+  // ==========================================================================
   .table-scrollable {
     container-type: scroll-state;
     scroll-snap-type: both mandatory;

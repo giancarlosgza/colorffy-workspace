@@ -1,18 +1,24 @@
 @use '@colorffy/css/scss/main';
 
 :root {
-    /** Override brand colors */
-    --color-brand-primary-500: #004617;
-    --color-brand-primary-50: #d4f5de;
-    --color-brand-secondary-500: #22cbff;
-    --color-brand-secondary-50: #90deff;
-    --color-brand-accent-500: #e9740e;
-    --color-brand-accent-50: #ffbe90;
+  // ==========================================================================
+  // BRAND COLOR OVERRIDES
+  // ==========================================================================
+  --color-brand-primary-500: #004617;
+  --color-brand-primary-50: #d4f5de;
+  --color-brand-secondary-500: #22cbff;
+  --color-brand-secondary-50: #90deff;
+  --color-brand-accent-500: #e9740e;
+  --color-brand-accent-50: #ffbe90;
 
-    /** Override specific colors */
-    --theme-on-secondary: var(--color-brand-black-500);
+  // ==========================================================================
+  // SPECIFIC COLOR OVERRIDES
+  // ==========================================================================
+  --theme-on-secondary: var(--color-brand-black-500);
 
-    /** Typography */
-    --font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
-    --font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
+  // ==========================================================================
+  // TYPOGRAPHY OVERRIDES
+  // ==========================================================================
+  --font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
+  --font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
 }

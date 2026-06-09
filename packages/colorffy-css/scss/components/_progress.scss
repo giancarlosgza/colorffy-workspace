@@ -3,13 +3,18 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.progress {
+  // ==========================================================================
+  // PROGRESS COMPONENT
+  // ==========================================================================
    @property --shape-angle {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
   }
 
-  // Progress bar
+  // ==========================================================================
+  // PROGRESS BAR COMPONENT
+  // ==========================================================================
   .progress {
     --_progress-bg-color: var(--theme-surface-container-high);
     --_progress-color: var(--theme-primary-a10);
@@ -74,7 +79,9 @@
     }
   }
 
-  // Progress icon
+  // ==========================================================================
+  // PROGRESS SPINNER COMPONENT
+  // ==========================================================================
   .progress-spinner {
     --_progress-spinner-color: var(--theme-muted-a10);
     --_progress-spinner-size: 1.25rem;
@@ -98,7 +105,9 @@
     }
   }
 
-  // Placeholder
+  // ==========================================================================
+  // PLACEHOLDER & SKELETON LOADERS
+  // ==========================================================================
   .placeholder-list {
     position: relative;
     height: 13rem;
@@ -183,7 +192,9 @@
     }
   }
 
-  // Spinner
+  // ==========================================================================
+  // SPINNER COMPONENT
+  // ==========================================================================
   .spinner {
     animation: rotator v.$spinner-duration linear infinite;
   }
@@ -196,7 +207,9 @@
     colors (v.$spinner-duration * 4) ease-in-out infinite;
   }
 
-  // Shapes loading
+  // ==========================================================================
+  // SHAPES LOADING COMPONENT
+  // ==========================================================================
   .loading-shapes-container {
     position: relative;
     display: grid;
@@ -256,7 +269,9 @@
     }
   }
 
-  // Spinner keyframes
+  // ==========================================================================
+  // KEYFRAMES & ANIMATIONS
+  // ==========================================================================
   @keyframes rotator {
     0% {
       transform: rotate(0deg);

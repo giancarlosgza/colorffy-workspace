@@ -2,7 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer layout.flex-container {
-  // Containers
+  // ==========================================================================
+  // CONTAINER UTILITIES
+  // ==========================================================================
   .container {
     @include m.container;
   }
@@ -11,10 +13,9 @@
     @include m.container-fluid;
   }
 
-  /*
-   * Flexbox system
-   */
-  // Row
+  // ==========================================================================
+  // FLEXBOX GRID SYSTEM (ROWS & COLUMNS)
+  // ==========================================================================
   .row {
     @include m.make-row;
 
@@ -23,7 +24,6 @@
     }
   }
 
-  // Cols
   .col {
     @include m.make-col(1);
   }

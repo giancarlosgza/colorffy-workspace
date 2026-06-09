@@ -3,6 +3,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer components.header {
+  // ==========================================================================
+  // HEADER LAYOUT COMPONENT
+  // ==========================================================================
   .header-container {
     container: HeaderContainer / inline-size;
 

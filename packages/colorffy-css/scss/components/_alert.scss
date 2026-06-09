@@ -2,6 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer components.alert {
+  // ==========================================================================
+  // ALERT CONTAINER & TOAST/SNACKBAR PLACEMENT
+  // ==========================================================================
   .alert-container {
     --_alert-radius: #{v.$rounded-lg};
 
@@ -104,6 +107,9 @@
     }
   }
 
+  // ==========================================================================
+  // STANDARD ALERT COMPONENT
+  // ==========================================================================
   .alert {
     --_alert-color: var(--theme-on-background);
     --_alert-icon-color: var(--theme-on-background);
@@ -185,6 +191,9 @@
       }
     }
 
+    // ==========================================================================
+    // ALERT STYLING VARIANTS (BANNER, TONAL, TRANSPARENT, SNACKBAR, CRITICAL)
+    // ==========================================================================
     // Contrast variant, only works for banner alerts
     &.alert-contrast {
       --_alert-bg-color: var(--theme-surface-body-pane);
@@ -358,7 +367,9 @@
     }
   }
 
-  // PWA alert fixed container
+  // ==========================================================================
+  // PWA OFFLINE/INSTALL ALERT CONTAINER
+  // ==========================================================================
   .pwa-alert-container {
     --_pwa-alert-position-x: 1rem;
     --_pwa-alert-position-y: 1rem;
@@ -428,7 +439,9 @@
     }
   }
 
-  // Media queries
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIORS
+  // ==========================================================================
   @include m.media-query(1024) {
     .pwa-alert-container {
       --_pwa-alert-position-x: .5rem;

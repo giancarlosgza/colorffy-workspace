@@ -1,6 +1,9 @@
 @use "../abstracts/variables" as v;
 
 @layer components.tooltip {
+  // ==========================================================================
+  // TOOLTIP COMPONENT
+  // ==========================================================================
   .v-popper--theme-tooltip {
     --_tooltip-bg-color: var(--theme-surface-tooltip);
     --_tooltip-text-color: #{v.$white};

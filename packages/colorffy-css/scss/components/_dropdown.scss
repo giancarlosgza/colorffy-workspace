@@ -2,6 +2,9 @@
 @use '../base/typography';
 
 @layer components.dropdown {
+  // ==========================================================================
+  // DROPDOWN COMPONENT
+  // ==========================================================================
   .v-popper {
     &:is(.v-popper--theme-dropdown) {
       display: inline-block;
@@ -316,7 +319,9 @@
         }
       }
 
-      // Desktop
+      // ==========================================================================
+      // DESKTOP DROPDOWN BEHAVIOR
+      // ==========================================================================
       &.v-popper__popper--hidden {
         visibility: hidden;
         opacity: 0;
@@ -337,7 +342,9 @@
         transform-origin: center;
       }
 
-      // Mobile
+      // ==========================================================================
+      // MOBILE DROPDOWN BEHAVIOR (NO POSITIONING)
+      // ==========================================================================
       &.v-popper__popper--no-positioning {
         --_dropdown-easing-duration: 300ms;
 

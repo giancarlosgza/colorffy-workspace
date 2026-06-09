@@ -2,6 +2,9 @@
 @use "../abstracts/variables" as v;
 
 @layer components.form-check {
+  // ==========================================================================
+  // FORM CHECK COMPONENT
+  // ==========================================================================
   .form-check {
     --_form-check-gutter-y: .85rem;
     --_form-check-gap: .75rem;

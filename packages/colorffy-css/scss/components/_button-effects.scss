@@ -2,7 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.buttons {
-  // Ripple effect
+  // ==========================================================================
+  // BUTTON RIPPLE EFFECTS
+  // ==========================================================================
   .ripple {
     position: relative;
     overflow: hidden;

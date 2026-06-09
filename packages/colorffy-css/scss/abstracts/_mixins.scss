@@ -3,7 +3,9 @@
 @use 'variables' as v;
 @use 'functions' as f;
 
-// Texts
+// ==========================================================================
+// TEXT & TYPOGRAPHY MIXINS
+// ==========================================================================
 @mixin text-color($color) {
   color: $color;
 }
@@ -46,7 +48,9 @@
   }
 }
 
-// Backgrounds
+// ==========================================================================
+// BACKGROUND & GRADIENT MIXINS
+// ==========================================================================
 @mixin bg-color($color) {
   background-color: $color;
 }
@@ -59,7 +63,9 @@
   }
 }
 
-// Images
+// ==========================================================================
+// IMAGE & BADGE MIXINS
+// ==========================================================================
 @mixin make-image($size) {
   width: $size;
   height: $size;
@@ -95,7 +101,9 @@
   --_#{$prefix}-color: #{$color};
 }
 
-// Buttons
+// ==========================================================================
+// BUTTON & INTERACTION MIXINS
+// ==========================================================================
 @mixin btn-base() {
   display: grid;
   grid-template-columns: var(--_btn-columns);
@@ -269,7 +277,9 @@
 * @author Giancarlos Garza
 */
 
-// Light tones
+// ==========================================================================
+// COLOR MIX LIGHT & SEMANTIC LIGHT TONES
+// ==========================================================================
 @mixin surface-light-tones() {
   @supports (color: color-mix(in srgb, white, gray)) {
     /* surfaces */
@@ -384,7 +394,9 @@
   }
 }
 
-// Dark tones
+// ==========================================================================
+// COLOR MIX DARK & SEMANTIC DARK TONES
+// ==========================================================================
 @mixin surface-dark-tones() {
   @supports (color: color-mix(in srgb, black, gray)) {
     /* surfaces */
@@ -499,9 +511,9 @@
   }
 }
 
-/*
-* Fixed base theme colors
-*/
+// ==========================================================================
+// FIXED THEME COLOR ASSIGNMENTS
+// ==========================================================================
 @mixin primary-fixed-colors() {
   --theme-primary-base-fixed: var(--color-brand-primary-500);
   --theme-secondary-base-fixed: var(--color-brand-secondary-500);
@@ -516,10 +528,9 @@
   --theme-dark-base-fixed: var(--color-brand-dark-500);
 }
 
-/*
-* Containers
-* Generate container with media queries
-*/
+// ==========================================================================
+// CONTAINER & FLEXBOX GRID SYSTEM MIXINS
+// ==========================================================================
 @mixin container {
   --_container-gutter-x: 1.5rem;
   --_container-gutter-y: 0;
@@ -595,10 +606,9 @@
   }
 }
 
-/*
-* Grid
-* Generate grid columns system
-*/
+// ==========================================================================
+// GRID COLUMN & POSITION SYSTEM MIXINS
+// ==========================================================================
 @mixin make-grid-cols($columns) {
   grid-template-columns: repeat($columns, 1fr);
 }
@@ -627,10 +637,9 @@
   }
 }
 
-/*
-* Spacing
-* Generate margin and padding spacing mixins
-*/
+// ==========================================================================
+// SPACING & UTILITY MIXINS (MARGIN, PADDING, OPACITY, RADIUS)
+// ==========================================================================
 @mixin make-margin($direction, $size) {
   @if ($direction == 'all') {
     margin: map.get(v.$spacing-sizes, $size);
@@ -677,9 +686,9 @@
 }
 
 
-/*
-* Properties
-*/
+// ==========================================================================
+// CSS CUSTOM PROPERTY DEFINITIONS
+// ==========================================================================
 @property --gradient-angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -728,9 +737,9 @@
   initial-value: 0.00010px;
 }
 
-/*
-* Gradient border
-*/
+// ==========================================================================
+// GRADIENT & GLOWING BORDER MIXINS
+// ==========================================================================
 @mixin gradient-glow-border($colors...) {
   &::before,
   &::after {
@@ -792,10 +801,9 @@
   @include text-gradient(45deg, v.$gradient-accent);
 }
 
-/*
- * Dynamic gradients variants
- * Outputs lightweight CSS custom properties
- */
+// ==========================================================================
+// GRADIENT GENERATION UTILITIES
+// ==========================================================================
 @mixin generate-gradients($colors, $isBordered: false, $isBg: false) {
   @each $name, $gradient in $colors {
     &.gradient-#{$name} {
@@ -808,10 +816,6 @@
   }
 }
 
-/*
- * Static gradient variants
- * Outputs lightweight CSS custom properties
- */
 @mixin generate-static-gradients($colors, $isBordered: false, $isBg: false) {
   @each $name, $gradient in $colors {
     &.gradient-#{$name} {
@@ -824,10 +828,10 @@
   }
 }
 
-/**
-* Container Island
-* Centered floating container with rounded edges
-*/
+
+// ==========================================================================
+// CONTAINER ISLAND FLOATING UTILITIES
+// ==========================================================================
 @mixin container-island($position: absolute, $edge: top, $offset: v.$container-island-margin) {
   position: $position;
   inset-inline: 0;

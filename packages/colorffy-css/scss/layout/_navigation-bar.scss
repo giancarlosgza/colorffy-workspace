@@ -3,7 +3,9 @@
 @use '../base/typography';
 
 @layer layout.navigation-bar {
-  // Bottom navigation bar
+  // ==========================================================================
+  // BOTTOM NAVIGATION BAR LAYOUT
+  // ==========================================================================
   .navigation-bar {
     --_navigation-bar-easing-in: #{v.$easing-in-fallback};
     --_navigation-bar-easing-out: #{v.$easing-out-fallback};
@@ -100,7 +102,9 @@
       }
     }
 
-    // Active indicator
+    // ==========================================================================
+    // ACTIVE ITEM INDICATOR
+    // ==========================================================================
     & .indicator {
       display: none;
 
@@ -142,7 +146,9 @@
     }
   }
 
-  // Reduced motion
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIOR
+  // ==========================================================================
   @media (prefers-reduced-motion) {
     .navigation-bar {
       .navigation-bar-item {

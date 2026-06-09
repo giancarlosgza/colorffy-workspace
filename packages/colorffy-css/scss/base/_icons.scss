@@ -9,7 +9,9 @@
     font-variation-settings: var(--iw-semi-bold);
   }
 
-  // Wrap
+  // ==========================================================================
+  // ICON WRAPPER UTILITIES
+  // ==========================================================================
   .icon-wrap {
     --_icon-wrap-padding: 20px;
     --_icon-wrap-radius: #{v.$rounded-full};
@@ -137,7 +139,9 @@
     }
   }
 
-  // Empty state
+  // ==========================================================================
+  // ICON EMPTY STATE UTILITIES
+  // ==========================================================================
   .icon-state-wrapper {
     --_icon-state-size: clamp(3rem, calc(5vw + 3rem), 7rem);
     --_icon-state-gap: 1rem;
@@ -208,9 +212,9 @@
     }
   }
 
-  /*
-   * Icons micro interactions
-   */
+  // ==========================================================================
+  // ICON MICRO-INTERACTIONS
+  // ==========================================================================
   .hover-rotate {
     &:not(.disabled, :disabled) {
       & i {

@@ -3,7 +3,9 @@
 @use '../base/typography';
 
 @layer components.tabs {
-  // Tabs
+  // ==========================================================================
+  // TABS COMPONENT
+  // ==========================================================================
   .tabs-navigation {
     --_nav-tabs-gap: .5rem;
     --_nav-tabs-gutter-x: 0;
@@ -107,7 +109,9 @@
     }
   }
 
-  // Segmented control
+  // ==========================================================================
+  // SEGMENTED CONTROL COMPONENT
+  // ==========================================================================
   .tab-segmented-control-container {
     overflow-x: auto;
     margin-bottom: .75rem;
@@ -196,8 +200,8 @@
         height: auto;
         z-index: 2;
 
-        &:is(.active-item) {
-        }
+        // &:is(.active-item) {
+        // }
 
         .segmented-control-link {
           display: block;

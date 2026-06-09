@@ -2,7 +2,13 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.prime {
-  // Multiselect
+  // ==========================================================================
+  // PRIME COMPONENT
+  // ==========================================================================
+
+  // ==========================================================================
+  // MULTISELECT COMPONENT
+  // ==========================================================================
   .p-multiselect {
     --p-multiselect-background: transparent;
     --p-multiselect-border-color: var(--theme-outline-text-field);
@@ -129,7 +135,9 @@
     }
   }
 
-  // Select
+  // ==========================================================================
+  // SELECT COMPONENT
+  // ==========================================================================
   .p-select {
     --p-select-background: transparent;
     --p-select-border-color: var(--theme-outline-text-field);
@@ -224,7 +232,9 @@
     }
   }
 
-  // Color picker
+  // ==========================================================================
+  // COLOR PICKER COMPONENT
+  // ==========================================================================
   .p-colorpicker {
     --_size: 1.75rem;
 
@@ -260,7 +270,9 @@
     }
   }
 
-  // Toast
+  // ==========================================================================
+  // TOAST COMPONENT
+  // ==========================================================================
   .p-toast {
     --_margin: .5rem;
 
@@ -307,7 +319,9 @@
     }
   }
 
-  // Dialog
+  // ==========================================================================
+  // CONFIRM DIALOG COMPONENT
+  // ==========================================================================
   .p-confirm-dialog {
     background-color: var(--theme-surface-container-highest);
     border-radius: calc(#{v.$rounded-xl} + 3px);
@@ -360,7 +374,9 @@
     background: var(--theme-overlay-backdrop);
   }
 
-  // Input Switch
+  // ==========================================================================
+  // INPUT SWITCH COMPONENT
+  // ==========================================================================
   .p-inputswitch {
     --_p-switch-easing-in: #{v.$easing-in-fallback};
     --_p-switch-easing-duration: 600ms;

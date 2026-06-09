@@ -4,7 +4,9 @@
 @use '../base/typography';
 
 @layer layout.navbar {
-  // Navbar container
+  // ==========================================================================
+  // NAVBAR STICKY CONTAINER
+  // ==========================================================================
   .nav-sticky {
     container-type: scroll-state;
     position: sticky;
@@ -39,7 +41,9 @@
     }
   }
 
-  // Top navbar
+  // ==========================================================================
+  // MAIN TOP NAVBAR
+  // ==========================================================================
   .navbar {
     --_nav-bg-color: var(--theme-background);
     --_nav-color: var(--theme-on-background);
@@ -293,7 +297,9 @@
     }
   }
 
-  // User navigation menu
+  // ==========================================================================
+  // USER POPOVER MENU
+  // ==========================================================================
   .popover-menu-container {
     --_popover-menu-bg-color: var(--theme-surface-overlay);
     --_popover-menu-color: var(--theme-on-background);
@@ -426,7 +432,9 @@
     }
   }
 
-  // Tools navigation menu
+  // ==========================================================================
+  // MEGA MENU TOOLS CONTAINER
+  // ==========================================================================
   .menu-tools-container {
     & .menu-tools {
       --_menu-tool-padding: .75rem;
@@ -705,7 +713,9 @@
     }
   }
 
-  // Reduced motion
+  // ==========================================================================
+  // REDUCED MOTION BEHAVIORS
+  // ==========================================================================
   @media (prefers-reduced-motion) {
     .menu-tools-container {
       .menu-tools {
@@ -732,7 +742,9 @@
     }
   }
 
-  // Media queries
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIORS
+  // ==========================================================================
   @include m.media-query(1024) {
     .sidebar-collapse-button {
       display: none;

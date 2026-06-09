@@ -2,6 +2,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.badge {
+  // ==========================================================================
+  // BADGE COMPONENT
+  // ==========================================================================
   .badge {
     --_badge-color: var(--theme-on-background);
     --_badge-bg-color: var(--theme-surface-container-high);
@@ -32,6 +35,9 @@
     background-color: var(--_badge-bg-color);
     border: v.$border-sm solid var(--_badge-border-color);
 
+    // ==========================================================================
+    // BADGE STYLING VARIANTS (PRIMARY, OUTLINE, SEMANTIC, TONAL, PILL, GRADIENT)
+    // ==========================================================================
     // Primary badges
     &.badge-primary {
       --_badge-color: var(--theme-on-primary);
@@ -165,7 +171,9 @@
     }
   }
 
-  // badge Group
+  // ==========================================================================
+  // BADGE GROUP LAYOUT CONTAINER
+  // ==========================================================================
   .badge-group {
     display: flex;
     flex-direction: row;

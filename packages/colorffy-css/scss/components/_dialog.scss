@@ -3,6 +3,9 @@
 @use "../utilities/mask";
 
 @layer components.dialog {
+  // ==========================================================================
+  // DIALOG COMPONENT
+  // ==========================================================================
   .dialog {
     --_dialog-border-color: var(--theme-outline-overlay);
     --_dialog-radius: #{v.$dialog-border-radius};
@@ -365,7 +368,9 @@
     }
   }
 
-  // Media queries
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIORS
+  // ==========================================================================
   @include m.media-query(992) {
     .dialog,
     .dialog:is([class*="dialog-"]) {

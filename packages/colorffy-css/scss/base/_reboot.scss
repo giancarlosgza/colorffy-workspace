@@ -44,7 +44,9 @@
     }
   }
 
-  // Sections
+  // ==========================================================================
+  // BODY & MAIN SECTIONS
+  // ==========================================================================
   body {
     margin: 0;
     font-family: var(--font-secondary);
@@ -75,7 +77,9 @@
     display: block;
   }
 
-  // Line rules
+  // ==========================================================================
+  // HORIZONTAL & VERTICAL LINES
+  // ==========================================================================
   hr {
     box-sizing: content-box;
     overflow: visible;
@@ -107,7 +111,9 @@
     white-space: pre-wrap;
   }
 
-  // Abbreviations
+  // ==========================================================================
+  // INLINE TEXT, LISTS & EMBEDDED CONTENT RESETS
+  // ==========================================================================
   abbr[title] {
     text-decoration: underline dotted; // 1
     cursor: help; // 2
@@ -188,7 +194,9 @@
     border-style: none;
   }
 
-  // Forms
+  // ==========================================================================
+  // FORM ELEMENTS RESETS
+  // ==========================================================================
   button,
   input,
   optgroup,
@@ -393,7 +401,9 @@
     border-width: 0;
   }
 
-  /* Scrollbar */
+  // ==========================================================================
+  // SCROLLBAR STYLING RESETS
+  // ==========================================================================
   * {
     // New Chromium-based & Firefox* browsers scrollbar properties
     @supports (scrollbar-color: auto) {
@@ -459,7 +469,9 @@
     }
   }
 
-  // Browser mouse selection color
+  // ==========================================================================
+  // SELECTION HIGHLIGHT RESETS
+  // ==========================================================================
   ::selection {
     --_selection-opacity: 45%;
     --_selection-space: oklab;

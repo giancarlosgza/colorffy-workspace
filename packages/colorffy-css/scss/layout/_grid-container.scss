@@ -2,14 +2,16 @@
 @use "../abstracts/mixins" as m;
 
 @layer layout.grid-container {
-  // Containers queries
+  // ==========================================================================
+  // CONTAINER QUERIES
+  // ==========================================================================
   .grid-list {
     container: list-columns / inline-size;
   }
 
-  /*
-  * Grid system
-  */
+  // ==========================================================================
+  // GRID SYSTEM REPEATS
+  // ==========================================================================
   @for $i from 1 through 12 {
     .grid-repeat-cols-#{$i} {
       @include m.make-grid-cols($i);
@@ -35,7 +37,9 @@
     }
   }
 
-  // Span columns
+  // ==========================================================================
+  // GRID COLUMN SPANS
+  // ==========================================================================
   @for $i from 1 through 12 {
     .grid-span-col-#{$i} {
       @include m.make-grid-span($i);
@@ -53,7 +57,9 @@
     }
   }
 
-  // Start and end columns
+  // ==========================================================================
+  // GRID COLUMN START & END POSITIONS
+  // ==========================================================================
   @for $i from 1 through 12 {
     .grid-start-col-#{$i} {
       @include m.make-grid-position(column, start, $i);
@@ -64,7 +70,9 @@
     }
   }
 
-  // Start and end rows
+  // ==========================================================================
+  // GRID ROW START & END POSITIONS
+  // ==========================================================================
   @for $i from 1 through 12 {
     .grid-start-row-#{$i} {
       @include m.make-grid-position(row, start, $i);
@@ -75,9 +83,9 @@
     }
   }
 
-  /*
-  * Auto columns
-  */
+  // ==========================================================================
+  // GRID AUTO-COLUMNS UTILITIES
+  // ==========================================================================
   // Expand the cols when there's more space available
   .grid-auto-fit-cols {
     --_min-col-size: 200px;
@@ -118,9 +126,9 @@
     grid-auto-columns: minmax(0, 1fr);
   }
 
-  /*
-  * Auto rows
-  */
+  // ==========================================================================
+  // GRID AUTO-ROWS UTILITIES
+  // ==========================================================================
   .grid-auto-rows {
     grid-auto-rows: auto;
   }
@@ -137,9 +145,9 @@
     grid-auto-rows: minmax(0, 1fr);
   }
 
-  /*
-  * Auto flow
-  */
+  // ==========================================================================
+  // GRID AUTO-FLOW UTILITIES
+  // ==========================================================================
   .grid-auto-flow-dense {
     grid-auto-flow: dense;
   }
@@ -160,7 +168,9 @@
     grid-auto-flow: row dense;
   }
 
-  // Subgrid
+  // ==========================================================================
+  // SUBGRID UTILITIES
+  // ==========================================================================
   .grid-subgrid-cols {
     grid-template-columns: subgrid;
   }
@@ -169,9 +179,9 @@
     grid-template-rows: subgrid;
   }
 
-  /*
-   * Grid main content
-   */
+  // ==========================================================================
+  // GRID MAIN CONTENT LAYOUT
+  // ==========================================================================
   .grid-main-content {
     display: grid;
     grid-template-columns: auto 1fr;

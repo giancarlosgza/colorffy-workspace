@@ -4,6 +4,9 @@
 @use '../utilities/text' as t;
 
 @layer layout.sidebar {
+  // ==========================================================================
+  // SIDEBAR NAVIGATION DRAWER LAYOUT
+  // ==========================================================================
   .navigation-drawer {
     --_drawer-radius: #{v.$rounded-xl v.$rounded-none v.$rounded-none v.$rounded-xl};
     --_drawer-easing-in: #{v.$easing-in-fallback};
@@ -359,7 +362,9 @@
     }
   }
 
-  // Overlay
+  // ==========================================================================
+  // SIDEBAR COMPONENT OVERLAY
+  // ==========================================================================
   .drawer-overlay {
     display: none;
     position: fixed;
@@ -372,6 +377,9 @@
     animation: fade-in 200ms ease-out forwards;
   }
 
+  // ==========================================================================
+  // MEDIA QUERIES & RESPONSIVE BEHAVIOR
+  // ==========================================================================
   @include m.media-query(1024) {
     .drawer-overlay {
       display: block;

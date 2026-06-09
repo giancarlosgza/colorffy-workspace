@@ -3,6 +3,9 @@
 @use "../abstracts/mixins" as m;
 
 @layer components.form-control {
+  // ==========================================================================
+  // FORM CONTROL COMPONENT
+  // ==========================================================================
   .form-group,
   .input-group {
     --_form-group-gutter-y: .85rem;
@@ -409,7 +412,9 @@
     }
   }
 
-  // Dropbox file input
+  // ==========================================================================
+  // DROPBOX FILE INPUT
+  // ==========================================================================
   .input-file-group {
     --_file-group-gutter-y: .85rem;
 

@@ -2,6 +2,9 @@
 @use '../abstracts/mixins' as m;
 
 @layer media-queries {
+  // ==========================================================================
+  // MEDIA QUERIES RESPONSIVE OVERRIDES (SCROLL LOCKING & NAVIGATION GAPS)
+  // ==========================================================================
   @include m.media-query(1024) {
     // Prevent body from scrolling when sheets, mobile drawers, or menus are open
     body {

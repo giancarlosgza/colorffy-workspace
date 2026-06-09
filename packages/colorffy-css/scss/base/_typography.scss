@@ -17,7 +17,9 @@
     color: var(--theme-on-background);
   }
 
-  // Type scale system
+  // ==========================================================================
+  // TYPOGRAPHY SCALE SYSTEM
+  // ==========================================================================
   h1 {
     font-family: map.get(v.$type-h1, font-family);
     font-weight: map.get(v.$type-h1, font-weight);
@@ -98,7 +100,9 @@
     @include m.text-variable(true);
   }
 
-  // Html texts
+  // ==========================================================================
+  // INLINE TEXTS, ANCHORS, LABELS & CODE ELEMENTS
+  // ==========================================================================
   p,
   a {
     font-weight: v.$fw-400;
