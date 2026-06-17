@@ -56,12 +56,21 @@ function onOverviewTabChange(tabId: string) {
     >
       <template #actions>
         <UiButtonGroup connected>
-          <UiButton text="Exportar" variant="outline" size="sm">
+          <UiButton
+            text="Exportar"
+            variant="outline"
+            size="sm"
+          >
             <template #icon>
               <UiIconMaterial icon-code="&#xf090;" />
             </template>
           </UiButton>
-          <UiButton text="Nuevo informe" variant="filled" color="primary" size="sm">
+          <UiButton
+            text="Nuevo informe"
+            variant="filled"
+            color="primary"
+            size="sm"
+          >
             <template #icon>
               <UiIconMaterial icon-code="&#xe145;" />
             </template>
@@ -79,29 +88,38 @@ function onOverviewTabChange(tabId: string) {
       >
         <UiCard
           variant="outline"
-          size="sm"
           class="card-pane h-100"
         >
           <template #body>
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div class="icon-wrap icon-wrap-sm icon-wrap-outline">
-                <UiIconMaterial :icon-code="stat.icon" :class="stat.iconClass" />
+                <UiIconMaterial
+                  :icon-code="stat.icon"
+                  :class="stat.iconClass"
+                />
               </div>
-              <UiBadge :text="stat.delta" :variant="stat.deltaVariant" size="sm" />
+              <UiBadge
+                :text="stat.delta"
+                :variant="stat.deltaVariant"
+                size="sm"
+              />
             </div>
-            <p class="subtitle-2 text-muted mb-0">
+
+            <p class="subtitle-2 text-muted mb-1">
               {{ stat.label }}
             </p>
-            <p class="fs-500 fw-800 mb-2">
+            <p class="fs-500 fw-800 mb-3">
               {{ stat.value }}
             </p>
+
             <UiProgressBar
               :value="stat.progress"
               :indeterminate="stat.indeterminate"
               :aria-label="stat.progressLabel"
               size="sm"
+              class="mb-2"
             />
-            <p class="fs-sm-300 text-muted mt-1 mb-0">
+            <p class="caption text-muted mb-0">
               {{ stat.progressLabel }}
             </p>
           </template>
@@ -136,22 +154,16 @@ function onOverviewTabChange(tabId: string) {
               <h4 class="subtitle-1 fw-700 mb-1">
                 Rendimiento {{ activePanelLabel }}
               </h4>
-              <p class="subtitle-2 text-muted">
+              <p class="subtitle-2 text-muted mb-3">
                 Indicadores combinados de las últimas 4 semanas.
               </p>
               <UiProgressBar
                 :value="82"
                 text="82%"
                 gradient
+                size="lg"
                 aria-label="Salud general del proyecto"
-                class="mt-2"
-              />
-              <UiProgressBar
-                :value="64"
-                animated
-                bar-class="bg-primary-fixed"
-                aria-label="Cobertura de pruebas"
-                text="Cobertura 64%"
+                bar-class="gradient-accent"
                 class="mt-2"
               />
             </div>
@@ -164,15 +176,19 @@ function onOverviewTabChange(tabId: string) {
               tabindex="0"
               class="mt-3"
             >
-              <h4 class="subtitle-1 fw-700 mb-3">
+              <h4 class="subtitle-1 fw-700 mb-1">
                 Tráfico por canal
               </h4>
+              <p class="subtitle-2 text-muted mb-3">
+                Distribución porcentual por fuente.
+              </p>
+
               <div
                 v-for="channel in channels"
                 :key="channel.name"
                 class="mb-3"
               >
-                <div class="d-flex justify-content-between subtitle-2 mb-1">
+                <div class="d-flex justify-content-between subtitle-2 mb-2">
                   <span>{{ channel.name }}</span>
                   <span class="text-muted tabular-numbers">{{ channel.value }}%</span>
                 </div>
@@ -193,7 +209,10 @@ function onOverviewTabChange(tabId: string) {
               tabindex="0"
               class="mt-3"
             >
-              <UiEmpty title="Sin reportes" subtitle="Esta sección está deshabilitada en la demo." />
+              <UiEmpty
+                title="Sin reportes"
+                subtitle="Esta sección está deshabilitada en la demo."
+              />
             </div>
           </template>
         </UiCard>
@@ -206,13 +225,21 @@ function onOverviewTabChange(tabId: string) {
           class="card-pane h-100"
         >
           <template #body>
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="subtitle-1 fw-700 mb-0">
                 Actividad reciente
               </h4>
-              <UiBadge text="4 nuevas" variant="outline" size="sm" />
+              <UiBadge
+                text="4 nuevas"
+                variant="outline"
+                size="sm"
+              />
             </div>
-            <UiListGroup is-interactive is-undecorated variant="flush">
+            <UiListGroup
+              is-interactive
+              is-undecorated
+              variant="flush"
+            >
               <UiListItem
                 v-for="item in activity"
                 :key="item.id"
@@ -238,20 +265,29 @@ function onOverviewTabChange(tabId: string) {
           <h4 class="subtitle-1 fw-700 mb-0">
             Estado del sistema
           </h4>
-          <UiBadge text="Operativo" variant="tonal tonal-success" size="sm" icon-code="&#xe061;" />
+          <UiBadge
+            text="Operativo"
+            variant="tonal tonal-success"
+            size="sm"
+            icon-code="&#xe061;"
+          />
         </div>
         <div class="row">
           <div class="col-md-6 mb-3">
-            <p class="subtitle-2 mb-1">
+            <p class="subtitle-2 mb-2">
               Migración de base de datos
             </p>
-            <UiProgressBar :value="0" indeterminate aria-label="Migración en progreso" />
-            <p class="fs-sm-300 text-muted mt-1 mb-0">
+            <UiProgressBar
+              :value="0"
+              indeterminate
+              aria-label="Migración en progreso"
+            />
+            <p class="subtitle-2 text-muted mt-2 mb-0">
               Progreso indeterminado — en ejecución
             </p>
           </div>
           <div class="col-md-6 mb-3">
-            <p class="subtitle-2 mb-1">
+            <p class="subtitle-2 mb-2">
               Almacenamiento usado
             </p>
             <UiProgressBar
@@ -260,7 +296,7 @@ function onOverviewTabChange(tabId: string) {
               bar-class="bg-danger-fixed bg-opacity-90"
               aria-label="Almacenamiento usado"
             />
-            <p class="fs-sm-300 text-muted mt-1 mb-0">
+            <p class="subtitle-2 text-muted mt-2 mb-0">
               91 GB de 100 GB
             </p>
           </div>

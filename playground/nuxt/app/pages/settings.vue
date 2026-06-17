@@ -47,7 +47,7 @@ function save() {
         <UiButton
           text="Guardar"
           variant="filled"
-          color="primary"
+          color="success"
           :loading="isSaving"
           @on-click="save"
         >
@@ -59,7 +59,7 @@ function save() {
     </UiHeaderContent>
 
     <!-- Section switcher -->
-    <div class="mt-section mb-3">
+    <div class="mt-section mb-4">
       <UiSegmentedControls
         :tabs="sectionTabs"
         :active-tab="activeSection"
@@ -75,7 +75,7 @@ function save() {
       aria-labelledby="tab-general"
       tabindex="0"
     >
-      <h3 class="subtitle-1 fw-700 mb-2">
+      <h3 class="subtitle-1 fw-700 mb-3">
         Cuenta
       </h3>
       <UiCard
@@ -84,7 +84,11 @@ function save() {
         class="card-pane mb-4"
       >
         <template #body>
-          <UiListGroup is-interactive variant="flush" size="md">
+          <UiListGroup
+            is-interactive
+            variant="flush"
+            size="md"
+          >
             <UiListItem
               title="Perfil"
               text="Nombre, foto e información pública"
@@ -94,9 +98,8 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <span class="d-inline-flex align-items-center gap-2 text-muted">
+                <span class="subtitle-2 text-muted d-inline-flex align-items-center gap-2 me-4">
                   Giancarlos
-                  <UiIconMaterial icon-code="&#xe5cc;" />
                 </span>
               </template>
             </UiListItem>
@@ -109,9 +112,12 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <span class="d-inline-flex align-items-center gap-2">
-                  <UiBadge text="Verificado" variant="tonal tonal-success" size="sm" icon-code="&#xe8e8;" />
-                  <UiIconMaterial icon-code="&#xe5cc;" class="text-muted" />
+                <span class="d-inline-flex align-items-center gap-2 me-4">
+                  <UiBadge
+                    text="Verificado"
+                    variant="tonal tonal-success"
+                    size="sm" icon-code="&#xe8e8;"
+                  />
                 </span>
               </template>
             </UiListItem>
@@ -124,9 +130,8 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <span class="d-inline-flex align-items-center gap-2 text-muted">
+                <span class="subtitle-2 text-muted d-inline-flex align-items-center gap-2 me-4">
                   Español
-                  <UiIconMaterial icon-code="&#xe5cc;" />
                 </span>
               </template>
             </UiListItem>
@@ -134,7 +139,7 @@ function save() {
         </template>
       </UiCard>
 
-      <h3 class="subtitle-1 fw-700 mb-2">
+      <h3 class="subtitle-1 fw-700 mb-3">
         Apariencia
       </h3>
       <UiCard
@@ -197,7 +202,7 @@ function save() {
       aria-labelledby="tab-notifications"
       tabindex="0"
     >
-      <h3 class="subtitle-1 fw-700 mb-2">
+      <h3 class="subtitle-1 fw-700 mb-3">
         Canales de notificación
       </h3>
       <UiCard
@@ -216,7 +221,15 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <UiInputCheck id="n-email" v-model="notifEmail" label="Correo" variant="switch" size="lg" hide-label class="gap-0 mb-0" />
+                <UiInputCheck
+                  id="n-email"
+                  v-model="notifEmail"
+                  label="Correo"
+                  variant="switch"
+                  size="lg"
+                  hide-label
+                  class="gap-0 mb-0"
+                />
               </template>
             </UiListItem>
             <UiListItem
@@ -228,7 +241,15 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <UiInputCheck id="n-push" v-model="notifPush" label="Push" variant="switch" size="lg" hide-label class="gap-0 mb-0" />
+                <UiInputCheck
+                  id="n-push"
+                  v-model="notifPush"
+                  label="Push"
+                  variant="switch"
+                  size="lg"
+                  hide-label
+                  class="gap-0 mb-0"
+                />
               </template>
             </UiListItem>
             <UiListItem
@@ -240,7 +261,15 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <UiInputCheck id="n-sms" v-model="notifSms" label="SMS" variant="switch" size="lg" hide-label class="gap-0 mb-0" />
+                <UiInputCheck
+                  id="n-sms"
+                  v-model="notifSms"
+                  label="SMS"
+                  variant="switch"
+                  size="lg"
+                  hide-label
+                  class="gap-0 mb-0"
+                />
               </template>
             </UiListItem>
             <UiListItem
@@ -253,8 +282,20 @@ function save() {
             >
               <template #list-action>
                 <span class="d-inline-flex align-items-center gap-2">
-                  <UiBadge text="Nuevo" variant="tonal tonal-accent" size="sm" />
-                  <UiInputCheck id="n-digest" v-model="weeklyDigest" label="Resumen" variant="switch" size="lg" hide-label class="gap-0 mb-0" />
+                  <UiBadge
+                    text="Nuevo"
+                    variant="tonal tonal-accent"
+                    size="sm"
+                  />
+                  <UiInputCheck
+                    id="n-digest"
+                    v-model="weeklyDigest"
+                    label="Resumen"
+                    variant="switch"
+                    size="lg"
+                    hide-label
+                    class="gap-0 mb-0"
+                  />
                 </span>
               </template>
             </UiListItem>
@@ -271,6 +312,9 @@ function save() {
       aria-labelledby="tab-system"
       tabindex="0"
     >
+      <h3 class="subtitle-1 fw-700 mb-3">
+        Información del sistema
+      </h3>
       <UiCard
         variant="outline"
         size="sm"
@@ -284,7 +328,12 @@ function save() {
             rounded
           />
 
-          <UiListGroup is-interactive variant="flush" size="md" class="mt-2">
+          <UiListGroup
+            is-interactive
+            variant="flush"
+            size="md"
+            class="mt-2"
+          >
             <UiListItem
               title="Actualización de software"
               text="Hay una actualización disponible"
@@ -294,7 +343,14 @@ function save() {
               has-actions
             >
               <template #list-action>
-                <UiBadge text="v1.7.2" variant="outline" size="sm" />
+                <UiBadge
+                  text="v1.7.2"
+                  variant="outline"
+                  size="sm"
+                  class="me-4"
+                  icon-code="&#xf5f4;"
+                  icon-class="text-success"
+                />
               </template>
             </UiListItem>
             <UiListItem

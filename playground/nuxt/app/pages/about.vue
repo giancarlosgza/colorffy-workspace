@@ -133,7 +133,6 @@ function join() {
       >
         <UiCard
           variant="outline"
-          size="sm"
           class="card-pane h-100"
         >
           <template #body>

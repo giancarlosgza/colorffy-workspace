@@ -99,6 +99,8 @@ function save() {
                   label="Nombre"
                   placeholder="Tu nombre"
                   variant="outline"
+                  rounded
+                  required
                 />
               </div>
               <div class="col-md-6 mb-3">
@@ -109,6 +111,8 @@ function save() {
                   type="email"
                   placeholder="tucorreo@ejemplo.com"
                   variant="outline"
+                  rounded
+                  required
                 />
               </div>
               <div class="col-md-6 mb-3">
@@ -128,8 +132,9 @@ function save() {
                   variant="outline"
                   :min="1"
                   :max="50"
+                  class="mb-2"
                 />
-                <p class="fs-sm-300 text-muted mt-1 mb-0">
+                <p class="caption text-muted mb-0">
                   Valor: {{ form.seats }} · tipo: <code>{{ seatsType }}</code>
                 </p>
               </div>
@@ -195,13 +200,14 @@ function save() {
                   :max="100"
                   :step="5"
                   size="lg"
+                  class="mb-0"
                 />
               </div>
             </div>
 
             <hr>
 
-            <h5 class="subtitle-1 fw-600 mb-2">
+            <h5 class="subtitle-1 fw-600 mb-3">
               Notificaciones
             </h5>
             <UiInputCheck
@@ -239,13 +245,26 @@ function save() {
         </UiCard>
 
         <!-- Danger zone (controlled accordion) -->
-        <UiAccordionGroup>
-          <UiAccordion v-model:open="dangerOpen" name="account-settings" title="Zona de peligro">
+        <UiAccordionGroup
+          is-transparent
+          custom-class="bg-surface-pane"
+        >
+          <UiAccordion
+            v-model:open="dangerOpen"
+            name="account-settings"
+            title="Zona de peligro"
+            class="border border-md border-danger"
+          >
             <template #content>
               <p class="subtitle-2 text-muted">
                 Estas acciones son permanentes y no se pueden deshacer.
               </p>
-              <UiButton text="Eliminar cuenta" variant="outline" color="danger" rounded>
+              <UiButton
+                text="Eliminar cuenta"
+                variant="filled"
+                color="danger"
+                rounded
+              >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe872;" />
                 </template>
@@ -253,9 +272,6 @@ function save() {
             </template>
           </UiAccordion>
         </UiAccordionGroup>
-        <p class="fs-sm-300 text-muted mt-1">
-          Acordeón {{ dangerOpen ? 'abierto' : 'cerrado' }} (v-model:open)
-        </p>
       </div>
 
       <!-- Right: connected accounts -->
@@ -288,7 +304,7 @@ function save() {
               <UiButton
                 :text="account.connected ? 'Desconectar' : 'Conectar'"
                 :variant="account.connected ? 'outline' : 'tonal'"
-                :color="account.connected ? 'danger' : 'primary'"
+                :color="account.connected ? 'danger' : 'success'"
                 size="sm"
               />
             </div>

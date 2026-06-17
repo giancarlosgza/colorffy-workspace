@@ -77,7 +77,7 @@ function runTask() {
             <p class="subtitle-2 text-muted mb-3">
               Dispara un toast por variante y posición.
             </p>
-            <div class="d-flex flex-wrap gap-2">
+            <UiButtonGroup connected>
               <UiButton
                 v-for="btn in toastButtons"
                 :key="btn.variant"
@@ -87,7 +87,7 @@ function runTask() {
                 size="sm"
                 @on-click="fireToast(btn.variant, btn.title, btn.message, btn.placement)"
               />
-            </div>
+            </UiButtonGroup>
           </template>
         </UiCard>
       </div>
@@ -106,8 +106,20 @@ function runTask() {
               Modal estándar y confirmación con estado de carga.
             </p>
             <div class="d-flex flex-wrap gap-2">
-              <UiButton text="Abrir modal" variant="filled" color="primary" size="sm" @on-click="modalRef?.showDialog()" />
-              <UiButton text="Confirmar eliminación" variant="outline" color="danger" size="sm" @on-click="confirmRef?.showDialog()" />
+              <UiButton
+                text="Abrir modal"
+                variant="filled"
+                color="primary"
+                size="sm"
+                @on-click="modalRef?.showDialog()"
+              />
+              <UiButton
+                text="Confirmar eliminación"
+                variant="outline"
+                color="danger"
+                size="sm"
+                @on-click="confirmRef?.showDialog()"
+              />
             </div>
           </template>
         </UiCard>
@@ -152,7 +164,7 @@ function runTask() {
           class="card-pane h-100"
         >
           <template #body>
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="subtitle-1 fw-700 mb-0">
                 Proceso en segundo plano
               </h4>
@@ -175,17 +187,19 @@ function runTask() {
               text="Listo"
               bar-class="bg-success-fixed bg-opacity-90"
               aria-label="Tarea inactiva"
-              class="mb-2"
+              class="mb-4"
             />
-            <UiButton
-              :text="taskRunning ? 'Procesando…' : 'Ejecutar tarea'"
-              variant="tonal"
-              color="primary"
-              size="sm"
-              :loading="taskRunning"
-              :disabled="taskRunning"
-              @on-click="runTask"
-            />
+            <UiButtonGroup class="justify-content-center">
+              <UiButton
+                :text="taskRunning ? 'Procesando…' : 'Ejecutar tarea'"
+                variant="filled"
+                color="primary"
+                size="sm"
+                :loading="taskRunning"
+                :disabled="taskRunning"
+                @on-click="runTask"
+              />
+            </UiButtonGroup>
           </template>
         </UiCard>
       </div>

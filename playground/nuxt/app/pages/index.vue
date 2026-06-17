@@ -76,15 +76,28 @@ function copyInstall() {
       <template #body>
         <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
           <div>
-            <UiBadge text="v1.7.1 · MIT" variant="outline" size="sm" icon-code="&#xf5f4;" icon-class="text-accent-fixed" custom-class="mb-2" />
+            <UiBadge
+              text="v1.7.1 · MIT"
+              variant="outline"
+              size="sm" icon-code="&#xf5f4;"
+              icon-class="text-accent-fixed"
+              custom-class="mb-2"
+            />
             <h1 class="fs-700 fw-800 mb-1">
               <span class="text-primary">Colorffy UI</span>
             </h1>
-            <p class="subtitle-1 text-muted mb-0" style="max-width: 48ch;">
+            <p
+              class="subtitle-1 text-muted mb-0"
+              style="max-width: 48ch;"
+            >
               Más de 70 componentes headless para Vue 3 y Nuxt. Empieza en menos de un minuto.
             </p>
             <div class="d-flex flex-wrap gap-2 mt-3">
-              <UiButton text="Ver en GitHub" variant="filled" color="primary">
+              <UiButton
+                text="Ver en GitHub"
+                variant="filled"
+                color="primary"
+              >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe86f;" />
                 </template>
@@ -96,7 +109,10 @@ function copyInstall() {
               </UiButton>
             </div>
           </div>
-          <UiIconApp brand="nuxt" size="xl" />
+          <UiIconApp
+            brand="nuxt"
+            size="xl"
+          />
         </div>
       </template>
     </UiCard>
@@ -111,7 +127,10 @@ function copyInstall() {
           <template #body>
             <div class="d-flex align-items-center gap-2 mb-3">
               <span class="icon-wrap icon-wrap-sm icon-wrap-outline">
-                <UiIconMaterial icon-code="&#xe2c4;" class="text-primary" />
+                <UiIconMaterial
+                  icon-code="&#xe2c4;"
+                  class="text-primary"
+                />
               </span>
               <h2 class="fs-500 fw-800 mb-0">
                 1 · Instalación
@@ -122,8 +141,12 @@ function copyInstall() {
               :active-tab="activePm"
               @update-active-tab="activePm = $event"
             />
-            <div class="d-flex align-items-center gap-2 bg-surface-container-high rounded-md p-2 ps-3 mt-3">
-              <code class="flex-grow-1 fs-sm-400" style="overflow-x: auto; white-space: nowrap;">
+            <div class="bg-muted-fixed bg-opacity-10 d-flex align-items-center gap-2 rounded-md p-2 ps-3 mt-3">
+              <code
+                class="flex-grow-1 fs-sm-400"
+                style="overflow-x: auto;
+                white-space: nowrap;"
+              >
                 {{ installCommand }}
               </code>
               <UiButtonTooltip
@@ -176,7 +199,7 @@ function copyInstall() {
               role="tabpanel"
               aria-labelledby="tab-nuxt"
               tabindex="0"
-              class="bg-surface-container-high rounded-md p-3 mt-3"
+              class="bg-muted-fixed bg-opacity-10 rounded-md p-3 mt-3"
               style="overflow-x: auto;"
             >
               <pre class="mb-0"><code class="fs-sm-300">{{ nuxtSetup }}</code></pre>
@@ -187,7 +210,7 @@ function copyInstall() {
               role="tabpanel"
               aria-labelledby="tab-vue"
               tabindex="0"
-              class="bg-surface-container-high rounded-md p-3 mt-3"
+              class="bg-muted-fixed bg-opacity-10 rounded-md p-3 mt-3"
               style="overflow-x: auto;"
             >
               <pre class="mb-0"><code class="fs-sm-300">{{ vueSetup }}</code></pre>
@@ -214,7 +237,10 @@ function copyInstall() {
         <p class="subtitle-2 text-muted">
           Los componentes se auto-importan en Nuxt. Solo escríbelos en tu plantilla:
         </p>
-        <div class="bg-surface-container-high rounded-md p-3" style="overflow-x: auto;">
+        <div
+          class="bg-muted-fixed bg-opacity-10 rounded-md p-3"
+          style="overflow-x: auto;"
+        >
           <pre class="mb-0"><code class="fs-sm-300">{{ usageSnippet }}</code></pre>
         </div>
       </template>
@@ -230,12 +256,14 @@ function copyInstall() {
         :key="page.to"
         class="col-12 col-sm-6 col-lg-4 mb-3"
       >
-        <NuxtLink :to="page.to" class="text-decoration-none">
+        <NuxtLink
+          :to="page.to"
+          class="undecorated"
+        >
           <UiCard
             variant="outline"
-            size="sm"
             selectable
-            class="card-pane h-100"
+            class="card-pane shadow-sm h-100"
           >
             <template #body>
               <div class="d-flex align-items-center gap-3">

@@ -85,7 +85,7 @@ function simulateLoading() {
       separator-icon="&#xe5cc;"
       class="mb-3"
       :items="[
-        { label: 'Inicio', to: '/', icon: '&#xe88a;' },
+        { label: 'Inicio', to: '/' },
         { label: 'Proyectos' },
       ]"
     />
@@ -109,32 +109,33 @@ function simulateLoading() {
     <!-- Toolbar -->
     <UiCard
       variant="outline"
-      size="sm"
       class="card-pane my-3"
     >
       <template #body>
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-          <UiSegmentedControls
-            :tabs="statusTabs"
-            :active-tab="statusFilter"
-            @update-active-tab="statusFilter = $event"
-          />
-          <div class="d-flex align-items-center gap-3 flex-wrap">
-            <div class="input-group">
-              <div class="input-group-prefix border border-transparent px-0">
-                <UiIconMaterial icon-code="&#xe8b6;" />
-              </div>
-              <UiInputText
-                v-model="search"
-                placeholder="Buscar proyecto…"
-                variant="transparent"
-                rounded
-                custom-class="px-2"
-              />
+        <UiSegmentedControls
+          :tabs="statusTabs"
+          :active-tab="statusFilter"
+          @update-active-tab="statusFilter = $event"
+        />
+
+        <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+          <div class="input-group">
+            <div class="input-group-prefix border border-transparent px-0">
+              <UiIconMaterial icon-code="&#xe8b6;" />
             </div>
+            <UiInputText
+              v-model="search"
+              placeholder="Buscar proyecto…"
+              variant="transparent"
+              rounded
+              custom-class="px-2"
+            />
+          </div>
+          <div>
             <UiButtonToggleGroup
               v-model="viewMode"
               :options="viewOptions"
+              class="grid-repeat-cols-md-2"
               aria-label="Cambiar vista"
             />
           </div>
@@ -149,13 +150,6 @@ function simulateLoading() {
       class="card-pane"
     >
       <template #body>
-        <div class="d-flex justify-content-end mb-2">
-          <UiButton text="Simular carga" variant="text" size="sm" @on-click="simulateLoading">
-            <template #icon>
-              <UiIconMaterial icon-code="&#xe5d5;" />
-            </template>
-          </UiButton>
-        </div>
         <UiDatatable
           :columns="columns"
           :items="filteredProjects"
@@ -171,6 +165,19 @@ function simulateLoading() {
           empty-state-title="No se encontraron proyectos"
           empty-state-subtitle="Ajusta el filtro o el término de búsqueda."
         >
+          <template #controls>
+            <UiButton
+              text="Simular carga"
+              variant="tonal"
+              color="success"
+              size="sm"
+              @on-click="simulateLoading"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe5d5;" />
+              </template>
+            </UiButton>
+          </template>
           <template #cell-name="{ item }">
             <span class="d-inline-flex align-items-center gap-2 fw-600">
               <UiAvatar :initials="item.name.charAt(0)" size="sm" mask-shape="pill" class="bg-secondary-fixed" />
@@ -248,7 +255,12 @@ function simulateLoading() {
           <template #body>
             <div class="d-flex justify-content-between align-items-start mb-2">
               <span class="d-inline-flex align-items-center gap-2 fw-700">
-                <UiAvatar :initials="project.name.charAt(0)" size="sm" mask-shape="pill" class="bg-secondary-fixed" />
+                <UiAvatar
+                  :initials="project.name.charAt(0)"
+                  size="sm"
+                  mask-shape="pill"
+                  class="bg-secondary-fixed"
+                />
                 {{ project.name }}
               </span>
               <UiBadge
@@ -257,20 +269,25 @@ function simulateLoading() {
                 size="sm"
               />
             </div>
-            <p class="subtitle-2 text-muted mb-1">
+            <p class="subtitle-2 text-muted mb-2">
               {{ project.owner }} · {{ formatCurrency(project.budget) }}
             </p>
             <UiProgressBar
               :value="project.completion"
-              size="sm"
               :text="`${project.completion}%`"
               :aria-label="`Avance de ${project.name}`"
             />
           </template>
         </UiCard>
       </div>
-      <div v-if="filteredProjects.length === 0" class="col-12">
-        <UiEmpty title="No se encontraron proyectos" subtitle="Ajusta el filtro o el término de búsqueda." />
+      <div
+        v-if="filteredProjects.length === 0"
+        class="col-12"
+      >
+        <UiEmpty
+          title="No se encontraron proyectos"
+          subtitle="Ajusta el filtro o el término de búsqueda."
+        />
       </div>
     </div>
   </div>
