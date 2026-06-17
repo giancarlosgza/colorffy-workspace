@@ -6,6 +6,7 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<ISidebarProps>(), {
   bordered: false,
   rail: false,
+  open: false,
   width: null,
   ariaLabel: 'Main navigation',
   customClass: ''
@@ -20,7 +21,8 @@ const sidebarClasses = computed(() => [
   {
     'drawer-bordered': props.bordered,
     'drawer-rail': props.rail,
-    'drawer-open': props.rail
+    'drawer-open': props.open,
+    'drawer-closed': !props.open
   },
   props.customClass
 ])
@@ -34,9 +36,9 @@ const sidebarStyles = computed(() => {
 
 <template>
   <div
-    v-if="props.rail"
+    v-if="open"
     class="drawer-overlay"
-    @click="emit('update:rail', false)"
+    @click="emit('update:open', false)"
   />
 
   <nav

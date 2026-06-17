@@ -18,10 +18,17 @@ export interface ISidebarProps {
   ariaLabel?: string
 
   /**
-   * Rail mode - collapses sidebar to show only icons.
-   * Applies .drawer-closed class for compact view.
+   * Rail mode - collapses the sidebar to an icons-only compact view.
+   * Applies the `.drawer-rail` class (primarily a desktop concern).
    */
   rail?: boolean
+
+  /**
+   * Responsive open state of the mobile drawer. Applies `.drawer-open` when
+   * true and `.drawer-closed` when false. On desktop the drawer is always
+   * visible, so this only drives the slide-in/out on small screens.
+   */
+  open?: boolean
 
   /**
    * Custom width of the sidebar.
@@ -42,9 +49,14 @@ export interface ISidebarProps {
  */
 export interface ISidebarEmits {
   /**
-   * Emitted when the rail state changes.
+   * Emitted when the rail (compact) state changes.
    */
   (e: 'update:rail', value: boolean): void
+
+  /**
+   * Emitted when the responsive open state changes (e.g. overlay dismiss).
+   */
+  (e: 'update:open', value: boolean): void
 }
 
 /**

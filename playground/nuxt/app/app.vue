@@ -58,7 +58,8 @@ function handleMenuItemClick(to: string | object) {
     <UiSidebar
       bordered
       :rail="sidebarCollapse"
-      @update:rail="sidebarCollapse = $event"
+      :open="sidebarCollapse"
+      @update:open="sidebarCollapse = $event"
     >
       <UiSidebarHeader>
         <UiIconMaterial v-if="false" icon-code="&#xe88a;" class="drawer-brand-icon" />
