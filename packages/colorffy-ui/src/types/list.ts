@@ -16,13 +16,13 @@ export interface IListGroupProps {
    * Surface variant for the list group.
    * Accepts documented variants or a custom string. Can be null.
    */
-  variant?: ListVariant | string | null
+  variant?: ListVariant | (string & {}) | null
 
   /**
    * Scalable size for list items.
    * Accepts documented sizes ('sm' | 'md') or a custom string. Can be null.
    */
-  size?: ListSize | string | null
+  size?: ListSize | (string & {}) | null
 
   /**
    * Enables interactive styles like hover/active.

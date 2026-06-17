@@ -26,8 +26,7 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
   title: null,
   subtitle: null,
   avatarUrl: null,
-  user: null,
-  auth: null
+  user: null
 })
 
 /** Emits */

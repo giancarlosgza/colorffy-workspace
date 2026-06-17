@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IDialogProps } from '@/types/dialog'
+import type { IDialogEmits, IDialogProps } from '@/types/dialog'
 import { vOnClickOutside } from '@vueuse/components'
 import { computed, ref } from 'vue'
 
@@ -14,12 +14,12 @@ const props = withDefaults(defineProps<IDialogProps>(), {
 })
 
 /** Emits */
-const emit = defineEmits(['onCloseDialog'])
+const emit = defineEmits<IDialogEmits>()
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const dialogClasses = computed(() => {
-  const classes = [] as any[]
+  const classes: (string | Record<string, boolean>)[] = []
 
   // Modes
   if (props.mode) {
@@ -50,7 +50,7 @@ const dialogClasses = computed(() => {
     if (Array.isArray(props.customClass))
       classes.push(...props.customClass)
     else
-      classes.push(props.customClass as any)
+      classes.push(props.customClass)
   }
 
   return classes

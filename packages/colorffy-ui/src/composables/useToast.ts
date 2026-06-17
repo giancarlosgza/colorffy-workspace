@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import type { IAlertProps } from '@/types/alert'
+import type { IToastDisplay } from '@/types/toast'
 
 type ToastVariant = NonNullable<IAlertProps['variant']>
 

@@ -29,18 +29,18 @@ export interface IBaseButtonProps {
    * Visual style. Prefer simple values like 'filled' | 'tonal' | 'outline'.
    * Legacy composite strings are still accepted for backward compatibility.
    */
-  variant: ButtonVariant | string | undefined
+  variant?: ButtonVariant | (string & {})
 
   /**
    * Semantic color used with certain variants (e.g., 'filled' or 'tonal').
    */
-  color?: ButtonColor | string | undefined
+  color?: ButtonColor | (string & {})
 
   /**
    * Preferred size alias.
    * Accepts logical sizes ('sm' | 'md' | 'lg'). Legacy class strings are also accepted for compatibility.
    */
-  size?: ButtonSizeLevel | string | undefined
+  size?: ButtonSizeLevel | (string & {})
 
   /**
    * Optional icon variant of the button. Can be 'shape-sm', 'shape-md', 'compact-sm', 'compact', or undefined.

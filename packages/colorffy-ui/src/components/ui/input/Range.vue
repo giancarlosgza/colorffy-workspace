@@ -58,7 +58,12 @@ const rangeClasses = computed(() => {
 })
 
 const valueAsPercent = computed(() => {
-  const currentValue = Number(model.value) || props.min
+  // Note: `Number(model.value) || props.min` would discard a legitimate value
+  // of 0 (e.g. a range with a negative min), so guard for empty/NaN explicitly.
+  const numeric = Number(model.value)
+  const currentValue = model.value === null || model.value === '' || Number.isNaN(numeric)
+    ? props.min
+    : numeric
   const percent = ((currentValue - props.min) / (props.max - props.min)) * 100
   return Math.round(percent)
 })

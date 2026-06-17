@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<IAccordionGroupProps>(), {
 
 /** Computed */
 const groupClasses = computed(() => {
-  const classes: any[] = []
+  const classes: (string | Record<string, boolean>)[] = []
   if (props.isTransparent)
     classes.push('accordion-transparent')
 

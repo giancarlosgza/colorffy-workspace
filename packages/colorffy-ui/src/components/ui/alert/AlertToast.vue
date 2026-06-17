@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AlertPlacement, AlertVariant, IAlertToastProps, IToastOptions } from '@/types/alert'
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import UiAlert from './Alert.vue'
 
 /** Props */
@@ -18,6 +18,8 @@ const placement = ref<AlertPlacement>(props.placement ?? 'bottom')
 const isVisible = ref<boolean>(false)
 
 /** Methods */
+let hideTimer: ReturnType<typeof setTimeout> | null = null
+
 function showToast(options?: IToastOptions) {
   if (options) {
     if (options.message)
@@ -29,10 +31,20 @@ function showToast(options?: IToastOptions) {
   }
   isVisible.value = true
 
-  setTimeout(() => {
+  // Reset any in-flight hide timer so re-showing the toast restarts the full
+  // duration instead of being cut short by a previous call's timer.
+  if (hideTimer)
+    clearTimeout(hideTimer)
+  hideTimer = setTimeout(() => {
     isVisible.value = false
+    hideTimer = null
   }, 3000)
 }
+
+onBeforeUnmount(() => {
+  if (hideTimer)
+    clearTimeout(hideTimer)
+})
 
 defineExpose({
   title,

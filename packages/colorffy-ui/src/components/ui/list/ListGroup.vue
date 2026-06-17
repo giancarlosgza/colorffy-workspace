@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<IListGroupProps>(), {
 
 /** Computed */
 const listClasses = computed(() => {
-  const classes: any[] = []
+  const classes: (string | Record<string, boolean>)[] = []
 
   if (props.customClass) {
     if (Array.isArray(props.customClass))

@@ -186,8 +186,10 @@ export interface IPopoverMenuProps {
 
   /**
    * Current route object for active state checking.
+   * A minimal route-like shape compatible with vue-router's route object
+   * without depending on vue-router.
    */
-  currentRoute?: any
+  currentRoute?: IRouteLike | null
 
   /**
    * Display title in the menu header.
@@ -212,12 +214,13 @@ export interface IPopoverMenuProps {
   /**
    * User data object (Firebase or custom).
    */
-  user?: any
+  user?: IUserData | null
 
   /**
-   * Auth state or configuration.
+   * Auth state or configuration. Opaque to the component; passed through for
+   * consumer use.
    */
-  auth?: any | null
+  auth?: unknown
 }
 
 /**
@@ -242,4 +245,15 @@ export interface IUserData {
   displayName: string | null
   email: string | null
   photoURL: string | null
+}
+
+/**
+ * Minimal route-like shape used for active-link detection.
+ * Structurally compatible with a vue-router route object (so consumers can
+ * pass `useRoute()` directly) without taking a dependency on vue-router.
+ */
+export interface IRouteLike {
+  path?: string
+  name?: string | symbol | null
+  [key: string]: unknown
 }

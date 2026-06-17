@@ -24,6 +24,7 @@ const isOpen = defineModel<boolean>('open', { default: false })
     :class="[customClass, { 'is-disabled': disabled }]"
     :open="isOpen || undefined"
     :aria-disabled="disabled || undefined"
+    @toggle="isOpen = ($event.target as HTMLDetailsElement).open"
   >
     <summary class="accordion-header">
       <slot name="header">

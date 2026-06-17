@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IProgressSpinnerProps } from '@/types/progress'
+import type { ClassValue } from '@/types/shared'
 import { computed } from 'vue'
 
 /** Props */
@@ -11,7 +12,7 @@ const props = withDefaults(defineProps<IProgressSpinnerProps>(), {
 
 /** Computed */
 const spinnerClasses = computed(() => {
-  const classes: any[] = ['progress-spinner']
+  const classes: ClassValue[] = ['progress-spinner']
 
   if (props.customClass)
     classes.push(props.customClass)

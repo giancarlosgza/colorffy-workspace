@@ -86,7 +86,8 @@ const buttonClasses = computed(() => {
     class="btn"
     :class="buttonClasses"
     type="button"
-    :disabled="disabled"
+    :disabled="disabled || loading"
+    :aria-busy="loading || undefined"
     @click="$emit('onClick')"
   >
     <slot name="icon" />

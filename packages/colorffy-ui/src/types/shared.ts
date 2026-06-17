@@ -1,4 +1,10 @@
 /**
+ * Vue-compatible class binding value: a string, an array of strings, or a
+ * map of class names to booleans. Shared by every component's `customClass`.
+ */
+export type ClassValue = string | string[] | Record<string, boolean>
+
+/**
  * Shared base properties for link-like components (Navbar, Sidebar, NavItems).
  */
 export interface IBaseLinkProps {
@@ -40,7 +46,7 @@ export interface IBaseLinkProps {
   /**
    * Optional custom CSS classes.
    */
-  customClass?: any
+  customClass?: ClassValue | null
 
   /**
    * Component type to render for links (e.g., 'a', 'router-link', 'nuxt-link').

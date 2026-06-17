@@ -1,5 +1,5 @@
 export type BadgeClassName = string | string[] | Record<string, boolean>
-export type BadgeVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'gradient' | 'default' | 'outline' | `tonal tonal-${'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger' | 'info'}` | string
+export type BadgeVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'gradient' | 'default' | 'outline' | `tonal tonal-${'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger' | 'info'}` | (string & {})
 export type BadgeSize = 'sm'
 
 /**
@@ -20,7 +20,7 @@ export interface IBadgeProps {
    * Prefer intent names (primary/secondary/accent/neutral/success/warning/danger)
    * or documented tonal forms. Legacy strings still supported.
    */
-  variant?: BadgeVariant | undefined
+  variant?: BadgeVariant
 
   /**
    * Optional icon of the badge. Can be a string or null.
@@ -40,7 +40,7 @@ export interface IBadgeProps {
   /**
    * Scalable size of the badge. Only 'sm' is supported.
    */
-  size?: BadgeSize | string | undefined
+  size?: BadgeSize | (string & {})
 
   /**
    * Fully rounded capsule style.

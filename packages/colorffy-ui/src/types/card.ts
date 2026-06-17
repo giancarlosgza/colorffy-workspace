@@ -23,12 +23,12 @@ export interface ICardProps {
   /**
    * Optional variant of the card. Can be 'outline', 'elevated', any other string, or undefined.
    */
-  variant?: CardVariant | string | undefined
+  variant?: CardVariant | (string & {})
 
   /**
    * Scalable size of the card. Prefer 'sm' | 'md'.
    */
-  size?: CardSize | undefined
+  size?: CardSize
 
   /**
    * Optional custom class for the card.

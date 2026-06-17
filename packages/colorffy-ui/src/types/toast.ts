@@ -1,8 +1,10 @@
+import type { AlertPlacement, AlertVariant, IToastOptions } from '@/types/alert'
+
 /**
  * Exposed Toast display handle.
  * Use `showToast()` to open the toast; can accept options for quick overrides.
  */
-declare interface IToastDisplay {
+export interface IToastDisplay {
   /**
    * Show the toast. Optional inline overrides.
    */

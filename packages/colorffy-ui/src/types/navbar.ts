@@ -14,7 +14,7 @@ export interface INavbarProps {
 
   /**
    * Use fluid container (.container-fluid vs .container).
-   * @default true
+   * @default false
    */
   fluid?: boolean
 

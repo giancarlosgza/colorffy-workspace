@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<IListItemProps>(), {
 
 /** Computed */
 const itemClasses = computed(() => {
-  const classes: any[] = []
+  const classes: (string | Record<string, boolean>)[] = []
 
   if (props.customClass) {
     if (Array.isArray(props.customClass))
@@ -39,7 +39,7 @@ const itemClasses = computed(() => {
   return classes
 })
 const iconWrapperClasses = computed(() => {
-  const classes: any[] = ['list-item-icon-wrapper']
+  const classes: (string | Record<string, boolean>)[] = ['list-item-icon-wrapper']
 
   if (props.customIconWrapperClass) {
     if (Array.isArray(props.customIconWrapperClass))
@@ -51,7 +51,7 @@ const iconWrapperClasses = computed(() => {
   return classes
 })
 const iconClasses = computed(() => {
-  const classes: any[] = []
+  const classes: (string | Record<string, boolean>)[] = []
 
   if (props.customIconClass) {
     if (Array.isArray(props.customIconClass))

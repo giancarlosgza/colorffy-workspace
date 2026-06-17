@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IProgressBarProps } from '@/types/progress'
+import type { ClassValue } from '@/types/shared'
 import { computed } from 'vue'
 
 /** Props */
@@ -19,7 +20,7 @@ const props = withDefaults(defineProps<IProgressBarProps>(), {
 
 /** Computed */
 const progressClasses = computed(() => {
-  const classes: any[] = ['progress']
+  const classes: ClassValue[] = ['progress']
 
   if (props.size === 'sm')
     classes.push('progress-sm')
@@ -33,7 +34,7 @@ const progressClasses = computed(() => {
   return classes
 })
 const progressBarClasses = computed(() => {
-  const classes: any[] = ['progress-bar']
+  const classes: ClassValue[] = ['progress-bar']
 
   if (props.animated)
     classes.push('progress-animated')

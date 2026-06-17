@@ -26,7 +26,7 @@ const emit = defineEmits<IConfirmModalEmits>()
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const dialogClasses = computed(() => {
-  const classes: any[] = ['dialog-confirm']
+  const classes: (string | Record<string, boolean>)[] = ['dialog-confirm']
 
   // Modes
   if (props.mode) {
@@ -57,7 +57,7 @@ const dialogClasses = computed(() => {
     if (Array.isArray(props.customClass)) {
       classes.push(...props.customClass)
     } else {
-      classes.push(props.customClass as any)
+      classes.push(props.customClass)
     }
   }
 
