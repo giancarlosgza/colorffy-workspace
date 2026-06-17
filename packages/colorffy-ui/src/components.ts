@@ -85,6 +85,7 @@ export { default as UiNavbarTitle } from './components/ui/navbar/NavbarTitle.vue
 export { default as UiNavbarToggle } from './components/ui/navbar/NavbarToggle.vue'
 
 // Components - Navigation
+export { default as UiBreadcrumb } from './components/ui/navigation/Breadcrumb.vue'
 export { default as UiNavigationBar } from './components/ui/navigation/NavigationBar.vue'
 export { default as UiPopoverMenu } from './components/ui/navigation/PopoverMenu.vue'
 export { default as UiSegmentedControls } from './components/ui/navigation/SegmentedControls.vue'

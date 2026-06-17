@@ -1,0 +1,86 @@
+@use "../abstracts/variables" as v;
+
+@layer components.breadcrumb {
+  // ==========================================================================
+  // BREADCRUMB COMPONENT
+  // ==========================================================================
+  .breadcrumb-nav {
+    --_breadcrumb-gap: 0.5rem;
+    --_breadcrumb-color: var(--theme-muted-a10);
+    --_breadcrumb-current-color: var(--theme-on-background);
+    --_breadcrumb-hover-color: var(--theme-on-background);
+    --_breadcrumb-separator-color: var(--theme-muted-a10);
+
+    display: block;
+    font-size: var(--fs-sm-500);
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_breadcrumb-gap);
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--_breadcrumb-gap);
+    min-width: 0;
+
+    .breadcrumb-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--_breadcrumb-color);
+      text-decoration: none;
+      border-radius: v.$rounded-sm;
+      transition: color 0.15s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--_breadcrumb-hover-color);
+        text-decoration: underline;
+      }
+    }
+
+    .breadcrumb-current {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      max-width: 16rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: var(--_breadcrumb-current-color);
+      font-weight: v.$fw-600;
+    }
+
+    &.active .breadcrumb-link {
+      color: var(--_breadcrumb-current-color);
+    }
+  }
+
+  .breadcrumb-separator {
+    display: inline-flex;
+    align-items: center;
+    color: var(--_breadcrumb-separator-color);
+    user-select: none;
+  }
+
+  .breadcrumb-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 0.15rem;
+    color: var(--_breadcrumb-separator-color);
+    user-select: none;
+  }
+
+  .breadcrumb-icon {
+    font-size: 1.1em;
+  }
+}
