@@ -49,6 +49,7 @@ const itemClasses = computed(() => {
       class="w-100"
     >
       <button
+        type="button"
         class="v-dropdown-item"
         :class="itemClasses"
         :disabled="disabled"

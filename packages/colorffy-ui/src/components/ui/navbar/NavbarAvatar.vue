@@ -21,7 +21,11 @@ defineEmits<INavbarAvatarEmits>()
       customClass,
     ]"
     role="button"
+    tabindex="0"
+    :aria-label="alt"
     @click="$emit('click')"
+    @keydown.enter.prevent="$emit('click')"
+    @keydown.space.prevent="$emit('click')"
   >
     <img
       v-if="src"

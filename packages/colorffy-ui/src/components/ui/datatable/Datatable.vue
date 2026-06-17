@@ -101,6 +101,13 @@ function getRowKey(item: Record<string, any>, index: number): string | number {
 function isSortable(header: string) {
   return props.sortable && !props.unsortableColumns.includes(header)
 }
+function ariaSortFor(header: string): 'ascending' | 'descending' | 'none' | undefined {
+  if (!isSortable(header))
+    return undefined
+  if (sortKey.value !== toCamelCase(header))
+    return 'none'
+  return sortOrder.value === 'asc' ? 'ascending' : 'descending'
+}
 function sortBy(key: string) {
   if (sortKey.value === key) {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
@@ -198,6 +205,7 @@ function isLastVisibleColumn(header: string) {
         class="table table-hover"
         :class="tableClass"
       >
+        <caption v-if="caption">{{ caption }}</caption>
         <thead>
           <tr>
             <th
@@ -205,7 +213,11 @@ function isLastVisibleColumn(header: string) {
               :key="header"
               scope="col"
               :class="{ sortable: isSortable(header), sorted: sortKey === toCamelCase(header) }"
+              :tabindex="isSortable(header) ? 0 : undefined"
+              :aria-sort="ariaSortFor(header)"
               @click="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
+              @keydown.enter.prevent="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
+              @keydown.space.prevent="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
             >
               {{ header }}
               <template v-if="isSortable(header)">

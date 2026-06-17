@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
 import { computed, ref, toRef, watch } from 'vue'
 
@@ -14,6 +15,7 @@ const emit = defineEmits<ISegmentedControlsEmits>()
 const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const activeTabPosition = computed(() => tabs.value.find(t => t.id === activeTabName.value)?.position ?? 0)
+const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
@@ -23,12 +25,54 @@ watch(() => props.activeTab, (newVal) => {
 })
 
 /** Methods */
+function setTabButton(el: Element | ComponentPublicInstance | null, index: number) {
+  tabButtons.value[index] = (el as HTMLButtonElement) ?? null
+}
 function handleSelectedTab(tab: ISegmentedTab) {
   if (tab.disabled)
     return
 
   activeTabName.value = tab.id
   emit('updateActiveTab', tab.id)
+}
+function nextEnabledIndex(from: number, direction: number): number {
+  const count = tabs.value.length
+  let index = from
+  for (let step = 0; step < count; step++) {
+    index = (index + direction + count) % count
+    if (!tabs.value[index]?.disabled)
+      return index
+  }
+  return from
+}
+function focusTab(index: number) {
+  const tab = tabs.value[index]
+  if (!tab || tab.disabled)
+    return
+  handleSelectedTab(tab)
+  tabButtons.value[index]?.focus()
+}
+function onTabKeydown(event: KeyboardEvent, index: number) {
+  switch (event.key) {
+    case 'ArrowRight':
+    case 'ArrowDown':
+      event.preventDefault()
+      focusTab(nextEnabledIndex(index, 1))
+      break
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      event.preventDefault()
+      focusTab(nextEnabledIndex(index, -1))
+      break
+    case 'Home':
+      event.preventDefault()
+      focusTab(nextEnabledIndex(tabs.value.length - 1, 1))
+      break
+    case 'End':
+      event.preventDefault()
+      focusTab(nextEnabledIndex(0, -1))
+      break
+  }
 }
 </script>
 
@@ -45,8 +89,10 @@ function handleSelectedTab(tab: ISegmentedTab) {
         :key="`tab-${tabIndex}`"
         class="segmented-control-item"
         :class="[activeTabName === tab.id ? 'active-item' : '']"
+        role="presentation"
       >
         <button
+          :ref="(el) => setTabButton(el, tabIndex)"
           class="segmented-control-link"
           role="tab"
           :class="[activeTabName === tab.id ? 'active' : '', tab.disabled ? 'disabled' : '']"
@@ -55,6 +101,7 @@ function handleSelectedTab(tab: ISegmentedTab) {
           :tabindex="activeTabName === tab.id ? 0 : -1"
           :disabled="tab.disabled"
           @click="handleSelectedTab(tab)"
+          @keydown="onTabKeydown($event, tabIndex)"
         >
           {{ tab.label }}
         </button>
@@ -63,6 +110,7 @@ function handleSelectedTab(tab: ISegmentedTab) {
       <!-- Indicator -->
       <li
         aria-hidden="true"
+        role="presentation"
         class="pill-indicator"
         :style="[`--pos: ${activeTabPosition}`]"
       />

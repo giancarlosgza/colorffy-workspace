@@ -23,7 +23,8 @@ const isExternalLink = computed(() => {
 })
 const linkProps = computed(() => {
   const baseProps = {
-    'class': ['nav-link', { disabled: props.disabled }, props.customClass],
+    'class': ['nav-link', { active: props.active, disabled: props.disabled }, props.customClass],
+    'aria-current': props.active ? 'page' : undefined,
     'aria-disabled': props.disabled || undefined,
     'disabled': props.disabled || undefined
   }
@@ -33,8 +34,6 @@ const linkProps = computed(() => {
     const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
     return {
       ...baseProps,
-      'class': ['nav-link', { active: props.active, disabled: props.disabled }, props.customClass],
-      'aria-current': props.active ? 'page' : undefined,
       'href': props.disabled ? undefined : href,
       ...(isExternalLink.value && {
         target: '_blank',

@@ -35,13 +35,15 @@ const linkProps = computed(() => {
     'drawer-item',
     {
       'drawer-item-disabled': props.disabled,
-      'drawer-item-child': props.child
+      'drawer-item-child': props.child,
+      'active': props.active
     },
     props.customClass
   ]
 
   const baseProps = {
     'class': baseClasses,
+    'aria-current': props.active ? 'page' : undefined,
     'aria-disabled': props.disabled || undefined,
     'disabled': props.disabled || undefined,
     'aria-labelledby': props.ariaLabelledby || undefined,
@@ -53,16 +55,6 @@ const linkProps = computed(() => {
     const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
     return {
       ...baseProps,
-      'class': [
-        'drawer-item',
-        {
-          'drawer-item-disabled': props.disabled,
-          'drawer-item-child': props.child,
-          'active': props.active
-        },
-        props.customClass
-      ],
-      'aria-current': props.active ? 'page' : undefined,
       'href': props.disabled ? undefined : href,
       ...(isExternalLink.value && {
         target: '_blank',

@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue'
 import type {
   IButtonToggleGroupEmits,
   IButtonToggleGroupProps,
   IButtonToggleOption
 } from '@/types/button'
+import { computed, ref } from 'vue'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -16,24 +18,66 @@ const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {
 /** Emits */
 const emit = defineEmits<IButtonToggleGroupEmits>()
 
+/** Data */
+const optionRefs = ref<(HTMLElement | null)[]>([])
+
+// Roving tabindex: the checked option (or first enabled) is the only tab stop.
+const rovingIndex = computed(() => {
+  const activeIndex = props.options.findIndex(o => o.active && !o.disabled)
+  return activeIndex !== -1 ? activeIndex : props.options.findIndex(o => !o.disabled)
+})
+
 /** Methods */
-function handleOptionClick(event: MouseEvent, item: IButtonToggleOption): void {
+function setOptionRef(el: Element | ComponentPublicInstance | null, index: number): void {
+  optionRefs.value[index] = (el as HTMLElement) ?? null
+}
+function selectOption(event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void {
   if (!item.disabled) {
     emit('onOptionClick', event, item)
   }
 }
-function handleKeyDown(event: KeyboardEvent, item: IButtonToggleOption): void {
-  if (!item.disabled && (event.key === 'Enter' || event.key === ' ')) {
-    if (event.key === ' ') {
+function nextEnabledIndex(from: number, direction: number): number {
+  const count = props.options.length
+  let index = from
+  for (let step = 0; step < count; step++) {
+    index = (index + direction + count) % count
+    if (!props.options[index]?.disabled)
+      return index
+  }
+  return from
+}
+function focusOption(index: number, event: KeyboardEvent): void {
+  const option = props.options[index]
+  if (!option || option.disabled)
+    return
+  selectOption(event, option)
+  optionRefs.value[index]?.focus()
+}
+function onOptionKeydown(event: KeyboardEvent, index: number): void {
+  switch (event.key) {
+    case 'Enter':
+    case ' ':
       event.preventDefault()
-    }
-    // Create a synthetic MouseEvent for consistency with the emit interface
-    const syntheticEvent = new MouseEvent('click', {
-      bubbles: event.bubbles,
-      cancelable: event.cancelable,
-      view: window
-    })
-    emit('onOptionClick', syntheticEvent, item)
+      selectOption(event, props.options[index])
+      break
+    case 'ArrowRight':
+    case 'ArrowDown':
+      event.preventDefault()
+      focusOption(nextEnabledIndex(index, 1), event)
+      break
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      event.preventDefault()
+      focusOption(nextEnabledIndex(index, -1), event)
+      break
+    case 'Home':
+      event.preventDefault()
+      focusOption(nextEnabledIndex(props.options.length - 1, 1), event)
+      break
+    case 'End':
+      event.preventDefault()
+      focusOption(nextEnabledIndex(0, -1), event)
+      break
   }
 }
 
@@ -60,8 +104,9 @@ function getIconClass(option: IButtonToggleOption): string {
     <div
       v-for="(option, index) in props.options"
       :key="getOptionKey(index)"
+      :ref="(el) => setOptionRef(el, index)"
       role="radio"
-      :tabindex="option.disabled ? -1 : 0"
+      :tabindex="index === rovingIndex ? 0 : -1"
       :aria-checked="option.active"
       :aria-disabled="option.disabled"
       :aria-label="getOptionAriaLabel(option)"
@@ -70,8 +115,8 @@ function getIconClass(option: IButtonToggleOption): string {
         'toggle-btn-active': option.active,
         'toggle-btn-disabled': option.disabled,
       }"
-      @click="handleOptionClick($event, option)"
-      @keydown="handleKeyDown($event, option)"
+      @click="selectOption($event, option)"
+      @keydown="onOptionKeydown($event, index)"
     >
       <div class="toggle-btn-inner">
         <!-- Icon -->

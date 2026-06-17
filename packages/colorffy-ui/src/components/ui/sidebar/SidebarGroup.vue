@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISidebarGroupProps } from '@/types/sidebar'
-import { ref } from 'vue'
+import { ref, useId } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<ISidebarGroupProps>(), {
 
 /** State */
 const isOpen = ref(props.defaultOpen)
+const contentId = useId()
 
 /** Methods */
 function toggleGroup() {
@@ -32,7 +33,7 @@ function toggleGroup() {
       role="button"
       tabindex="0"
       :aria-expanded="isOpen"
-      :aria-controls="`group-${text}`"
+      :aria-controls="contentId"
       @click="toggleGroup"
       @keydown.enter.prevent="toggleGroup"
       @keydown.space.prevent="toggleGroup"
@@ -50,7 +51,7 @@ function toggleGroup() {
     <!-- Group content -->
     <div
       v-if="!collapsible || isOpen"
-      :id="`group-${text}`"
+      :id="contentId"
       class="drawer-group-content"
     >
       <slot />

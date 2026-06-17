@@ -11,6 +11,11 @@ export interface IColumnsToggleTooltip {
  */
 export interface IDatatableProps {
   /**
+   * Optional caption text, rendered as a <caption> to give the table an
+   * accessible name. Omitted when not provided.
+   */
+  caption?: string
+  /**
    * Optional custom CSS classes for the table element.
    * @default ''
    */

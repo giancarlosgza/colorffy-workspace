@@ -74,7 +74,7 @@ const textClasses = computed(() => {
         v-model="model"
         type="color"
         :class="colorClasses"
-        @change="emit('onUpdate')"
+        @change="emit('onUpdate', model)"
       >
       <!-- Text -->
       <input
@@ -83,7 +83,7 @@ const textClasses = computed(() => {
         type="text"
         :class="textClasses"
         :maxlength="maxLength"
-        @change="emit('onUpdate')"
+        @change="emit('onUpdate', model)"
       >
     </div>
   </div>

@@ -40,6 +40,7 @@ const itemClasses = computed(() => {
 <template>
   <li>
     <button
+      type="button"
       class="v-dropdown-item"
       :class="itemClasses"
       :disabled="disabled"

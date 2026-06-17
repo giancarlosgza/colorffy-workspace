@@ -31,6 +31,23 @@ const emit = defineEmits<ITextInputEmits>()
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
+// For type="number", coerce the string input to a real number (or null).
+const inputModel = computed<string | number | null>({
+  get: () => model.value,
+  set: (val) => {
+    if (props.type !== 'number') {
+      model.value = val
+      return
+    }
+    if (val === '' || val === null) {
+      model.value = null
+      return
+    }
+    const num = Number(val)
+    model.value = Number.isNaN(num) ? null : num
+  }
+})
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => (props.id ? `${props.id}-input-text` : undefined))
@@ -82,7 +99,7 @@ watch(model, (value) => {
     </label>
     <input
       :id="inputId"
-      v-model="model"
+      v-model="inputModel"
       :class="inputClasses"
       :type="type"
       :maxlength="maxlength"

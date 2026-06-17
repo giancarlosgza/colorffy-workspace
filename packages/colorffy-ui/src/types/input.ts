@@ -157,7 +157,7 @@ export interface IColorPickerProps {
  * Interface emits for the ColorPicker component.
  */
 export interface IColorPickerEmits {
-  (e: 'onUpdate'): void
+  (e: 'onUpdate', value: string | null): void
 }
 
 /**

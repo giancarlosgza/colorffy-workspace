@@ -12,6 +12,11 @@ export type AvatarMaskShape
 
 export interface IAvatarProps {
   src?: string
+  /**
+   * Alternative text / accessible name for the avatar image.
+   * @default 'Avatar'
+   */
+  alt?: string
   size?: 'sm' | 'md' | 'lg' | 'navbar' | 'menu'
   initials?: string | null
   /**

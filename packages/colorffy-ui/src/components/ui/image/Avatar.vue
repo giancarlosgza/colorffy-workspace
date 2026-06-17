@@ -5,6 +5,7 @@ import { computed, ref } from 'vue'
 /** Props */
 const props = withDefaults(defineProps<IAvatarProps>(), {
   src: '',
+  alt: 'Avatar',
   size: 'sm',
   initials: null,
   maskShape: null,
@@ -75,7 +76,7 @@ function handleImageError() {
     v-else-if="src && !imageError"
     :src="src"
     :class="avatarClasses"
-    alt="Avatar"
+    :alt="alt"
     @error="handleImageError"
   >
   <!-- Placeholder Avatar -->
