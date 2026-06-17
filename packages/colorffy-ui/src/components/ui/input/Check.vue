@@ -6,7 +6,7 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<ICheckProps>(), {
   id: null,
   type: 'checkbox',
-  modelValue: null,
+  modelValue: false,
   errorMessages: () => [],
   customClass: null,
   size: null,
@@ -16,7 +16,8 @@ const props = withDefaults(defineProps<ICheckProps>(), {
 })
 
 /** Model */
-const model = defineModel<string | boolean | null>('modelValue', { default: null })
+// Default to false so a checkbox starts as a real boolean, not null.
+const model = defineModel<string | boolean | null>('modelValue', { default: false })
 
 /** Computed */
 const hasError = computed(() => props.errorMessages?.length > 0)

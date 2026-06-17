@@ -52,6 +52,12 @@ const radioInputClasses = computed(() => {
   return classes
 })
 
+/** Methods */
+// Reads a label/value field off an option, containing the unsafe cast here.
+function getField(option: unknown, key: string): unknown {
+  return (option as Record<string, unknown>)[key]
+}
+
 /** Watchers */
 watch(model, (value) => {
   emit('onUpdate', value)
@@ -81,7 +87,7 @@ watch(model, (value) => {
           v-model="model"
           :class="radioInputClasses"
           :name="groupName"
-          :value="optionValue ? option[optionValue] : option"
+          :value="optionValue ? getField(option, optionValue) : option"
           type="radio"
           :required="required"
         >
@@ -89,7 +95,7 @@ watch(model, (value) => {
           :for="baseId ? `${baseId}-${index}` : undefined"
           :class="checkLabelClasses"
         >
-          {{ optionLabel ? option[optionLabel] : option }}
+          {{ optionLabel ? getField(option, optionLabel) : option }}
         </label>
       </div>
     </div>

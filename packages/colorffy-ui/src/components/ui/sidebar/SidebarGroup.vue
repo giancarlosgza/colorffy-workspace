@@ -30,9 +30,12 @@ function toggleGroup() {
       v-if="collapsible && text"
       class="drawer-item"
       role="button"
+      tabindex="0"
       :aria-expanded="isOpen"
       :aria-controls="`group-${text}`"
       @click="toggleGroup"
+      @keydown.enter.prevent="toggleGroup"
+      @keydown.space.prevent="toggleGroup"
     >
       <UiIconMaterial v-if="icon" :icon-code="icon" decorative />
       <span>{{ text }}</span>

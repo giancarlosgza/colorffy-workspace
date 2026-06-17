@@ -59,6 +59,12 @@ const selectClasses = computed(() => {
   return classes
 })
 
+/** Methods */
+// Reads a label/value field off an option, containing the unsafe cast here.
+function getField(option: unknown, key: string): unknown {
+  return (option as Record<string, unknown>)[key]
+}
+
 /** Watchers */
 watch(model, (value) => {
   emit('onUpdate', value)
@@ -93,9 +99,9 @@ watch(model, (value) => {
       <option
         v-for="(option, indexOption) in options"
         :key="`option-${indexOption}`"
-        :value="optionValue ? option[optionValue] : option"
+        :value="optionValue ? getField(option, optionValue) : option"
       >
-        {{ optionLabel ? option[optionLabel] : option }}
+        {{ optionLabel ? getField(option, optionLabel) : option }}
       </option>
     </select>
 

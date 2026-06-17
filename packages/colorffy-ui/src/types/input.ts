@@ -45,7 +45,7 @@ export interface ITextareaInputEmits {
  */
 export interface ISelectInputProps extends IBaseInputProps {
   modelValue?: string | number | Record<string, unknown> | null
-  options?: any[]
+  options?: unknown[]
   optionLabel?: string | null
   optionValue?: string | null
 }
@@ -82,7 +82,7 @@ export interface IRangeInputEmits {
 export interface IRadioInputProps {
   id?: string | null
   label?: string | null
-  options?: any[]
+  options?: unknown[]
   optionLabel?: string | null
   optionValue?: string | null
   modelValue?: string | number | null

@@ -51,6 +51,11 @@ export interface IDatatableProps {
    */
   items: Record<string, any>[]
   /**
+   * Optional row-object key to use as the stable `v-for` key. When omitted,
+   * falls back to each row's `id`, then to the array index.
+   */
+  rowKey?: string
+  /**
    * Default column key to sort by.
    * @default ''
    */

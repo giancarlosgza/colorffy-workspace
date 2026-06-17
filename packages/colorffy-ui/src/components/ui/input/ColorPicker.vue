@@ -21,8 +21,8 @@ const emit = defineEmits<IColorPickerEmits>()
 const model = defineModel<string | null>('modelValue', { default: null })
 
 /** Computed */
-const inputIdColor = computed(() => props.id ? `${props.id}-input-text` : undefined)
-const inputIdText = computed(() => props.id ? `${props.id}-input-color` : undefined)
+const inputIdColor = computed(() => props.id ? `${props.id}-input-color` : undefined)
+const inputIdText = computed(() => props.id ? `${props.id}-input-text` : undefined)
 
 const groupClasses = computed(() => ['form-group'])
 const labelClasses = computed(() => [
@@ -58,10 +58,10 @@ const textClasses = computed(() => {
     >
       {{ label }}{{ required ? ' *' : '' }}
     </label>
+    <!-- Accessible name for the hex text input (hidden visually, not from AT) -->
     <label
       :for="inputIdText"
-      class="d-none" :class="[labelClasses]"
-      aria-hidden="true"
+      class="visually-hidden"
     >
       {{ label }}{{ required ? ' *' : '' }}
     </label>
@@ -82,6 +82,7 @@ const textClasses = computed(() => {
         v-model.lazy="model"
         type="text"
         :class="textClasses"
+        :maxlength="maxLength"
         @change="emit('onUpdate')"
       >
     </div>

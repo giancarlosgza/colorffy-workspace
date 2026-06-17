@@ -31,8 +31,7 @@ function showToast(options?: IToastOptions) {
   }
   isVisible.value = true
 
-  // Reset any in-flight hide timer so re-showing the toast restarts the full
-  // duration instead of being cut short by a previous call's timer.
+  // Reset any in-flight timer so re-showing restarts the full duration.
   if (hideTimer)
     clearTimeout(hideTimer)
   hideTimer = setTimeout(() => {

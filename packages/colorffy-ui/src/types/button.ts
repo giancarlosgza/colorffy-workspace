@@ -255,9 +255,9 @@ export interface IButtonToggleGroupProps {
  */
 export interface IButtonToggleGroupEmits {
   /**
-   * Emitted when an option is clicked.
+   * Emitted when an option is activated by pointer or keyboard.
    */
-  (e: 'onOptionClick', event: MouseEvent, item: IButtonToggleOption): void
+  (e: 'onOptionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void
 }
 
 /**

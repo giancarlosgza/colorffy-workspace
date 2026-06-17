@@ -39,16 +39,14 @@ const describedById = computed(() => (hasErrors.value && baseId.value ? `${baseI
 const value = computed({
   get: () => {
     const currentValue = model.value ?? ''
-
-    if (!currentValue.trim()) {
-      return ''
-    }
-
-    return formatPhoneNumber(currentValue)
+    // formatPhoneNumber strips non-digits, so any stored value formats safely.
+    return currentValue ? formatPhoneNumber(currentValue) : ''
   },
   set: (value: string | null) => {
-    model.value = value ?? ''
-    emit('onUpdate', model.value)
+    // Store raw digits so modelValue stays clean, not dash-formatted.
+    const digits = (value ?? '').replace(/\D/g, '')
+    model.value = digits
+    emit('onUpdate', digits)
   }
 })
 const placeholderText = computed(() => props.placeholder ?? undefined)

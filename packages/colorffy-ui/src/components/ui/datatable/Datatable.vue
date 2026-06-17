@@ -50,6 +50,21 @@ const columnsToggleTooltipText = computed(() => {
 const visibleHeaders = computed(() => {
   return props.headers.filter(header => !managedHiddenColumns.value.includes(header))
 })
+function compareValues(a: unknown, b: unknown): number {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a - b
+  }
+
+  // Compare numeric-looking values as numbers, not lexicographically.
+  const aNum = Number(a)
+  const bNum = Number(b)
+  if (a !== '' && b !== '' && !Number.isNaN(aNum) && !Number.isNaN(bNum)) {
+    return aNum - bNum
+  }
+
+  return String(a).localeCompare(String(b))
+}
+
 const sortedItems = computed(() => {
   if (!sortKey.value) {
     return props.items
@@ -59,17 +74,30 @@ const sortedItems = computed(() => {
     const aValue = a[sortKey.value]
     const bValue = b[sortKey.value]
 
-    if (aValue < bValue) {
-      return sortOrder.value === 'asc' ? -1 : 1
+    // Nullish values always sort last, regardless of sort direction.
+    const aNil = aValue === null || aValue === undefined
+    const bNil = bValue === null || bValue === undefined
+    if (aNil || bNil) {
+      if (aNil && bNil)
+        return 0
+      return aNil ? 1 : -1
     }
-    if (aValue > bValue) {
-      return sortOrder.value === 'asc' ? 1 : -1
-    }
-    return 0
+
+    const result = compareValues(aValue, bValue)
+    return sortOrder.value === 'asc' ? result : -result
   })
 })
 
 /** Methods */
+function getRowKey(item: Record<string, any>, index: number): string | number {
+  if (props.rowKey && item[props.rowKey] != null) {
+    return item[props.rowKey]
+  }
+  if (item.id != null) {
+    return item.id
+  }
+  return index
+}
 function isSortable(header: string) {
   return props.sortable && !props.unsortableColumns.includes(header)
 }
@@ -205,7 +233,7 @@ function isLastVisibleColumn(header: string) {
         />
         <!-- Table Content -->
         <tbody v-else-if="sortedItems.length > 0">
-          <tr v-for="(item, index) in sortedItems" :key="index">
+          <tr v-for="(item, index) in sortedItems" :key="getRowKey(item, index)">
             <td v-for="header in visibleHeaders" :key="header">
               <slot :name="`cell-${toCamelCase(header)}`" :item="item">
                 {{ item[toCamelCase(header)] }}
