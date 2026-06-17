@@ -215,7 +215,9 @@ function isLastVisibleColumn(header: string) {
         class="table table-hover"
         :class="tableClass"
       >
-        <caption v-if="caption">{{ caption }}</caption>
+        <caption v-if="caption">
+          {{ caption }}
+        </caption>
         <thead>
           <tr>
             <th

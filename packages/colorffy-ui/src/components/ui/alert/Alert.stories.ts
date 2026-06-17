@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import UiAlert from './Alert.vue'
 import UiButton from '../button/Button.vue'
 import UiButtonGroup from '../button/ButtonGroup.vue'
+import UiAlert from './Alert.vue'
 
 const meta = {
   title: 'Components/Alert',
@@ -164,4 +164,3 @@ export const WithBothSlots: Story = {
     `
   })
 }
-

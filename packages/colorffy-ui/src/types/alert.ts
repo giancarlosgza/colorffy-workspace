@@ -7,6 +7,8 @@ export interface IToastOptions {
   message?: string
   variant?: AlertVariant
   placement?: AlertPlacement
+  /** Auto-hide delay in milliseconds. Defaults to 3000. */
+  duration?: number
 }
 
 /**

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INavItem, INavigationBarProps } from '@/types/navigation'
+import type { INavigationBarProps, INavItem } from '@/types/navigation'
 import { computed } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 

@@ -35,7 +35,7 @@ const linkProps = computed(() => {
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
-      'href': props.disabled ? undefined : target,
+      href: props.disabled ? undefined : target,
       ...(isExternalLink.value && {
         target: '_blank',
         rel: 'noopener noreferrer'

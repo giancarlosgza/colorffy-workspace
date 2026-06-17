@@ -9,13 +9,11 @@ interface ToastOptions {
 }
 
 export function useToast(toast: Ref<IToastDisplay | null>) {
-  function onToastMessage(variant: ToastVariant, message: string, _opts?: ToastOptions) {
+  function onToastMessage(variant: ToastVariant, message: string, opts?: ToastOptions) {
     if (!toast.value)
       return
 
-    toast.value.variant = variant
-    toast.value.message = message
-    toast.value.showToast()
+    toast.value.showToast({ variant, message, duration: opts?.duration })
   }
 
   // Convenience helpers

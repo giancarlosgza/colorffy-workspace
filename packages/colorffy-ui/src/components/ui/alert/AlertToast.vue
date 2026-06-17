@@ -37,7 +37,7 @@ function showToast(options?: IToastOptions) {
   hideTimer = setTimeout(() => {
     isVisible.value = false
     hideTimer = null
-  }, 3000)
+  }, options?.duration ?? 3000)
 }
 
 onBeforeUnmount(() => {
