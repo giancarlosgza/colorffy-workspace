@@ -16,25 +16,32 @@ const user = {
 const isMenuActive = ref<boolean>(false)
 const menuItems = [
   {
-    id: 'home',
-    to: '/',
-    icon: '&#xe66b;',
-    text: 'Home',
-    ariaLabel: 'Navigate to home page'
+    id: 'dashboard',
+    to: '/dashboard',
+    icon: '&#xe871;',
+    text: 'Dashboard',
+    ariaLabel: 'Go to dashboard'
   },
   {
-    id: 'about',
-    to: '/about',
+    id: 'projects',
+    to: '/projects',
+    icon: '&#xe8ef;',
+    text: 'Projects',
+    ariaLabel: 'Go to projects'
+  },
+  {
+    id: 'account',
+    to: '/account',
     icon: '&#xe853;',
-    text: 'About',
-    ariaLabel: 'Go to about page'
+    text: 'Account',
+    ariaLabel: 'Go to account settings'
   },
   {
-    id: 'components',
-    to: { name: 'components', query: { ref: 'bottom-bar' } },
-    icon: '&#xe5c3;',
-    text: 'Components',
-    ariaLabel: 'Go to components page'
+    id: 'notifications',
+    to: '/notifications',
+    icon: '&#xe7f4;',
+    text: 'Alerts',
+    ariaLabel: 'Go to notifications'
   }
 ]
 
@@ -92,11 +99,24 @@ function handleMenuItemClick(to: string | object) {
         />
         <UiSidebarLink
           :as="NuxtLink"
-          to="/components"
-          text="Components"
-          icon="&#xe5c3;"
-          tooltip-text="View components"
-          disabled
+          to="/dashboard"
+          text="Dashboard"
+          icon="&#xe871;"
+          tooltip-text="Dashboard overview"
+        />
+        <UiSidebarLink
+          :as="NuxtLink"
+          to="/projects"
+          text="Projects"
+          icon="&#xe8ef;"
+          tooltip-text="View projects"
+        />
+        <UiSidebarLink
+          :as="NuxtLink"
+          to="/settings"
+          text="Settings"
+          icon="&#xe8b8;"
+          tooltip-text="App settings"
         />
         <UiSidebarLink
           :as="NuxtLink"
@@ -106,40 +126,11 @@ function handleMenuItemClick(to: string | object) {
           tooltip-text="View about page"
         />
 
-        <!-- Group -->
-        <UiSidebarGroup text="Documentation">
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
-            text="Documentation"
-            icon="&#xe873;"
-            child
-            tooltip-text="View docs"
-          />
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
-            text="API Reference"
-            icon="&#xe8ef;"
-            child
-            tooltip-text="API docs"
-          />
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
-            text="Guides"
-            icon="&#xe866;"
-            child
-            tooltip-text="View guides"
-          />
-        </UiSidebarGroup>
-
         <!-- Collapsible Group -->
-        <UiSidebarText text="Resources" />
-        <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
+        <UiSidebarGroup text="Account" collapsible :default-open="true" icon="&#xe853;">
           <UiSidebarLink
             :as="NuxtLink"
-            to="/components"
+            to="/account"
             text="Profile"
             icon="&#xe853;"
             child
@@ -147,35 +138,11 @@ function handleMenuItemClick(to: string | object) {
           />
           <UiSidebarLink
             :as="NuxtLink"
-            to="/components"
-            text="Account"
-            icon="&#xe8b8;"
-            child
-            tooltip-text="Account"
-          />
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
-            text="Security"
-            icon="&#xe32a;"
-            child
-            tooltip-text="Security"
-          />
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
+            to="/notifications"
             text="Notifications"
             icon="&#xe7f4;"
             child
             tooltip-text="Notifications"
-          />
-          <UiSidebarLink
-            :as="NuxtLink"
-            to="/components"
-            text="Billing"
-            icon="&#xf041;"
-            child
-            tooltip-text="Billing"
           />
         </UiSidebarGroup>
       </UiSidebarBody>
@@ -241,8 +208,8 @@ function handleMenuItemClick(to: string | object) {
             </UiNavbarItem>
             <UiNavbarLink
               :as="NuxtLink"
-              :to="{ name: 'components' }"
-              text="Components"
+              :to="{ name: 'settings' }"
+              text="Settings"
               class="nav-dropdown"
             >
               <template #icon>
@@ -260,7 +227,7 @@ function handleMenuItemClick(to: string | object) {
                 variant="outline"
                 custom-class="my-0"
                 icon-code="&#xef3d;"
-                icon-class="text-gradient gradient-accent"
+                icon-class="text-accent"
               />
             </UiNavbarItem>
             <UiNavbarItem>
@@ -300,8 +267,8 @@ function handleMenuItemClick(to: string | object) {
               >
                 <template #icon>
                   <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
-                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-gradient gradient-orange" />
-                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-gradient gradient-blue" />
+                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-warning" />
+                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-info" />
                 </template>
               </UiButton>
             </UiButtonGroup>
