@@ -28,7 +28,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['vue', 'floating-vue', '@colorffy/css', '@nuxt/kit', '@nuxt/schema'],
+      external: ['vue', 'floating-vue', '@vueuse/core', '@vueuse/components', '@colorffy/css', '@nuxt/kit', '@nuxt/schema'],
       output: {
         exports: 'named',
         globals: {

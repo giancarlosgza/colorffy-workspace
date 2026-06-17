@@ -1,5 +1,5 @@
 import type { NuxtModule } from '@nuxt/schema'
-import { addComponent, defineNuxtModule } from '@nuxt/kit'
+import { addComponent, addImports, defineNuxtModule } from '@nuxt/kit'
 import * as allExports from './components'
 
 export default defineNuxtModule({
@@ -18,5 +18,12 @@ export default defineNuxtModule({
         })
       }
     })
+
+    // Auto-import the composables so they're available without manual imports
+    addImports([
+      { name: 'useToast', from: '@colorffy/ui' },
+      { name: 'useTextUtils', from: '@colorffy/ui' },
+      { name: 'useDateUtils', from: '@colorffy/ui' }
+    ])
   }
 }) satisfies NuxtModule

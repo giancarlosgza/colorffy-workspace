@@ -4,8 +4,11 @@
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,7 +19,8 @@
       "types": "./dist/nuxt.d.ts",
       "import": "./dist/nuxt.js",
       "require": "./dist/nuxt.cjs"
-    }
+    },
+    "./style.css": "./dist/ui.css"
   },
   "files": [
     "dist"
@@ -34,6 +38,7 @@
   },
   "peerDependencies": {
     "@vueuse/components": "^14.0.0",
+    "@vueuse/core": "^14.0.0",
     "floating-vue": "^5.2.0",
     "nuxt": "^3.0.0 || ^4.0.0",
     "vue": "^3.5.0"
