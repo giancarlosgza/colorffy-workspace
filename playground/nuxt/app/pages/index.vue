@@ -12,7 +12,15 @@ const dialogSideSheetRef = ref<InstanceType<typeof UiModal> | null>(null)
 const confirmModalRef = ref<InstanceType<typeof UiConfirmModal> | null>(null)
 const rangeValue = ref<number>(50)
 
-const datatableHeaders = ['ID', 'Nombre', 'Descripción', 'Estado', 'Solicitudes', 'Fecha De Creación', 'Acciones']
+const datatableColumns = [
+  { key: 'id', label: 'ID', hidden: true },
+  { key: 'nombre', label: 'Nombre' },
+  { key: 'descripcion', label: 'Descripción' },
+  { key: 'estado', label: 'Estado' },
+  { key: 'solicitudes', label: 'Solicitudes', align: 'end' as const },
+  { key: 'creado', label: 'Fecha De Creación', align: 'end' as const },
+  { key: 'acciones', label: 'Acciones', sortable: false }
+]
 const datatableItems = [
   { id: 1, nombre: 'Proyecto Atlas', descripcion: 'Sistema de monitoreo geoespacial.', estado: 'Activo', solicitudes: 234, creado: '2025-10-01' },
   { id: 2, nombre: 'Proyecto Nébula', descripcion: 'Pipeline de datos en tiempo real.', estado: 'Pendiente', solicitudes: 567, creado: '2025-10-03' },
@@ -474,8 +482,7 @@ function handleConfirm() {
             <template #body>
               <div>
                 <UiDatatable
-                  :hidden-columns="['ID']"
-                  :headers="datatableHeaders"
+                  :columns="datatableColumns"
                   :items="datatableItems"
                   table-class="table-bordered scroll-fade-inline-effect"
                   column-manager
@@ -547,7 +554,7 @@ function handleConfirm() {
                       />
                     </div>
                   </template>
-                  <template #cell-fechaDeCreacion="{ item }">
+                  <template #cell-creado="{ item }">
                     <span class="text-muted text-end d-block">
                       {{ new Date(item.creado).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: '2-digit' }) }}
                     </span>

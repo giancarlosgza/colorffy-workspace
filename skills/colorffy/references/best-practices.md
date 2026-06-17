@@ -203,10 +203,10 @@ const users = ref([
 ])
 
 const columns = [
-  { field: 'name', label: 'Name', sortable: true },
-  { field: 'email', label: 'Email', sortable: true },
-  { field: 'role', label: 'Role', filterable: true },
-  { field: 'actions', label: 'Actions' }
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'role', label: 'Role' },
+  { key: 'actions', label: 'Actions', sortable: false }
 ]
 
 const editUser = (user) => {
@@ -221,15 +221,15 @@ const deleteUser = (user) => {
 <template>
   <UiDatatable
     :columns="columns"
-    :data="users"
-    :paginate="true"
-    :per-page="10"
+    :items="users"
+    default-sort-key="name"
+    column-manager
   >
-    <template #cell-actions="{ row }">
+    <template #cell-actions="{ item }">
       <UiButtonMenu text="Actions" variant="text" size="sm">
         <template #menu>
-          <UiButtonMenuItem @click="editUser(row)">Edit</UiButtonMenuItem>
-          <UiButtonMenuItem @click="deleteUser(row)">Delete</UiButtonMenuItem>
+          <UiButtonMenuItem @click="editUser(item)">Edit</UiButtonMenuItem>
+          <UiButtonMenuItem @click="deleteUser(item)">Delete</UiButtonMenuItem>
         </template>
       </UiButtonMenu>
     </template>
@@ -290,7 +290,7 @@ onMounted(async () => {
 <template>
   <div>
     <UiTableSkeleton v-if="loading" :cols="4" :rows="5" />
-    <UiDatatable v-else :data="data" :columns="columns" />
+    <UiDatatable v-else :items="data" :columns="columns" />
   </div>
 </template>
 ```
@@ -308,7 +308,7 @@ const hasData = computed(() => data.value.length > 0)
 
 <template>
   <div>
-    <UiDatatable v-if="hasData" :data="data" :columns="columns" />
+    <UiDatatable v-if="hasData" :items="data" :columns="columns" />
     <UiEmpty
       v-else
       title="No data found"

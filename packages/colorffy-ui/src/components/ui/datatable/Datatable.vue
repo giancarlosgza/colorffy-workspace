@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IDatatableProps } from '@/types/datatable'
+import type { IDatatableColumn, IDatatableProps } from '@/types/datatable'
 import { computed, ref, watch } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
@@ -19,9 +19,7 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   isExpanded: false,
   defaultSortKey: '',
   defaultSortOrder: 'asc',
-  unsortableColumns: () => ['Actions'],
   sortable: true,
-  hiddenColumns: () => [],
   columnManager: false,
   columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
   columnManagerText: 'Columns',
@@ -33,11 +31,13 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
 })
 
 /** Data */
-const sortKey = ref(resolveSortKey(props.defaultSortKey))
+const sortKey = ref(props.defaultSortKey)
 const sortOrder = ref(props.defaultSortOrder)
-const managedHiddenColumns = ref([...props.hiddenColumns])
+// Keys of columns hidden by default (`column.hidden`); also the reset target
+const defaultHiddenKeys = computed(() => props.columns.filter(col => col.hidden).map(col => col.key))
+const managedHiddenColumns = ref<string[]>([...defaultHiddenKeys.value])
 
-watch(() => props.hiddenColumns, (val) => {
+watch(defaultHiddenKeys, (val) => {
   managedHiddenColumns.value = [...val]
 })
 
@@ -51,23 +51,9 @@ const columnsToggleTooltipText = computed(() => {
     ? props.columnsToggleTooltip.hideDefault
     : props.columnsToggleTooltip.showAll
 })
-const visibleHeaders = computed(() => {
-  return props.headers.filter(header => !managedHiddenColumns.value.includes(header))
+const visibleColumns = computed(() => {
+  return props.columns.filter(col => !managedHiddenColumns.value.includes(col.key))
 })
-function compareValues(a: unknown, b: unknown): number {
-  if (typeof a === 'number' && typeof b === 'number') {
-    return a - b
-  }
-
-  // Compare numeric-looking values as numbers, not lexicographically.
-  const aNum = Number(a)
-  const bNum = Number(b)
-  if (a !== '' && b !== '' && !Number.isNaN(aNum) && !Number.isNaN(bNum)) {
-    return aNum - bNum
-  }
-
-  return String(a).localeCompare(String(b))
-}
 
 const sortedItems = computed(() => {
   if (!sortKey.value) {
@@ -93,6 +79,20 @@ const sortedItems = computed(() => {
 })
 
 /** Methods */
+function compareValues(a: unknown, b: unknown): number {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a - b
+  }
+
+  // Compare numeric-looking values as numbers, not lexicographically.
+  const aNum = Number(a)
+  const bNum = Number(b)
+  if (a !== '' && b !== '' && !Number.isNaN(aNum) && !Number.isNaN(bNum)) {
+    return aNum - bNum
+  }
+
+  return String(a).localeCompare(String(b))
+}
 function getRowKey(item: Record<string, any>, index: number): string | number {
   if (props.rowKey && item[props.rowKey] != null) {
     return item[props.rowKey]
@@ -102,13 +102,13 @@ function getRowKey(item: Record<string, any>, index: number): string | number {
   }
   return index
 }
-function isSortable(header: string) {
-  return props.sortable && !props.unsortableColumns.includes(header)
+function isSortable(column: IDatatableColumn) {
+  return props.sortable && column.sortable !== false
 }
-function ariaSortFor(header: string): 'ascending' | 'descending' | 'none' | undefined {
-  if (!isSortable(header))
+function ariaSortFor(column: IDatatableColumn): 'ascending' | 'descending' | 'none' | undefined {
+  if (!isSortable(column))
     return undefined
-  if (sortKey.value !== toCamelCase(header))
+  if (sortKey.value !== column.key)
     return 'none'
   return sortOrder.value === 'asc' ? 'ascending' : 'descending'
 }
@@ -120,38 +120,25 @@ function sortBy(key: string) {
     sortOrder.value = 'asc'
   }
 }
-function toCamelCase(str: string) {
-  // Normalize accented characters to ASCII equivalents
-  const normalized = str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
-  const newStr = normalized.toLowerCase().replace(/[^a-z0-9]+(.)/gi, (m, chr) => chr.toUpperCase())
-  return newStr.charAt(0).toLowerCase() + newStr.slice(1)
-}
-function resolveSortKey(key: string): string {
-  if (!key)
-    return ''
-  // Accept either an already-camelCased data key or a raw header label
-  return props.headers.some(h => toCamelCase(h) === key) ? key : toCamelCase(key)
+function alignClass(column: IDatatableColumn) {
+  return column.align ? `text-${column.align}` : undefined
 }
 function toggleShowAllColumns() {
-  if (managedHiddenColumns.value.length > 0) {
-    managedHiddenColumns.value = []
-  } else {
-    managedHiddenColumns.value = [...props.hiddenColumns]
-  }
+  managedHiddenColumns.value = managedHiddenColumns.value.length > 0 ? [] : [...defaultHiddenKeys.value]
 }
-function toggleColumnVisibility(header: string) {
-  const index = managedHiddenColumns.value.indexOf(header)
+function toggleColumnVisibility(key: string) {
+  const index = managedHiddenColumns.value.indexOf(key)
   if (index > -1) {
     managedHiddenColumns.value.splice(index, 1)
-  } else if (visibleHeaders.value.length > 1) {
-    managedHiddenColumns.value.push(header)
+  } else if (visibleColumns.value.length > 1) {
+    managedHiddenColumns.value.push(key)
   }
 }
-function isColumnVisible(header: string) {
-  return !managedHiddenColumns.value.includes(header)
+function isColumnVisible(key: string) {
+  return !managedHiddenColumns.value.includes(key)
 }
-function isLastVisibleColumn(header: string) {
-  return visibleHeaders.value.length === 1 && isColumnVisible(header)
+function isLastVisibleColumn(key: string) {
+  return visibleColumns.value.length === 1 && isColumnVisible(key)
 }
 </script>
 
@@ -159,7 +146,7 @@ function isLastVisibleColumn(header: string) {
   <div>
     <!-- Table Controls -->
     <div
-      v-if="(hiddenColumns && hiddenColumns.length > 0) || columnManager"
+      v-if="defaultHiddenKeys.length > 0 || columnManager"
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
       <div>
@@ -167,7 +154,7 @@ function isLastVisibleColumn(header: string) {
       </div>
       <UiButtonGroup>
         <UiButtonTooltip
-          v-if="hiddenColumns && hiddenColumns.length > 0"
+          v-if="defaultHiddenKeys.length > 0"
           id="columns-toggle"
           variant="outline"
           size="sm"
@@ -196,13 +183,13 @@ function isLastVisibleColumn(header: string) {
           </template>
           <template #menu>
             <UiButtonMenuItem
-              v-for="header in headers"
-              :id="`column-${toCamelCase(header)}`"
-              :key="header"
-              :item-text="header"
-              :icon="isColumnVisible(header) ? '&#xe834;' : '&#xe835;'"
-              :disabled="isLastVisibleColumn(header)"
-              @click="toggleColumnVisibility(header)"
+              v-for="column in columns"
+              :id="`column-${column.key}`"
+              :key="column.key"
+              :item-text="column.label"
+              :icon="isColumnVisible(column.key) ? '&#xe834;' : '&#xe835;'"
+              :disabled="isLastVisibleColumn(column.key)"
+              @click="toggleColumnVisibility(column.key)"
             />
           </template>
         </UiButtonMenu>
@@ -221,20 +208,20 @@ function isLastVisibleColumn(header: string) {
         <thead>
           <tr>
             <th
-              v-for="header in visibleHeaders"
-              :key="header"
+              v-for="column in visibleColumns"
+              :key="column.key"
               scope="col"
-              :class="{ sortable: isSortable(header), sorted: sortKey === toCamelCase(header) }"
-              :tabindex="isSortable(header) ? 0 : undefined"
-              :aria-sort="ariaSortFor(header)"
-              @click="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
-              @keydown.enter.prevent="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
-              @keydown.space.prevent="isSortable(header) ? sortBy(toCamelCase(header)) : undefined"
+              :class="[{ sortable: isSortable(column), sorted: sortKey === column.key }, alignClass(column), column.thClass]"
+              :tabindex="isSortable(column) ? 0 : undefined"
+              :aria-sort="ariaSortFor(column)"
+              @click="isSortable(column) ? sortBy(column.key) : undefined"
+              @keydown.enter.prevent="isSortable(column) ? sortBy(column.key) : undefined"
+              @keydown.space.prevent="isSortable(column) ? sortBy(column.key) : undefined"
             >
-              {{ header }}
-              <template v-if="isSortable(header)">
+              {{ column.label }}
+              <template v-if="isSortable(column)">
                 <UiIconMaterial
-                  v-if="sortKey === toCamelCase(header)"
+                  v-if="sortKey === column.key"
                   :icon-code="sortOrder === 'asc' ? '&#xf1d2;' : '&#xf1d1;'"
                   class="fs-sm-100 rotate-90"
                 />
@@ -250,7 +237,7 @@ function isLastVisibleColumn(header: string) {
         <!-- Loading State -->
         <StateTableSkeleton
           v-if="isLoading"
-          :skeleton-cols="visibleHeaders.length"
+          :skeleton-cols="visibleColumns.length"
           :skeleton-col-expanded="skeletonColExpanded"
           :skeleton-rows="skeletonRows"
           :is-expanded="isExpanded"
@@ -258,9 +245,13 @@ function isLastVisibleColumn(header: string) {
         <!-- Table Content -->
         <tbody v-else-if="sortedItems.length > 0">
           <tr v-for="(item, index) in sortedItems" :key="getRowKey(item, index)">
-            <td v-for="header in visibleHeaders" :key="header">
-              <slot :name="`cell-${toCamelCase(header)}`" :item="item">
-                {{ item[toCamelCase(header)] }}
+            <td
+              v-for="column in visibleColumns"
+              :key="column.key"
+              :class="[alignClass(column), column.tdClass]"
+            >
+              <slot :name="`cell-${column.key}`" :item="item">
+                {{ item[column.key] }}
               </slot>
             </td>
           </tr>
@@ -268,7 +259,7 @@ function isLastVisibleColumn(header: string) {
         <!-- Empty State -->
         <tbody v-else>
           <tr>
-            <td :colspan="visibleHeaders.length">
+            <td :colspan="visibleColumns.length">
               <StateEmpty
                 :title="emptyStateTitle"
                 :subtitle="emptyStateSubtitle"

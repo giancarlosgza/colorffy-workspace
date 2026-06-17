@@ -535,6 +535,54 @@ const textUtils = useTextUtils()
 </template>
 ```
 
+### Datatable
+
+Columns are defined explicitly. Each column's `key` is the data field on every
+row object, the cell slot (`cell-<key>`), and the sort key; `label` is the text
+shown in the header — keeping them separate makes i18n and runtime label changes
+trivial. Per-column `sortable`, `hidden`, and `align` replace the older parallel
+`unsortableColumns` / `hiddenColumns` arrays.
+
+```vue
+<script setup lang="ts">
+import type { IDatatableColumn } from '@colorffy/ui'
+
+const columns: IDatatableColumn[] = [
+  { key: 'id', label: 'ID', hidden: true }, // starts hidden, toggleable via column manager
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'role', label: 'Role' },
+  { key: 'total', label: 'Total', align: 'end' },
+  { key: 'actions', label: 'Actions', sortable: false }
+]
+
+const items = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', total: 1280 },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', total: 940 }
+]
+</script>
+
+<template>
+  <UiDatatable
+    :columns="columns"
+    :items="items"
+    default-sort-key="name"
+    table-class="table-bordered"
+    column-manager
+  >
+    <!-- Custom cell rendering: the slot name is `cell-<key>` -->
+    <template #cell-actions="{ item }">
+      <UiButton variant="outline" size="sm" :text="`Edit ${item.name}`" />
+    </template>
+  </UiDatatable>
+</template>
+```
+
+**Key props:** `columns` (`IDatatableColumn[]`), `items`, `sortable`,
+`default-sort-key` (a column `key`), `column-manager`, `is-loading` /
+`skeleton-rows` (built-in loading state), `caption`, `row-key`, and
+`empty-state-*` (built-in empty state).
+
 ## 🏗️ TypeScript Support
 
 All components come with full TypeScript support. Import types as needed:

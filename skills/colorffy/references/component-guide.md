@@ -153,9 +153,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 ## Data Display
 
 **Tables**
-- Use `UiDatatable` for sortable, filterable data tables
-- Supports pagination out of the box
-- Configure `columns` with field, label, sortable, filterable
+- Use `UiDatatable` for sortable data tables with a column manager
+- Configure `columns` with `key`, `label`, and optional `sortable` / `hidden` / `align`
+- Built-in loading skeleton (`is-loading`) and empty state; custom cells via `#cell-<key>`
+- Pagination and filtering are not built in — handle them in the parent and pass the current `items`
 - Best for structured data with many rows
 
 **Lists**

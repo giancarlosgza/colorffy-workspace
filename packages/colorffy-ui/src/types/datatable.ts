@@ -7,6 +7,54 @@ export interface IColumnsToggleTooltip {
 }
 
 /**
+ * Describes a single Datatable column. Decouples the data `key` from the
+ * display `label`, so labels can be localized or changed without affecting
+ * sorting, hidden state, or the `cell-<key>` slot contract.
+ */
+export interface IDatatableColumn {
+  /**
+   * Data field on each row object. Drives sorting and the cell slot name
+   * (`cell-<key>`); the default cell renders `item[key]`.
+   */
+  key: string
+
+  /**
+   * Display label rendered in the column header.
+   */
+  label: string
+
+  /**
+   * When false, the column cannot be sorted. Falls back to the table-level
+   * `sortable` prop when omitted.
+   * @default true
+   */
+  sortable?: boolean
+
+  /**
+   * When true, the column starts hidden and can be toggled back via the
+   * column manager.
+   * @default false
+   */
+  hidden?: boolean
+
+  /**
+   * Optional text alignment applied to the header and body cells via the
+   * `text-<align>` utility class.
+   */
+  align?: 'start' | 'center' | 'end'
+
+  /**
+   * Optional custom CSS class for the column's header cell.
+   */
+  thClass?: string
+
+  /**
+   * Optional custom CSS class for the column's body cells.
+   */
+  tdClass?: string
+}
+
+/**
  * Interface props for the Datatable component.
  */
 export interface IDatatableProps {
@@ -46,13 +94,14 @@ export interface IDatatableProps {
    */
   isExpanded?: boolean
   /**
-   * Array of column header labels.
+   * Column definitions. A single explicit list that drives headers, sorting,
+   * hidden state, and the `cell-<key>` slots.
    */
-  headers: string[]
+  columns: IDatatableColumn[]
   /**
-   * Array of data items to display. Each row is an object keyed by the
-   * camelCased column header; cell values are intentionally untyped since
-   * the table renders arbitrary data without a column-type system.
+   * Array of data items to display. Each row is an object keyed by each
+   * column's `key`; cell values are intentionally untyped since the table
+   * renders arbitrary data without a column-type system.
    */
   items: Record<string, any>[]
   /**
@@ -61,7 +110,7 @@ export interface IDatatableProps {
    */
   rowKey?: string
   /**
-   * Default column key to sort by.
+   * Column `key` to sort by initially.
    * @default ''
    */
   defaultSortKey?: string
@@ -71,20 +120,10 @@ export interface IDatatableProps {
    */
   defaultSortOrder?: 'asc' | 'desc'
   /**
-   * Array of column labels that should not be sortable.
-   * @default ['Actions']
-   */
-  unsortableColumns?: string[]
-  /**
-   * When true, enables column sorting.
+   * When true, enables column sorting (per-column opt-out via `column.sortable`).
    * @default true
    */
   sortable?: boolean
-  /**
-   * Array of column labels that should be hidden by default.
-   * @default []
-   */
-  hiddenColumns?: string[]
   /**
    * When true, shows the column manager menu.
    * @default false

@@ -741,28 +741,49 @@ Popover menu overlay.
 ## Tables
 
 ### UiDatatable
-Advanced data table with sorting, filtering, pagination.
+Data table with type-aware sorting, a column manager, and built-in loading/empty states.
 
 ```vue
 <UiDatatable
   :columns="[
-    { field: 'name', label: 'Name', sortable: true },
-    { field: 'email', label: 'Email' },
-    { field: 'role', label: 'Role', filterable: true }
+    { key: 'id', label: 'ID', hidden: true },
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+    { key: 'role', label: 'Role', sortable: false },
+    { key: 'total', label: 'Total', align: 'end' }
   ]"
-  :data="users"
-  :paginate="true"
-  :per-page="10"
-/>
+  :items="users"
+  default-sort-key="name"
+  column-manager
+>
+  <!-- Custom cell: slot name is `cell-<key>`, scoped value is `item` -->
+  <template #cell-total="{ item }">
+    {{ item.total.toLocaleString() }}
+  </template>
+</UiDatatable>
 ```
 
+**Column (`IDatatableColumn`):**
+- `key` (string) - Data field on each row; also the sort key and `cell-<key>` slot name
+- `label` (string) - Header text shown to the user (decoupled from `key` for i18n)
+- `sortable` (boolean) - Per-column sort opt-out; defaults to the table-level `sortable`
+- `hidden` (boolean) - Starts hidden; toggleable via the column manager
+- `align` ('start' | 'center' | 'end') - Text alignment for the header and cells
+- `thClass` / `tdClass` (string) - Custom classes for the header / body cells
+
 **Props:**
-- `columns` (array) - Column definitions
-- `data` (array) - Table data
-- `paginate` (boolean) - Enable pagination
-- `perPage` (number) - Rows per page
-- `sortable` (boolean) - Enable sorting
-- `filterable` (boolean) - Enable filtering
+- `columns` (`IDatatableColumn[]`) - Column definitions
+- `items` (array) - Table data (objects keyed by each column's `key`)
+- `sortable` (boolean) - Enable sorting globally
+- `defaultSortKey` (string) - Column `key` to sort by initially
+- `defaultSortOrder` ('asc' | 'desc') - Initial sort direction
+- `columnManager` (boolean) - Show the show/hide column menu
+- `isLoading` (boolean) + `skeletonRows` (number) - Built-in loading skeleton
+- `rowKey` (string) - Row field used as the stable `v-for` key (falls back to `id`, then index)
+- `caption` (string) - Accessible `<caption>` for the table
+- `emptyStateTitle` / `emptyStateSubtitle` - Built-in empty state text
+
+> **Note:** Pagination and filtering are not built in — paginate/filter `items` in the parent and pass the current page.
 
 ## State Components
 

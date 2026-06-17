@@ -28,24 +28,31 @@ const sampleData = [
   { id: 5, name: 'Charlie Wilson', email: 'charlie@example.com', role: 'User', status: 'Active' }
 ]
 
-const headers = ['ID', 'Name', 'Email', 'Role', 'Status', 'Actions']
+const columns = [
+  { key: 'id', label: 'ID' },
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'role', label: 'Role' },
+  { key: 'status', label: 'Status' },
+  { key: 'actions', label: 'Actions', sortable: false }
+]
 
 export const Default: Story = {
   args: {
-    headers,
+    columns,
     items: sampleData
   },
   render: _args => ({
     components: { UiDatatable, UiButton },
     setup() {
       return {
-        headers,
+        columns,
         items: sampleData
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
       >
         <template #cell-actions="{ item }">
@@ -61,7 +68,7 @@ export const Default: Story = {
 
 export const Sortable: Story = {
   args: {
-    headers,
+    columns,
     items: sampleData,
     sortable: true
   },
@@ -69,17 +76,16 @@ export const Sortable: Story = {
     components: { UiDatatable, UiButton },
     setup() {
       return {
-        headers,
+        columns,
         items: sampleData
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
         :sortable="true"
         default-sort-key="name"
-        :unsortable-columns="['Actions']"
       >
         <template #cell-actions="{ item }">
           <UiButton variant="outline" size="sm" text="View" />
@@ -91,7 +97,7 @@ export const Sortable: Story = {
 
 export const Bordered: Story = {
   args: {
-    headers,
+    columns,
     items: sampleData,
     tableClass: 'table-bordered'
   },
@@ -99,13 +105,13 @@ export const Bordered: Story = {
     components: { UiDatatable, UiButton },
     setup() {
       return {
-        headers,
+        columns,
         items: sampleData
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
         table-class="table-bordered"
       >
@@ -119,7 +125,7 @@ export const Bordered: Story = {
 
 export const Striped: Story = {
   args: {
-    headers,
+    columns,
     items: sampleData,
     tableClass: 'table-striped'
   },
@@ -127,13 +133,13 @@ export const Striped: Story = {
     components: { UiDatatable },
     setup() {
       return {
-        headers,
+        columns,
         items: sampleData
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
         table-class="table-striped"
       />
@@ -143,24 +149,27 @@ export const Striped: Story = {
 
 export const WithColumnManager: Story = {
   args: {
-    headers,
+    columns,
     items: sampleData,
     columnManager: true
   },
   render: _args => ({
     components: { UiDatatable, UiButton },
     setup() {
+      // Email starts hidden; toggleable via the column manager
+      const managerColumns = columns.map(column =>
+        column.key === 'email' ? { ...column, hidden: true } : column
+      )
       return {
-        headers,
+        columns: managerColumns,
         items: sampleData
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
         :column-manager="true"
-        :hidden-columns="['Email']"
       >
         <template #cell-actions="{ item }">
           <UiButton variant="outline" size="sm" text="Edit" />
@@ -172,7 +181,7 @@ export const WithColumnManager: Story = {
 
 export const Loading: Story = {
   args: {
-    headers,
+    columns,
     items: [],
     isLoading: true,
     skeletonRows: 5
@@ -181,13 +190,13 @@ export const Loading: Story = {
     components: { UiDatatable },
     setup() {
       return {
-        headers,
+        columns,
         items: []
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
         :is-loading="true"
         :skeleton-rows="5"
@@ -198,20 +207,20 @@ export const Loading: Story = {
 
 export const EmptyState: Story = {
   args: {
-    headers,
+    columns,
     items: []
   },
   render: _args => ({
     components: { UiDatatable },
     setup() {
       return {
-        headers,
+        columns,
         items: []
       }
     },
     template: `
-      <UiDatatable 
-        :headers="headers"
+      <UiDatatable
+        :columns="columns"
         :items="items"
       />
     `
