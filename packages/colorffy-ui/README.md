@@ -381,12 +381,20 @@ export default defineNuxtConfig({
 - `UiListItem` - List item
 
 #### Navigation
-- `UiDrawerLink` - Drawer navigation link
+- `UiBreadcrumb` - SEO-friendly breadcrumb trail (JSON-LD)
 - `UiNavbarLink` - Navbar link
 - `UiNavigationBar` - Navigation bar
 - `UiPopoverMenu` - Popover menu
 - `UiSegmentedControls` - Segmented control
 - `UiTabs` - Tab navigation
+
+#### Sidebar (Navigation Drawer)
+- `UiSidebar` - Drawer container (compact `rail` + responsive `open`)
+- `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter` - Drawer regions
+- `UiSidebarGroup` - Grouped links (optionally collapsible)
+- `UiSidebarLink` - Drawer navigation link (polymorphic `as`)
+- `UiSidebarText` - Section label
+- `UiSidebarDropdown` - Header/footer dropdown
 
 #### Tables
 - `UiDatatable` - Data table component
@@ -582,6 +590,103 @@ const items = [
 `default-sort-key` (a column `key`), `column-manager`, `is-loading` /
 `skeleton-rows` (built-in loading state), `caption`, `row-key`, and
 `empty-state-*` (built-in empty state).
+
+### Breadcrumb
+
+SEO-friendly breadcrumb trail. Pass an ordered `items` list (root → current);
+the last item is auto-marked as the current page (`aria-current="page"`,
+rendered as plain text). By default it emits a schema.org `BreadcrumbList` as
+inline JSON-LD for rich results — set `base-url` so the URLs are absolute. Long
+trails collapse with `max-items` (visual only; the JSON-LD keeps the full trail).
+
+```vue
+<script setup lang="ts">
+import type { IBreadcrumbItem } from '@colorffy/ui'
+import { NuxtLink } from '#components'
+
+const items: IBreadcrumbItem[] = [
+  { label: 'Home', to: '/', icon: '&#xe88a;' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Atlas' } // no `to` → current page
+]
+</script>
+
+<template>
+  <UiBreadcrumb
+    :as="NuxtLink"
+    :items="items"
+    base-url="https://example.com"
+    separator-icon="&#xe5cc;"
+  />
+</template>
+```
+
+**Key props:** `items` (`IBreadcrumbItem[]` — `{ label, to?, href?, icon?, current? }`),
+`as` (polymorphic link: `'a'` / `NuxtLink` / `router-link`), `separator` /
+`separatorIcon`, `base-url` (absolute URLs for the JSON-LD), `structured-data`
+(default `true`; disable to feed your own `useHead`), `max-items` (collapse long
+trails), and `ariaLabel`. **Emits:** `itemClick(item, index)`. **Slots:**
+`#item="{ item, index, isCurrent }"`, `#separator`.
+
+### Sidebar (Navigation Drawer)
+
+The sidebar separates two **independent** states:
+
+- **`rail`** — compact, icons-only mode (a desktop concern). One-way; the parent
+  controls it (e.g. from a `UiNavbarToggle`), so it has no `update:rail` emit.
+- **`open`** — the responsive mobile slide-in. On desktop the drawer is always
+  visible, so `open` only drives the show/hide on small screens. Supports
+  `v-model:open`; the dimmed overlay renders while open and emits `update:open`
+  when dismissed.
+
+```vue
+<script setup lang="ts">
+import { NuxtLink } from '#components'
+import { ref } from 'vue'
+
+const rail = ref(false) // compact (desktop)
+const open = ref(false) // mobile drawer (responsive)
+</script>
+
+<template>
+  <UiSidebar
+    bordered
+    :rail="rail"
+    v-model:open="open"
+    aria-label="Main navigation"
+  >
+    <UiSidebarHeader>
+      <UiSidebarDropdown title="Acme" subtitle="Workspace" />
+    </UiSidebarHeader>
+
+    <UiSidebarBody>
+      <UiSidebarText text="Platform" />
+      <UiSidebarLink :as="NuxtLink" to="/" text="Home" icon="&#xe88a;" tooltip-text="Home" />
+      <UiSidebarLink :as="NuxtLink" to="/projects" text="Projects" icon="&#xe8ef;" />
+
+      <!-- Collapsible group of nested (child) links -->
+      <UiSidebarGroup text="Account" collapsible :default-open="true" icon="&#xe853;">
+        <UiSidebarLink :as="NuxtLink" to="/account" text="Profile" icon="&#xe853;" child />
+        <UiSidebarLink :as="NuxtLink" to="/notifications" text="Notifications" icon="&#xe7f4;" child />
+      </UiSidebarGroup>
+    </UiSidebarBody>
+
+    <UiSidebarFooter>
+      <UiBadge text="v1.0.0" variant="outline" size="sm" />
+    </UiSidebarFooter>
+  </UiSidebar>
+</template>
+```
+
+Wire `open` to a toggle (e.g. in the navbar) for the mobile drawer:
+
+```vue
+<UiNavbarToggle :collapsed="open" @toggle="open = !open" />
+```
+
+**`UiSidebar` props:** `bordered`, `rail` (compact, one-way), `open`
+(`v-model:open`), `width` (sets `--theme-nav-drawer-width`), `ariaLabel`
+(landmark name), `customClass`. **Emits:** `update:open`.
 
 ## 🏗️ TypeScript Support
 

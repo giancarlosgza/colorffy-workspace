@@ -31,6 +31,12 @@
     align-items: center;
     gap: var(--_breadcrumb-gap);
     min-width: 0;
+    
+    & span, 
+    & a {
+      font-size: var(--fs-sm-200);
+      font-family: var(--font-secondary);
+    }
 
     .breadcrumb-link {
       display: inline-flex;
@@ -44,7 +50,6 @@
       &:hover,
       &:focus-visible {
         color: var(--_breadcrumb-hover-color);
-        text-decoration: underline;
       }
     }
 
@@ -70,6 +75,11 @@
     align-items: center;
     color: var(--_breadcrumb-separator-color);
     user-select: none;
+
+    & i {
+      font-size: var(--fs-600);
+      color: var(--theme-muted-a10);
+    }
   }
 
   .breadcrumb-ellipsis {
@@ -81,6 +91,7 @@
   }
 
   .breadcrumb-icon {
-    font-size: 1.1em;
+    font-size: var(--fs-600);
+    color: var(--theme-muted-a10);
   }
 }

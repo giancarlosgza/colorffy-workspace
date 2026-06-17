@@ -19,11 +19,7 @@ const props = withDefaults(defineProps<IBreadcrumbProps>(), {
 const emit = defineEmits<IBreadcrumbEmits>()
 
 /** Computed */
-// Whether the trail is long enough to collapse the middle into an ellipsis
 const isCollapsed = computed(() => props.maxItems > 0 && props.items.length > props.maxItems)
-
-// Entries actually rendered. Ellipsis entries carry no item; real entries keep
-// their original index so current/last detection stays correct after collapsing.
 const visibleEntries = computed(() => {
   if (!isCollapsed.value)
     return props.items.map((item, index) => ({ item, index, ellipsis: false }))
@@ -86,13 +82,15 @@ function linkProps(item: IBreadcrumbItem): Record<string, unknown> {
   return { to: target }
 }
 function toAbsoluteUrl(target: string | object | undefined): string {
-  // Route objects can't be serialized to a URL reliably; emit name-only items
   if (!target || typeof target !== 'string')
     return ''
+
   if (/^https?:\/\//.test(target))
     return target
+
   if (!props.baseUrl)
     return target
+
   return `${props.baseUrl.replace(/\/+$/, '')}/${target.replace(/^\/+/, '')}`
 }
 
@@ -120,18 +118,31 @@ function StructuredData() {
         :class="{ active: !entry.ellipsis && isCurrent(entry.item!, entry.index) }"
       >
         <!-- Collapsed middle -->
-        <span v-if="entry.ellipsis" class="breadcrumb-ellipsis" aria-hidden="true">
+        <span
+          v-if="entry.ellipsis"
+          class="breadcrumb-ellipsis"
+          aria-hidden="true"
+        >
           &hellip;
         </span>
 
-        <!-- Current page (non-link) -->
+        <!-- Current page -->
         <span
           v-else-if="isCurrent(entry.item!, entry.index)"
           class="breadcrumb-current"
           aria-current="page"
         >
-          <slot name="item" :item="entry.item" :index="entry.index" :is-current="true">
-            <UiIconMaterial v-if="entry.item!.icon" :icon-code="entry.item!.icon" class="breadcrumb-icon" />
+          <slot
+            name="item"
+            :item="entry.item"
+            :index="entry.index"
+            :is-current="true"
+          >
+            <UiIconMaterial
+              v-if="entry.item!.icon"
+              :icon-code="entry.item!.icon"
+              class="breadcrumb-icon"
+            />
             {{ entry.item!.label }}
           </slot>
         </span>
@@ -144,20 +155,32 @@ function StructuredData() {
           v-bind="linkProps(entry.item!)"
           @click="emit('itemClick', entry.item!, entry.index)"
         >
-          <slot name="item" :item="entry.item" :index="entry.index" :is-current="false">
-            <UiIconMaterial v-if="entry.item!.icon" :icon-code="entry.item!.icon" class="breadcrumb-icon" />
+          <slot
+            name="item"
+            :item="entry.item"
+            :index="entry.index"
+            :is-current="false"
+          >
+            <UiIconMaterial
+              v-if="entry.item!.icon"
+              :icon-code="entry.item!.icon"
+              class="breadcrumb-icon"
+            />
             {{ entry.item!.label }}
           </slot>
         </component>
 
-        <!-- Separator (skipped after the last visible entry) -->
+        <!-- Separator -->
         <span
           v-if="vi < visibleEntries.length - 1"
           class="breadcrumb-separator"
           aria-hidden="true"
         >
           <slot name="separator">
-            <UiIconMaterial v-if="separatorIcon" :icon-code="separatorIcon" />
+            <UiIconMaterial
+              v-if="separatorIcon"
+              :icon-code="separatorIcon"
+            />
             <template v-else>{{ separator }}</template>
           </slot>
         </span>

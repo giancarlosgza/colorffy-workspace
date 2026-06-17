@@ -262,5 +262,4 @@ export interface IUserData {
 export interface IRouteLike {
   path?: string
   name?: string | symbol | null
-  [key: string]: unknown
 }

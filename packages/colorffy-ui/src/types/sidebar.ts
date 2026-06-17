@@ -49,12 +49,9 @@ export interface ISidebarProps {
  */
 export interface ISidebarEmits {
   /**
-   * Emitted when the rail (compact) state changes.
-   */
-  (e: 'update:rail', value: boolean): void
-
-  /**
-   * Emitted when the responsive open state changes (e.g. overlay dismiss).
+   * Emitted when the responsive open state changes (e.g. overlay dismiss),
+   * enabling `v-model:open`. The `rail` (compact) state is parent-controlled
+   * and one-way — the sidebar has no internal control that toggles it.
    */
   (e: 'update:open', value: boolean): void
 }

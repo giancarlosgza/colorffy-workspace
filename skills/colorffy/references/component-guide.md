@@ -31,8 +31,9 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Shows icons + labels
 
 **Sidebar navigation**
-- Use `UiDrawerLink` for sidebar/drawer navigation items
-- Supports icons and active states
+- Use `UiSidebar` (+ `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter`, `UiSidebarGroup`, `UiSidebarLink`, `UiSidebarText`, `UiSidebarDropdown`) for the navigation drawer
+- Two independent states: `rail` (compact, desktop) and `open` (responsive mobile, `v-model:open`)
+- Supports icons, active states, collapsible groups, and nested `child` links
 - Good for dashboards and admin panels
 
 **Segmented controls**
@@ -209,7 +210,8 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 ### "I need navigation"
 - Top horizontal → `UiTabs` or navbar with `UiNavbarLink`
 - Mobile bottom → `UiNavigationBar`
-- Sidebar → `UiDrawerLink`
+- Sidebar / drawer → `UiSidebar` + `UiSidebarLink`
+- Breadcrumb trail → `UiBreadcrumb`
 - Dropdown menu → `UiButtonMenu`
 
 ### "I need to display data"

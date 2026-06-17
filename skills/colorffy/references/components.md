@@ -719,17 +719,72 @@ Link for navbar navigation.
 <UiNavbarLink href="/dashboard" text="Dashboard" active />
 ```
 
-### UiDrawerLink
-Link for drawer/sidebar navigation.
+### UiBreadcrumb
+SEO-friendly breadcrumb trail. Pass an ordered `items` list (root → current); the last entry is auto-marked as the current page (`aria-current="page"`, non-link). Emits a schema.org `BreadcrumbList` as inline JSON-LD by default.
 
 ```vue
-<UiDrawerLink href="/settings" active>
-  <template #icon>
-    <UiIconMaterial icon-code="&#xe8b8;" />
-  </template>
-  Settings
-</UiDrawerLink>
+<UiBreadcrumb
+  :as="NuxtLink"
+  base-url="https://example.com"
+  separator-icon="&#xe5cc;"
+  :items="[
+    { label: 'Home', to: '/', icon: '&#xe88a;' },
+    { label: 'Projects', to: '/projects' },
+    { label: 'Atlas' }
+  ]"
+/>
 ```
+
+**Props:**
+- `items` (`IBreadcrumbItem[]`) - Entries `{ label, to?, href?, icon?, current? }`; omit `to`/`href` on the current page
+- `as` (string | component, default `'a'`) - Polymorphic link (`'a'`, `NuxtLink`, `router-link`)
+- `separator` (string, default `'/'`) / `separatorIcon` (string) - Item separator
+- `structuredData` (boolean, default `true`) - Emit JSON-LD `BreadcrumbList`; disable to feed your own `useHead`
+- `baseUrl` (string) - Origin prefix → absolute URLs in the JSON-LD
+- `maxItems` (number, default `0`) - Collapse long trails to first + … + last N (visual only; JSON-LD keeps the full trail)
+- `ariaLabel` (string, default `'Breadcrumb'`) - `<nav>` landmark name
+- **Emits:** `itemClick(item, index)` · **Slots:** `#item="{ item, index, isCurrent }"`, `#separator`
+
+### UiSidebar (Navigation Drawer)
+Composable navigation drawer. It keeps two **independent** states: `rail`
+(compact icons-only — a desktop concern, one-way/parent-controlled) and `open`
+(the responsive mobile slide-in — supports `v-model:open`). On desktop the
+drawer is always visible; `open` only drives the mobile show/hide, and a dimmed
+overlay renders while open (emits `update:open` on dismiss).
+
+```vue
+<UiSidebar bordered :rail="rail" v-model:open="open" aria-label="Main navigation">
+  <UiSidebarHeader>
+    <UiSidebarDropdown title="Acme" subtitle="Workspace" />
+  </UiSidebarHeader>
+
+  <UiSidebarBody>
+    <UiSidebarText text="Platform" />
+    <UiSidebarLink :as="NuxtLink" to="/" text="Home" icon="&#xe88a;" tooltip-text="Home" />
+
+    <UiSidebarGroup text="Account" collapsible :default-open="true" icon="&#xe853;">
+      <UiSidebarLink :as="NuxtLink" to="/account" text="Profile" icon="&#xe853;" child />
+      <UiSidebarLink :as="NuxtLink" to="/notifications" text="Notifications" icon="&#xe7f4;" child />
+    </UiSidebarGroup>
+  </UiSidebarBody>
+
+  <UiSidebarFooter>
+    <UiBadge text="v1.0.0" variant="outline" size="sm" />
+  </UiSidebarFooter>
+</UiSidebar>
+```
+
+**`UiSidebar` props:**
+- `rail` (boolean) - Compact icons-only mode (`.drawer-rail`); one-way, no `update:rail` emit
+- `open` (boolean) - Responsive mobile drawer (`.drawer-open` / `.drawer-closed`); use `v-model:open`
+- `bordered` (boolean) - Right border instead of shadow
+- `width` (string) - Sets `--theme-nav-drawer-width`
+- `ariaLabel` (string, default `'Main navigation'`) - `<nav>` landmark name
+- **Emits:** `update:open` (overlay dismiss)
+
+**Sub-components:** `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter` (regions), `UiSidebarText` (section label), `UiSidebarGroup` (`collapsible`, `defaultOpen`, `icon`, `text`), `UiSidebarLink` (polymorphic `as`, `to`/`href`, `icon`, `child`, `tooltipText`), `UiSidebarDropdown` (`title`, `subtitle`, `interactive`).
+
+> Pair with `UiNavbarToggle` to drive the states: `<UiNavbarToggle :collapsed="open" @toggle="open = !open" />`.
 
 ### UiPopoverMenu
 Popover menu overlay.
