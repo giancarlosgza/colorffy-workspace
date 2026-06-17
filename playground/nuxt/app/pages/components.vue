@@ -6,14 +6,20 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 const tabs = ref([
-  { id: 'index', label: 'Home', route: '/', disabled: true },
-  { id: 'about', label: 'About', route: '/about', disabled: true },
+  { id: 'index', label: 'Home', route: '/', disabled: false },
+  { id: 'about', label: 'About', route: '/about', disabled: false },
   { id: 'components', label: 'Components', route: '/components' }
 ])
 const segmentedTabs = ref([
-  { id: 'overview', label: 'Overview', position: 0 },
-  { id: 'features', label: 'Features', position: 1, disabled: true },
-  { id: 'settings', label: 'Settings', position: 2 }
+  { id: 'overview', label: 'Overview', position: 0, panelId: 'panel-overview' },
+  { id: 'features', label: 'Features', position: 1, disabled: true, panelId: 'panel-features' },
+  { id: 'settings', label: 'Settings', position: 2, panelId: 'panel-settings' }
+])
+// Segmented control used for route navigation (no panels)
+const navSegmentedTabs = ref([
+  { id: 'index', label: 'Home', position: 0, route: '/' },
+  { id: 'about', label: 'About', position: 1, route: '/about' },
+  { id: 'components', label: 'Components', position: 2, route: '/components' }
 ])
 
 /** Computed */
@@ -30,6 +36,10 @@ const currentActiveSegmentedTab = computed(() => {
   }
   return segmentedTabs.value[0]?.id
 })
+const currentActiveNavSegmentedTab = computed(() => {
+  const currentTab = navSegmentedTabs.value.find(tab => tab.route === route.path)
+  return currentTab?.id ?? navSegmentedTabs.value[0]?.id
+})
 
 /** Methods */
 function handleTabChange(tabId: string) {
@@ -44,6 +54,13 @@ function handleSegmentedTabChange(tabId: string) {
 
   if (selectedTab) {
     router.replace({ query: { activeTab: tabId } })
+  }
+}
+function handleNavSegmentedTabChange(tabId: string) {
+  const selectedTab = navSegmentedTabs.value.find(tab => tab.id === tabId)
+
+  if (selectedTab?.route) {
+    router.push(selectedTab.route)
   }
 }
 </script>
@@ -65,16 +82,44 @@ function handleSegmentedTabChange(tabId: string) {
       />
     </div>
 
+    <!-- Segmented Controls (navigation) -->
+    <div class="mt-4">
+      <h3 class="subtitle-1 mb-2">
+        Segmented Controls (navigation)
+      </h3>
+      <UiSegmentedControls
+        :tabs="navSegmentedTabs"
+        :active-tab="currentActiveNavSegmentedTab"
+        @update-active-tab="handleNavSegmentedTabChange"
+      />
+    </div>
+
     <!-- Segmented Controls -->
     <div class="mt-4">
       <h3 class="subtitle-1 mb-2">
-        Segmented Controls
+        Segmented Controls (panels)
       </h3>
       <UiSegmentedControls
         :tabs="segmentedTabs"
         :active-tab="currentActiveSegmentedTab"
         @update-active-tab="handleSegmentedTabChange"
       />
+
+      <!-- Panels associated with the segmented control via panelId -->
+      <div
+        v-for="tab in segmentedTabs"
+        v-show="currentActiveSegmentedTab === tab.id"
+        :id="tab.panelId"
+        :key="tab.id"
+        role="tabpanel"
+        :aria-labelledby="`tab-${tab.id}`"
+        tabindex="0"
+        class="mt-3"
+      >
+        <p class="subtitle-2 text-muted">
+          {{ tab.label }} panel content
+        </p>
+      </div>
     </div>
 
     <!-- List Group -->

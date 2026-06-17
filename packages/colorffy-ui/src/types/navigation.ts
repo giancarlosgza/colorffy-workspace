@@ -91,6 +91,13 @@ export interface ITabItem {
    * When true, the tab is disabled and cannot be selected.
    */
   disabled?: boolean
+
+  /**
+   * Optional id of the tabpanel this tab controls. When set, the tab exposes
+   * `aria-controls`; render the panel with that id, `role="tabpanel"`, and
+   * `aria-labelledby="tab-<id>"` (the tab button's generated id).
+   */
+  panelId?: string
 }
 
 /**

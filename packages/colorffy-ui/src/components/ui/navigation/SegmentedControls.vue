@@ -94,11 +94,13 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         role="presentation"
       >
         <button
+          :id="`tab-${tab.id}`"
           :ref="(el) => setTabButton(el, tabIndex)"
           class="segmented-control-link"
           role="tab"
           :class="[activeTabName === tab.id ? 'active' : '', tab.disabled ? 'disabled' : '']"
           :aria-selected="activeTabName === tab.id"
+          :aria-controls="tab.panelId || undefined"
           :aria-disabled="tab.disabled"
           :tabindex="activeTabName === tab.id ? 0 : -1"
           :disabled="tab.disabled"

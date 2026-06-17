@@ -70,11 +70,25 @@
 
       &.progress-gradient {
         --angle: 45deg;
-        --_gradient-stops: #{v.$gradient-database}; 
-        
+        --_gradient-stops: #{v.$gradient-database};
+
         @include m.bg-gradient(var(--angle), var(--_gradient-stops));
         @include m.generate-static-gradients(v.$static-gradients, false, true);
         @include m.generate-gradients(v.$dynamic-gradients, false, true);
+      }
+
+      // Indeterminate bar: a partial-width bar that sweeps across the track
+      // (width/value are unknown). Pairs with the component's `indeterminate` prop.
+      &.progress-indeterminate {
+        width: 40%;
+        animation: progress-indeterminate 1.4s var(--_progress-easing-in) infinite;
+        will-change: transform;
+
+        @media (prefers-reduced-motion: reduce) {
+          width: 100%;
+          opacity: 0.6;
+          animation: none;
+        }
       }
     }
   }
@@ -272,6 +286,15 @@
   // ==========================================================================
   // KEYFRAMES & ANIMATIONS
   // ==========================================================================
+  @keyframes progress-indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(250%);
+    }
+  }
+
   @keyframes rotator {
     0% {
       transform: rotate(0deg);
