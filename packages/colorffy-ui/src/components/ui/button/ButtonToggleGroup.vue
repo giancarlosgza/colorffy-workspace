@@ -18,12 +18,20 @@ const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {
 /** Emits */
 const emit = defineEmits<IButtonToggleGroupEmits>()
 
+/** Model */
+// Selected option id; takes precedence over the legacy per-option `active` flag.
+const model = defineModel<string>()
+
 /** Data */
 const optionRefs = ref<(HTMLElement | null)[]>([])
 
-// Roving tabindex: the checked option (or first enabled) is the only tab stop.
+function isSelected(option: IButtonToggleOption): boolean {
+  return model.value !== undefined ? model.value === option.id : !!option.active
+}
+
+// Roving tabindex: the selected option (or first enabled) is the only tab stop.
 const rovingIndex = computed(() => {
-  const activeIndex = props.options.findIndex(o => o.active && !o.disabled)
+  const activeIndex = props.options.findIndex(o => isSelected(o) && !o.disabled)
   return activeIndex !== -1 ? activeIndex : props.options.findIndex(o => !o.disabled)
 })
 
@@ -33,6 +41,7 @@ function setOptionRef(el: Element | ComponentPublicInstance | null, index: numbe
 }
 function selectOption(event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void {
   if (!item.disabled) {
+    model.value = item.id
     emit('onOptionClick', event, item)
   }
 }
@@ -87,7 +96,7 @@ function getOptionKey(index: number): string {
 function getOptionAriaLabel(option: IButtonToggleOption): string {
   const title = option.title || 'Option'
   const disabled = option.disabled ? ' (disabled)' : ''
-  const active = option.active ? ' (selected)' : ''
+  const active = isSelected(option) ? ' (selected)' : ''
   return `${title}${disabled}${active}`
 }
 function getIconClass(option: IButtonToggleOption): string {
@@ -107,12 +116,12 @@ function getIconClass(option: IButtonToggleOption): string {
       :ref="(el) => setOptionRef(el, index)"
       role="radio"
       :tabindex="index === rovingIndex ? 0 : -1"
-      :aria-checked="option.active"
+      :aria-checked="isSelected(option)"
       :aria-disabled="option.disabled"
       :aria-label="getOptionAriaLabel(option)"
       class="toggle-btn"
       :class="{
-        'toggle-btn-active': option.active,
+        'toggle-btn-active': isSelected(option),
         'toggle-btn-disabled': option.disabled,
       }"
       @click="selectOption($event, option)"

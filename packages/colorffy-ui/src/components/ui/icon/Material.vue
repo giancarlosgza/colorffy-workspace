@@ -12,6 +12,8 @@ const props = withDefaults(defineProps<IMaterialIconProps>(), {
 const ariaHidden = computed(() => (props.decorative ? 'true' : undefined))
 const ariaRole = computed(() => (props.decorative ? undefined : 'img'))
 const ariaLabel = computed(() => (props.decorative ? undefined : props.ariaLabel ?? undefined))
+// Block raw angle brackets (tag injection); icon entities/glyphs/ligatures pass through
+const safeIconCode = computed(() => (/[<>]/.test(props.iconCode) ? '' : props.iconCode))
 </script>
 
 <template>
@@ -20,6 +22,6 @@ const ariaLabel = computed(() => (props.decorative ? undefined : props.ariaLabel
     :aria-hidden="ariaHidden"
     :role="ariaRole"
     :aria-label="ariaLabel"
-    v-html="iconCode"
+    v-html="safeIconCode"
   />
 </template>

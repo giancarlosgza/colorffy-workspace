@@ -46,3 +46,7 @@ node_modules
 
 # Skills
 *.skill
+
+.claude/
+.agent/
+.gemini/
