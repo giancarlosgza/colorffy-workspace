@@ -30,11 +30,6 @@ export interface IAccordionItemProps {
   text?: string | null
 
   /**
-   * Controlled open state of the accordion (v-model:open).
-   */
-  open?: boolean
-
-  /**
    * Disables user interaction when true.
    */
   disabled?: boolean

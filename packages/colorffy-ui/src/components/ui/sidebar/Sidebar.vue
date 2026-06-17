@@ -7,6 +7,7 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
   bordered: false,
   rail: false,
   width: null,
+  ariaLabel: 'Main navigation',
   customClass: ''
 })
 
@@ -38,11 +39,10 @@ const sidebarStyles = computed(() => {
     @click="emit('update:rail', false)"
   />
 
-  <div
+  <nav
     :class="sidebarClasses"
     :style="sidebarStyles"
-    role="navigation"
-    aria-label="Main navigation"
+    :aria-label="ariaLabel"
   >
     <div class="drawer-content">
       <slot name="header" />
@@ -50,5 +50,5 @@ const sidebarStyles = computed(() => {
       <slot name="footer" />
       <slot />
     </div>
-  </div>
+  </nav>
 </template>

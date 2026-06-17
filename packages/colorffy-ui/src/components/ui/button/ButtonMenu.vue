@@ -21,8 +21,8 @@ withDefaults(defineProps<IButtonMenuProps>(), {
   customClass: '',
   rounded: false,
   fluid: false,
-  placement: 'bottom' as const,
-  tooltipPlacement: 'top' as const
+  placement: 'bottom',
+  tooltipPlacement: 'top'
 })
 
 /** Emits */
@@ -64,9 +64,6 @@ defineEmits<IButtonMenuEmits>()
         <!-- Icon slot -->
         <template #icon>
           <slot name="icon" />
-        </template>
-        <template #content>
-          <slot name="content" />
         </template>
       </UiButton>
 

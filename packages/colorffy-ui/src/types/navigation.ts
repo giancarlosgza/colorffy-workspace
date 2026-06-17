@@ -30,7 +30,7 @@ export interface INavItem extends IBaseLinkProps {
  * Interface props for the NavigationBar component.
  * @deprecated Use INavItem for individual items.
  */
-export interface INavigationItem extends INavItem {}
+export type INavigationItem = INavItem
 
 /**
  * Interface props for the NavigationBar component.
@@ -161,14 +161,14 @@ export interface ITabEmits {
 /**
  * Aliases for specific component emits to maintain compatibility.
  */
-export interface ITabsEmits extends ITabEmits {}
-export interface ISegmentedControlsEmits extends ITabEmits {}
+export type ITabsEmits = ITabEmits
+export type ISegmentedControlsEmits = ITabEmits
 
 /**
  * Interface for menu items used in PopoverMenu component.
  * @deprecated Use INavItem instead.
  */
-export interface IMenuItem extends INavItem {}
+export type IMenuItem = INavItem
 
 /**
  * Interface props for the PopoverMenu component.

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IRangeInputEmits, IRangeInputProps } from '@/types/input'
-import { computed, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<IRangeInputProps>(), {
@@ -70,6 +70,12 @@ const valueAsPercent = computed(() => {
 /** Watchers */
 watch(model, (value) => {
   emit('onUpdate', value)
+})
+
+// Seed an empty model with min so the native thumb matches the stored value
+onMounted(() => {
+  if (model.value == null)
+    model.value = props.min
 })
 </script>
 

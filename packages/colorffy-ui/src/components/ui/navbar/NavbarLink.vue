@@ -29,12 +29,13 @@ const linkProps = computed(() => {
     'disabled': props.disabled || undefined
   }
 
-  // For anchor tags or external links
-  if (props.as === 'a' || isExternalLink.value) {
-    const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
+  const target = linkTarget.value
+
+  // Anchor/external only for string targets; object targets use the router branch
+  if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
-      'href': props.disabled ? undefined : href,
+      'href': props.disabled ? undefined : target,
       ...(isExternalLink.value && {
         target: '_blank',
         rel: 'noopener noreferrer'
@@ -45,7 +46,7 @@ const linkProps = computed(() => {
   // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
-    to: linkTarget.value
+    to: target
   }
 })
 </script>

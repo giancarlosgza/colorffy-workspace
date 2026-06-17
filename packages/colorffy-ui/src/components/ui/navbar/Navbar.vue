@@ -6,6 +6,7 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<INavbarProps>(), {
   sticky: false,
   fluid: false,
+  ariaLabel: 'Main navigation',
   customClass: null
 })
 
@@ -17,12 +18,13 @@ const containerClass = computed(() => props.fluid ? 'container-fluid' : 'contain
   <component
     :is="sticky ? 'div' : 'nav'"
     :class="sticky ? 'nav-sticky' : ['navbar', customClass]"
+    :aria-label="sticky ? undefined : ariaLabel"
   >
     <nav
       v-if="sticky"
       class="navbar"
       :class="customClass"
-      aria-label="Main navigation"
+      :aria-label="ariaLabel"
     >
       <div :class="containerClass">
         <slot />

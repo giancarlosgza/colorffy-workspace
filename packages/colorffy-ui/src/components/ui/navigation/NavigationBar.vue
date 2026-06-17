@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INavigationBarProps } from '@/types/navigation'
+import type { INavItem, INavigationBarProps } from '@/types/navigation'
 import { computed } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -34,12 +34,13 @@ const indicatorClasses = computed(() => ({
 }))
 
 /** Methods */
-function isActivePath(path: string | object): boolean {
-  if (typeof path === 'string') {
-    return props.activeItem === path
-  }
-  // For object paths, you might need custom logic based on your routing needs
-  return false
+// Matches the active item by its id or its string `to` (so consumers can pass either)
+function isActiveItem(item: INavItem): boolean {
+  if (props.activeItem == null)
+    return false
+  if (props.activeItem === item.id)
+    return true
+  return typeof item.to === 'string' && props.activeItem === item.to
 }
 function isExternalLink(to: string | object): boolean {
   return typeof to === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(to)
@@ -88,11 +89,11 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     >
       <component
         :is="props.as"
-        v-bind="getLinkProps(item.to, item.ariaLabel, isActivePath(item.to))"
+        v-bind="getLinkProps(item.to, item.ariaLabel, isActiveItem(item))"
       >
         <UiIconMaterial
           :icon-code="item.icon"
-          :class="{ 'iw-bold': isActivePath(item.to) }"
+          :class="{ 'iw-bold': isActiveItem(item) }"
         />
         <p class="typography-headline-sm">
           {{ item.text }}

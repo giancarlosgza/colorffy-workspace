@@ -12,6 +12,12 @@ export interface ISidebarProps {
   bordered?: boolean
 
   /**
+   * Accessible label for the navigation landmark.
+   * @default 'Main navigation'
+   */
+  ariaLabel?: string
+
+  /**
    * Rail mode - collapses sidebar to show only icons.
    * Applies .drawer-closed class for compact view.
    */

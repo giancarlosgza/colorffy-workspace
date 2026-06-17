@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ISidebarDropdownProps } from '@/types/sidebar'
 import { Dropdown as VDropdown } from 'floating-vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -13,6 +13,9 @@ const props = withDefaults(defineProps<ISidebarDropdownProps>(), {
   customClass: ''
 })
 
+/** Data */
+const isShown = ref(false)
+
 /** Computed */
 const contentClasses = computed(() => [
   'drawer-dropdown-content',
@@ -21,13 +24,26 @@ const contentClasses = computed(() => [
   },
   props.customClass
 ])
+
+/** Methods */
+function toggleDropdown() {
+  isShown.value = !isShown.value
+}
 </script>
 
 <template>
   <!-- Interactive version with VDropdown -->
-  <VDropdown v-if="interactive" class="d-flex flex-grow-1" :placement="placement">
+  <VDropdown v-if="interactive" v-model:shown="isShown" class="d-flex flex-grow-1" :placement="placement">
     <!-- Trigger content -->
-    <div :class="contentClasses">
+    <div
+      :class="contentClasses"
+      role="button"
+      tabindex="0"
+      aria-haspopup="menu"
+      :aria-expanded="isShown"
+      @keydown.enter.prevent="toggleDropdown"
+      @keydown.space.prevent="toggleDropdown"
+    >
       <div class="drawer-dropdown-text">
         <p class="drawer-dropdown-title">
           {{ title }}

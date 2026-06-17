@@ -14,14 +14,16 @@ const emit = defineEmits<ISegmentedControlsEmits>()
 /** Data */
 const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
-const activeTabPosition = computed(() => tabs.value.find(t => t.id === activeTabName.value)?.position ?? 0)
+// Derive the pill position from the rendered order, not a separate `position` field
+const activeTabPosition = computed(() => {
+  const index = tabs.value.findIndex(t => t.id === activeTabName.value)
+  return index >= 0 ? index : 0
+})
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
-  if (newVal) {
-    activeTabName.value = newVal
-  }
+  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
 })
 
 /** Methods */
@@ -86,7 +88,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
       <!-- Tabs -->
       <li
         v-for="(tab, tabIndex) in tabs"
-        :key="`tab-${tabIndex}`"
+        :key="tab.id"
         class="segmented-control-item"
         :class="[activeTabName === tab.id ? 'active-item' : '']"
         role="presentation"

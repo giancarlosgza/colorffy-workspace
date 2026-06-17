@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDatatableProps } from '@/types/datatable'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
 import UiButtonGroup from '../button/ButtonGroup.vue'
@@ -33,9 +33,13 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
 })
 
 /** Data */
-const sortKey = ref(props.defaultSortKey)
+const sortKey = ref(resolveSortKey(props.defaultSortKey))
 const sortOrder = ref(props.defaultSortOrder)
 const managedHiddenColumns = ref([...props.hiddenColumns])
+
+watch(() => props.hiddenColumns, (val) => {
+  managedHiddenColumns.value = [...val]
+})
 
 /** Computed */
 const areAllColumnsVisible = computed(() => managedHiddenColumns.value.length === 0)
@@ -121,6 +125,12 @@ function toCamelCase(str: string) {
   const normalized = str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
   const newStr = normalized.toLowerCase().replace(/[^a-z0-9]+(.)/gi, (m, chr) => chr.toUpperCase())
   return newStr.charAt(0).toLowerCase() + newStr.slice(1)
+}
+function resolveSortKey(key: string): string {
+  if (!key)
+    return ''
+  // Accept either an already-camelCased data key or a raw header label
+  return props.headers.some(h => toCamelCase(h) === key) ? key : toCamelCase(key)
 }
 function toggleShowAllColumns() {
   if (managedHiddenColumns.value.length > 0) {

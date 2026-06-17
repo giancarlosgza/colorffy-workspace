@@ -7,7 +7,6 @@ withDefaults(defineProps<IAccordionItemProps>(), {
   name: 'accordion-item',
   title: '',
   text: '',
-  open: false,
   disabled: false,
   customClass: null
 })

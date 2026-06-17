@@ -5,8 +5,8 @@ import UiAlert from './Alert.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IAlertToastProps>(), {
-  snackbarTitle: null,
-  snackbarMessage: null,
+  snackbarTitle: '',
+  snackbarMessage: '',
   snackbarVariant: 'success',
   placement: 'bottom'
 })

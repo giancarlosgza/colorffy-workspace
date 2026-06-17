@@ -8,7 +8,7 @@ import UiIconMaterial from '../icon/Material.vue'
 /** Props */
 const props = withDefaults(defineProps<IButtonMenuSubmenuProps>(), {
   id: '',
-  placement: 'right' as const,
+  placement: 'right',
   isMobile: false,
   itemText: '',
   icon: null,

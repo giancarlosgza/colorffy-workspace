@@ -77,7 +77,7 @@ const iconClasses = computed(() => {
         :class="iconWrapperClasses"
       >
         <UiIconMaterial
-          :icon-code="icon || ''"
+          :icon-code="icon"
           :class="iconClasses"
         />
       </div>

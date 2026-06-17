@@ -20,9 +20,7 @@ const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
-  if (newVal) {
-    activeTabName.value = newVal
-  }
+  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
 })
 
 /** Methods */
@@ -85,7 +83,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
   >
     <li
       v-for="(tab, tabIndex) in tabs"
-      :key="`tab-${tabIndex}`"
+      :key="tab.id"
       class="tab-item"
       role="presentation"
     >

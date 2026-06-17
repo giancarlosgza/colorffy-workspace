@@ -79,17 +79,11 @@ export interface IRangeInputEmits {
 /**
  * Interface props for the RadioInput component.
  */
-export interface IRadioInputProps {
-  id?: string | null
-  label?: string | null
+export interface IRadioInputProps extends IBaseInputProps {
   options?: unknown[]
   optionLabel?: string | null
   optionValue?: string | null
   modelValue?: string | number | null
-  customClass?: string | null
-  required?: boolean
-  size?: InputSize
-  hideLabel?: boolean
   inline?: boolean
 }
 

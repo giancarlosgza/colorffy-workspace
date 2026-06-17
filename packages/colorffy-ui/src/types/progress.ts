@@ -16,10 +16,15 @@ export interface IProgressBarProps {
   value: number
 
   /**
+   * Accessible name for the progress bar (sets aria-label).
+   */
+  ariaLabel?: string
+
+  /**
    * Size variant of the progress bar.
    * Accepts 'sm' for smaller height or 'lg' for larger height.
    */
-  size?: ProgressSize | undefined
+  size?: ProgressSize
 
   /**
    * Enable animated stripes effect.
@@ -30,6 +35,12 @@ export interface IProgressBarProps {
    * Enable gradient style. Use customClass to add specific gradient classes (e.g., 'g-red', 'g-cyan').
    */
   gradient?: boolean
+
+  /**
+   * When true, renders an indeterminate progress bar (unknown value): omits
+   * aria-valuenow and applies the `progress-indeterminate` class for styling.
+   */
+  indeterminate?: boolean
 
   /**
    * Optional text to display inside the progress bar (e.g., percentage or custom label).
@@ -54,7 +65,7 @@ export interface IProgressBarProps {
   /**
    * Optional inline styles for the progress wrapper.
    */
-  customStyles?: string | Record<string, any> | null
+  customStyles?: string | Record<string, string | number> | null
 
   /**
    * Optional custom class for the progress bar element. Accepts string, array, or object map.
@@ -64,7 +75,7 @@ export interface IProgressBarProps {
   /**
    * Optional inline styles for the progress bar element.
    */
-  barStyles?: string | Record<string, any> | null
+  barStyles?: string | Record<string, string | number> | null
 }
 
 /**
@@ -88,5 +99,5 @@ export interface IProgressSpinnerProps {
   /**
    * Optional inline styles for the spinner.
    */
-  customStyles?: string | Record<string, any> | null
+  customStyles?: string | Record<string, string | number> | null
 }

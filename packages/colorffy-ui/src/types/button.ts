@@ -45,7 +45,7 @@ export interface IBaseButtonProps {
   /**
    * Optional icon variant of the button. Can be 'shape-sm', 'shape-md', 'compact-sm', 'compact', or undefined.
    */
-  iconVariant?: 'shape-sm' | 'shape-md' | 'compact-sm' | 'compact' | undefined
+  iconVariant?: 'shape-sm' | 'shape-md' | 'compact-sm' | 'compact'
 
   /**
    * Icon-only mode toggle. When true, renders the button with icon styles (no label required).
@@ -100,7 +100,7 @@ export interface IBaseButtonProps {
  * - Preferred size prop: `size` ('sm' | 'md' | 'lg').
  * - Legacy composite `variant` strings remain accepted as a fallback; `sizeLevel` is kept for backward compatibility.
  */
-export interface IButtonProps extends IBaseButtonProps {}
+export type IButtonProps = IBaseButtonProps
 
 /**
  * Interface emits for the Button component.
@@ -170,6 +170,16 @@ export interface IButtonTooltipProps extends IButtonProps {
    * Text to display in the tooltip.
    */
   tooltipText?: string
+
+  /**
+   * Forwarded to the underlying button's `aria-expanded` (for toggle buttons).
+   */
+  ariaExpanded?: boolean
+
+  /**
+   * Forwarded to the underlying button's `aria-controls`.
+   */
+  ariaControls?: string
 }
 
 /**
@@ -312,7 +322,7 @@ export interface IButtonMenuItemProps {
   /**
    * Inline styles for the icon.
    */
-  iconStyle?: string | Record<string, any> | null
+  iconStyle?: string | Record<string, string | number> | null
 
   /**
    * CSS classes for the icon.
@@ -352,7 +362,7 @@ export interface IButtonMenuItemProps {
   /**
    * Inline styles for the trailing icon.
    */
-  iconTrailingStyle?: string | Record<string, any> | null
+  iconTrailingStyle?: string | Record<string, string | number> | null
 
   /**
    * CSS classes for the trailing icon.
@@ -414,7 +424,7 @@ export interface IButtonMenuSubmenuProps {
   /**
    * Inline styles for the icon.
    */
-  iconStyle?: string | Record<string, any> | null
+  iconStyle?: string | Record<string, string | number> | null
 
   /**
    * CSS classes for the icon.
@@ -449,7 +459,7 @@ export interface IButtonMenuSubmenuProps {
   /**
    * Inline styles for the trailing icon.
    */
-  iconTrailingStyle?: string | Record<string, any> | null
+  iconTrailingStyle?: string | Record<string, string | number> | null
 
   /**
    * CSS classes for the trailing icon.

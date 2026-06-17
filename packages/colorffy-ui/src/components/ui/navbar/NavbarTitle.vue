@@ -2,7 +2,7 @@
 import type { INavbarTitleProps } from '@/types/navbar'
 
 /** Props */
-const _props = withDefaults(defineProps<INavbarTitleProps>(), {
+withDefaults(defineProps<INavbarTitleProps>(), {
   title: '',
   customClass: null
 })

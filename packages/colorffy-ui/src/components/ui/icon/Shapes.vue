@@ -28,7 +28,7 @@ const resolvedSize = computed(() => {
   if (!props.size)
     return sizeMap.md
 
-  return sizeMap[props.size as IconSize] ?? sizeMap.md
+  return sizeMap[props.size] ?? sizeMap.md
 })
 const ariaHidden = computed(() => (props.decorative ? true : undefined))
 const ariaRole = computed(() => (props.decorative ? undefined : 'img'))

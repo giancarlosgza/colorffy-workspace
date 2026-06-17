@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<IProgressBarProps>(), {
   size: undefined,
   animated: false,
   gradient: false,
+  indeterminate: false,
   text: null,
   ariaValuemin: 0,
   ariaValuemax: 100,
@@ -42,6 +43,9 @@ const progressBarClasses = computed(() => {
   if (props.gradient)
     classes.push('progress-gradient')
 
+  if (props.indeterminate)
+    classes.push('progress-indeterminate')
+
   if (props.barClass)
     classes.push(props.barClass)
 
@@ -72,7 +76,8 @@ const progressBarStyles = computed(() => {
       :class="progressBarClasses"
       :style="progressBarStyles"
       role="progressbar"
-      :aria-valuenow="value"
+      :aria-label="ariaLabel"
+      :aria-valuenow="indeterminate ? undefined : value"
       :aria-valuemin="ariaValuemin"
       :aria-valuemax="ariaValuemax"
     >

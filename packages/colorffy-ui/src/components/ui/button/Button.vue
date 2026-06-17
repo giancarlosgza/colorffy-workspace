@@ -96,8 +96,8 @@ const buttonClasses = computed(() => {
     <!-- Loading -->
     <span
       v-if="loading"
-      aria-label="Loading"
       class="icon-spinner-stack"
+      aria-hidden="true"
     >
       <UiIconMaterial
         icon-code="&#xe9d0;"

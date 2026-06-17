@@ -40,7 +40,7 @@ export interface IAlertProps {
   /**
    * Scalable size of the alert. Only 'sm' is supported.
    */
-  size?: AlertSize | undefined
+  size?: AlertSize
 
   /**
    * Marks the alert as critical.
@@ -70,12 +70,12 @@ export interface IAlertToastProps {
   /**
    * Optional title of the toast.
    */
-  snackbarTitle?: string | null
+  snackbarTitle?: string
 
   /**
    * Optional message of the toast.
    */
-  snackbarMessage?: string | null
+  snackbarMessage?: string
 
   /**
    * Optional variant of the toast.

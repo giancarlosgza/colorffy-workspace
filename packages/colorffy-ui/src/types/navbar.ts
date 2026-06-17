@@ -19,6 +19,12 @@ export interface INavbarProps {
   fluid?: boolean
 
   /**
+   * Accessible label for the navigation landmark.
+   * @default 'Main navigation'
+   */
+  ariaLabel?: string
+
+  /**
    * Optional custom CSS classes to apply to the navbar.
    */
   customClass?: NavbarClassName | null
@@ -58,6 +64,17 @@ export interface INavbarTitleProps {
  * Interface props for the NavbarToggle component.
  */
 export interface INavbarToggleProps {
+  /**
+   * Optional id for the toggle button.
+   * @default 'sidebar-collapse'
+   */
+  id?: string
+
+  /**
+   * Id of the element this toggle controls (sets aria-controls on the button).
+   */
+  controls?: string
+
   /**
    * Whether sidebar is collapsed.
    * Controls icon display and tooltip text.
@@ -188,4 +205,4 @@ export interface INavbarItemProps {
 /**
  * Interface props for the NavbarLink component.
  */
-export interface INavbarLinkProps extends IBaseLinkProps {}
+export type INavbarLinkProps = IBaseLinkProps

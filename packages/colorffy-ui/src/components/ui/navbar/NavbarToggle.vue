@@ -6,6 +6,7 @@ import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<INavbarToggleProps>(), {
+  id: 'sidebar-collapse',
   collapsed: false,
   collapseText: 'Collapse sidebar',
   expandText: 'Expand sidebar',
@@ -30,13 +31,15 @@ const toggleClasses = computed(() => [
 
 <template>
   <UiButtonTooltip
-    id="sidebar-collapse"
+    :id="id"
     variant="text"
     icon
     icon-variant="compact"
     custom-class="text-neutral"
     :class="toggleClasses"
     :tooltip-text="tooltipText"
+    :aria-expanded="!collapsed"
+    :aria-controls="controls"
     @click="$emit('toggle')"
   >
     <template #icon>

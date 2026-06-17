@@ -9,12 +9,12 @@ import { computed } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<IIconAppProps>(), {
-  icon: 'youtube' as IconBrandName,
-  brand: null as IconBrandName | null,
-  size: 'md' as IconSize,
-  color: null as string | null,
+  icon: 'youtube',
+  brand: null,
+  size: 'md',
+  color: null,
   decorative: true,
-  ariaLabel: null as string | null
+  ariaLabel: null
 })
 
 /** Data */

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IRadioInputEmits, IRadioInputProps } from '@/types/input'
-import { computed, watch } from 'vue'
+import { computed, useId, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<IRadioInputProps>(), {
@@ -10,7 +10,9 @@ const props = withDefaults(defineProps<IRadioInputProps>(), {
   optionLabel: null,
   optionValue: null,
   modelValue: null,
+  errorMessages: () => [],
   customClass: null,
+  disabled: false,
   required: false,
   size: null,
   hideLabel: false,
@@ -24,11 +26,15 @@ const emit = defineEmits<IRadioInputEmits>()
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
 /** Computed */
+const labelId = useId()
 const baseId = computed(() => props.id ?? undefined)
 const groupName = computed(() => (baseId.value ? `radio-${baseId.value}` : undefined))
+const hasErrors = computed(() => props.errorMessages?.length > 0)
+const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 
 const groupClasses = computed(() => [
-  'form-group'
+  'form-group',
+  { 'form-invalid': hasErrors.value }
 ])
 const labelClasses = computed(() => [
   'mb-2',
@@ -69,13 +75,19 @@ watch(model, (value) => {
     <!-- Main Group Label -->
     <label
       v-if="label"
+      :id="labelId"
       :class="labelClasses"
     >
       {{ label }}{{ props.required ? ' *' : '' }}
     </label>
 
     <!-- Radio Options -->
-    <div :class="optionsWrapperClasses">
+    <div
+      :class="optionsWrapperClasses"
+      role="radiogroup"
+      :aria-labelledby="label ? labelId : undefined"
+      :aria-describedby="describedById"
+    >
       <div
         v-for="(option, index) in options"
         :key="`radio-opt-${index}`"
@@ -89,6 +101,7 @@ watch(model, (value) => {
           :name="groupName"
           :value="optionValue ? getField(option, optionValue) : option"
           type="radio"
+          :disabled="disabled"
           :required="required"
         >
         <label
@@ -99,5 +112,14 @@ watch(model, (value) => {
         </label>
       </div>
     </div>
+
+    <!-- Feedback -->
+    <p
+      v-if="hasErrors"
+      :id="describedById"
+      class="invalid-feedback"
+    >
+      {{ errorMessages?.[0] }}
+    </p>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 import StateBaseSkeleton from './BaseSkeleton.vue'
 
@@ -33,7 +33,14 @@ const props = withDefaults(defineProps<ITableSkeletonProps>(), {
 
 /** Data */
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
-const isMobile = breakpoints.smallerOrEqual('sm')
+const smAndDown = breakpoints.smallerOrEqual('sm')
+// Stays false during SSR + first client render to avoid a hydration mismatch.
+const isClient = ref(false)
+const isMobile = computed(() => isClient.value && smAndDown.value)
+
+onMounted(() => {
+  isClient.value = true
+})
 
 /** Computed */
 const expandedSkeletonCols = computed(() => {

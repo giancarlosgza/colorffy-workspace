@@ -38,5 +38,5 @@ export interface ICardProps {
   /**
    * When true, adds the `card-selectable` class to enable selectable styles.
    */
-  selectable?: boolean | undefined
+  selectable?: boolean
 }

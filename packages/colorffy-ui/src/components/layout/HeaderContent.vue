@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IHeaderContentEmits, IHeaderContentProps } from '@/types/layout'
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import UiButtonTooltip from '../ui/button/ButtonTooltip.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
 const emit = defineEmits<IHeaderContentEmits>()
 
 /** Computed */
+const titleId = useId()
 const headerClasses = computed(() => {
   const classes = []
 
@@ -108,7 +109,7 @@ function handleBackClick() {
         <div class="header-content">
           <h1
             v-if="title"
-            :id="`page-title-${$attrs.id || 'default'}`"
+            :id="titleId"
             class="text-title"
           >
             {{ title }}
@@ -117,7 +118,7 @@ function handleBackClick() {
           <p
             v-if="subtitle"
             class="text-description"
-            :aria-describedby="title ? `page-title-${$attrs.id || 'default'}` : undefined"
+            :aria-describedby="title ? titleId : undefined"
           >
             {{ subtitle }}
           </p>

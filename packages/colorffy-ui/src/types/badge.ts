@@ -35,7 +35,7 @@ export interface IBadgeProps {
   /**
    * Optional inline styles for the icon within the badge.
    */
-  iconStyle?: string | Record<string, any> | null
+  iconStyle?: string | Record<string, string | number> | null
 
   /**
    * Scalable size of the badge. Only 'sm' is supported.
