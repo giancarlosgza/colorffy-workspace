@@ -10,5 +10,7 @@ export default defineNuxtConfig({
   extends: ['docus'],
 
   site: { url: siteUrl },
-  llms: { domain: siteUrl }
+  llms: { domain: siteUrl },
+  mcp: { enabled: false },
+  devtools: { enabled: false }
 })

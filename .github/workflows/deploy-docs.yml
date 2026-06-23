@@ -39,8 +39,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      # -r (recursive) is required: better-sqlite3 is a dependency of the `docs`
+      # workspace package, not the root — a non-recursive rebuild silently no-ops.
       - name: Build better-sqlite3 (native, for Nuxt Content)
-        run: pnpm rebuild better-sqlite3
+        run: pnpm rebuild -r better-sqlite3
 
       - name: Generate static site
         run: pnpm --filter colorffy-docs generate
