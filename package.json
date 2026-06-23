@@ -16,7 +16,8 @@
     "docs:dev": "pnpm --filter colorffy-docs dev",
     "docs:build": "pnpm --filter colorffy-docs build",
     "docs:generate": "pnpm --filter colorffy-docs generate",
-    "docs:preview": "pnpm --filter colorffy-docs preview"
+    "docs:preview": "pnpm --filter colorffy-docs preview",
+    "docs:deploy": "pnpm --filter colorffy-docs generate && npx wrangler@latest pages deploy docs/.output/public --project-name=colorffy-ui-docs"
   },
   "keywords": [],
   "author": "Giancarlos Garza",

@@ -1,0 +1,53 @@
+name: Deploy Docs 📚
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      # NOTE: no --ignore-scripts here — the docs build needs better-sqlite3
+      # compiled (Nuxt Content's native SQLite connector). pnpm only builds the
+      # deps listed in pnpm-workspace.yaml `onlyBuiltDependencies`.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate static site
+        run: pnpm --filter colorffy-docs generate
+        env:
+          # Used for absolute URLs in sitemap.xml, llms.txt and OG images.
+          # Override by setting a `DOCS_SITE_URL` repository variable (e.g. your custom domain).
+          NUXT_PUBLIC_SITE_URL: ${{ vars.DOCS_SITE_URL || 'https://colorffy-docs.pages.dev' }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy docs/.output/public --project-name=colorffy-ui-docs --branch=main
