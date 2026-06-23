@@ -31,11 +31,16 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      # NOTE: no --ignore-scripts here — the docs build needs better-sqlite3
-      # compiled (Nuxt Content's native SQLite connector). pnpm only builds the
-      # deps listed in pnpm-workspace.yaml `onlyBuiltDependencies`.
+      # --ignore-scripts so sibling packages' postinstall hooks don't run in CI:
+      # playground/nuxt runs `nuxt prepare`, which needs @colorffy/ui's dist built
+      # (not present in a fresh checkout, and not needed for the docs — they only
+      # extend the published `docus`). We then rebuild just better-sqlite3, the
+      # native dep Nuxt Content needs at generate time.
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Build better-sqlite3 (native, for Nuxt Content)
+        run: pnpm rebuild better-sqlite3
 
       - name: Generate static site
         run: pnpm --filter colorffy-docs generate

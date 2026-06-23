@@ -10,5 +10,5 @@ export default defineNuxtConfig({
   extends: ['docus'],
 
   site: { url: siteUrl },
-  llms: { domain: siteUrl },
+  llms: { domain: siteUrl }
 })
