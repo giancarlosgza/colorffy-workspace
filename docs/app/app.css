@@ -1,0 +1,29 @@
+/*
+ * Colorffy brand theme for Docus.
+ *
+ * Docus imports Tailwind CSS and Nuxt UI for you and appends this file last,
+ * so do NOT add `@import "tailwindcss"` here — only theme tokens belong below.
+ * The `colorffy` palette is wired to Nuxt UI's `primary` color in app.config.ts.
+ */
+
+@theme static {
+  /* Colorffy primary typeface (downloaded automatically by @nuxt/fonts). */
+  --font-sans: 'Plus Jakarta Sans', 'Roboto', -apple-system, 'Segoe UI', sans-serif;
+
+  /*
+   * Colorffy brand scale.
+   *   500 = secondary blue  #0075d6  → vivid, interactive (links, buttons)
+   *   900 = primary navy    #002678  → brand anchor (deep accents, dark mode text)
+   */
+  --color-colorffy-50: oklch(0.971 0.014 256);
+  --color-colorffy-100: oklch(0.932 0.032 256);
+  --color-colorffy-200: oklch(0.871 0.060 256);
+  --color-colorffy-300: oklch(0.786 0.099 256);
+  --color-colorffy-400: oklch(0.673 0.150 254);
+  --color-colorffy-500: oklch(0.560 0.170 250);
+  --color-colorffy-600: oklch(0.488 0.160 254);
+  --color-colorffy-700: oklch(0.415 0.142 257);
+  --color-colorffy-800: oklch(0.345 0.120 259);
+  --color-colorffy-900: oklch(0.290 0.110 260);
+  --color-colorffy-950: oklch(0.215 0.082 262);
+}

@@ -12,7 +12,11 @@
     "lint:playground": "eslint playground",
     "pnpm:install": "pnpm install",
     "pnpm:prune": "pnpm prune",
-    "pnpm:build": "pnpm run build -r"
+    "pnpm:build": "pnpm run build -r",
+    "docs:dev": "pnpm --filter colorffy-docs dev",
+    "docs:build": "pnpm --filter colorffy-docs build",
+    "docs:generate": "pnpm --filter colorffy-docs generate",
+    "docs:preview": "pnpm --filter colorffy-docs preview"
   },
   "keywords": [],
   "author": "Giancarlos Garza",
