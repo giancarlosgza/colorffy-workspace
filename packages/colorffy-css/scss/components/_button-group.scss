@@ -285,12 +285,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .fab-group {
-      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + .85rem);
+      --_btn-fab-position-y: 1.25rem;
       --_btn-fab-position-x: .75rem;
-
-      @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
-        --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + 1.35rem);
-      }
 
       & .btn-fab {
         --_btn-gap: 0;
@@ -300,6 +296,15 @@
         & span {
           display: none;
         }
+      }
+    }
+
+    // Lift FAB
+    body:has(.navigation-bar) .fab-group {
+      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + .85rem);
+
+      @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+        --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + 1.35rem);
       }
     }
   }
