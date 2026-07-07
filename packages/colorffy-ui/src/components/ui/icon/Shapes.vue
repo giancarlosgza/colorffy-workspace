@@ -23,12 +23,12 @@ const sizeMap: Record<IconSize, number> = {
 /** Computed */
 const resolvedSize = computed(() => {
   if (typeof props.size === 'number')
-    return props.size
+    return String(props.size)
 
   if (!props.size)
-    return sizeMap.md
+    return String(sizeMap.md)
 
-  return sizeMap[props.size] ?? sizeMap.md
+  return String(sizeMap[props.size] ?? sizeMap.md)
 })
 const ariaHidden = computed(() => (props.decorative ? true : undefined))
 const ariaRole = computed(() => (props.decorative ? undefined : 'img'))
