@@ -110,7 +110,10 @@ function join() {
               </UiButton>
             </UiButtonGroup>
           </div>
-          <UiIconApp brand="nuxt" size="xl" />
+          <UiIconApp
+            brand="nuxt"
+            size="xl"
+          />
         </div>
       </template>
     </UiCard>
@@ -263,7 +266,10 @@ function join() {
                 :key="tech.brand"
                 class="d-flex align-items-center gap-2"
               >
-                <UiIconApp :brand="tech.brand" size="md" />
+                <UiIconApp
+                  :brand="tech.brand"
+                  size="md"
+                />
                 <span class="subtitle-1 fw-600">{{ tech.name }}</span>
               </div>
             </div>
@@ -322,7 +328,10 @@ function join() {
             <p class="fs-sm-300 text-muted mb-3">
               {{ member.role }}
             </p>
-            <UiIconApp :brand="member.brand" size="sm" />
+            <UiIconApp
+              :brand="member.brand"
+              size="sm"
+            />
           </template>
         </UiCard>
       </div>

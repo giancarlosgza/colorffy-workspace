@@ -64,8 +64,8 @@ const ariaAttributes = computed(() => {
     <svg
       v-if="!hideSpinner"
       class="spinner mb-3"
-      :width="spinnerSizeValue"
-      :height="spinnerSizeValue"
+      :width.attr="spinnerSizeValue"
+      :height.attr="spinnerSizeValue"
       viewBox="0 0 66 66"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

@@ -160,15 +160,15 @@ const iconAppearance = computed(() => {
 <template>
   <div>
     <svg
-      :width="resolvedSize"
-      :height="resolvedSize"
+      :width.attr="resolvedSize"
+      :height.attr="resolvedSize"
       :aria-hidden="ariaHidden"
       :role="ariaRole"
       :aria-label="ariaLabel"
       focusable="false"
       :class="iconAppearance.class"
       :style="iconAppearance.fill ? { fill: iconAppearance.fill } : undefined"
-      :viewBox="brandSvg.viewBox"
+      :viewBox.attr="brandSvg.viewBox"
       :fill="brandSvg.fill"
       :preserve-aspect-ratio="brandSvg.preserveAspectRatio"
       xmlns="http://www.w3.org/2000/svg"

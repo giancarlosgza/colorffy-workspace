@@ -92,14 +92,14 @@ const ariaLabel = computed(() => {
 <template>
   <svg
     v-if="iconConfig && iconConfig.paths && iconConfig.paths.length"
-    :width="resolvedSize"
-    :height="resolvedSize"
+    :width.attr="resolvedSize"
+    :height.attr="resolvedSize"
     :role="ariaRole"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
     :style="{ fill: iconConfig.defaultColor }"
     focusable="false"
-    :viewBox="iconConfig.viewBox"
+    :viewBox.attr="iconConfig.viewBox"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -112,8 +112,8 @@ const ariaLabel = computed(() => {
   <!-- Multi-color inline definitions (not color-overridable) -->
   <svg
     v-else-if="props.tool === 'Firebase Console'"
-    :width="resolvedSize"
-    :height="resolvedSize"
+    :width.attr="resolvedSize"
+    :height.attr="resolvedSize"
     :role="ariaRole"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
@@ -128,8 +128,8 @@ const ariaLabel = computed(() => {
 
   <svg
     v-else-if="props.tool === 'Search Console'"
-    :width="resolvedSize"
-    :height="resolvedSize"
+    :width.attr="resolvedSize"
+    :height.attr="resolvedSize"
     :role="ariaRole"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
@@ -151,8 +151,8 @@ const ariaLabel = computed(() => {
 
   <svg
     v-else-if="props.tool === 'Google Ads'"
-    :width="resolvedSize"
-    :height="resolvedSize"
+    :width.attr="resolvedSize"
+    :height.attr="resolvedSize"
     :role="ariaRole"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
@@ -172,8 +172,8 @@ const ariaLabel = computed(() => {
 
   <svg
     v-else-if="props.tool === 'Google Analytics'"
-    :width="resolvedSize"
-    :height="resolvedSize"
+    :width.attr="resolvedSize"
+    :height.attr="resolvedSize"
     :role="ariaRole"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"

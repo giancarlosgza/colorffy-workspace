@@ -130,8 +130,8 @@ watch(() => props.title, () => {
     <!-- Spinner -->
     <svg
       class="spinner"
-      :width="spinnerSize.width"
-      :height="spinnerSize.height"
+      :width.attr="spinnerSize.width"
+      :height.attr="spinnerSize.height"
       viewBox="0 0 66 66"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
