@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDatatableColumn, IDatatableProps } from '@/types/datatable'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, useId, watch } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
 import UiButtonGroup from '../button/ButtonGroup.vue'
@@ -20,6 +20,8 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   defaultSortKey: '',
   defaultSortOrder: 'asc',
   sortable: true,
+  selectable: false,
+  stickyHeader: false,
   columnManager: false,
   columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
   columnManagerText: 'Columns',
@@ -29,6 +31,10 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   emptyStateUseCustomIcon: false,
   emptyStateIconCode: '&#xeb83;'
 })
+
+/** Model */
+// Selected row identities (see `getRowKey`); v-model:selected -> `update:selected`.
+const selectedModel = defineModel<(string | number)[]>('selected', { default: () => [] })
 
 /** Data */
 const sortKey = ref(props.defaultSortKey)
@@ -54,6 +60,9 @@ const columnsToggleTooltipText = computed(() => {
 const visibleColumns = computed(() => {
   return props.columns.filter(col => !managedHiddenColumns.value.includes(col.key))
 })
+// Header/skeleton/empty-state span, including the leading checkbox column when selectable.
+const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
+const selectAllId = useId()
 
 const sortedItems = computed(() => {
   if (!sortKey.value) {
@@ -78,6 +87,13 @@ const sortedItems = computed(() => {
   })
 })
 
+// Identity of every row currently rendered (sorted, not filtered — selection
+// composes with sorting since identity follows the row, not its index).
+const rowKeys = computed(() => sortedItems.value.map((item, index) => getRowKey(item, index)))
+const selectedKeySet = computed(() => new Set(selectedModel.value))
+const isAllSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every(key => selectedKeySet.value.has(key)))
+const isSomeSelected = computed(() => !isAllSelected.value && rowKeys.value.some(key => selectedKeySet.value.has(key)))
+
 /** Methods */
 function compareValues(a: unknown, b: unknown): number {
   if (typeof a === 'number' && typeof b === 'number') {
@@ -101,6 +117,22 @@ function getRowKey(item: Record<string, any>, index: number): string | number {
     return item.id
   }
   return index
+}
+function isRowSelected(item: Record<string, any>, index: number) {
+  return selectedKeySet.value.has(getRowKey(item, index))
+}
+function toggleRowSelection(item: Record<string, any>, index: number) {
+  const key = getRowKey(item, index)
+  selectedModel.value = isRowSelected(item, index)
+    ? selectedModel.value.filter(selectedKey => selectedKey !== key)
+    : [...selectedModel.value, key]
+}
+function toggleSelectAll() {
+  if (isAllSelected.value) {
+    selectedModel.value = selectedModel.value.filter(key => !rowKeys.value.includes(key))
+    return
+  }
+  selectedModel.value = [...new Set([...selectedModel.value, ...rowKeys.value])]
 }
 function isSortable(column: IDatatableColumn) {
   return props.sortable && column.sortable !== false
@@ -197,16 +229,38 @@ function isLastVisibleColumn(key: string) {
     </div>
 
     <!-- Table -->
-    <div class="table-responsive">
+    <div
+      class="table-responsive"
+      :class="{ 'table-responsive-sticky': stickyHeader }"
+    >
       <table
         class="table table-hover"
-        :class="tableClass"
+        :class="[tableClass, { 'table-sticky-header': stickyHeader }]"
       >
         <caption v-if="caption">
           {{ caption }}
         </caption>
         <thead>
           <tr>
+            <th
+              v-if="selectable"
+              scope="col"
+              class="table-select-col"
+            >
+              <div class="form-check">
+                <input
+                  :id="selectAllId"
+                  type="checkbox"
+                  class="form-check-input"
+                  :checked="isAllSelected"
+                  :indeterminate="isSomeSelected"
+                  :disabled="rowKeys.length === 0"
+                  aria-label="Select all rows"
+                  @change="toggleSelectAll"
+                >
+                <label :for="selectAllId" class="visually-hidden">Select all rows</label>
+              </div>
+            </th>
             <th
               v-for="column in visibleColumns"
               :key="column.key"
@@ -237,14 +291,33 @@ function isLastVisibleColumn(key: string) {
         <!-- Loading State -->
         <StateTableSkeleton
           v-if="isLoading"
-          :skeleton-cols="visibleColumns.length"
+          :skeleton-cols="columnCount"
           :skeleton-col-expanded="skeletonColExpanded"
           :skeleton-rows="skeletonRows"
           :is-expanded="isExpanded"
         />
         <!-- Table Content -->
         <tbody v-else-if="sortedItems.length > 0">
-          <tr v-for="(item, index) in sortedItems" :key="getRowKey(item, index)">
+          <tr
+            v-for="(item, index) in sortedItems"
+            :key="getRowKey(item, index)"
+            :class="{ 'is-selected': selectable && isRowSelected(item, index) }"
+          >
+            <td
+              v-if="selectable"
+              class="table-select-col"
+            >
+              <div class="form-check">
+                <!-- aria-label supplies the accessible name; see the header checkbox for the id/for pattern -->
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  :checked="isRowSelected(item, index)"
+                  :aria-label="`Select row ${index + 1}`"
+                  @change="toggleRowSelection(item, index)"
+                >
+              </div>
+            </td>
             <td
               v-for="column in visibleColumns"
               :key="column.key"
@@ -259,7 +332,7 @@ function isLastVisibleColumn(key: string) {
         <!-- Empty State -->
         <tbody v-else>
           <tr>
-            <td :colspan="visibleColumns.length">
+            <td :colspan="columnCount">
               <StateEmpty
                 :title="emptyStateTitle"
                 :subtitle="emptyStateSubtitle"

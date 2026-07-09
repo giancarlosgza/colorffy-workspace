@@ -106,9 +106,34 @@ export interface IDatatableProps {
   items: Record<string, any>[]
   /**
    * Optional row-object key to use as the stable `v-for` key. When omitted,
-   * falls back to each row's `id`, then to the array index.
+   * falls back to each row's `id`, then to the array index. This same
+   * identity is reused for row `selectable` state, so give rows a stable
+   * `id` (or set `rowKey`) if selection needs to survive re-sorting.
    */
   rowKey?: string
+  /**
+   * When true, renders a leading checkbox column for row selection. Pair
+   * with `v-model:selected`. The header checkbox selects/clears all rows
+   * and shows an indeterminate state when only some rows are selected.
+   * @default false
+   */
+  selectable?: boolean
+  /**
+   * Selected row identities, bound via `v-model:selected`. Each entry is a
+   * row's identity as resolved by `rowKey` (see above) — the same value
+   * used for the row's `:key`.
+   * @default []
+   */
+  selected?: (string | number)[]
+  /**
+   * When true, the table header sticks to the top of its scroll container
+   * while the body scrolls. Pairs with the `.table-responsive-sticky`
+   * wrapper class (applied automatically) which caps the wrapper height via
+   * `--_table-sticky-max-height` (default `32rem`, override with a style
+   * binding) and makes it vertically scrollable.
+   * @default false
+   */
+  stickyHeader?: boolean
   /**
    * Column `key` to sort by initially.
    * @default ''
@@ -164,4 +189,11 @@ export interface IDatatableProps {
    * @default '&#xeb83;'
    */
   emptyStateIconCode?: string
+}
+
+/**
+ * Interface emits for the Datatable component.
+ */
+export interface IDatatableEmits {
+  (e: 'update:selected', value: (string | number)[]): void
 }

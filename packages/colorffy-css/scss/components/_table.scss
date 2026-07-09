@@ -23,6 +23,12 @@
     display: none;
   }
 
+  // Opt-in scroll container for stickyHeader; override --_table-sticky-max-height to resize
+  .table-responsive.table-responsive-sticky {
+    max-height: var(--_table-sticky-max-height, 32rem);
+    overflow-y: auto;
+  }
+
   // ==========================================================================
   // STANDARD TABLE COMPONENT
   // ==========================================================================
@@ -35,6 +41,7 @@
     --_table-gutter-y: 0.55rem;
     --_table-font-size: 12px;
     --_table-border-radius: #{v.$rounded-none};
+    --_table-thead-bg-color: var(--theme-surface-a10);
 
     display: table;
     width: 100%;
@@ -43,7 +50,7 @@
     font-size: var(--_table-font-size);
 
     thead {
-      background-color: var(--theme-surface-a10);
+      background-color: var(--_table-thead-bg-color);
 
       tr {
         th {
@@ -107,14 +114,41 @@
           }
         }
       }
+
+      // Row selection highlight (`selectable` prop)
+      tr.is-selected {
+        background-color: var(--theme-surface-a0);
+      }
+    }
+
+    // Selection column checkbox (selectable prop); .form-check overrides undo form spacing
+    th.table-select-col,
+    td.table-select-col {
+      width: 2.75rem;
+      text-align: center;
+
+      .form-check {
+        display: inline-flex;
+        margin-bottom: 0;
+        min-height: auto;
+      }
+    }
+
+    // Sticky header (stickyHeader prop) pairs with .table-responsive-sticky as the scroll container
+    &.table-sticky-header thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: var(--_table-thead-bg-color);
     }
 
     // Table bordered
     &.table-bordered {
       --_table-border-radius: #{v.$rounded-md};
+      --_table-thead-bg-color: var(--theme-surface-container-lowest);
 
       & thead {
-        background-color: var(--theme-surface-container-lowest);
+        background-color: var(--_table-thead-bg-color);
 
         & tr th {
           border-block: none;

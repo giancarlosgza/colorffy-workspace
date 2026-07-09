@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { ref } from 'vue'
 import UiButton from '../button/Button.vue'
 import UiDatatable from './Datatable.vue'
 
@@ -13,7 +14,9 @@ const meta: Meta<typeof UiDatatable> = {
     },
     sortable: { control: 'boolean' },
     columnManager: { control: 'boolean' },
-    isLoading: { control: 'boolean' }
+    isLoading: { control: 'boolean' },
+    selectable: { control: 'boolean' },
+    stickyHeader: { control: 'boolean' }
   }
 }
 
@@ -170,6 +173,69 @@ export const WithColumnManager: Story = {
         :columns="columns"
         :items="items"
         :column-manager="true"
+      >
+        <template #cell-actions="{ item }">
+          <UiButton variant="outline" size="sm" text="Edit" />
+        </template>
+      </UiDatatable>
+    `
+  })
+}
+
+export const Selectable: Story = {
+  args: {
+    columns,
+    items: sampleData,
+    selectable: true
+  },
+  render: _args => ({
+    components: { UiDatatable, UiButton },
+    setup() {
+      const selected = ref<(string | number)[]>([])
+      return {
+        columns,
+        items: sampleData,
+        selected
+      }
+    },
+    template: `
+      <div>
+        <p class="mb-2">Selected: {{ selected }}</p>
+        <UiDatatable
+          :columns="columns"
+          :items="items"
+          selectable
+          v-model:selected="selected"
+        >
+          <template #cell-actions="{ item }">
+            <UiButton variant="outline" size="sm" text="Edit" />
+          </template>
+        </UiDatatable>
+      </div>
+    `
+  })
+}
+
+export const StickyHeader: Story = {
+  args: {
+    columns,
+    items: [...sampleData, ...sampleData, ...sampleData].map((item, index) => ({ ...item, id: index + 1 })),
+    stickyHeader: true
+  },
+  render: _args => ({
+    components: { UiDatatable, UiButton },
+    setup() {
+      const manyItems = [...sampleData, ...sampleData, ...sampleData].map((item, index) => ({ ...item, id: index + 1 }))
+      return {
+        columns,
+        items: manyItems
+      }
+    },
+    template: `
+      <UiDatatable
+        :columns="columns"
+        :items="items"
+        sticky-header
       >
         <template #cell-actions="{ item }">
           <UiButton variant="outline" size="sm" text="Edit" />
