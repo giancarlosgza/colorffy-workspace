@@ -91,6 +91,31 @@
   }
 
   // ==========================================================================
+  // AVATAR GROUP COMPONENT
+  // ==========================================================================
+  .avatar-group {
+    --_avatar-group-overlap: 0.6rem;
+    --_avatar-group-ring-width: 2px;
+    --_avatar-group-ring-color: var(--theme-surface-a0);
+
+    display: inline-flex;
+    align-items: center;
+
+    > .img-avatar {
+      outline: var(--_avatar-group-ring-width) solid var(--_avatar-group-ring-color);
+
+      &:not(:first-child) {
+        margin-inline-start: calc(-1 * var(--_avatar-group-overlap));
+      }
+    }
+
+    // Reset the default .initials-avatar trailing margin so overlap stays consistent
+    > .initials-avatar {
+      margin-inline: 0;
+    }
+  }
+
+  // ==========================================================================
   // OBJECT-FIT UTILITIES
   // ==========================================================================
   .img-fit-cover {
