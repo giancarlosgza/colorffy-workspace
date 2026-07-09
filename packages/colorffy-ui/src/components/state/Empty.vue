@@ -89,7 +89,9 @@ const ariaAttributes = computed(() => {
       {{ subtitle }}
     </p>
 
-    <!-- Action slot -->
-    <slot name="button" />
+    <!-- Action slot (falls back to legacy #button slot when unused) -->
+    <slot name="action">
+      <slot name="button" />
+    </slot>
   </div>
 </template>

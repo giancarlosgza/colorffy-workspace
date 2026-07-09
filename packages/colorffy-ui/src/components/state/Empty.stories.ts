@@ -60,7 +60,7 @@ export const WithActionButton: Story = {
     },
     template: `
       <StateEmpty v-bind="args">
-        <template #button>
+        <template #action>
           <UiButton text="Create New" variant="filled" color="primary" />
         </template>
       </StateEmpty>
