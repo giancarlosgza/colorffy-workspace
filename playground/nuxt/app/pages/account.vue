@@ -43,6 +43,10 @@ const accounts = ref([
 const dangerOpen = ref(false)
 const isSaving = ref(false)
 
+// Auto-hide success alert after save() — key bump forces a remount so it can re-show on every save
+const showSavedAlert = ref(false)
+const savedAlertKey = ref(0)
+
 // Two-step verification demo (UiInputOtp)
 const otpCode = ref('')
 const otpVerified = ref(false)
@@ -55,6 +59,8 @@ function save() {
   isSaving.value = true
   setTimeout(() => {
     isSaving.value = false
+    savedAlertKey.value++
+    showSavedAlert.value = true
   }, 1500)
 }
 
@@ -93,6 +99,19 @@ function onOtpComplete() {
         </UiButton>
       </template>
     </UiHeaderContent>
+
+    <!-- Auto-hides after 4s via `duration`; the :key remount lets it re-show on every save -->
+    <UiAlert
+      v-if="showSavedAlert"
+      :key="savedAlertKey"
+      type="tonal"
+      variant="success"
+      message="Cambios guardados"
+      :duration="4000"
+      dismissible
+      class="mt-3 mb-0"
+      @dismiss="showSavedAlert = false"
+    />
 
     <div class="row mt-section">
       <!-- Left: forms -->
@@ -294,7 +313,9 @@ function onOtpComplete() {
               type="tonal"
               variant="success"
               message="Código verificado. Este dispositivo quedó autorizado."
+              dismissible
               class="mt-3 mb-0"
+              @dismiss="otpVerified = false"
             />
           </template>
         </UiCard>
@@ -308,6 +329,7 @@ function onOtpComplete() {
             v-model:open="dangerOpen"
             name="account-settings"
             title="Zona de peligro"
+            icon="&#xe002;"
             class="border border-md border-danger"
           >
             <template #content>
@@ -369,6 +391,18 @@ function onOtpComplete() {
                 size="sm"
               />
             </div>
+
+            <!-- Link-mode button: renders as <a> instead of <button> -->
+            <UiButton
+              text="Centro de ayuda"
+              variant="text"
+              href="https://colorffy.com"
+              class="mt-2"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe887;" />
+              </template>
+            </UiButton>
           </template>
         </UiCard>
       </div>

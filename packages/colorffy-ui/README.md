@@ -611,8 +611,10 @@ const items = [
 
 **Key props:** `columns` (`IDatatableColumn[]`), `items`, `sortable`,
 `default-sort-key` (a column `key`), `column-manager`, `is-loading` /
-`skeleton-rows` (built-in loading state), `caption`, `row-key`, and
-`empty-state-*` (built-in empty state).
+`skeleton-rows` (built-in loading state), `caption`, `row-key`, `selectable` /
+`selected` (`v-model:selected`, row-selection checkbox column), `sticky-header`
+(sticks the header while the body scrolls), and `empty-state-*` (built-in
+empty state).
 
 ### Breadcrumb
 

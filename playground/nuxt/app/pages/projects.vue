@@ -47,6 +47,9 @@ const statusTabs = [
 const search = ref('')
 const isLoading = ref(false)
 
+// Row selection (Datatable selectable + v-model:selected)
+const selectedProjects = ref<(string | number)[]>([])
+
 // "Nuevo proyecto" wizard (Stepper showcase)
 const wizardSteps: IStepItem[] = [
   { id: 'details', label: 'Detalles', description: 'Nombre y descripción' },
@@ -88,6 +91,10 @@ function simulateLoading() {
   setTimeout(() => {
     isLoading.value = false
   }, 1600)
+}
+function clearFilters() {
+  search.value = ''
+  statusFilter.value = 'all'
 }
 function goToPreviousWizardStep() {
   if (isFirstWizardStep.value)
@@ -187,6 +194,10 @@ function createProject() {
           row-key="id"
           default-sort-key="name"
           caption="Listado de proyectos del equipo"
+          selectable
+          v-model:selected="selectedProjects"
+          sticky-header
+          style="--_table-sticky-max-height: 18rem"
           column-manager
           column-manager-text="Columnas"
           column-manager-tooltip="Administrar columnas"
@@ -195,6 +206,9 @@ function createProject() {
           empty-state-subtitle="Ajusta el filtro o el término de búsqueda."
         >
           <template #controls>
+            <span v-if="selectedProjects.length" class="subtitle-2 text-muted me-2">
+              {{ selectedProjects.length }} seleccionados
+            </span>
             <UiButton
               text="Simular carga"
               variant="tonal"
@@ -316,7 +330,15 @@ function createProject() {
         <UiEmpty
           title="No se encontraron proyectos"
           subtitle="Ajusta el filtro o el término de búsqueda."
-        />
+        >
+          <template #action>
+            <UiButton
+              text="Limpiar filtros"
+              variant="outline"
+              @on-click="clearFilters"
+            />
+          </template>
+        </UiEmpty>
       </div>
     </div>
 

@@ -28,6 +28,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiTabs` for section/page navigation
 - Use navbar with `UiNavbarLink` for main site navigation
 - Tabs support active state and click events
+- Each tab item can carry a leading `icon` and/or trailing `badge`; set `fluid` on `UiTabs` to stretch tabs to fill the available width equally
 
 **Bottom navigation (mobile)**
 - Use `UiNavigationBar` for mobile app-style bottom nav
@@ -118,6 +119,11 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - High visual prominence
 - Use sparingly (1-2 per section)
 
+**Buttons as links**
+- Pass `to` or `href` to render button styling on a link (`<a>` or the tag/component given via `as`) instead of a `<button>`
+- Without `to`/`href`, `UiButton` always renders a native `<button>` — `as` alone has no effect
+- Good for external/docs links or router navigation that should look like a button
+
 **Secondary actions**
 - Use `variant="outline"` for secondary actions
 - Use `variant="tonal"` for subtle actions
@@ -146,6 +152,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `type="snackbar"` for temporary notifications (bottom-right)
 - Use `type="tonal"` for inline alerts within content
 - Use `UiAlertToast` for simple toast notifications
+- Set `dismissible` for a close button (emits `dismiss`); set `duration` (ms) to auto-hide banner/tonal alerts (ignored for `type="snackbar"` — use `UiAlertToast`/`useToast` there instead)
 
 **Alert variants:**
 - `success` - Positive feedback (green)
@@ -161,13 +168,16 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 
 **Empty states**
 - Use `UiEmpty` when no data to display
-- Provide helpful title, message, and icon
-- Optionally include action button
+- Provide helpful `title`, `subtitle`, and (with `use-custom-icon`) `icon-code`
+- Add a call-to-action via the `#action` slot — empty states almost always need one (e.g. "Clear filters" or "New item")
 
 **Badges & counts**
 - Use `UiBadge` for labels, tags, status indicators
-- Use with `count` prop for numeric badges
-- Variants: `filled`, `outline`, `tonal`
+- Use `pill` for numeric/initial content (e.g. `text="9"`); keep full-word labels non-pill
+- Use `dot` for a label-less indicator (unread, presence, activity)
+- Use `max` to cap a numeric `text` (e.g. `text="120"` with `:max="99"` renders "99+")
+- Use `attached` to overlay a badge on a `.position-relative` parent's corner (avatars, icon buttons, tabs)
+- Variants: intent colors (`primary`/`success`/`danger`/...), `outline`, `gradient`, `tonal tonal-<intent>`
 - Use `UiBadgeGroup` to contain multiple badges
 - Badges are static (not clickable) — for interactive filters/tags/inputs use `UiChip` / `UiChipGroup` instead
 
@@ -177,12 +187,15 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiDatatable` for sortable data tables with a column manager
 - Configure `columns` with `key`, `label`, and optional `sortable` / `hidden` / `align`
 - Built-in loading skeleton (`is-loading`) and empty state; custom cells via `#cell-<key>`
+- Set `selectable` + `v-model:selected` for a row-selection checkbox column (identity from `rowKey`, falling back to `id`, then index)
+- Set `sticky-header` to keep the header visible while the body scrolls (wraps in `.table-responsive-sticky`)
 - Pagination and filtering are not built in — handle them in the parent and pass the current `items`
 - Best for structured data with many rows
 
 **Lists**
 - Use `UiListGroup` with `UiListItem` for simple lists
 - Items support icons, active state, clickable prop
+- Pass `to` or `href` to render a row as a navigable link (`as` picks the tag/component, e.g. `NuxtLink`); link mode implies the hover/active/arrow styling automatically
 - Lighter weight than tables
 - Good for navigation lists, option lists
 
@@ -194,13 +207,16 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 
 **Cards**
 - Use `UiCard` for content grouping
-- Three slots: `header`, `body`, `footer`
-- Variants: `pane`, `outlined`, `elevated`
+- Slots: `media` (cover image), `header`, `body`, `footer`
+- Variants: `pane`, `outline`, `elevated`
+- Set `image-url` (+ optional `image-alt`) for a full-bleed cover image at the top; use `#media` instead for custom markup
+- Set `to` or `href` to render the whole card as a link (root switches from `div` to `as`/`a`); external URLs auto-get `target="_blank" rel="noopener noreferrer"`
 - Good for dashboards, product cards, content blocks
 
 **Collapsible sections**
 - Use `UiAccordion` for single collapsible section
 - Use `UiAccordionGroup` when only one should be open
+- Set `icon` for a leading Material Symbols icon before the title
 - Good for FAQs, settings sections
 - Reduces visual clutter
 
@@ -208,9 +224,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 
 **Avatars**
 - Use `UiAvatar` for user profile images
-- Supports fallback text if image fails
-- Sizes: `sm`, `md`, `lg`, `xl` or custom pixels
-- Shapes: `circle`, `square`, `rounded`
+- Falls back to `initials` when no `src`/image
+- Sizes: `sm`, `md`, `lg`, `navbar`, `menu`
+- Optional decorative `maskShape` (e.g. `gem`, `cookie-9`)
+- Set `status` (`online` | `busy` | `away` | `offline`) for a presence dot on the bottom-end corner; works with masked avatars and is passed through by `UiAvatarGroup`'s `avatars` entries
 - Use `UiAvatarGroup` to stack multiple avatars with an overlapping ring; pass `avatars` (supports `max` overflow) or compose `UiAvatar` via the default slot
 
 **Icons**

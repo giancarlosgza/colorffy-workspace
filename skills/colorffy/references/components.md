@@ -67,7 +67,7 @@ Content container/pane wrapper.
 Single collapsible accordion item.
 
 ```vue
-<UiAccordion title="Section Title" name="accordion-group">
+<UiAccordion title="Section Title" name="accordion-group" icon="&#xe88a;">
   <template #content>
     <p>Accordion content</p>
   </template>
@@ -77,7 +77,8 @@ Single collapsible accordion item.
 **Props:**
 - `title` (string, required) - Accordion header text
 - `name` (string, required) - Group identifier
-- `open` (boolean, default: false) - Initial open state
+- `icon` (string, optional) - Leading Material Symbols icon (HTML entity) shown before the title; ignored when the `header` slot is used
+- `open` (boolean, default: false) - Initial open state (also controllable via `v-model:open`)
 
 ### UiAccordionGroup
 Groups multiple accordion items (allows only one open at a time).
@@ -105,7 +106,8 @@ Versatile alert component with multiple types and variants.
   title="Success!"
   message="Operation completed successfully."
   :critical="false"
-  :dismissible="true"
+  dismissible
+  @dismiss="onDismiss"
 />
 ```
 
@@ -115,7 +117,11 @@ Versatile alert component with multiple types and variants.
 - `title` (string, optional) - Alert heading
 - `message` (string, required) - Alert text
 - `critical` (boolean, default: false) - High-priority styling
-- `dismissible` (boolean, default: false) - Show close button
+- `dismissible` (boolean, default: false) - Show close button; clicking it hides the alert and emits `dismiss`
+- `duration` (number, optional) - Auto-hide delay in ms for non-snackbar types; emits `dismiss` when the timer fires (ignored when `type="snackbar"` — use `UiAlertToast`/`useToast` instead)
+- `closeLabel` (string, default: 'Close') - Accessible label for the close button (only rendered when `dismissible` is true)
+
+**Events:** `dismiss` - Emitted when the alert is closed via the close button or the `duration` auto-hide timer
 
 **Types:**
 - `banner` - Full-width banner at top/bottom
@@ -141,19 +147,28 @@ Toast notification for temporary messages.
 ## Badges
 
 ### UiBadge
-Badge/tag component for labels and counts.
+Badge/tag component for static labels, counts, and status indicators (not clickable — for interactive filters/tags use `UiChip`).
 
 ```vue
-<UiBadge text="New" variant="filled" color="primary" />
-<UiBadge :count="5" variant="outline" color="danger" />
+<UiBadge text="New" variant="primary" />
+<UiBadge text="9" variant="danger" pill />
+<UiBadge variant="danger" dot />
+<UiBadge variant="danger" pill text="120" :max="99" />
 ```
 
 **Props:**
-- `text` (string) - Badge text
-- `count` (number) - Numeric badge (alternative to text)
-- `variant` ('filled' | 'outline' | 'tonal')
-- `color` ('primary' | 'secondary' | 'success' | 'warning' | 'danger')
-- `size` ('sm' | 'md' | 'lg')
+- `text` (string | null) - Badge label
+- `variant` ('primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'gradient' | 'default' | 'outline' | `'tonal tonal-<intent>'`) - Color / style preset
+- `size` ('sm') - Only `sm` is supported
+- `pill` (boolean, default: false) - Fully rounded capsule style; reserve for numbers/initials only, not full-word labels
+- `dot` (boolean, default: false) - Renders a label-less notification dot; `text`/`iconCode` are ignored while `dot` is set
+- `max` (number, optional) - Caps numeric `text` at this value, rendering `{max}+` when exceeded (e.g. `text="120"` with `:max="99"` renders "99+")
+- `attached` (boolean, default: false) - Overlays the badge on the top-end corner of the nearest `.position-relative` ancestor (e.g. on avatars or icon buttons); the parent must set `position: relative`
+- `iconCode` (string, optional) - Leading Material Symbols code
+- `iconClass` (string | string[] | object, optional) - Classes for the icon
+- `customClass` (string | string[] | object, optional) - Extra classes
+
+**Convention:** `pill` is for numbers/initials only — keep full-word labels like "Active" or "Pending" as the default (non-pill) shape.
 
 ### UiBadgeGroup
 Container for multiple badges.
@@ -188,17 +203,26 @@ Primary button component with extensive customization.
 ```
 
 **Props:**
-- `variant` ('filled' | 'tonal' | 'outline' | 'text') - Button style
+- `variant` ('filled' | 'tonal' | 'outline' | 'text' | 'link' | 'chip' | 'cta' | 'gradient' | 'frosted') - Button style
 - `color` ('primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'accent')
 - `size` ('sm' | 'md' | 'lg')
 - `text` (string) - Button label
 - `loading` (boolean) - Show loading spinner
 - `disabled` (boolean) - Disable interaction
-- `type` ('button' | 'submit' | 'reset')
+- `type` ('button' | 'submit' | 'reset', default: 'button') - Native `<button>` type; ignored in link mode
+- `to` (string | object, optional) - Navigation target; setting `to` (or `href`) switches the button into link mode, rendering an `<a>` (or the tag/component given via `as`) instead of a `<button>`
+- `href` (string, optional) - Plain/external href; setting `href` (or `to`) switches to link mode
+- `as` (string | object, default: 'a') - Tag/component to render in link mode (e.g. `'a'`, `RouterLink`, `NuxtLink`); only takes effect when `to`/`href` is set — passing `as` alone has no effect
 
 **Slots:**
 - `icon` - Prepend icon before text
 - `default` - Custom content (overrides text prop)
+
+```vue
+<!-- Link mode: renders <a>/as instead of <button>, same button styling -->
+<UiButton variant="filled" color="primary" text="Docs" href="https://colorffy.com" />
+<UiButton variant="outline" text="Dashboard" to="/dashboard" as="router-link" />
+```
 
 **Variants:**
 - `filled` - Solid background
@@ -367,13 +391,28 @@ Container card component.
     <UiButton text="Action" />
   </template>
 </UiCard>
+
+<!-- Cover image + clickable card -->
+<UiCard variant="outline" image-url="/cover.jpg" image-alt="Cover photo" href="https://colorffy.com">
+  <template #body>
+    <h3>Card Title</h3>
+    <p>Card content…</p>
+  </template>
+</UiCard>
 ```
 
 **Props:**
-- `variant` ('pane' | 'outlined' | 'elevated')
-- `padding` (boolean, default: true) - Apply internal padding
+- `variant` ('outline' | 'elevated' | 'pane')
+- `size` ('xs' | 'sm' | 'md')
+- `selectable` (boolean, default: false) - Adds `card-selectable` interactive styling
+- `imageUrl` (string, optional) - Cover image URL rendered full-bleed at the top of the card (ignored when the `#media` slot is used)
+- `imageAlt` (string, optional) - Alt text for the cover image (decorative/empty by default)
+- `to` (string | object, optional) - Navigation destination; activates link mode (root renders as `as`/`a` instead of `div`) when set together with, or instead of, `href`
+- `href` (string, optional) - Standard href for link mode (e.g. external links); activates link mode. External URLs (`http(s):`, `mailto:`, `tel:`, `//`) automatically get `target="_blank" rel="noopener noreferrer"`
+- `as` (string | object, default: 'a') - Tag/component rendered in link mode; ignored unless `to`/`href` is set
 
 **Slots:**
+- `media` - Cover image area, defaults to the `imageUrl`/`imageAlt` image
 - `header` - Card header section
 - `body` - Main content area
 - `footer` - Card footer section
@@ -535,24 +574,22 @@ monochrome icons; multi-color SVGs keep their own fills.
 ## Images
 
 ### UiAvatar
-User avatar component with fallback.
+User avatar component; shows an image (`src`) or falls back to `initials`, with an optional decorative `maskShape`.
 
 ```vue
-<UiAvatar
-  src="/path/to/image.jpg"
-  alt="John Doe"
-  fallback="JD"
-  size="md"
-  shape="circle"
-/>
+<UiAvatar src="/path/to/image.jpg" alt="John Doe" size="md" />
+<UiAvatar initials="JD" size="lg" />
+<UiAvatar src="/path/to/image.jpg" mask-shape="gem" status="online" />
 ```
 
 **Props:**
-- `src` (string) - Image URL
-- `alt` (string) - Alt text
-- `fallback` (string) - Text to show if image fails
-- `size` ('sm' | 'md' | 'lg' | 'xl') or number (pixels)
-- `shape` ('circle' | 'square' | 'rounded')
+- `src` (string, optional) - Image URL
+- `alt` (string, default: 'Avatar') - Accessible name
+- `initials` (string | null, optional) - Fallback initials when no image is set
+- `size` ('sm' | 'md' | 'lg' | 'navbar' | 'menu')
+- `maskShape` ('arch' | 'pill' | 'sunny' | 'gem' | 'cookie-6' | 'cookie-9' | 'cookie-12' | 'clover-4' | 'clover-8' | 'bum' | null, optional) - Decorative mask
+- `maskStretch` (boolean, default: false) - Stretch the mask to 115%
+- `status` ('online' | 'busy' | 'away' | 'offline' | null, optional) - Presence indicator dot on the avatar's bottom-end corner; passed through by `UiAvatarGroup`'s `avatars` entries
 
 ### UiAvatarGroup
 Stacks avatars with an overlapping ring; from an `avatars` array or by composing `UiAvatar` via the default slot.
@@ -786,13 +823,16 @@ Individual list item.
 **Props:**
 - `active` (boolean) - Highlighted state
 - `clickable` (boolean) - Show hover effect
-- `disabled` (boolean)
+- `disabled` (boolean) - Disables the item; strips `href`/`to` and blocks pointer events in link mode
 - `hasActions` (boolean, default: false) - Wraps list item in flex layout to support trailing action templates (and sets `is-undecorated` to true automatically)
 - `imageUrl` (string, optional) - Image URL rendered in place of the icon (takes precedence over `icon`); accepts `public/` paths, imported assets, or external URLs
 - `imageAlt` (string, optional) - Alt text for the image (defaults to empty/decorative)
 - `customImageClass` (string | string[], optional) - Custom CSS classes for the image (e.g. `rounded-full`)
 - `customIconClass` (string | string[], optional) - Custom CSS classes for the icon component inside list item
 - `customIconWrapperClass` (string | string[], optional) - Custom CSS classes for the list item icon wrapper container
+- `to` (string | object, optional) - Navigation destination; activates link mode (the `.list-item` wrapper renders as `as`/`a` instead of a plain `div`)
+- `href` (string, optional) - Standard href for link mode (e.g. external links); activates link mode
+- `as` (string | object, default: 'a') - Tag/component rendered in link mode (e.g. `'router-link'`, `'nuxt-link'`); ignored unless `to`/`href` is set
 
 **Slots:**
 - `media` - Replaces the whole image/icon area with arbitrary content (e.g. `UiIconSvg`)
@@ -807,6 +847,10 @@ Individual list item.
   image-url="/avatars/jane.jpg"
   image-alt="Jane Cooper avatar"
 />
+
+<!-- Navigable row (renders as a link) -->
+<UiListItem title="Dashboard" icon="&#xe88a;" to="/dashboard" />
+<UiListItem title="Colorffy" icon="&#xe157;" href="https://colorffy.com" />
 ```
 
 ## Navigation
@@ -844,8 +888,9 @@ Horizontal tab navigation.
 
 **Props:**
 - `activeTab` (string) - Id of the active tab
-- `tabs` (array) - Tab items: `{ id, label, disabled?, panelId?, badge? }`; `badge` accepts `Partial<IBadgeProps>` (`text`, `variant`, `pill`, `iconCode`, ...) rendered after the label
+- `tabs` (array) - Tab items: `{ id, label, disabled?, panelId?, badge?, icon? }`; `badge` accepts `Partial<IBadgeProps>` (`text`, `variant`, `pill`, `iconCode`, ...) rendered after the label; `icon` is a Material Symbols entity code rendered before the label
 - `pillTabs` / `contrastTabs` (boolean) - Styling variants
+- `fluid` (boolean, default: false) - Stretches every tab to fill the available width equally
 
 **Emits:**
 - `updateActiveTab` (tabId: string) - Fired when a tab is selected
@@ -1013,9 +1058,25 @@ Data table with type-aware sorting, a column manager, and built-in loading/empty
 - `defaultSortOrder` ('asc' | 'desc') - Initial sort direction
 - `columnManager` (boolean) - Show the show/hide column menu
 - `isLoading` (boolean) + `skeletonRows` (number) - Built-in loading skeleton
-- `rowKey` (string) - Row field used as the stable `v-for` key (falls back to `id`, then index)
+- `rowKey` (string) - Row field used as the stable `v-for` key (falls back to `id`, then index); also the row-selection identity
+- `selectable` (boolean, default: false) - Renders a leading checkbox column for row selection. Pair with `v-model:selected`; the header checkbox selects/clears all rows and shows an indeterminate state when only some rows are selected
+- `selected` (`(string | number)[]`, default: `[]`) - Selected row identities, bound via `v-model:selected`
+- `stickyHeader` (boolean, default: false) - Sticks the header to the top of its scroll container while the body scrolls; wraps the table in `.table-responsive-sticky` (height capped via `--_table-sticky-max-height`, default `32rem`)
 - `caption` (string) - Accessible `<caption>` for the table
 - `emptyStateTitle` / `emptyStateSubtitle` - Built-in empty state text
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const selected = ref<(string | number)[]>([])
+</script>
+
+<template>
+  <UiDatatable :columns="columns" :items="items" selectable v-model:selected="selected" sticky-header />
+</template>
+```
+
+**Emits:** `update:selected` (row identities array)
 
 > **Note:** Pagination and filtering are not built in — paginate/filter `items` in the parent and pass the current page.
 
@@ -1053,10 +1114,23 @@ Chronological event feed with dot/icon/image markers and a connector line.
 ### UiEmpty
 
 ```vue
-<UiEmpty title="No data found" message="Try adjusting your filters" icon="&#xe8b6;" />
+<UiEmpty title="No projects yet" subtitle="Create your first project to get started.">
+  <template #action>
+    <UiButton variant="filled" color="primary" text="New project" />
+  </template>
+</UiEmpty>
+
+<UiEmpty title="Inbox zero" use-custom-icon icon-code="&#xe156;" />
 ```
 
-**Props:** `title`, `message`, `icon`
+**Props:**
+- `title` (string | null, optional) - Headline
+- `subtitle` (string | null, optional) - Supporting text
+- `useCustomIcon` (boolean, default: false) - Render `iconCode` as a static icon instead of the default animated icon
+- `iconCode` (string, default: '&#xeb83;') - Material icon code used when `useCustomIcon` is true
+- `customClass` (string | string[] | null, optional) - Extra classes
+
+**Slots:** `action` - call-to-action content (usually a `UiButton`) rendered below the title/subtitle; the legacy `button` slot still works as a fallback
 
 ### UiBaseSkeleton, UiGridSkeleton, UiTableSkeleton
 

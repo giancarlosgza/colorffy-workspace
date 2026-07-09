@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ITimelineItem } from '@colorffy/ui'
+import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
 
 definePageMeta({ pageTitle: 'Dashboard' })
@@ -47,13 +48,14 @@ const activityFilters = [
 
 // Team card — tab badges with counts, list items with avatar images
 const teamTabs = ref([
-  { id: 'members', label: 'Miembros', panelId: 'panel-members', badge: { text: '4', variant: 'secondary', pill: true } },
-  { id: 'invites', label: 'Invitaciones', panelId: 'panel-invites', badge: { text: '2', variant: 'danger', pill: true } }
+  { id: 'members', label: 'Miembros', panelId: 'panel-members', badge: { text: '4', variant: 'secondary', pill: true }, icon: '&#xe7fb;' },
+  { id: 'invites', label: 'Invitaciones', panelId: 'panel-invites', badge: { text: '2', variant: 'danger', pill: true }, icon: '&#xe0be;' }
 ])
 const activeTeamTab = ref('members')
 
+// `online` drives the notification dot on the avatar; only Giancarlos links out (to his own account page)
 const members = [
-  { id: 1, name: 'Giancarlos Garza', role: 'Administrador', avatar: 'https://i.pravatar.cc/88?img=12' },
+  { id: 1, name: 'Giancarlos Garza', role: 'Administrador', avatar: 'https://i.pravatar.cc/88?img=12', online: true },
   { id: 2, name: 'Ana Morales', role: 'Diseñadora de producto', avatar: 'https://i.pravatar.cc/88?img=5' },
   { id: 3, name: 'Luis Herrera', role: 'Desarrollador frontend', avatar: 'https://i.pravatar.cc/88?img=13' },
   { id: 4, name: 'María Fuentes', role: 'QA', avatar: 'https://i.pravatar.cc/88?img=9' }
@@ -61,8 +63,8 @@ const members = [
 
 // Team avatar stack for the "Equipo" card header (members' photos + one pending initials entry)
 const teamAvatars = [
-  { src: 'https://i.pravatar.cc/88?img=68', alt: 'Giancarlos Garza' },
-  { src: 'https://i.pravatar.cc/88?img=47', alt: 'Ana Morales' },
+  { src: 'https://i.pravatar.cc/88?img=68', alt: 'Giancarlos Garza', status: 'online' },
+  { src: 'https://i.pravatar.cc/88?img=47', alt: 'Ana Morales', status: 'busy' },
   { src: 'https://i.pravatar.cc/88?img=13', alt: 'Luis Herrera' },
   { src: 'https://i.pravatar.cc/88?img=9', alt: 'María Fuentes' },
   { initials: 'CR' }
@@ -329,16 +331,19 @@ function onOverviewTabChange(tabId: string) {
               :max="3"
             />
           </div>
-          <UiButton
-            text="Invitar"
-            variant="tonal"
-            color="primary"
-            size="sm"
-          >
-            <template #icon>
-              <UiIconMaterial icon-code="&#xe7fe;" />
-            </template>
-          </UiButton>
+          <div class="position-relative d-inline-block">
+            <UiButton
+              text="Invitar"
+              variant="tonal"
+              color="primary"
+              size="sm"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe7fe;" />
+              </template>
+            </UiButton>
+            <UiBadge attached pill variant="danger" text="12" :max="9" />
+          </div>
         </div>
 
         <UiTabs
@@ -347,7 +352,7 @@ function onOverviewTabChange(tabId: string) {
           @update-active-tab="activeTeamTab = $event"
         />
 
-        <!-- Members panel (avatar images via image-url) -->
+        <!-- Members panel (avatar rendered via media slot, online dot + link mode) -->
         <div
           v-show="activeTeamTab === 'members'"
           id="panel-members"
@@ -356,20 +361,28 @@ function onOverviewTabChange(tabId: string) {
           tabindex="0"
           class="mt-3"
         >
-          <UiListGroup
-            is-interactive
-            is-undecorated
-            variant="flush"
-          >
+          <!-- is-interactive/is-undecorated dropped here so only the linked row below picks up hover/arrow styling, instead of doubling it group-wide -->
+          <UiListGroup variant="flush">
             <UiListItem
               v-for="member in members"
               :key="member.id"
               :title="member.name"
               :text="member.role"
-              :image-url="member.avatar"
-              :image-alt="`Foto de ${member.name}`"
-              custom-image-class="mask-shape shape-cookie-12 shape-stretch"
-            />
+              :to="member.id === 1 ? '/account' : undefined"
+              :as="NuxtLink"
+            >
+              <template #media>
+                <span class="position-relative d-inline-block">
+                  <img
+                    class="list-item-image mask-shape shape-cookie-12 shape-stretch"
+                    :src="member.avatar"
+                    :alt="`Foto de ${member.name}`"
+                  >
+                  <!-- Label-less notification dot marking who is currently online -->
+                  <UiBadge v-if="member.online" dot variant="success" attached aria-label="En línea" />
+                </span>
+              </template>
+            </UiListItem>
           </UiListGroup>
         </div>
 
