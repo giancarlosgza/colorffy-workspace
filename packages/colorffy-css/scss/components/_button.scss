@@ -23,6 +23,11 @@
       --_btn-easing-duration: 300ms;
 
       @include m.btn-base();
+
+      // Anchor-mode (to/href): strip default link underline; color comes from --_btn-color
+      &:is(a) {
+        text-decoration: none;
+      }
     }
 
     @layer variants {

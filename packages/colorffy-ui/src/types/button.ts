@@ -100,8 +100,39 @@ export interface IBaseButtonProps {
  * - Use `variant` (filled | tonal | outline | text | link | chip | cta | gradient | frosted) for style and `color` (primary | warning | etc.) for intent.
  * - Preferred size prop: `size` ('sm' | 'md' | 'lg').
  * - Legacy composite `variant` strings remain accepted as a fallback.
+ * - Polymorphic: passing `to` or `href` renders the button as a link (`<a>` by default,
+ *   or the component/tag given via `as`) while keeping identical button styling. Passing
+ *   `as` alone (without `to`/`href`) has no effect — the native `<button>` markup is
+ *   emitted unchanged.
  */
-export type IButtonProps = IBaseButtonProps
+export interface IButtonProps extends IBaseButtonProps {
+  /**
+   * Native `type` attribute for the rendered `<button>`. Ignored in link mode
+   * (when `to` or `href` is set).
+   * @default 'button'
+   */
+  type?: 'button' | 'submit' | 'reset'
+
+  /**
+   * Navigation destination. Setting `to` (or `href`) switches Button into link mode,
+   * rendering an `<a>` (or the tag/component passed via `as`) instead of a `<button>`.
+   * Accepts a string path or a router location object.
+   */
+  to?: string | object
+
+  /**
+   * Standard `href` for plain/external links. Setting `href` (or `to`) switches Button
+   * into link mode, rendering an `<a>` (or the tag/component passed via `as`).
+   */
+  href?: string
+
+  /**
+   * Tag or component to render in link mode (e.g. `'a'`, `RouterLink`, `NuxtLink`).
+   * Only takes effect when `to` or `href` is also set.
+   * @default 'a'
+   */
+  as?: string | object
+}
 
 /**
  * Interface emits for the Button component.

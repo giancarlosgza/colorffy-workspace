@@ -20,7 +20,14 @@ const meta = {
     },
     text: { control: 'text' },
     disabled: { control: 'boolean' },
-    loading: { control: 'boolean' }
+    loading: { control: 'boolean' },
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset']
+    },
+    to: { control: 'text' },
+    href: { control: 'text' },
+    as: { control: 'text' }
   }
 } satisfies Meta<typeof UiButton>
 
@@ -102,6 +109,32 @@ export const Disabled: Story = {
   args: {
     variant: 'filled',
     text: 'Disabled Button',
+    disabled: true
+  }
+}
+
+export const AsLink: Story = {
+  args: {
+    variant: 'filled',
+    color: 'primary',
+    text: 'Go to docs',
+    href: 'https://colorffy.com'
+  }
+}
+
+export const AsInternalLink: Story = {
+  args: {
+    variant: 'outline',
+    text: 'Internal link',
+    to: '/dashboard'
+  }
+}
+
+export const DisabledLink: Story = {
+  args: {
+    variant: 'filled',
+    text: 'Disabled link',
+    href: '/dashboard',
     disabled: true
   }
 }
