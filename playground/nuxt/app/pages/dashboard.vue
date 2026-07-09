@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ITimelineItem } from '@colorffy/ui'
 import { computed, ref } from 'vue'
 
 definePageMeta({ pageTitle: 'Dashboard' })
@@ -29,13 +30,13 @@ const channels = [
   { name: 'Referidos', value: 12, barClass: 'bg-warning-fixed bg-opacity-90' }
 ]
 
-// Activity feed — filterable by kind through the chip group
+// Activity feed — filterable by kind through the chip group, rendered as a UiTimeline
 const activity = [
-  { id: 1, kind: 'deploys', title: 'Nuevo despliegue', text: 'Proyecto Atlas v2.4.0 publicado', icon: '&#xe1b6;', wrapper: 'bg-success-fixed', iconColor: 'text-success-emphasis' },
-  { id: 2, kind: 'social', title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', icon: '&#xe0b9;', wrapper: 'bg-primary-fixed', iconColor: 'text-primary-emphasis' },
-  { id: 3, kind: 'alerts', title: 'Alerta de uso', text: 'API alcanzó el 80% del límite', icon: '&#xe002;', wrapper: 'bg-warning-fixed', iconColor: 'text-warning-emphasis' },
-  { id: 4, kind: 'billing', title: 'Pago recibido', text: 'Suscripción Enterprise renovada', icon: '&#xe227;', wrapper: 'bg-accent-fixed', iconColor: 'text-accent-emphasis' }
-]
+  { id: 1, kind: 'deploys', title: 'Nuevo despliegue', text: 'Proyecto Atlas v2.4.0 publicado', time: 'Hace 2 h', icon: '&#xe1b6;', variant: 'success' },
+  { id: 2, kind: 'social', title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', icon: '&#xe0b9;', time: 'Hace 5 h', variant: 'primary' },
+  { id: 3, kind: 'alerts', title: 'Alerta de uso', text: 'API alcanzó el 80% del límite', icon: '&#xe002;', time: 'Hace 1 día', variant: 'warning' },
+  { id: 4, kind: 'billing', title: 'Pago recibido', text: 'Suscripción Enterprise renovada', icon: '&#xe227;', time: 'Hace 2 días', variant: 'accent' }
+] as const
 const activityFilter = ref<string | string[] | null>(null)
 const activityFilters = [
   { id: 'deploys', text: 'Despliegues' },
@@ -58,6 +59,15 @@ const members = [
   { id: 4, name: 'María Fuentes', role: 'QA', avatar: 'https://i.pravatar.cc/88?img=9' }
 ]
 
+// Team avatar stack for the "Equipo" card header (members' photos + one pending initials entry)
+const teamAvatars = [
+  { src: 'https://i.pravatar.cc/88?img=68', alt: 'Giancarlos Garza' },
+  { src: 'https://i.pravatar.cc/88?img=47', alt: 'Ana Morales' },
+  { src: 'https://i.pravatar.cc/88?img=13', alt: 'Luis Herrera' },
+  { src: 'https://i.pravatar.cc/88?img=9', alt: 'María Fuentes' },
+  { initials: 'CR' }
+]
+
 // Pending invitations — provider icons rendered through the media slot
 const invites = [
   { id: 1, email: 'carlos.rivas@example.com', brand: 'google', sent: 'Enviada hace 2 días' },
@@ -72,6 +82,15 @@ const filteredActivity = computed(() => {
 
   return activity.filter(item => item.kind === activityFilter.value)
 })
+// Maps the filtered activity into the shape UiTimeline expects
+const activityTimelineItems = computed<ITimelineItem[]>(() => filteredActivity.value.map(item => ({
+  id: String(item.id),
+  title: item.title,
+  text: item.text,
+  time: item.time,
+  icon: item.icon,
+  variant: item.variant
+})))
 
 /** Methods */
 function onOverviewTabChange(tabId: string) {
@@ -288,21 +307,7 @@ function onOverviewTabChange(tabId: string) {
 
             <UiDivider  />
 
-            <UiListGroup
-              is-interactive
-              is-undecorated
-              variant="flush"
-            >
-              <UiListItem
-                v-for="item in filteredActivity"
-                :key="item.id"
-                :title="item.title"
-                :text="item.text"
-                :icon="item.icon"
-                :custom-icon-wrapper-class="`${item.wrapper} rounded-full`"
-                :custom-icon-class="item.iconColor"
-              />
-            </UiListGroup>
+            <UiTimeline :items="activityTimelineItems" />
           </template>
         </UiCard>
       </div>
@@ -315,9 +320,15 @@ function onOverviewTabChange(tabId: string) {
     >
       <template #body>
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="subtitle-1 fw-700 mb-0">
-            Equipo
-          </h4>
+          <div class="d-flex align-items-center gap-3">
+            <h4 class="subtitle-1 fw-700 mb-0">
+              Equipo
+            </h4>
+            <UiAvatarGroup
+              :avatars="teamAvatars"
+              :max="3"
+            />
+          </div>
           <UiButton
             text="Invitar"
             variant="tonal"

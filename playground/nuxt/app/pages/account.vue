@@ -43,6 +43,10 @@ const accounts = ref([
 const dangerOpen = ref(false)
 const isSaving = ref(false)
 
+// Two-step verification demo (UiInputOtp)
+const otpCode = ref('')
+const otpVerified = ref(false)
+
 /** Computed */
 const seatsType = computed(() => typeof form.value.seats)
 
@@ -52,6 +56,17 @@ function save() {
   setTimeout(() => {
     isSaving.value = false
   }, 1500)
+}
+
+// Resets the success feedback once the code is edited again
+function onOtpUpdate(value: string) {
+  if (value.length < 6) {
+    otpVerified.value = false
+  }
+}
+
+function onOtpComplete() {
+  otpVerified.value = true
 }
 </script>
 
@@ -140,9 +155,13 @@ function save() {
                   :max="50"
                   class="mb-2"
                 />
-                <p class="caption text-muted mb-0">
-                  Valor: {{ form.seats }} · tipo: <code>{{ seatsType }}</code>
-                </p>
+                <!-- div instead of p: the tooltip renders a block wrapper, invalid inside <p> (SSR hydration) -->
+                <div class="caption text-muted mb-0">
+                  Valor: {{ form.seats }} · tipo:
+                  <UiTooltip text="Tipo de dato JavaScript del valor enlazado con v-model">
+                    <code>{{ seatsType }}</code>
+                  </UiTooltip>
+                </div>
               </div>
               <div class="col-12 mb-3">
                 <UiInputTextarea
@@ -250,6 +269,36 @@ function save() {
           </template>
         </UiCard>
 
+        <!-- Two-step verification (UiInputOtp demo) -->
+        <UiCard
+          variant="outline"
+          class="card-pane mb-3"
+        >
+          <template #body>
+            <h4 class="subtitle-1 fw-700 mb-1">
+              Verificación en dos pasos
+            </h4>
+            <p class="subtitle-2 text-muted mb-3">
+              Ingresa el código de 6 dígitos que enviamos a tu correo para confirmar este dispositivo.
+            </p>
+            <UiInputOtp
+              id="verification-code"
+              v-model="otpCode"
+              label="Código de verificación"
+              :length="6"
+              @complete="onOtpComplete"
+              @on-update="onOtpUpdate"
+            />
+            <UiAlert
+              v-if="otpVerified"
+              type="tonal"
+              variant="success"
+              message="Código verificado. Este dispositivo quedó autorizado."
+              class="mt-3 mb-0"
+            />
+          </template>
+        </UiCard>
+
         <!-- Danger zone (controlled accordion) -->
         <UiAccordionGroup
           is-transparent
@@ -298,11 +347,13 @@ function save() {
               :key="account.brand"
               class="d-flex align-items-center gap-3 py-2"
             >
-              <UiIconSvg
-                :content="brandIcons[account.brand]"
-                size="sm"
-                :class="{ 'filter-invert': account.brand === 'apple' || account.brand === 'github' }"
-              />
+              <UiTooltip :text="account.name" placement="right">
+                <UiIconSvg
+                  :content="brandIcons[account.brand]"
+                  size="sm"
+                  :class="{ 'filter-invert': account.brand === 'apple' || account.brand === 'github' }"
+                />
+              </UiTooltip>
               <div class="flex-grow-1">
                 <p class="subtitle-1 fw-600 mb-0">
                   {{ account.name }}

@@ -50,6 +50,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiPopoverMenu` for context menus
 - Support dividers and non-clickable text
 
+**Multi-step flows**
+- Use `UiStepper` for progress through a sequence of steps; `vertical` for narrow layouts; `linear` blocks skipping ahead
+- Step `icon` replaces the number; completed steps show a check mark; disabled steps are skipped by keyboard navigation
+
 ## Forms & Inputs
 
 **Text input**
@@ -97,6 +101,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Includes country code selector
 - Set `defaultCountry` for region
 
+**PIN/verification codes**
+- Use `UiInputOtp` for segmented OTP/PIN entry; `length` sets box count (default 6)
+- Auto-advances focus, supports paste and WebOTP autofill; listen for `complete`
+
 **Chips as filters or tag inputs**
 - Use `UiChipGroup` (+ `UiChip`) when the selection is interactive — filter pills, multi-select tag pickers, removable input tags
 - Single mode models `string | null` (clicking the selected chip deselects it); `multiple` models `string[]`
@@ -129,6 +137,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiButtonTooltip` for actions needing explanation
 - Combines button functionality with helper text
 - Set `tooltipPlacement` for positioning
+- Use `UiTooltip` to add a tooltip to any non-button/link trigger (avatar, icon, custom control); use `UiButtonTooltip`/`UiLinkTooltip` when the trigger is a plain button or link
 
 ## Feedback & Status
 
@@ -177,6 +186,12 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Lighter weight than tables
 - Good for navigation lists, option lists
 
+**Timelines**
+- Use `UiTimeline` for chronological event feeds (activity logs, status history, changelogs)
+- Markers: image → icon → dot fallback; `variant` colors the marker
+- Use `align="alternate"` for a centered, zig-zagging layout
+- Custom per-item content via `#item-<id>` or the scoped `#item` slot
+
 **Cards**
 - Use `UiCard` for content grouping
 - Three slots: `header`, `body`, `footer`
@@ -196,6 +211,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Supports fallback text if image fails
 - Sizes: `sm`, `md`, `lg`, `xl` or custom pixels
 - Shapes: `circle`, `square`, `rounded`
+- Use `UiAvatarGroup` to stack multiple avatars with an overlapping ring; pass `avatars` (supports `max` overflow) or compose `UiAvatar` via the default slot
 
 **Icons**
 - Use `UiIconMaterial` for Material Symbols (icon font glyph via `iconCode`)
@@ -224,6 +240,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Sidebar / drawer → `UiSidebar` + `UiSidebarLink`
 - Breadcrumb trail → `UiBreadcrumb`
 - Dropdown menu → `UiButtonMenu`
+- Multi-step flow / wizard progress → `UiStepper`
 
 ### "I need to display data"
 - Structured data, many rows → `UiDatatable`

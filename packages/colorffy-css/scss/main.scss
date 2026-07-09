@@ -26,14 +26,17 @@
 @use './components/dropdown';
 @use './components/form-check';
 @use './components/form-control';
+@use './components/form-otp';
 @use './components/image';
 @use './components/input-group';
 @use './components/list';
 @use './components/popover';
 @use './components/prime';
 @use './components/progress';
+@use './components/stepper';
 @use './components/tabs';
 @use './components/table';
+@use './components/timeline';
 @use './components/tooltip';
 
 @use './layout/flex-container';

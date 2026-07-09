@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IDatatableColumn } from '@colorffy/ui'
+import type { IDatatableColumn, IStepItem } from '@colorffy/ui'
 import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
 
@@ -47,6 +47,18 @@ const statusTabs = [
 const search = ref('')
 const isLoading = ref(false)
 
+// "Nuevo proyecto" wizard (Stepper showcase)
+const wizardSteps: IStepItem[] = [
+  { id: 'details', label: 'Detalles', description: 'Nombre y descripción' },
+  { id: 'team', label: 'Equipo', description: 'Responsable y prioridad' },
+  { id: 'budget', label: 'Presupuesto', description: 'Monto y fecha límite' },
+  { id: 'review', label: 'Revisar', description: 'Confirma y crea' }
+]
+const activeWizardStep = ref(wizardSteps[0].id)
+const wizardForm = ref({ name: '', description: '', owner: '', priority: '', budget: '', deadline: '' })
+const teamOptions = projects.map(project => project.owner)
+const priorityOptions = ['Baja', 'Media', 'Alta']
+
 /** Computed */
 const filteredProjects = computed(() => {
   return projects.filter((project) => {
@@ -55,6 +67,9 @@ const filteredProjects = computed(() => {
     return matchesStatus && matchesSearch
   })
 })
+const wizardStepIndex = computed(() => wizardSteps.findIndex(step => step.id === activeWizardStep.value))
+const isFirstWizardStep = computed(() => wizardStepIndex.value <= 0)
+const isLastWizardStep = computed(() => wizardStepIndex.value === wizardSteps.length - 1)
 
 /** Methods */
 const statusMeta: Record<string, { label: string, variant: string, icon: string }> = {
@@ -73,6 +88,20 @@ function simulateLoading() {
   setTimeout(() => {
     isLoading.value = false
   }, 1600)
+}
+function goToPreviousWizardStep() {
+  if (isFirstWizardStep.value)
+    return
+  activeWizardStep.value = wizardSteps[wizardStepIndex.value - 1].id
+}
+function goToNextWizardStep() {
+  if (isLastWizardStep.value)
+    return
+  activeWizardStep.value = wizardSteps[wizardStepIndex.value + 1].id
+}
+function createProject() {
+  activeWizardStep.value = wizardSteps[0].id
+  wizardForm.value = { name: '', description: '', owner: '', priority: '', budget: '', deadline: '' }
 }
 </script>
 
@@ -290,5 +319,138 @@ function simulateLoading() {
         />
       </div>
     </div>
+
+    <!-- New project wizard (Stepper showcase) -->
+    <h3 class="subtitle-1 fw-700 mb-3 mt-section">
+      Asistente para crear un proyecto
+    </h3>
+    <UiCard variant="outline" class="card-pane">
+      <template #body>
+        <UiStepper
+          :steps="wizardSteps"
+          :active-step="activeWizardStep"
+          linear
+          class="mb-4"
+          @update-active-step="activeWizardStep = $event"
+        />
+
+        <div v-if="activeWizardStep === 'details'">
+          <h4 class="subtitle-2 fw-700 mb-3">
+            Detalles del proyecto
+          </h4>
+          <UiInputText
+            id="wizard-name"
+            v-model="wizardForm.name"
+            label="Nombre del proyecto"
+            placeholder="Ej. Plataforma de clientes"
+            class="mb-3"
+          />
+          <UiInputTextarea
+            id="wizard-description"
+            v-model="wizardForm.description"
+            label="Descripción"
+            placeholder="Breve resumen del objetivo del proyecto"
+            :rows="3"
+          />
+        </div>
+
+        <div v-else-if="activeWizardStep === 'team'">
+          <h4 class="subtitle-2 fw-700 mb-3">
+            Equipo asignado
+          </h4>
+          <UiInputSelect
+            id="wizard-owner"
+            v-model="wizardForm.owner"
+            label="Responsable"
+            :options="teamOptions"
+            class="mb-3"
+          />
+          <UiInputRadio
+            id="wizard-priority"
+            v-model="wizardForm.priority"
+            label="Prioridad"
+            :options="priorityOptions"
+          />
+        </div>
+
+        <div v-else-if="activeWizardStep === 'budget'">
+          <h4 class="subtitle-2 fw-700 mb-3">
+            Presupuesto y fechas
+          </h4>
+          <UiInputText
+            id="wizard-budget"
+            v-model="wizardForm.budget"
+            type="number"
+            label="Presupuesto estimado (USD)"
+            placeholder="0"
+            class="mb-3"
+          />
+          <UiInputText
+            id="wizard-deadline"
+            v-model="wizardForm.deadline"
+            type="date"
+            label="Fecha límite"
+          />
+        </div>
+
+        <div v-else>
+          <h4 class="subtitle-2 fw-700 mb-3">
+            Revisar y confirmar
+          </h4>
+          <UiAlert
+            message="Verifica los datos antes de crear el proyecto."
+            type="tonal"
+            variant="info"
+            rounded
+            class="mb-3"
+          />
+          <UiListGroup variant="flush" size="md" is-undecorated>
+            <UiListItem title="Nombre" :text="wizardForm.name || 'Sin definir'" />
+            <UiListItem title="Responsable" :text="wizardForm.owner || 'Sin asignar'" />
+            <UiListItem title="Prioridad" :text="wizardForm.priority || 'Sin definir'" />
+            <UiListItem
+              title="Presupuesto"
+              :text="wizardForm.budget ? formatCurrency(Number(wizardForm.budget)) : 'Sin definir'"
+            />
+          </UiListGroup>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <UiButton
+            text="Anterior"
+            variant="outline"
+            :disabled="isFirstWizardStep"
+            @on-click="goToPreviousWizardStep"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe5c4;" />
+            </template>
+          </UiButton>
+          <UiButton
+            v-if="!isLastWizardStep"
+            text="Siguiente"
+            variant="filled"
+            color="primary"
+            icon-trailing
+            @on-click="goToNextWizardStep"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe5c8;" />
+            </template>
+          </UiButton>
+          <UiButton
+            v-else
+            text="Crear proyecto"
+            variant="filled"
+            color="success"
+            @on-click="createProject"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+        </div>
+      </template>
+    </UiCard>
   </div>
 </template>

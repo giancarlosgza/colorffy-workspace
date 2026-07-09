@@ -367,11 +367,13 @@ export default defineNuxtConfig({
 
 #### Images
 - `UiAvatar` - Avatar component
+- `UiAvatarGroup` - Stacks avatars with overlapping ring, `max` collapses overflow into "+N"
 
 #### Form Inputs
 - `UiInputCheck` - Checkbox input
 - `UiInputColorPicker` - Color picker
 - `UiInputFile` - File upload
+- `UiInputOtp` - Segmented OTP/PIN code input
 - `UiInputPhoneNumber` - Phone number input
 - `UiInputRadio` - Radio button
 - `UiInputRange` - Range slider
@@ -381,6 +383,9 @@ export default defineNuxtConfig({
 
 #### Links
 - `UiLinkTooltip` - Link with tooltip
+
+#### Tooltips
+- `UiTooltip` - Generic tooltip wrapper for any trigger element
 
 #### Lists
 - `UiListGroup` - List container
@@ -402,8 +407,14 @@ export default defineNuxtConfig({
 - `UiSidebarText` - Section label
 - `UiSidebarDropdown` - Header/footer dropdown
 
+#### Steppers
+- `UiStepper` - Horizontal/vertical step progress indicator (upcoming/current/completed, optional `linear` mode)
+
 #### Tables
 - `UiDatatable` - Data table component
+
+#### Timeline
+- `UiTimeline` - Chronological event feed (dot/icon/image markers + connector line)
 
 ### State Components
 - `UiBaseSkeleton` - Basic skeleton loader

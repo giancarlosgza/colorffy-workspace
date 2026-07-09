@@ -59,11 +59,13 @@ export { default as UiIconSvg } from './components/ui/icon/Svg.vue'
 
 // Components - Image
 export { default as UiAvatar } from './components/ui/image/Avatar.vue'
+export { default as UiAvatarGroup } from './components/ui/image/AvatarGroup.vue'
 
 // Components - Input
 export { default as UiInputCheck } from './components/ui/input/Check.vue'
 export { default as UiInputColorPicker } from './components/ui/input/ColorPicker.vue'
 export { default as UiInputFile } from './components/ui/input/File.vue'
+export { default as UiInputOtp } from './components/ui/input/Otp.vue'
 export { default as UiInputPhoneNumber } from './components/ui/input/PhoneNumber.vue'
 export { default as UiInputRadio } from './components/ui/input/Radio.vue'
 export { default as UiInputRange } from './components/ui/input/Range.vue'
@@ -113,3 +115,12 @@ export { default as UiSidebarGroup } from './components/ui/sidebar/SidebarGroup.
 export { default as UiSidebarHeader } from './components/ui/sidebar/SidebarHeader.vue'
 export { default as UiSidebarLink } from './components/ui/sidebar/SidebarLink.vue'
 export { default as UiSidebarText } from './components/ui/sidebar/SidebarText.vue'
+
+// Components - Stepper
+export { default as UiStepper } from './components/ui/stepper/Stepper.vue'
+
+// Components - Timeline
+export { default as UiTimeline } from './components/ui/timeline/Timeline.vue'
+
+// Components - Tooltip
+export { default as UiTooltip } from './components/ui/tooltip/Tooltip.vue'
