@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IDatatableColumn, IStepItem } from '@colorffy/ui'
-import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
+import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Proyectos' })
 
@@ -187,6 +187,7 @@ function createProject() {
     >
       <template #body>
         <UiDatatable
+          v-model:selected="selectedProjects"
           :columns="columns"
           :items="filteredProjects"
           :is-loading="isLoading"
@@ -195,7 +196,6 @@ function createProject() {
           default-sort-key="name"
           caption="Listado de proyectos del equipo"
           selectable
-          v-model:selected="selectedProjects"
           sticky-header
           style="--_table-sticky-max-height: 18rem"
           column-manager

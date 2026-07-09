@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { NuxtLink } from '#components'
 import { vOnClickOutside } from '@vueuse/components'
+import { NuxtLink } from '#components'
 
 /** Data */
 const colors = ['system', 'light', 'dark']

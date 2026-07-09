@@ -90,17 +90,17 @@ const inputClasses = computed(() => {
 
 // Shared input bindings so both branches (with/without group) stay in sync
 const inputAttrs = computed(() => ({
-  id: inputId.value,
-  class: inputClasses.value,
-  type: props.type,
-  maxlength: props.maxlength,
-  placeholder: placeholderText.value,
-  min: minValue.value,
-  max: maxValue.value,
-  disabled: props.disabled,
-  required: props.required,
-  readonly: props.readonly,
-  autofocus: props.autofocus,
+  'id': inputId.value,
+  'class': inputClasses.value,
+  'type': props.type,
+  'maxlength': props.maxlength,
+  'placeholder': placeholderText.value,
+  'min': minValue.value,
+  'max': maxValue.value,
+  'disabled': props.disabled,
+  'required': props.required,
+  'readonly': props.readonly,
+  'autofocus': props.autofocus,
   'aria-invalid': hasErrors.value || undefined,
   'aria-describedby': describedById.value
 }))

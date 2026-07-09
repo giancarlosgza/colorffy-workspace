@@ -32,7 +32,7 @@ const isOpen = defineModel<boolean>('open', { default: false })
       <slot name="header">
         <UiIconMaterial
           v-if="icon"
-          :class="['accordion-icon', iconClass]"
+          class="accordion-icon" :class="[iconClass]"
           :icon-code="icon"
         />
         <span class="accordion-title">{{ title }}</span>

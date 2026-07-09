@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IAvatarProps, ITimelineItem } from '@colorffy/ui'
-import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
+import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Dashboard' })
 
@@ -299,11 +299,12 @@ function onOverviewTabChange(tabId: string) {
               class="mb-3"
             />
 
-            <UiDivider  />
+            <UiDivider />
 
-            <UiTimeline 
-            :items="activityTimelineItems" 
-              align="start"/>
+            <UiTimeline
+              :items="activityTimelineItems"
+              align="start"
+            />
           </template>
         </UiCard>
       </div>

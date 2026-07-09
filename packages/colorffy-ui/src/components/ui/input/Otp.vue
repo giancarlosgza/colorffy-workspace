@@ -90,7 +90,7 @@ function sanitizeValue(value: string) {
   if (!value) {
     return ''
   }
-  return props.integerOnly ? value.replace(/[^0-9]/g, '') : value
+  return props.integerOnly ? value.replace(/\D/g, '') : value
 }
 
 function setValue(value: string) {

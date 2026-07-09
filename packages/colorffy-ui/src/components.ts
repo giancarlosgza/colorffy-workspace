@@ -42,15 +42,15 @@ export { default as UiCard } from './components/ui/card/Card.vue'
 export { default as UiChip } from './components/ui/chip/Chip.vue'
 export { default as UiChipGroup } from './components/ui/chip/ChipGroup.vue'
 
-// Components - Divider
-export { default as UiDivider } from './components/ui/divider/Divider.vue'
-
 // Components - Table
 export { default as UiDatatable } from './components/ui/datatable/Datatable.vue'
-export { default as UiConfirmModal } from './components/ui/dialog/ConfirmModal.vue'
 
+export { default as UiConfirmModal } from './components/ui/dialog/ConfirmModal.vue'
 // Components - Dialog
 export { default as UiModal } from './components/ui/dialog/Modal.vue'
+
+// Components - Divider
+export { default as UiDivider } from './components/ui/divider/Divider.vue'
 
 // Components - Icon
 export { default as UiIconMaterial } from './components/ui/icon/Material.vue'

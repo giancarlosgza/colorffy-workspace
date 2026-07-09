@@ -325,7 +325,7 @@ function isLastVisibleColumn(key: string) {
             </td>
           </tr>
         </tbody>
-        
+
         <!-- Empty State -->
         <tbody v-else>
           <tr>

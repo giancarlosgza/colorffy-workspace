@@ -74,8 +74,7 @@ watch(model, (value) => {
 
 // Seed an empty model with min so the native thumb matches the stored value
 onMounted(() => {
-  if (model.value == null)
-    model.value = props.min
+  model.value ??= props.min
 })
 </script>
 
