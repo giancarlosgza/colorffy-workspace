@@ -12,7 +12,10 @@ const props = withDefaults(defineProps<IBadgeProps>(), {
   pill: false,
   customClass: null,
   iconClass: null,
-  iconStyle: null
+  iconStyle: null,
+  dot: false,
+  max: null,
+  attached: false
 })
 
 /** Computed */
@@ -28,10 +31,30 @@ const badgeClasses = computed(() => {
   if (props.pill)
     classes.push('badge-pill')
 
+  if (props.dot)
+    classes.push('badge-dot')
+
+  if (props.attached)
+    classes.push('badge-attached')
+
   if (props.customClass)
     classes.push(props.customClass)
 
   return classes
+})
+
+// Pure passthrough of `text` unless `max` is explicitly set and exceeded,
+// e.g. text="120" + max={99} -> "99+"
+const displayText = computed(() => {
+  if (props.max == null || !props.text)
+    return props.text
+
+  const numericValue = Number(props.text)
+
+  if (!Number.isNaN(numericValue) && numericValue > props.max)
+    return `${props.max}+`
+
+  return props.text
 })
 </script>
 
@@ -41,11 +64,11 @@ const badgeClasses = computed(() => {
     :class="badgeClasses"
   >
     <UiIconMaterial
-      v-if="iconCode"
+      v-if="iconCode && !dot"
       :icon-code="iconCode"
       :class="iconClass"
       :style="iconStyle"
     />
-    <span v-if="text" v-text="text" />
+    <span v-if="text && !dot" v-text="displayText" />
   </div>
 </template>

@@ -53,4 +53,25 @@ export interface IBadgeProps {
    * Optional custom class for the badge. Accepts string, array, or object map.
    */
   customClass?: BadgeClassName | null
+
+  /**
+   * Renders a label-less notification dot instead of text/icon content.
+   * Text and iconCode are ignored while dot is enabled.
+   */
+  dot?: boolean | null
+
+  /**
+   * Caps numeric text at this value, rendering `{max}+` when the numeric
+   * text exceeds it (e.g. text="120" with max={99} renders "99+").
+   * Only applies when `text` is a numeric string; ignored otherwise.
+   */
+  max?: number | null
+
+  /**
+   * Absolutely positions the badge on the top-end corner of the nearest
+   * `.position-relative` ancestor, for overlay/notification use (e.g. on
+   * avatars or icon buttons). The parent must set `position: relative`
+   * (use the colorffy-css `.position-relative` utility).
+   */
+  attached?: boolean | null
 }

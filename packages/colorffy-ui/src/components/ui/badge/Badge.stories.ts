@@ -16,7 +16,10 @@ const meta = {
       control: 'select',
       options: ['sm']
     },
-    pill: { control: 'boolean' }
+    pill: { control: 'boolean' },
+    dot: { control: 'boolean' },
+    max: { control: 'number' },
+    attached: { control: 'boolean' }
   }
 } satisfies Meta<typeof UiBadge>
 
@@ -69,6 +72,46 @@ export const Outline: Story = {
     variant: 'outline',
     text: 'Outline'
   }
+}
+
+export const Dot: Story = {
+  args: {
+    variant: 'danger',
+    dot: true
+  }
+}
+
+export const MaxCount: Story = {
+  args: {
+    variant: 'danger',
+    pill: true,
+    text: '120',
+    max: 99
+  }
+}
+
+export const Attached: Story = {
+  args: {
+    variant: 'danger',
+    pill: true,
+    text: '3',
+    max: 9,
+    attached: true
+  },
+  render: args => ({
+    components: { UiBadge },
+    setup() {
+      return { args }
+    },
+    template: `
+      <div class="position-relative d-inline-block">
+        <button type="button" style="width: 48px; height: 48px; border-radius: 50%;">
+          <i class="ph ph-bell" />
+        </button>
+        <UiBadge v-bind="args" />
+      </div>
+    `
+  })
 }
 
 export const AllVariants: Story = {
