@@ -20,29 +20,15 @@ const props = withDefaults(defineProps<IAlertProps>(), {
 /** Emits */
 const emit = defineEmits<IAlertEmits>()
 
-/** Visibility & auto-hide */
-const isVisible = ref(true)
+/** Data */
+const isVisible = ref<boolean>(true)
 let hideTimer: ReturnType<typeof setTimeout> | null = null
 
-function clearHideTimer() {
-  if (hideTimer) {
-    clearTimeout(hideTimer)
-    hideTimer = null
-  }
-}
-
-function dismiss() {
-  clearHideTimer()
-  isVisible.value = false
-  emit('dismiss')
-}
-
+/** Lifecycle */
 onMounted(() => {
-  // Snackbars manage their own duration via AlertToast/useToast, so skip auto-hide here.
   if (props.duration && props.type !== 'snackbar')
     hideTimer = setTimeout(dismiss, props.duration)
 })
-
 onBeforeUnmount(() => {
   clearHideTimer()
 })
@@ -79,6 +65,19 @@ const alertClasses = computed(() => {
 
   return classes
 })
+
+/** Methods */
+function clearHideTimer() {
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+}
+function dismiss() {
+  clearHideTimer()
+  isVisible.value = false
+  emit('dismiss')
+}
 </script>
 
 <template>

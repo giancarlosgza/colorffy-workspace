@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITimelineItem } from '@colorffy/ui'
+import type { IAvatarProps, ITimelineItem } from '@colorffy/ui'
 import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
 
@@ -62,9 +62,9 @@ const members = [
 ]
 
 // Team avatar stack for the "Equipo" card header (members' photos + one pending initials entry)
-const teamAvatars = [
-  { src: 'https://i.pravatar.cc/88?img=68', alt: 'Giancarlos Garza', status: 'online' },
-  { src: 'https://i.pravatar.cc/88?img=47', alt: 'Ana Morales', status: 'busy' },
+const teamAvatars: IAvatarProps[] = [
+  { src: 'https://i.pravatar.cc/88?img=68', alt: 'Giancarlos Garza' },
+  { src: 'https://i.pravatar.cc/88?img=47', alt: 'Ana Morales' },
   { src: 'https://i.pravatar.cc/88?img=13', alt: 'Luis Herrera' },
   { src: 'https://i.pravatar.cc/88?img=9', alt: 'María Fuentes' },
   { initials: 'CR' }
@@ -298,18 +298,12 @@ function onOverviewTabChange(tabId: string) {
               aria-label="Filtrar actividad"
               class="mb-3"
             />
-           <div>
-             <UiChip
-               text="Close"
-               class="d-inline-flex"
-               icon-code="&#xe145;"
-               closable
-             />
-           </div>
 
             <UiDivider  />
 
-            <UiTimeline :items="activityTimelineItems" />
+            <UiTimeline 
+            :items="activityTimelineItems" 
+              align="start"/>
           </template>
         </UiCard>
       </div>

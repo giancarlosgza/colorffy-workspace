@@ -191,7 +191,7 @@
       }
     }
 
-    // Actions column (custom actions slot + optional close button)
+    // Actions column
     .alert-actions {
       display: flex;
       align-items: center;
@@ -199,7 +199,7 @@
       gap: .5rem;
     }
 
-    // Dismiss button (only rendered when `dismissible` is true)
+    // Dismiss button
     .alert-close {
       display: inline-flex;
       flex-shrink: 0;

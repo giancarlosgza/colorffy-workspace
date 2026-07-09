@@ -123,7 +123,7 @@
           }
         }
 
-        // Image (rendered in place of the icon wrapper, matching its footprint)
+        // Image
         & .list-item-image {
           --_list-item-image-size: 2.75rem;
 
@@ -159,18 +159,16 @@
 
         cursor: not-allowed;
 
-        // Override .list-item:is(a)'s cursor: pointer so disabled links don't look clickable
         & .list-item:is(a) {
           cursor: not-allowed;
           pointer-events: none;
         }
       }
 
-      // Link mode (to/href) implies the same interactive affordances as UiListGroup's isInteractive
+      // Link mode
       &.list-group-item-link {
         @extend %list-group-item-interactive;
-
-        // Hide the trailing arrow when list-item-undecorated marks custom trailing actions
+        
         &.list-item-undecorated {
           &:after {
             content: none;

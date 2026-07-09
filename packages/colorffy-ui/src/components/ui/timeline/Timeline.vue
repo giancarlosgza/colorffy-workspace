@@ -7,6 +7,7 @@ import UiIconMaterial from '../icon/Material.vue'
 const props = withDefaults(defineProps<ITimelineProps>(), {
   items: () => [],
   align: 'start',
+  size: undefined,
   customClass: null
 })
 
@@ -17,6 +18,12 @@ const timelineClasses = computed(() => {
   if (props.align === 'alternate')
     classes.push('timeline-alternate')
 
+  if (props.size === 'sm')
+    classes.push('timeline-sm')
+
+  if (props.size === 'lg')
+    classes.push('timeline-lg')
+
   if (props.customClass)
     classes.push(props.customClass)
 
@@ -24,14 +31,12 @@ const timelineClasses = computed(() => {
 })
 
 /** Methods */
-// Colors the dot/icon marker using the shared semantic palette
 function markerClasses(item: ITimelineItem) {
   return item.variant ? `timeline-item-${item.variant}` : undefined
 }
 </script>
 
 <template>
-  <!-- Explicit roles: display:contents + list-style:none strip implicit list semantics in some browsers -->
   <ol
     class="timeline"
     :class="timelineClasses"
@@ -43,7 +48,7 @@ function markerClasses(item: ITimelineItem) {
       class="timeline-item"
       role="listitem"
     >
-      <!-- Marker column: image/icon/dot + connector line to the next item -->
+      <!-- Marker column -->
       <div
         class="timeline-item-marker"
         :class="markerClasses(item)"
@@ -72,7 +77,6 @@ function markerClasses(item: ITimelineItem) {
 
       <!-- Content column -->
       <div class="timeline-item-content">
-        <!-- Per-item custom body: #item-<id> slot first, then scoped #item slot -->
         <slot
           :name="`item-${item.id}`"
           :item="item"
@@ -88,12 +92,12 @@ function markerClasses(item: ITimelineItem) {
             />
             <p
               v-if="item.title"
-              class="subtitle-1"
+              class="timeline-title"
               v-text="item.title"
             />
             <p
               v-if="item.text"
-              class="subtitle-2"
+              class="timeline-text"
               v-text="item.text"
             />
           </slot>

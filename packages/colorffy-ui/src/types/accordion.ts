@@ -33,6 +33,11 @@ export interface IAccordionItemProps {
   icon?: string | null
 
   /**
+   * Optional custom class for the icon within the accordion item. Accepts string, array, or object map.
+   */
+  iconClass?: AccordionClassName | null
+
+  /**
    * Body text displayed inside the accordion panel. Prefer using the default slot.
    */
   text?: string | null

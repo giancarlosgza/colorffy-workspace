@@ -33,13 +33,11 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
 })
 
 /** Model */
-// Selected row identities (see `getRowKey`); v-model:selected -> `update:selected`.
 const selectedModel = defineModel<(string | number)[]>('selected', { default: () => [] })
 
 /** Data */
 const sortKey = ref(props.defaultSortKey)
 const sortOrder = ref(props.defaultSortOrder)
-// Keys of columns hidden by default (`column.hidden`); also the reset target
 const defaultHiddenKeys = computed(() => props.columns.filter(col => col.hidden).map(col => col.key))
 const managedHiddenColumns = ref<string[]>([...defaultHiddenKeys.value])
 
@@ -60,7 +58,6 @@ const columnsToggleTooltipText = computed(() => {
 const visibleColumns = computed(() => {
   return props.columns.filter(col => !managedHiddenColumns.value.includes(col.key))
 })
-// Header/skeleton/empty-state span, including the leading checkbox column when selectable.
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
 const selectAllId = useId()
 
@@ -87,8 +84,6 @@ const sortedItems = computed(() => {
   })
 })
 
-// Identity of every row currently rendered (sorted, not filtered — selection
-// composes with sorting since identity follows the row, not its index).
 const rowKeys = computed(() => sortedItems.value.map((item, index) => getRowKey(item, index)))
 const selectedKeySet = computed(() => new Set(selectedModel.value))
 const isAllSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every(key => selectedKeySet.value.has(key)))
@@ -237,7 +232,7 @@ function isLastVisibleColumn(key: string) {
         class="table table-hover"
         :class="[tableClass, { 'table-sticky-header': stickyHeader }]"
       >
-        <caption v-if="caption">
+        <caption v-if="caption" class="mt-3">
           {{ caption }}
         </caption>
         <thead>
@@ -296,6 +291,7 @@ function isLastVisibleColumn(key: string) {
           :skeleton-rows="skeletonRows"
           :is-expanded="isExpanded"
         />
+
         <!-- Table Content -->
         <tbody v-else-if="sortedItems.length > 0">
           <tr
@@ -329,6 +325,7 @@ function isLastVisibleColumn(key: string) {
             </td>
           </tr>
         </tbody>
+        
         <!-- Empty State -->
         <tbody v-else>
           <tr>

@@ -13,17 +13,13 @@
     display: block;
     width: 100%;
     overflow-x: auto;
-
-    // For smooth scrolling on iOS
     -webkit-overflow-scrolling: touch;
   }
 
-  // Optional: Hide table horizontal scrollbar if it's not needed
   .table-responsive::-webkit-scrollbar {
     display: none;
   }
 
-  // Opt-in scroll container for stickyHeader; override --_table-sticky-max-height to resize
   .table-responsive.table-responsive-sticky {
     max-height: var(--_table-sticky-max-height, 32rem);
     overflow-y: auto;
@@ -115,13 +111,12 @@
         }
       }
 
-      // Row selection highlight (`selectable` prop)
       tr.is-selected {
         background-color: var(--theme-surface-a0);
       }
     }
 
-    // Selection column checkbox (selectable prop); .form-check overrides undo form spacing
+    // Selection column
     th.table-select-col,
     td.table-select-col {
       width: 2.75rem;
@@ -134,7 +129,7 @@
       }
     }
 
-    // Sticky header (stickyHeader prop) pairs with .table-responsive-sticky as the scroll container
+    // Sticky header
     &.table-sticky-header thead th {
       position: sticky;
       top: 0;

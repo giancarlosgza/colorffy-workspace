@@ -220,7 +220,7 @@
       --_toggle-btn-bg-color: transparent;
       --_toggle-btn-color: var(--theme-on-background);
       --_toggle-btn-subtitle-color: var(--theme-muted-a10);
-      --_toggle-btn-border-size: #{v.$border-md};
+      --_toggle-btn-border-size: #{v.$border-sm};
       --_toggle-btn-border-color: var(--theme-outline-button);
       --_toggle-btn-easing-in: #{v.$easing-in-fallback};
       --_toggle-btn-easing-duration: 300ms;
@@ -230,17 +230,25 @@
       border-radius: var(--_toggle-btn-radius);
       border: var(--_toggle-btn-border-size) solid var(--_toggle-btn-border-color);
       padding: var(--_toggle-btn-padding);
-
+      cursor: pointer;
       transition: border-width, border-color, background, color, border-radius;
       transition-timing-function: var(--_toggle-btn-easing-in);
       transition-duration: var(--_toggle-btn-easing-duration);
       will-change: border;
 
+      &:is(:hover, :active, :focus) {
+        --_toggle-btn-border-color: var(--theme-primary-a10);
+
+        box-shadow: inset 0 0 0 .5px var(--theme-primary-a10);
+      }
+
       &.toggle-btn-active {
         --_toggle-btn-bg-color: var(--theme-surface-container-low);
         --_toggle-btn-border-color: var(--theme-primary-a10);
-        --_toggle-btn-border-size: #{v.$border-md};
-        --_toggle-btn-radius: calc(#{v.$button-border-radius} * 2);
+        --_toggle-btn-border-size: #{v.$border-sm};
+        --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
+
+        box-shadow: inset 0 0 0 1px var(--theme-primary-a10);
       }
 
       &.toggle-btn-disabled {

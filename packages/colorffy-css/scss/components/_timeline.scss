@@ -14,6 +14,11 @@
     --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
     --_timeline-icon-color: var(--theme-on-background);
     --_timeline-time-color: var(--theme-muted-a10);
+    --_timeline-image-size: 2.75rem;
+    --_timeline-icon-size: var(--fs-500);
+    --_timeline-icon-wrapper-padding: .625rem;
+    --_timeline-title-size: var(--fs-sm-300);
+    --_timeline-subtitle-size: var(--fs-sm-400);
 
     display: grid;
     grid-template-columns: auto 1fr;
@@ -23,12 +28,12 @@
     margin: 0;
     list-style: none;
 
-    // Items participate directly in the timeline grid (marker + content columns)
+    // Items participate directly in the timeline grid
     & .timeline-item {
       display: contents;
     }
 
-    // Marker column: dot/icon/image + connector line to the next item
+    // Marker column
     & .timeline-item-marker {
       grid-column: 1;
       grid-row: auto;
@@ -58,25 +63,25 @@
       background-color: var(--_timeline-dot-color);
     }
 
-    // Image marker, sized to match .list-item-image so lists and timelines align
+    // Image marker
     & .timeline-item-image {
-      inline-size: 2.75rem;
-      block-size: 2.75rem;
+      inline-size: var(--_timeline-image-size);
+      block-size: var(--_timeline-image-size);
       flex-shrink: 0;
       border-radius: v.$rounded-md;
       object-fit: cover;
     }
 
-    // Icon marker, reusing .list-item-icon-wrapper sizing from _list.scss
+    // Icon marker
     & .list-item-icon-wrapper {
       flex-shrink: 0;
       border-radius: v.$rounded-md;
-      padding: .625rem;
+      padding: var(--_timeline-icon-wrapper-padding);
       aspect-ratio: 1;
       background-color: var(--_timeline-icon-bg-color);
 
       & i {
-        font-size: var(--fs-500);
+        font-size: var(--_timeline-icon-size);
         color: var(--_timeline-icon-color);
       }
     }
@@ -92,6 +97,16 @@
         &:not(:last-child) {
           margin-bottom: .15rem;
         }
+
+        &:is(.timeline-title) {
+          font-size: var(--_timeline-title-size);
+          font-weight: v.$fw-600;
+        }
+
+        &:is(.timeline-text) {
+          font-size: var(--_timeline-subtitle-size);
+          color: var(--theme-muted-a10);
+        }
       }
 
       & .caption {
@@ -101,6 +116,35 @@
 
     & .timeline-item:last-child .timeline-item-content {
       padding-bottom: 0;
+    }
+
+    // Sizes
+    &.timeline-sm {
+      --_timeline-gap: .75rem;
+      --_timeline-item-spacing: 1rem;
+      --_timeline-connector-thickness: 2px;
+      --_timeline-dot-size: .5rem;
+      --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
+      --_timeline-icon-color: var(--theme-on-background);
+      --_timeline-image-size: 2.75rem;
+      --_timeline-icon-size: var(--fs-600);
+      --_timeline-icon-wrapper-padding: .35rem;
+      --_timeline-title-size: var(--fs-sm-400);
+      --_timeline-subtitle-size: var(--fs-sm-500);
+    }
+
+    &.timeline-lg {
+      --_timeline-gap: 1.25rem;
+      --_timeline-item-spacing: 2rem;
+      --_timeline-connector-thickness: 2px;
+      --_timeline-dot-size: .5rem;
+      --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
+      --_timeline-icon-color: var(--theme-on-background);
+      --_timeline-image-size: 3.75rem;
+      --_timeline-icon-size: var(--fs-400);
+      --_timeline-icon-wrapper-padding: .75rem;
+      --_timeline-title-size: var(--fs-sm-100);
+      --_timeline-subtitle-size: var(--fs-sm-200);
     }
 
     // ==========================================================================

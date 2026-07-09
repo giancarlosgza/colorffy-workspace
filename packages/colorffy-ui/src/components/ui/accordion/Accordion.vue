@@ -8,6 +8,7 @@ withDefaults(defineProps<IAccordionItemProps>(), {
   name: 'accordion-item',
   title: '',
   icon: null,
+  iconClass: null,
   text: '',
   disabled: false,
   customClass: null
@@ -31,7 +32,7 @@ const isOpen = defineModel<boolean>('open', { default: false })
       <slot name="header">
         <UiIconMaterial
           v-if="icon"
-          class="accordion-icon"
+          :class="['accordion-icon', iconClass]"
           :icon-code="icon"
         />
         <span class="accordion-title">{{ title }}</span>

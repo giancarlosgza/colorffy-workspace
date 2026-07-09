@@ -77,8 +77,7 @@
         @include m.generate-gradients(v.$dynamic-gradients, false, true);
       }
 
-      // Indeterminate bar: a partial-width bar that sweeps across the track
-      // (width/value are unknown). Pairs with the component's `indeterminate` prop.
+      // Indeterminate
       &.progress-indeterminate {
         width: 40%;
         animation: progress-indeterminate 1.4s var(--_progress-easing-in) infinite;

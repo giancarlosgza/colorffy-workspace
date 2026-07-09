@@ -38,7 +38,6 @@ function toggle(option: IChipOption) {
     return
   }
 
-  // Single mode: clicking the selected chip deselects it
   emit('update:modelValue', isSelected(option) ? null : option.id)
 }
 </script>

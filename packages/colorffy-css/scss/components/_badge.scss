@@ -170,7 +170,7 @@
       margin-inline: 0;
     }
 
-    // Notification dot — label-less badge for unread/status indicators; text/icon omitted while active
+    // Notification Dot
     &.badge-dot {
       --_badge-gutter-y: 0;
       --_badge-gutter-x: 0;
@@ -181,7 +181,7 @@
       margin: 0;
     }
 
-    // Overlay on the top-end corner of a .position-relative parent
+    // Overlay
     &.badge-attached {
       position: absolute;
       inset-block-start: 0;

@@ -1,5 +1,6 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
+@use '../base/typography';
 
 @layer components.cards {
   // ==========================================================================
@@ -154,8 +155,8 @@
     // Card link mode (`to`/`href` renders the card root as `a`/`as`)
     &.card-link {
       color: inherit;
-      text-decoration: none;
       cursor: pointer;
+      @extend .undecorated;
       transition: background-color 300ms v.$easing-in-fallback, box-shadow 300ms v.$easing-in-fallback;
 
       &:is(:hover) {

@@ -43,7 +43,6 @@
 
     &.avatar-md {
       position: relative;
-      //border: calc(#{v.$border-md} * 3) solid var(--theme-background);
       @include m.make-image(100px);
     }
 
@@ -109,7 +108,6 @@
       }
     }
 
-    // Reset the default .initials-avatar trailing margin so overlap stays consistent
     > .initials-avatar {
       margin-inline: 0;
     }
@@ -128,12 +126,10 @@
     display: inline-flex;
     vertical-align: middle;
 
-    // Pull the dot toward the shape's visible mass when the avatar is masked
     &.avatar-status-masked {
       --_avatar-status-inset: 8%;
     }
 
-    // Reset the default .initials-avatar trailing margin so the dot hugs the avatar
     > .initials-avatar {
       margin-inline: 0;
     }
@@ -166,7 +162,6 @@
     }
   }
 
-  // Mirror avatar-group ring/overlap when a status wrapper is a direct child instead of the avatar
   .avatar-group > .avatar-status-wrapper {
     &:not(:first-child) {
       margin-inline-start: calc(-1 * var(--_avatar-group-overlap));

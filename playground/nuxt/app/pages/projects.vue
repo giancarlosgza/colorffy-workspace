@@ -57,7 +57,7 @@ const wizardSteps: IStepItem[] = [
   { id: 'budget', label: 'Presupuesto', description: 'Monto y fecha límite' },
   { id: 'review', label: 'Revisar', description: 'Confirma y crea' }
 ]
-const activeWizardStep = ref(wizardSteps[0].id)
+const activeWizardStep = ref(wizardSteps[0]?.id ?? '')
 const wizardForm = ref({ name: '', description: '', owner: '', priority: '', budget: '', deadline: '' })
 const teamOptions = projects.map(project => project.owner)
 const priorityOptions = ['Baja', 'Media', 'Alta']
@@ -97,17 +97,17 @@ function clearFilters() {
   statusFilter.value = 'all'
 }
 function goToPreviousWizardStep() {
-  if (isFirstWizardStep.value)
-    return
-  activeWizardStep.value = wizardSteps[wizardStepIndex.value - 1].id
+  const prevStep = wizardSteps[wizardStepIndex.value - 1]
+  if (prevStep)
+    activeWizardStep.value = prevStep.id
 }
 function goToNextWizardStep() {
-  if (isLastWizardStep.value)
-    return
-  activeWizardStep.value = wizardSteps[wizardStepIndex.value + 1].id
+  const nextStep = wizardSteps[wizardStepIndex.value + 1]
+  if (nextStep)
+    activeWizardStep.value = nextStep.id
 }
 function createProject() {
-  activeWizardStep.value = wizardSteps[0].id
+  activeWizardStep.value = wizardSteps[0]?.id ?? ''
   wizardForm.value = { name: '', description: '', owner: '', priority: '', budget: '', deadline: '' }
 }
 </script>
@@ -352,7 +352,7 @@ function createProject() {
           :steps="wizardSteps"
           :active-step="activeWizardStep"
           linear
-          class="mb-4"
+          class="mb-5"
           @update-active-step="activeWizardStep = $event"
         />
 

@@ -247,7 +247,9 @@ function copyInstall() {
     </UiCard>
 
     <!-- Cover image + clickable card (image-url + href) -->
-    <UiCard
+    <div class="row">
+      <div class="col-md-6">
+        <UiCard
       variant="outline"
       class="card-pane shadow-sm mb-4"
       image-url="https://picsum.photos/640/360"
@@ -264,6 +266,27 @@ function copyInstall() {
       </template>
     </UiCard>
 
+      </div>
+      <div class="col-md-6">
+        <UiCard
+      variant="elevated"
+      class="card-pane mb-4"
+      image-url="https://picsum.photos/640/360"
+      image-alt="Vista previa de la documentación de Colorffy"
+      href="https://colorffy.com"
+    >
+      <template #body>
+        <h3 class="subtitle-1 fw-700 mb-1">
+          Documentación completa
+        </h3>
+        <p class="fs-sm-300 text-muted mb-0">
+          Guías, ejemplos y referencia de la API en colorffy.com.
+        </p>
+      </template>
+    </UiCard>
+
+      </div>
+    </div>
     <!-- Explore -->
     <h2 class="fs-500 fw-800 mb-3 mt-section">
       Explora la demo

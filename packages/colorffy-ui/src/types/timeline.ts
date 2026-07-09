@@ -2,6 +2,7 @@ import type { ClassValue, ThemeColor } from '@/types/shared'
 
 export type TimelineClassName = ClassValue
 export type TimelineAlign = 'start' | 'alternate'
+export type TimelineSize = 'sm' | 'lg'
 
 /**
  * Interface for individual items rendered by the Timeline component.
@@ -81,6 +82,12 @@ export interface ITimelineProps {
    * connector line and alternates content left/right.
    */
   align?: TimelineAlign
+
+  /**
+   * Size variant of the timeline.
+   * Accepts 'sm' for a tighter layout or 'lg' for a larger one; defaults to the standard size.
+   */
+  size?: TimelineSize
 
   /**
    * Optional custom classes for the root element.

@@ -45,7 +45,6 @@
       border-bottom-right-radius: var(--_input-group-radius);
     }
 
-    // Change the border-radius from form-control when input-group has prefix or suffix
     &:has(.input-group-prefix) {
       .form-control {
         border-top-left-radius: 0;

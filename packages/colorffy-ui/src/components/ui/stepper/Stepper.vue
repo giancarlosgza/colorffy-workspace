@@ -48,7 +48,6 @@ function isStepBlocked(step: IStepItem, index: number): boolean {
   if (step.disabled)
     return true
 
-  // Linear mode blocks jumping ahead of the current step
   if (props.linear && index > currentIndex.value)
     return true
 
@@ -139,7 +138,8 @@ function onStepKeydown(event: KeyboardEvent, index: number) {
 
         <span class="step-text">
           <span class="step-label">{{ step.label }}</span>
-          <span v-if="step.description" class="step-description">{{ step.description }}</span>
+          <span v-if="step.description" 
+          class="step-description">{{ step.description }}</span>
         </span>
       </button>
     </li>

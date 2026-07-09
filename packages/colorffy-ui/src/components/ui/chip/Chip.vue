@@ -40,13 +40,11 @@ const chipClasses = computed(() => {
 
   return classes
 })
-// Selected chips swap the leading icon for a check mark (M3 filter chips)
 const leadingIcon = computed(() => (props.selected ? '&#xe5ca;' : props.iconCode))
 const ariaPressed = computed(() => (props.selected ? true : undefined))
 </script>
 
 <template>
-  <!-- Closable chips wrap two buttons so the remove target stays separate -->
   <div
     v-if="closable"
     :class="chipClasses"
@@ -77,7 +75,6 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
     </button>
   </div>
 
-  <!-- Plain chips stay a single native button -->
   <button
     v-else
     type="button"

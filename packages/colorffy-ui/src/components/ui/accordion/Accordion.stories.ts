@@ -9,6 +9,7 @@ const meta = {
   argTypes: {
     title: { control: 'text' },
     icon: { control: 'text' },
+    iconClass: { control: 'text' },
     text: { control: 'text' },
     open: { control: 'boolean' },
     disabled: { control: 'boolean' }
