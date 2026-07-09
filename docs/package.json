@@ -8,8 +8,8 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "docus": "latest",
+    "docus": "^5.12.3",
     "better-sqlite3": "^12.5.0",
-    "nuxt": "^4.4.2"
+    "nuxt": "^4.4.8"
   }
 }
