@@ -3,6 +3,19 @@
 
 @layer components.buttons {
   // ==========================================================================
+  // CHIP GROUP COMPONENT
+  // ==========================================================================
+  .chip-group {
+    --_chip-group-gap: .5rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_chip-group-gap);
+  }
+
+  // ==========================================================================
   // BUTTON GROUP COMPONENT
   // ==========================================================================
   .btn-group {

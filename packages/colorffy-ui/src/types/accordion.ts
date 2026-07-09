@@ -1,4 +1,6 @@
-export type AccordionClassName = string | string[] | Record<string, boolean>
+import type { ClassValue } from '@/types/shared'
+
+export type AccordionClassName = ClassValue
 
 /**
  * Interface props for the Accordion item component.

@@ -110,12 +110,14 @@ function save() {
                   label="Correo electrónico"
                   type="email"
                   placeholder="tucorreo@ejemplo.com"
-                  variant="outline"
                   required
                 >
                   <!-- Prefix slot renders an attached icon box -->
                   <template #prefix>
                     <UiIconMaterial icon-code="&#xe0be;" />
+                  </template>
+                  <template #suffix>
+                    <UiIconMaterial icon-code="&#xe86c;" />
                   </template>
                 </UiInputText>
               </div>

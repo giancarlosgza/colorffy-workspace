@@ -1,4 +1,6 @@
-export type CardClassName = string | string[] | Record<string, boolean>
+import type { ClassValue } from '@/types/shared'
+
+export type CardClassName = ClassValue
 export type CardVariant = 'outline' | 'elevated' | 'pane'
 export type CardSize = 'xs' | 'sm' | 'md'
 

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import UiIconMaterial from '../icon/Material.vue'
 import UiInputText from './Text.vue'
 
 const meta: Meta<typeof UiInputText> = {
@@ -73,6 +74,44 @@ export const Readonly: Story = {
         model-value="This value cannot be changed"
         readonly
       />
+    `
+  })
+}
+
+export const WithPrefix: Story = {
+  render: () => ({
+    components: { UiInputText, UiIconMaterial },
+    template: `
+      <UiInputText label="Website" placeholder="Enter code">
+        <template #prefix>
+          <UiIconMaterial icon-code="&#xe8b6;" />
+        </template>
+      </UiInputText>
+    `
+  })
+}
+
+export const WithSuffix: Story = {
+  render: () => ({
+    components: { UiInputText },
+    template: `
+      <UiInputText label="Amount" placeholder="0.00" type="number">
+        <template #suffix>USD</template>
+      </UiInputText>
+    `
+  })
+}
+
+export const WithPrefixAndSuffix: Story = {
+  render: () => ({
+    components: { UiInputText, UiIconMaterial },
+    template: `
+      <UiInputText label="Price" placeholder="0.00" type="number">
+        <template #prefix>
+          <UiIconMaterial icon-code="&#xe8b6;" />
+        </template>
+        <template #suffix>USD</template>
+      </UiInputText>
     `
   })
 }

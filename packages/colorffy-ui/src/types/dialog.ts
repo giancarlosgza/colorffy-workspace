@@ -1,4 +1,6 @@
-export type DialogClassName = string | string[] | Record<string, boolean>
+import type { ClassValue } from '@/types/shared'
+
+export type DialogClassName = ClassValue
 export type DialogMode = 'modal' | 'side-sheet' | 'headless'
 export type DialogSize = 'sm' | 'md' | 'lg' | 'fullscreen'
 export type DialogVariant = 'danger' | 'warning' | 'success' | 'primary'
@@ -25,13 +27,13 @@ export interface IDialogProps {
 
   /**
    * Preferred way to describe the dialog shape.
-   * When provided, it takes precedence over `isModal`, `isSideSheet`, and `isHeadless`.
+   * When provided, it takes precedence over the `showAsModal` and `isHeadless` flags.
    */
   mode?: DialogMode
 
   /**
    * Preferred size for the Dialog component.
-   * When provided, it takes precedence over legacy `isSmall` and `isLarge` flags.
+   * Controls the dialog dimensions ('sm' | 'md' | 'lg' | 'fullscreen').
    */
   size?: DialogSize | null
 

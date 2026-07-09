@@ -1,8 +1,10 @@
+import type { ClassValue, ThemeColor } from '@/types/shared'
+
 export type AlertType = 'banner' | 'tonal' | 'snackbar'
-export type AlertVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'transparent' | 'default'
+export type AlertVariant = ThemeColor | 'transparent' | 'default'
 export type AlertSize = 'sm'
 export type AlertPlacement = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right'
-export type AlertClassName = string | string[] | Record<string, boolean>
+export type AlertClassName = ClassValue
 export interface IToastOptions {
   message?: string
   variant?: AlertVariant

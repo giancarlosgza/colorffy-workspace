@@ -1,5 +1,7 @@
-export type BadgeClassName = string | string[] | Record<string, boolean>
-export type BadgeVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'gradient' | 'default' | 'outline' | `tonal tonal-${'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'danger' | 'info'}` | (string & {})
+import type { ClassValue, ThemeColor } from '@/types/shared'
+
+export type BadgeClassName = ClassValue
+export type BadgeVariant = ThemeColor | 'gradient' | 'default' | 'outline' | `tonal tonal-${Exclude<ThemeColor, 'neutral'>}` | (string & {})
 export type BadgeSize = 'sm'
 
 /**

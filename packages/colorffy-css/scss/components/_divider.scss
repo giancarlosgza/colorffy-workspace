@@ -1,0 +1,62 @@
+@use "../abstracts/variables" as v;
+
+@layer components.divider {
+  // ==========================================================================
+  // DIVIDER COMPONENT
+  // ==========================================================================
+  .divider {
+    --_divider-thickness: 1px;
+    --_divider-color: var(--theme-outline-surface);
+    --_divider-spacing: .75rem;
+
+    border: none;
+    block-size: var(--_divider-thickness);
+    inline-size: 100%;
+    background-color: var(--_divider-color);
+    margin-block: var(--_divider-spacing);
+
+    // ==========================================================================
+    // DIVIDER VERTICAL
+    // ==========================================================================
+    &.divider-vertical {
+      display: inline-block;
+      inline-size: var(--_divider-thickness);
+      block-size: auto;
+      min-block-size: 1em;
+      align-self: stretch;
+      margin-block: 0;
+      margin-inline: var(--_divider-spacing);
+    }
+
+    // ==========================================================================
+    // DIVIDER INSET
+    // ==========================================================================
+    &.divider-inset {
+      margin-inline-start: 3rem;
+    }
+
+    // ==========================================================================
+    // DIVIDER TEXT
+    // ==========================================================================
+    &.divider-text {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+
+      block-size: auto;
+      inline-size: 100%;
+      background-color: transparent;
+
+      color: var(--theme-muted-a10);
+      font-size: var(--fs-sm-300);
+
+      &::before,
+      &::after {
+        content: "";
+        flex: 1;
+        block-size: var(--_divider-thickness);
+        background-color: var(--_divider-color);
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
-import type { IBaseLinkProps } from '@/types/shared'
+import type { ClassValue, IBaseLinkProps } from '@/types/shared'
 
-export type NavbarClassName = string | string[] | Record<string, boolean>
+export type NavbarClassName = ClassValue
 
 /**
  * Interface props for the Navbar component.

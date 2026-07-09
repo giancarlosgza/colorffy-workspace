@@ -6,12 +6,19 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<IColorPickerProps>(), {
   id: null,
   label: null,
-  maxLength: 7,
+  maxlength: 7,
   modelValue: null,
+  errorMessages: () => [],
+  placeholder: null,
+  disabled: false,
+  required: false,
+  readonly: false,
+  optionalLabel: false,
+  variant: null,
+  rounded: false,
   customClass: null,
   size: null,
-  hideLabel: false,
-  required: false
+  hideLabel: false
 })
 
 /** Emits */
@@ -21,10 +28,15 @@ const emit = defineEmits<IColorPickerEmits>()
 const model = defineModel<string | null>('modelValue', { default: null })
 
 /** Computed */
+const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputIdColor = computed(() => props.id ? `${props.id}-input-color` : undefined)
 const inputIdText = computed(() => props.id ? `${props.id}-input-text` : undefined)
+const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 
-const groupClasses = computed(() => ['form-group'])
+const groupClasses = computed(() => [
+  'form-group',
+  { 'form-invalid': hasErrors.value }
+])
 const labelClasses = computed(() => [
   'mb-2',
   { 'visually-hidden': props.hideLabel }
@@ -74,6 +86,10 @@ const textClasses = computed(() => {
         v-model="model"
         type="color"
         :class="colorClasses"
+        :disabled="disabled"
+        :required="required"
+        :aria-invalid="hasErrors || undefined"
+        :aria-describedby="describedById"
         @change="emit('onUpdate', model)"
       >
       <!-- Text -->
@@ -82,9 +98,27 @@ const textClasses = computed(() => {
         v-model.lazy="model"
         type="text"
         :class="textClasses"
-        :maxlength="maxLength"
+        :maxlength="maxlength"
+        :disabled="disabled"
+        :aria-invalid="hasErrors || undefined"
+        :aria-describedby="describedById"
         @change="emit('onUpdate', model)"
       >
     </div>
+
+    <!-- Feedback -->
+    <p
+      v-if="hasErrors"
+      :id="describedById"
+      class="invalid-feedback"
+    >
+      {{ errorMessages?.[0] }}
+    </p>
+    <p
+      v-else-if="optionalLabel"
+      class="caption text-muted mt-1"
+    >
+      Optional
+    </p>
   </div>
 </template>

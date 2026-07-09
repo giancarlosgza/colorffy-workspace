@@ -13,6 +13,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiCard` when you need header/body/footer structure
 - Cards support variants: `pane` (default), `outlined`, `elevated`
 
+**Visual separation**
+- Use `UiDivider` to separate items in a list, sections of a form, or inline toolbar actions (`vertical`)
+- Use `text` for a labelled divider (e.g. "OR"); use `inset` to align past a leading icon
+
 **Modals & Dialogs**
 - Use `UiModal` for custom modal content with full control
 - Use `UiConfirmModal` for quick confirmation dialogs
@@ -93,6 +97,12 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Includes country code selector
 - Set `defaultCountry` for region
 
+**Chips as filters or tag inputs**
+- Use `UiChipGroup` (+ `UiChip`) when the selection is interactive — filter pills, multi-select tag pickers, removable input tags
+- Single mode models `string | null` (clicking the selected chip deselects it); `multiple` models `string[]`
+- Use `closable` chips for removable tags; `UiChipGroup` emits `remove(optionId)`
+- Prefer `UiBadge` instead when the label is just a static status/count, not something the user clicks
+
 ## Buttons & Actions
 
 **Primary actions**
@@ -150,6 +160,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use with `count` prop for numeric badges
 - Variants: `filled`, `outline`, `tonal`
 - Use `UiBadgeGroup` to contain multiple badges
+- Badges are static (not clickable) — for interactive filters/tags/inputs use `UiChip` / `UiChipGroup` instead
 
 ## Data Display
 
@@ -199,6 +210,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - 6+ options → `UiInputSelect`
 - Button-style toggle → `UiButtonToggleGroup`
 - Visual options (tabs) → `UiTabs` or `UiSegmentedControls`
+- Filter-style pills (single or multi-select) → `UiChipGroup`
 
 ### "I need to show feedback to users"
 - Page-level important → `UiAlert` type="banner"

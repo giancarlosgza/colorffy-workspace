@@ -1,4 +1,4 @@
-import type { IBaseInputProps, InputSize } from '@/types/shared'
+import type { IBaseInputProps } from '@/types/shared'
 
 /**
  * Interface props for the TextInput component.
@@ -114,15 +114,26 @@ export interface IPhoneNumberInputEmits {
 
 /**
  * Interface props for the FileInput component.
+ *
+ * Extends the shared input base. Inherited `placeholder`, `variant`,
+ * `readonly` and `rounded` have no visual effect on a file input and are
+ * left inherited but unwired.
  */
-export interface IFileInputProps {
-  id?: string | null
-  label?: string | null
+export interface IFileInputProps extends IBaseInputProps {
+  /**
+   * Label text shown inside the dropbox area.
+   */
   inputLabel?: string | null
+
+  /**
+   * Renders a larger dropbox variant.
+   */
   large?: boolean
+
+  /**
+   * Bound file value.
+   */
   modelValue?: File | null
-  customClass?: string | null
-  required?: boolean
 }
 
 /**
@@ -136,38 +147,49 @@ export interface IFileInputEmits {
 /**
  * Interface props for the ColorPicker component.
  */
-export interface IColorPickerProps {
-  id?: string | null
-  label?: string | null
-  maxLength?: number
+export interface IColorPickerProps extends IBaseInputProps {
+  /**
+   * Maximum length of the hex text input.
+   */
+  maxlength?: number
+
+  /**
+   * Bound color value (hex string).
+   */
   modelValue?: string | null
-  customClass?: string | null
-  size?: InputSize
-  hideLabel?: boolean
-  required?: boolean
 }
 
 /**
  * Interface emits for the ColorPicker component.
  */
 export interface IColorPickerEmits {
+  (e: 'update:modelValue', value: string | null): void
   (e: 'onUpdate', value: string | null): void
 }
 
 /**
  * Interface props for the Check component.
  */
-export interface ICheckProps {
-  id?: string | null
+export interface ICheckProps extends Omit<IBaseInputProps, 'variant'> {
+  /**
+   * Display label text (required for the Check component).
+   */
   label: string
+
+  /**
+   * Native input type (e.g. 'checkbox').
+   */
   type?: string
+
+  /**
+   * Bound checked value.
+   */
   modelValue?: string | boolean | null
-  errorMessages?: string[]
-  customClass?: string | null
-  size?: InputSize
-  hideLabel?: boolean
+
+  /**
+   * Check visual variant. `'switch'` renders a toggle switch.
+   */
   variant?: 'switch' | null
-  required?: boolean
 }
 
 /**
@@ -175,4 +197,5 @@ export interface ICheckProps {
  */
 export interface ICheckEmits {
   (e: 'update:modelValue', value: string | boolean | null): void
+  (e: 'onUpdate', value: string | boolean | null): void
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ITextInputEmits, ITextInputProps } from '@/types/input'
-import { computed, watch } from 'vue'
+import { computed, useSlots, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ITextInputProps>(), {
@@ -48,7 +48,13 @@ const inputModel = computed<string | number | null>({
   }
 })
 
+/** Composable */
+const slots = useSlots()
+
 /** Computed */
+const hasPrefix = computed(() => !!slots.prefix)
+const hasSuffix = computed(() => !!slots.suffix)
+const hasGroup = computed(() => hasPrefix.value || hasSuffix.value)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => (props.id ? `${props.id}-input-text` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
@@ -82,6 +88,23 @@ const inputClasses = computed(() => {
   return classes
 })
 
+// Shared input bindings so both branches (with/without group) stay in sync
+const inputAttrs = computed(() => ({
+  id: inputId.value,
+  class: inputClasses.value,
+  type: props.type,
+  maxlength: props.maxlength,
+  placeholder: placeholderText.value,
+  min: minValue.value,
+  max: maxValue.value,
+  disabled: props.disabled,
+  required: props.required,
+  readonly: props.readonly,
+  autofocus: props.autofocus,
+  'aria-invalid': hasErrors.value || undefined,
+  'aria-describedby': describedById.value
+}))
+
 /** Watchers */
 watch(model, (value) => {
   emit('onUpdate', value)
@@ -97,21 +120,31 @@ watch(model, (value) => {
     >
       {{ label }}{{ required ? ' *' : '' }}
     </label>
+    <div
+      v-if="hasGroup"
+      class="input-group"
+    >
+      <span
+        v-if="hasPrefix"
+        class="input-group-prefix"
+      >
+        <slot name="prefix" />
+      </span>
+      <input
+        v-model="inputModel"
+        v-bind="inputAttrs"
+      >
+      <span
+        v-if="hasSuffix"
+        class="input-group-suffix"
+      >
+        <slot name="suffix" />
+      </span>
+    </div>
     <input
-      :id="inputId"
+      v-else
       v-model="inputModel"
-      :class="inputClasses"
-      :type="type"
-      :maxlength="maxlength"
-      :placeholder="placeholderText"
-      :min="minValue"
-      :max="maxValue"
-      :disabled="disabled"
-      :required="required"
-      :readonly="readonly"
-      :autofocus="autofocus"
-      :aria-invalid="hasErrors || undefined"
-      :aria-describedby="describedById"
+      v-bind="inputAttrs"
     >
 
     <!-- Feedback -->

@@ -307,6 +307,40 @@
             --_btn-border-color: var(--theme-surface-a60);
           }
         }
+
+        // Closable chips render as a wrapper with two inner action buttons
+        &:is(.chip-closable) {
+          padding-inline-end: .35rem;
+
+          & :where(.chip-content, .chip-remove) {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--_btn-gap, .35rem);
+            padding: 0;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+
+            &:is(:disabled) {
+              cursor: not-allowed;
+            }
+          }
+
+          & .chip-remove {
+            border-radius: #{v.$rounded-full};
+            padding: .1rem;
+
+            & i {
+              font-size: 1.05rem;
+            }
+
+            &:is(:hover, :focus-visible):not(:disabled) {
+              background-color: var(--theme-surface-container-highest);
+            }
+          }
+        }
       }
 
       // Gradient

@@ -273,11 +273,20 @@ function onOverviewTabChange(tabId: string) {
             <UiChipGroup
               v-model="activityFilter"
               :options="activityFilters"
+              closable
               aria-label="Filtrar actividad"
               class="mb-3"
             />
+           <div>
+             <UiChip
+               text="Close"
+               class="d-inline-flex"
+               icon-code="&#xe145;"
+               closable
+             />
+           </div>
 
-            <UiDivider />
+            <UiDivider  />
 
             <UiListGroup
               is-interactive

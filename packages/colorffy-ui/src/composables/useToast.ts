@@ -20,6 +20,8 @@ export function useToast(toast: Ref<IToastDisplay | null>) {
   const success = (message: string, opts?: ToastOptions) => onToastMessage('success', message, opts)
   const warning = (message: string, opts?: ToastOptions) => onToastMessage('warning', message, opts)
   const danger = (message: string, opts?: ToastOptions) => onToastMessage('danger', message, opts)
+  const info = (message: string, opts?: ToastOptions) => onToastMessage('info', message, opts)
+  const primary = (message: string, opts?: ToastOptions) => onToastMessage('primary', message, opts)
 
-  return { onToastMessage, success, warning, danger }
+  return { onToastMessage, success, warning, danger, info, primary }
 }

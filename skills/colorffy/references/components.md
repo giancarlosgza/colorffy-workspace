@@ -11,7 +11,9 @@ Complete reference for all 70+ Vue 3 components in @colorffy/ui.
 - [Badges](#badges)
 - [Buttons](#buttons)
 - [Cards](#cards)
+- [Chips](#chips)
 - [Dialogs](#dialogs)
+- [Dividers](#dividers)
 - [Icons](#icons)
 - [Images](#images)
 - [Form Inputs](#form-inputs)
@@ -373,6 +375,52 @@ Container card component.
 - `body` - Main content area
 - `footer` - Card footer section
 
+## Chips
+
+### UiChip
+Single interactive chip (filter, input, or plain).
+
+```vue
+<UiChip text="Filter chip" icon-code="&#xe152;" @click="onClick" />
+<UiChip text="Selected" selected />
+<UiChip text="Removable" closable @remove="onRemove" />
+```
+
+**Props:**
+- `id` (string | null)
+- `text` (string | null) - Chip label
+- `iconCode` (string | null) - Leading Material Symbols code, replaced by a check mark while `selected`
+- `selected` (boolean, default: false) - Filter-chip active state
+- `disabled` (boolean, default: false)
+- `closable` (boolean, default: false) - Renders a trailing remove button
+- `textOnly` (boolean, default: false) - Borderless text-only variant
+- `closeLabel` (string, default: 'Remove') - Accessible label for the remove button
+
+**Events:** `click`, `remove`
+
+**Slots:** `default` - extra content rendered after `text`
+
+### UiChipGroup
+Chip set with single/multiple selection via `v-model`.
+
+```vue
+<UiChipGroup
+  v-model="selected"
+  :options="[{ id: 'a', text: 'Option A' }, { id: 'b', text: 'Option B' }]"
+  aria-label="Filter"
+/>
+```
+
+**Props:**
+- `options` (`IChipOption[]`, required) - `{ id, text, iconCode?, disabled?, closable? }`
+- `modelValue` (`string | string[] | null`) - single mode: `string | null`; multi mode: `string[]`
+- `multiple` (boolean, default: false)
+- `ariaLabel` (string | null)
+
+**Events:** `update:modelValue`, `remove` (emits the option `id`)
+
+**Note:** Chips are interactive filters/inputs; use `UiBadge` for static status labels.
+
 ## Dialogs
 
 ### UiModal
@@ -432,6 +480,23 @@ Pre-configured confirmation dialog.
 **Events:**
 - `confirm` - User confirmed action
 - `cancel` - User cancelled
+
+## Dividers
+
+### UiDivider
+Separator for lists, forms, and sections. Renders a plain `<hr>`, or a labelled/vertical `<div role="separator">`.
+
+```vue
+<UiDivider />
+<UiDivider text="OR" />
+<UiDivider vertical />
+<UiDivider inset />
+```
+
+**Props:**
+- `text` (string | null) - Centered label between two hairlines
+- `vertical` (boolean, default: false) - Vertical divider for inline flex content
+- `inset` (boolean, default: false) - Indent from the inline start
 
 ## Icons
 
@@ -513,6 +578,8 @@ User avatar component with fallback.
 **Additional props:**
 - `type` ('text' | 'email' | 'password' | 'url' | 'tel')
 
+**Slots:** `#prefix`, `#suffix` - render a bordered box attached to the input (e.g. an icon or a "USD" label)
+
 ### UiInputTextarea
 
 ```vue
@@ -554,6 +621,9 @@ User avatar component with fallback.
 - `color` (string)
 - `variant` ('switch' | null) - style variant (renders switch checkbox when set to `'switch'`)
 - `hideLabel` (boolean) - hides label text visually while keeping it accessible
+- Also shares the common base props: `errorMessages`, `required`, `optionalLabel`
+
+**Events:** `update:modelValue`, `onUpdate` (fires with the same value)
 
 ### UiInputRadio
 
@@ -588,15 +658,17 @@ User avatar component with fallback.
 <UiInputFile v-model="files" label="Upload file" :multiple="false" accept=".jpg,.png,.pdf" />
 ```
 
-**Props:** `modelValue` (File | File[]), `multiple` (boolean), `accept` (string)
+**Props:** `modelValue` (File | File[]), `multiple` (boolean), `accept` (string), plus the common base props `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel` (renders the error feedback block when `errorMessages` is set)
 
 ### UiInputColorPicker
 
 ```vue
-<UiInputColorPicker v-model="color" label="Choose color" />
+<UiInputColorPicker v-model="color" label="Choose color" :maxlength="7" />
 ```
 
-**Props:** `modelValue` (string, hex color)
+**Props:** `modelValue` (string, hex color), `maxlength` (number, default: 7), plus the common base props `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`. `v-model` works as expected (no separate `@on-update` wiring needed).
+
+**Breaking change:** the length-limit prop was renamed `maxLength` → `maxlength` (lowercase).
 
 ### UiInputPhoneNumber
 
@@ -901,18 +973,26 @@ Data table with type-aware sorting, a column manager, and built-in loading/empty
 ## Composables
 
 ### useToast
-Show toast notifications.
+Show toast notifications. Pass a `ref` to a mounted `UiAlertToast` instance; returns variant helpers plus a generic `onToastMessage`.
 
-```typescript
+```vue
+<script setup lang="ts">
 import { useToast } from '@colorffy/ui'
+import { ref } from 'vue'
 
-const toast = useToast()
+const toastRef = ref(null)
+const toast = useToast(toastRef)
 
-toast.show({
-  message: 'Success!',
-  variant: 'success',
-  duration: 3000
-})
+toast.success('Success!', { duration: 3000 })
+toast.warning('Careful!')
+toast.danger('Something went wrong.')
+toast.info('Heads up.')
+toast.primary('Welcome back!')
+</script>
+
+<template>
+  <UiAlertToast ref="toastRef" />
+</template>
 ```
 
 ### useDateUtils

@@ -1,4 +1,6 @@
-export type ListClassName = string | string[] | Record<string, boolean>
+import type { ClassValue } from '@/types/shared'
+
+export type ListClassName = ClassValue
 
 export type ListVariant = 'flush' | 'low-contrast'
 export type ListSize = 'sm' | 'md'

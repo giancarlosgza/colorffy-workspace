@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ICheckProps } from '@/types/input'
-import { computed } from 'vue'
+import type { ICheckEmits, ICheckProps } from '@/types/input'
+import { computed, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ICheckProps>(), {
@@ -8,12 +8,20 @@ const props = withDefaults(defineProps<ICheckProps>(), {
   type: 'checkbox',
   modelValue: false,
   errorMessages: () => [],
+  placeholder: null,
+  disabled: false,
+  required: false,
+  readonly: false,
+  optionalLabel: false,
+  rounded: false,
   customClass: null,
   size: null,
   hideLabel: false,
-  variant: null,
-  required: false
+  variant: null
 })
+
+/** Emits */
+const emit = defineEmits<ICheckEmits>()
 
 /** Model */
 // Default to false so a checkbox starts as a real boolean, not null.
@@ -41,6 +49,11 @@ const checkClasses = computed(() => {
   }
   return classes
 })
+
+/** Watchers */
+watch(model, (value) => {
+  emit('onUpdate', value)
+})
 </script>
 
 <template>
@@ -51,6 +64,8 @@ const checkClasses = computed(() => {
       v-model="model"
       :class="checkClasses"
       :type="type"
+      :disabled="disabled"
+      :required="required"
       :aria-invalid="hasError || undefined"
       :aria-describedby="describedById"
     >
@@ -69,6 +84,12 @@ const checkClasses = computed(() => {
         class="invalid-feedback"
       >
         {{ errorMessages?.[0] }}
+      </p>
+      <p
+        v-else-if="optionalLabel"
+        class="caption text-muted mt-1"
+      >
+        Optional
       </p>
     </div>
   </div>

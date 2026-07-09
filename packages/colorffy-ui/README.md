@@ -349,9 +349,16 @@ export default defineNuxtConfig({
 #### Cards
 - `UiCard` - Card container
 
+#### Chips
+- `UiChip` - Interactive chip (filter, input, or plain)
+- `UiChipGroup` - Chip group with single/multiple selection (`v-model`)
+
 #### Dialogs
 - `UiModal` - Modal dialog
 - `UiConfirmModal` - Confirmation modal
+
+#### Dividers
+- `UiDivider` - Horizontal, labelled, or vertical separator
 
 #### Icons
 - `UiIconMaterial` - Material Symbols (icon font glyph via `iconCode`)
@@ -413,10 +420,16 @@ The library also exports useful composables:
 
 ```typescript
 import { useDateUtils, useTextUtils, useToast } from '@colorffy/ui'
+import { ref } from 'vue'
 
-// Show toast notification
-const toast = useToast()
-toast.show({ message: 'Success!', variant: 'success' })
+// Show toast notifications - pass a ref to a mounted UiAlertToast
+const toastRef = ref(null)
+const toast = useToast(toastRef)
+toast.success('Success!')
+toast.warning('Careful!')
+toast.danger('Something went wrong.')
+toast.info('Heads up.')
+toast.primary('Welcome back!')
 
 // Date utilities
 const dateUtils = useDateUtils()

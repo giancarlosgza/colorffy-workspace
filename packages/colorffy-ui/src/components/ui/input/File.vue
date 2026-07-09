@@ -10,8 +10,17 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
   inputLabel: null,
   large: false,
   modelValue: null,
+  errorMessages: () => [],
+  placeholder: null,
+  disabled: false,
+  required: false,
+  readonly: false,
+  optionalLabel: false,
+  variant: null,
+  rounded: false,
   customClass: null,
-  required: false
+  size: null,
+  hideLabel: false
 })
 
 /** Emits */
@@ -22,10 +31,19 @@ const model = defineModel<File | null>('modelValue', { default: null })
 
 /** Refs */
 const { label, inputLabel, large } = toRefs(props)
-const inputId = computed(() => props.id ?? undefined)
 
-const groupClasses = computed(() => ['input-file-group'])
-const labelClasses = computed(() => [])
+/** Computed */
+const hasErrors = computed(() => props.errorMessages?.length > 0)
+const inputId = computed(() => props.id ?? undefined)
+const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
+
+const groupClasses = computed(() => [
+  'input-file-group',
+  { 'form-invalid': hasErrors.value }
+])
+const labelClasses = computed(() => [
+  { 'visually-hidden': props.hideLabel }
+])
 const dropboxClasses = computed(() => [
   'input-file-dropbox',
   {
@@ -67,6 +85,10 @@ function handleInput(event: Event) {
           :id="inputId"
           :class="fileClasses"
           type="file"
+          :disabled="disabled"
+          :required="required"
+          :aria-invalid="hasErrors || undefined"
+          :aria-describedby="describedById"
           @input="handleInput"
         >
 
@@ -86,6 +108,21 @@ function handleInput(event: Event) {
           <p v-text="inputLabel" />
         </div>
       </div>
+
+      <!-- Feedback -->
+      <p
+        v-if="hasErrors"
+        :id="describedById"
+        class="invalid-feedback"
+      >
+        {{ errorMessages?.[0] }}
+      </p>
+      <p
+        v-else-if="optionalLabel"
+        class="caption text-muted mt-1"
+      >
+        Optional
+      </p>
     </div>
   </div>
 </template>

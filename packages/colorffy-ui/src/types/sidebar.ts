@@ -1,6 +1,6 @@
-import type { IBaseLinkProps } from '@/types/shared'
+import type { ClassValue, FloatingPlacement, IBaseLinkProps } from '@/types/shared'
 
-export type SidebarClassName = string | string[] | Record<string, boolean>
+export type SidebarClassName = ClassValue
 
 /**
  * Interface props for the Sidebar (NavigationDrawer) component.
@@ -74,7 +74,7 @@ export interface ISidebarLinkProps extends IBaseLinkProps {
    * Tooltip placement position.
    * @default 'right'
    */
-  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+  tooltipPlacement?: FloatingPlacement
 
   /**
    * Marks as child/nested link (applies .drawer-item-child class with indentation).
@@ -114,7 +114,7 @@ export interface ISidebarDropdownProps {
    * Only applies when interactive is true.
    * @default 'bottom'
    */
-  placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+  placement?: FloatingPlacement
 
   /**
    * Optional custom CSS classes to apply to the dropdown content.

@@ -5,6 +5,25 @@
 export type ClassValue = string | string[] | Record<string, boolean>
 
 /**
+ * Canonical semantic color palette shared across components.
+ * Component-specific color unions extend this with their own extras
+ * (e.g. Button adds 'white' | 'black' | 'transparent').
+ */
+export type ThemeColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info'
+
+/**
+ * Canonical size scale shared across components. Components supporting a
+ * subset should narrow it (e.g. `Extract<SizeLevel, 'sm' | 'lg'>`).
+ */
+export type SizeLevel = 'sm' | 'md' | 'lg'
+
+/**
+ * Canonical floating placement union (floating-vue compatible), shared by
+ * tooltips, dropdown menus and sidebar popovers.
+ */
+export type FloatingPlacement = 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+
+/**
  * Shared base properties for link-like components (Navbar, Sidebar, NavItems).
  */
 export interface IBaseLinkProps {

@@ -1,4 +1,6 @@
-export type ProgressClassName = string | string[] | Record<string, boolean>
+import type { ClassValue } from '@/types/shared'
+
+export type ProgressClassName = ClassValue
 export type ProgressSize = 'sm' | 'lg'
 
 /**

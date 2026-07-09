@@ -1,9 +1,10 @@
 import type { IBadgeProps } from '@/types/badge'
+import type { ClassValue, FloatingPlacement, SizeLevel, ThemeColor } from '@/types/shared'
 
-export type ButtonClassName = string | string[] | Record<string, boolean>
+export type ButtonClassName = ClassValue
 export type ButtonVariant = 'filled' | 'tonal' | 'outline' | 'text' | 'link' | 'chip' | 'cta' | 'gradient' | 'frosted'
-export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'white' | 'black' | 'transparent'
-export type ButtonSizeLevel = 'sm' | 'md' | 'lg'
+export type ButtonColor = ThemeColor | 'white' | 'black' | 'transparent'
+export type ButtonSizeLevel = SizeLevel
 
 /**
  * Base props shared by all button families.
@@ -90,7 +91,7 @@ export interface IBaseButtonProps {
   /**
    * Optional placement for tooltip or dropdown.
    */
-  placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+  placement?: FloatingPlacement
 }
 
 /**
@@ -98,7 +99,7 @@ export interface IBaseButtonProps {
  * Notes:
  * - Use `variant` (filled | tonal | outline | text | link | chip | cta | gradient | frosted) for style and `color` (primary | warning | etc.) for intent.
  * - Preferred size prop: `size` ('sm' | 'md' | 'lg').
- * - Legacy composite `variant` strings remain accepted as a fallback; `sizeLevel` is kept for backward compatibility.
+ * - Legacy composite `variant` strings remain accepted as a fallback.
  */
 export type IButtonProps = IBaseButtonProps
 
@@ -292,7 +293,7 @@ export interface IButtonMenuProps extends IBaseButtonProps {
   /**
    * Optional placement for the tooltip.
    */
-  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+  tooltipPlacement?: FloatingPlacement
 }
 
 /**
@@ -404,7 +405,7 @@ export interface IButtonMenuSubmenuProps {
    * Placement of the submenu dropdown.
    * Defaults to 'right' for a submenu.
    */
-  placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
+  placement?: FloatingPlacement
 
   /**
    * When true, disables certain positioning features on mobile devices.
