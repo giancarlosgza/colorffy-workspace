@@ -1,0 +1,193 @@
+@use "../abstracts/variables" as v;
+
+@layer components.stepper {
+  // ==========================================================================
+  // STEPPER COMPONENT
+  // ==========================================================================
+  .stepper {
+    --_stepper-indicator-size: 2.25rem;
+    --_stepper-connector-thickness: 2px;
+    --_stepper-connector-color: var(--theme-outline-surface);
+    --_stepper-connector-color-active: var(--theme-primary-a10);
+    --_stepper-indicator-bg-color: var(--theme-surface-container);
+    --_stepper-indicator-color: var(--theme-muted-a10);
+    --_stepper-label-color: var(--theme-muted-a10);
+    --_stepper-description-color: var(--theme-muted-a10);
+    --_stepper-gap: 1.5rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    // ==========================================================================
+    // STEP ITEM
+    // ==========================================================================
+    .step-item {
+      position: relative;
+      flex: 1 1 0%;
+      display: flex;
+
+      // Connector line drawn between this step's indicator and the next
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: calc(var(--_stepper-indicator-size) / 2 - calc(var(--_stepper-connector-thickness) / 2));
+        left: calc(50% + calc(var(--_stepper-indicator-size) / 2) + .5rem);
+        right: calc(-50% + calc(var(--_stepper-indicator-size) / 2) + .5rem);
+        height: var(--_stepper-connector-thickness);
+        background-color: var(--_stepper-connector-color);
+        transition: background-color 200ms v.$easing-in-fallback;
+      }
+
+      // Completed steps light up the connector leading to the next step
+      &.step-completed:not(:last-child)::after {
+        background-color: var(--_stepper-connector-color-active);
+      }
+
+      .step-trigger {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .5rem;
+        width: 100%;
+
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: inherit;
+        font: inherit;
+        text-align: center;
+        cursor: pointer;
+
+        &:is(:disabled, [aria-disabled="true"]) {
+          cursor: not-allowed;
+          opacity: .55;
+        }
+
+        &:is(:focus-visible) {
+          outline: v.$border-md solid var(--theme-primary-a10);
+          outline-offset: 2px;
+          border-radius: v.$rounded-sm;
+        }
+      }
+
+      // Indicator (numbered circle / icon / check mark)
+      .step-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        width: var(--_stepper-indicator-size);
+        height: var(--_stepper-indicator-size);
+        border-radius: v.$rounded-full;
+        background-color: var(--_stepper-indicator-bg-color);
+        color: var(--_stepper-indicator-color);
+        border: v.$border-sm solid var(--_stepper-connector-color);
+        transition: background-color 200ms v.$easing-in-fallback,
+        color 200ms v.$easing-in-fallback,
+        border-color 200ms v.$easing-in-fallback;
+
+        .step-number {
+          font-size: var(--fs-sm-300);
+          font-weight: v.$fw-600;
+          line-height: 1;
+        }
+
+        i {
+          font-size: var(--fs-500);
+        }
+      }
+
+      // Label + description
+      .step-text {
+        display: flex;
+        flex-direction: column;
+        gap: .15rem;
+        max-width: 12rem;
+      }
+
+      .step-label {
+        font-size: var(--fs-sm-300);
+        font-weight: v.$fw-600;
+        color: var(--_stepper-label-color);
+        transition: color 200ms v.$easing-in-fallback;
+      }
+
+      .step-description {
+        font-size: var(--fs-sm-500);
+        font-weight: v.$fw-400;
+        color: var(--_stepper-description-color);
+      }
+
+      // Current step: highlighted indicator + label
+      &.step-current {
+        --_stepper-indicator-bg-color: var(--theme-primary-a10);
+        --_stepper-indicator-color: var(--theme-on-primary);
+        --_stepper-label-color: var(--theme-on-background);
+
+        .step-indicator {
+          border-color: var(--theme-primary-a10);
+        }
+      }
+
+      // Completed step: filled indicator with check mark
+      &.step-completed {
+        --_stepper-indicator-bg-color: var(--theme-primary-a10);
+        --_stepper-indicator-color: var(--theme-on-primary);
+        --_stepper-label-color: var(--theme-on-background);
+
+        .step-indicator {
+          border-color: var(--theme-primary-a10);
+        }
+      }
+    }
+
+    // ==========================================================================
+    // STEPPER VERTICAL
+    // ==========================================================================
+    &.stepper-vertical {
+      flex-direction: column;
+      align-items: stretch;
+
+      .step-item {
+        flex-direction: row;
+        align-items: flex-start;
+        padding-bottom: var(--_stepper-gap);
+
+        &:not(:last-child)::after {
+          top: var(--_stepper-indicator-size);
+          left: calc(var(--_stepper-indicator-size) / 2 - calc(var(--_stepper-connector-thickness) / 2));
+          right: auto;
+          bottom: 0;
+          width: var(--_stepper-connector-thickness);
+          height: auto;
+        }
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+
+        .step-trigger {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: .75rem;
+          text-align: left;
+        }
+
+        .step-text {
+          max-width: none;
+          padding-top: .2rem;
+        }
+      }
+    }
+  }
+}
