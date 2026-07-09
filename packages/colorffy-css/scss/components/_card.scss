@@ -28,6 +28,15 @@
     border-radius: var(--_card-radius);
     transition: all 300ms v.$easing-in-fallback;
 
+    // Cover image (imageUrl/#media slot), full-bleed with the card's top radius
+    .card-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: var(--_card-radius) var(--_card-radius) 0 0;
+    }
+
     .card-header {
       padding-block: var(--_card-gutter-y) calc(var(--_card-gutter-y) - .55rem);
       padding-inline: var(--_card-gutter-x);
@@ -139,6 +148,22 @@
 
       @supports (transition: linear(1, 1, 1)) {
         --_card-easing-in: #{v.$easing-emphasized};
+      }
+    }
+
+    // Card link mode (`to`/`href` renders the card root as `a`/`as`)
+    &.card-link {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 300ms v.$easing-in-fallback, box-shadow 300ms v.$easing-in-fallback;
+
+      &:is(:hover) {
+        --_card-bg-color: var(--theme-surface-a30);
+      }
+
+      &:is(:active) {
+        --_card-bg-color: var(--theme-surface-a40);
       }
     }
 
