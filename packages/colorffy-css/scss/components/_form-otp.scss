@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as v;
+
+@layer components.form-otp {
+  // ==========================================================================
+  // FORM OTP COMPONENT
+  // ==========================================================================
+  .form-otp {
+    --_form-otp-gap: .5rem;
+
+    display: flex;
+    align-items: center;
+    gap: var(--_form-otp-gap);
+    flex-wrap: wrap;
+
+    // Each box reuses the shared .form-control tokens (height/padding/font
+    // vary automatically with the existing .form-sm / .form-lg modifiers);
+    // it's simply pinned to a square so width tracks height.
+    .form-otp-box {
+      --_form-padding-x: 0;
+      --_form-padding-y: 0;
+      --_form-font-size: var(--fs-600);
+      --_form-width: var(--_form-height);
+
+      flex: 0 0 auto;
+      text-align: center;
+      font-weight: v.$fw-500;
+    }
+  }
+}

@@ -199,3 +199,39 @@ export interface ICheckEmits {
   (e: 'update:modelValue', value: string | boolean | null): void
   (e: 'onUpdate', value: string | boolean | null): void
 }
+
+/**
+ * Interface props for the Otp (segmented PIN/verification code) component.
+ */
+export interface IInputOtpProps extends IBaseInputProps {
+  /**
+   * Bound OTP value. Always a string; each character fills one box in order.
+   */
+  modelValue?: string
+
+  /**
+   * Number of boxes (characters) making up the code.
+   */
+  length?: number
+
+  /**
+   * Restricts each box to a single digit: applies a numeric `inputmode` and
+   * discards non-digit characters on input or paste. Set to `false` to allow
+   * alphanumeric codes (e.g. mixed-case verification codes).
+   */
+  integerOnly?: boolean
+
+  /**
+   * Autofocuses the first box on mount.
+   */
+  autofocus?: boolean
+}
+
+/**
+ * Interface emits for the Otp component.
+ */
+export interface IInputOtpEmits {
+  (e: 'update:modelValue', value: string): void
+  (e: 'onUpdate', value: string): void
+  (e: 'complete', value: string): void
+}
