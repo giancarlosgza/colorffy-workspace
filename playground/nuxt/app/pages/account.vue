@@ -111,9 +111,13 @@ function save() {
                   type="email"
                   placeholder="tucorreo@ejemplo.com"
                   variant="outline"
-                  rounded
                   required
-                />
+                >
+                  <!-- Prefix slot renders an attached icon box -->
+                  <template #prefix>
+                    <UiIconMaterial icon-code="&#xe0be;" />
+                  </template>
+                </UiInputText>
               </div>
               <div class="col-md-6 mb-3">
                 <UiInputPhoneNumber

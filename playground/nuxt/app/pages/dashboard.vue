@@ -29,12 +29,19 @@ const channels = [
   { name: 'Referidos', value: 12, barClass: 'bg-warning-fixed bg-opacity-90' }
 ]
 
-// Activity feed
+// Activity feed — filterable by kind through the chip group
 const activity = [
-  { id: 1, title: 'Nuevo despliegue', text: 'Proyecto Atlas v2.4.0 publicado', icon: '&#xe1b6;', wrapper: 'bg-success-fixed', iconColor: 'text-success-emphasis' },
-  { id: 2, title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', icon: '&#xe0b9;', wrapper: 'bg-primary-fixed', iconColor: 'text-primary-emphasis' },
-  { id: 3, title: 'Alerta de uso', text: 'API alcanzó el 80% del límite', icon: '&#xe002;', wrapper: 'bg-warning-fixed', iconColor: 'text-warning-emphasis' },
-  { id: 4, title: 'Pago recibido', text: 'Suscripción Enterprise renovada', icon: '&#xe227;', wrapper: 'bg-accent-fixed', iconColor: 'text-accent-emphasis' }
+  { id: 1, kind: 'deploys', title: 'Nuevo despliegue', text: 'Proyecto Atlas v2.4.0 publicado', icon: '&#xe1b6;', wrapper: 'bg-success-fixed', iconColor: 'text-success-emphasis' },
+  { id: 2, kind: 'social', title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', icon: '&#xe0b9;', wrapper: 'bg-primary-fixed', iconColor: 'text-primary-emphasis' },
+  { id: 3, kind: 'alerts', title: 'Alerta de uso', text: 'API alcanzó el 80% del límite', icon: '&#xe002;', wrapper: 'bg-warning-fixed', iconColor: 'text-warning-emphasis' },
+  { id: 4, kind: 'billing', title: 'Pago recibido', text: 'Suscripción Enterprise renovada', icon: '&#xe227;', wrapper: 'bg-accent-fixed', iconColor: 'text-accent-emphasis' }
+]
+const activityFilter = ref<string | string[] | null>(null)
+const activityFilters = [
+  { id: 'deploys', text: 'Despliegues' },
+  { id: 'social', text: 'Comentarios' },
+  { id: 'alerts', text: 'Alertas' },
+  { id: 'billing', text: 'Pagos' }
 ]
 
 // Team card — tab badges with counts, list items with avatar images
@@ -59,6 +66,12 @@ const invites = [
 
 /** Computed */
 const activePanelLabel = computed(() => overviewTabs.value.find(t => t.id === activeOverviewTab.value)?.label ?? '')
+const filteredActivity = computed(() => {
+  if (!activityFilter.value)
+    return activity
+
+  return activity.filter(item => item.kind === activityFilter.value)
+})
 
 /** Methods */
 function onOverviewTabChange(tabId: string) {
@@ -256,13 +269,23 @@ function onOverviewTabChange(tabId: string) {
                 size="sm"
               />
             </div>
+            <!-- Filter chips (single-select, clicking the active chip clears it) -->
+            <UiChipGroup
+              v-model="activityFilter"
+              :options="activityFilters"
+              aria-label="Filtrar actividad"
+              class="mb-3"
+            />
+
+            <UiDivider />
+
             <UiListGroup
               is-interactive
               is-undecorated
               variant="flush"
             >
               <UiListItem
-                v-for="item in activity"
+                v-for="item in filteredActivity"
                 :key="item.id"
                 :title="item.title"
                 :text="item.text"
