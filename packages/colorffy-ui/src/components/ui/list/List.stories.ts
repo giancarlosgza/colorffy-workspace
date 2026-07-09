@@ -152,6 +152,34 @@ export const Large: Story = {
   })
 }
 
+// Passing `to`/`href` renders `.list-item` as a link (default tag `a`) and
+// implies the same hover/active/arrow styling as `UiListGroup`'s `is-interactive`.
+export const LinkItems: Story = {
+  render: () => ({
+    components: { UiListGroup, UiListItem },
+    template: `
+      <UiListGroup>
+        <UiListItem title="Internal route" text="Uses the \`to\` prop" icon="&#xe88a;" to="/dashboard" />
+        <UiListItem title="External link" text="Uses the \`href\` prop" icon="&#xe157;" href="https://colorffy.com" />
+        <UiListItem title="Disabled link" text="Navigation is blocked" icon="&#xe14b;" to="/dashboard" disabled />
+      </UiListGroup>
+    `
+  })
+}
+
+// `as` overrides the rendered tag for framework router links (e.g. NuxtLink,
+// RouterLink) while keeping the same `to`/`href` passthrough.
+export const CustomLinkTag: Story = {
+  render: () => ({
+    components: { UiListGroup, UiListItem },
+    template: `
+      <UiListGroup>
+        <UiListItem title="Router link" text="Rendered via the as prop" icon="&#xe88a;" to="/dashboard" as="router-link" />
+      </UiListGroup>
+    `
+  })
+}
+
 export const ComplexList: Story = {
   render: () => ({
     components: { UiListGroup, UiListItem },

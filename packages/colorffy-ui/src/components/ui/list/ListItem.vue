@@ -16,10 +16,51 @@ const props = withDefaults(defineProps<IListItemProps>(), {
   customIconWrapperClass: null,
   customIconClass: null,
   customImageClass: null,
-  hasActions: false
+  hasActions: false,
+  to: null,
+  href: null,
+  as: null
 })
 
 /** Computed */
+// Link mode activates only when `to` or `href` is passed; otherwise the
+// item renders exactly as before (plain `div.list-item`, no extra attrs).
+const linkTarget = computed(() => props.to || props.href || null)
+const isLink = computed(() => linkTarget.value !== null)
+const resolvedTag = computed(() => (isLink.value ? (props.as || 'a') : 'div'))
+const isExternalLink = computed(() => {
+  const target = linkTarget.value
+  return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
+const linkAttrs = computed(() => {
+  if (!isLink.value)
+    return {}
+
+  const target = linkTarget.value
+  const baseAttrs = {
+    'aria-current': props.active ? 'page' : undefined,
+    'aria-disabled': props.disabled || undefined,
+    'disabled': props.disabled || undefined
+  }
+
+  // Anchor/external only for string targets; object targets use the router branch
+  if (typeof target === 'string' && (resolvedTag.value === 'a' || isExternalLink.value)) {
+    return {
+      ...baseAttrs,
+      href: props.disabled ? undefined : target,
+      ...(isExternalLink.value && {
+        target: '_blank',
+        rel: 'noopener noreferrer'
+      })
+    }
+  }
+
+  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
+  return {
+    ...baseAttrs,
+    to: props.disabled ? undefined : target
+  }
+})
 const itemClasses = computed(() => {
   const classes: (string | Record<string, boolean>)[] = []
 
@@ -38,6 +79,11 @@ const itemClasses = computed(() => {
 
   if (props.hasActions)
     classes.push('list-item-undecorated')
+
+  // Link mode implies the interactive (hover/active + arrow) styling that
+  // `UiListGroup`'s `isInteractive` prop provides at the group level.
+  if (isLink.value)
+    classes.push('list-group-item-link')
 
   return classes
 })
@@ -85,7 +131,11 @@ const imageClasses = computed(() => {
     :class="itemClasses"
     :aria-disabled="disabled || undefined"
   >
-    <div class="list-item">
+    <component
+      :is="resolvedTag"
+      class="list-item"
+      v-bind="linkAttrs"
+    >
       <!-- Media slot (replaces the image/icon area) -->
       <slot name="media">
         <!-- Image (takes precedence over icon) -->
@@ -121,7 +171,7 @@ const imageClasses = computed(() => {
           v-text="text"
         />
       </div>
-    </div>
+    </component>
 
     <!-- Actions slot -->
     <div

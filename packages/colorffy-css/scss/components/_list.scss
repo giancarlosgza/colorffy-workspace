@@ -2,6 +2,34 @@
 @use '../base/typography';
 
 @layer components.list {
+  // Shared interactive treatment (hover/active background + trailing arrow) for list-group-item
+  %list-group-item-interactive {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    &:after {
+      content: '';
+      inline-size: 16px;
+      block-size: 16px;
+      background-color: var(--theme-muted-a10);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+      position: absolute;
+      inset-block: 0;
+      right: 1rem;
+      margin: auto;
+    }
+
+    &:is(:hover) {
+      --_list-group-item-bg-color: var(--theme-surface-container-high);
+    }
+
+    &:is(:active, :focus) {
+      --_list-group-item-bg-color: var(--theme-surface-container-highest);
+    }
+  }
+
   // ==========================================================================
   // LIST COMPONENT
   // ==========================================================================
@@ -77,6 +105,7 @@
         }
 
         &:is(a) {
+          color: inherit;
           cursor: pointer;
           @extend .undecorated;
         }
@@ -129,6 +158,24 @@
         --_list-group-item-icon-color: var(--theme-muted-a10);
 
         cursor: not-allowed;
+
+        // Override .list-item:is(a)'s cursor: pointer so disabled links don't look clickable
+        & .list-item:is(a) {
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+      }
+
+      // Link mode (to/href) implies the same interactive affordances as UiListGroup's isInteractive
+      &.list-group-item-link {
+        @extend %list-group-item-interactive;
+
+        // Hide the trailing arrow when list-item-undecorated marks custom trailing actions
+        &.list-item-undecorated {
+          &:after {
+            content: none;
+          }
+        }
       }
 
       & .list-item-actions {
@@ -195,30 +242,7 @@
     // ==========================================================================
     &.list-group-interactive {
       & .list-group-item {
-        position: relative;
-        cursor: pointer;
-        user-select: none;
-
-        &:after {
-          content: '';
-          inline-size: 16px;
-          block-size: 16px;
-          background-color: var(--theme-muted-a10);
-          -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
-          position: absolute;
-          inset-block: 0;
-          right: 1rem;
-          margin: auto;
-        }
-
-        &:is(:hover) {
-          --_list-group-item-bg-color: var(--theme-surface-container-high);
-        }
-
-        &:is(:active, :focus) {
-          --_list-group-item-bg-color: var(--theme-surface-container-highest);
-        }
+        @extend %list-group-item-interactive;
       }
 
       &:is(.list-group-undecorated) {

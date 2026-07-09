@@ -116,4 +116,24 @@ export interface IListItemProps {
    * When true, layout has custom actions trailing the item content.
    */
   hasActions?: boolean
+
+  /**
+   * Navigation destination. Can be a string path or router object.
+   * Activates link mode (the `.list-item` wrapper renders as `as`/`a` instead
+   * of a plain `div`) when set together with, or instead of, `href`.
+   */
+  to?: string | object | null
+
+  /**
+   * Standard href attribute for link mode (e.g. external links).
+   * Activates link mode when set together with, or instead of, `to`.
+   */
+  href?: string | null
+
+  /**
+   * Component/tag to render for the `.list-item` wrapper in link mode
+   * (e.g. 'a', 'router-link', 'nuxt-link'). Defaults to 'a'.
+   * Ignored unless `to` or `href` is also provided.
+   */
+  as?: string | object | null
 }
