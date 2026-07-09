@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IAlertProps } from '@/types/alert'
-import { computed } from 'vue'
+import type { IAlertEmits, IAlertProps } from '@/types/alert'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -11,7 +11,40 @@ const props = withDefaults(defineProps<IAlertProps>(), {
   rounded: false,
   placement: 'bottom',
   size: undefined,
-  customClass: undefined
+  customClass: undefined,
+  dismissible: false,
+  duration: undefined,
+  closeLabel: 'Close'
+})
+
+/** Emits */
+const emit = defineEmits<IAlertEmits>()
+
+/** Visibility & auto-hide */
+const isVisible = ref(true)
+let hideTimer: ReturnType<typeof setTimeout> | null = null
+
+function clearHideTimer() {
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+}
+
+function dismiss() {
+  clearHideTimer()
+  isVisible.value = false
+  emit('dismiss')
+}
+
+onMounted(() => {
+  // Snackbars manage their own duration via AlertToast/useToast, so skip auto-hide here.
+  if (props.duration && props.type !== 'snackbar')
+    hideTimer = setTimeout(dismiss, props.duration)
+})
+
+onBeforeUnmount(() => {
+  clearHideTimer()
 })
 
 /** Computed */
@@ -50,6 +83,7 @@ const alertClasses = computed(() => {
 
 <template>
   <div
+    v-if="isVisible"
     class="alert-container"
     :class="alertContainerClasses"
   >
@@ -86,8 +120,17 @@ const alertClasses = computed(() => {
       </div>
 
       <!-- Actions -->
-      <div>
+      <div class="alert-actions">
         <slot name="actions" />
+        <button
+          v-if="dismissible"
+          type="button"
+          class="alert-close"
+          :aria-label="closeLabel"
+          @click="dismiss"
+        >
+          <UiIconMaterial icon-code="&#xe5cd;" />
+        </button>
       </div>
     </div>
   </div>

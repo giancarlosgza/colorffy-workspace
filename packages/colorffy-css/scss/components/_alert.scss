@@ -191,6 +191,38 @@
       }
     }
 
+    // Actions column (custom actions slot + optional close button)
+    .alert-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: .5rem;
+    }
+
+    // Dismiss button (only rendered when `dismissible` is true)
+    .alert-close {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      padding: .15rem;
+      background: transparent;
+      border: none;
+      border-radius: #{v.$rounded-full};
+      color: inherit;
+      cursor: pointer;
+
+      i {
+        font-size: 1.05rem;
+        font-variation-settings: var(--iw-bold);
+        color: inherit;
+      }
+
+      &:is(:hover, :focus-visible) {
+        background-color: color-mix(in oklab, currentColor 12%, transparent);
+      }
+    }
+
     // ==========================================================================
     // ALERT STYLING VARIANTS (BANNER, TONAL, TRANSPARENT, SNACKBAR, CRITICAL)
     // ==========================================================================

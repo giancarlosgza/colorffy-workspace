@@ -65,6 +65,33 @@ export interface IAlertProps {
    * Custom classes to apply to the root element.
    */
   customClass?: AlertClassName
+
+  /**
+   * When true, renders a close button. Clicking it hides the alert and emits `dismiss`.
+   */
+  dismissible?: boolean
+
+  /**
+   * Auto-hide delay in milliseconds for non-snackbar alert types. When set, the alert
+   * hides itself after this delay and emits `dismiss`. Snackbars manage their own
+   * duration via `UiAlertToast`/`useToast`, so this is ignored when `type` is `snackbar`.
+   */
+  duration?: number
+
+  /**
+   * Accessible label for the close button (only rendered when `dismissible` is true).
+   */
+  closeLabel?: string
+}
+
+/**
+ * Interface emits for the Alert component.
+ */
+export interface IAlertEmits {
+  /**
+   * Emitted when the alert is dismissed, either via the close button or the `duration` auto-hide timer.
+   */
+  (e: 'dismiss'): void
 }
 
 /**

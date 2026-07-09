@@ -18,7 +18,9 @@ const meta = {
     },
     title: { control: 'text' },
     message: { control: 'text' },
-    critical: { control: 'boolean' }
+    critical: { control: 'boolean' },
+    dismissible: { control: 'boolean' },
+    duration: { control: 'number' }
   }
 } satisfies Meta<typeof UiAlert>
 
@@ -132,6 +134,45 @@ export const WithActionsSlot: Story = {
           </UiButtonGroup>
         </template>
       </UiAlert>
+    `
+  })
+}
+
+export const Dismissible: Story = {
+  args: {
+    type: 'banner',
+    variant: 'info',
+    title: 'Dismissible alert',
+    message: 'Click the close button to hide this alert.',
+    dismissible: true
+  },
+  render: args => ({
+    components: { UiAlert },
+    setup() {
+      const handleDismiss = () => console.log('Dismissed')
+      return { args, handleDismiss }
+    },
+    template: `
+      <UiAlert v-bind="args" @dismiss="handleDismiss" />
+    `
+  })
+}
+
+export const AutoHide: Story = {
+  args: {
+    type: 'tonal',
+    variant: 'success',
+    message: 'This alert hides itself automatically after 3 seconds.',
+    duration: 3000
+  },
+  render: args => ({
+    components: { UiAlert },
+    setup() {
+      const handleDismiss = () => console.log('Auto-hidden')
+      return { args, handleDismiss }
+    },
+    template: `
+      <UiAlert v-bind="args" @dismiss="handleDismiss" />
     `
   })
 }
