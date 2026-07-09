@@ -29,24 +29,16 @@ jobs:
           node-version: '24'
           cache: 'pnpm'
 
-      # --ignore-scripts so sibling packages' postinstall hooks don't run in CI:
-      # playground/nuxt runs `nuxt prepare`, which needs @colorffy/ui's dist built
-      # (not present in a fresh checkout, and not needed for the docs — they only
-      # extend the published `docus`). We then rebuild just better-sqlite3, the
-      # native dep Nuxt Content needs at generate time.
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      # -r (recursive) is required: better-sqlite3 is a dependency of the `docs`
-      # workspace package, not the root — a non-recursive rebuild silently no-ops.
+      # -r (recursive) is required
       - name: Build better-sqlite3 (native, for Nuxt Content)
         run: pnpm rebuild -r better-sqlite3
 
       - name: Generate static site
         run: pnpm --filter colorffy-docs generate
         env:
-          # Used for absolute URLs in sitemap.xml, llms.txt and OG images.
-          # Override by setting a `DOCS_SITE_URL` repository variable (e.g. your custom domain).
           NUXT_PUBLIC_SITE_URL: ${{ vars.DOCS_SITE_URL || 'https://colorffy-docs.pages.dev' }}
 
       - name: Deploy to Cloudflare Pages
@@ -55,4 +47,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '4.110.0'
           command: pages deploy docs/.output/public --project-name=colorffy-ui-docs --branch=main

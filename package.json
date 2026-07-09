@@ -26,6 +26,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "9.1.0",
     "eslint": "10.6.0",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "wrangler": "4.110.0"
   }
 }
