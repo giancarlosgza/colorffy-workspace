@@ -12,9 +12,7 @@
     gap: var(--_form-otp-gap);
     flex-wrap: wrap;
 
-    // Each box reuses the shared .form-control tokens (height/padding/font
-    // vary automatically with the existing .form-sm / .form-lg modifiers);
-    // it's simply pinned to a square so width tracks height.
+    // Each box reuses .form-control tokens and is pinned to a square so width tracks height
     .form-otp-box {
       --_form-padding-x: 0;
       --_form-padding-y: 0;
