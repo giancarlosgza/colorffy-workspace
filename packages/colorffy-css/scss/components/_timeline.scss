@@ -1,0 +1,172 @@
+@use "../abstracts/variables" as v;
+
+@layer components.timeline {
+  // ==========================================================================
+  // TIMELINE COMPONENT
+  // ==========================================================================
+  .timeline {
+    --_timeline-gap: 1rem;
+    --_timeline-item-spacing: 1.5rem;
+    --_timeline-connector-thickness: 2px;
+    --_timeline-connector-color: var(--theme-outline-surface);
+    --_timeline-dot-size: .75rem;
+    --_timeline-dot-color: var(--theme-muted-a10);
+    --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
+    --_timeline-icon-color: var(--theme-on-background);
+    --_timeline-time-color: var(--theme-muted-a10);
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--_timeline-gap);
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    // Items participate directly in the timeline grid (marker + content columns)
+    & .timeline-item {
+      display: contents;
+    }
+
+    // Marker column: dot/icon/image + connector line to the next item
+    & .timeline-item-marker {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    & .timeline-item-line {
+      flex: 1 1 auto;
+      inline-size: var(--_timeline-connector-thickness);
+      min-block-size: .75rem;
+      margin-block: .35rem;
+      background-color: var(--_timeline-connector-color);
+    }
+
+    & .timeline-item:last-child .timeline-item-line {
+      display: none;
+    }
+
+    & .timeline-item-dot {
+      inline-size: var(--_timeline-dot-size);
+      block-size: var(--_timeline-dot-size);
+      flex-shrink: 0;
+      border-radius: v.$rounded-full;
+      background-color: var(--_timeline-dot-color);
+    }
+
+    // Image marker, sized to match .list-item-image so lists and timelines align
+    & .timeline-item-image {
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      flex-shrink: 0;
+      border-radius: v.$rounded-md;
+      object-fit: cover;
+    }
+
+    // Icon marker, reusing .list-item-icon-wrapper sizing from _list.scss
+    & .list-item-icon-wrapper {
+      flex-shrink: 0;
+      border-radius: v.$rounded-md;
+      padding: .625rem;
+      aspect-ratio: 1;
+      background-color: var(--_timeline-icon-bg-color);
+
+      & i {
+        font-size: var(--fs-500);
+        color: var(--_timeline-icon-color);
+      }
+    }
+
+    // Content column
+    & .timeline-item-content {
+      grid-column: 2;
+      padding-bottom: var(--_timeline-item-spacing);
+
+      & p {
+        margin-block: 0;
+
+        &:not(:last-child) {
+          margin-bottom: .15rem;
+        }
+      }
+
+      & .caption {
+        color: var(--_timeline-time-color);
+      }
+    }
+
+    & .timeline-item:last-child .timeline-item-content {
+      padding-bottom: 0;
+    }
+
+    // ==========================================================================
+    // TIMELINE MARKER VARIANTS (SEMANTIC PALETTE)
+    // ==========================================================================
+    & .timeline-item-primary {
+      --_timeline-dot-color: var(--theme-primary-base);
+      --_timeline-icon-bg-color: var(--theme-primary-a10);
+      --_timeline-icon-color: var(--theme-on-primary);
+    }
+
+    & .timeline-item-secondary {
+      --_timeline-dot-color: var(--theme-secondary-base);
+      --_timeline-icon-bg-color: var(--theme-secondary-a10);
+      --_timeline-icon-color: var(--theme-on-secondary);
+    }
+
+    & .timeline-item-accent {
+      --_timeline-dot-color: var(--theme-accent-base);
+      --_timeline-icon-bg-color: var(--theme-accent-a10);
+      --_timeline-icon-color: var(--theme-on-accent);
+    }
+
+    & .timeline-item-success {
+      --_timeline-dot-color: var(--theme-success-base);
+      --_timeline-icon-bg-color: var(--theme-success-a10);
+      --_timeline-icon-color: var(--theme-on-success);
+    }
+
+    & .timeline-item-warning {
+      --_timeline-dot-color: var(--theme-warning-base);
+      --_timeline-icon-bg-color: var(--theme-warning-a10);
+      --_timeline-icon-color: var(--theme-on-warning);
+    }
+
+    & .timeline-item-danger {
+      --_timeline-dot-color: var(--theme-danger-base);
+      --_timeline-icon-bg-color: var(--theme-danger-a10);
+      --_timeline-icon-color: var(--theme-on-danger);
+    }
+
+    & .timeline-item-info {
+      --_timeline-dot-color: var(--theme-info-base);
+      --_timeline-icon-bg-color: var(--theme-info-a10);
+      --_timeline-icon-color: var(--theme-on-info);
+    }
+
+    // ==========================================================================
+    // TIMELINE ALTERNATE ALIGNMENT
+    // ==========================================================================
+    &.timeline-alternate {
+      grid-template-columns: 1fr auto 1fr;
+
+      & .timeline-item-marker {
+        grid-column: 2;
+      }
+
+      & .timeline-item-content {
+        grid-column: 1;
+        text-align: end;
+      }
+
+      & .timeline-item:nth-child(even) .timeline-item-content {
+        grid-column: 3;
+        text-align: start;
+      }
+    }
+  }
+}
