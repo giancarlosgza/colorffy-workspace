@@ -7,7 +7,7 @@ const meta: Meta<typeof UiInputColorPicker> = {
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
-    maxLength: { control: 'number' }
+    maxlength: { control: 'number' }
   }
 }
 
