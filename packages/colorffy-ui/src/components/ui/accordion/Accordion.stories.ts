@@ -8,6 +8,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     title: { control: 'text' },
+    icon: { control: 'text' },
     text: { control: 'text' },
     open: { control: 'boolean' },
     disabled: { control: 'boolean' }
@@ -29,6 +30,14 @@ export const Open: Story = {
     title: 'Open Accordion',
     text: 'This accordion is open by default.',
     open: true
+  }
+}
+
+export const WithIcon: Story = {
+  args: {
+    title: 'Shipping & Returns',
+    icon: '&#xe88a;',
+    text: 'Free shipping on all orders. Returns accepted within 30 days.'
   }
 }
 

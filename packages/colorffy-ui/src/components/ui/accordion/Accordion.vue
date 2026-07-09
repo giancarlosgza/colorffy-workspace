@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { IAccordionItemProps } from '@/types/accordion'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 withDefaults(defineProps<IAccordionItemProps>(), {
   id: null,
   name: 'accordion-item',
   title: '',
+  icon: null,
   text: '',
   disabled: false,
   customClass: null
@@ -27,6 +29,11 @@ const isOpen = defineModel<boolean>('open', { default: false })
   >
     <summary class="accordion-header">
       <slot name="header">
+        <UiIconMaterial
+          v-if="icon"
+          class="accordion-icon"
+          :icon-code="icon"
+        />
         <span class="accordion-title">{{ title }}</span>
       </slot>
     </summary>

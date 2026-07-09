@@ -27,6 +27,12 @@ export interface IAccordionItemProps {
   title?: string | null
 
   /**
+   * Optional leading Material Symbols icon (HTML entity, e.g. `'&#xe87c;'`) shown before the title.
+   * Rendered via UiIconMaterial. Ignored when the `header` slot is used.
+   */
+  icon?: string | null
+
+  /**
    * Body text displayed inside the accordion panel. Prefer using the default slot.
    */
   text?: string | null

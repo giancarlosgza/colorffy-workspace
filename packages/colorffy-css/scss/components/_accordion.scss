@@ -60,12 +60,20 @@
 
         &.accordion-header {
           --_accordion-trailing-icon-deg: 0deg;
+          --_accordion-icon-gap: 0.65rem;
 
           position: relative;
           display: flex;
           flex-direction: row;
+          align-items: center;
+          gap: var(--_accordion-icon-gap);
           cursor: pointer;
           background-color: transparent;
+
+          .accordion-icon {
+            flex-shrink: 0;
+            color: var(--theme-muted-a10);
+          }
 
           .accordion-title {
             font-size: var(--fs-sm-200);
