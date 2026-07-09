@@ -116,6 +116,68 @@
   }
 
   // ==========================================================================
+  // AVATAR STATUS INDICATOR
+  // ==========================================================================
+  .avatar-status-wrapper {
+    --_avatar-status-size: 25%;
+    --_avatar-status-inset: 0%;
+    --_avatar-status-ring-width: 2px;
+    --_avatar-status-ring-color: var(--theme-surface-a0);
+
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    // Pull the dot toward the shape's visible mass when the avatar is masked
+    &.avatar-status-masked {
+      --_avatar-status-inset: 8%;
+    }
+
+    // Reset the default .initials-avatar trailing margin so the dot hugs the avatar
+    > .initials-avatar {
+      margin-inline: 0;
+    }
+  }
+
+  .avatar-status {
+    position: absolute;
+    inset-block-end: var(--_avatar-status-inset);
+    inset-inline-end: var(--_avatar-status-inset);
+    width: var(--_avatar-status-size);
+    aspect-ratio: 1;
+    border-radius: v.$rounded-full;
+    background-color: var(--_avatar-status-color, var(--theme-muted-a10));
+    box-shadow: 0 0 0 var(--_avatar-status-ring-width) var(--_avatar-status-ring-color);
+
+    &.avatar-status-online {
+      --_avatar-status-color: var(--theme-success-base);
+    }
+
+    &.avatar-status-busy {
+      --_avatar-status-color: var(--theme-danger-base);
+    }
+
+    &.avatar-status-away {
+      --_avatar-status-color: var(--theme-warning-base);
+    }
+
+    &.avatar-status-offline {
+      --_avatar-status-color: var(--theme-muted-a10);
+    }
+  }
+
+  // Mirror avatar-group ring/overlap when a status wrapper is a direct child instead of the avatar
+  .avatar-group > .avatar-status-wrapper {
+    &:not(:first-child) {
+      margin-inline-start: calc(-1 * var(--_avatar-group-overlap));
+    }
+
+    > .img-avatar {
+      outline: var(--_avatar-group-ring-width) solid var(--_avatar-group-ring-color);
+    }
+  }
+
+  // ==========================================================================
   // OBJECT-FIT UTILITIES
   // ==========================================================================
   .img-fit-cover {

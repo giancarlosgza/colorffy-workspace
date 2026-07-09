@@ -14,6 +14,8 @@ export type AvatarMaskShape
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'navbar' | 'menu'
 
+export type AvatarStatus = 'online' | 'busy' | 'away' | 'offline'
+
 export interface IAvatarProps {
   src?: string
   /**
@@ -32,6 +34,13 @@ export interface IAvatarProps {
    * @default false
    */
   maskStretch?: boolean
+  /**
+   * Show a presence indicator dot on the avatar's bottom-end corner.
+   * When `maskShape` is set, the dot is rendered outside the mask and
+   * nudged inward so it stays visible.
+   * @default null
+   */
+  status?: AvatarStatus | null
 }
 
 /**

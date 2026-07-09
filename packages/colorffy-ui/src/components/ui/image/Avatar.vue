@@ -9,7 +9,8 @@ const props = withDefaults(defineProps<IAvatarProps>(), {
   size: 'sm',
   initials: null,
   maskShape: null,
-  maskStretch: false
+  maskStretch: false,
+  status: null
 })
 
 /** Data */
@@ -55,6 +56,16 @@ const initialsAvatarClasses = computed(() => {
   }
   return classes
 })
+const statusWrapperClasses = computed(() => {
+  const classes = ['avatar-status-wrapper']
+  if (props.maskShape) {
+    classes.push('avatar-status-masked')
+  }
+  return classes
+})
+const statusDotClasses = computed(() => {
+  return ['avatar-status', `avatar-status-${props.status}`]
+})
 
 /** Methods */
 function handleImageError() {
@@ -63,9 +74,47 @@ function handleImageError() {
 </script>
 
 <template>
+  <!-- Status avatar: wrapped so the dot escapes mask-shape clipping -->
+  <span
+    v-if="status"
+    :class="statusWrapperClasses"
+  >
+    <!-- Initial Avatar -->
+    <span
+      v-if="initials"
+      :class="initialsAvatarClasses"
+    >
+      {{ initials }}
+    </span>
+
+    <!-- Image Avatar -->
+    <img
+      v-else-if="src && !imageError"
+      :src="src"
+      :class="avatarClasses"
+      :alt="alt"
+      @error="handleImageError"
+    >
+    <!-- Placeholder Avatar -->
+    <div
+      v-else
+      :class="placeholderClasses"
+    />
+
+    <!-- Status dot -->
+    <span
+      :class="statusDotClasses"
+      role="img"
+      :aria-label="status"
+    />
+  </span>
+
+  <!-- Default markup, unchanged when no status is set. Kept as a direct -->
+  <!-- v-else-if chain (no <template> wrapper) so Vue still treats the -->
+  <!-- component as single-root and inherits fallthrough attrs like class -->
   <!-- Initial Avatar -->
   <span
-    v-if="initials"
+    v-else-if="initials"
     :class="initialsAvatarClasses"
   >
     {{ initials }}

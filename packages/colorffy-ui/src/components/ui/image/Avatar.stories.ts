@@ -11,7 +11,11 @@ const meta: Meta<typeof UiAvatar> = {
       control: 'select',
       options: ['sm', 'md', 'lg', 'navbar', 'menu']
     },
-    initials: { control: 'text' }
+    initials: { control: 'text' },
+    status: {
+      control: 'select',
+      options: [null, 'online', 'busy', 'away', 'offline']
+    }
   }
 }
 
@@ -50,6 +54,55 @@ export const WithInitials: Story = {
     initials: 'JD',
     size: 'lg'
   }
+}
+
+export const WithStatus: Story = {
+  args: {
+    src: 'https://i.pravatar.cc/150?img=5',
+    size: 'md',
+    status: 'online'
+  }
+}
+
+export const StatusVariants: Story = {
+  args: {
+    size: 'md'
+  },
+  render: args => ({
+    components: { UiAvatar },
+    setup() {
+      return { args }
+    },
+    template: `
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <UiAvatar src="https://i.pravatar.cc/150?img=5" size="md" status="online" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=6" size="md" status="busy" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=7" size="md" status="away" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=8" size="md" status="offline" />
+        <UiAvatar initials="JD" size="md" status="online" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=9" size="sm" status="busy" />
+      </div>
+    `
+  })
+}
+
+export const StatusWithMaskShape: Story = {
+  args: {
+    size: 'md'
+  },
+  render: args => ({
+    components: { UiAvatar },
+    setup() {
+      return { args }
+    },
+    template: `
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <UiAvatar src="https://i.pravatar.cc/150?img=13" size="md" mask-shape="gem" status="online" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=14" size="md" mask-shape="cookie-9" status="busy" />
+        <UiAvatar src="https://i.pravatar.cc/150?img=15" size="md" mask-shape="clover-4" status="away" />
+      </div>
+    `
+  })
 }
 
 export const Multiple: Story = {
