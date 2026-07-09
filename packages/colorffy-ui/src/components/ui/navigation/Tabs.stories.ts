@@ -91,3 +91,14 @@ export const TwoTabs: Story = {
     pillTabs: true
   }
 }
+
+// Per-tab badge config (Partial<IBadgeProps>) rendered after the label
+export const WithBadges: Story = {
+  args: {
+    tabs: [
+      { id: 'inbox', label: 'Inbox', badge: { text: '12', variant: 'primary', pill: true } },
+      { id: 'archived', label: 'Archived', badge: { text: 'New', variant: 'success' } },
+      { id: 'spam', label: 'Spam' }
+    ]
+  }
+}

@@ -12,10 +12,11 @@ const stats = [
   { label: 'Tickets', value: '127', delta: 'En vivo', deltaVariant: 'tonal tonal-warning', icon: '&#xe0b7;', iconClass: 'text-warning', progress: 0, indeterminate: true, progressLabel: 'Sincronizando…' }
 ]
 
-// Tabs with associated panels (reports tab disabled to test disabled state)
+// Tabs with associated panels (reports tab disabled to test disabled state,
+// analytics tab carries a count badge)
 const overviewTabs = ref([
   { id: 'summary', label: 'Resumen', panelId: 'panel-summary' },
-  { id: 'analytics', label: 'Analítica', panelId: 'panel-analytics' },
+  { id: 'analytics', label: 'Analítica', panelId: 'panel-analytics', badge: { text: '4', variant: 'primary', pill: true } },
   { id: 'reports', label: 'Reportes', panelId: 'panel-reports', disabled: true }
 ])
 const activeOverviewTab = ref('summary')
@@ -34,6 +35,26 @@ const activity = [
   { id: 2, title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', icon: '&#xe0b9;', wrapper: 'bg-primary-fixed', iconColor: 'text-primary-emphasis' },
   { id: 3, title: 'Alerta de uso', text: 'API alcanzó el 80% del límite', icon: '&#xe002;', wrapper: 'bg-warning-fixed', iconColor: 'text-warning-emphasis' },
   { id: 4, title: 'Pago recibido', text: 'Suscripción Enterprise renovada', icon: '&#xe227;', wrapper: 'bg-accent-fixed', iconColor: 'text-accent-emphasis' }
+]
+
+// Team card — tab badges with counts, list items with avatar images
+const teamTabs = ref([
+  { id: 'members', label: 'Miembros', panelId: 'panel-members', badge: { text: '4', variant: 'secondary', pill: true } },
+  { id: 'invites', label: 'Invitaciones', panelId: 'panel-invites', badge: { text: '2', variant: 'danger', pill: true } }
+])
+const activeTeamTab = ref('members')
+
+const members = [
+  { id: 1, name: 'Giancarlos Garza', role: 'Administrador', avatar: 'https://i.pravatar.cc/88?img=12' },
+  { id: 2, name: 'Ana Morales', role: 'Diseñadora de producto', avatar: 'https://i.pravatar.cc/88?img=5' },
+  { id: 3, name: 'Luis Herrera', role: 'Desarrollador frontend', avatar: 'https://i.pravatar.cc/88?img=13' },
+  { id: 4, name: 'María Fuentes', role: 'QA', avatar: 'https://i.pravatar.cc/88?img=9' }
+]
+
+// Pending invitations — provider icons rendered through the media slot
+const invites = [
+  { id: 1, email: 'carlos.rivas@example.com', brand: 'google', sent: 'Enviada hace 2 días' },
+  { id: 2, email: 'sofia.lima@example.com', brand: 'github', sent: 'Enviada hace 5 horas' }
 ]
 
 /** Computed */
@@ -254,6 +275,101 @@ function onOverviewTabChange(tabId: string) {
         </UiCard>
       </div>
     </div>
+
+    <!-- Team (tab badges + list item images / media slot) -->
+    <UiCard
+      variant="outline"
+      class="card-pane mb-3"
+    >
+      <template #body>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="subtitle-1 fw-700 mb-0">
+            Equipo
+          </h4>
+          <UiButton
+            text="Invitar"
+            variant="tonal"
+            color="primary"
+            size="sm"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe7fe;" />
+            </template>
+          </UiButton>
+        </div>
+
+        <UiTabs
+          :tabs="teamTabs"
+          :active-tab="activeTeamTab"
+          @update-active-tab="activeTeamTab = $event"
+        />
+
+        <!-- Members panel (avatar images via image-url) -->
+        <div
+          v-show="activeTeamTab === 'members'"
+          id="panel-members"
+          role="tabpanel"
+          aria-labelledby="tab-members"
+          tabindex="0"
+          class="mt-3"
+        >
+          <UiListGroup
+            is-interactive
+            is-undecorated
+            variant="flush"
+          >
+            <UiListItem
+              v-for="member in members"
+              :key="member.id"
+              :title="member.name"
+              :text="member.role"
+              :image-url="member.avatar"
+              :image-alt="`Foto de ${member.name}`"
+              custom-image-class="mask-shape shape-cookie-12 shape-stretch"
+            />
+          </UiListGroup>
+        </div>
+
+        <!-- Invitations panel (provider icons via the media slot) -->
+        <div
+          v-show="activeTeamTab === 'invites'"
+          id="panel-invites"
+          role="tabpanel"
+          aria-labelledby="tab-invites"
+          tabindex="0"
+          class="mt-3"
+        >
+          <UiListGroup
+            is-undecorated
+            variant="flush"
+          >
+            <UiListItem
+              v-for="invite in invites"
+              :key="invite.id"
+              :title="invite.email"
+              :text="invite.sent"
+              has-actions
+            >
+              <template #media>
+                <UiIconSvg
+                  :content="brandIcons[invite.brand]"
+                  size="sm"
+                  :class="{ 'filter-invert': invite.brand === 'github' }"
+                />
+              </template>
+              <template #list-action>
+                <UiButton
+                  text="Reenviar"
+                  variant="outline"
+                  size="sm"
+                  class="me-3"
+                />
+              </template>
+            </UiListItem>
+          </UiListGroup>
+        </div>
+      </template>
+    </UiCard>
 
     <!-- System status -->
     <UiCard

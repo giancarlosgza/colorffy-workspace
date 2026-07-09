@@ -49,6 +49,30 @@ export const WithIcons: Story = {
   })
 }
 
+// `imageUrl` replaces the icon wrapper; use the `media` slot for arbitrary content
+export const WithImages: Story = {
+  render: () => ({
+    components: { UiListGroup, UiListItem },
+    template: `
+      <UiListGroup>
+        <UiListItem
+          title="Jane Cooper"
+          text="jane.cooper@example.com"
+          image-url="https://i.pravatar.cc/88?img=1"
+          image-alt="Jane Cooper avatar"
+        />
+        <UiListItem
+          title="Devon Lane"
+          text="devon.lane@example.com"
+          image-url="https://i.pravatar.cc/88?img=2"
+          image-alt="Devon Lane avatar"
+        />
+        <UiListItem title="Fallback to icon" text="No image provided" icon="&#xe7fd;" />
+      </UiListGroup>
+    `
+  })
+}
+
 export const ActiveItem: Story = {
   render: () => ({
     components: { UiListGroup, UiListItem },

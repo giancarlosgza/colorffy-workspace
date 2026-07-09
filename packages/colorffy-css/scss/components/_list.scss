@@ -93,6 +93,17 @@
             color: var(--_list-group-item-icon-color);
           }
         }
+
+        // Image (rendered in place of the icon wrapper, matching its footprint)
+        & .list-item-image {
+          --_list-item-image-size: 2.75rem;
+
+          width: var(--_list-item-image-size);
+          height: var(--_list-item-image-size);
+          flex-shrink: 0;
+          border-radius: v.$rounded-md;
+          object-fit: cover;
+        }
       }
 
       &.list-item-active {

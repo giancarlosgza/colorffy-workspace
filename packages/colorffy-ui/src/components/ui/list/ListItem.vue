@@ -8,11 +8,14 @@ const props = withDefaults(defineProps<IListItemProps>(), {
   title: null,
   text: null,
   icon: null,
+  imageUrl: null,
+  imageAlt: null,
   active: false,
   disabled: false,
   customClass: null,
   customIconWrapperClass: null,
   customIconClass: null,
+  customImageClass: null,
   hasActions: false
 })
 
@@ -62,6 +65,18 @@ const iconClasses = computed(() => {
 
   return classes
 })
+const imageClasses = computed(() => {
+  const classes: (string | Record<string, boolean>)[] = ['list-item-image']
+
+  if (props.customImageClass) {
+    if (Array.isArray(props.customImageClass))
+      classes.push(...props.customImageClass)
+    else
+      classes.push(props.customImageClass)
+  }
+
+  return classes
+})
 </script>
 
 <template>
@@ -71,16 +86,27 @@ const iconClasses = computed(() => {
     :aria-disabled="disabled || undefined"
   >
     <div class="list-item">
-      <!-- Icon -->
-      <div
-        v-if="icon"
-        :class="iconWrapperClasses"
-      >
-        <UiIconMaterial
-          :icon-code="icon"
-          :class="iconClasses"
-        />
-      </div>
+      <!-- Media slot (replaces the image/icon area) -->
+      <slot name="media">
+        <!-- Image (takes precedence over icon) -->
+        <img
+          v-if="imageUrl"
+          :class="imageClasses"
+          :src="imageUrl"
+          :alt="imageAlt ?? ''"
+        >
+
+        <!-- Icon -->
+        <div
+          v-else-if="icon"
+          :class="iconWrapperClasses"
+        >
+          <UiIconMaterial
+            :icon-code="icon"
+            :class="iconClasses"
+          />
+        </div>
+      </slot>
 
       <!-- Support text -->
       <div>

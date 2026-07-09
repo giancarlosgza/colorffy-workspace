@@ -2,6 +2,7 @@
 import type { ComponentPublicInstance } from 'vue'
 import type { ITabItem, ITabsEmits, ITabsProps } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
+import UiBadge from '../badge/Badge.vue'
 
 /** Props */
 const props = withDefaults(defineProps<ITabsProps>(), {
@@ -102,6 +103,19 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         @keydown="onTabKeydown($event, tabIndex)"
       >
         {{ tab.label }}
+
+        <!-- Badge -->
+        <UiBadge
+          v-if="tab.badge"
+          size="sm"
+          :variant="tab.badge.variant"
+          :text="tab.badge.text"
+          :icon-code="tab.badge.iconCode"
+          :icon-class="tab.badge.iconClass"
+          :icon-style="tab.badge.iconStyle"
+          :pill="tab.badge.pill"
+          :custom-class="tab.badge.customClass"
+        />
       </button>
     </li>
   </ul>

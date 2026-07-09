@@ -69,6 +69,17 @@ export interface IListItemProps {
   icon?: string | null
 
   /**
+   * Optional image URL rendered in place of the icon.
+   * Takes precedence over `icon` when both are provided.
+   */
+  imageUrl?: string | null
+
+  /**
+   * Alt text for the image. Defaults to empty (decorative image).
+   */
+  imageAlt?: string | null
+
+  /**
    * Marks the item as active.
    */
   active?: boolean
@@ -93,6 +104,11 @@ export interface IListItemProps {
    * Optional custom classes for the icon component.
    */
   customIconClass?: ListClassName | null
+
+  /**
+   * Optional custom classes for the list-item-image element.
+   */
+  customImageClass?: ListClassName | null
 
   /**
    * When true, layout has custom actions trailing the item content.

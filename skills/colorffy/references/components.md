@@ -665,13 +665,26 @@ Individual list item.
 - `clickable` (boolean) - Show hover effect
 - `disabled` (boolean)
 - `hasActions` (boolean, default: false) - Wraps list item in flex layout to support trailing action templates (and sets `is-undecorated` to true automatically)
+- `imageUrl` (string, optional) - Image URL rendered in place of the icon (takes precedence over `icon`); accepts `public/` paths, imported assets, or external URLs
+- `imageAlt` (string, optional) - Alt text for the image (defaults to empty/decorative)
+- `customImageClass` (string | string[], optional) - Custom CSS classes for the image (e.g. `rounded-full`)
 - `customIconClass` (string | string[], optional) - Custom CSS classes for the icon component inside list item
 - `customIconWrapperClass` (string | string[], optional) - Custom CSS classes for the list item icon wrapper container
 
 **Slots:**
-- `icon` - Prepend icon
+- `media` - Replaces the whole image/icon area with arbitrary content (e.g. `UiIconSvg`)
 - `default` - Item content
 - `list-action` - Append slot after the list-item content (visible when `hasActions` is true)
+
+```vue
+<!-- Image instead of icon -->
+<UiListItem
+  title="Jane Cooper"
+  text="jane.cooper@example.com"
+  image-url="/avatars/jane.jpg"
+  image-alt="Jane Cooper avatar"
+/>
+```
 
 ## Navigation
 
@@ -697,17 +710,22 @@ Horizontal tab navigation.
 
 ```vue
 <UiTabs
-  v-model="activeTab"
   :tabs="[
-    { label: 'Tab 1', value: '1' },
-    { label: 'Tab 2', value: '2' }
+    { id: 'inbox', label: 'Inbox', badge: { text: '12', variant: 'primary', pill: true } },
+    { id: 'archived', label: 'Archived' }
   ]"
+  :active-tab="activeTab"
+  @update-active-tab="activeTab = $event"
 />
 ```
 
 **Props:**
-- `modelValue` (string) - Active tab value
-- `tabs` (array) - Tab items
+- `activeTab` (string) - Id of the active tab
+- `tabs` (array) - Tab items: `{ id, label, disabled?, panelId?, badge? }`; `badge` accepts `Partial<IBadgeProps>` (`text`, `variant`, `pill`, `iconCode`, ...) rendered after the label
+- `pillTabs` / `contrastTabs` (boolean) - Styling variants
+
+**Emits:**
+- `updateActiveTab` (tabId: string) - Fired when a tab is selected
 
 ### UiSegmentedControls
 Segmented control switcher.

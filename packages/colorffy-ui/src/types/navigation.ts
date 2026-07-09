@@ -1,3 +1,4 @@
+import type { IBadgeProps } from '@/types/badge'
 import type { IBaseLinkProps } from '@/types/shared'
 
 /**
@@ -98,6 +99,11 @@ export interface ITabItem {
    * `aria-labelledby="tab-<id>"` (the tab button's generated id).
    */
   panelId?: string
+
+  /**
+   * Optional badge configuration rendered after the tab label.
+   */
+  badge?: Partial<IBadgeProps> | null
 }
 
 /**

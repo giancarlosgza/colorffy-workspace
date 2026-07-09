@@ -92,9 +92,8 @@ function save() {
             <UiListItem
               title="Perfil"
               text="Nombre, foto e información pública"
-              icon="&#xe853;"
-              custom-icon-wrapper-class="bg-primary-fixed rounded-full"
-              custom-icon-class="text-primary-emphasis"
+              image-url="https://i.pravatar.cc/88?img=12"
+              image-alt="Foto de perfil de Giancarlos"
               has-actions
             >
               <template #list-action>
