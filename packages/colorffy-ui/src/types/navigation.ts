@@ -98,6 +98,12 @@ export interface ITabItem {
    * Optional badge configuration rendered after the tab label.
    */
   badge?: Partial<IBadgeProps> | null
+
+  /**
+   * Optional leading Material icon code for the tab (e.g. `'&#xe87c;'`).
+   * Same convention as `INavItem.icon`; rendered via UiIconMaterial.
+   */
+  icon?: string
 }
 
 /**
@@ -153,6 +159,11 @@ export interface ITabsProps {
    * The id of the tab that should be active.
    */
   activeTab?: string
+
+  /**
+   * When true, tabs stretch to fill the available width equally.
+   */
+  fluid?: boolean
 }
 
 /**

@@ -30,6 +30,22 @@
     border-radius: var(--_nav-tabs-radius);
     border-bottom: v.$border-sm solid var(--theme-outline-button);
 
+    // Thin scrollbar affordance when tabs overflow horizontally
+    scrollbar-width: thin;
+    scrollbar-color: var(--theme-muted-base) transparent;
+
+    // Fluid tabs stretch equally to fill the available width
+    &.tabs-fluid {
+      .tab-item {
+        flex: 1 1 0;
+
+        .tab-link {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
     // Tabs pill
     &.tabs-pills {
       --_nav-tabs-radius: calc(#{v.$rounded-lg} + calc(var(--_nav-tabs-gap) - .15rem));
@@ -81,6 +97,11 @@
           transition: background-color 200ms v.$easing-in-fallback,
           color 200ms v.$easing-in-fallback,
           padding 200ms v.$easing-in-fallback;
+        }
+
+        // Reserve a trailing auto column for the badge alongside the leading icon
+        &:has(i, svg) {
+          --_btn-columns: auto 1fr auto;
         }
 
         &:is(:hover) {

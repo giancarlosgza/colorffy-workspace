@@ -3,12 +3,14 @@ import type { ComponentPublicInstance } from 'vue'
 import type { ITabItem, ITabsEmits, ITabsProps } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
 import UiBadge from '../badge/Badge.vue'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<ITabsProps>(), {
   pillTabs: false,
   contrastTabs: false,
-  activeTab: undefined
+  activeTab: undefined,
+  fluid: false
 })
 
 /** Emits */
@@ -79,7 +81,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
 <template>
   <ul
     class="tabs-navigation"
-    :class="{ 'tabs-pills': pillTabs, 'tabs-contrast': contrastTabs }"
+    :class="{ 'tabs-pills': pillTabs, 'tabs-contrast': contrastTabs, 'tabs-fluid': fluid }"
     role="tablist"
   >
     <li
@@ -102,6 +104,12 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         @click="handleSelectedTab(tab)"
         @keydown="onTabKeydown($event, tabIndex)"
       >
+        <!-- Leading icon -->
+        <UiIconMaterial
+          v-if="tab.icon"
+          :icon-code="tab.icon"
+        />
+
         {{ tab.label }}
 
         <!-- Badge -->

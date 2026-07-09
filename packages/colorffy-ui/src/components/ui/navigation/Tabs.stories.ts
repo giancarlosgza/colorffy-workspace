@@ -8,7 +8,8 @@ const meta = {
   argTypes: {
     tabs: { control: 'object' },
     pillTabs: { control: 'boolean' },
-    contrastTabs: { control: 'boolean' }
+    contrastTabs: { control: 'boolean' },
+    fluid: { control: 'boolean' }
   }
 } satisfies Meta<typeof UiTabs>
 
@@ -101,4 +102,44 @@ export const WithBadges: Story = {
       { id: 'spam', label: 'Spam' }
     ]
   }
+}
+
+// Leading Material icon per tab, same convention as INavItem.icon
+export const WithIcons: Story = {
+  args: {
+    tabs: [
+      { id: 'overview', label: 'Overview', icon: '&#xe88a;' },
+      { id: 'details', label: 'Details', icon: '&#xe873;' },
+      { id: 'settings', label: 'Settings', icon: '&#xe8b8;' }
+    ]
+  }
+}
+
+// Fluid tabs stretch equally to fill the available width
+export const Fluid: Story = {
+  args: {
+    tabs: defaultTabs,
+    fluid: true
+  }
+}
+
+// Overflowing tabs scroll horizontally with a thin scrollbar instead of wrapping
+export const OverflowScroll: Story = {
+  args: {
+    tabs: [
+      { id: 'tab-1', label: 'First Tab' },
+      { id: 'tab-2', label: 'Second Tab' },
+      { id: 'tab-3', label: 'Third Tab' },
+      { id: 'tab-4', label: 'Fourth Tab' },
+      { id: 'tab-5', label: 'Fifth Tab' },
+      { id: 'tab-6', label: 'Sixth Tab' },
+      { id: 'tab-7', label: 'Seventh Tab' },
+      { id: 'tab-8', label: 'Eighth Tab' }
+    ]
+  },
+  decorators: [
+    () => ({
+      template: '<div style="max-width: 420px;"><story /></div>'
+    })
+  ]
 }
