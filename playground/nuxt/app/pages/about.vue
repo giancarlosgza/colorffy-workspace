@@ -110,8 +110,8 @@ function join() {
               </UiButton>
             </UiButtonGroup>
           </div>
-          <UiIconApp
-            brand="nuxt"
+          <UiIconSvg
+            :content="brandIcons.nuxt"
             size="xl"
           />
         </div>
@@ -266,8 +266,8 @@ function join() {
                 :key="tech.brand"
                 class="d-flex align-items-center gap-2"
               >
-                <UiIconApp
-                  :brand="tech.brand"
+                <UiIconSvg
+                  :content="brandIcons[tech.brand]"
                   size="md"
                 />
                 <span class="subtitle-1 fw-600">{{ tech.name }}</span>
@@ -286,10 +286,10 @@ function join() {
               Funciona con
             </h3>
             <div class="d-flex flex-wrap align-items-center gap-3">
-              <UiIconApp
+              <UiIconSvg
                 v-for="brand in integrations"
                 :key="brand"
-                :brand="brand"
+                :content="brandIcons[brand]"
                 size="md"
                 :decorative="false"
                 :aria-label="brand"
@@ -328,8 +328,8 @@ function join() {
             <p class="fs-sm-300 text-muted mb-3">
               {{ member.role }}
             </p>
-            <UiIconApp
-              :brand="member.brand"
+            <UiIconSvg
+              :content="brandIcons[member.brand]"
               size="sm"
             />
           </template>

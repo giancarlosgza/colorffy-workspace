@@ -187,11 +187,10 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Shapes: `circle`, `square`, `rounded`
 
 **Icons**
-- Use `UiIconMaterial` for Material Design icons
-- Use `UiIconApp` for application-specific icons
-- Use `UiIconShapes` for geometric shapes
-- Use `UiIconTool` for tool/utility icons
-- All support `size` and `color` props
+- Use `UiIconMaterial` for Material Symbols (icon font glyph via `iconCode`)
+- Use `UiIconShapes` for decorative geometric shapes
+- Use `UiIconSvg` for any inline SVG (logos, brand marks) — paste into the slot, or pass `content` for data-driven icons from a local registry
+- All support `size` and `color` props (`color` recolors monochrome SVGs)
 
 ## Decision Trees
 

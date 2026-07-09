@@ -30,7 +30,7 @@ const plans = [
   { name: 'Enterprise', id: 'enterprise' }
 ]
 
-// Connected accounts (IconApp brands)
+// Connected accounts (brand keys map to brandIcons)
 const accounts = ref([
   { brand: 'google', name: 'Google', detail: 'giancarlosgza@gmail.com', connected: true },
   { brand: 'github', name: 'GitHub', detail: '@giancarlosgza', connected: true },
@@ -292,7 +292,11 @@ function save() {
               :key="account.brand"
               class="d-flex align-items-center gap-3 py-2"
             >
-              <UiIconApp :brand="account.brand" size="sm" />
+              <UiIconSvg
+                :content="brandIcons[account.brand]"
+                size="sm"
+                :class="{ 'filter-invert': account.brand === 'apple' || account.brand === 'github' }"
+              />
               <div class="flex-grow-1">
                 <p class="subtitle-1 fw-600 mb-0">
                   {{ account.name }}

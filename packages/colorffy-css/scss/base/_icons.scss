@@ -10,6 +10,29 @@
   }
 
   // ==========================================================================
+  // INLINE SVG ICON WRAPPER
+  // ==========================================================================
+  .icon-svg {
+    --_icon-svg-size: 2rem;
+
+    display: inline-flex;
+    vertical-align: middle;
+    line-height: 0;
+
+    // Explicit width/height beats the pasted <svg>'s own size attributes
+    & > svg {
+      width: var(--_icon-svg-size);
+      height: var(--_icon-svg-size);
+    }
+
+    // Recolor monochrome icons to follow the wrapper color; multi-color
+    // SVGs keep their own fills and are unaffected
+    &.icon-svg-current > svg {
+      fill: currentColor;
+    }
+  }
+
+  // ==========================================================================
   // ICON WRAPPER UTILITIES
   // ==========================================================================
   .icon-wrap {

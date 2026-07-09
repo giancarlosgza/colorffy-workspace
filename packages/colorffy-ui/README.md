@@ -354,10 +354,9 @@ export default defineNuxtConfig({
 - `UiConfirmModal` - Confirmation modal
 
 #### Icons
-- `UiIconApp` - Application icons
-- `UiIconMaterial` - Material Design icons
-- `UiIconShapes` - Shape icons
-- `UiIconTool` - Tool icons
+- `UiIconMaterial` - Material Symbols (icon font glyph via `iconCode`)
+- `UiIconShapes` - Decorative geometric shapes
+- `UiIconSvg` - Wrapper for any inline SVG (paste into the slot, or pass `content`)
 
 #### Images
 - `UiAvatar` - Avatar component

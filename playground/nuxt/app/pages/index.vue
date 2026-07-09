@@ -109,8 +109,8 @@ function copyInstall() {
               </UiButton>
             </div>
           </div>
-          <UiIconApp
-            brand="nuxt"
+          <UiIconSvg
+            :content="brandIcons.nuxt"
             size="xl"
           />
         </div>

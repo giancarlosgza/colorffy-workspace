@@ -46,10 +46,9 @@ export { default as UiConfirmModal } from './components/ui/dialog/ConfirmModal.v
 export { default as UiModal } from './components/ui/dialog/Modal.vue'
 
 // Components - Icon
-export { default as UiIconApp } from './components/ui/icon/App.vue'
 export { default as UiIconMaterial } from './components/ui/icon/Material.vue'
 export { default as UiIconShapes } from './components/ui/icon/Shapes.vue'
-export { default as UiIconTool } from './components/ui/icon/Tool.vue'
+export { default as UiIconSvg } from './components/ui/icon/Svg.vue'
 
 // Components - Image
 export { default as UiAvatar } from './components/ui/image/Avatar.vue'

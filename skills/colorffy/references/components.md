@@ -446,13 +446,23 @@ Pre-configured confirmation dialog.
 <UiIconMaterial icon-code="&#xe8b6;" :size="24" color="primary" />
 ```
 
-### UiIconApp, UiIconShapes, UiIconTool
+### UiIconShapes, UiIconSvg
 
 ```vue
-<UiIconApp name="settings" :size="24" />
-<UiIconShapes shape="circle" :size="24" />
-<UiIconTool tool="wrench" :size="24" />
+<UiIconShapes shape="circle-1" :size="24" />
+
+<!-- UiIconSvg: paste any inline <svg> into the slot -->
+<UiIconSvg :size="24">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="…" /></svg>
+</UiIconSvg>
+
+<!-- ...or pass raw markup via `content` for data-driven icons -->
+<UiIconSvg :content="brandIcons[name]" :size="24" />
 ```
+
+`UiIconSvg` replaces the removed `UiIconApp`/`UiIconTool`: keep the SVGs you
+need in a local registry instead of a hardcoded library set. `color` recolors
+monochrome icons; multi-color SVGs keep their own fills.
 
 ## Images
 
