@@ -53,6 +53,24 @@ export const Collapsed: Story = {
   }
 }
 
+export const LongCurrentItem: Story = {
+  args: {
+    items: [
+      { label: 'Home', to: '/' },
+      { label: 'Changelog', to: '/changelog' },
+      { label: 'Discover By Styles, Presets, & Export Examples' }
+    ],
+    separatorIcon: '&#xe5cc;'
+  },
+  render: args => ({
+    components: { UiBreadcrumb },
+    setup() {
+      return { args }
+    },
+    template: '<div style="max-width: 24rem;"><UiBreadcrumb v-bind="args" /></div>'
+  })
+}
+
 export const WithoutStructuredData: Story = {
   args: {
     items: trail,

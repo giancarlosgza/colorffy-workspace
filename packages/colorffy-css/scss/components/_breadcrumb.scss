@@ -10,6 +10,7 @@
     --_breadcrumb-current-color: var(--theme-on-background);
     --_breadcrumb-hover-color: var(--theme-on-background);
     --_breadcrumb-separator-color: var(--theme-muted-a10);
+    --_breadcrumb-current-max-width: 32rem;
 
     display: block;
     font-size: var(--fs-sm-500);
@@ -17,7 +18,7 @@
 
   .breadcrumb {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: var(--_breadcrumb-gap);
 
@@ -28,6 +29,7 @@
 
   .breadcrumb-item {
     display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: var(--_breadcrumb-gap);
     min-width: 0;
@@ -55,14 +57,25 @@
 
     .breadcrumb-current {
       display: inline-flex;
+      flex: 1 1 auto;
       align-items: center;
       gap: 0.25rem;
-      max-width: 16rem;
+      min-width: 0;
+      color: var(--_breadcrumb-current-color);
+      font-weight: v.$fw-600;
+    }
+
+    .breadcrumb-label {
+      display: block;
+      max-inline-size: var(--_breadcrumb-current-max-width);
+      min-width: 0;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      color: var(--_breadcrumb-current-color);
-      font-weight: v.$fw-600;
+    }
+
+    &:has(.breadcrumb-current) {
+      flex: 1 1 auto;
     }
 
     &.active .breadcrumb-link {

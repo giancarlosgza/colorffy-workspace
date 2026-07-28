@@ -123,6 +123,7 @@ function createProject() {
       :items="[
         { label: 'Inicio', to: '/' },
         { label: 'Proyectos' },
+        { label: 'Administrar listado de proyectos y tareas', current: true },
       ]"
     />
 

@@ -143,7 +143,7 @@ function StructuredData() {
               :icon-code="entry.item!.icon"
               class="breadcrumb-icon"
             />
-            {{ entry.item!.label }}
+            <span class="breadcrumb-label">{{ entry.item!.label }}</span>
           </slot>
         </span>
 
@@ -166,7 +166,7 @@ function StructuredData() {
               :icon-code="entry.item!.icon"
               class="breadcrumb-icon"
             />
-            {{ entry.item!.label }}
+            <span class="breadcrumb-label">{{ entry.item!.label }}</span>
           </slot>
         </component>
 
