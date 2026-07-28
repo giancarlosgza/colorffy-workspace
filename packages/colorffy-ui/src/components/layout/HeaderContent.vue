@@ -44,7 +44,8 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
 const emit = defineEmits<IHeaderContentEmits>()
 
 /** Computed */
-const titleId = useId()
+const generatedHeadingId = useId()
+const headingId = computed(() => props.headingId ?? generatedHeadingId)
 const headerClasses = computed(() => {
   const classes = []
 
@@ -109,7 +110,7 @@ function handleBackClick() {
         <div class="header-content">
           <h1
             v-if="title"
-            :id="titleId"
+            :id="headingId"
             class="text-title"
           >
             {{ title }}
@@ -118,7 +119,7 @@ function handleBackClick() {
           <p
             v-if="subtitle"
             class="text-description"
-            :aria-describedby="title ? titleId : undefined"
+            :aria-describedby="title ? headingId : undefined"
           >
             {{ subtitle }}
           </p>

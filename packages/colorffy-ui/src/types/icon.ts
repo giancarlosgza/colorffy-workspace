@@ -103,6 +103,11 @@ export interface IMaterialIconProps extends IIconBaseProps {
  */
 export interface IIconSvgProps extends IIconBaseProps {
   /**
+   * Optional namespace seed for IDs inside inlined SVG markup.
+   */
+  uid?: string | null
+
+  /**
    * Optional raw inline SVG markup to render (for data-driven icons).
    * When omitted, the default slot is used instead.
    */

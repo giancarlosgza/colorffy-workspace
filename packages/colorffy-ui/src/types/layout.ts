@@ -7,6 +7,11 @@
  */
 export interface IHeaderContentProps {
   /**
+   * Optional ID for the header title element and its description reference.
+   */
+  headingId?: string
+
+  /**
    * Main title text to display in the header.
    */
   title?: string | null

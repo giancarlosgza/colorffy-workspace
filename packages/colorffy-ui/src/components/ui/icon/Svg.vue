@@ -5,6 +5,7 @@ import { computed, useId } from 'vue'
 /** Props */
 const props = withDefaults(defineProps<IIconSvgProps>(), {
   content: null,
+  uid: null,
   size: 'md',
   color: null,
   decorative: true,
@@ -21,7 +22,8 @@ const sizeMap: Record<IconSize, number> = {
 }
 
 /** Composable */
-const uid = useId()
+const generatedUid = useId()
+const uid = computed(() => props.uid ?? generatedUid)
 
 /** Computed */
 const resolvedSize = computed(() => {
@@ -43,7 +45,7 @@ const wrapperProps = computed(() => ({
   'role': ariaRole.value,
   'aria-label': ariaLabel.value
 }))
-const renderedContent = computed(() => namespaceSvgIds(props.content ?? '', uid))
+const renderedContent = computed(() => namespaceSvgIds(props.content ?? '', uid.value))
 
 /** Methods */
 function namespaceSvgIds(markup: string, seed: string): string {

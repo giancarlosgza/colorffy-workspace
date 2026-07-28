@@ -8,6 +8,7 @@ const meta = {
   component: HeaderContent,
   tags: ['autodocs'],
   argTypes: {
+    headingId: { control: 'text' },
     title: { control: 'text' },
     subtitle: { control: 'text' },
     actions: { control: 'boolean' },
@@ -25,6 +26,24 @@ export const Default: Story = {
   args: {
     title: 'Page Title',
     subtitle: 'This is a subtitle description'
+  }
+}
+
+export const WithExplicitHeadingId: Story = {
+  args: {
+    headingId: 'project-heading',
+    title: 'Project Header',
+    subtitle: 'Project details'
+  },
+  play: async ({ canvasElement }) => {
+    const heading = canvasElement.querySelector('h1')
+    const description = canvasElement.querySelector('p')
+
+    if (!heading || heading.id !== 'project-heading')
+      throw new Error('Expected the explicit headingId to be applied to the heading')
+
+    if (!description || description.getAttribute('aria-describedby') !== 'project-heading')
+      throw new Error('Expected the explicit headingId to be applied to the description reference')
   }
 }
 

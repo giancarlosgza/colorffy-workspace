@@ -12,6 +12,7 @@ const HEART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path
 
 // Multi-color sample — keeps its own fills, ignores `color`
 const DUO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="8" cy="12" r="6" fill="#4285F4" /><circle cx="16" cy="12" r="6" fill="#EA4335" fill-opacity="0.85" /></svg>`
+const GRADIENT = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><linearGradient id="gradient"><stop offset="0%" /><stop offset="100%" /></linearGradient></defs><path fill="url(#gradient)" d="M0 0h24v24H0z" /></svg>'
 
 const meta = {
   title: 'Components/Icon/Svg',
@@ -19,6 +20,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     content: { control: 'text' },
+    uid: { control: 'text' },
     size: { control: 'text' },
     color: { control: 'text' },
     decorative: { control: 'boolean' },
@@ -79,6 +81,17 @@ export const Colored: Story = {
 // local registry) instead of pasting into the slot.
 export const FromContentProp: Story = {
   args: { size: 'lg', content: HEART }
+}
+
+export const WithExplicitUid: Story = {
+  args: { size: 'lg', content: GRADIENT, uid: 'brand-mark' },
+  play: async ({ canvasElement }) => {
+    if (!canvasElement.querySelector('#icon-brand-mark-gradient'))
+      throw new Error('Expected the explicit uid to namespace the SVG gradient ID')
+
+    if (!canvasElement.querySelector('[fill="url(#icon-brand-mark-gradient)"]'))
+      throw new Error('Expected the explicit uid to rewrite the SVG gradient reference')
+  }
 }
 
 export const WithAccessibility: Story = {
