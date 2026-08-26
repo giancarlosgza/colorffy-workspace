@@ -295,6 +295,7 @@ function handleMenuItemClick(to: string | object) {
         :as="NuxtLink"
         :items="menuItems"
         :active-item="route.path"
+        indicator-tab
       />
     </main>
   </div>
