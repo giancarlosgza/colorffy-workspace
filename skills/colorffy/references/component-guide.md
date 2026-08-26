@@ -46,6 +46,13 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Best for 2-4 view switchers (e.g., Grid/List)
 - More compact than tabs
 
+**Active indicators (`UiTabs`, `UiSegmentedControls`, `UiNavigationBar`)**
+
+All three place *and* animate their indicator with pure CSS anchor positioning — no JavaScript. Every item gets its own `anchor-name` (`--tabs-item-1`, `--tabs-item-2`, …) from an `@for` loop, a `:has()` ladder points a `--*-anchor` custom property at the active item's name, and the indicator reads `anchor(var(--*-anchor) <side>)`. An `@supports not (anchor-name: --foo)` fallback styles the active item directly. One rule when touching it:
+
+- **The transition only fires if the referenced anchor name changes.** Transitions run on computed-value changes, and `left: anchor(left)` computes the same before and after — so moving `anchor-name` between elements while the indicator keeps a fixed `position-anchor` makes it *snap*, with no transition generated at all. Switching which name the indicator references (`anchor(var(--x) left)`) does change the computed value, so it interpolates. That is why the anchor names are per-item and the active one is selected through a variable.
+- Keep the `transition` inside `@media (prefers-reduced-motion: no-preference)`, and note the `@for` bound caps how many items animate (16 for tabs/segmented, 8 for the navigation bar).
+
 **Dropdown menus**
 - Use `UiButtonMenu` with `UiButtonMenuItem` for action menus
 - Use `UiPopoverMenu` for context menus

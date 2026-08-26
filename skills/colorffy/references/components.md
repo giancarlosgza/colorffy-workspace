@@ -899,21 +899,33 @@ Horizontal tab navigation.
 - `pillTabs` / `contrastTabs` (boolean) - Styling variants
 - `fluid` (boolean, default: false) - Stretches every tab to fill the available width equally
 
+The active indicator (underline, or the raised pill with `pillTabs`) is placed and animated with pure CSS anchor positioning; where anchor positioning is unsupported the active tab falls back to its own border/background.
+
 **Emits:**
 - `updateActiveTab` (tabId: string) - Fired when a tab is selected
 
 ### UiSegmentedControls
-Segmented control switcher.
+Compact segmented switcher with an animated active pill.
 
 ```vue
 <UiSegmentedControls
-  v-model="view"
-  :options="[
-    { label: 'Grid', value: 'grid' },
-    { label: 'List', value: 'list' }
+  :tabs="[
+    { id: 'grid', label: 'Grid' },
+    { id: 'list', label: 'List' }
   ]"
+  :active-tab="view"
+  @update-active-tab="view = $event"
 />
 ```
+
+**Props:**
+- `tabs` (array) - Items: `{ id, label, disabled? }` (`position` is deprecated and ignored)
+- `activeTab` (string) - Id of the active tab; defaults to the first tab
+
+**Emits:**
+- `updateActiveTab(tabId)` - Fired when a tab is selected
+
+The pill is placed and animated with pure CSS anchor positioning, falling back to a bolder label on a filled background where anchor positioning is unsupported. Same mechanism as `UiTabs` and `UiNavigationBar` — see [component-guide.md](./component-guide.md).
 
 ### UiNavbarLink
 Link for navbar navigation.

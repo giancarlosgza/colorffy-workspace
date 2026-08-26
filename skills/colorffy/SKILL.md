@@ -192,6 +192,13 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 **[See theming reference →](references/theming.md)**
 
+## Breaking changes
+
+- **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
+- **`ISegmentedTab.position` deprecated:** ignored since the indicator reads real geometry; optional now, removed in v3.
+
+**[See the CSS migration guide →](https://colorffy.com/docs/colorffy-css/migration)**
+
 ## Support
 
 - **Issues:** [GitHub Issues](https://github.com/giancarlosgza/colorffy-workspace/issues)
