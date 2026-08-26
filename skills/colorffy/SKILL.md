@@ -175,12 +175,22 @@ const name = ref('')
 
 **Spacing:** `m-*`, `p-*`, `gap-*` (0-5, responsive)
 **Colors:** `text-*`, `bg-*`, `border-*` (primary, success, danger, etc.)
-**Typography:** `fs-*` (100-600), `fw-*` (400-800), `text-{align}`
+**Typography:** `fs-*` (t-shirt: `4xs`–`5xl`, anchored at `base`), `fw-*` (400-800), `text-{align}`
 **Layout:** `d-flex`, `d-grid`, `justify-content-*`, `align-items-*`
 **Borders:** `border`, `rounded-{size}`
 **Effects:** `shadow-*`, `opacity-*`, `filter-*`
 
 **[See complete utilities reference →](references/utilities.md)**
+
+## Design Tokens (v2.5+)
+
+Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values:
+
+- **Spacing:** `var(--space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--space-unit` (override it for runtime density)
+- **Font sizes:** `var(--fs-4xs…5xl)` + `var(--fs-{step}--line-height)` companions
+- **Deprecated (removed in v3):** `--fs-100`-style ordinal tokens and `fs-100`-style classes still work as aliases — do not use in new code
+
+**[See theming reference →](references/theming.md)**
 
 ## Support
 

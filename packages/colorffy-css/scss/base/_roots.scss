@@ -103,7 +103,7 @@
     --theme-frosted-glass-bg-dark: rgb(30 30 30 / 65%);
     --theme-frosted-glass-backdrop-filter-dark: blur(30px) saturate(150%) contrast(100%) brightness(100%);
 
-    /* font sizes (t-shirt scale, anchored at base) */
+    /* font sizes */
     --fs-4xs: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.6875rem);
     --fs-3xs: clamp(0.6875rem, calc(0.31rem + 1.97vw), 0.75rem);
     --fs-2xs: clamp(0.70rem, calc(0.32rem + 1.69vw), 0.8125rem);
@@ -117,7 +117,7 @@
     --fs-4xl: clamp(1.875rem, calc(0.11rem + 4.66vw), 2.5rem);
     --fs-5xl: clamp(2rem, calc(0.11rem + 5vw), 3.3rem);
 
-    /* font size line-height companions (unitless) */
+    /* font size line-height  */
     --fs-4xs--line-height: 1.4;
     --fs-3xs--line-height: 1.4;
     --fs-2xs--line-height: 1.4;
@@ -145,7 +145,7 @@
     --fs-600: var(--fs-base);
     --fs-xl-100: var(--fs-5xl);
 
-    /* spacing scale (number = px at 16px root, derived from one unit) */
+    /* spacing scale */
     --space-unit: .25rem;
     --space-4: var(--space-unit);
     --space-6: calc(var(--space-unit) * 1.5);

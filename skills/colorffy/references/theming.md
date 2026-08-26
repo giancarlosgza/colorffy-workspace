@@ -197,13 +197,27 @@ $fw-800: 800; // Extrabold
 ```
 
 ### Font Sizes (CSS Custom Properties)
-Font sizes are controlled via CSS custom properties on `:root` to allow clamp-based fluid sizing:
-- Base scales: `--fs-100` to `--fs-600` (e.g. `--fs-100` for `h1` size clamp)
-- Small scales: `--fs-sm-100` to `--fs-sm-500` (used for overlines, subtitles, captions, buttons)
+Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
+
+`--fs-4xs` (11px) · `--fs-3xs` (12px) · `--fs-2xs` (13px) · `--fs-xs` (14px) · `--fs-sm` (15px) · `--fs-base` (16px) · `--fs-lg` (20px) · `--fs-xl` (24px) · `--fs-2xl` (28px) · `--fs-3xl` (32px) · `--fs-4xl` (40px, h1) · `--fs-5xl` (~53px)
+
+Each size has a unitless line-height companion: `--fs-{step}--line-height` (e.g. `--fs-lg--line-height: 1.4`).
+
+**Deprecated (removed in v3):** the old ordinal names `--fs-100`…`--fs-600`, `--fs-sm-100`…`--fs-sm-500`, `--fs-xl-100` remain as aliases of the new tokens. Note the old scale was inverted (`--fs-100` was the *largest*). Always use the t-shirt names in new code.
 
 ## Spacing Scale
 
-Spacing size utilities are defined via the `$spacing-sizes` SCSS map:
+### Spacing Tokens (CSS Custom Properties, v2.5+)
+
+All component spacing uses the `--space-*` tokens on `:root` — the number is the pixel value at a 16px root, and every step derives from `--space-unit: .25rem`:
+
+`--space-4` · `--space-6` · `--space-8` · `--space-12` · `--space-14` · `--space-16` · `--space-20` · `--space-24` · `--space-32` · `--space-48`
+
+Runtime density: override `--space-unit` on `:root` or any subtree to scale all component spacing proportionally (e.g. `--space-unit: .2rem` = 80% density). When writing custom CSS alongside Colorffy, use `var(--space-*)` instead of hardcoded rem/px spacing.
+
+### Utility Class Scale (separate from the tokens)
+
+The `m-*`/`p-*`/`gap-*` utility classes are generated from the `$spacing-sizes` SCSS map, which keeps its own historical scale until v3:
 
 ```scss
 $spacing-sizes: (

@@ -120,14 +120,16 @@ Add breakpoint prefixes: `sm`, `md`, `lg`, `xl`, `xxl`
 
 ### Font Size
 
-**Pattern:** `fs-{100-600}` (100 smallest, 400 base, 600 largest), `fs-sm-{100-500}`, `fs-xl-100`
+**Pattern (v2.5+):** `fs-{4xs|3xs|2xs|xs|sm|base|lg|xl|2xl|3xl|4xl|5xl}` — t-shirt scale anchored at `base` (16px). Each class sets the size and its paired line-height.
 
 ```html
-<p class="fs-400">Base size</p>
-<p class="fs-600">Largest</p>
-<p class="fs-sm-300">Small variant</p>
-<p class="fs-xl-100">Extra large</p>
+<p class="fs-base">Base size</p>
+<p class="fs-2xs">Small variant</p>
+<p class="fs-2xl">Display text</p>
+<p class="fs-5xl">Extra large</p>
 ```
+
+**Deprecated (removed in v3):** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` still work (font-size only, no line-height). Do not use in new code.
 
 ### Font Weight
 
