@@ -111,9 +111,11 @@ export interface ITabItem {
  */
 export interface ISegmentedTab extends ITabItem {
   /**
-   * Numerical position of the tab for the indicator offset calculation.
+   * Numerical position of the tab.
+   *
+   * @deprecated Unused since the indicator moved to CSS anchor positioning. Omit it; removed in v3.
    */
-  position: number
+  position?: number
 
   /**
    * When true, the tab is disabled and cannot be selected.

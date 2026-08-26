@@ -2,6 +2,9 @@
 @use "../abstracts/mixins" as m;
 @use '../base/typography';
 
+// Items covered by the anchored indicator; the transition needs one anchor name per item
+$indicator-max-items: 8;
+
 @layer layout.navigation-bar {
   // ==========================================================================
   // BOTTOM NAVIGATION BAR LAYOUT
@@ -16,6 +19,7 @@
     --_navigation-bar-font-size: .65rem;
     --_navigation-bar-icon-size: 1.35rem;
     --_navigation-bar-bg-color: var(--theme-surface-navigation);
+    --_navigation-bar-indicator-anchor: --navigation-bar-item-1;
 
     display: none;
     flex-direction: row;
@@ -83,8 +87,6 @@
 
         // Nuxt link active class
         &.router-link-exact-active {
-          anchor-name: --active-item;
-
           p, i {
             color: var(--theme-primary-a10);
           }
@@ -105,6 +107,17 @@
     // ==========================================================================
     // ACTIVE ITEM INDICATOR
     // ==========================================================================
+    // Anchors
+    @for $i from 1 through $indicator-max-items {
+      & .navigation-bar-item:nth-child(#{$i}) .navigation-bar-link {
+        anchor-name: --navigation-bar-item-#{$i};
+      }
+
+      &:has(.navigation-bar-item:nth-child(#{$i}) .navigation-bar-link.router-link-exact-active) {
+        --_navigation-bar-indicator-anchor: --navigation-bar-item-#{$i};
+      }
+    }
+
     & .indicator {
       display: none;
 
@@ -117,16 +130,19 @@
         max-width: 100%;
         height: calc(100% - 1rem);
         z-index: 1;
-        transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-        left var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-        right var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
 
-        position-anchor: --active-item;
-        top: anchor(top);
-        bottom: anchor(bottom);
-        left: anchor(left);
-        right: anchor(right);
+        position-anchor: var(--_navigation-bar-indicator-anchor);
+        top: anchor(var(--_navigation-bar-indicator-anchor) top);
+        bottom: anchor(var(--_navigation-bar-indicator-anchor) bottom);
+        left: anchor(var(--_navigation-bar-indicator-anchor) left);
+        right: anchor(var(--_navigation-bar-indicator-anchor) right);
         background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
+
+        // Animation
+        @media (prefers-reduced-motion: no-preference) {
+          transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
+          inset var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
+        }
       }
 
       &:is(.indicator-tab) {
@@ -134,7 +150,7 @@
           border-radius: v.$rounded-sm;
           height: .25rem;
           background-color: var(--theme-primary-a10);
-          top: calc(anchor(top) - 1rem);
+          top: calc(anchor(var(--_navigation-bar-indicator-anchor) top) - 1rem);
           bottom: unset;
         }
       }

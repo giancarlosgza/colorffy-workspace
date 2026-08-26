@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
-import { nextTick, ref, toRef, watch } from 'vue'
+import { ref, toRef, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
@@ -15,36 +15,15 @@ const emit = defineEmits<ISegmentedControlsEmits>()
 const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
-const pillIndicator = ref<HTMLElement | null>(null)
 
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
-  animatePillMove()
   activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
 })
 
 /** Methods */
 function isActiveTab(tab: ISegmentedTab): boolean {
   return activeTabName.value === tab.id
-}
-// FLIP slide for the pill: CSS transitions on anchored insets freeze re-resolution in Chromium
-function animatePillMove() {
-  const pill = pillIndicator.value
-  if (!pill || typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-    return
-
-  const prev = pill.getBoundingClientRect()
-  nextTick(() => {
-    const next = pill.getBoundingClientRect()
-    const dx = prev.left - next.left
-    if (!dx)
-      return
-
-    pill.animate(
-      [{ translate: `${dx}px 0` }, { translate: '0 0' }],
-      { duration: 300, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
-    )
-  })
 }
 function setTabButton(el: Element | ComponentPublicInstance | null, index: number) {
   tabButtons.value[index] = (el as HTMLButtonElement) ?? null
@@ -53,7 +32,6 @@ function handleSelectedTab(tab: ISegmentedTab) {
   if (tab.disabled)
     return
 
-  animatePillMove()
   activeTabName.value = tab.id
   emit('updateActiveTab', tab.id)
 }
@@ -118,7 +96,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
           :ref="(el) => setTabButton(el, tabIndex)"
           class="segmented-control-link"
           role="tab"
-          :class="{ 'active': isActiveTab(tab), 'disabled': tab.disabled }"
+          :class="{ active: isActiveTab(tab), disabled: tab.disabled }"
           :aria-selected="isActiveTab(tab)"
           :aria-controls="tab.panelId || undefined"
           :aria-disabled="tab.disabled"
@@ -133,7 +111,6 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
 
       <!-- Indicator -->
       <li
-        ref="pillIndicator"
         aria-hidden="true"
         role="presentation"
         class="pill-indicator"

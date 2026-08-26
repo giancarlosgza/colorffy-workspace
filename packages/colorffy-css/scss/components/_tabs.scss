@@ -2,6 +2,9 @@
 @use "../abstracts/mixins" as m;
 @use '../base/typography';
 
+// Items covered by the anchored indicator; the transition needs one anchor name per item
+$indicator-max-items: 16;
+
 @layer components.tabs {
   // ==========================================================================
   // TABS COMPONENT
@@ -12,7 +15,13 @@
     --_nav-tabs-gutter-y: var(--space-12);
     --_nav-tabs-radius: #{v.$rounded-none};
     --_nav-tabs-bg-color: transparent;
+    --_nav-tabs-indicator-size: calc(#{v.$border-md} + 1px);
+    --_nav-tabs-indicator-color: var(--theme-primary-a10);
+    --_nav-tabs-indicator-anchor: --tabs-item-1;
+    --_nav-tabs-indicator-duration: 300ms;
+    --_nav-tabs-indicator-easing: #{v.$easing-in-fallback};
 
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -59,18 +68,45 @@
           --_btn-radius: #{v.$rounded-lg};
 
           &:is(.active, .router-link-active, .router-link-exact-active) {
-            --_btn-padding-inline: calc(var(--space-24) + var(--space-4));
-            --_btn-shadow: var(--shadow-md);
-
             color: var(--theme-on-background);
-            background: var(--theme-surface-body-pane);
-            border-bottom: none;
           }
+        }
+      }
+
+      // Indicator
+      :where(.tab-indicator) {
+        @supports (anchor-name: --foo) {
+          top: anchor(var(--_nav-tabs-indicator-anchor) top);
+          bottom: anchor(var(--_nav-tabs-indicator-anchor) bottom);
+          height: auto;
+          z-index: 1;
+          background: var(--theme-surface-body-pane);
+          border-radius: v.$rounded-lg;
+          box-shadow: var(--shadow-md);
+        }
+      }
+
+      // States
+      @supports (anchor-name: --foo) {
+        .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active):is(:hover) {
+          background: transparent;
+        }
+      }
+
+      // Fallback
+      @supports not (anchor-name: --foo) {
+        .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active) {
+          --_btn-shadow: var(--shadow-md);
+
+          background: var(--theme-surface-body-pane);
+          border-bottom: none;
         }
       }
     }
 
     .tab-item {
+      z-index: 2;
+
       .tab-link {
         --_btn-bg-color: transparent;
         --_btn-color: var(--theme-on-background);
@@ -93,8 +129,7 @@
           color: var(--theme-muted-a10);
           text-decoration: none;
           transition: background-color 200ms v.$easing-in-fallback,
-          color 200ms v.$easing-in-fallback,
-          padding 200ms v.$easing-in-fallback;
+          color 200ms v.$easing-in-fallback;
         }
 
         // Badge alongside icon
@@ -108,11 +143,8 @@
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {
-          --_btn-padding-inline: var(--space-20);
-
           font-weight: v.$fw-800;
           color: var(--theme-on-background);
-          border-bottom: calc(#{v.$border-md} + 1px) solid var(--theme-primary-a10);
         }
 
         &:is(:disabled, .disabled) {
@@ -120,6 +152,46 @@
           cursor: not-allowed;
           pointer-events: none;
         }
+      }
+    }
+
+    // Anchors
+    @for $i from 1 through $indicator-max-items {
+      .tab-item:nth-child(#{$i}) .tab-link {
+        anchor-name: --tabs-item-#{$i};
+      }
+
+      &:has(.tab-item:nth-child(#{$i}) .tab-link:is(.active, .router-link-active, .router-link-exact-active)) {
+        --_nav-tabs-indicator-anchor: --tabs-item-#{$i};
+      }
+    }
+
+    // Indicator
+    :where(.tab-indicator) {
+      display: none;
+
+      @supports (anchor-name: --foo) {
+        display: block;
+        position: absolute;
+        position-anchor: var(--_nav-tabs-indicator-anchor);
+        left: anchor(var(--_nav-tabs-indicator-anchor) left);
+        right: anchor(var(--_nav-tabs-indicator-anchor) right);
+        bottom: 0;
+        height: var(--_nav-tabs-indicator-size);
+        background: var(--_nav-tabs-indicator-color);
+        z-index: 5;
+
+        // Animation
+        @media (prefers-reduced-motion: no-preference) {
+          transition: inset var(--_nav-tabs-indicator-duration) var(--_nav-tabs-indicator-easing);
+        }
+      }
+    }
+
+    // Fallback
+    @supports not (anchor-name: --foo) {
+      .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active) {
+        border-bottom: var(--_nav-tabs-indicator-size) solid var(--_nav-tabs-indicator-color);
       }
     }
 
@@ -140,6 +212,7 @@
       --_segmented-control-easing-in: #{v.$easing-in-fallback};
       --_segmented-control-easing-duration: 400ms;
       --_segmented-control-count: 2;
+      --_segmented-control-anchor: --segmented-item-1;
 
       display: grid;
       grid-template-columns: repeat(var(--_segmented-control-count), 1fr);
@@ -188,18 +261,18 @@
           }
         }
 
-        // Nav tab underline indicator
+        // Indicator
         :where(.pill-indicator) {
           @supports (anchor-name: --foo) {
             top: auto;
-            bottom: calc(anchor(bottom) - .35rem);
+            bottom: calc(anchor(var(--_segmented-control-anchor) bottom) - .35rem);
             height: 3.5px;
             background: var(--theme-primary-a10);
             border-radius: v.$rounded-sm;
           }
         }
 
-        // Fallback active style when anchor positioning is unsupported
+        // Fallback
         @supports not (anchor-name: --foo) {
           .segmented-control-item .segmented-control-link:is(.active) {
             background: transparent;
@@ -252,7 +325,6 @@
           }
 
           &:is(.active) {
-            anchor-name: --segmented-active-item;
             font-weight: v.$fw-600;
             color: var(--theme-on-background-inverse);
           }
@@ -265,25 +337,41 @@
         }
       }
 
-      // Nav pill indicator, anchored to the active link
+      // Anchors
+      @for $i from 1 through $indicator-max-items {
+        .segmented-control-item:nth-child(#{$i}) .segmented-control-link {
+          anchor-name: --segmented-item-#{$i};
+        }
+
+        &:has(.segmented-control-item:nth-child(#{$i}) .segmented-control-link:is(.active)) {
+          --_segmented-control-anchor: --segmented-item-#{$i};
+        }
+      }
+
+      // Indicator
       :where(.pill-indicator) {
         display: none;
 
         @supports (anchor-name: --foo) {
           display: block;
           position: absolute;
-          position-anchor: --segmented-active-item;
-          top: anchor(top);
-          bottom: anchor(bottom);
-          left: anchor(left);
-          right: anchor(right);
+          position-anchor: var(--_segmented-control-anchor);
+          top: anchor(var(--_segmented-control-anchor) top);
+          bottom: anchor(var(--_segmented-control-anchor) bottom);
+          left: anchor(var(--_segmented-control-anchor) left);
+          right: anchor(var(--_segmented-control-anchor) right);
           background: var(--theme-surface-a90);
           border-radius: calc(var(--_segmented-control-radius) - 6px);
           z-index: 1;
+
+          // Animation
+          @media (prefers-reduced-motion: no-preference) {
+            transition: inset var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
+          }
         }
       }
 
-      // Fallback active style when anchor positioning is unsupported
+      // Fallback
       @supports not (anchor-name: --foo) {
         & .segmented-control-item .segmented-control-link:is(.active) {
           background-color: var(--theme-surface-a90);

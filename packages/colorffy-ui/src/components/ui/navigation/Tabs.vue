@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { ITabItem, ITabsEmits, ITabsProps } from '@/types/navigation'
-import { ref, toRef, watch } from 'vue'
+import { computed, ref, toRef, watch } from 'vue'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -21,12 +21,22 @@ const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
+/** Computed */
+const tabsClasses = computed(() => ({
+  'tabs-pills': props.pillTabs,
+  'tabs-contrast': props.contrastTabs,
+  'tabs-fluid': props.fluid
+}))
+
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
   activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
 })
 
 /** Methods */
+function isActiveTab(tab: ITabItem): boolean {
+  return activeTabName.value === tab.id
+}
 function setTabButton(el: Element | ComponentPublicInstance | null, index: number) {
   tabButtons.value[index] = (el as HTMLButtonElement) ?? null
 }
@@ -81,7 +91,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
 <template>
   <ul
     class="tabs-navigation"
-    :class="{ 'tabs-pills': pillTabs, 'tabs-contrast': contrastTabs, 'tabs-fluid': fluid }"
+    :class="tabsClasses"
     role="tablist"
   >
     <li
@@ -95,11 +105,11 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         :ref="(el) => setTabButton(el, tabIndex)"
         class="tab-link"
         role="tab"
-        :class="[activeTabName === tab.id ? 'active' : '', tab.disabled ? 'disabled' : '']"
-        :aria-selected="activeTabName === tab.id"
+        :class="{ active: isActiveTab(tab), disabled: tab.disabled }"
+        :aria-selected="isActiveTab(tab)"
         :aria-controls="tab.panelId || undefined"
         :aria-disabled="tab.disabled"
-        :tabindex="activeTabName === tab.id ? 0 : -1"
+        :tabindex="isActiveTab(tab) ? 0 : -1"
         :disabled="tab.disabled"
         @click="handleSelectedTab(tab)"
         @keydown="onTabKeydown($event, tabIndex)"
@@ -126,5 +136,12 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         />
       </button>
     </li>
+
+    <!-- Indicator -->
+    <li
+      aria-hidden="true"
+      role="presentation"
+      class="tab-indicator"
+    />
   </ul>
 </template>
