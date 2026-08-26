@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
-import { computed, ref, toRef, watch } from 'vue'
+import { nextTick, ref, toRef, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
@@ -14,19 +14,38 @@ const emit = defineEmits<ISegmentedControlsEmits>()
 /** Data */
 const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
-// Derive the pill position from the rendered order, not a separate `position` field
-const activeTabPosition = computed(() => {
-  const index = tabs.value.findIndex(t => t.id === activeTabName.value)
-  return index >= 0 ? index : 0
-})
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
+const pillIndicator = ref<HTMLElement | null>(null)
 
 /** Watchers */
 watch(() => props.activeTab, (newVal) => {
+  animatePillMove()
   activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
 })
 
 /** Methods */
+function isActiveTab(tab: ISegmentedTab): boolean {
+  return activeTabName.value === tab.id
+}
+// FLIP slide for the pill: CSS transitions on anchored insets freeze re-resolution in Chromium
+function animatePillMove() {
+  const pill = pillIndicator.value
+  if (!pill || typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    return
+
+  const prev = pill.getBoundingClientRect()
+  nextTick(() => {
+    const next = pill.getBoundingClientRect()
+    const dx = prev.left - next.left
+    if (!dx)
+      return
+
+    pill.animate(
+      [{ translate: `${dx}px 0` }, { translate: '0 0' }],
+      { duration: 300, easing: 'cubic-bezier(0.2, 0, 0, 1)' }
+    )
+  })
+}
 function setTabButton(el: Element | ComponentPublicInstance | null, index: number) {
   tabButtons.value[index] = (el as HTMLButtonElement) ?? null
 }
@@ -34,6 +53,7 @@ function handleSelectedTab(tab: ISegmentedTab) {
   if (tab.disabled)
     return
 
+  animatePillMove()
   activeTabName.value = tab.id
   emit('updateActiveTab', tab.id)
 }
@@ -90,7 +110,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         v-for="(tab, tabIndex) in tabs"
         :key="tab.id"
         class="segmented-control-item"
-        :class="[activeTabName === tab.id ? 'active-item' : '']"
+        :class="{ 'active-item': isActiveTab(tab) }"
         role="presentation"
       >
         <button
@@ -98,11 +118,11 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
           :ref="(el) => setTabButton(el, tabIndex)"
           class="segmented-control-link"
           role="tab"
-          :class="[activeTabName === tab.id ? 'active' : '', tab.disabled ? 'disabled' : '']"
-          :aria-selected="activeTabName === tab.id"
+          :class="{ 'active': isActiveTab(tab), 'disabled': tab.disabled }"
+          :aria-selected="isActiveTab(tab)"
           :aria-controls="tab.panelId || undefined"
           :aria-disabled="tab.disabled"
-          :tabindex="activeTabName === tab.id ? 0 : -1"
+          :tabindex="isActiveTab(tab) ? 0 : -1"
           :disabled="tab.disabled"
           @click="handleSelectedTab(tab)"
           @keydown="onTabKeydown($event, tabIndex)"
@@ -113,10 +133,10 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
 
       <!-- Indicator -->
       <li
+        ref="pillIndicator"
         aria-hidden="true"
         role="presentation"
         class="pill-indicator"
-        :style="[`--pos: ${activeTabPosition}`]"
       />
     </ul>
   </div>
