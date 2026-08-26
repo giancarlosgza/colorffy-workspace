@@ -16,6 +16,7 @@
       position: relative;
       display: grid;
       grid-template-columns: var(--_header-columns);
+      align-items: center;
       gap: var(--_header-columns-gap);
       margin-block: 0 var(--_header-columns-gap);
 
@@ -26,8 +27,12 @@
           font-size: var(--fs-xl);
           line-height: 1.25;
           letter-spacing: -.15px;
-          margin-bottom: var(--space-4);
+          margin-bottom: 0;
           @include m.text-variable(true);
+
+          &:not(:last-child) {
+            margin-bottom: var(--space-4);
+          }
         }
 
         & .text-description {
