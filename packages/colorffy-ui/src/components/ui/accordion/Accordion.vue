@@ -11,6 +11,7 @@ withDefaults(defineProps<IAccordionItemProps>(), {
   iconClass: null,
   text: '',
   disabled: false,
+  size: null,
   customClass: null
 })
 
@@ -23,7 +24,7 @@ const isOpen = defineModel<boolean>('open', { default: false })
     :id="id ? `accordion-${id}` : undefined"
     :name="name || undefined"
     class="accordion"
-    :class="[customClass, { 'is-disabled': disabled }]"
+    :class="[customClass, size && size !== 'md' ? `accordion-${size}` : null, { 'is-disabled': disabled }]"
     :open="isOpen || undefined"
     :aria-disabled="disabled || undefined"
     @toggle="isOpen = ($event.target as HTMLDetailsElement).open"

@@ -217,6 +217,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Use `UiAccordion` for single collapsible section
 - Use `UiAccordionGroup` when only one should be open
 - Set `icon` for a leading Material Symbols icon before the title
+- Set `size="sm"` for compact lists; `variant="border-block"` + `shape="square"` for flush FAQ-style lists; `variant="borderless"` for a flat look
 - Good for FAQs, settings sections
 - Reduces visual clutter
 

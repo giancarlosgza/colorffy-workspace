@@ -1,6 +1,10 @@
-import type { ClassValue } from '@/types/shared'
+import type { ClassValue, SizeLevel } from '@/types/shared'
 
 export type AccordionClassName = ClassValue
+
+export type AccordionSize = Extract<SizeLevel, 'sm' | 'md'>
+export type AccordionVariant = 'borderless' | 'border-block'
+export type AccordionShape = 'rounded' | 'square'
 
 /**
  * Interface props for the Accordion item component.
@@ -48,6 +52,12 @@ export interface IAccordionItemProps {
   disabled?: boolean
 
   /**
+   * Scalable size for this accordion item ('sm' | 'md').
+   * Overrides the size set on the parent AccordionGroup. Defaults to 'md'.
+   */
+  size?: AccordionSize | (string & {}) | null
+
+  /**
    * Optional custom classes for the root element.
    */
   customClass?: AccordionClassName | null
@@ -64,6 +74,25 @@ export interface IAccordionGroupProps {
    * Renders the group with a transparent background.
    */
   isTransparent?: boolean
+
+  /**
+   * Surface variant for the group.
+   * 'borderless' removes background and borders; 'border-block' renders a
+   * flush list separated by horizontal rules. Accepts a custom string.
+   */
+  variant?: AccordionVariant | (string & {}) | null
+
+  /**
+   * Scalable size applied to all accordion items ('sm' | 'md').
+   * Defaults to 'md'. Accepts a custom string.
+   */
+  size?: AccordionSize | (string & {}) | null
+
+  /**
+   * Corner shape for the accordion items. 'rounded' (default) keeps the
+   * tonal per-position radius; 'square' removes all rounding.
+   */
+  shape?: AccordionShape | null
 
   /**
    * Optional custom classes for the wrapper element.

@@ -389,8 +389,10 @@ function join() {
             <h3 class="subtitle-1 fw-700 mb-3">
               Preguntas frecuentes
             </h3>
+            <!-- Borderless FAQ list: no surface, small size -->
             <UiAccordionGroup
-              is-transparent
+              variant="borderless"
+              size="sm"
             >
               <UiAccordion
                 v-for="faq in faqs"

@@ -79,12 +79,13 @@ Single collapsible accordion item.
 - `name` (string, required) - Group identifier
 - `icon` (string, optional) - Leading Material Symbols icon (HTML entity) shown before the title; ignored when the `header` slot is used
 - `open` (boolean, default: false) - Initial open state (also controllable via `v-model:open`)
+- `size` ('sm' | 'md', optional) - Per-item size override; defaults to the group size
 
 ### UiAccordionGroup
 Groups multiple accordion items (allows only one open at a time).
 
 ```vue
-<UiAccordionGroup>
+<UiAccordionGroup variant="border-block" shape="square" size="sm">
   <UiAccordion title="Section 1" name="demo">
     <template #content><p>Content 1</p></template>
   </UiAccordion>
@@ -93,6 +94,12 @@ Groups multiple accordion items (allows only one open at a time).
   </UiAccordion>
 </UiAccordionGroup>
 ```
+
+**Props:**
+- `variant` ('borderless' | 'border-block', optional) - 'borderless' removes surface and borders; 'border-block' renders a flush list separated by horizontal rules
+- `size` ('sm' | 'md', default: 'md') - Scales item paddings, arrow, and title
+- `shape` ('rounded' | 'square', default: 'rounded') - Corner shape for items
+- `isTransparent` (boolean, default: false) - Transparent background with outline border
 
 ## Alerts & Notifications
 

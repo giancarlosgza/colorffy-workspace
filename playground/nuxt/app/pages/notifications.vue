@@ -214,7 +214,12 @@ function runTask() {
             <h4 class="subtitle-1 fw-700 mb-3">
               Preguntas frecuentes
             </h4>
-            <UiAccordionGroup is-transparent>
+            <UiAccordionGroup
+              is-transparent
+              shape="square"
+              size="sm"
+              variant="border-block"
+            >
               <UiAccordion
                 v-for="faq in faqs"
                 :key="faq.id"

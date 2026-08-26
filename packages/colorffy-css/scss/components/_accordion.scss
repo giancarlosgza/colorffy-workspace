@@ -17,6 +17,10 @@
       --_accordion-radius: #{v.$rounded-lg};
       --_accordion-border-color: transparent;
       --_accordion-padding: var(--space-14);
+      --_accordion-icon-gap: 0.625rem;
+      --_accordion-arrow-size: 24px;
+      --_accordion-title-fs: var(--fs-xs);
+      --_accordion-content-gap: var(--space-16);
       --_accordion-easing-in: #{v.$easing-in-fallback};
       --_accordion-easing-duration: 200ms;
 
@@ -60,13 +64,13 @@
 
         &.accordion-header {
           --_accordion-trailing-icon-deg: 0deg;
-          --_accordion-icon-gap: 0.625rem;
 
           position: relative;
           display: flex;
           flex-direction: row;
           align-items: center;
           gap: var(--_accordion-icon-gap);
+          padding-inline-end: calc(var(--_accordion-padding) + var(--_accordion-arrow-size) + var(--space-4));
           cursor: pointer;
           background-color: transparent;
 
@@ -76,7 +80,7 @@
           }
 
           .accordion-title {
-            font-size: var(--fs-xs);
+            font-size: var(--_accordion-title-fs);
             font-weight: v.$fw-700;
             font-family: var(--font-primary);
             color: var(--_accordion-color);
@@ -93,14 +97,15 @@
           // Toggle arrow icon
           &:after {
             content: '';
-            inline-size: 28px;
-            block-size: 28px;
+            inline-size: var(--_accordion-arrow-size);
+            block-size: var(--_accordion-arrow-size);
             background-color: var(--theme-muted-a10);
             -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
             
             position: absolute;
-            top: var(--_accordion-padding);
+            inset-block: 0;
+            margin-block: auto;
             right: var(--_accordion-padding);
             rotate: var(--_accordion-trailing-icon-deg);
             transition: rotate var(--_accordion-easing-duration) var(--_accordion-easing-in);
@@ -130,7 +135,7 @@
           opacity: 1;
           min-height: 1rem;
           height: auto;
-          margin-bottom: var(--space-16);
+          margin-bottom: var(--_accordion-content-gap);
         }
       }
 
@@ -176,6 +181,47 @@
     &.accordion-pane {
       & .accordion {
         --_accordion-bg-color: var(--theme-surface-body-pane);
+      }
+    }
+
+    // Sizes
+    &.accordion-sm .accordion,
+    & .accordion.accordion-sm {
+      --_accordion-padding: var(--space-8);
+      --_accordion-icon-gap: var(--space-8);
+      --_accordion-arrow-size: 20px;
+      --_accordion-title-fs: var(--fs-2xs);
+      --_accordion-content-gap: var(--space-8);
+    }
+
+    // Variants
+    &.accordion-borderless {
+      & .accordion {
+        --_accordion-bg-color: transparent;
+        --_accordion-border-color: transparent;
+      }
+    }
+
+    &.accordion-border-block {
+      gap: 0;
+
+      & .accordion {
+        --_accordion-bg-color: transparent;
+        --_accordion-border-color: var(--theme-outline-surface);
+
+        border-inline: none;
+        border-block-end: none;
+
+        &:last-child {
+          border-block-end: v.$border-sm solid var(--_accordion-border-color);
+        }
+      }
+    }
+
+    // Shapes
+    &.accordion-square {
+      & .accordion:is(:first-child, :not(:first-child)) {
+        --_accordion-radius: #{v.$rounded-none};
       }
     }
   }
