@@ -23,11 +23,11 @@
       background-color: var(--_input-group-bg-color);
       border: var(--_input-group-border-width) solid var(--_input-group-border-color);
       color: var(--_input-group-color);
-      font-size: var(--fs-sm-300);
+      font-size: var(--fs-2xs);
 
       i {
         color: inherit;
-        font-size: var(--fs-600);
+        font-size: var(--fs-base);
         font-variation-settings: var(--iw-semi-bold);
       }
     }

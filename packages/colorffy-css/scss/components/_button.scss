@@ -14,8 +14,8 @@
       --_btn-border-color: transparent;
       --_btn-gap: 0;
       --_btn-radius: #{v.$button-border-radius};
-      --_btn-padding-inline: 0.75rem;
-      --_btn-padding-block: 0.375rem;
+      --_btn-padding-inline: var(--space-12);
+      --_btn-padding-block: var(--space-6);
       --_btn-height: 36px;
       --_btn-icon-size: 1.15rem;
       --_btn-shadow: var(--shadow-sm);
@@ -315,12 +315,12 @@
 
         // Closable chips render as a wrapper with two inner action buttons
         &:is(.chip-closable) {
-          padding-inline-end: .35rem;
+          padding-inline-end: var(--space-6);
 
           & :where(.chip-content, .chip-remove) {
             display: inline-flex;
             align-items: center;
-            gap: var(--_btn-gap, .35rem);
+            gap: var(--_btn-gap, var(--space-6));
             padding: 0;
             background: transparent;
             border: none;
@@ -418,8 +418,6 @@
       &.btn-fab {
         --_btn-columns: 1fr;
         --_btn-gap: 0;
-        --_btn-padding-inline: 0.85rem;
-        --_btn-padding-block: 0.75rem;
         --_btn-radius: calc(#{v.$button-border-radius} + 8px);
         --_btn-shadow: var(--shadow-lg);
 
@@ -436,7 +434,7 @@
         }
 
         &:has(span) {
-          --_btn-gap: .5rem;
+          --_btn-gap: var(--space-8);
           aspect-ratio: unset;
         }
 
@@ -447,8 +445,8 @@
 
       &.btn-cta {
         --_btn-radius: #{v.$rounded-full};
-        --_btn-padding-inline: 2.5rem;
-        --_btn-padding-block: 1.5rem;
+        --_btn-padding-inline: calc(var(--space-32) + var(--space-8));
+        --_btn-padding-block: var(--space-24);
 
         height: fit-content;
       }

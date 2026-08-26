@@ -10,15 +10,15 @@
     --_badge-bg-color: var(--theme-surface-container-high);
     --_badge-border-color: var(--theme-outline-button);
     --_badge-radius: #{v.$rounded-full};
-    --_badge-font-size: var(--fs-sm-500);
+    --_badge-font-size: var(--fs-4xs);
     --_badge-font-weight: #{v.$fw-500};
-    --_badge-gutter-y: .25rem;
-    --_badge-gutter-x: .5rem;
+    --_badge-gutter-y: var(--space-4);
+    --_badge-gutter-x: var(--space-8);
 
     display: inline-flex;
     padding-block: var(--_badge-gutter-y);
     padding-inline: var(--_badge-gutter-x);
-    margin-inline: calc(var(--_badge-gutter-x) - .35rem);
+    margin-inline: .15rem;
 
     font-size: var(--_badge-font-size);
     font-weight: var(--_badge-font-weight);
@@ -133,9 +133,10 @@
 
     // Pill badge for buttons and notifications use
     &.badge-pill {
-      --_badge-gutter-y: .25rem;
-      --_badge-gutter-x: .35rem;
+      --_badge-gutter-y: var(--space-4);
+      --_badge-gutter-x: var(--space-6);
       --_badge-font-weight: #{v.$fw-700};
+      margin-inline: 0;
       aspect-ratio: 1;
     }
 
@@ -150,7 +151,7 @@
 
     &:has(i) {
       display: inline-flex;
-      gap: .25rem;
+      gap: var(--space-4);
       align-items: center;
 
       i {
@@ -163,8 +164,8 @@
     // Size
     &.badge-sm {
       --_badge-font-size: 10px;
-      --_badge-gutter-y: 0.25rem;
-      --_badge-gutter-x: 0.375rem;
+      --_badge-gutter-y: var(--space-4);
+      --_badge-gutter-x: var(--space-6);
 
       margin-block: 0;
       margin-inline: 0;
@@ -199,7 +200,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.45rem 0.55rem;
+    gap: var(--space-6) var(--space-8);
 
     .badge {
       margin: 0;

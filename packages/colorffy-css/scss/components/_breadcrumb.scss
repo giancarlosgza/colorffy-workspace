@@ -5,7 +5,7 @@
   // BREADCRUMB COMPONENT
   // ==========================================================================
   .breadcrumb-nav {
-    --_breadcrumb-gap: 0.5rem;
+    --_breadcrumb-gap: var(--space-8);
     --_breadcrumb-color: var(--theme-muted-a10);
     --_breadcrumb-current-color: var(--theme-on-background);
     --_breadcrumb-hover-color: var(--theme-on-background);
@@ -13,7 +13,7 @@
     --_breadcrumb-current-max-width: 32rem;
 
     display: block;
-    font-size: var(--fs-sm-500);
+    font-size: var(--fs-4xs);
   }
 
   .breadcrumb {
@@ -36,14 +36,14 @@
     
     & span, 
     & a {
-      font-size: var(--fs-sm-200);
+      font-size: var(--fs-xs);
       font-family: var(--font-secondary);
     }
 
     .breadcrumb-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--space-4);
       color: var(--_breadcrumb-color);
       text-decoration: none;
       border-radius: v.$rounded-sm;
@@ -59,7 +59,7 @@
       display: inline-flex;
       flex: 1 1 auto;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--space-4);
       min-width: 0;
       color: var(--_breadcrumb-current-color);
       font-weight: v.$fw-600;
@@ -90,7 +90,7 @@
     user-select: none;
 
     & i {
-      font-size: var(--fs-600);
+      font-size: var(--fs-base);
       color: var(--theme-muted-a10);
     }
   }
@@ -104,7 +104,7 @@
   }
 
   .breadcrumb-icon {
-    font-size: var(--fs-600);
+    font-size: var(--fs-base);
     color: var(--theme-muted-a10);
   }
 }

@@ -6,7 +6,7 @@
   // CHIP GROUP COMPONENT
   // ==========================================================================
   .chip-group {
-    --_chip-group-gap: .5rem;
+    --_chip-group-gap: var(--space-8);
 
     display: flex;
     flex-direction: row;
@@ -19,7 +19,7 @@
   // BUTTON GROUP COMPONENT
   // ==========================================================================
   .btn-group {
-    --_btn-group-gap: .75rem .55rem;
+    --_btn-group-gap: var(--space-12) var(--space-8);
 
     display: flex;
     flex-direction: row;
@@ -36,7 +36,7 @@
     }
 
     &:is(.btn-group-connected) {
-      --_btn-group-gap: 0.25rem;
+      --_btn-group-gap: var(--space-4);
       --_btn-connected-radius: #{v.$rounded-full};
 
       // Prevent circular icon buttons when grouped; they should match standard button shape
@@ -118,8 +118,8 @@
   // FAB GROUP COMPONENT
   // ==========================================================================
   .fab-group {
-    --_btn-fab-position-y: 1.75rem;
-    --_btn-fab-position-x: 1.75rem;
+    --_btn-fab-position-y: calc(var(--space-24) + var(--space-4));
+    --_btn-fab-position-x: calc(var(--space-24) + var(--space-4));
 
     position: fixed;
     bottom: var(--_btn-fab-position-y);
@@ -127,7 +127,7 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    gap: 1rem;
+    gap: var(--space-16);
     isolation: isolate;
     z-index: v.$z-index-fab;
 
@@ -152,8 +152,8 @@
 
     display: flex;
     border: v.$border-sm solid var(--theme-outline-button);
-    gap: .35rem;
-    padding: .25rem;
+    gap: var(--space-6);
+    padding: var(--space-4);
     border-radius: calc(#{v.$button-border-radius} + .25rem);
     position: relative;
 
@@ -162,7 +162,7 @@
 
       .btn:is(.btn-chip) {
         margin: 0;
-        padding-block: 4px;
+        padding-block: var(--space-4);
 
         &:is(:hover, :focus, :active) {
           background: transparent;
@@ -176,7 +176,7 @@
 
     &:has(.segmented-control-active.active-grid) {
       &:after {
-        translate: calc(100% + 8px);
+        translate: calc(100% + calc(var(--space-4) * 2));
       }
     }
 
@@ -188,9 +188,9 @@
       inset-block: 0;
       left: var(--_sc-bg-position);
       margin-block: auto;
-      margin-inline: 4px;
+      margin-inline: var(--space-4);
       // Calc the size based on inline margin and segmented control size
-      width: calc(50% - 8px);
+      width: calc(50% - calc(var(--space-4) * 2));
       height: 85%;
       border-radius: calc(#{v.$rounded-lg} - 4px);
       background-color: var(--theme-surface-container-high);
@@ -212,10 +212,10 @@
   .toggle-btn-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-    gap: .85rem;
+    gap: var(--space-14);
 
     & .toggle-btn {
-      --_toggle-btn-padding: .75rem;
+      --_toggle-btn-padding: var(--space-12);
       --_toggle-btn-radius: #{v.$button-border-radius};
       --_toggle-btn-bg-color: transparent;
       --_toggle-btn-color: var(--theme-on-background);
@@ -270,7 +270,7 @@
       & .toggle-btn-inner {
         display: grid;
         grid-template-areas: 'icon' 'text' 'badge';
-        gap: .75rem;
+        gap: var(--space-12);
 
         & .toggle-btn-icon-wrapper {
           grid-area: icon;
@@ -281,10 +281,10 @@
 
           & p {
             &.subtitle-1 {
-              font-size: var(--fs-sm-200);
+              font-size: var(--fs-xs);
               font-weight: v.$fw-600;
               font-family: var(--font-primary);
-              margin-bottom: 0.25rem;
+              margin-bottom: var(--space-4);
 
               &:not(:has(~ p)) {
                 margin-bottom: 0;
@@ -306,8 +306,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .fab-group {
-      --_btn-fab-position-y: 1.25rem;
-      --_btn-fab-position-x: .75rem;
+      --_btn-fab-position-y: var(--space-20);
+      --_btn-fab-position-x: var(--space-12);
 
       & .btn-fab {
         --_btn-gap: 0;
@@ -322,7 +322,7 @@
 
     // Lift FAB
     body:has(.navigation-bar) .fab-group {
-      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + .85rem);
+      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + var(--space-14));
 
       @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
         --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + 1.35rem);

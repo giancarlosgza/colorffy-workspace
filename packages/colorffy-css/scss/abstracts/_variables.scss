@@ -130,7 +130,7 @@ $fw-800: 800;
 $type-h1: (
         font-family: (var(--font-primary)),
         font-weight: $fw-800,
-        font-size: var(--fs-100),
+        font-size: var(--fs-4xl),
         letter-spacing: 0px,
         line-height: 1
 );
@@ -138,42 +138,42 @@ $type-h1: (
 $type-h2: (
         font-family: (var(--font-primary)),
         font-weight: $fw-400,
-        font-size: var(--fs-200),
+        font-size: var(--fs-3xl),
         letter-spacing: 0px,
 );
 
 $type-h3: (
         font-family: (var(--font-primary)),
         font-weight: $fw-500,
-        font-size: var(--fs-300),
+        font-size: var(--fs-2xl),
         letter-spacing: 0px,
 );
 
 $type-h4: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-400),
+        font-size: var(--fs-xl),
         letter-spacing: .25px,
 );
 
 $type-h5: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-500),
+        font-size: var(--fs-lg),
         letter-spacing: .20px,
 );
 
 $type-h6: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-600),
+        font-size: var(--fs-base),
         letter-spacing: .15px,
 );
 
 $type-body1: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-600),
+        font-size: var(--fs-base),
         letter-spacing: .5px,
         line-height: 1.5
 );
@@ -181,14 +181,14 @@ $type-body1: (
 $type-subtitle1: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-sm-100),
+        font-size: var(--fs-sm),
         letter-spacing: .45px,
 );
 
 $type-subtitle2: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-sm-300),
+        font-size: var(--fs-2xs),
         letter-spacing: .35px,
 );
 
@@ -202,21 +202,21 @@ $type-button: (
 $type-caption: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-sm-500),
+        font-size: var(--fs-4xs),
         letter-spacing: .5px,
 );
 
 $type-label: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-600,
-        font-size: var(--fs-sm-400),
+        font-size: var(--fs-3xs),
         letter-spacing: -0.01em,
 );
 
 $type-overline: (
         font-family: (var(--font-primary)),
         font-weight: $fw-800,
-        font-size: var(--fs-sm-200),
+        font-size: var(--fs-xs),
         letter-spacing: -0.01em,
 );
 

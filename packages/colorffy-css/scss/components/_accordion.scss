@@ -9,14 +9,14 @@
   .accordion-group {
     display: grid;
     grid-template-rows: auto;
-    gap: .25rem;
+    gap: var(--space-4);
 
     & .accordion {
       --_accordion-bg-color: var(--theme-surface-accordion);
       --_accordion-color: var(--theme-on-background);
       --_accordion-radius: #{v.$rounded-lg};
       --_accordion-border-color: transparent;
-      --_accordion-padding: 0.85rem;
+      --_accordion-padding: var(--space-14);
       --_accordion-easing-in: #{v.$easing-in-fallback};
       --_accordion-easing-duration: 200ms;
 
@@ -60,7 +60,7 @@
 
         &.accordion-header {
           --_accordion-trailing-icon-deg: 0deg;
-          --_accordion-icon-gap: 0.65rem;
+          --_accordion-icon-gap: 0.625rem;
 
           position: relative;
           display: flex;
@@ -76,7 +76,7 @@
           }
 
           .accordion-title {
-            font-size: var(--fs-sm-200);
+            font-size: var(--fs-xs);
             font-weight: v.$fw-700;
             font-family: var(--font-primary);
             color: var(--_accordion-color);
@@ -100,8 +100,8 @@
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
             
             position: absolute;
-            top: 0.65rem;
-            right: 0.65rem;
+            top: var(--_accordion-padding);
+            right: var(--_accordion-padding);
             rotate: var(--_accordion-trailing-icon-deg);
             transition: rotate var(--_accordion-easing-duration) var(--_accordion-easing-in);
           }
@@ -130,7 +130,7 @@
           opacity: 1;
           min-height: 1rem;
           height: auto;
-          margin-bottom: 1rem;
+          margin-bottom: var(--space-16);
         }
       }
 

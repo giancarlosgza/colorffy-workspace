@@ -106,7 +106,7 @@
   p,
   a {
     font-weight: v.$fw-400;
-    font-size: var(--fs-sm-200);
+    font-size: var(--fs-xs);
     letter-spacing: 0.4px;
     line-height: 20px;
   }
@@ -191,14 +191,14 @@
   code {
     --_code-color: var(--theme-muted-a10);
 
-    font-size: var(--fs-sm-400);
+    font-size: var(--fs-3xs);
     color: var(--_code-color);
     cursor: pointer;
   }
 
   kbd {
     font-weight: v.$fw-400;
-    font-size: var(--fs-sm-500);
+    font-size: var(--fs-4xs);
     color: var(--theme-on-background);
     background-color: var(--theme-surface-kbd);
     border: v.$border-sm solid var(--theme-surface-kbd);

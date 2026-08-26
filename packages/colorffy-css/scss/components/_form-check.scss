@@ -6,8 +6,8 @@
   // FORM CHECK COMPONENT
   // ==========================================================================
   .form-check {
-    --_form-check-gutter-y: .85rem;
-    --_form-check-gap: .75rem;
+    --_form-check-gutter-y: var(--space-14);
+    --_form-check-gap: var(--space-12);
     --_form-check-height: 1.5rem;
     --_form-check-input-size: 1.25rem;
     --_form-check-input-bg-color: transparent;
@@ -21,24 +21,27 @@
     align-items: center;
     gap: var(--_form-check-gap);
     min-height: var(--_form-check-height);
-    margin-bottom: var(--_form-check-gutter-y);
     padding-left: 0;
+
+    &:not(:last-child) {
+      margin-bottom: var(--_form-check-gutter-y);
+    }
 
     // Sizing variants
     &:is(.form-sm) {
       --_form-check-height: 1.25rem;
       --_form-check-input-size: 1rem;
-      --_form-check-gap: .5rem;
+      --_form-check-gap: var(--space-8);
       
-      font-size: var(--fs-sm-400);
+      font-size: var(--fs-3xs);
     }
 
     &:is(.form-lg) {
       --_form-check-height: 1.75rem;
       --_form-check-input-size: 1.5rem;
-      --_form-check-gap: .85rem;
+      --_form-check-gap: var(--space-14);
 
-      font-size: var(--fs-600);
+      font-size: var(--fs-base);
     }
 
     @supports (transition: all 100ms linear(1, 1, 1)) {

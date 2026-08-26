@@ -11,7 +11,7 @@
 
     & .header {
       --_header-columns: 1fr;
-      --_header-columns-gap: 1rem;
+      --_header-columns-gap: var(--space-16);
 
       position: relative;
       display: grid;
@@ -23,15 +23,15 @@
       & .header-title {
         // Texts
         & .text-title {
-          font-size: var(--fs-400);
+          font-size: var(--fs-xl);
           line-height: 1.25;
           letter-spacing: -.15px;
-          margin-bottom: .25rem;
+          margin-bottom: var(--space-4);
           @include m.text-variable(true);
         }
 
         & .text-description {
-          font-size: var(--fs-sm-200);
+          font-size: var(--fs-xs);
           color: var(--theme-muted-a10);
           max-inline-size: 50ch;
           margin-bottom: 0;
@@ -48,7 +48,7 @@
           & h1 {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-8);
           }
 
           & span {
@@ -102,7 +102,7 @@
   @include m.media-query(992) {
     .header {
       :where(.col-heading h1:is(.text-title)) {
-        font-size: var(--fs-500);
+        font-size: var(--fs-lg);
       }
     }
   }

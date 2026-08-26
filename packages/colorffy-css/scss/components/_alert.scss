@@ -16,7 +16,7 @@
       z-index: v.$z-index-toast;
 
       // Positioning variables
-      --_alert-toast-spacing: 1.85rem;
+      --_alert-toast-spacing: var(--space-32);
       --_alert-toast-min-width: 300px;
       --_alert-toast-max-width: 90vw;
       --_alert-toast-width: fit-content;
@@ -116,12 +116,13 @@
     --_alert-bg-color: var(--theme-surface-container-low);
     --_alert-border-color: var(--theme-surface-container-low);
     --_alert-radius: #{v.$rounded-lg};
-    --_alert-font-size: var(--fs-sm-400);
+    --_alert-font-size: var(--fs-3xs);
     --_alert-font-weight: #{v.$fw-400};
     --_alert-icon-size: 1.75em;
-    --_alert-padding-block: .75rem;
-    --_alert-padding-inline: .75rem;
-    --_alert-gap: .5rem;
+    --_alert-padding-block: var(--space-12);
+    --_alert-padding-inline: var(--space-12);
+    --_alert-gap: var(--space-8);
+    --_alert-stack-gap: var(--_alert-padding-block);
     --_alert-columns: 1fr auto;
 
     display: grid;
@@ -155,7 +156,7 @@
     }
 
     &:has(i) {
-      --_alert-gap: .5rem;
+      --_alert-gap: var(--space-8);
       --_alert-flex-direction: row;
 
       align-items: center;
@@ -166,12 +167,12 @@
     }
 
     &:not(.alert-snackbar) {
-      margin-block-end: var(--_alert-padding-block);
+      margin-block-end: var(--_alert-stack-gap);
     }
 
     // Alert with title
     &:has(.alert-title) {
-      --_alert-gap: .75rem;
+      --_alert-gap: var(--space-12);
       --_alert-columns: 1fr;
     }
 
@@ -183,7 +184,7 @@
       @include m.text-wrap-pretty;
 
       .alert-title {
-        --_alert-font-size: var(--fs-sm-200);
+        --_alert-font-size: var(--fs-xs);
         --_alert-font-weight: #{v.$fw-800};
 
         font-family: var(--font-secondary);
@@ -196,7 +197,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: .5rem;
+      gap: var(--space-8);
     }
 
     // Dismiss button
@@ -234,8 +235,8 @@
     // Variants
     &.alert-sm {
       --_alert-icon-size: 1.5em;
-      --_alert-padding-block: .5rem;
-      --_alert-padding-inline: .5rem;
+      --_alert-padding-block: var(--space-8);
+      --_alert-padding-inline: var(--space-8);
     }
 
     &.alert-rounded {
@@ -403,10 +404,10 @@
   // PWA OFFLINE/INSTALL ALERT CONTAINER
   // ==========================================================================
   .pwa-alert-container {
-    --_pwa-alert-position-x: 1rem;
-    --_pwa-alert-position-y: 1rem;
+    --_pwa-alert-position-x: var(--space-16);
+    --_pwa-alert-position-y: var(--space-16);
     --_pwa-alert-padding: #{v.$space-1};
-    --_pwa-alert-gap: .75rem;
+    --_pwa-alert-gap: var(--space-12);
     --_pwa-border-radius: #{v.$card-border-radius};
 
     position: fixed;
@@ -476,8 +477,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .pwa-alert-container {
-      --_pwa-alert-position-x: .5rem;
-      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + 1rem);
+      --_pwa-alert-position-x: var(--space-8);
+      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + var(--space-16));
 
       max-width: 100%;
       left: var(--_pwa-alert-position-x);
@@ -485,7 +486,7 @@
 
     .alert-container {
       &:has(.alert-snackbar) {
-        --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + 1rem + env(safe-area-inset-bottom, 0.5vh));
+        --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + var(--space-16) + env(safe-area-inset-bottom, 0.5vh));
       }
     }
   }

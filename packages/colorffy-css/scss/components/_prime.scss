@@ -26,8 +26,8 @@
       font-size: 14px;
 
       .p-multiselect-label {
-        --p-multiselect-padding-y: .35rem;
-        --p-multiselect-padding-x: .35rem;
+        --p-multiselect-padding-y: var(--space-6);
+        --p-multiselect-padding-x: var(--space-6);
       }
 
       .p-placeholder {
@@ -47,7 +47,7 @@
     --p-multiselect-overlay-border-radius: #{v.$form-border-radius};
     --p-multiselect-overlay-shadow: var(--shadow-md);
 
-    margin-top: .35rem;
+    margin-top: var(--space-6);
 
     & .p-multiselect-header {
       --p-multiselect-list-header-padding: .15rem;
@@ -60,7 +60,7 @@
       }
 
       & .p-multiselect-filter-container {
-        --p-form-field-padding-x: .5rem;
+        --p-form-field-padding-x: var(--space-8);
         --p-icon-size: .75rem;
         --p-iconfield-icon-color: var(--theme-muted-a10);
 
@@ -68,12 +68,12 @@
           --p-inputtext-color: var(--theme-on-background);
           --p-inputtext-background: transparent;
           --p-inputtext-border-color: transparent;
-          --p-inputtext-padding-y: .35rem;
-          --p-inputtext-padding-x: .35rem;
+          --p-inputtext-padding-y: var(--space-6);
+          --p-inputtext-padding-x: var(--space-6);
           --p-inputtext-border-radius: calc(#{v.$rounded-sm} / 1.25);
           --p-inputtext-shadow: none;
 
-          font-size: var(--fs-sm-300) !important;
+          font-size: var(--fs-2xs) !important;
 
           &::placeholder {
             color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%) !important;
@@ -84,20 +84,20 @@
 
     & .p-multiselect-list-container {
       .p-multiselect-list {
-        --p-multiselect-list-gap: .35rem;
+        --p-multiselect-list-gap: var(--space-6);
         --p-multiselect-list-padding: .15rem;
 
         .p-multiselect-option-group {
-          --p-multiselect-option-group-padding: .25rem .05rem;
+          --p-multiselect-option-group-padding: var(--space-4) 0;
           --p-multiselect-option-group-color: var(--theme-muted-a10);
           --p-multiselect-option-group-font-weight: #{v.$fw-800};
 
-          font-size: var(--fs-sm-400);
+          font-size: var(--fs-3xs);
         }
 
         .p-multiselect-option {
-          --p-multiselect-option-gap: .25rem;
-          --p-multiselect-option-padding: .35rem;
+          --p-multiselect-option-gap: var(--space-4);
+          --p-multiselect-option-padding: var(--space-6);
           --p-multiselect-option-color: var(--theme-on-background);
           --p-multiselect-option-border-radius: #{v.$rounded-sm};
 
@@ -121,15 +121,15 @@
           }
 
           & span {
-            font-size: var(--fs-sm-400);
+            font-size: var(--fs-3xs);
           }
         }
 
         .p-multiselect-empty-message {
-          --p-multiselect-empty-message-padding: .35rem;
+          --p-multiselect-empty-message-padding: var(--space-6);
 
           color: var(--theme-muted-a10);
-          font-size: var(--fs-sm-300);
+          font-size: var(--fs-2xs);
         }
       }
     }
@@ -145,8 +145,8 @@
     --p-select-shadow: none;
 
     .p-select-label {
-      --p-select-padding-y: .35rem;
-      --p-select-padding-x: .35rem;
+      --p-select-padding-y: var(--space-6);
+      --p-select-padding-x: var(--space-6);
     }
 
     .p-placeholder {
@@ -166,13 +166,13 @@
     --p-select-overlay-border-radius: #{v.$form-border-radius};
     --p-select-overlay-shadow: var(--shadow-md);
 
-    margin-top: .35rem;
+    margin-top: var(--space-6);
 
     & .p-select-header {
       --p-select-list-header-padding: .15rem;
 
       & .p-iconfield {
-        --p-form-field-padding-x: .5rem;
+        --p-form-field-padding-x: var(--space-8);
         --p-icon-size: .75rem;
         --p-iconfield-icon-color: var(--theme-muted-a10);
 
@@ -180,12 +180,12 @@
           --p-inputtext-color: var(--theme-on-background);
           --p-inputtext-background: transparent;
           --p-inputtext-border-color: transparent;
-          --p-inputtext-padding-y: .35rem;
-          --p-inputtext-padding-x: .35rem;
+          --p-inputtext-padding-y: var(--space-6);
+          --p-inputtext-padding-x: var(--space-6);
           --p-inputtext-border-radius: calc(#{v.$rounded-sm} / 1.25);
           --p-inputtext-shadow: none;
 
-          font-size: var(--fs-sm-300) !important;
+          font-size: var(--fs-2xs) !important;
 
           &::placeholder {
             color: color-mix(in srgb, var(--theme-muted-a10), transparent 35%) !important;
@@ -196,12 +196,12 @@
 
     .p-select-list-container {
       .p-select-list {
-        --p-select-list-gap: .35rem;
+        --p-select-list-gap: var(--space-6);
         --p-select-list-padding: .15rem;
 
         .p-select-option {
-          --p-select-option-gap: .25rem;
-          --p-select-option-padding: .35rem;
+          --p-select-option-gap: var(--space-4);
+          --p-select-option-padding: var(--space-6);
           --p-select-option-color: var(--theme-on-background);
           --p-select-option-border-radius: #{v.$rounded-sm};
 
@@ -225,7 +225,7 @@
           }
 
           & .p-select-option-label {
-            font-size: var(--fs-sm-400);
+            font-size: var(--fs-3xs);
           }
         }
       }
@@ -254,7 +254,7 @@
   .p-colorpicker-panel {
     background: var(--theme-surface-container-highest);
     border-radius: calc(#{v.$rounded-sm} + 8px);
-    padding: v.$space-1;
+    padding: var(--space-16);
     box-shadow: var(--shadow-md);
 
     .p-colorpicker-color-selector {
@@ -274,12 +274,12 @@
   // TOAST COMPONENT
   // ==========================================================================
   .p-toast {
-    --_margin: .5rem;
+    --_margin: var(--space-8);
 
     .p-toast-message {
       background: var(--theme-surface-toast);
       border-radius: v.$rounded-md;
-      padding: .85rem;
+      padding: var(--space-14);
 
       .p-toast-message-content {
         display: flex;
@@ -298,12 +298,20 @@
             &.subtitle-1 {
               font-weight: v.$fw-800;
               font-family: var(--font-secondary);
-              font-size: var(--fs-500);
-              margin-bottom: var(--_margin);
+              font-size: var(--fs-lg);
+              margin-bottom: 0;
+
+              &:not(:last-child) {
+                margin-bottom: var(--_margin);
+              }
             }
 
             &.subtitle-2 {
-              margin-bottom: var(--_margin);
+              margin-bottom: 0;
+
+              &:not(:last-child) {
+                margin-bottom: var(--_margin);
+              }
             }
           }
 
@@ -329,8 +337,8 @@
     display: flex;
     flex-direction: column;
     pointer-events: auto;
-    padding: 1.5rem;
-    gap: 1.5rem;
+    padding: var(--space-24);
+    gap: var(--space-24);
     //min-width: calc(100vw - 30vw);
     //max-width: calc(100vw - 50vw);
     width: calc(100vh - 50vh);
@@ -343,7 +351,7 @@
       .p-dialog-title {
         font-family: var(--font-secondary);
         font-weight: v.$fw-800;
-        font-size: var(--fs-500);
+        font-size: var(--fs-lg);
         color: var(--theme-on-background);
         margin-bottom: 0;
       }

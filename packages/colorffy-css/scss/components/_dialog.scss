@@ -9,7 +9,7 @@
   .dialog {
     --_dialog-border-color: var(--theme-outline-overlay);
     --_dialog-radius: #{v.$dialog-border-radius};
-    --_dialog-gutter: calc(#{v.$space-1} * 1.25);
+    --_dialog-gutter: calc(var(--space-16) + var(--space-4));
     --_dialog-max-size: 90%;
     --_discrete: allow-discrete;
     --_dialog-easing-in: #{v.$easing-in-fallback};
@@ -40,7 +40,7 @@
       flex-wrap: nowrap;
       height: 100%;
       min-height: 100%;
-      padding: calc(var(--_dialog-gutter) / 1.25);
+      padding: var(--space-16);
       overscroll-behavior: contain;
 
       & .dialog-header {
@@ -55,14 +55,14 @@
             color: var(--theme-on-background);
             font-family: var(--font-primary);
             font-weight: v.$fw-700;
-            font-size: var(--fs-600);
-            margin-bottom: .25rem;
+            font-size: var(--fs-base);
+            margin-bottom: var(--space-4);
           }
 
           &:is(.dialog-subtitle) {
             color: var(--theme-muted-a10);
             font-weight: v.$fw-500;
-            font-size: var(--fs-sm-300);
+            font-size: var(--fs-2xs);
             margin-bottom: 0;
           }
         }
@@ -76,7 +76,7 @@
         flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
-        margin-block: calc(var(--_dialog-gutter) * 1);
+        margin-block: var(--_dialog-gutter);
         color: var(--theme-on-background);
 
         & p {
@@ -86,13 +86,13 @@
 
           &:is(.dialog-highlight) {
             position: relative;
-            padding-left: .75rem;
+            padding-left: var(--space-12);
             font-family: var(--font-primary);
             font-weight: v.$fw-800;
-            margin-block: 1.25rem;
+            margin-block: var(--space-20);
 
             &:first-child {
-              margin-block: 0 1.25rem;
+              margin-block: 0 var(--space-20);
             }
 
             &:before {
@@ -121,7 +121,7 @@
         gap: calc(var(--_dialog-gutter) / 2);
 
         & .btn {
-          padding-inline: 1rem;
+          padding-inline: var(--space-16);
           margin-inline: 0;
         }
 
@@ -190,12 +190,12 @@
     &.dialog-side-sheet {
       --_dialog-radius: #{v.$dialog-border-radius};
 
-      inset-inline: auto .5rem;
-      inset-block: 1rem;
+      inset-inline: auto var(--space-8);
+      inset-block: var(--space-16);
       margin: auto;
       width: 18rem;
       height: 100%;
-      max-height: calc(100vh - 1rem);
+      max-height: calc(100vh - 2rem);
       border-radius: var(--_dialog-radius);
       /* 0. Not visible default state */
       translate: 20rem 0;
@@ -251,7 +251,7 @@
 
         & .dialog-footer {
           :nth-child(1 of .btn) {
-            padding-inline: v.$space-1;
+            padding-inline: var(--space-16);
             flex: 1;
             order: 0;
           }
@@ -275,17 +275,17 @@
         place-content: center;
 
         & i {
-          font-size: var(--fs-200);
+          font-size: var(--fs-3xl);
           font-variation-settings: var(--iw-semi-bold);
-          margin-bottom: .5rem;
+          margin-bottom: var(--space-8);
         }
 
         & p:not(.text-muted) {
-          font-size: var(--fs-500);
+          font-size: var(--fs-lg);
           font-family: var(--font-primary);
           font-weight: v.$fw-700;
           line-height: 1.35;
-          margin-bottom: 1rem;
+          margin-bottom: var(--space-16);
         }
       }
     }
@@ -325,18 +325,18 @@
       .dialog-content {
         .dialog-header {
           flex-wrap: nowrap;
-          gap: .75rem;
+          gap: var(--space-12);
           text-align: start;
           justify-content: flex-start;
           width: 100%;
-          padding-top: calc(var(--_dialog-gutter) - .55rem);
+          padding-top: var(--space-12);
 
           & i {
             --angle: 45deg;
             --_gradient-stops: #{v.$gradient-ghost};
 
-            padding: 15px;
-            font-size: var(--fs-400);
+            padding: var(--space-14);
+            font-size: var(--fs-xl);
             border-radius: v.$rounded-lg;
             color: var(--theme-on-primary);
             background-color: var(--theme-primary-a10);

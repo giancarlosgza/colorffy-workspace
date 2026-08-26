@@ -18,54 +18,68 @@
   }
 
   // ==========================================================================
-  // FONT SIZE UTILITIES (XL, REGULAR & SM SIZES)
+  // FONT SIZE UTILITIES (T-SHIRT SCALE)
+  // Each class sets the size and its paired line-height companion
+  // ==========================================================================
+  $fs-scale: 4xs, 3xs, 2xs, xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl;
+
+  @each $step in $fs-scale {
+    .fs-#{$step} {
+      font-size: var(--fs-#{$step});
+      line-height: var(--fs-#{$step}--line-height);
+    }
+  }
+
+  // ==========================================================================
+  // DEPRECATED FONT SIZE UTILITIES — will be removed in v3
+  // Font-size only (no line-height) to preserve legacy rendering
   // ==========================================================================
   .fs-xl-100 {
-    font-size: var(--fs-xl-100);
+    font-size: var(--fs-5xl);
   }
 
   .fs-100 {
-    font-size: var(--fs-100);
+    font-size: var(--fs-4xl);
   }
 
   .fs-200 {
-    font-size: var(--fs-200);
+    font-size: var(--fs-3xl);
   }
 
   .fs-300 {
-    font-size: var(--fs-300);
+    font-size: var(--fs-2xl);
   }
 
   .fs-400 {
-    font-size: var(--fs-400);
+    font-size: var(--fs-xl);
   }
 
   .fs-500 {
-    font-size: var(--fs-500);
+    font-size: var(--fs-lg);
   }
 
   .fs-600 {
-    font-size: var(--fs-600);
+    font-size: var(--fs-base);
   }
 
   .fs-sm-100 {
-    font-size: var(--fs-sm-100);
+    font-size: var(--fs-sm);
   }
 
   .fs-sm-200 {
-    font-size: var(--fs-sm-200);
+    font-size: var(--fs-xs);
   }
 
   .fs-sm-300 {
-    font-size: var(--fs-sm-300);
+    font-size: var(--fs-2xs);
   }
 
   .fs-sm-400 {
-    font-size: var(--fs-sm-400);
+    font-size: var(--fs-3xs);
   }
 
   .fs-sm-500 {
-    font-size: var(--fs-sm-500);
+    font-size: var(--fs-4xs);
   }
 
   // ==========================================================================
@@ -277,30 +291,30 @@
   // TYPOGRAPHY HIERARCHY (HERO, HEADINGS & SUBHEADINGS)
   // ==========================================================================
   .text-hero {
-    font-size: var(--fs-xl-100);
+    font-size: var(--fs-5xl);
     font-weight: v.$fw-800;
     line-height: 1.25;
   }
 
   .text-heading {
-    font-size: var(--fs-400);
+    font-size: var(--fs-xl);
     font-weight: v.$fw-800;
     line-height: 1.25;
     @include m.text-variable(true);
 
     &:is(.heading-lg) {
-      font-size: var(--fs-200);
+      font-size: var(--fs-3xl);
     }
 
     &:is(.heading-xl) {
-      font-size: var(--fs-xl-100);
+      font-size: var(--fs-5xl);
     }
   }
 
   .text-subheading {
     --_text-subheading-gutter: 1rem;
 
-    font-size: var(--fs-500);
+    font-size: var(--fs-lg);
     font-weight: v.$fw-600;
     margin-bottom: var(--_text-subheading-gutter);
     position: relative;
@@ -363,7 +377,7 @@
 
   .text-title-description {
     display: inline-block;
-    font-size: var(--fs-600);
+    font-size: var(--fs-base);
     font-weight: v.$fw-600;
 
     ~ p:is(.subtitle-1) {

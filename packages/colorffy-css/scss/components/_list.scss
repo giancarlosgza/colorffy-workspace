@@ -17,7 +17,7 @@
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
       position: absolute;
       inset-block: 0;
-      right: 1rem;
+      right: var(--space-16);
       margin: auto;
     }
 
@@ -44,7 +44,7 @@
 
     display: grid;
     grid-template-rows: auto;
-    gap: .35rem;
+    gap: var(--space-6);
     width: 100%;
     padding: 0;
     margin: 0;
@@ -76,8 +76,8 @@
 
       // Item
       & .list-item {
-        --_list-item-gap: 0.85rem;
-        --_list-item-padding: 0.55rem;
+        --_list-item-gap: var(--space-14);
+        --_list-item-padding: var(--space-8);
 
         display: flex;
         flex-wrap: nowrap;
@@ -92,13 +92,13 @@
           &:is(.subtitle-1) {
             font-family: var(--font-primary);
             font-weight: v.$fw-600;
-            font-size: var(--fs-sm-400);
+            font-size: var(--fs-3xs);
             color: var(--_list-group-item-color);
             margin-bottom: 0;
           }
 
           &:is(.subtitle-2) {
-            font-size: var(--fs-sm-400);
+            font-size: var(--fs-3xs);
             color: var(--_list-group-item-color-subtitle);
             margin-block: 0;
           }
@@ -118,7 +118,7 @@
           background-color: var(--_list-group-item-icon-bg-color);
 
           & i {
-            font-size: var(--fs-500);
+            font-size: var(--fs-lg);
             color: var(--_list-group-item-icon-color);
           }
         }
@@ -177,7 +177,7 @@
       }
 
       & .list-item-actions {
-        padding-right: 1rem;
+        padding-right: var(--space-16);
       }
     }
 
@@ -193,8 +193,8 @@
     &.list-group-sm {
       .list-group-item {
         & .list-item {
-          --_list-item-gap: 0.45rem;
-          --_list-item-padding: 0.35rem;
+          --_list-item-gap: var(--space-6);
+          --_list-item-padding: var(--space-4);
         }
       }
     }
@@ -202,8 +202,8 @@
     &.list-group-md {
       .list-group-item {
         & .list-item {
-          --_list-item-gap: 0.65rem;
-          --_list-item-padding: 0.45rem;
+          --_list-item-gap: .625rem;
+          --_list-item-padding: var(--space-6);
         }
       }
     }

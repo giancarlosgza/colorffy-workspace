@@ -26,7 +26,7 @@
     display: flex;
     overflow: hidden;
     height: var(--_progress-height);
-    font-size: var(--fs-sm-500);
+    font-size: var(--fs-4xs);
     font-weight: v.$fw-600;
     background: var(--_progress-bg-color);
     border-radius: var(--_progress-radius);
@@ -101,9 +101,12 @@
 
     position: relative;
     display: flex;
-    margin-bottom: .75rem;
     width: var(--_progress-spinner-size);
     height: var(--_progress-spinner-size);
+
+    &:not(:last-child) {
+      margin-bottom: var(--space-12);
+    }
 
     &:after {
       content: '';

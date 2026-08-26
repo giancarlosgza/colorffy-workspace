@@ -140,7 +140,7 @@
   // If button has an icon add styles to it
   &:has(i, svg) {
     --_btn-columns: auto 1fr;
-    --_btn-gap: .35rem;
+    --_btn-gap: var(--space-6);
 
     &:is(.icon-trailing) {
       --_btn-columns: 1fr auto;
@@ -214,19 +214,19 @@
 */
 @mixin btn-size($size) {
   @if ($size == 'sm') {
-    --_btn-padding-inline: 0.55rem;
+    --_btn-padding-inline: var(--space-8);
     --_btn-height: 32px;
     --_btn-icon-size: 1rem;
   } @else if ($size == 'lg') {
-    --_btn-padding-inline: 0.85rem;
+    --_btn-padding-inline: var(--space-14);
     --_btn-height: 48px;
     --_btn-icon-size: 1.45rem;
 
     // Large button font size
     font-size: 14px;
   } @else if ($size == 'fab') {
-    --_btn-padding-inline: 1rem;
-    --_btn-padding-block: 1rem;
+    --_btn-padding-inline: var(--space-16);
+    --_btn-padding-block: var(--space-16);
     --_btn-height: 48px;
     --_btn-icon-size: 1.5rem;
 

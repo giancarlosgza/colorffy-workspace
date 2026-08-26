@@ -103,23 +103,60 @@
     --theme-frosted-glass-bg-dark: rgb(30 30 30 / 65%);
     --theme-frosted-glass-backdrop-filter-dark: blur(30px) saturate(150%) contrast(100%) brightness(100%);
 
-    /* font sizes small */
-    --fs-sm-100: clamp(0.80rem, calc(0.31rem + 1.97vw), 0.9375rem);
-    --fs-sm-200: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.875rem);
-    --fs-sm-300: clamp(0.70rem, calc(0.32rem + 1.69vw), 0.8125rem);
-    --fs-sm-400: clamp(0.6875rem, calc(0.31rem + 1.97vw), 0.75rem);
-    --fs-sm-500: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.6875rem);
+    /* font sizes (t-shirt scale, anchored at base) */
+    --fs-4xs: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.6875rem);
+    --fs-3xs: clamp(0.6875rem, calc(0.31rem + 1.97vw), 0.75rem);
+    --fs-2xs: clamp(0.70rem, calc(0.32rem + 1.69vw), 0.8125rem);
+    --fs-xs: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.875rem);
+    --fs-sm: clamp(0.80rem, calc(0.31rem + 1.97vw), 0.9375rem);
+    --fs-base: clamp(0.875rem, calc(0.29rem + 2.28vw), 1rem);
+    --fs-lg: clamp(1rem, calc(0.27rem + 2.64vw), 1.25rem);
+    --fs-xl: clamp(1.25rem, calc(0.24rem + 3.06vw), 1.5rem);
+    --fs-2xl: clamp(1.4063rem, calc(0.21rem + 3.52vw), 1.75rem);
+    --fs-3xl: clamp(1.5625rem, calc(0.16rem + 4.06vw), 2rem);
+    --fs-4xl: clamp(1.875rem, calc(0.11rem + 4.66vw), 2.5rem);
+    --fs-5xl: clamp(2rem, calc(0.11rem + 5vw), 3.3rem);
 
-    /* font sizes large */
-    --fs-100: clamp(1.875rem, calc(0.11rem + 4.66vw), 2.5rem);
-    --fs-200: clamp(1.5625rem, calc(0.16rem + 4.06vw), 2rem);
-    --fs-300: clamp(1.4063rem, calc(0.21rem + 3.52vw), 1.75rem);
-    --fs-400: clamp(1.25rem, calc(0.24rem + 3.06vw), 1.5rem);
-    --fs-500: clamp(1rem, calc(0.27rem + 2.64vw), 1.25rem);
-    --fs-600: clamp(0.875rem, calc(0.29rem + 2.28vw), 1rem);
+    /* font size line-height companions (unitless) */
+    --fs-4xs--line-height: 1.4;
+    --fs-3xs--line-height: 1.4;
+    --fs-2xs--line-height: 1.4;
+    --fs-xs--line-height: 1.45;
+    --fs-sm--line-height: 1.45;
+    --fs-base--line-height: 1.5;
+    --fs-lg--line-height: 1.4;
+    --fs-xl--line-height: 1.35;
+    --fs-2xl--line-height: 1.3;
+    --fs-3xl--line-height: 1.25;
+    --fs-4xl--line-height: 1.15;
+    --fs-5xl--line-height: 1.1;
 
-    /* font sizes extra large */
-    --fs-xl-100: clamp(2rem, calc(0.11rem + 5vw), 3.3rem);
+    /* DEPRECATED font size aliases — will be removed in v3 */
+    --fs-sm-100: var(--fs-sm);
+    --fs-sm-200: var(--fs-xs);
+    --fs-sm-300: var(--fs-2xs);
+    --fs-sm-400: var(--fs-3xs);
+    --fs-sm-500: var(--fs-4xs);
+    --fs-100: var(--fs-4xl);
+    --fs-200: var(--fs-3xl);
+    --fs-300: var(--fs-2xl);
+    --fs-400: var(--fs-xl);
+    --fs-500: var(--fs-lg);
+    --fs-600: var(--fs-base);
+    --fs-xl-100: var(--fs-5xl);
+
+    /* spacing scale (number = px at 16px root, derived from one unit) */
+    --space-unit: .25rem;
+    --space-4: var(--space-unit);
+    --space-6: calc(var(--space-unit) * 1.5);
+    --space-8: calc(var(--space-unit) * 2);
+    --space-12: calc(var(--space-unit) * 3);
+    --space-14: calc(var(--space-unit) * 3.5);
+    --space-16: calc(var(--space-unit) * 4);
+    --space-20: calc(var(--space-unit) * 5);
+    --space-24: calc(var(--space-unit) * 6);
+    --space-32: calc(var(--space-unit) * 8);
+    --space-48: calc(var(--space-unit) * 12);
 
     /* drawer size */
     --theme-nav-drawer-width: 18rem;

@@ -12,7 +12,7 @@
 
     height: auto;
     width: var(--_inline-scroll-height);
-    padding-bottom: .35rem;
+    padding-bottom: var(--space-6);
 
     overflow-x: auto;
     overflow-y: hidden;
@@ -27,7 +27,7 @@
 
     width: auto;
     height: var(--_block-scroll-height);
-    padding-bottom: .35rem;
+    padding-bottom: var(--space-6);
 
     overflow-x: hidden;
     overflow-y: scroll;

@@ -23,14 +23,14 @@
   .v-popper__popper {
     --_dropdown-bg-color: var(--theme-surface-overlay);
     --_dropdown-color: var(--theme-on-background);
-    --_dropdown-padding: 4px;
+    --_dropdown-padding: var(--space-4);
     --_dropdown-shadow: var(--shadow-lg);
     --_dropdown-radius: #{v.$rounded-lg};
     --_dropdown-easing-in: #{v.$easing-in-fallback};
     --_dropdown-easing-out: #{v.$easing-out-fallback};
     --_dropdown-easing-duration: 400ms;
-    --_dropdown-item-gutter-x: .5rem;
-    --_dropdown-item-gutter-y: .5rem;
+    --_dropdown-item-gutter-x: var(--space-8);
+    --_dropdown-item-gutter-y: var(--space-8);
 
     @supports (transition: all 100ms linear(1, 1, 1)) {
       --_dropdown-easing-in: #{v.$easing-overshoot-soft};
@@ -72,7 +72,7 @@
               & .v-dropdown-item {
                 display: flex;
                 align-items: center;
-                gap: .35rem;
+                gap: var(--space-6);
                 font-weight: v.$fw-400;
                 background: inherit;
                 color: var(--_dropdown-color);
@@ -84,7 +84,7 @@
                 border-radius: calc(var(--_dropdown-radius) / 2);
 
                 font-family: var(--font-primary);
-                font-size: var(--fs-sm-400);
+                font-size: var(--fs-3xs);
                 text-align: start;
 
                 width: 100%;
@@ -121,10 +121,10 @@
 
                 & .badge {
                   --_badge-font-size: 8px;
-                  --_badge-gutter-y: 0.25rem;
-                  --_badge-gutter-x: 0.375rem;
+                  --_badge-gutter-y: var(--space-4);
+                  --_badge-gutter-x: var(--space-6);
 
-                  margin-left: .35rem;
+                  margin-left: var(--space-6);
                   line-height: 1.25;
                 }
 
@@ -175,7 +175,7 @@
 
               &.v-dropdown-divider {
                 height: 0;
-                margin: .25rem;
+                margin: var(--space-4);
                 overflow: hidden;
                 border-top: v.$border-sm solid color-mix(in oklab, var(--theme-muted-base-fixed) 50%, transparent);
                 opacity: 1;
@@ -187,7 +187,7 @@
         // Color Picker Popover
         & .v-popper__inner {
           &:has(.color-picker-popper) {
-            --_dropdown-padding: 12px;
+            --_dropdown-padding: var(--space-12);
 
             // Color Picker Popover
             .color-picker-popper {
@@ -196,7 +196,7 @@
               display: flex;
               flex-direction: column;
               width: var(--_color-pickerp-width);
-              gap: .75rem;
+              gap: var(--space-12);
               user-select: none;
 
               /* Color Picker Area */
@@ -284,7 +284,7 @@
               .controls {
                 display: flex;
                 align-items: center;
-                gap: .5rem;
+                gap: var(--space-8);
 
                 & .preview-swatch {
                   flex-shrink: 0;
@@ -374,7 +374,7 @@
 
           & .v-popper__inner {
             border-radius: v.$rounded-xl;
-            margin: .5rem;
+            margin: var(--space-8);
             //padding-block: 12px 24px;
 
             .color-picker-popper {
@@ -384,8 +384,7 @@
             & ul {
               & li {
                 & .v-dropdown-item {
-                  padding-block: 12px;
-                  font-size: 12px;
+                  padding-block: var(--space-12);
 
                   & i {
                     font-variation-settings: var(--iw-semi-bold);

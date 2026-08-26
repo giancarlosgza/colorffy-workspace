@@ -13,7 +13,7 @@
     --_stepper-indicator-color: var(--theme-muted-a10);
     --_stepper-label-color: var(--theme-muted-a10);
     --_stepper-description-color: var(--theme-muted-a10);
-    --_stepper-gap: 1.5rem;
+    --_stepper-gap: var(--space-24);
 
     display: flex;
     flex-direction: row;
@@ -37,8 +37,8 @@
         position: absolute;
         z-index: 0;
         top: calc(var(--_stepper-indicator-size) / 2 - calc(var(--_stepper-connector-thickness) / 2));
-        left: calc(50% + calc(var(--_stepper-indicator-size) / 2) + .5rem);
-        right: calc(-50% + calc(var(--_stepper-indicator-size) / 2) + .5rem);
+        left: calc(50% + calc(var(--_stepper-indicator-size) / 2) + var(--space-8));
+        right: calc(-50% + calc(var(--_stepper-indicator-size) / 2) + var(--space-8));
         height: var(--_stepper-connector-thickness);
         background-color: var(--_stepper-connector-color);
         transition: background-color 200ms v.$easing-in-fallback;
@@ -55,7 +55,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: .5rem;
+        gap: var(--space-8);
         width: 100%;
 
         background: transparent;
@@ -97,13 +97,13 @@
         border-color 200ms v.$easing-in-fallback;
 
         .step-number {
-          font-size: var(--fs-sm-300);
+          font-size: var(--fs-2xs);
           font-weight: v.$fw-600;
           line-height: 1;
         }
 
         i {
-          font-size: var(--fs-500);
+          font-size: var(--fs-lg);
         }
       }
 
@@ -116,14 +116,14 @@
       }
 
       .step-label {
-        font-size: var(--fs-sm-300);
+        font-size: var(--fs-2xs);
         font-weight: v.$fw-600;
         color: var(--_stepper-label-color);
         transition: color 200ms v.$easing-in-fallback;
       }
 
       .step-description {
-        font-size: var(--fs-sm-500);
+        font-size: var(--fs-4xs);
         font-weight: v.$fw-400;
         color: var(--_stepper-description-color);
       }
@@ -179,13 +179,13 @@
         .step-trigger {
           flex-direction: row;
           align-items: flex-start;
-          gap: .75rem;
+          gap: var(--space-12);
           text-align: left;
         }
 
         .step-text {
           max-width: none;
-          padding-top: .2rem;
+          padding-top: var(--space-4);
         }
       }
     }

@@ -8,7 +8,7 @@
   // ==========================================================================
   .form-group,
   .input-group {
-    --_form-group-gutter-y: .85rem;
+    --_form-group-gutter-y: var(--space-14);
 
     margin-bottom: var(--_form-group-gutter-y);
 
@@ -19,7 +19,7 @@
       font-size: map.get(v.$type-label, font-size);
       font-weight: map.get(v.$type-label, font-weight);
       letter-spacing: map.get(v.$type-label, letter-spacing);
-      margin-bottom: calc(var(--_form-group-gutter-y) / 1.5);
+      margin-bottom: var(--space-8);
     }
 
     &:has(label:empty) {
@@ -34,8 +34,8 @@
     & .form-select {
       --_form-width: 100%;
       --_form-height: 2.5rem;
-      --_form-padding-x: .5rem;
-      --_form-padding-y: .25rem;
+      --_form-padding-x: var(--space-8);
+      --_form-padding-y: var(--space-4);
       --_form-radius: #{v.$form-border-radius};
       --_form-bg-color: transparent;
       --_form-color: var(--theme-on-background);
@@ -82,7 +82,7 @@
       }
 
       &:is(.form-rounded) {
-        --_form-padding-x: .75rem;
+        --_form-padding-x: var(--space-12);
         --_form-radius: #{v.$rounded-full};
       }
 
@@ -96,9 +96,9 @@
       // Sizing variants
       &:is(.form-sm) {
         --_form-height: 2rem;
-        --_form-padding-x: .45rem;
+        --_form-padding-x: var(--space-6);
         --_form-padding-y: .15rem;
-        --_form-font-size: var(--fs-sm-400);
+        --_form-font-size: var(--fs-3xs);
 
         &.form-select {
           background-position: right .5rem center;
@@ -108,9 +108,9 @@
 
       &:is(.form-lg) {
         --_form-height: 3rem;
-        --_form-padding-x: .75rem;
-        --_form-padding-y: .375rem;
-        --_form-font-size: var(--fs-600);
+        --_form-padding-x: var(--space-12);
+        --_form-padding-y: var(--space-6);
+        --_form-font-size: var(--fs-base);
 
         &.form-select {
           background-position: right 1rem center;
@@ -164,8 +164,8 @@
 
         + .invalid-feedback {
           display: block;
-          margin-top: .45rem;
-          font-size: var(--fs-sm-400);
+          margin-top: var(--space-6);
+          font-size: var(--fs-3xs);
           color: var(--theme-danger-a10);
         }
       }
@@ -204,8 +204,8 @@
       --_form-range-slider-height: 1.95rem;
       --_form-range-slider-width: 0.30rem;
       --_form-range-slider-margin: calc(var(--_form-range-track-size) - 1.45rem);
-      --_form-range-padding-x: .5rem;
-      --_form-range-padding-y: .25rem;
+      --_form-range-padding-x: var(--space-8);
+      --_form-range-padding-y: var(--space-4);
       --_form-range-easing-in: #{v.$easing-in-fallback};
 
       &:is([type="range"]) {
@@ -304,7 +304,7 @@
         --_form-border-width: #{v.$form-border};
         --_form-color-width: 3rem;
         --_form-color-height: 2.5rem;
-        --_form-color-padding: .375rem;
+        --_form-color-padding: var(--space-6);
 
         display: inline-block;
         border: var(--_form-border-width) solid var(--_form-border-color);
@@ -332,8 +332,8 @@
           border: v.$border-sm solid var(--theme-outline-surface);
           aspect-ratio: 1;
           border-radius: v.$rounded-sm;
-          padding: 14px;
-          margin-inline-start: 6px;
+          padding: var(--space-14);
+          margin-inline-start: var(--space-6);
           background-color: #0000ff;
           transition: transform 0.1s ease;
 
@@ -357,13 +357,13 @@
         .form-color {
           --_form-color-width: 2.5rem;
           --_form-color-height: 2rem;
-          --_form-color-padding: .25rem;
+          --_form-color-padding: var(--space-4);
         }
         .form-control {
           --_form-height: 2rem;
-          --_form-padding-x: .45rem;
+          --_form-padding-x: var(--space-6);
           --_form-padding-y: .15rem;
-          --_form-font-size: var(--fs-sm-400);
+          --_form-font-size: var(--fs-3xs);
         }
       }
 
@@ -371,13 +371,13 @@
         .form-color {
           --_form-color-width: 3.5rem;
           --_form-color-height: 3rem;
-          --_form-color-padding: .5rem;
+          --_form-color-padding: var(--space-8);
         }
         .form-control {
           --_form-height: 3rem;
-          --_form-padding-x: .75rem;
-          --_form-padding-y: .375rem;
-          --_form-font-size: var(--fs-600);
+          --_form-padding-x: var(--space-12);
+          --_form-padding-y: var(--space-6);
+          --_form-font-size: var(--fs-base);
         }
       }
     }
@@ -395,8 +395,8 @@
         // Show invalid feedback if form control is invalid
         + .invalid-feedback {
           display: block;
-          margin-top: .45rem;
-          font-size: var(--fs-sm-400);
+          margin-top: var(--space-6);
+          font-size: var(--fs-3xs);
           color: var(--theme-danger-a10);
         }
       }
@@ -416,7 +416,7 @@
   // DROPBOX FILE INPUT
   // ==========================================================================
   .input-file-group {
-    --_file-group-gutter-y: .85rem;
+    --_file-group-gutter-y: var(--space-14);
 
     margin-bottom: var(--_file-group-gutter-y);
 
@@ -425,7 +425,8 @@
       --_file-color: var(--theme-on-background);
       --_file-border-width: #{v.$border-md};
       --_file-border-color: var(--theme-outline-text-field);
-      --_file-gutter: .25rem 0;
+      --_file-padding: var(--space-4) 0;
+      --_file-gap: var(--space-4);
       --_file-radius: #{v.$rounded-md};
       --_file-easing-in: #{v.$easing-in-fallback};
       --_file-easing-duration: 100ms;
@@ -439,7 +440,7 @@
       border: var(--_file-border-width) dashed var(--_file-border-color);
       background: var(--_file-bg-color);
       color: var(--theme-on-background);
-      padding: var(--_file-gutter);
+      padding: var(--_file-padding);
       height: 100%;
       min-height: var(--_file-height);
       max-height: var(--_file-height);
@@ -470,11 +471,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--_file-gutter);
+        gap: var(--_file-gap);
 
         & p {
           font-weight: v.$fw-500;
-          font-size: var(--fs-sm-400);
+          font-size: var(--fs-3xs);
           color: var(--_file-color);
           margin-bottom: 0;
         }

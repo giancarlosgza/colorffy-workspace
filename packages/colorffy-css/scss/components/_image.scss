@@ -68,20 +68,24 @@
     width: 24px;
     aspect-ratio: 1;
     margin-block: auto;
-    margin-inline: 0 0.25rem;
+    margin-inline: 0;
+
+    &:not(:last-child) {
+      margin-inline-end: var(--space-4);
+    }
     border-radius: v.$rounded-full;
     background: rgb(from var(--theme-accent-base-fixed) r g b / 0.25);
-    font-size: var(--fs-sm-500);
+    font-size: var(--fs-4xs);
     font-weight: v.$fw-600;
 
     &.initials-navbar {
       --_initials-alpha: 35%;
       --_initials-base-color: var(--theme-primary-a10);
 
-      padding: .25rem;
+      padding: var(--space-4);
       margin-inline: 0;
       border-radius: v.$rounded-sm;
-      font-size: var(--fs-sm-500) !important;
+      font-size: var(--fs-4xs) !important;
       background-color: var(--_initials-base-color);
       @supports (color: hsl(from white h s l)) {
         background-color: oklab(from var(--_initials-base-color) l a b / var(--_initials-alpha));
@@ -93,7 +97,7 @@
   // AVATAR GROUP COMPONENT
   // ==========================================================================
   .avatar-group {
-    --_avatar-group-overlap: 0.6rem;
+    --_avatar-group-overlap: 0.625rem;
     --_avatar-group-ring-width: 2px;
     --_avatar-group-ring-color: var(--theme-surface-a0);
 

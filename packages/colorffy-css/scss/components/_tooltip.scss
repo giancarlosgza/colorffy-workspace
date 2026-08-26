@@ -7,7 +7,7 @@
   .v-popper--theme-tooltip {
     --_tooltip-bg-color: var(--theme-surface-tooltip);
     --_tooltip-text-color: #{v.$white};
-    --_tooltip-padding: 8px;
+    --_tooltip-padding: var(--space-8);
 
     isolation: isolate;
     position: relative;

@@ -13,7 +13,7 @@
     --_popover-radius: #{v.$dialog-border-radius};
     --_popover-width: 20rem;
     --_popover-height: 30rem;
-    --_popover-gutter: 1rem;
+    --_popover-gutter: var(--space-16);
 
     position: fixed;
     inset: 0;
@@ -58,7 +58,7 @@
       inset: auto;
       bottom: anchor(top);
       left: anchor(left);
-      margin-block: 10px;
+      margin-block: .625rem;
 
       // Block axis (vertical)
       &.popover-anchor-top {
@@ -104,16 +104,19 @@
         margin-bottom: var(--_popover-gutter);
 
         & .popover-title {
-          font-size: var(--fs-sm-200);
+          font-size: var(--fs-xs);
           font-weight: v.$fw-700;
           color: var(--_popover-color);
-          margin-bottom: .25rem;
+          margin-bottom: var(--space-4);
         }
 
         & .popover-subtitle {
-          font-size: var(--fs-sm-400);
+          font-size: var(--fs-3xs);
           color: var(--theme-muted-a10);
-          margin-bottom: .25rem;
+
+          &:not(:last-child) {
+            margin-bottom: var(--space-4);
+          }
         }
       }
 
@@ -126,7 +129,6 @@
       & .popover-footer {
         border-top: v.$border-sm solid var(--_popover-border-color);
         margin-top: var(--_popover-gutter);
-        padding-top: .75rem;
       }
     }
 

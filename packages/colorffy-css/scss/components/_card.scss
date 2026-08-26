@@ -7,8 +7,8 @@
   // CARD COMPONENT
   // ==========================================================================
   .card {
-    --_card-gutter-x: 1rem;
-    --_card-gutter-y: 1rem;
+    --_card-gutter-x: var(--space-16);
+    --_card-gutter-y: var(--space-16);
     --_card-bg-color: var(--theme-surface-a0);
     --_card-color: var(--theme-on-background);
     --_card-border: #{v.$border-sm};
@@ -39,13 +39,13 @@
     }
 
     .card-header {
-      padding-block: var(--_card-gutter-y) calc(var(--_card-gutter-y) - .55rem);
+      padding-block: var(--_card-gutter-y) var(--space-8);
       padding-inline: var(--_card-gutter-x);
       margin-bottom: 0;
       border-radius: v.$card-border-radius v.$card-border-radius 0 0;
 
       .card-title {
-        font-size: var(--fs-600);
+        font-size: var(--fs-base);
         font-weight: v.$fw-700;
         font-family: var(--font-secondary);
         margin-bottom: 0;
@@ -69,7 +69,7 @@
     }
 
     .card-footer {
-      padding-block: calc(var(--_card-gutter-y) / 3) var(--_card-gutter-y);
+      padding-block: var(--space-6) var(--_card-gutter-y);
       padding-inline: var(--_card-gutter-x);
       margin-top: 0;
       border-radius: 0 0 v.$card-border-radius v.$card-border-radius;
@@ -170,8 +170,8 @@
 
     // Card sizes
     &.card-sm {
-      --_card-gutter-x: .5rem;
-      --_card-gutter-y: .5rem;
+      --_card-gutter-x: var(--space-8);
+      --_card-gutter-y: var(--space-8);
 
       .card-body {
         padding-block: var(--_card-gutter-y);
@@ -183,15 +183,15 @@
     }
 
     &.card-xs {
-      --_card-gutter-x: .75rem;
-      --_card-gutter-y: .55rem;
+      --_card-gutter-x: var(--space-12);
+      --_card-gutter-y: var(--space-8);
 
       display: inline-flex;
 
       .card-body {
         display: flex;
         align-items: center;
-        gap: .35rem;
+        gap: var(--space-6);
 
         i {
           font-size: 18px;
