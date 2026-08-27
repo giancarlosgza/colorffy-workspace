@@ -266,7 +266,6 @@ function closeMenu(): void {
               </template>
             </UiPopoverMenuUser>
           </template>
-
           <template #body>
             <!-- Navigation -->
             <UiPopoverMenuGroup aria-label="Navegación">
@@ -282,19 +281,18 @@ function closeMenu(): void {
               />
             </UiPopoverMenuGroup>
 
-            <UiDivider />
-
             <!-- Preferences -->
-            <UiPopoverMenuGroup text="Preferencias">
+            <UiPopoverMenuGroup text="Preferences">
               <UiPopoverMenuItem
-                icon="&#xe8b8;"
-                text="Paleta de comandos"
+                text="Pricing"
+              />
+              <UiPopoverMenuItem
+                text="Shortcuts"
                 shortcut="⌘K"
               />
               <UiPopoverMenuItem
                 as="div"
-                icon="&#xe3ac;"
-                text="Tema"
+                text="Theme"
               >
                 <template #trailing>
                   <UiButtonGroup
@@ -307,14 +305,28 @@ function closeMenu(): void {
                       :variant="color === activeMode ? 'filled' : 'outline'"
                       :color="color === activeMode ? 'primary' : ''"
                       :aria-label="color === 'system' ? 'Sistema' : color === 'light' ? 'Claro' : 'Oscuro'"
-                      icon
-                      size="sm"
+                      icon size="sm"
                       @click="$colorMode.preference = color; activeMode = color"
                     >
                       <template #icon>
-                        <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
-                        <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" />
-                        <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" />
+                        <UiIconMaterial
+                          v-if="color === 'system'"
+                          icon-code="&#xe31e;"
+                          class="fs-sm"
+                          :class="activeMode === 'system' ? 'text-on-primary' : ''"
+                        />
+                        <UiIconMaterial
+                          v-else-if="color === 'light'"
+                          icon-code="&#xe518;"
+                          class="fs-sm"
+                          :class="activeMode === 'light' ? 'text-on-primary' : ''"
+                        />
+                        <UiIconMaterial
+                          v-else-if="color === 'dark'"
+                          icon-code="&#xe51c;"
+                          class="fs-sm"
+                          :class="activeMode === 'dark' ? 'text-on-primary' : ''"
+                        />
                       </template>
                     </UiButton>
                   </UiButtonGroup>
@@ -329,17 +341,16 @@ function closeMenu(): void {
                 as="a"
                 to="https://colorffy-ui-docs.pages.dev"
                 icon="&#xe873;"
-                text="Documentación"
+                text="Documentation"
                 icon-trailing="&#xe89e;"
               />
               <UiPopoverMenuItem
                 icon="&#xe879;"
-                text="Cerrar sesión"
+                text="Sign Out"
                 is-destructive
               />
             </UiPopoverMenuGroup>
           </template>
-
           <template #footer>
             <span class="caption text-muted flex-grow-1">Colorffy UI</span>
             <span class="caption text-muted">v2.5.0</span>
