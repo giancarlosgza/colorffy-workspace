@@ -1038,11 +1038,14 @@ Dropdown panel (account menus, overflow menus) with `header` / `body` / `footer`
 - `id` (string) - DOM id; pass one when a page has more than one menu
 - `ariaLabel` (string, default: 'Menu') - Accessible name
 - `closable` (boolean, default: true) - Close button, pinned to the header's top right whatever the header holds (a custom `header` slot keeps it)
+- `nativePopover` (boolean, default: true) - Renders as a native `popover="auto"` (top layer, click-outside and Esc handled by the browser) when the browser supports both the Popover API and CSS anchor positioning; browsers missing either — or `false` — keep the class-based rendering, where dismissal is the consumer's job (e.g. `v-on-click-outside`, harmless alongside the native branch)
 - `title` (string) - Default header title; the default header is the title plus the close button, nothing else
 - `menuItems` (array) - Shortcut that renders the body when no body slot is filled; entries take `UiPopoverMenuItem` props plus an `id`
 - `currentRoute` - Active-row detection for `menuItems`
 
 **Slots:** `header`, `body`, `footer`. The default slot is an alias for `body` (handy for simple menus); `body` wins if both are given.
+
+**Emits:** `hideDropdown`, `menuItemClick(to)`.
 
 **Deprecated (removed in v3):** `user`, `avatarUrl`, `avatarCustomClass`, `subtitle` — no longer rendered; use `UiPopoverMenuUser` in the `header` slot. `body-extra` — put the content in `#body`; it is still the only way to append to a `menuItems`-rendered body.
 
@@ -1062,7 +1065,6 @@ Identity block for a popover menu's `header` slot: avatar beside the name and em
 
 **Props:** `user` (`{ displayName, email, photoURL }` — the Firebase shape), `displayName`, `email`, `photoUrl` (each wins over `user`), `alt`, `avatarClass`, `customClass`.
 **Slots:** `avatar`, default (the two text lines), `trailing`.
-**Emits:** `hideDropdown`, `menuItemClick(to)`.
 
 ### UiPopoverMenuGroup
 Groups related rows inside the body; separate groups with `UiDivider`. Renders `role="group"`, so give each one a `text` or `ariaLabel` when a menu has more than one group.

@@ -196,6 +196,7 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 - **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
 - **`ISegmentedTab.position` deprecated:** ignored since the indicator reads real geometry; optional now, removed in v3.
+- **`UiPopoverMenu` renders as a native popover:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"` with native light dismiss; the `isOpened`/`hideDropdown` contract is unchanged. Custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]` for that branch, or opt out with `:native-popover="false"`.
 
 **[See the CSS migration guide →](https://colorffy.com/docs/colorffy-css/migration)**
 
