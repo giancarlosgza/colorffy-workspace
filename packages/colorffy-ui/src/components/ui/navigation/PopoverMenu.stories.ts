@@ -13,6 +13,8 @@ const meta = {
   title: 'Components/Navigation/PopoverMenu',
   component: UiPopoverMenu,
   tags: ['autodocs'],
+  // Native auto-popovers light-dismiss each other on the docs page, so stories use the class branch
+  args: { nativePopover: false },
   argTypes: {
     isOpened: { control: 'boolean' },
     closable: { control: 'boolean' },

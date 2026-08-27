@@ -314,6 +314,10 @@
       --_popover-menu-easing-duration: 800ms;
     }
 
+    @supports (anchor-name: --foo) {
+      anchor-name: --popover-menu;
+    }
+
     & .popover-menu {
       position: absolute;
       top: var(--_popover-menu-gutter);
@@ -322,7 +326,9 @@
       min-width: 18rem;
       margin: var(--_popover-menu-gutter) auto;
       padding: var(--space-6);
+      max-height: calc(100dvh - #{v.$navbar-min-height} - var(--_popover-menu-gutter) * 2);
       overflow-y: auto;
+      overscroll-behavior: contain;
       border: v.$border-sm solid var(--_popover-menu-border-color);
       background-color: var(--_popover-menu-bg-color);
       color: var(--_popover-menu-color);
@@ -345,6 +351,39 @@
         transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
         opacity calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback},
         visibility calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback};
+      }
+
+      // Native popover
+      @supports (anchor-name: --foo) {
+        &:where([popover]) {
+          position: fixed;
+          position-anchor: --popover-menu;
+          inset: auto;
+          top: calc(anchor(top) + var(--_popover-menu-gutter) * 2);
+          right: anchor(right);
+          bottom: var(--_popover-menu-gutter);
+          width: auto;
+          margin: 0;
+          visibility: visible;
+          transition: translate var(--_popover-menu-easing-out-duration) var(--_popover-menu-easing-out),
+          opacity var(--_popover-menu-easing-out-duration) var(--_popover-menu-easing-out),
+          display var(--_popover-menu-easing-out-duration) allow-discrete,
+          overlay var(--_popover-menu-easing-out-duration) allow-discrete;
+        }
+
+        &:popover-open {
+          opacity: 1;
+          translate: 0;
+          transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
+          opacity calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback},
+          display var(--_popover-menu-easing-duration) allow-discrete,
+          overlay var(--_popover-menu-easing-duration) allow-discrete;
+
+          @starting-style {
+            opacity: 0;
+            translate: 0 -1.5rem;
+          }
+        }
       }
 
       & .popover-menu-header {
@@ -827,6 +866,14 @@
           translate: 0;
           transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
         }
+
+        &:where([popover]) {
+          transition: opacity 100ms ease-out, display 100ms allow-discrete, overlay 100ms allow-discrete;
+        }
+
+        &:popover-open {
+          transition: opacity 150ms ease-in-out, display 150ms allow-discrete, overlay 150ms allow-discrete;
+        }
       }
     }
   }
@@ -939,6 +986,10 @@
   @include m.media-query(768) {
     .navbar {
       &:has(.popover-menu-visible) {
+        background-color: var(--theme-surface-body-pane);
+      }
+
+      &:has(.popover-menu:popover-open) {
         background-color: var(--theme-surface-body-pane);
       }
     }

@@ -374,6 +374,14 @@ export interface IPopoverMenuProps {
   closable?: boolean
 
   /**
+   * Renders through the native Popover API — top layer, light dismiss and Esc
+   * handled by the browser — when it supports both `popover` and CSS anchor
+   * positioning. Browsers missing either keep the class-based rendering, as
+   * does setting this to false.
+   */
+  nativePopover?: boolean
+
+  /**
    * Items rendered in the body when the default slot is empty.
    * Entries accept everything `UiPopoverMenuItem` takes, so they can be links,
    * actions, or destructive rows.
