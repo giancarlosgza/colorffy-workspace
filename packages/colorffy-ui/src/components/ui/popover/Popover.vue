@@ -44,13 +44,22 @@ const popoverStyle = computed(() => ({ 'position-anchor': props.anchorName }))
       class="popover-content"
       :class="contentClass"
     >
-      <div class="popover-header">
+      <div
+        v-if="$slots.header"
+        class="popover-header"
+      >
         <slot name="header" />
       </div>
-      <div class="popover-body">
+      <div
+        v-if="$slots.body"
+        class="popover-body"
+      >
         <slot name="body" />
       </div>
-      <div class="popover-footer">
+      <div
+        v-if="$slots.footer"
+        class="popover-footer"
+      >
         <slot name="footer" />
       </div>
     </div>

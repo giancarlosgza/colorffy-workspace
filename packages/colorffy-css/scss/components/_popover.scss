@@ -34,52 +34,59 @@
     // ==========================================================================
     // POPOVER SIZES (SM, LG)
     // ==========================================================================
-    &.popover-sm {
-      --_popover-width: anchor-size(width);
-
-      width: anchor-size(width);
+    &.popover-lg {
+      --_popover-height: 40rem;
     }
 
-    &.popover-lg {
-      --_popover-width: none;
-      --_popover-height: 40rem;
+    @supports (anchor-name: --foo) {
+      &.popover-sm {
+        --_popover-width: anchor-size(width);
 
-      width: max(30rem, anchor-size(width));
+        width: anchor-size(width);
+      }
+
+      &.popover-lg {
+        --_popover-width: none;
+
+        width: max(30rem, anchor-size(width));
+      }
     }
 
     // ==========================================================================
     // ANCHOR PROGRESSIVE ENHANCEMENT
     // ==========================================================================
-    &.popover-anchor {
-      position: absolute;
-      position-anchor: --anchor-popover;
-      position-try: flip-block, flip-inline;
-      margin: 0;
-      inset: auto;
-      bottom: anchor(top);
-      left: anchor(left);
-      margin-block: .625rem;
-
-      // Block axis (vertical)
-      &.popover-anchor-top {
-        top: auto;
+    @supports (anchor-name: --foo) {
+      &.popover-anchor {
+        position: absolute;
+        position-anchor: --anchor-popover;
+        position-try: flip-block, flip-inline;
+        margin: 0;
+        inset: auto;
         bottom: anchor(top);
-      }
-
-      &.popover-anchor-bottom {
-        bottom: auto;
-        top: anchor(bottom);
-      }
-
-      // Inline axis (horizontal)
-      &.popover-anchor-left {
-        right: auto;
         left: anchor(left);
-      }
+        margin-block: .625rem;
 
-      &.popover-anchor-right {
-        left: auto;
-        right: anchor(right);
+        // Block axis (vertical)
+        &.popover-anchor-top {
+          top: auto;
+          bottom: anchor(top);
+        }
+
+        &.popover-anchor-bottom {
+          bottom: auto;
+          top: anchor(bottom);
+        }
+
+        // Inline axis (horizontal)
+        &.popover-anchor-left {
+          right: auto;
+          left: anchor(left);
+        }
+
+        &.popover-anchor-right {
+          left: auto;
+          right: anchor(right);
+        }
       }
     }
 
