@@ -45,6 +45,7 @@ const optionsWrapperClasses = computed(() => [
 ])
 const checkClasses = computed(() => [
   'form-check',
+  'mb-0',
   props.size ? `form-${props.size}` : ''
 ])
 const checkLabelClasses = computed(() => [

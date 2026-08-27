@@ -283,7 +283,7 @@ function onOtpComplete() {
               option-label="name"
               option-value="id"
               :options="plans"
-              inline
+              :inline="true"
             />
           </template>
         </UiCard>
