@@ -185,6 +185,170 @@ export type ITabsEmits = ITabEmits
 export type ISegmentedControlsEmits = ITabEmits
 
 /**
+ * Interface props for the PopoverMenuUser component.
+ *
+ * Renders an identity block — avatar beside name and email — for a popover menu's
+ * `header` slot. Individual fields win over the `user` object when both are set.
+ */
+export interface IPopoverMenuUserProps {
+  /**
+   * User object (Firebase or custom) filling all three fields at once.
+   */
+  user?: IUserData | null
+
+  /**
+   * Primary line. Overrides `user.displayName`.
+   */
+  displayName?: string | null
+
+  /**
+   * Secondary line. Overrides `user.email`.
+   */
+  email?: string | null
+
+  /**
+   * Avatar image source. Overrides `user.photoURL`; falls back to a placeholder.
+   */
+  photoUrl?: string | null
+
+  /**
+   * Alt text for the avatar. Defaults to the display name.
+   */
+  alt?: string | null
+
+  /**
+   * Custom CSS classes for the avatar.
+   */
+  avatarClass?: string | string[] | null
+
+  /**
+   * Custom CSS classes for the identity block.
+   */
+  customClass?: string | string[] | null
+}
+
+/**
+ * Interface props for the PopoverMenuGroup component.
+ *
+ * Groups related rows inside a popover menu's body. Separate groups with `UiDivider`.
+ */
+export interface IPopoverMenuGroupProps {
+  /**
+   * Optional label rendered above the rows, and used as the group's accessible
+   * name when `ariaLabel` is not set.
+   */
+  text?: string | null
+
+  /**
+   * Accessible name for the group when there is no visible label.
+   */
+  ariaLabel?: string | null
+
+  /**
+   * Custom CSS classes for the group.
+   */
+  customClass?: string | string[] | null
+}
+
+/**
+ * Interface props for the PopoverMenuItem component.
+ */
+export interface IPopoverMenuItemProps {
+  /**
+   * Element or component to render: `'button'` for an action, `'a'` for a link,
+   * or a router component (NuxtLink, RouterLink) for in-app navigation.
+   * @default 'button'
+   */
+  as?: string | object
+
+  /**
+   * Primary label. Ignored when the default slot is used.
+   */
+  text?: string
+
+  /**
+   * Leading Material icon code (e.g. `'&#xe8b8;'`).
+   */
+  icon?: string | null
+
+  /**
+   * CSS classes for the leading icon.
+   */
+  iconClass?: string | string[] | null
+
+  /**
+   * Inline styles for the leading icon.
+   */
+  iconStyle?: string | Record<string, string | number> | null
+
+  /**
+   * Destination for link and router variants. Unused when `as` is `'button'`.
+   */
+  to?: string | object | null
+
+  /**
+   * When true, marks the item as the current one.
+   * Router components set their own active class, so leave this unset for them.
+   */
+  active?: boolean
+
+  /**
+   * When true, the item cannot be activated.
+   */
+  disabled?: boolean
+
+  /**
+   * When true, applies destructive styling (e.g. sign out, delete).
+   */
+  isDestructive?: boolean
+
+  /**
+   * Keyboard shortcut rendered as a trailing hint (e.g. `'⌘K'`).
+   */
+  shortcut?: string | null
+
+  /**
+   * Trailing badge configuration.
+   */
+  badge?: Partial<IBadgeProps> | null
+
+  /**
+   * Trailing Material icon code — handy for external links or submenus.
+   */
+  iconTrailing?: string | null
+
+  /**
+   * ARIA label when the visible text is not descriptive enough.
+   */
+  ariaLabel?: string | null
+
+  /**
+   * Custom CSS classes for the item.
+   */
+  customClass?: string | string[] | null
+}
+
+/**
+ * Interface emits for the PopoverMenuItem component.
+ */
+export interface IPopoverMenuItemEmits {
+  /**
+   * Emitted when the item is activated and not disabled.
+   */
+  (e: 'click', event: MouseEvent): void
+}
+
+/**
+ * Interface for items passed to PopoverMenu's `menuItems` shortcut.
+ */
+export interface IPopoverMenuItem extends IPopoverMenuItemProps {
+  /**
+   * Unique identifier for the item.
+   */
+  id: string
+}
+
+/**
  * Interface props for the PopoverMenu component.
  */
 export interface IPopoverMenuProps {
@@ -194,9 +358,27 @@ export interface IPopoverMenuProps {
   isOpened?: boolean
 
   /**
-   * Array of menu items to display.
+   * DOM id for the menu element. Required when more than one menu exists on a page.
    */
-  menuItems?: INavItem[]
+  id?: string | null
+
+  /**
+   * ARIA label for the menu. Defaults to a generic menu label.
+   */
+  ariaLabel?: string | null
+
+  /**
+   * When false, hides the close button. It is pinned to the header's top right
+   * whatever the header holds, so a custom `header` slot keeps it too.
+   */
+  closable?: boolean
+
+  /**
+   * Items rendered in the body when the default slot is empty.
+   * Entries accept everything `UiPopoverMenuItem` takes, so they can be links,
+   * actions, or destructive rows.
+   */
+  menuItems?: IPopoverMenuItem[]
 
   /**
    * Current route object for active state checking.
@@ -206,27 +388,28 @@ export interface IPopoverMenuProps {
   currentRoute?: IRouteLike | null
 
   /**
-   * Display title in the menu header.
+   * Title shown in the default header, beside the close button.
    */
   title?: string | null
 
   /**
-   * Display subtitle in the menu header.
+   * @deprecated The default header is a title and the close button only. Put an
+   * identity block in the `header` slot with `UiPopoverMenuUser`. Removed in v3.
    */
   subtitle?: string | null
 
   /**
-   * Avatar image source URL.
+   * @deprecated Moved to `UiPopoverMenuUser`'s `photoUrl`. Removed in v3.
    */
   avatarUrl?: string | null
 
   /**
-   * Optional custom CSS class for the avatar image.
+   * @deprecated Moved to `UiPopoverMenuUser`'s `avatarClass`. Removed in v3.
    */
   avatarCustomClass?: string | null
 
   /**
-   * User data object (Firebase or custom).
+   * @deprecated Moved to `UiPopoverMenuUser`'s `user`. Removed in v3.
    */
   user?: IUserData | null
 

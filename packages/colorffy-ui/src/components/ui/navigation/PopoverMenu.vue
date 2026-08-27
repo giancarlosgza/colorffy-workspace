@@ -1,36 +1,31 @@
 <script setup lang="ts">
 import type {
   IPopoverMenuEmits,
-  IPopoverMenuProps,
-  IUserData
+  IPopoverMenuItem,
+  IPopoverMenuProps
 } from '@/types/navigation'
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
-import UiListGroup from '../list/ListGroup.vue'
-import UiListItem from '../list/ListItem.vue'
+import UiPopoverMenuGroup from './PopoverMenuGroup.vue'
+import UiPopoverMenuItem from './PopoverMenuItem.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IPopoverMenuProps>(), {
   isOpened: false,
-  menuItems: () => [
-    {
-      id: 'home',
-      to: '/',
-      icon: '&#xe66b;',
-      text: 'Home',
-      ariaLabel: 'Navigate to home page'
-    }
-  ],
+  id: null,
+  ariaLabel: null,
+  closable: true,
+  menuItems: () => [],
   currentRoute: null,
-  title: null,
-  subtitle: null,
-  avatarUrl: null,
-  user: null
+  title: null
 })
 
 /** Emits */
 const emit = defineEmits<IPopoverMenuEmits>()
+
+/** Data */
+const slots = useSlots()
 
 /** Computed */
 const listItems = computed(() => props.menuItems)
@@ -39,25 +34,24 @@ const menuClasses = computed(() => [
   { 'popover-menu-visible': props.isOpened }
 ])
 
-const userData = computed((): IUserData => ({
-  displayName: props.user?.displayName || props.title || null,
-  email: props.user?.email || props.subtitle || null,
-  photoURL: props.user?.photoURL || props.avatarUrl || null
-}))
-const userDisplayName = computed(() => userData.value.displayName || 'User')
-const userEmail = computed(() => userData.value.email || 'Email')
-const userPhotoAlt = computed(() => `${userDisplayName.value} Profile Photo`)
+const hasHeader = computed(() => Boolean(slots.header || props.title || props.closable))
+const hasBody = computed(() => Boolean(slots.body || slots.default || slots['body-extra'] || listItems.value.length))
 
 /** Methods */
 function handleHideDropdown() {
   emit('hideDropdown')
 }
-function handleMenuItemClick(to: string | object): void {
-  emit('menuItemClick', to)
+function handleMenuItemClick(item: IPopoverMenuItem): void {
+  if (item.disabled)
+    return
+
+  if (item.to)
+    emit('menuItemClick', item.to)
+
   handleHideDropdown()
 }
-function isActiveMenuItem(to: string | object): boolean {
-  if (!props.currentRoute)
+function isActiveMenuItem(to: string | object | null | undefined): boolean {
+  if (!props.currentRoute || !to)
     return false
 
   // String path comparison
@@ -77,61 +71,36 @@ function isActiveMenuItem(to: string | object): boolean {
 <template>
   <div class="popover-menu-container">
     <div
-      id="user-navigation-menu"
+      :id="id || undefined"
       :class="menuClasses"
       role="menu"
-      aria-label="User account menu"
+      :aria-label="ariaLabel || 'Menu'"
       tabindex="0"
     >
       <!-- Header -->
-      <div class="popover-menu-header">
-        <!-- User related data -->
-        <div v-if="user">
-          <div class="avatar-container">
-            <img
-              v-if="userData.photoURL"
-              :src="userData.photoURL"
-              class="img-fluid img-avatar avatar-menu"
-              :class="avatarCustomClass"
-              :alt="userPhotoAlt"
+      <div
+        v-if="hasHeader"
+        class="popover-menu-header"
+      >
+        <div class="popover-menu-header-content">
+          <slot name="header">
+            <p
+              v-if="title"
+              class="subtitle-1 text-truncate"
+              :title="title"
             >
-            <span
-              v-else
-              class="img-avatar avatar-placeholder avatar-menu"
-              :class="avatarCustomClass"
-            />
-          </div>
-
-          <p
-            class="subtitle-1 text-truncate"
-            :title="userDisplayName"
-          >
-            {{ userDisplayName }}
-          </p>
-          <p
-            v-if="userData.email"
-            class="subtitle-2 text-truncate"
-            :title="userEmail"
-          >
-            {{ userEmail }}
-          </p>
-        </div>
-
-        <!-- Fallback header content -->
-        <div v-else>
-          <p class="subtitle-1 text-truncate">
-            {{ props.title }}
-          </p>
-          <p class="subtitle-2 text-truncate">
-            {{ props.subtitle }}
-          </p>
+              {{ title }}
+            </p>
+          </slot>
         </div>
 
         <!-- Close button -->
         <UiButton
+          v-if="closable"
           variant="outline"
           icon
-          aria-label="Close user menu"
+          custom-class="popover-menu-close"
+          aria-label="Close menu"
           @on-click="handleHideDropdown"
         >
           <template #icon>
@@ -141,28 +110,33 @@ function isActiveMenuItem(to: string | object): boolean {
       </div>
 
       <!-- Body -->
-      <div class="popover-menu-body">
-        <UiListGroup
-          variant="low-contrast"
-          size="sm"
-          is-interactive
-        >
-          <UiListItem
-            v-for="item in listItems"
-            :key="item.id"
-            :title="item.text"
-            :icon="item.icon"
-            :active="isActiveMenuItem(item.to)"
-            :aria-label="item.ariaLabel"
-            @click="handleMenuItemClick(item.to)"
-          />
-        </UiListGroup>
+      <div
+        v-if="hasBody"
+        class="popover-menu-body"
+      >
+        <slot name="body">
+          <slot>
+            <UiPopoverMenuGroup>
+              <UiPopoverMenuItem
+                v-for="item in listItems"
+                :key="item.id"
+                v-bind="item"
+                :active="item.active ?? isActiveMenuItem(item.to)"
+                @click="handleMenuItemClick(item)"
+              />
+            </UiPopoverMenuGroup>
+          </slot>
+        </slot>
 
+        <!-- Deprecated: use the body slot; removed in v3 -->
         <slot name="body-extra" />
       </div>
 
       <!-- Footer -->
-      <div class="popover-menu-footer">
+      <div
+        v-if="$slots.footer"
+        class="popover-menu-footer"
+      >
         <slot name="footer" />
       </div>
     </div>

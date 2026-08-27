@@ -6,7 +6,6 @@ import { NuxtLink } from '#components'
 const colors = ['system', 'light', 'dark']
 const activeMode = useState()
 const route = useRoute()
-const router = useRouter()
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
 const user = {
   displayName: 'Giancarlos',
@@ -51,9 +50,6 @@ function toggleUserMenu(): void {
 }
 function closeMenu(): void {
   isMenuActive.value = false
-}
-function handleMenuItemClick(to: string | object) {
-  router.push(to)
 }
 </script>
 
@@ -245,45 +241,108 @@ function handleMenuItemClick(to: string | object) {
 
         <!-- Popover Menu -->
         <UiPopoverMenu
-          :user="user"
+          id="user-account-menu"
           :is-opened="isMenuActive"
-          :menu-items="menuItems"
           :current-route="route"
-          avatar-custom-class="border border-md border-accent p-px"
+          :closable="false"
+          aria-label="Menú de cuenta"
           @hide-dropdown="isMenuActive = false"
-          @menu-item-click="handleMenuItemClick"
         >
-          <template #body-extra>
-            <hr>
-            <UiButtonGroup connected joined class="justify-content-center">
-              <UiButton
-                v-for="(color, index) in colors"
-                :key="`color-${index}`"
-                :variant="color === activeMode ? 'filled' : 'outline'"
-                :color="color === activeMode ? 'primary' : ''"
-                :text="color === 'system' ? 'Sistema' : color === 'light' ? 'Claro' : 'Oscuro'"
-                size="sm"
-                @click="$colorMode.preference = color; activeMode = color"
-              >
-                <template #icon>
-                  <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
-                  <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" class="text-warning" />
-                  <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" class="text-info" />
-                </template>
-              </UiButton>
-            </UiButtonGroup>
-          </template>
-          <template #footer>
-            <UiButton
-              variant="outline"
-              text="Sign out"
-              class="btn-block"
-              rounded
+          <template #header>
+            <UiPopoverMenuUser
+              :user="user"
+              display-name="Gian"
+              email="giancarlos@gmail.com"
+              photo-url="https://images.pexels.com/photos/38089393/pexels-photo-38089393.jpeg"
+              avatar-class="border border-lg border-gradient gradient-secondary p-1"
             >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe879;" class="text-danger" />
+              <template #trailing>
+                <UiBadge
+                  text="Pro"
+                  variant="outline"
+                  size="sm"
+                  class="border border-md border-gradient gradient-secondary"
+                />
               </template>
-            </UiButton>
+            </UiPopoverMenuUser>
+          </template>
+
+          <template #body>
+            <!-- Navigation -->
+            <UiPopoverMenuGroup aria-label="Navegación">
+              <UiPopoverMenuItem
+                v-for="item in menuItems"
+                :key="item.id"
+                :as="NuxtLink"
+                :to="item.to"
+                :icon="item.icon"
+                :text="item.text"
+                :aria-label="item.ariaLabel"
+                @click="closeMenu"
+              />
+            </UiPopoverMenuGroup>
+
+            <UiDivider />
+
+            <!-- Preferences -->
+            <UiPopoverMenuGroup text="Preferencias">
+              <UiPopoverMenuItem
+                icon="&#xe8b8;"
+                text="Paleta de comandos"
+                shortcut="⌘K"
+              />
+              <UiPopoverMenuItem
+                as="div"
+                icon="&#xe3ac;"
+                text="Tema"
+              >
+                <template #trailing>
+                  <UiButtonGroup
+                    connected
+                    joined
+                  >
+                    <UiButton
+                      v-for="(color, index) in colors"
+                      :key="`color-${index}`"
+                      :variant="color === activeMode ? 'filled' : 'outline'"
+                      :color="color === activeMode ? 'primary' : ''"
+                      :aria-label="color === 'system' ? 'Sistema' : color === 'light' ? 'Claro' : 'Oscuro'"
+                      icon
+                      size="sm"
+                      @click="$colorMode.preference = color; activeMode = color"
+                    >
+                      <template #icon>
+                        <UiIconMaterial v-if="color === 'system'" icon-code="&#xe31e;" />
+                        <UiIconMaterial v-else-if="color === 'light'" icon-code="&#xe518;" />
+                        <UiIconMaterial v-else-if="color === 'dark'" icon-code="&#xe51c;" />
+                      </template>
+                    </UiButton>
+                  </UiButtonGroup>
+                </template>
+              </UiPopoverMenuItem>
+            </UiPopoverMenuGroup>
+
+            <UiDivider />
+
+            <UiPopoverMenuGroup aria-label="Cuenta">
+              <UiPopoverMenuItem
+                as="a"
+                to="https://colorffy-ui-docs.pages.dev"
+                icon="&#xe873;"
+                text="Documentación"
+                icon-trailing="&#xe89e;"
+              />
+              <UiPopoverMenuItem
+                icon="&#xe879;"
+                text="Cerrar sesión"
+                is-destructive
+              />
+            </UiPopoverMenuGroup>
+          </template>
+
+          <template #footer>
+            <span class="caption text-muted flex-grow-1">Colorffy UI</span>
+            <span class="caption text-muted">v2.5.0</span>
           </template>
         </UiPopoverMenu>
       </UiNavbar>
