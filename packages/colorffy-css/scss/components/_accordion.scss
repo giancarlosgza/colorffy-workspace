@@ -20,6 +20,7 @@
       --_accordion-icon-gap: 0.625rem;
       --_accordion-arrow-size: 24px;
       --_accordion-title-fs: var(--fs-xs);
+      --_accordion-body-fs: var(--fs-2xs);
       --_accordion-content-gap: var(--space-16);
       --_accordion-easing-in: #{v.$easing-in-fallback};
       --_accordion-easing-duration: 200ms;
@@ -152,6 +153,7 @@
 
         p {
           color: var(--theme-muted-a10);
+          font-size: var(--_accordion-body-fs);
           line-height: 1.75;
           margin-bottom: var(--_accordion-padding);
           @extend .subtitle-2;
@@ -191,6 +193,7 @@
       --_accordion-icon-gap: var(--space-8);
       --_accordion-arrow-size: 20px;
       --_accordion-title-fs: var(--fs-2xs);
+      --_accordion-body-fs: var(--fs-3xs);
       --_accordion-content-gap: var(--space-8);
     }
 
