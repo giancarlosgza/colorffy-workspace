@@ -1002,11 +1002,93 @@ overlay renders while open (emits `update:open` on dismiss).
 > Pair with `UiNavbarToggle` to drive the states: `<UiNavbarToggle :collapsed="open" @toggle="open = !open" />`.
 
 ### UiPopoverMenu
-Popover menu overlay.
+Dropdown panel (account menus, overflow menus) with `header` / `body` / `footer` slots. Fill `#body` with `UiPopoverMenuGroup` blocks of `UiPopoverMenuItem` rows, separated by `UiDivider`.
 
 ```vue
-<UiPopoverMenu :items="menuItems" />
+<UiPopoverMenu
+  id="account-menu"
+  :is-opened="open"
+  aria-label="Account menu"
+  @hide-dropdown="open = false"
+>
+  <template #header>
+    <UiPopoverMenuUser :user="user" />
+  </template>
+
+  <template #body>
+    <UiPopoverMenuGroup>
+      <UiPopoverMenuItem :as="NuxtLink" to="/dashboard" icon="&#xe871;" text="Dashboard" />
+    </UiPopoverMenuGroup>
+
+    <UiDivider />
+
+    <UiPopoverMenuGroup>
+      <UiPopoverMenuItem icon="&#xe879;" text="Sign out" is-destructive @click="signOut" />
+    </UiPopoverMenuGroup>
+  </template>
+
+  <template #footer>
+    <span class="subtitle-2 text-muted">v2.5.0</span>
+  </template>
+</UiPopoverMenu>
 ```
+
+**Props:**
+- `isOpened` (boolean) - Show / hide
+- `id` (string) - DOM id; pass one when a page has more than one menu
+- `ariaLabel` (string, default: 'Menu') - Accessible name
+- `closable` (boolean, default: true) - Close button, pinned to the header's top right whatever the header holds (a custom `header` slot keeps it)
+- `title` (string) - Default header title; the default header is the title plus the close button, nothing else
+- `menuItems` (array) - Shortcut that renders the body when no body slot is filled; entries take `UiPopoverMenuItem` props plus an `id`
+- `currentRoute` - Active-row detection for `menuItems`
+
+**Slots:** `header`, `body`, `footer`. The default slot is an alias for `body` (handy for simple menus); `body` wins if both are given.
+
+**Deprecated (removed in v3):** `user`, `avatarUrl`, `avatarCustomClass`, `subtitle` — no longer rendered; use `UiPopoverMenuUser` in the `header` slot. `body-extra` — put the content in `#body`; it is still the only way to append to a `menuItems`-rendered body.
+
+### UiPopoverMenuUser
+Identity block for a popover menu's `header` slot: avatar beside the name and email.
+
+```vue
+<UiPopoverMenuUser :user="user">
+  <template #avatar>
+    <UiAvatar initials="CO" size="md" status="online" />
+  </template>
+  <template #trailing>
+    <UiBadge text="Pro" variant="outline" size="sm" />
+  </template>
+</UiPopoverMenuUser>
+```
+
+**Props:** `user` (`{ displayName, email, photoURL }` — the Firebase shape), `displayName`, `email`, `photoUrl` (each wins over `user`), `alt`, `avatarClass`, `customClass`.
+**Slots:** `avatar`, default (the two text lines), `trailing`.
+**Emits:** `hideDropdown`, `menuItemClick(to)`.
+
+### UiPopoverMenuGroup
+Groups related rows inside the body; separate groups with `UiDivider`. Renders `role="group"`, so give each one a `text` or `ariaLabel` when a menu has more than one group.
+
+```vue
+<UiPopoverMenuGroup text="Workspace">
+  <UiPopoverMenuItem icon="&#xe7fb;" text="Invite people" />
+</UiPopoverMenuGroup>
+```
+
+**Props:** `text` (visible label, doubles as the accessible name), `ariaLabel`, `customClass`.
+
+### UiPopoverMenuItem
+One row inside a popover menu. Renders a `button` by default, an `a` with `as="a"`, or a router component when passed one — so actions and links share a row style.
+
+```vue
+<UiPopoverMenuItem icon="&#xe8b8;" text="Command menu" shortcut="⌘K" @click="openPalette" />
+<UiPopoverMenuItem as="a" to="https://example.com" text="Docs" icon-trailing="&#xe89e;" />
+<UiPopoverMenuItem icon="&#xe879;" text="Delete" is-destructive />
+```
+
+**Props:** `as` ('button' | 'a' | 'div' | router component), `text`, `icon`, `iconTrailing`, `to`, `active`, `disabled`, `isDestructive`, `shortcut`, `badge` (`Partial<IBadgeProps>`), `ariaLabel`, `customClass`.
+**Slots:** default (label), `trailing` — use `as="div"` plus `#trailing` to embed a control (e.g. a theme switch) as a row.
+**Emits:** `click(event)`.
+
+Rows rendered as `div`/`span` are containers: no `menuitem` role, no click emit.
 
 ## Steppers
 
