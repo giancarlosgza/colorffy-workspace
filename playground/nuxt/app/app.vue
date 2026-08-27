@@ -297,14 +297,13 @@ function closeMenu(): void {
                 <template #trailing>
                   <UiButtonGroup
                     connected
-                    joined
                   >
                     <UiButton
                       v-for="(color, index) in colors"
                       :key="`color-${index}`"
                       :variant="color === activeMode ? 'filled' : 'outline'"
                       :color="color === activeMode ? 'primary' : ''"
-                      :aria-label="color === 'system' ? 'Sistema' : color === 'light' ? 'Claro' : 'Oscuro'"
+                      :aria-label="color === 'system' ? 'System' : color === 'light' ? 'Light' : 'Dark'"
                       icon size="sm"
                       @click="$colorMode.preference = color; activeMode = color"
                     >
