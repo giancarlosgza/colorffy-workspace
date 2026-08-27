@@ -301,9 +301,49 @@ function join() {
     </div>
 
     <!-- Team -->
-    <h3 class="subtitle-1 fw-700 mt-2 mb-3 mt-section">
-      El equipo
-    </h3>
+    <div class="d-flex align-items-center gap-1 mt-2 mb-3 mt-section">
+      <h3 class="subtitle-1 fw-700 mb-0">
+        El equipo
+      </h3>
+      <UiButton
+        variant="text"
+        icon
+        size="sm"
+        aria-label="Acerca del equipo"
+        popovertarget="team-popover"
+        style="anchor-name: --popover-team"
+      >
+        <template #icon>
+          <UiIconMaterial icon-code="&#xe887;" />
+        </template>
+      </UiButton>
+
+      <!-- Popover -->
+      <UiPopover
+        id="team-popover"
+        anchor-name="--popover-team"
+        position-block="bottom"
+        position-inline="left"
+      >
+        <template #header>
+          <p class="popover-title">
+            ¿Quieres aparecer aquí?
+          </p>
+          <p class="popover-subtitle">
+            El equipo detrás de Colorffy UI
+          </p>
+        </template>
+        <template #body>
+          <p class="mb-0">
+            Colorffy UI es de código abierto: cualquier contribución de código,
+            diseño, documentación o traducciones te acerca a esta sección.
+          </p>
+        </template>
+        <template #footer>
+          <span class="caption text-muted">Únete desde GitHub</span>
+        </template>
+      </UiPopover>
+    </div>
     <div class="row">
       <div
         v-for="member in team"
