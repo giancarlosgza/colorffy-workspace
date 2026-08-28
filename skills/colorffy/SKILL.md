@@ -173,7 +173,7 @@ const name = ref('')
 
 ## Utility Class Categories Quick Reference
 
-**Spacing:** `m-*`, `p-*`, `gap-*` (0-5, responsive)
+**Spacing:** `m-*`, `p-*`, `gap-*` (`px`, `0`–`10`, responsive)
 **Colors:** `text-*`, `bg-*`, `border-*` (primary, success, danger, etc.)
 **Typography:** `fs-*` (t-shirt: `4xs`–`5xl`, anchored at `base`), `fw-*` (400-800), `text-{align}`
 **Layout:** `d-flex`, `d-grid`, `justify-content-*`, `align-items-*`
@@ -196,7 +196,17 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 - **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
 - **`ISegmentedTab.position` deprecated:** ignored since the indicator reads real geometry; optional now, removed in v3.
+- **`UiPopoverMenu` default header no longer renders identity:** `user`, `avatarUrl`, `avatarCustomClass` and `subtitle` are deprecated no-ops (removed in v3) — the default header is a `title` plus the close button (`closable` now defaults to `true`). Move the identity into the `header` slot with `UiPopoverMenuUser`, which takes the same `user` object.
 - **`UiPopoverMenu` renders as a native popover:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"` with native light dismiss; the `isOpened`/`hideDropdown` contract is unchanged. Custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]` for that branch, or opt out with `:native-popover="false"`.
+
+## Planned for 3.0
+
+Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them in new code:
+
+- Legacy font-size **tokens** (`--fs-100`…`--fs-600`, `--fs-sm-*`, `--fs-xl-100`) and **utility classes** (`.fs-100`…, `.fs-sm-*`) — use the t-shirt scale (`--fs-4xs`–`--fs-5xl`, `.fs-base`, …).
+- `$space-1` / `$space-2` / `$space-3` SCSS variables — use `var(--space-16/32/48)`.
+- `ISegmentedTab.position` and `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
+- Public tokens gain a namespace prefix (planned `--cffy-*`); `m-*`/`p-*`/`gap-*` utilities rebase onto the token scale (`.p-12` = `var(--space-12)`, so old numeric steps change meaning); a `--container-*` width scale absorbs one-offs like `--theme-nav-drawer-width`. None of these exist in 2.x yet — don't reference them until 3.0.
 
 **[See the CSS migration guide →](https://colorffy.com/docs/colorffy-css/migration)**
 

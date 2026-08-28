@@ -215,6 +215,8 @@ All component spacing uses the `--space-*` tokens on `:root` — the number is t
 
 Runtime density: override `--space-unit` on `:root` or any subtree to scale all component spacing proportionally (e.g. `--space-unit: .2rem` = 80% density). When writing custom CSS alongside Colorffy, use `var(--space-*)` instead of hardcoded rem/px spacing.
 
+**Deprecated (removed in v3):** the `$space-1` / `$space-2` / `$space-3` SCSS variables (1/2/3rem). Use `var(--space-16)` / `var(--space-32)` / `var(--space-48)` instead — they resolve to the same values and follow density scaling.
+
 ### Utility Class Scale (separate from the tokens)
 
 The `m-*`/`p-*`/`gap-*` utility classes are generated from the `$spacing-sizes` SCSS map, which keeps its own historical scale until v3:

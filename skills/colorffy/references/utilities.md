@@ -51,11 +51,11 @@ Complete reference for utility classes in @colorffy/css.
 
 ## Spacing
 
-Colorffy uses a consistent spacing system with sizes: `0`, `1`, `2`, `3`, `4`, `5`, `auto`.
+Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map).
 
 ### Margin
 
-**Pattern:** `m{side}-{size}` where size is `0` (0), `1` (0.25rem), `2` (0.5rem), `3` (1rem), `4` (1.5rem), `5` (3rem), or `auto`
+**Pattern:** `m{side}-{size}` where size is `px` (1px), `0` (0), `1` (0.25rem), `2` (0.5rem), `3` (1rem), `4` (1.5rem), `5` (3rem), `6` (4.5rem), `7` (6rem), `8` (7.5rem), `9` (9rem), `10` (12rem), or `auto`
 
 ```html
 <div class="m-3">All sides</div>
@@ -510,7 +510,7 @@ See [Colors](#colors) section above.
 
 ### Translate
 
-**Pattern:** `translate-{x|y}-{0-5}` or `translate-{x|y}--{0-5}` (negative). Uses spacing scale (same as margin/padding).
+**Pattern:** `translate-{x|y}-{size}` or `translate-{x|y}--{size}` (negative). Uses the spacing scale (`px`, `0`–`10`, same as margin/padding).
 
 ```html
 <div class="translate-x-3">Right 1rem</div>

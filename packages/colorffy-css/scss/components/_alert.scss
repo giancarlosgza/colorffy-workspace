@@ -406,7 +406,7 @@
   .pwa-alert-container {
     --_pwa-alert-position-x: var(--space-16);
     --_pwa-alert-position-y: var(--space-16);
-    --_pwa-alert-padding: #{v.$space-1};
+    --_pwa-alert-padding: var(--space-16);
     --_pwa-alert-gap: var(--space-12);
     --_pwa-border-radius: #{v.$card-border-radius};
 
