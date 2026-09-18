@@ -1,13 +1,16 @@
+import type { ClassValue } from '@/types/shared'
+
 /**
  * Interface props for the HeaderContent component.
  * Notes:
  * - Use `title` and `subtitle` to display header text.
  * - Use `backButton` to enable back navigation.
- * - Use `actions` with the #actions slot to add action buttons.
+ * - Fill the #actions slot to add action buttons; the layout reacts on its own.
  */
 export interface IHeaderContentProps {
   /**
-   * Optional ID for the header title element and its description reference.
+   * Optional ID for the header title element, for external `aria-labelledby`
+   * references. Falls back to a generated id.
    */
   headingId?: string
 
@@ -22,15 +25,13 @@ export interface IHeaderContentProps {
   subtitle?: string | null
 
   /**
-   * When true, shows the actions slot for toolbar buttons.
+   * When true, drops the actions out of the layout once the header's own
+   * container is 700px or narrower, rather than wrapping them below the title.
+   * Named for the container width, not the viewport: a narrow header in a wide
+   * window collapses too.
+   * @default false
    */
-  actions?: boolean
-
-  /**
-   * When true, hides action buttons on mobile devices.
-   * @default true
-   */
-  hideActionsOnMobile?: boolean
+  hideActionsWhenNarrow?: boolean
 
   /**
    * When true, displays a back navigation button.
@@ -46,7 +47,7 @@ export interface IHeaderContentProps {
   /**
    * Optional custom CSS classes for the header container.
    */
-  containerClass?: string | string[]
+  containerClass?: ClassValue | null
 }
 
 /**
@@ -56,7 +57,7 @@ export interface IHeaderContentEmits {
   /**
    * Emitted when the back button is clicked.
    */
-  (e: 'click'): void
+  (e: 'back'): void
 }
 
 /**

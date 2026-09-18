@@ -19,8 +19,7 @@
       "types": "./dist/nuxt.d.ts",
       "import": "./dist/nuxt.js",
       "require": "./dist/nuxt.cjs"
-    },
-    "./style.css": "./dist/ui.css"
+    }
   },
   "files": [
     "dist"

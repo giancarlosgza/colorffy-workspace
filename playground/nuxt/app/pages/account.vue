@@ -82,8 +82,6 @@ function onOtpComplete() {
     <UiHeaderContent
       title="Configuración de la cuenta"
       subtitle="Administra tu perfil, preferencias e integraciones"
-      actions
-      :hide-actions-on-mobile="false"
     >
       <template #actions>
         <UiButton

@@ -106,8 +106,6 @@ function onOverviewTabChange(tabId: string) {
     <UiHeaderContent
       title="Panel general"
       subtitle="Resumen del rendimiento de tu espacio de trabajo"
-      actions
-      :hide-actions-on-mobile="false"
     >
       <template #actions>
         <UiButtonGroup connected>

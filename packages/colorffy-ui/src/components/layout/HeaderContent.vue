@@ -16,11 +16,9 @@ import UiIconMaterial from '../ui/icon/Material.vue'
  * <HeaderContent
  *   title="Gradient Generator"
  *   subtitle="Create beautiful gradients"
- *   :is-featured="true"
- *   :actions="true"
  *   :back-button="true"
  *   back-button-label="Back to tools"
- *   @click="handleBack"
+ *   @back="handleBack"
  * >
  *   <template #actions>
  *     <UiButton text="Save" />
@@ -33,11 +31,10 @@ import UiIconMaterial from '../ui/icon/Material.vue'
 const props = withDefaults(defineProps<IHeaderContentProps>(), {
   title: null,
   subtitle: null,
-  actions: false,
-  hideActionsOnMobile: true,
+  hideActionsWhenNarrow: false,
   backButton: false,
   backButtonLabel: 'Go back',
-  containerClass: ''
+  containerClass: null
 })
 
 /** Emits */
@@ -46,50 +43,23 @@ const emit = defineEmits<IHeaderContentEmits>()
 /** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
-const headerClasses = computed(() => {
-  const classes = []
-
-  if (props.backButton) {
-    classes.push('page-header-breadcrumb')
-  }
-
-  if (props.actions) {
-    classes.push('page-header-actions')
-  }
-
-  return classes
-})
-const containerClasses = computed(() => {
-  const classes = ['header-container']
-
-  if (props.containerClass) {
-    if (Array.isArray(props.containerClass)) {
-      classes.push(...(props.containerClass as string[]))
-    } else {
-      classes.push(props.containerClass as string)
-    }
-  }
-
-  return classes.join(' ')
-})
 
 /** Methods */
 function handleBackClick() {
-  emit('click')
+  emit('back')
 }
 </script>
 
 <template>
-  <div :class="containerClasses">
-    <header
-      class="header"
-      role="banner"
-      :aria-label="title ? `Page header: ${title}` : 'Page header'"
-    >
+  <div
+    class="header-container"
+    :class="containerClass"
+  >
+    <header class="header">
       <!-- Title -->
       <div
         class="header-title"
-        :class="headerClasses"
+        :class="{ 'page-header-breadcrumb': backButton, 'page-header-actions': Boolean($slots.actions) }"
       >
         <!-- Back button -->
         <UiButtonTooltip
@@ -119,7 +89,6 @@ function handleBackClick() {
           <p
             v-if="subtitle"
             class="text-description"
-            :aria-describedby="title ? headingId : undefined"
           >
             {{ subtitle }}
           </p>
@@ -128,10 +97,10 @@ function handleBackClick() {
 
       <!-- Actions -->
       <div
-        v-if="actions && $slots.actions"
+        v-if="$slots.actions"
         class="header-actions"
-        :class="{ 'page-header-actions-responsive': hideActionsOnMobile }"
-        role="toolbar"
+        :class="{ 'page-header-actions-responsive': hideActionsWhenNarrow }"
+        role="group"
         aria-label="Page actions"
       >
         <slot name="actions" />
@@ -139,17 +108,3 @@ function handleBackClick() {
     </header>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.text-title {
-  view-transition-name: selected-header;
-  width: fit-content;
-  contain: paint;
-}
-
-.text-description {
-  view-transition-name: selected-description;
-  width: fit-content;
-  contain: paint;
-}
-</style>

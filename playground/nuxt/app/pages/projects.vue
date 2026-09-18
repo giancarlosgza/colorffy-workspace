@@ -131,8 +131,6 @@ function createProject() {
     <UiHeaderContent
       title="Proyectos"
       subtitle="Administra y supervisa todos los proyectos del equipo"
-      actions
-      :hide-actions-on-mobile="false"
     >
       <template #actions>
         <UiButton text="Nuevo proyecto" variant="filled" color="primary">

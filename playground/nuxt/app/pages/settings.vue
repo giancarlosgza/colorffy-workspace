@@ -40,8 +40,6 @@ function save() {
     <UiHeaderContent
       title="Configuración"
       subtitle="Administra las preferencias de tu cuenta y del sistema"
-      actions
-      :hide-actions-on-mobile="false"
     >
       <template #actions>
         <UiButton

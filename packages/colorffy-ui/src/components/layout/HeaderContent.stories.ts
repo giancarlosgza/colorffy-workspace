@@ -11,8 +11,7 @@ const meta = {
     headingId: { control: 'text' },
     title: { control: 'text' },
     subtitle: { control: 'text' },
-    actions: { control: 'boolean' },
-    hideActionsOnMobile: { control: 'boolean' },
+    hideActionsWhenNarrow: { control: 'boolean' },
     backButton: { control: 'boolean' },
     backButtonLabel: { control: 'text' },
     containerClass: { control: 'text' }
@@ -37,13 +36,9 @@ export const WithExplicitHeadingId: Story = {
   },
   play: async ({ canvasElement }) => {
     const heading = canvasElement.querySelector('h1')
-    const description = canvasElement.querySelector('p')
 
     if (!heading || heading.id !== 'project-heading')
       throw new Error('Expected the explicit headingId to be applied to the heading')
-
-    if (!description || description.getAttribute('aria-describedby') !== 'project-heading')
-      throw new Error('Expected the explicit headingId to be applied to the description reference')
   }
 }
 
@@ -59,8 +54,7 @@ export const WithBackButton: Story = {
 export const WithActions: Story = {
   args: {
     title: 'Page with Actions',
-    subtitle: 'Header with action buttons',
-    actions: true
+    subtitle: 'Header with action buttons'
   },
   render: args => ({
     components: { HeaderContent, UiButton, UiButtonGroup },
@@ -85,8 +79,7 @@ export const WithBackButtonAndActions: Story = {
     title: 'Full Header Example',
     subtitle: 'With back button and action buttons',
     backButton: true,
-    backButtonLabel: 'Back to dashboard',
-    actions: true
+    backButtonLabel: 'Back to dashboard'
   },
   render: args => ({
     components: { HeaderContent, UiButton, UiButtonGroup },
