@@ -131,6 +131,17 @@ Add breakpoint prefixes: `sm`, `md`, `lg`, `xl`, `xxl`
 
 **Deprecated (removed in v3):** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` still work (font-size only, no line-height). Do not use in new code.
 
+### Display Styles
+
+Use `display-1` through `display-4` for prominent marketing and editorial headings. They use the primary font, a unit line height, and built-in weight and tracking.
+
+```html
+<h1 class="display-1">Primary display heading</h1>
+<h2 class="display-2">Secondary display heading</h2>
+<h3 class="display-3">Section display heading</h3>
+<h4 class="display-4">Card display heading</h4>
+```
+
 ### Font Weight
 
 **Pattern:** `fw-{400,500,600,700,800}` (400=normal, 700=bold)

@@ -80,7 +80,7 @@ function join() {
               icon-class="text-accent-fixed"
               custom-class="mb-2"
             />
-            <h1 class="fs-700 fw-800 mb-1">
+            <h1 class="display-2 mb-1">
               Acerca de <span class="text-primary">Colorffy UI</span>
             </h1>
             <p class="subtitle-1 text-muted mb-0" style="max-width: 46ch;">

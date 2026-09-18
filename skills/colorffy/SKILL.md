@@ -18,6 +18,7 @@ Complete framework for building Vue 3 and Nuxt 3 applications with Colorffy UI (
 | **Reference** | **[Components API](references/components.md)** | Full reference for 70+ components |
 | | **[CSS Utilities](references/utilities.md)** | Complete utility class reference |
 | | **[Layout Systems](references/layout.md)** | Grid and Flexbox layout utilities |
+| | **[Official Documentation](https://colorffy-ui-docs.pages.dev/getting-started/introduction)** | Hosted Colorffy documentation |
 | **Patterns** | **[Best Practices](references/best-practices.md)** | Common patterns, workflows, tips |
 
 ## Framework Overview
@@ -175,7 +176,7 @@ const name = ref('')
 
 **Spacing:** `m-*`, `p-*`, `gap-*` (`px`, `0`–`10`, responsive)
 **Colors:** `text-*`, `bg-*`, `border-*` (primary, success, danger, etc.)
-**Typography:** `fs-*` (t-shirt: `4xs`–`5xl`, anchored at `base`), `fw-*` (400-800), `text-{align}`
+**Typography:** `display-1`–`display-4` (prominent headings), `fs-*` (t-shirt: `4xs`–`5xl`, anchored at `base`), `fw-*` (400-800), `text-{align}`
 **Layout:** `d-flex`, `d-grid`, `justify-content-*`, `align-items-*`
 **Borders:** `border`, `rounded-{size}`
 **Effects:** `shadow-*`, `opacity-*`, `filter-*`

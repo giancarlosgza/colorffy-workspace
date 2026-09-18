@@ -170,6 +170,38 @@ $type-h6: (
         letter-spacing: .15px,
 );
 
+$type-display-1: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-800,
+        font-size: clamp(2.5rem, calc(1.64rem + 3.57vw), 4.5rem),
+        letter-spacing: -0.03em,
+        line-height: 1,
+);
+
+$type-display-2: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-500,
+        font-size: clamp(2rem, calc(1.3rem + 2.9vw), 3.625rem),
+        letter-spacing: -0.03em,
+        line-height: 1,
+);
+
+$type-display-3: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-500,
+        font-size: clamp(1.625rem, calc(1.2rem + 1.79vw), 2.5rem),
+        letter-spacing: -0.03em,
+        line-height: 1,
+);
+
+$type-display-4: (
+        font-family: (var(--font-primary)),
+        font-weight: $fw-500,
+        font-size: clamp(1.375rem, calc(1.11rem + 1.12vw), 2rem),
+        letter-spacing: -0.64px,
+        line-height: 1,
+);
+
 $type-body1: (
         font-family: (var(--font-secondary)),
         font-weight: $fw-400,

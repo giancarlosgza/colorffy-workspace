@@ -62,6 +62,38 @@
     letter-spacing: map.get(v.$type-h6, letter-spacing);
   }
 
+  .display-1 {
+    font-family: map.get(v.$type-display-1, font-family);
+    font-weight: map.get(v.$type-display-1, font-weight);
+    font-size: map.get(v.$type-display-1, font-size);
+    letter-spacing: map.get(v.$type-display-1, letter-spacing);
+    line-height: map.get(v.$type-display-1, line-height);
+  }
+
+  .display-2 {
+    font-family: map.get(v.$type-display-2, font-family);
+    font-weight: map.get(v.$type-display-2, font-weight);
+    font-size: map.get(v.$type-display-2, font-size);
+    letter-spacing: map.get(v.$type-display-2, letter-spacing);
+    line-height: map.get(v.$type-display-2, line-height);
+  }
+
+  .display-3 {
+    font-family: map.get(v.$type-display-3, font-family);
+    font-weight: map.get(v.$type-display-3, font-weight);
+    font-size: map.get(v.$type-display-3, font-size);
+    letter-spacing: map.get(v.$type-display-3, letter-spacing);
+    line-height: map.get(v.$type-display-3, line-height);
+  }
+
+  .display-4 {
+    font-family: map.get(v.$type-display-4, font-family);
+    font-weight: map.get(v.$type-display-4, font-weight);
+    font-size: map.get(v.$type-display-4, font-size);
+    letter-spacing: map.get(v.$type-display-4, letter-spacing);
+    line-height: map.get(v.$type-display-4, line-height);
+  }
+
   .subtitle-1 {
     font-family: map.get(v.$type-subtitle1, font-family);
     font-weight: map.get(v.$type-subtitle1, font-weight);

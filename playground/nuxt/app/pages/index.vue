@@ -83,7 +83,7 @@ function copyInstall() {
               icon-class="text-accent-fixed"
               custom-class="mb-2"
             />
-            <h1 class="fs-700 fw-800 mb-1">
+            <h1 class="display-1 mb-1">
               <span class="text-primary">Colorffy UI</span>
             </h1>
             <p
