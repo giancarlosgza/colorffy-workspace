@@ -16,20 +16,22 @@
   "dependencies": {
     "@colorffy/css": "workspace:*",
     "@colorffy/ui": "workspace:*",
-    "@material-symbols/font-700": "^0.39.4",
-    "floating-vue": "^5.2.2",
-    "vue": "^3.5.30",
-    "vue-router": "^4.6.4"
+    "@material-symbols/font-700": "^0.47.3",
+    "@vueuse/components": "^15.0.0",
+    "@vueuse/core": "^15.0.0",
+    "floating-vue": "^5.4.0",
+    "vue": "^3.5.43",
+    "vue-router": "^5.3.1"
   },
   "devDependencies": {
-    "@tsconfig/node22": "^22.0.5",
-    "@types/node": "^22.19.15",
-    "@vitejs/plugin-vue": "^6.0.5",
-    "@vue/tsconfig": "^0.8.1",
-    "npm-run-all2": "^8.0.4",
-    "typescript": "~5.9.3",
-    "vite": "^7.3.1",
-    "vite-plugin-vue-devtools": "^8.1.0",
-    "vue-tsc": "^3.2.6"
+    "@tsconfig/node22": "^22.0.6",
+    "@types/node": "^26.6.1",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/tsconfig": "^0.9.1",
+    "npm-run-all2": "^9.0.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0",
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vue-tsc": "^3.3.11"
   }
 }
