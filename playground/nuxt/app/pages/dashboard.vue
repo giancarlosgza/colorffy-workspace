@@ -294,7 +294,6 @@ function onOverviewTabChange(tabId: string) {
             <UiChipGroup
               v-model="activityFilter"
               :options="activityFilters"
-              closable
               aria-label="Filtrar actividad"
               class="mb-3"
             />

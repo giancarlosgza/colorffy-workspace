@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AlertPlacement, AlertVariant, UiAlertToast, UiConfirmModal, UiModal } from '@colorffy/ui'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 definePageMeta({ pageTitle: 'Notificaciones' })
 
@@ -25,11 +25,34 @@ const inlineAlerts: { type: 'banner' | 'tonal', variant: AlertVariant, title: st
   { type: 'tonal', variant: 'info', title: 'Mantenimiento', message: 'El sistema estará en mantenimiento el domingo.' }
 ]
 
+// Filter chips (single-select, clicking the active chip clears it back to all)
+const alertFilter = ref<string | string[] | null>(null)
+const alertFilters = [
+  { id: 'banner', text: 'Banner' },
+  { id: 'tonal', text: 'Tonal' }
+]
+
+// Closable input chips
+const topics = ref([
+  { id: 'deploys', text: 'Despliegues' },
+  { id: 'billing', text: 'Pagos' },
+  { id: 'security', text: 'Seguridad' },
+  { id: 'product', text: 'Producto' }
+])
+
 const faqs = [
   { id: 'billing', q: '¿Cómo cambio mi método de pago?', a: 'Ve a Cuenta → Facturación y selecciona "Editar método de pago".' },
   { id: 'export', q: '¿Puedo exportar mis datos?', a: 'Sí, desde cualquier tabla usa el menú de acciones para exportar a PDF, CSV o Excel.' },
   { id: 'team', q: '¿Cómo invito a mi equipo?', a: 'Desde Configuración → Miembros, ingresa los correos y envía las invitaciones.' }
 ]
+
+/** Computed */
+const filteredAlerts = computed(() => {
+  if (!alertFilter.value)
+    return inlineAlerts
+
+  return inlineAlerts.filter(alert => alert.type === alertFilter.value)
+})
 
 /** Methods */
 function fireToast(variant: AlertVariant, title: string, message: string, placement: AlertPlacement) {
@@ -45,6 +68,10 @@ function onConfirm() {
     confirmRef.value?.closeDialog()
     fireToast('success', 'Eliminado', 'El proyecto fue eliminado.', 'bottom')
   }, 1500)
+}
+function unsubscribe(id: string, text: string) {
+  topics.value = topics.value.filter(topic => topic.id !== id)
+  fireToast('info', 'Suscripción cancelada', `Ya no recibirás avisos de ${text}.`, 'bottom')
 }
 function runTask() {
   taskRunning.value = true
@@ -135,8 +162,16 @@ function runTask() {
             <h4 class="subtitle-1 fw-700 mb-3">
               Alertas en línea
             </h4>
+            <UiChipGroup
+              v-model="alertFilter"
+              :options="alertFilters"
+              variant="elevated"
+              color="neutral"
+              aria-label="Filtrar alertas por tipo"
+              class="mb-3"
+            />
             <UiAlert
-              v-for="alert in inlineAlerts"
+              v-for="alert in filteredAlerts"
               :key="`${alert.type}-${alert.variant}`"
               :type="alert.type"
               :variant="alert.variant"
@@ -145,6 +180,7 @@ function runTask() {
               class="mb-2"
             />
             <UiAlert
+              v-if="alertFilter !== 'tonal'"
               type="banner"
               variant="danger"
               title="Acción crítica"
@@ -153,6 +189,39 @@ function runTask() {
               rounded
               class="mb-0"
             />
+          </template>
+        </UiCard>
+      </div>
+
+      <!-- Subscribed topics -->
+      <div class="col-12 mb-3">
+        <UiCard
+          variant="outline"
+          class="card-pane"
+        >
+          <template #body>
+            <h4 class="subtitle-1 fw-700 mb-1">
+              Temas suscritos
+            </h4>
+            <p class="subtitle-2 text-muted mb-3">
+              Quita un tema para dejar de recibir sus avisos.
+            </p>
+            <div class="chip-group">
+              <UiChip
+                v-for="topic in topics"
+                :key="topic.id"
+                :text="topic.text"
+                closable
+                :close-label="`Quitar ${topic.text}`"
+                @remove="unsubscribe(topic.id, topic.text)"
+              />
+              <p
+                v-if="!topics.length"
+                class="subtitle-2 text-muted mb-0"
+              >
+                No sigues ningún tema.
+              </p>
+            </div>
           </template>
         </UiCard>
       </div>
