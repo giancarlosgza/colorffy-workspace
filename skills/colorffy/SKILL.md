@@ -209,7 +209,7 @@ Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them
 - `ISegmentedTab.position` and `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
 - Public tokens gain a namespace prefix (planned `--cffy-*`); `m-*`/`p-*`/`gap-*` utilities rebase onto the token scale (`.p-12` = `var(--space-12)`, so old numeric steps change meaning); a `--container-*` width scale absorbs one-offs like `--theme-nav-drawer-width`. None of these exist in 2.x yet — don't reference them until 3.0.
 
-**[See the CSS migration guide →](https://colorffy.com/docs/colorffy-css/migration)**
+**[See the CSS migration guide →](https://colorffy.com/docs/migration)**
 
 ## Support
 

@@ -9,6 +9,12 @@ export default defineNuxtConfig({
   // so its app/app.config.ts and app/app.css are loaded and take precedence.
   extends: ['docus'],
 
+  // Both pages moved out of /colorffy-css/ when they grew to cover both packages
+  routeRules: {
+    '/colorffy-css/migration': { redirect: { to: '/migration', statusCode: 301 } },
+    '/colorffy-css/changelog': { redirect: { to: '/changelog', statusCode: 301 } }
+  },
+
   site: { url: siteUrl },
   llms: { domain: siteUrl },
   mcp: { enabled: false },
