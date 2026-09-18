@@ -1,5 +1,3 @@
-@use "sass:map";
-@use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
 @layer components.header {
@@ -12,6 +10,7 @@
     & .header {
       --_header-columns: 1fr;
       --_header-columns-gap: var(--space-16);
+      --_header-title-size: var(--fs-xl);
 
       position: relative;
       display: grid;
@@ -24,10 +23,14 @@
       & .header-title {
         // Texts
         & .text-title {
-          font-size: var(--fs-xl);
+          font-size: var(--_header-title-size);
           line-height: 1.25;
           letter-spacing: -.15px;
           margin-bottom: 0;
+          // Paint containment keeps the snapshot to the text box itself
+          inline-size: fit-content;
+          contain: paint;
+          view-transition-name: selected-header;
           @include m.text-variable(true);
 
           &:not(:last-child) {
@@ -40,6 +43,9 @@
           color: var(--theme-muted-a10);
           max-inline-size: 50ch;
           margin-bottom: 0;
+          inline-size: fit-content;
+          contain: paint;
+          view-transition-name: selected-description;
           @include m.text-wrap-pretty;
         }
 
@@ -47,24 +53,6 @@
         &.page-header-breadcrumb {
           display: flex;
           gap: calc(var(--_header-columns-gap) / 4);
-        }
-
-        &.page-header-featured {
-          & h1 {
-            display: flex;
-            align-items: center;
-            gap: var(--space-8);
-          }
-
-          & span {
-            display: grid;
-            place-items: center;
-
-            & .badge {
-              --_badge-radius: #{v.$rounded-sm};
-              font-variation-settings: 'wght' 600;
-            }
-          }
         }
       }
 
@@ -80,6 +68,10 @@
         & .btn-group {
           justify-content: flex-end;
         }
+      }
+
+      @include m.media-query(992) {
+        --_header-title-size: var(--fs-lg);
       }
 
       // CQ
@@ -99,23 +91,6 @@
             }
           }
         }
-      }
-    }
-  }
-
-  // Media queries
-  @include m.media-query(992) {
-    .header {
-      :where(.col-heading h1:is(.text-title)) {
-        font-size: var(--fs-lg);
-      }
-    }
-  }
-
-  @include m.media-query(768) {
-    .header {
-      & .col-actions {
-        display: none;
       }
     }
   }
