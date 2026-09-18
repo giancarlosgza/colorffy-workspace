@@ -265,7 +265,7 @@ function createProject() {
               </template>
               <template #menu>
                 <UiButtonMenuText :item-text="item.name" />
-                <UiButtonMenuItem item-text="Ver detalles" icon="&#xe8f4;" />
+                <UiButtonMenuItem item-text="Ver detalles" icon="&#xe8f4;" @click="navigateTo('/project-detail')" />
                 <UiButtonMenuItem item-text="Editar" icon="&#xe3c9;" shortcut="Ctrl+E" />
                 <UiButtonMenuSubmenu item-text="Exportar como" icon="&#xe2c4;" placement="left-start">
                   <UiButtonMenuItem item-text="PDF" />
