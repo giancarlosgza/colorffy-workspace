@@ -9,8 +9,10 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     headingId: { control: 'text' },
+    headline: { control: 'text' },
     title: { control: 'text' },
     subtitle: { control: 'text' },
+    size: { control: 'select', options: [null, '2xl', '3xl', '4xl', '5xl'] },
     hideActionsWhenNarrow: { control: 'boolean' },
     backButton: { control: 'boolean' },
     backButtonLabel: { control: 'text' },
@@ -39,6 +41,14 @@ export const WithExplicitHeadingId: Story = {
 
     if (!heading || heading.id !== 'project-heading')
       throw new Error('Expected the explicit headingId to be applied to the heading')
+  }
+}
+
+export const WithHeadline: Story = {
+  args: {
+    headline: 'Herramientas',
+    title: 'Generador de gradientes',
+    subtitle: 'El eyebrow usa las clases caption y text-primary'
   }
 }
 
@@ -95,6 +105,22 @@ export const WithBackButtonAndActions: Story = {
           </UiButtonGroup>
         </template>
       </HeaderContent>
+    `
+  })
+}
+
+export const Sizes: Story = {
+  render: args => ({
+    components: { HeaderContent },
+    setup: () => ({ args }),
+    template: `
+      <div>
+        <HeaderContent v-bind="args" title="Default (--fs-xl)" subtitle="Sin size" />
+        <HeaderContent v-bind="args" size="2xl" title="size 2xl" subtitle="--fs-2xl" />
+        <HeaderContent v-bind="args" size="3xl" title="size 3xl" subtitle="--fs-3xl" />
+        <HeaderContent v-bind="args" size="4xl" title="size 4xl" subtitle="--fs-4xl, matches the base h1" />
+        <HeaderContent v-bind="args" size="5xl" title="size 5xl" subtitle="--fs-5xl" />
+      </div>
     `
   })
 }

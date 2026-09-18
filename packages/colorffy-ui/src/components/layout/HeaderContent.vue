@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IHeaderContentEmits, IHeaderContentProps } from '@/types/layout'
-import { computed, useId } from 'vue'
+import { computed, useId, useSlots } from 'vue'
 import UiButtonTooltip from '../ui/button/ButtonTooltip.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
@@ -14,6 +14,7 @@ import UiIconMaterial from '../ui/icon/Material.vue'
  * @example
  * ```vue
  * <HeaderContent
+ *   headline="Tools"
  *   title="Gradient Generator"
  *   subtitle="Create beautiful gradients"
  *   :back-button="true"
@@ -29,8 +30,10 @@ import UiIconMaterial from '../ui/icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IHeaderContentProps>(), {
+  headline: null,
   title: null,
   subtitle: null,
+  size: null,
   hideActionsWhenNarrow: false,
   backButton: false,
   backButtonLabel: 'Go back',
@@ -40,11 +43,21 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
 /** Emits */
 const emit = defineEmits<IHeaderContentEmits>()
 
+/** Slots */
+const slots = useSlots()
+
 /** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
+const containerClasses = computed(() => [props.size ? `header-${props.size}` : null, props.containerClass])
 
 /** Methods */
+function headerClasses() {
+  return {
+    'page-header-back': props.backButton,
+    'page-header-actions': Boolean(slots.actions)
+  }
+}
 function handleBackClick() {
   emit('back')
 }
@@ -53,13 +66,13 @@ function handleBackClick() {
 <template>
   <div
     class="header-container"
-    :class="containerClass"
+    :class="containerClasses"
   >
     <header class="header">
       <!-- Title -->
       <div
         class="header-title"
-        :class="{ 'page-header-breadcrumb': backButton, 'page-header-actions': Boolean($slots.actions) }"
+        :class="headerClasses()"
       >
         <!-- Back button -->
         <UiButtonTooltip
@@ -78,6 +91,13 @@ function handleBackClick() {
 
         <!-- Title and subtitle -->
         <div class="header-content">
+          <p
+            v-if="headline"
+            class="caption text-primary"
+          >
+            {{ headline }}
+          </p>
+
           <h1
             v-if="title"
             :id="headingId"

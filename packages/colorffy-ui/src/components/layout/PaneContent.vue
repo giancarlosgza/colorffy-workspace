@@ -14,28 +14,7 @@ const props = withDefaults(defineProps<IPaneContentProps>(), {
 })
 
 /** Computed */
-const paneClasses = computed<(string | string[])[]>(() => {
-  const classes: (string | string[])[] = []
-
-  if (props.customClass) {
-    classes.push(props.customClass)
-  }
-
-  if (props.isFullHeight) {
-    classes.push('pane-content-expanded')
-  }
-
-  return classes
-})
-const containerClasses = computed<(string | string[])[]>(() => {
-  const classes: (string | string[])[] = []
-
-  if (props.containerClass) {
-    classes.push(props.containerClass)
-  }
-
-  return classes
-})
+const paneClasses = computed(() => [props.customClass, { 'pane-content-expanded': props.isFullHeight }])
 const ariaAttributes = computed(() => {
   const attributes: Record<string, string> = {}
 
@@ -62,7 +41,10 @@ defineExpose({
 </script>
 
 <template>
-  <div class="row" :class="containerClasses">
+  <div
+    class="row"
+    :class="containerClass"
+  >
     <div class="col-md-12">
       <section
         ref="paneContentRef"

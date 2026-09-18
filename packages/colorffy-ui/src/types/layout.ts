@@ -1,5 +1,7 @@
 import type { ClassValue } from '@/types/shared'
 
+export type HeaderContentSize = '2xl' | '3xl' | '4xl' | '5xl'
+
 /**
  * Interface props for the HeaderContent component.
  * Notes:
@@ -15,6 +17,11 @@ export interface IHeaderContentProps {
   headingId?: string
 
   /**
+   * Small eyebrow label rendered above the title.
+   */
+  headline?: string | null
+
+  /**
    * Main title text to display in the header.
    */
   title?: string | null
@@ -23,6 +30,12 @@ export interface IHeaderContentProps {
    * Subtitle text to display below the title.
    */
   subtitle?: string | null
+
+  /**
+   * Title size, named after the type scale step it uses. Each step also takes
+   * the line height the scale pairs with it. Omitted, the title is `--fs-xl`.
+   */
+  size?: HeaderContentSize | (string & {}) | null
 
   /**
    * When true, drops the actions out of the layout once the header's own
@@ -71,12 +84,12 @@ export interface IPaneContentProps {
   /**
    * Optional custom CSS classes for the pane.
    */
-  customClass?: string | string[] | null
+  customClass?: ClassValue | null
 
   /**
    * Optional custom CSS classes for the container wrapper.
    */
-  containerClass?: string | string[] | null
+  containerClass?: ClassValue | null
 
   /**
    * When true, expands the pane to full height with `pane-content-expanded`.
