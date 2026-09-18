@@ -30,10 +30,11 @@ import UiIconMaterial from '../ui/icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IHeaderContentProps>(), {
+  as: 'h1',
   headline: null,
   title: null,
   subtitle: null,
-  size: null,
+  size: 'sm',
   hideActionsWhenNarrow: false,
   backButton: false,
   backButtonLabel: 'Go back',
@@ -46,10 +47,18 @@ const emit = defineEmits<IHeaderContentEmits>()
 /** Slots */
 const slots = useSlots()
 
+/** Constants */
+const TITLE_SIZE_CLASSES: Record<string, string> = {
+  'md': 'header-2xl',
+  'lg': 'header-3xl',
+  'xl': 'header-4xl',
+  '2xl': 'header-5xl'
+}
+
 /** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
-const containerClasses = computed(() => [props.size ? `header-${props.size}` : null, props.containerClass])
+const containerClasses = computed(() => [TITLE_SIZE_CLASSES[props.size ?? ''] ?? null, props.containerClass])
 
 /** Methods */
 function headerClasses() {
@@ -98,13 +107,14 @@ function handleBackClick() {
             {{ headline }}
           </p>
 
-          <h1
+          <component
+            :is="as"
             v-if="title"
             :id="headingId"
             class="text-title"
           >
             {{ title }}
-          </h1>
+          </component>
 
           <p
             v-if="subtitle"

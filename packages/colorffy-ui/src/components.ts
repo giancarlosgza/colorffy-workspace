@@ -1,6 +1,8 @@
 // Components - Layout
 export { default as UiHeaderContent } from './components/layout/HeaderContent.vue'
+export { default as UiHeroContent } from './components/layout/HeroContent.vue'
 export { default as UiPaneContent } from './components/layout/PaneContent.vue'
+export { default as UiSubheadingContent } from './components/layout/SubheadingContent.vue'
 
 // Components - State
 export { default as UiBaseSkeleton } from './components/state/BaseSkeleton.vue'

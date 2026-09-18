@@ -8,11 +8,12 @@ const meta = {
   component: HeaderContent,
   tags: ['autodocs'],
   argTypes: {
+    as: { control: 'text' },
     headingId: { control: 'text' },
     headline: { control: 'text' },
     title: { control: 'text' },
     subtitle: { control: 'text' },
-    size: { control: 'select', options: [null, '2xl', '3xl', '4xl', '5xl'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
     hideActionsWhenNarrow: { control: 'boolean' },
     backButton: { control: 'boolean' },
     backButtonLabel: { control: 'text' },
@@ -115,11 +116,11 @@ export const Sizes: Story = {
     setup: () => ({ args }),
     template: `
       <div>
-        <HeaderContent v-bind="args" title="Default (--fs-xl)" subtitle="Sin size" />
-        <HeaderContent v-bind="args" size="2xl" title="size 2xl" subtitle="--fs-2xl" />
-        <HeaderContent v-bind="args" size="3xl" title="size 3xl" subtitle="--fs-3xl" />
-        <HeaderContent v-bind="args" size="4xl" title="size 4xl" subtitle="--fs-4xl, matches the base h1" />
-        <HeaderContent v-bind="args" size="5xl" title="size 5xl" subtitle="--fs-5xl" />
+        <HeaderContent v-bind="args" title="size sm" subtitle="--fs-xl, the default" />
+        <HeaderContent v-bind="args" size="md" title="size md" subtitle="--fs-2xl" />
+        <HeaderContent v-bind="args" size="lg" title="size lg" subtitle="--fs-3xl" />
+        <HeaderContent v-bind="args" size="xl" title="size xl" subtitle="--fs-4xl, matches the base h1" />
+        <HeaderContent v-bind="args" size="2xl" title="size 2xl" subtitle="--fs-5xl" />
       </div>
     `
   })
