@@ -1,12 +1,17 @@
 import type { ClassValue } from '@/types/shared'
 
+export type ChipVariant = 'outline' | 'elevated'
+export type ChipColor = 'primary' | 'secondary' | 'neutral'
+
 /**
  * Interface props for the Chip component.
  * Notes:
  * - Chips build on the `.btn-chip` design-system styles.
- * - `selected` renders the pill-shaped active state and swaps the leading
- *   icon for a check mark (Material 3 filter-chip behavior).
+ * - `selected` renders the active state and swaps the leading icon for a
+ *   check mark (Material 3 filter-chip behavior).
  * - `closable` renders a trailing remove button and emits `remove`.
+ * - `variant` shapes the unselected container, `color` the selected fill:
+ *   a chip stays outline or elevated until `selected` paints it.
  */
 export interface IChipProps {
   /**
@@ -44,6 +49,18 @@ export interface IChipProps {
    * When true, renders the borderless text-only chip variant.
    */
   textOnly?: boolean
+
+  /**
+   * Container style while the chip is unselected: 'outline' (default) or
+   * 'elevated' for an overlay surface with no outline and a raised shadow.
+   */
+  variant?: ChipVariant | (string & {}) | null
+
+  /**
+   * Fill applied once the chip is selected: 'primary' (default), 'secondary'
+   * or 'neutral'. It has no effect while the chip is unselected.
+   */
+  color?: ChipColor | (string & {}) | null
 
   /**
    * Accessible label for the remove button.
@@ -113,6 +130,16 @@ export interface IChipGroupProps {
    * Array of chip options to display.
    */
   options: IChipOption[]
+
+  /**
+   * Container style applied to every option in the group.
+   */
+  variant?: ChipVariant | (string & {}) | null
+
+  /**
+   * Selected fill applied to every option in the group.
+   */
+  color?: ChipColor | (string & {}) | null
 
   /**
    * Selected option id (single) or ids (multiple).

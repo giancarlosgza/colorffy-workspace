@@ -12,6 +12,8 @@ const props = withDefaults(defineProps<IChipProps>(), {
   disabled: false,
   closable: false,
   textOnly: false,
+  variant: 'outline',
+  color: 'primary',
   closeLabel: 'Remove',
   customClass: null
 })
@@ -22,6 +24,13 @@ const emit = defineEmits<IChipEmits>()
 /** Computed */
 const chipClasses = computed(() => {
   const classes: (string | string[] | Record<string, boolean>)[] = ['btn', 'btn-chip']
+
+  // Outline is the base `.btn-chip` look, so it needs no extra class
+  if (props.variant && props.variant !== 'outline')
+    classes.push(`chip-${props.variant}`)
+
+  if (props.color)
+    classes.push(`chip-${props.color}`)
 
   if (props.selected)
     classes.push('chip-active')

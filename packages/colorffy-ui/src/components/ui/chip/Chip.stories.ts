@@ -14,6 +14,8 @@ const meta = {
     disabled: { control: 'boolean' },
     closable: { control: 'boolean' },
     textOnly: { control: 'boolean' },
+    variant: { control: 'select', options: ['outline', 'elevated'] },
+    color: { control: 'select', options: ['primary', 'secondary', 'neutral'] },
     closeLabel: { control: 'text' }
   }
 } satisfies Meta<typeof UiChip>
@@ -46,6 +48,37 @@ export const TextOnly: Story = {
   args: { text: 'Borderless', textOnly: true }
 }
 
+// The container stays outline or elevated until the chip is selected
+export const Variants: Story = {
+  render: args => ({
+    components: { UiChip },
+    setup: () => ({ args }),
+    template: `
+      <div class="chip-group">
+        <UiChip v-bind="args" text="Outline" />
+        <UiChip v-bind="args" text="Outline selected" selected />
+        <UiChip v-bind="args" text="Elevated" variant="elevated" />
+        <UiChip v-bind="args" text="Elevated selected" variant="elevated" selected />
+      </div>
+    `
+  })
+}
+
+// Color only shows once the chip is selected
+export const Colors: Story = {
+  render: args => ({
+    components: { UiChip },
+    setup: () => ({ args }),
+    template: `
+      <div class="chip-group">
+        <UiChip v-bind="args" text="Primary" selected />
+        <UiChip v-bind="args" text="Secondary" color="secondary" selected />
+        <UiChip v-bind="args" text="Neutral" color="neutral" selected />
+      </div>
+    `
+  })
+}
+
 // Single-select filter chips: clicking the selected chip deselects it
 export const GroupSingleSelect: Story = {
   render: () => ({
@@ -65,6 +98,25 @@ export const GroupSingleSelect: Story = {
         <UiChipGroup v-model="selected" :options="options" aria-label="Filter status" />
         <p style="font-size: 0.85rem; margin-top: 1rem;">Selected: {{ selected ?? 'none' }}</p>
       </div>
+    `
+  })
+}
+
+// The group variant applies to every option it renders
+export const GroupVariant: Story = {
+  render: () => ({
+    components: { UiChipGroup },
+    setup() {
+      const selected = ref<string | string[] | null>('week')
+      const options = [
+        { id: 'day', text: 'Day' },
+        { id: 'week', text: 'Week' },
+        { id: 'month', text: 'Month' }
+      ]
+      return { selected, options }
+    },
+    template: `
+      <UiChipGroup v-model="selected" :options="options" variant="elevated" color="neutral" aria-label="Filter range" />
     `
   })
 }

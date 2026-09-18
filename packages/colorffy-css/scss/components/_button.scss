@@ -293,23 +293,40 @@
           --_btn-border-color: transparent;
         }
 
+        // Elevated variant
+        &:is(.chip-elevated) {
+          --_btn-bg-color: var(--theme-surface-overlay);
+          --_btn-border-color: transparent;
+          --_btn-shadow: var(--shadow-md);
+
+          &:is(:hover, :focus, :active) {
+            --_btn-bg-color: var(--theme-surface-overlay);
+            --_btn-shadow: var(--shadow-md);
+          }
+        }
+
+        // Selected colors; the container stays outline or elevated until then
         &:is(.chip-active) {
-          --_btn-bg-color: var(--theme-surface-container-high);
-          --_btn-border-color: var(--theme-surface-container-high);
-          --_btn-radius: #{v.$rounded-full};
+          &:not(.chip-secondary, .chip-neutral) {
+            @include m.btn-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true);
 
-          padding-inline: 1rem;
-
-          // For side sheets
-          &:is(.a40) {
-            --_btn-bg-color: var(--theme-surface-a40);
-            --_btn-border-color: var(--theme-surface-a40);
+            --_btn-border-color: var(--_btn-bg-color);
           }
 
-          // For modals
-          &:is(.a60) {
-            --_btn-bg-color: var(--theme-surface-a60);
-            --_btn-border-color: var(--theme-surface-a60);
+          &:is(.chip-secondary) {
+            @include m.btn-tonal(var(--theme-secondary-a10), var(--theme-secondary-a90), true);
+
+            --_btn-border-color: var(--_btn-bg-color);
+          }
+
+          &:is(.chip-neutral) {
+            --_btn-bg-color: var(--theme-surface-container-high);
+            --_btn-border-color: var(--theme-surface-container-high);
+
+            &:is(:hover, :focus, :active) {
+              --_btn-bg-color: var(--theme-surface-container-highest);
+              --_btn-border-color: var(--theme-surface-container-highest);
+            }
           }
         }
 
@@ -464,15 +481,19 @@
       }
 
       // Modifiers
+      &.btn-rounded {
+        --_btn-radius: #{v.$rounded-full};
+      }
+
+      &.btn-square {
+        --_btn-radius: #{v.$rounded-none};
+      }
+
       &.btn-block {
         --_btn-columns: auto;
 
         text-align: center;
         width: 100%;
-      }
-
-      &.btn-rounded {
-        --_btn-radius: #{v.$rounded-full};
       }
     }
 

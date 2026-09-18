@@ -6,6 +6,8 @@ import UiChip from './Chip.vue'
 /** Props */
 const props = withDefaults(defineProps<IChipGroupProps>(), {
   modelValue: null,
+  variant: 'outline',
+  color: 'primary',
   multiple: false,
   ariaLabel: null,
   customClass: null
@@ -55,6 +57,8 @@ function toggle(option: IChipOption) {
       :key="option.id"
       :text="option.text"
       :icon-code="option.iconCode"
+      :variant="variant"
+      :color="color"
       :selected="isSelected(option)"
       :disabled="option.disabled"
       :closable="option.closable"
