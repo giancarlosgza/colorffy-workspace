@@ -37,7 +37,11 @@
 
     &:is(.btn-group-connected) {
       --_btn-group-gap: var(--space-4);
-      --_btn-connected-radius: #{v.$rounded-full};
+
+      // Pill ends measured from the button height, so the browser never scales the inner radii down
+      .btn {
+        --_btn-connected-radius: calc(var(--_btn-height) / 2);
+      }
 
       // Prevent circular icon buttons when grouped; they should match standard button shape
       .btn-icon {
@@ -81,33 +85,27 @@
       &:is(.btn-group-vertical) {
         > :is(div:has(.v-popper), .v-popper) {
           & .btn {
-            border-radius: v.$button-border-radius;
+            border-radius: var(--_btn-radius);
           }
 
           &:first-child .btn {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) 0 0;
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
           }
 
           &:last-child .btn {
-            border-radius: 0 0 var(--_btn-connected-radius) var(--_btn-connected-radius);
+            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
 
         > .btn {
-          border-radius: v.$button-border-radius;
+          border-radius: var(--_btn-radius);
 
           &:first-child {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) 0 0;
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
           }
 
           &:last-child {
-            border-radius: 0 0 var(--_btn-connected-radius) var(--_btn-connected-radius);
-          }
-        }
-
-        &:is(.btn-group-joined) {
-          .btn {
-            border-radius: 0;
+            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
       }
