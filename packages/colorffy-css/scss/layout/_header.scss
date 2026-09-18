@@ -5,33 +5,61 @@
   // HEADER LAYOUT COMPONENT
   // ==========================================================================
   .header-container {
+    --_header-block-end: var(--space-16);
+    --_header-title-size: var(--fs-xl);
+    --_header-title-leading: var(--fs-xl--line-height);
+
     container: HeaderContainer / inline-size;
+    margin-block-end: var(--_header-block-end);
+
+    // Title sizes; each step carries the line height the scale pairs with it
+    &:is(.header-2xl) {
+      --_header-title-size: var(--fs-2xl);
+      --_header-title-leading: var(--fs-2xl--line-height);
+    }
+
+    &:is(.header-3xl) {
+      --_header-title-size: var(--fs-3xl);
+      --_header-title-leading: var(--fs-3xl--line-height);
+    }
+
+    &:is(.header-4xl) {
+      --_header-title-size: var(--fs-4xl);
+      --_header-title-leading: var(--fs-4xl--line-height);
+    }
+
+    &:is(.header-5xl) {
+      --_header-title-size: var(--fs-5xl);
+      --_header-title-leading: var(--fs-5xl--line-height);
+    }
 
     & .header {
       --_header-columns: 1fr;
       --_header-columns-gap: var(--space-16);
-      --_header-title-size: var(--fs-xl);
+      --_header-back-gap: var(--space-4);
 
       position: relative;
       display: grid;
       grid-template-columns: var(--_header-columns);
       align-items: center;
       gap: var(--_header-columns-gap);
-      margin-block: 0 var(--_header-columns-gap);
 
       // Text title
       & .header-title {
         // Texts
+        & .header-content > .caption {
+          margin-bottom: var(--space-4);
+        }
+
         & .text-title {
           font-size: var(--_header-title-size);
-          line-height: 1.25;
+          line-height: var(--_header-title-leading);
           letter-spacing: -.15px;
           margin-bottom: 0;
           // Paint containment keeps the snapshot to the text box itself
           inline-size: fit-content;
           contain: paint;
           view-transition-name: selected-header;
-          @include m.text-variable(true);
 
           &:not(:last-child) {
             margin-bottom: var(--space-4);
@@ -49,10 +77,11 @@
           @include m.text-wrap-pretty;
         }
 
-        // Breadcrumb or back navigation
-        &.page-header-breadcrumb {
+        // Back navigation
+        &.page-header-back {
           display: flex;
-          gap: calc(var(--_header-columns-gap) / 4);
+          align-items: center;
+          gap: var(--_header-back-gap);
         }
       }
 
@@ -68,10 +97,6 @@
         & .btn-group {
           justify-content: flex-end;
         }
-      }
-
-      @include m.media-query(992) {
-        --_header-title-size: var(--fs-lg);
       }
 
       // CQ
