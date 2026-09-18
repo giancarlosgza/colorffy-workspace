@@ -1,0 +1,27 @@
+@layer components.subheading {
+  // ==========================================================================
+  // SUBHEADING LAYOUT COMPONENT
+  // ==========================================================================
+  .subheading-content {
+    --_subheading-columns: 1fr;
+    --_subheading-columns-gap: var(--space-16);
+
+    display: grid;
+    grid-template-columns: var(--_subheading-columns);
+    align-items: center;
+    gap: var(--_subheading-columns-gap);
+
+    // Actions
+    &:has(.subheading-actions) {
+      --_subheading-columns: 1fr auto;
+    }
+
+    & .subheading-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-8);
+    }
+  }
+}

@@ -43,9 +43,11 @@
 @use './layout/footer';
 @use './layout/grid-container';
 @use './layout/header';
+@use './layout/hero';
 @use './layout/navbar';
 @use './layout/navigation-bar';
 @use './layout/sidebar';
+@use './layout/subheading';
 
 @use "./utilities/aspect-ratio";
 @use "./utilities/background";

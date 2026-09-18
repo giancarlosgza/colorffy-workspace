@@ -12,7 +12,7 @@
     container: HeaderContainer / inline-size;
     margin-block-end: var(--_header-block-end);
 
-    // Title sizes; each step carries the line height the scale pairs with it
+    // Title sizes
     &:is(.header-2xl) {
       --_header-title-size: var(--fs-2xl);
       --_header-title-leading: var(--fs-2xl--line-height);
@@ -56,8 +56,9 @@
           line-height: var(--_header-title-leading);
           letter-spacing: -.15px;
           margin-bottom: 0;
-          // Paint containment keeps the snapshot to the text box itself
           inline-size: fit-content;
+
+          // View transition for the selected header
           contain: paint;
           view-transition-name: selected-header;
 
@@ -72,6 +73,8 @@
           max-inline-size: 50ch;
           margin-bottom: 0;
           inline-size: fit-content;
+
+          // View transition for the selected description
           contain: paint;
           view-transition-name: selected-description;
           @include m.text-wrap-pretty;

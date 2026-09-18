@@ -1,0 +1,55 @@
+@use '../abstracts/mixins' as m;
+
+@layer components.hero {
+  // ==========================================================================
+  // HERO LAYOUT COMPONENT
+  // ==========================================================================
+  .hero-content {
+    --_hero-gap: var(--space-8);
+    --_hero-actions-gap: var(--space-24);
+    --_hero-block-end: var(--space-32);
+    --_hero-measure: 60ch;
+
+    display: grid;
+    justify-items: start;
+    text-align: start;
+    gap: var(--_hero-gap);
+    margin-block-end: var(--_hero-block-end);
+
+    // Alignment
+    &:is(.hero-center) {
+      justify-items: center;
+      text-align: center;
+    }
+
+    &:is(.hero-end) {
+      justify-items: end;
+      text-align: end;
+    }
+
+    // Texts
+    & .hero-title {
+      margin-bottom: 0;
+      max-inline-size: var(--_hero-measure);
+      text-wrap: balance;
+    }
+
+    & .hero-description {
+      font-size: var(--fs-lg);
+      line-height: var(--fs-lg--line-height);
+      color: var(--theme-muted-a10);
+      max-inline-size: var(--_hero-measure);
+      margin-bottom: 0;
+      @include m.text-wrap-pretty;
+    }
+
+    // Actions
+    & .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-12);
+      margin-block-start: calc(var(--_hero-actions-gap) - var(--_hero-gap));
+    }
+  }
+}

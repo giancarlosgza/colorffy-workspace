@@ -312,34 +312,36 @@
   }
 
   .text-subheading {
-    --_text-subheading-gutter: 1rem;
+    --_text-subheading-gutter: var(--space-16);
+    --_text-subheading-gap: var(--space-8);
 
+    font-family: var(--font-primary);
     font-size: var(--fs-lg);
+    line-height: var(--fs-lg--line-height);
     font-weight: v.$fw-600;
     margin-bottom: var(--_text-subheading-gutter);
     position: relative;
     width: fit-content;
-    @include m.text-variable(false);
 
     &:has(~ p) {
-      margin-bottom: calc(var(--_text-subheading-gutter) / 2);
+      margin-bottom: var(--_text-subheading-gap);
 
+      // Falls back, since the heading's gutter never reaches a sibling
       ~ p {
         color: var(--theme-muted-a10);
-        margin-bottom: var(--_text-subheading-gutter, 1rem);
+        margin-bottom: var(--_text-subheading-gutter, var(--space-16));
       }
     }
 
-    &:is(.subheading-m0) {
-      --_text-subheading-gutter: 0;
-    }
+    // Gutter modifiers
+    @each $name, $gutter in ('m0': 0, 'm1': var(--space-4)) {
+      &:is(.subheading-#{$name}) {
+        --_text-subheading-gutter: #{$gutter};
 
-    &:is(.subheading-m1) {
-      --_text-subheading-gutter: .25rem;
-    }
-
-    &:is(.subheading-m2) {
-      --_text-subheading-gutter: 1rem;
+        ~ p {
+          margin-bottom: #{$gutter};
+        }
+      }
     }
 
     // If it has a data-link attribute, add a hash icon
