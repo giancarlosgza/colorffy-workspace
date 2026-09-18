@@ -204,12 +204,12 @@ function onOverviewTabChange(tabId: string) {
               tabindex="0"
               class="mt-3"
             >
-              <h4 class="subtitle-1 fw-700 mb-1">
-                Rendimiento {{ activePanelLabel }}
-              </h4>
-              <p class="subtitle-2 text-muted mb-3">
-                Indicadores combinados de las últimas 4 semanas.
-              </p>
+              <UiSubheadingContent
+                as="h4"
+                gutter="sm"
+                :title="`Rendimiento ${activePanelLabel}`"
+                subtitle="Indicadores combinados de las últimas 4 semanas."
+              />
               <UiProgressBar
                 :value="82"
                 text="82%"
@@ -229,12 +229,11 @@ function onOverviewTabChange(tabId: string) {
               tabindex="0"
               class="mt-3"
             >
-              <h4 class="subtitle-1 fw-700 mb-1">
-                Tráfico por canal
-              </h4>
-              <p class="subtitle-2 text-muted mb-3">
-                Distribución porcentual por fuente.
-              </p>
+              <UiSubheadingContent
+                as="h4"
+                title="Tráfico por canal"
+                subtitle="Distribución porcentual por fuente."
+              />
 
               <div
                 v-for="channel in channels"
@@ -278,16 +277,18 @@ function onOverviewTabChange(tabId: string) {
           class="card-pane h-100"
         >
           <template #body>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="subtitle-1 fw-700 mb-0">
-                Actividad reciente
-              </h4>
-              <UiBadge
-                text="4 nuevas"
-                variant="outline"
-                size="sm"
-              />
-            </div>
+            <UiSubheadingContent
+              as="h4"
+              title="Actividad reciente"
+            >
+              <template #actions>
+                <UiBadge
+                  text="4 nuevas"
+                  variant="outline"
+                  size="sm"
+                />
+              </template>
+            </UiSubheadingContent>
             <!-- Filter chips (single-select, clicking the active chip clears it) -->
             <UiChipGroup
               v-model="activityFilter"
@@ -425,17 +426,19 @@ function onOverviewTabChange(tabId: string) {
       class="card-pane"
     >
       <template #body>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="subtitle-1 fw-700 mb-0">
-            Estado del sistema
-          </h4>
-          <UiBadge
-            text="Operativo"
-            variant="tonal tonal-success"
-            size="sm"
-            icon-code="&#xe061;"
-          />
-        </div>
+        <UiSubheadingContent
+          as="h4"
+          title="Estado del sistema"
+        >
+          <template #actions>
+            <UiBadge
+              text="Operativo"
+              variant="tonal tonal-success"
+              size="sm"
+              icon-code="&#xe061;"
+            />
+          </template>
+        </UiSubheadingContent>
         <div class="row">
           <div class="col-md-6 mb-3">
             <p class="subtitle-2 mb-2">

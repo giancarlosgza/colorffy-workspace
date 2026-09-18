@@ -73,9 +73,9 @@ function save() {
       aria-labelledby="tab-general"
       tabindex="0"
     >
-      <h3 class="subtitle-1 fw-700 mb-3">
-        Cuenta
-      </h3>
+      <UiSubheadingContent
+        title="Cuenta"
+      />
       <UiCard
         variant="outline"
         size="sm"
@@ -136,9 +136,9 @@ function save() {
         </template>
       </UiCard>
 
-      <h3 class="subtitle-1 fw-700 mb-3">
-        Apariencia
-      </h3>
+      <UiSubheadingContent
+        title="Apariencia"
+      />
       <UiCard
         variant="outline"
         size="sm"
@@ -199,9 +199,9 @@ function save() {
       aria-labelledby="tab-notifications"
       tabindex="0"
     >
-      <h3 class="subtitle-1 fw-700 mb-3">
-        Canales de notificación
-      </h3>
+      <UiSubheadingContent
+        title="Canales de notificación"
+      />
       <UiCard
         variant="outline"
         size="sm"
@@ -309,9 +309,9 @@ function save() {
       aria-labelledby="tab-system"
       tabindex="0"
     >
-      <h3 class="subtitle-1 fw-700 mb-3">
-        Información del sistema
-      </h3>
+      <UiSubheadingContent
+        title="Información del sistema"
+      />
       <UiCard
         variant="outline"
         size="sm"

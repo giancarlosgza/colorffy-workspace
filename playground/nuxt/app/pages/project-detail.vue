@@ -77,7 +77,7 @@ function publish() {
       headline="Proyecto activo"
       :title="project.name"
       :subtitle="`Cliente: ${project.client} · Entrega ${project.deadline}`"
-      size="3xl"
+      size="lg"
       back-button
       back-button-label="Volver a proyectos"
       @back="goBack"
@@ -118,6 +118,7 @@ function publish() {
         >
           <template #body>
             <UiHeaderContent
+              as="h2"
               heading-id="overview-heading"
               title="Resumen"
               subtitle="Avance general del proyecto y presupuesto consumido"
@@ -136,6 +137,12 @@ function publish() {
             </UiHeaderContent>
 
             <section aria-labelledby="overview-heading">
+              <UiSubheadingContent
+                title="Estado actual"
+                subtitle="Avance calculado sobre las tareas cerradas del sprint."
+                as="h3"
+                gutter="md"
+              />
               <UiProgressBar
                 :value="project.progress"
                 :text="`${project.progress}%`"
@@ -171,6 +178,7 @@ function publish() {
         >
           <template #body>
             <UiHeaderContent
+              as="h2"
               title="Actividad"
               subtitle="Movimientos recientes del equipo"
               container-class="bg-accent-fixed bg-opacity-20 p-3 rounded-xl mb-3"
@@ -202,6 +210,7 @@ function publish() {
         >
           <template #body>
             <UiHeaderContent
+              as="h2"
               title="Equipo"
               subtitle="3 personas asignadas"
               hide-actions-when-narrow
@@ -256,7 +265,10 @@ function publish() {
           class="card-pane"
         >
           <template #body>
-            <UiHeaderContent title="Archivos" />
+            <UiHeaderContent
+              as="h2"
+              title="Archivos"
+            />
 
             <UiListGroup
               variant="flush"

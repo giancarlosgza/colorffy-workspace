@@ -98,12 +98,11 @@ function runTask() {
           class="card-pane h-100"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-1">
-              Toasts
-            </h4>
-            <p class="subtitle-2 text-muted mb-3">
-              Dispara un toast por variante y posición.
-            </p>
+            <UiSubheadingContent
+              as="h4"
+              title="Toasts"
+              subtitle="Dispara un toast por variante y posición."
+            />
             <UiButtonGroup connected>
               <UiButton
                 v-for="btn in toastButtons"
@@ -126,12 +125,11 @@ function runTask() {
           class="card-pane h-100"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-1">
-              Diálogos
-            </h4>
-            <p class="subtitle-2 text-muted mb-3">
-              Modal estándar y confirmación con estado de carga.
-            </p>
+            <UiSubheadingContent
+              as="h4"
+              title="Diálogos"
+              subtitle="Modal estándar y confirmación con estado de carga."
+            />
             <div class="d-flex flex-wrap gap-2">
               <UiButton
                 text="Abrir modal"
@@ -159,9 +157,10 @@ function runTask() {
           class="card-pane"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-3">
-              Alertas en línea
-            </h4>
+            <UiSubheadingContent
+              as="h4"
+              title="Alertas en línea"
+            />
             <UiChipGroup
               v-model="alertFilter"
               :options="alertFilters"
@@ -200,12 +199,11 @@ function runTask() {
           class="card-pane"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-1">
-              Temas suscritos
-            </h4>
-            <p class="subtitle-2 text-muted mb-3">
-              Quita un tema para dejar de recibir sus avisos.
-            </p>
+            <UiSubheadingContent
+              as="h4"
+              title="Temas suscritos"
+              subtitle="Quita un tema para dejar de recibir sus avisos."
+            />
             <div class="chip-group">
               <UiChip
                 v-for="topic in topics"
@@ -233,16 +231,18 @@ function runTask() {
           class="card-pane h-100"
         >
           <template #body>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="subtitle-1 fw-700 mb-0">
-                Proceso en segundo plano
-              </h4>
-              <UiBadge
-                :text="taskRunning ? 'En curso' : 'Inactivo'"
-                :variant="taskRunning ? 'tonal tonal-warning' : 'outline'"
-                size="sm"
-              />
-            </div>
+            <UiSubheadingContent
+              as="h4"
+              title="Proceso en segundo plano"
+            >
+              <template #actions>
+                <UiBadge
+                  :text="taskRunning ? 'En curso' : 'Inactivo'"
+                  :variant="taskRunning ? 'tonal tonal-warning' : 'outline'"
+                  size="sm"
+                />
+              </template>
+            </UiSubheadingContent>
             <UiProgressBar
               v-if="taskRunning"
               :value="0"
@@ -280,9 +280,10 @@ function runTask() {
           class="card-pane h-100"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-3">
-              Preguntas frecuentes
-            </h4>
+            <UiSubheadingContent
+              as="h4"
+              title="Preguntas frecuentes"
+            />
             <UiAccordionGroup
               is-transparent
               shape="square"

@@ -74,25 +74,15 @@ function copyInstall() {
       class="bg-bordered-gradient rounded-lg mb-4"
     >
       <template #body>
-        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
-          <div>
-            <UiBadge
-              text="v1.7.1 · MIT"
-              variant="outline"
-              size="sm" icon-code="&#xf5f4;"
-              icon-class="text-accent-fixed"
-              custom-class="mb-2"
-            />
-            <h1 class="display-1 mb-1">
-              <span class="text-primary">Colorffy UI</span>
-            </h1>
-            <p
-              class="subtitle-1 text-muted mb-0"
-              style="max-width: 48ch;"
-            >
-              Más de 70 componentes headless para Vue 3 y Nuxt. Empieza en menos de un minuto.
-            </p>
-            <div class="d-flex flex-wrap gap-2 mt-3">
+        <div class="position-relative">
+          <UiHeroContent
+            headline="v2.5.1 · MIT"
+            title="Colorffy UI"
+            subtitle="Más de 70 componentes headless para Vue 3 y Nuxt. Empieza en menos de un minuto."
+            align="center"
+            size="xl"
+          >
+            <template #actions>
               <UiButton
                 text="Ver en GitHub"
                 variant="filled"
@@ -107,11 +97,12 @@ function copyInstall() {
                   <UiIconMaterial icon-code="&#xe873;" />
                 </template>
               </UiButton>
-            </div>
-          </div>
+            </template>
+          </UiHeroContent>
           <UiIconSvg
             :content="brandIcons.nuxt"
             size="xl"
+            class="position-absolute top-0 right-0"
           />
         </div>
       </template>

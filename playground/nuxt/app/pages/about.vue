@@ -188,9 +188,9 @@ function join() {
       class="card-pane mb-4"
     >
       <template #body>
-        <h3 class="subtitle-1 fw-700 mb-3">
-          Principios de diseño
-        </h3>
+        <UiSubheadingContent
+          title="Principios de diseño"
+        />
         <UiTabs
           :tabs="principleTabs"
           :active-tab="activePrinciple"
@@ -257,9 +257,9 @@ function join() {
           class="h-100 card-pane"
         >
           <template #body>
-            <h3 class="subtitle-1 fw-700 mb-3">
-              Construido con
-            </h3>
+            <UiSubheadingContent
+              title="Construido con"
+            />
             <div class="d-flex flex-wrap gap-4">
               <div
                 v-for="tech in builtWith"
@@ -282,9 +282,9 @@ function join() {
           class="h-100 card-pane"
         >
           <template #body>
-            <h3 class="subtitle-1 fw-700 mb-3">
-              Funciona con
-            </h3>
+            <UiSubheadingContent
+              title="Funciona con"
+            />
             <div class="d-flex flex-wrap align-items-center gap-3">
               <UiIconSvg
                 v-for="brand in integrations"
@@ -385,9 +385,9 @@ function join() {
           class="card-pane h-100"
         >
           <template #body>
-            <h3 class="subtitle-1 fw-700 mb-3">
-              Hoja de ruta
-            </h3>
+            <UiSubheadingContent
+              title="Hoja de ruta"
+            />
             <UiAccordionGroup
               is-transparent
             >
@@ -426,9 +426,9 @@ function join() {
           class="card-pane h-100"
         >
           <template #body>
-            <h3 class="subtitle-1 fw-700 mb-3">
-              Preguntas frecuentes
-            </h3>
+            <UiSubheadingContent
+              title="Preguntas frecuentes"
+            />
             <!-- Borderless FAQ list: no surface, small size -->
             <UiAccordionGroup
               variant="borderless"

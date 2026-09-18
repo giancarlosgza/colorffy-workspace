@@ -342,9 +342,10 @@ function createProject() {
     </div>
 
     <!-- New project wizard (Stepper showcase) -->
-    <h3 class="subtitle-1 fw-700 mb-3 mt-section">
-      Asistente para crear un proyecto
-    </h3>
+    <UiSubheadingContent
+      title="Asistente para crear un proyecto"
+      custom-class="mt-section"
+    />
     <UiCard variant="outline" class="card-pane">
       <template #body>
         <UiStepper

@@ -120,9 +120,10 @@ function onOtpComplete() {
           class="card-pane mb-3"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-3">
-              Perfil
-            </h4>
+            <UiSubheadingContent
+              as="h4"
+              title="Perfil"
+            />
             <div class="row">
               <div class="col-md-6 mb-3">
                 <UiInputText
@@ -208,9 +209,10 @@ function onOtpComplete() {
           class="card-pane mb-3"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-3">
-              Preferencias
-            </h4>
+            <UiSubheadingContent
+              as="h4"
+              title="Preferencias"
+            />
             <div class="row">
               <div class="col-md-6 mb-3">
                 <UiInputSelect
@@ -292,12 +294,11 @@ function onOtpComplete() {
           class="card-pane mb-3"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-1">
-              Verificación en dos pasos
-            </h4>
-            <p class="subtitle-2 text-muted mb-3">
-              Ingresa el código de 6 dígitos que enviamos a tu correo para confirmar este dispositivo.
-            </p>
+            <UiSubheadingContent
+              as="h4"
+              title="Verificación en dos pasos"
+              subtitle="Ingresa el código de 6 dígitos que enviamos a tu correo para confirmar este dispositivo."
+            />
             <UiInputOtp
               id="verification-code"
               v-model="otpCode"
@@ -356,12 +357,11 @@ function onOtpComplete() {
           class="card-pane mb-3"
         >
           <template #body>
-            <h4 class="subtitle-1 fw-700 mb-1">
-              Cuentas conectadas
-            </h4>
-            <p class="subtitle-2 text-muted mb-3">
-              Vincula servicios para iniciar sesión más rápido.
-            </p>
+            <UiSubheadingContent
+              as="h4"
+              title="Cuentas conectadas"
+              subtitle="Vincula servicios para iniciar sesión más rápido."
+            />
             <div
               v-for="account in accounts"
               :key="account.brand"
