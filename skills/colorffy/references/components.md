@@ -432,6 +432,8 @@ Single interactive chip (filter, input, or plain).
 ```vue
 <UiChip text="Filter chip" icon-code="&#xe152;" @click="onClick" />
 <UiChip text="Selected" selected />
+<UiChip text="Elevated" variant="elevated" selected />
+<UiChip text="Low emphasis" color="neutral" selected />
 <UiChip text="Removable" closable @remove="onRemove" />
 ```
 
@@ -439,7 +441,9 @@ Single interactive chip (filter, input, or plain).
 - `id` (string | null)
 - `text` (string | null) - Chip label
 - `iconCode` (string | null) - Leading Material Symbols code, replaced by a check mark while `selected`
-- `selected` (boolean, default: false) - Filter-chip active state
+- `variant` ('outline' | 'elevated', default: 'outline') - Container style while unselected
+- `color` ('primary' | 'secondary' | 'neutral', default: 'primary') - Fill applied once selected; no effect while unselected
+- `selected` (boolean, default: false) - Filter-chip active state; paints the chip with `color`
 - `disabled` (boolean, default: false)
 - `closable` (boolean, default: false) - Renders a trailing remove button
 - `textOnly` (boolean, default: false) - Borderless text-only variant
@@ -462,13 +466,15 @@ Chip set with single/multiple selection via `v-model`.
 
 **Props:**
 - `options` (`IChipOption[]`, required) - `{ id, text, iconCode?, disabled?, closable? }`
+- `variant` ('outline' | 'elevated', default: 'outline') - Container style for every option
+- `color` ('primary' | 'secondary' | 'neutral', default: 'primary') - Selected fill for every option
 - `modelValue` (`string | string[] | null`) - single mode: `string | null`; multi mode: `string[]`
 - `multiple` (boolean, default: false)
 - `ariaLabel` (string | null)
 
 **Events:** `update:modelValue`, `remove` (emits the option `id`)
 
-**Note:** Chips are interactive filters/inputs; use `UiBadge` for static status labels.
+**Note:** Chips are interactive filters/inputs; use `UiBadge` for static status labels. A chip carries no color until it is selected — `variant` is the resting container, `color` is the selected fill.
 
 ## Dialogs
 

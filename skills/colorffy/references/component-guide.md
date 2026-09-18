@@ -117,6 +117,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning â
 - Use `UiChipGroup` (+ `UiChip`) when the selection is interactive â€” filter pills, multi-select tag pickers, removable input tags
 - Single mode models `string | null` (clicking the selected chip deselects it); `multiple` models `string[]`
 - Use `closable` chips for removable tags; `UiChipGroup` emits `remove(optionId)`
+- Two style axes: `variant` ('outline' | 'elevated') is the resting container, `color` ('primary' | 'secondary' | 'neutral') only lands once the chip is selected
 - Prefer `UiBadge` instead when the label is just a static status/count, not something the user clicks
 
 ## Buttons & Actions

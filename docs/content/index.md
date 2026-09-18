@@ -15,7 +15,7 @@ seo:
   target: _blank
   trailing-icon: i-lucide-arrow-right
   ---
-  v1.8.0 — Sidebar & Breadcrumb components
+  v2.5.1 — Redesigned chips & connected button groups
   :::
 
 #title
