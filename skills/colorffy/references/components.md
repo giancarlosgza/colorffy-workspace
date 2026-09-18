@@ -40,7 +40,7 @@ import { UiButton, UiCard, UiAlert } from '@colorffy/ui'
 ## Layout Components
 
 ### UiHeaderContent
-Page header with title and subtitle.
+Page header with title and subtitle. Renders an `h1` by default; use `as` for section headers.
 
 ```vue
 <UiHeaderContent title="Page Title" subtitle="Optional subtitle" />
@@ -49,6 +49,44 @@ Page header with title and subtitle.
 **Props:**
 - `title` (string) - Main heading
 - `subtitle` (string, optional) - Secondary text
+
+### UiHeroContent
+Page-opening hero with a display-sized title and CTA slot.
+
+```vue
+<UiHeroContent headline="Open source" title="Build vibrant interfaces" subtitle="70+ components" size="lg" align="center">
+  <template #actions>
+    <UiButton variant="filled" color="primary" text="Get started" />
+  </template>
+</UiHeroContent>
+```
+
+**Props:**
+- `headline` (string | null) - Eyebrow label above the title
+- `title` / `subtitle` (string | null)
+- `size` ('sm' | 'md' | 'lg' | 'xl', default: 'xl') - Title size on the display scale
+- `align` ('start' | 'center' | 'end', default: 'start')
+- `headingId` (string) - Referenced by the section's `aria-labelledby`
+
+**Slots:** `actions` - call-to-action buttons
+
+### UiSubheadingContent
+Section subheading with an optional description.
+
+```vue
+<UiSubheadingContent title="Integrations" subtitle="Connect your tools.">
+  <template #actions>
+    <UiBadge text="3 active" variant="outline" size="sm" />
+  </template>
+</UiSubheadingContent>
+```
+
+**Props:**
+- `as` (string, default: 'h3') - Heading element, keeps the heading order valid
+- `title` / `subtitle` (string | null)
+- `gutter` ('none' | 'sm' | 'md', default: 'md') - Space below the block; the title-to-description gap is fixed
+
+**Slots:** `actions` - badge or control beside the subheading
 
 ### UiPaneContent
 Content container/pane wrapper.

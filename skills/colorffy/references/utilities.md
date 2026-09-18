@@ -230,9 +230,9 @@ Predefined heading styles:
 <p>Subheading with description</p>
 
 <!-- Subheading with custom margins -->
+<h3 class="text-subheading">Default margin</h3>
+<h3 class="text-subheading subheading-m1">Tight margin</h3>
 <h3 class="text-subheading subheading-m0">No margin</h3>
-<h3 class="text-subheading subheading-m1">Small margin</h3>
-<h3 class="text-subheading subheading-m2">Large margin</h3>
 
 <!-- Subheading with linkable hash -->
 <h3 class="text-subheading" data-link="true">
