@@ -26,11 +26,18 @@ const props = withDefaults(defineProps<IListItemProps>(), {
 // Link mode activates only when `to` or `href` is passed; otherwise the
 // item renders exactly as before (plain `div.list-item`, no extra attrs).
 const linkTarget = computed(() => props.to || props.href || null)
-const isLink = computed(() => linkTarget.value !== null)
-const resolvedTag = computed(() => (isLink.value ? (props.as || 'a') : 'div'))
+const routerComponent = computed(() => (props.as && props.as !== 'a' ? props.as : null))
 const isExternalLink = computed(() => {
   const target = linkTarget.value
   return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
+})
+const usesAnchor = computed(() => isExternalLink.value || routerComponent.value === null)
+const isLink = computed(() => linkTarget.value !== null && (typeof linkTarget.value === 'string' || !usesAnchor.value))
+const resolvedTag = computed(() => {
+  if (!isLink.value)
+    return 'div'
+
+  return usesAnchor.value ? 'a' : routerComponent.value
 })
 const linkAttrs = computed(() => {
   if (!isLink.value)
@@ -43,8 +50,7 @@ const linkAttrs = computed(() => {
     'disabled': props.disabled || undefined
   }
 
-  // Anchor/external only for string targets; object targets use the router branch
-  if (typeof target === 'string' && (resolvedTag.value === 'a' || isExternalLink.value)) {
+  if (usesAnchor.value) {
     return {
       ...baseAttrs,
       href: props.disabled ? undefined : target,

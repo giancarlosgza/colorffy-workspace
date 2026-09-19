@@ -83,18 +83,17 @@ const buttonClasses = computed(() => {
   return classes
 })
 
-// Link mode activates only when a navigation target is provided; `as` alone
-// (with no `to`/`href`) never switches the native `<button>` markup.
-const isLink = computed(() => Boolean(props.to || props.href))
 const linkTarget = computed(() => props.to || props.href)
+const routerComponent = computed(() => (props.as && props.as !== 'a' ? props.as : null))
 const isExternalLink = computed(() => {
   const target = linkTarget.value
   return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
 })
-// String targets render a plain anchor unless `as` overrides it to something
-// else; object targets (router locations) always defer to `as`.
-const usesAnchor = computed(() => typeof linkTarget.value === 'string' && (props.as === 'a' || isExternalLink.value))
-const linkTag = computed(() => (usesAnchor.value ? 'a' : props.as))
+const usesAnchor = computed(() => isExternalLink.value || routerComponent.value === null)
+// Link mode activates only when a navigation target is provided; `as` alone
+// (with no `to`/`href`) never switches the native `<button>` markup.
+const isLink = computed(() => Boolean(linkTarget.value) && (typeof linkTarget.value === 'string' || !usesAnchor.value))
+const linkTag = computed(() => (usesAnchor.value ? 'a' : routerComponent.value))
 const linkClasses = computed(() => {
   const classes = [...buttonClasses.value]
   if (props.disabled)
