@@ -360,9 +360,15 @@ function closeMenu(): void {
       <NuxtPage />
 
       <!-- Footer -->
-      <UiFooter fluid>
+      <UiFooter>
         <div class="row">
           <div class="col-lg-4 mb-4">
+            <UiIconSvg
+              :content="brandIcons.nuxt"
+              size="xl"
+              class="mb-3"
+            />
+
             <p class="footer-title">
               Colorffy UI
             </p>
@@ -374,39 +380,45 @@ function closeMenu(): void {
               direction="row"
               custom-class="mt-3"
             >
-              <UiButton
-                variant="outline"
-                icon
-                size="sm"
-                aria-label="GitHub"
-                href="https://github.com/giancarlosgza/colorffy-workspace"
-              >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xe86f;" />
-                </template>
-              </UiButton>
-              <UiButton
-                variant="outline"
-                icon
-                size="sm"
-                aria-label="Sitio web"
-                href="https://colorffy.com"
-              >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xe894;" />
-                </template>
-              </UiButton>
-              <UiButton
-                variant="outline"
-                icon
-                size="sm"
-                aria-label="Documentación"
-                href="https://colorffy.com/docs"
-              >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xe873;" />
-                </template>
-              </UiButton>
+              <UiButtonGroup>
+                <UiButtonTooltip
+                  id="github-tooltip"
+                  variant="outline"
+                  icon
+                  size="sm"
+                  aria-label="GitHub"
+                  href="https://github.com/giancarlosgza/colorffy-workspace"
+                  tooltip-text="GitHub"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xe86f;" />
+                  </template>
+                </UiButtonTooltip>
+                <UiButtonTooltip
+                  variant="outline"
+                  icon
+                  size="sm"
+                  aria-label="Sitio web"
+                  href="https://colorffy.com"
+                  tooltip-text="Sitio web"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xe894;" />
+                  </template>
+                </UiButtonTooltip>
+                <UiButtonTooltip
+                  variant="outline"
+                  icon
+                  size="sm"
+                  aria-label="Documentación"
+                  href="https://colorffy.com/docs"
+                  tooltip-text="Documentación"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xe873;" />
+                  </template>
+                </UiButtonTooltip>
+              </UiButtonGroup>
             </UiFooterGroup>
           </div>
 
