@@ -32,6 +32,7 @@ const props = withDefaults(defineProps<IHeroContentProps>(), {
   subtitle: null,
   size: 'xl',
   align: 'start',
+  viewTransitionName: null,
   customClass: null
 })
 
@@ -42,11 +43,15 @@ const TITLE_DISPLAY_CLASSES: Record<string, string> = {
   lg: 'display-2',
   xl: 'display-1'
 }
+
 /** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
 const heroClasses = computed(() => [props.align === 'start' ? null : `hero-${props.align}`, props.customClass])
-const titleClasses = computed(() => ['hero-title', TITLE_DISPLAY_CLASSES[props.size ?? ''] ?? 'display-1'])
+const viewTransitionClass = computed(() => (props.viewTransitionName ? 'hero-vt' : null))
+const titleClasses = computed(() => ['hero-title', TITLE_DISPLAY_CLASSES[props.size ?? ''] ?? 'display-1', viewTransitionClass.value])
+const titleStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: props.viewTransitionName } : undefined))
+const descriptionStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: `${props.viewTransitionName}-description` } : undefined))
 </script>
 
 <template>
@@ -66,6 +71,7 @@ const titleClasses = computed(() => ['hero-title', TITLE_DISPLAY_CLASSES[props.s
       v-if="title"
       :id="headingId"
       :class="titleClasses"
+      :style="titleStyle"
     >
       {{ title }}
     </h1>
@@ -73,6 +79,8 @@ const titleClasses = computed(() => ['hero-title', TITLE_DISPLAY_CLASSES[props.s
     <p
       v-if="subtitle"
       class="hero-description"
+      :class="viewTransitionClass"
+      :style="descriptionStyle"
     >
       {{ subtitle }}
     </p>

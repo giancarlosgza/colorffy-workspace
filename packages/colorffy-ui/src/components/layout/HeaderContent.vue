@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
   hideActionsWhenNarrow: false,
   backButton: false,
   backButtonLabel: 'Go back',
+  viewTransitionName: null,
   containerClass: null
 })
 
@@ -59,6 +60,9 @@ const TITLE_SIZE_CLASSES: Record<string, string> = {
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
 const containerClasses = computed(() => [TITLE_SIZE_CLASSES[props.size ?? ''] ?? null, props.containerClass])
+const viewTransitionClass = computed(() => (props.viewTransitionName ? 'header-vt' : null))
+const titleStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: props.viewTransitionName } : undefined))
+const descriptionStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: `${props.viewTransitionName}-description` } : undefined))
 
 /** Methods */
 function headerClasses() {
@@ -112,6 +116,8 @@ function handleBackClick() {
             v-if="title"
             :id="headingId"
             class="text-title"
+            :class="viewTransitionClass"
+            :style="titleStyle"
           >
             {{ title }}
           </component>
@@ -119,6 +125,8 @@ function handleBackClick() {
           <p
             v-if="subtitle"
             class="text-description"
+            :class="viewTransitionClass"
+            :style="descriptionStyle"
           >
             {{ subtitle }}
           </p>

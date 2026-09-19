@@ -69,6 +69,14 @@ export interface IHeaderContentProps {
   backButtonLabel?: string
 
   /**
+   * Pairs this header with the matching one on another page for a view
+   * transition. The value is the shared name both pages use, so it must be
+   * unique within each document; the description derives `<name>-description`.
+   * Nothing is emitted when it is omitted.
+   */
+  viewTransitionName?: string | null
+
+  /**
    * Optional custom CSS classes for the header container.
    */
   containerClass?: ClassValue | null
@@ -167,6 +175,14 @@ export interface IHeroContentProps {
    * Horizontal alignment of the whole hero.
    */
   align?: HeroContentAlign | (string & {}) | null
+
+  /**
+   * Pairs this hero with the matching one on another page for a view
+   * transition. The value is the shared name both pages use, so it must be
+   * unique within each document; the description derives `<name>-description`.
+   * Nothing is emitted when it is omitted.
+   */
+  viewTransitionName?: string | null
 
   /**
    * Optional custom CSS classes for the hero section.

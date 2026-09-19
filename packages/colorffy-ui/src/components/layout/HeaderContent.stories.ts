@@ -17,6 +17,7 @@ const meta = {
     hideActionsWhenNarrow: { control: 'boolean' },
     backButton: { control: 'boolean' },
     backButtonLabel: { control: 'text' },
+    viewTransitionName: { control: 'text' },
     containerClass: { control: 'text' }
   }
 } satisfies Meta<typeof HeaderContent>
