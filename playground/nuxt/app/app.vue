@@ -360,18 +360,61 @@ function closeMenu(): void {
       <NuxtPage />
 
       <!-- Footer -->
-      <UiFooter>
+      <UiFooter fluid>
         <div class="row">
-          <div class="col-md-4 mb-3">
+          <div class="col-lg-4 mb-4">
             <p class="footer-title">
               Colorffy UI
             </p>
             <p class="footer-subtitle">
-              Componentes headless para Vue 3 y Nuxt · MIT
+              Más de 70 componentes headless para Vue 3 y Nuxt, con un sistema
+              de color tonal y temas dinámicos.
             </p>
+            <UiFooterGroup
+              direction="row"
+              custom-class="mt-3"
+            >
+              <UiButton
+                variant="outline"
+                icon
+                size="sm"
+                aria-label="GitHub"
+                href="https://github.com/giancarlosgza/colorffy-workspace"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe86f;" />
+                </template>
+              </UiButton>
+              <UiButton
+                variant="outline"
+                icon
+                size="sm"
+                aria-label="Sitio web"
+                href="https://colorffy.com"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe894;" />
+                </template>
+              </UiButton>
+              <UiButton
+                variant="outline"
+                icon
+                size="sm"
+                aria-label="Documentación"
+                href="https://colorffy.com/docs"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe873;" />
+                </template>
+              </UiButton>
+            </UiFooterGroup>
           </div>
-          <div class="col-md-3 mb-3">
-            <UiFooterGroup title="Documentación">
+
+          <div class="col-6 col-lg-2 mb-3">
+            <UiFooterGroup
+              title="Documentación"
+              overline
+            >
               <UiFooterItem
                 text="Instalación"
                 href="https://colorffy.com/docs"
@@ -386,8 +429,53 @@ function closeMenu(): void {
               />
             </UiFooterGroup>
           </div>
-          <div class="col-md-3 mb-3">
-            <UiFooterGroup title="Proyecto">
+
+          <div class="col-6 col-lg-2 mb-3">
+            <UiFooterGroup
+              title="Playground"
+              overline
+            >
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/dashboard"
+                text="Dashboard"
+              />
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/projects"
+                text="Proyectos"
+              />
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/settings"
+                text="Configuración"
+              />
+            </UiFooterGroup>
+          </div>
+
+          <div class="col-6 col-lg-2 mb-3">
+            <UiFooterGroup
+              title="Cuenta"
+              overline
+            >
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/account"
+                text="Perfil"
+              />
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/notifications"
+                text="Notificaciones"
+              />
+            </UiFooterGroup>
+          </div>
+
+          <div class="col-6 col-lg-2 mb-3">
+            <UiFooterGroup
+              title="Proyecto"
+              overline
+            >
               <UiFooterItem
                 :as="NuxtLink"
                 to="/about"
@@ -397,24 +485,21 @@ function closeMenu(): void {
                 text="GitHub"
                 href="https://github.com/giancarlosgza/colorffy-workspace"
               />
-              <UiFooterItem text="v2.5.1" />
-            </UiFooterGroup>
-          </div>
-          <div class="col-md-2 mb-3">
-            <UiFooterGroup title="Redes">
-              <UiFooterItem
-                text="GitHub"
-                href="https://github.com/giancarlosgza"
-                icon="&#xe86f;"
-              />
-              <UiFooterItem
-                text="Web"
-                href="https://colorffy.com"
-                icon="&#xe894;"
-              />
             </UiFooterGroup>
           </div>
         </div>
+
+        <template #bottom>
+          <p>Hecho con Colorffy UI · Licencia MIT</p>
+          <div class="d-flex align-items-center gap-2">
+            <p>© 2026 Colorffy</p>
+            <UiBadge
+              text="v2.5.1"
+              variant="outline"
+              size="sm"
+            />
+          </div>
+        </template>
       </UiFooter>
 
       <!-- Navigation Bar -->
