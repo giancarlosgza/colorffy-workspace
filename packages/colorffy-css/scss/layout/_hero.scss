@@ -43,6 +43,12 @@
       @include m.text-wrap-pretty;
     }
 
+    // View transition snapshot, applied only when a name is set
+    & :is(.hero-title, .hero-description):is(.hero-vt) {
+      inline-size: fit-content;
+      contain: paint;
+    }
+
     // Actions
     & .hero-actions {
       display: flex;
