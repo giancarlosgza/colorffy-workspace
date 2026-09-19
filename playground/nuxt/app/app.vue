@@ -4,6 +4,7 @@ import { NuxtLink } from '#components'
 
 /** Data */
 const colors = ['system', 'light', 'dark']
+const colorMode = useColorMode()
 const activeMode = useState()
 const route = useRoute()
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
@@ -305,7 +306,7 @@ function closeMenu(): void {
                       :color="color === activeMode ? 'primary' : ''"
                       :aria-label="color === 'system' ? 'System' : color === 'light' ? 'Light' : 'Dark'"
                       icon size="sm"
-                      @click="$colorMode.preference = color; activeMode = color"
+                      @click="colorMode.preference = color; activeMode = color"
                     >
                       <template #icon>
                         <UiIconMaterial
