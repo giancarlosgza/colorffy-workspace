@@ -359,6 +359,64 @@ function closeMenu(): void {
 
       <NuxtPage />
 
+      <!-- Footer -->
+      <UiFooter>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <p class="footer-title">
+              Colorffy UI
+            </p>
+            <p class="footer-subtitle">
+              Componentes headless para Vue 3 y Nuxt · MIT
+            </p>
+          </div>
+          <div class="col-md-3 mb-3">
+            <UiFooterGroup title="Documentación">
+              <UiFooterItem
+                text="Instalación"
+                href="https://colorffy.com/docs"
+              />
+              <UiFooterItem
+                text="Componentes"
+                href="https://colorffy.com/docs"
+              />
+              <UiFooterItem
+                text="Utilidades"
+                href="https://colorffy.com/docs"
+              />
+            </UiFooterGroup>
+          </div>
+          <div class="col-md-3 mb-3">
+            <UiFooterGroup title="Proyecto">
+              <UiFooterItem
+                :as="NuxtLink"
+                to="/about"
+                text="Acerca de"
+              />
+              <UiFooterItem
+                text="GitHub"
+                href="https://github.com/giancarlosgza/colorffy-workspace"
+              />
+              <UiFooterItem text="v2.5.1" />
+            </UiFooterGroup>
+          </div>
+          <div class="col-md-2 mb-3">
+            <UiFooterGroup title="Redes">
+              <UiFooterItem
+                text="GitHub"
+                href="https://github.com/giancarlosgza"
+                icon="&#xe86f;"
+              />
+              <UiFooterItem
+                text="Web"
+                href="https://colorffy.com"
+                icon="&#xe894;"
+              />
+            </UiFooterGroup>
+          </div>
+        </div>
+      </UiFooter>
+
       <!-- Navigation Bar -->
       <UiNavigationBar
         :as="NuxtLink"
