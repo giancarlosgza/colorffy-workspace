@@ -5,7 +5,6 @@ import { NuxtLink } from '#components'
 /** Data */
 const colors = ['system', 'light', 'dark']
 const colorMode = useColorMode()
-const activeMode = useState()
 const route = useRoute()
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
 const user = {
@@ -302,30 +301,30 @@ function closeMenu(): void {
                     <UiButton
                       v-for="(color, index) in colors"
                       :key="`color-${index}`"
-                      :variant="color === activeMode ? 'filled' : 'outline'"
-                      :color="color === activeMode ? 'primary' : ''"
+                      :variant="color === colorMode.preference ? 'filled' : 'outline'"
+                      :color="color === colorMode.preference ? 'primary' : ''"
                       :aria-label="color === 'system' ? 'System' : color === 'light' ? 'Light' : 'Dark'"
                       icon size="sm"
-                      @click="colorMode.preference = color; activeMode = color"
+                      @click="colorMode.preference = color"
                     >
                       <template #icon>
                         <UiIconMaterial
                           v-if="color === 'system'"
                           icon-code="&#xe31e;"
                           class="fs-sm"
-                          :class="activeMode === 'system' ? 'text-on-primary' : ''"
+                          :class="colorMode.preference === 'system' ? 'text-on-primary' : ''"
                         />
                         <UiIconMaterial
                           v-else-if="color === 'light'"
                           icon-code="&#xe518;"
                           class="fs-sm"
-                          :class="activeMode === 'light' ? 'text-on-primary' : ''"
+                          :class="colorMode.preference === 'light' ? 'text-on-primary' : ''"
                         />
                         <UiIconMaterial
                           v-else-if="color === 'dark'"
                           icon-code="&#xe51c;"
                           class="fs-sm"
-                          :class="activeMode === 'dark' ? 'text-on-primary' : ''"
+                          :class="colorMode.preference === 'dark' ? 'text-on-primary' : ''"
                         />
                       </template>
                     </UiButton>
