@@ -1,5 +1,4 @@
 @use '../abstracts/variables' as v;
-@use '../abstracts/mixins' as m;
 
 @layer components.footer {
   // ==========================================================================
@@ -14,9 +13,7 @@
     --_footer-gap: var(--space-16);
     --_footer-top-radius: #{v.$rounded-xl};
     --_footer-radius: var(--_footer-top-radius) var(--_footer-top-radius) #{v.$rounded-none} #{v.$rounded-none};
-    --_footer-gradient-line-position: 1rem;
     --_footer-easing-in: #{v.$easing-in-fallback};
-    --_footer-easing-in-duration: 200ms;
 
     position: relative;
     background: var(--_footer-bg-color);
@@ -30,30 +27,6 @@
 
     @supports (transition: linear(0,0,0)) {
       --_footer-easing-in: #{v.$easing-power-in-out};
-      --_footer-easing-in-duration: 400ms;
-    }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: -.25rem;
-      inset-inline: 0;
-      height: 5rem;
-      z-index: -1;
-      border-radius: var(--_footer-top-radius);
-      scale: 0 1;
-      transition: scale var(--_footer-easing-in-duration) var(--_footer-easing-in),
-      border-radius var(--_footer-easing-in-duration) var(--_footer-easing-in);
-      @include m.bg-gradient(45deg, v.$gradient-ghost);
-    }
-
-    &:is(:hover) {
-      --_footer-top-radius: #{v.$rounded-none};
-      --_footer-gradient-line-position: -.25rem;
-
-      &:before {
-        scale: 1 1;
-      }
     }
 
     & p {
