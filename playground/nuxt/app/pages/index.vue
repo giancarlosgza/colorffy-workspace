@@ -51,6 +51,34 @@ const pages = [
   { to: '/about', icon: '&#xe88e;', title: 'Acerca de', text: 'Historia y hoja de ruta' }
 ]
 
+// External links, one per card surface variant
+const externalLinks = [
+  {
+    variant: 'outline',
+    href: 'https://colorffy.com/docs',
+    title: 'Documentación completa',
+    text: 'Guías, ejemplos y referencia de la API.',
+    image: 'https://picsum.photos/seed/docs/640/360',
+    imageAlt: 'Vista previa de la documentación de Colorffy'
+  },
+  {
+    variant: 'pane',
+    href: 'https://colorffy.com',
+    title: 'Generador de temas',
+    text: 'Crea tu paleta y exporta los tokens.',
+    image: 'https://picsum.photos/seed/themes/640/360',
+    imageAlt: 'Vista previa del generador de temas de Colorffy'
+  },
+  {
+    variant: 'elevated',
+    href: 'https://github.com/giancarlosgza/colorffy-workspace',
+    title: 'Código en GitHub',
+    text: 'Issues, releases y contribuciones.',
+    image: 'https://picsum.photos/seed/github/640/360',
+    imageAlt: 'Vista previa del repositorio de Colorffy'
+  }
+]
+
 const copied = ref(false)
 
 /** Computed */
@@ -240,38 +268,24 @@ function copyInstall() {
 
     <!-- Cover image + clickable card (image-url + href) -->
     <div class="row">
-      <div class="col-md-6">
+      <div
+        v-for="link in externalLinks"
+        :key="link.href"
+        class="col-md-4"
+      >
         <UiCard
-          variant="outline"
-          class="card-pane shadow-sm mb-4"
-          image-url="https://picsum.photos/640/360"
-          image-alt="Vista previa de la documentación de Colorffy"
-          href="https://colorffy.com"
+          :variant="link.variant"
+          class="mb-4 h-100"
+          :image-url="link.image"
+          :image-alt="link.imageAlt"
+          :href="link.href"
         >
           <template #body>
             <h3 class="subtitle-1 fw-700 mb-1">
-              Documentación completa
+              {{ link.title }}
             </h3>
             <p class="fs-sm-300 text-muted mb-0">
-              Guías, ejemplos y referencia de la API en colorffy.com.
-            </p>
-          </template>
-        </UiCard>
-      </div>
-      <div class="col-md-6">
-        <UiCard
-          variant="elevated"
-          class="card-pane mb-4"
-          image-url="https://picsum.photos/640/360"
-          image-alt="Vista previa de la documentación de Colorffy"
-          href="https://colorffy.com"
-        >
-          <template #body>
-            <h3 class="subtitle-1 fw-700 mb-1">
-              Documentación completa
-            </h3>
-            <p class="fs-sm-300 text-muted mb-0">
-              Guías, ejemplos y referencia de la API en colorffy.com.
+              {{ link.text }}
             </p>
           </template>
         </UiCard>
