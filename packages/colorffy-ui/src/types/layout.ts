@@ -236,6 +236,7 @@ export interface ISubheadingContentProps {
  *   slot when it needs more than two lines of text.
  * - The default slot takes the link groups, inside the footer's own container.
  * - `fluid` swaps that container for `.container-fluid`, as on the navbar.
+ * - The #bottom slot renders a divided bar under the groups.
  */
 export interface IFooterProps {
   /**
@@ -270,10 +271,17 @@ export interface IFooterGroupProps {
   title?: string | null
 
   /**
-   * Stacks the links in a column or lays them out in a row.
+   * Stacks the links in a column or lays them out in a row. A row group with
+   * a title keeps the heading on its own line above the links.
    * @default 'col'
    */
   direction?: FooterGroupDirection | (string & {})
+
+  /**
+   * Renders the title as a small uppercase overline.
+   * @default false
+   */
+  overline?: boolean
 
   /**
    * Optional custom CSS classes for the group.

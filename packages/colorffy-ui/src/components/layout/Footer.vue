@@ -37,6 +37,13 @@ const containerClass = computed(() => props.fluid ? 'container-fluid' : 'contain
       </slot>
 
       <slot />
+
+      <div
+        v-if="$slots.bottom"
+        class="footer-bottom"
+      >
+        <slot name="bottom" />
+      </div>
     </div>
   </footer>
 </template>
