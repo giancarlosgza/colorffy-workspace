@@ -72,7 +72,7 @@ function publish() {
 
 <template>
   <div class="container mt-3 mb-5">
-    <!-- Page header: back navigation to the list this detail came from -->
+    <!-- Page header -->
     <UiHeaderContent
       headline="Proyecto activo"
       :title="project.name"
@@ -112,7 +112,6 @@ function publish() {
 
     <div class="row mt-section">
       <div class="col-lg-8">
-        <!-- Section header inside a wide card -->
         <UiCard
           variant="outline"
           class="card-pane mb-3"
@@ -172,7 +171,6 @@ function publish() {
           </template>
         </UiCard>
 
-        <!-- Section header whose actions are a filter, not a button -->
         <UiCard
           variant="outline"
           class="card-pane"
@@ -204,7 +202,7 @@ function publish() {
       </div>
 
       <div class="col-lg-4">
-        <!-- Narrow column: the actions would crowd the title, so they drop out -->
+        <!-- Narrow column: actions drop out -->
         <UiCard
           variant="outline"
           class="card-pane mb-3"
@@ -260,7 +258,6 @@ function publish() {
           </template>
         </UiCard>
 
-        <!-- Plain section header: title only -->
         <UiCard
           variant="outline"
           class="card-pane"

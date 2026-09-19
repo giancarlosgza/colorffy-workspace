@@ -305,7 +305,7 @@
           }
         }
 
-        // Selected colors; the container stays outline or elevated until then
+        // Selected colors
         &:is(.chip-active) {
           &:not(.chip-secondary, .chip-neutral) {
             @include m.btn-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true);

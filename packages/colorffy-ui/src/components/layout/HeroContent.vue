@@ -2,28 +2,6 @@
 import type { IHeroContentProps } from '@/types/layout'
 import { computed, useId } from 'vue'
 
-/**
- * HeroContent Component
- *
- * A page-opening hero with an eyebrow, display title, description and CTA slot.
- *
- * @component
- * @example
- * ```vue
- * <HeroContent
- *   headline="Open source"
- *   title="Build vibrant interfaces"
- *   subtitle="70+ headless components for Vue 3 and Nuxt."
- *   size="lg"
- *   align="center"
- * >
- *   <template #actions>
- *     <UiButton text="Get started" variant="filled" color="primary" />
- *   </template>
- * </HeroContent>
- * ```
- */
-
 /** Props */
 const props = withDefaults(defineProps<IHeroContentProps>(), {
   headingId: undefined,

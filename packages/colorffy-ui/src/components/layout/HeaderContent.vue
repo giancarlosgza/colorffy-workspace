@@ -4,30 +4,6 @@ import { computed, useId, useSlots } from 'vue'
 import UiButtonTooltip from '../ui/button/ButtonTooltip.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
-/**
- * HeaderContent Component
- *
- * A flexible header component with support for back buttons, actions, and featured badges.
- * Designed for page headers with navigation and action controls.
- *
- * @component
- * @example
- * ```vue
- * <HeaderContent
- *   headline="Tools"
- *   title="Gradient Generator"
- *   subtitle="Create beautiful gradients"
- *   :back-button="true"
- *   back-button-label="Back to tools"
- *   @back="handleBack"
- * >
- *   <template #actions>
- *     <UiButton text="Save" />
- *   </template>
- * </HeaderContent>
- * ```
- */
-
 /** Props */
 const props = withDefaults(defineProps<IHeaderContentProps>(), {
   as: 'h1',

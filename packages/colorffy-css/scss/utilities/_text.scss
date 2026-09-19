@@ -326,7 +326,6 @@
     &:has(~ p) {
       margin-bottom: var(--_text-subheading-gap);
 
-      // Falls back, since the heading's gutter never reaches a sibling
       ~ p {
         color: var(--theme-muted-a10);
         margin-bottom: var(--_text-subheading-gutter, var(--space-16));

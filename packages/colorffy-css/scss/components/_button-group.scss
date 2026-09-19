@@ -38,7 +38,7 @@
     &:is(.btn-group-connected) {
       --_btn-group-gap: var(--space-4);
 
-      // Pill ends measured from the button height, so the browser never scales the inner radii down
+      // Pill ends
       .btn {
         --_btn-connected-radius: calc(var(--_btn-height) / 2);
       }
