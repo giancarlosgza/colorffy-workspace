@@ -82,6 +82,7 @@ function onOtpComplete() {
     <UiHeaderContent
       title="Configuración de la cuenta"
       subtitle="Administra tu perfil, preferencias e integraciones"
+      view-transition-name="page-title"
     >
       <template #actions>
         <UiButton

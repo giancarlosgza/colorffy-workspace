@@ -40,6 +40,7 @@ function save() {
     <UiHeaderContent
       title="Configuración"
       subtitle="Administra las preferencias de tu cuenta y del sistema"
+      view-transition-name="page-title"
     >
       <template #actions>
         <UiButton

@@ -78,6 +78,7 @@ function publish() {
       :title="project.name"
       :subtitle="`Cliente: ${project.client} · Entrega ${project.deadline}`"
       size="lg"
+      view-transition-name="page-title"
       back-button
       back-button-label="Volver a proyectos"
       @back="goBack"

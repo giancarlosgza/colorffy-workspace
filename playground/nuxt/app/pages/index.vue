@@ -81,6 +81,7 @@ function copyInstall() {
             subtitle="Más de 70 componentes headless para Vue 3 y Nuxt. Empieza en menos de un minuto."
             align="center"
             size="xl"
+            view-transition-name="page-title"
           >
             <template #actions>
               <UiButton

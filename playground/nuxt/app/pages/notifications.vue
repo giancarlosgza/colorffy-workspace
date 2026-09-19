@@ -88,6 +88,7 @@ function runTask() {
     <UiHeaderContent
       title="Notificaciones y feedback"
       subtitle="Alertas, toasts, diálogos y estados de progreso"
+      view-transition-name="page-title"
     />
 
     <div class="row mt-section">

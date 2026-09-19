@@ -106,6 +106,7 @@ function onOverviewTabChange(tabId: string) {
     <UiHeaderContent
       title="Panel general"
       subtitle="Resumen del rendimiento de tu espacio de trabajo"
+      view-transition-name="page-title"
     >
       <template #actions>
         <UiButtonGroup connected>
