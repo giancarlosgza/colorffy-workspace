@@ -466,9 +466,9 @@ Container card component.
 ```
 
 **Props:**
-- `variant` ('outline' | 'elevated' | 'pane')
+- `variant` ('outline' | 'elevated' | 'pane') - Static surface; pick one. No hover or press feedback on its own
 - `size` ('xs' | 'sm' | 'md')
-- `selectable` (boolean, default: false) - Adds `card-selectable` interactive styling
+- `selectable` (boolean, default: false) - Adds `card-selectable`: hover lift, primary border on press/focus, held by the `selected` class
 - `imageUrl` (string, optional) - Cover image URL rendered full-bleed at the top of the card (ignored when the `#media` slot is used)
 - `imageAlt` (string, optional) - Alt text for the cover image (decorative/empty by default)
 - `to` (string | object, optional) - Navigation destination; activates link mode (root renders as `as`/`a` instead of `div`) when set together with, or instead of, `href`
