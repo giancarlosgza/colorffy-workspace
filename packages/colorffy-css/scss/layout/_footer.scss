@@ -93,8 +93,7 @@
       }
 
       // Links
-      & a,
-      .anchor-link {
+      & :is(.footer-item, .anchor-link) {
         display: inline-block;
         color: var(--theme-muted-a10);
         font-size: var(--fs-2xs);
@@ -108,7 +107,7 @@
       }
 
       // Icons
-      & i {
+      & .footer-item-icon {
         font-size: var(--fs-sm);
         font-variation-settings: var(--iw-semi-bold);
         color: var(--theme-secondary-a90);

@@ -26,9 +26,10 @@ const resolvedTag = computed(() => {
 
   return usesAnchor.value ? 'a' : routerComponent.value
 })
+const itemClasses = computed(() => ['footer-item', isLink.value ? null : 'anchor-link', props.customClass])
 const linkAttrs = computed(() => {
   if (!isLink.value)
-    return { class: 'anchor-link' }
+    return {}
 
   if (usesAnchor.value) {
     return {
@@ -44,12 +45,13 @@ const linkAttrs = computed(() => {
 <template>
   <component
     :is="resolvedTag"
-    :class="customClass"
+    :class="itemClasses"
     v-bind="linkAttrs"
   >
     <UiIconMaterial
       v-if="icon"
       :icon-code="icon"
+      class="footer-item-icon"
     />
     <slot>{{ text }}</slot>
   </component>
