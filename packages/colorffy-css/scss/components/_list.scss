@@ -78,6 +78,9 @@
       & .list-item {
         --_list-item-gap: var(--space-14);
         --_list-item-padding: var(--space-8);
+        --_list-item-icon-padding: .625rem;
+        --_list-item-icon-size: var(--fs-lg);
+        --_list-item-image-size: 2.75rem;
 
         display: flex;
         flex-wrap: nowrap;
@@ -113,20 +116,18 @@
         // Icon
         & .list-item-icon-wrapper {
           border-radius: v.$rounded-md;
-          padding: .625rem;
+          padding: var(--_list-item-icon-padding);
           aspect-ratio: 1;
           background-color: var(--_list-group-item-icon-bg-color);
 
           & i {
-            font-size: var(--fs-lg);
+            font-size: var(--_list-item-icon-size);
             color: var(--_list-group-item-icon-color);
           }
         }
 
         // Image
         & .list-item-image {
-          --_list-item-image-size: 2.75rem;
-
           width: var(--_list-item-image-size);
           height: var(--_list-item-image-size);
           flex-shrink: 0;
@@ -195,6 +196,9 @@
         & .list-item {
           --_list-item-gap: var(--space-6);
           --_list-item-padding: var(--space-4);
+          --_list-item-icon-padding: var(--space-6);
+          --_list-item-icon-size: var(--fs-sm);
+          --_list-item-image-size: 1.75rem;
         }
       }
     }
@@ -204,6 +208,9 @@
         & .list-item {
           --_list-item-gap: .625rem;
           --_list-item-padding: var(--space-6);
+          --_list-item-icon-padding: var(--space-8);
+          --_list-item-icon-size: var(--fs-base);
+          --_list-item-image-size: 2.25rem;
         }
       }
     }

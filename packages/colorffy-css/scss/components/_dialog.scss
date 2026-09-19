@@ -7,8 +7,10 @@
   // DIALOG COMPONENT
   // ==========================================================================
   .dialog {
+    --_dialog-bg-color: var(--theme-surface-overlay);
     --_dialog-border-color: var(--theme-outline-overlay);
     --_dialog-radius: #{v.$dialog-border-radius};
+    --_dialog-shadow: var(--shadow-xl);
     --_dialog-gutter: calc(var(--space-16) + var(--space-4));
     --_dialog-max-size: 90%;
     --_discrete: allow-discrete;
@@ -25,8 +27,8 @@
     max-width: var(--_dialog-max-size);
     max-height: var(--_dialog-max-size);
     border: v.$border-sm solid var(--_dialog-border-color);
-    background-color: var(--theme-surface-container);
-    box-shadow: var(--shadow-xl);
+    background-color: var(--_dialog-bg-color);
+    box-shadow: var(--_dialog-shadow);
 
     &[open]:not(:modal) {
       z-index: v.$z-index-fullscreen;
