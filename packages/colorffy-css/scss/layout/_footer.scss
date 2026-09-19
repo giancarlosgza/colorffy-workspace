@@ -46,22 +46,32 @@
       --_footer-group-direction: column;
 
       display: flex;
+      flex-direction: var(--_footer-group-direction);
+      flex-wrap: wrap;
       align-items: baseline;
       gap: var(--_footer-gap);
       margin-bottom: var(--space-12);
 
-      &:is(.footer-col) {
-        flex-direction: var(--_footer-group-direction);
-
-        & svg {
-          width: 20px;
-          height: 20px;
-        }
+      & svg {
+        width: 20px;
+        height: 20px;
       }
 
       &:is(.footer-row) {
         --_footer-group-direction: row;
         --_footer-gap: var(--space-24);
+
+        // A heading keeps its own line above the links
+        &:has(.footer-group-title) {
+          --_footer-group-direction: column;
+
+          & .footer-group-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: var(--_footer-gap);
+          }
+        }
       }
 
       // Title paragraph
@@ -73,6 +83,12 @@
 
         &:not(:last-child) {
           margin-bottom: var(--space-8);
+        }
+
+        &:is(.footer-group-title-overline) {
+          font-size: var(--fs-3xs);
+          letter-spacing: .08em;
+          text-transform: uppercase;
         }
       }
 
@@ -97,6 +113,25 @@
         font-variation-settings: var(--iw-semi-bold);
         color: var(--theme-secondary-a90);
         margin-inline-end: var(--space-4);
+      }
+    }
+
+    // Bottom bar
+    & .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--_footer-gap);
+      margin-block-start: var(--_footer-gap);
+      padding-block-start: var(--_footer-gap);
+      border-block-start: v.$border-sm solid var(--theme-outline-surface);
+
+      & p {
+        color: var(--theme-muted-a10);
+        font-size: var(--fs-2xs);
+        font-family: var(--font-secondary);
+        margin-bottom: 0;
       }
     }
   }
