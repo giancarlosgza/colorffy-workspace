@@ -67,6 +67,7 @@ Page-opening hero with a display-sized title and CTA slot.
 - `size` ('sm' | 'md' | 'lg' | 'xl', default: 'xl') - Title size on the display scale
 - `align` ('start' | 'center' | 'end', default: 'start')
 - `headingId` (string) - Referenced by the section's `aria-labelledby`
+- `viewTransitionName` (string | null) - Shared name pairing it with another page's title; must be unique per document
 
 **Slots:** `actions` - call-to-action buttons
 
