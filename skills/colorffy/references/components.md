@@ -62,8 +62,8 @@ Page footer with a brand block, link groups and links.
 ```
 
 **UiFooter props:** `title` / `subtitle` (string | null), `fluid` (boolean, default: false), `customClass`
-**UiFooter slots:** `brand` (replaces title/subtitle), default (link groups)
-**UiFooterGroup props:** `title` (string | null), `direction` ('col' | 'row', default: 'col')
+**UiFooter slots:** `brand` (replaces title/subtitle), default (link groups), `bottom` (divided bar, split left/right)
+**UiFooterGroup props:** `title` (string | null), `direction` ('col' | 'row', default: 'col'), `overline` (boolean) - small uppercase heading
 **UiFooterItem props:** `text`, `icon`, `to` / `href`, `as`, `customClass` — renders a plain `.anchor-link` without a target
 
 **Note:** the footer supplies its own `.container`; pass `fluid` for `.container-fluid`.
