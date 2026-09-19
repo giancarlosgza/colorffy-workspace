@@ -11,9 +11,6 @@
     --_footer-gutter-x: 0;
     --_footer-gutter-y: calc(var(--space-32) + var(--space-8));
     --_footer-gap: var(--space-16);
-    --_footer-top-radius: #{v.$rounded-xl};
-    --_footer-radius: var(--_footer-top-radius) var(--_footer-top-radius) #{v.$rounded-none} #{v.$rounded-none};
-    --_footer-easing-in: #{v.$easing-in-fallback};
 
     position: relative;
     background: var(--_footer-bg-color);
@@ -21,13 +18,7 @@
     margin-top: var(--_footer-gutter-y);
     padding-block: var(--_footer-gutter-y);
     padding-inline: var(--_footer-gutter-x);
-    border-radius: var(--_footer-radius);
     overflow-x: clip;
-    transition: border-radius 200ms var(--_footer-easing-in);
-
-    @supports (transition: linear(0,0,0)) {
-      --_footer-easing-in: #{v.$easing-power-in-out};
-    }
 
     & p {
       color: var(--_footer-color);
