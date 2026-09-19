@@ -50,6 +50,24 @@ Page header with title and subtitle. Renders an `h1` by default; use `as` for se
 - `title` (string) - Main heading
 - `subtitle` (string, optional) - Secondary text
 
+### UiFooter / UiFooterGroup / UiFooterItem
+Page footer with a brand block, link groups and links.
+
+```vue
+<UiFooter title="Colorffy UI" subtitle="MIT licensed">
+  <UiFooterGroup title="Docs">
+    <UiFooterItem text="Installation" :as="NuxtLink" to="/install" />
+  </UiFooterGroup>
+</UiFooter>
+```
+
+**UiFooter props:** `title` / `subtitle` (string | null), `fluid` (boolean, default: false), `customClass`
+**UiFooter slots:** `brand` (replaces title/subtitle), default (link groups)
+**UiFooterGroup props:** `title` (string | null), `direction` ('col' | 'row', default: 'col')
+**UiFooterItem props:** `text`, `icon`, `to` / `href`, `as`, `customClass` — renders a plain `.anchor-link` without a target
+
+**Note:** the footer supplies its own `.container`; pass `fluid` for `.container-fluid`.
+
 ### UiHeroContent
 Page-opening hero with a display-sized title and CTA slot.
 
