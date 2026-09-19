@@ -4,6 +4,7 @@ export type HeaderContentSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 export type HeroContentSize = 'sm' | 'md' | 'lg' | 'xl'
 export type HeroContentAlign = 'start' | 'center' | 'end'
 export type SubheadingContentGutter = 'none' | 'sm' | 'md'
+export type FooterGroupDirection = 'col' | 'row'
 
 /**
  * Interface props for the HeaderContent component.
@@ -224,6 +225,96 @@ export interface ISubheadingContentProps {
 
   /**
    * Optional custom CSS classes for the wrapper.
+   */
+  customClass?: ClassValue | null
+}
+
+/**
+ * Interface props for the Footer component.
+ * Notes:
+ * - `title` and `subtitle` render the brand block; replace it with the #brand
+ *   slot when it needs more than two lines of text.
+ * - The default slot takes the link groups, inside the footer's own container.
+ * - `fluid` swaps that container for `.container-fluid`, as on the navbar.
+ */
+export interface IFooterProps {
+  /**
+   * Brand title.
+   */
+  title?: string | null
+
+  /**
+   * Supporting line below the title.
+   */
+  subtitle?: string | null
+
+  /**
+   * Use fluid container (.container-fluid vs .container).
+   * @default false
+   */
+  fluid?: boolean
+
+  /**
+   * Optional custom CSS classes for the footer.
+   */
+  customClass?: ClassValue | null
+}
+
+/**
+ * Interface props for the FooterGroup component.
+ */
+export interface IFooterGroupProps {
+  /**
+   * Heading for the group.
+   */
+  title?: string | null
+
+  /**
+   * Stacks the links in a column or lays them out in a row.
+   * @default 'col'
+   */
+  direction?: FooterGroupDirection | (string & {})
+
+  /**
+   * Optional custom CSS classes for the group.
+   */
+  customClass?: ClassValue | null
+}
+
+/**
+ * Interface props for the FooterItem component.
+ * Notes:
+ * - Renders an anchor when `to` or `href` is set, and a plain `.anchor-link`
+ *   entry otherwise, so both share the footer's link styling.
+ */
+export interface IFooterItemProps {
+  /**
+   * Label text. The default slot overrides it.
+   */
+  text?: string | null
+
+  /**
+   * Optional leading Material Symbols icon code.
+   */
+  icon?: string | null
+
+  /**
+   * Router target. Renders through `as` when it is a component.
+   */
+  to?: string | Record<string, unknown> | null
+
+  /**
+   * Plain href target.
+   */
+  href?: string | null
+
+  /**
+   * Component to render links with (e.g. NuxtLink). Defaults to an anchor.
+   */
+  as?: string | object | null
+
+  /**
+   * Optional custom CSS classes.
    */
   customClass?: ClassValue | null
 }

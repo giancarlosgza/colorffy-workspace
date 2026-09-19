@@ -1,4 +1,7 @@
 // Components - Layout
+export { default as UiFooter } from './components/layout/Footer.vue'
+export { default as UiFooterGroup } from './components/layout/FooterGroup.vue'
+export { default as UiFooterItem } from './components/layout/FooterItem.vue'
 export { default as UiHeaderContent } from './components/layout/HeaderContent.vue'
 export { default as UiHeroContent } from './components/layout/HeroContent.vue'
 export { default as UiPaneContent } from './components/layout/PaneContent.vue'
