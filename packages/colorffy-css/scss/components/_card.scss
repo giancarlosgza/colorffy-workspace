@@ -92,14 +92,6 @@
 
     &.card-elevated {
       --_card-shadow: var(--shadow-sm);
-
-      &:is(:hover) {
-        --_card-shadow: var(--shadow-md);
-      }
-
-      &:is(:active, :focus) {
-        --_card-shadow: var(--shadow-lg);
-      }
     }
 
     &.card-pane {
@@ -114,37 +106,44 @@
       backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
     }
 
-    // Card selectable
-    &.card-selectable {
-      --_card-border: #{v.$border-md};
-      --_card-border-color: transparent;
-      --_card-selectable-translate: 0 -.5rem;
+    // Interactive cards (selectable choice or link navigation)
+    &:is(.card-selectable, .card-link) {
+      --_card-easing-in: #{v.$easing-in-fallback};
 
       cursor: pointer;
       transition: background-color 300ms var(--_card-easing-in),
-      border 300ms var(--_card-easing-in),
-      border-radius 300ms var(--_card-easing-in),
+      border-color 300ms var(--_card-easing-in),
+      box-shadow 300ms var(--_card-easing-in),
       translate 600ms var(--_card-easing-in);
 
-      & > * {
-        user-select: none;
-      }
-
       &:is(:hover) {
-        --_card-bg-color: var(--theme-surface-a30);
-
-        translate: var(--_card-selectable-translate);
+        --_card-bg-color: var(--theme-surface-overlay);
       }
 
-      &:is(:active, :focus) {
+      &:is(:active) {
         --_card-bg-color: var(--theme-surface-a40);
-        --_card-border-color: var(--theme-primary-a10);
-        --_card-radius: #{v.$rounded-xl};
       }
 
-      &:is(.selected) {
-        --_card-border-color: var(--theme-primary-a10);
-        --_card-radius: #{v.$rounded-lg};
+      // A pane already sits on the overlay surface, so it steps further
+      &:is(.card-pane) {
+        &:is(:hover) {
+          --_card-bg-color: var(--theme-surface-a30);
+        }
+
+        &:is(:active) {
+          --_card-bg-color: var(--theme-surface-a40);
+        }
+      }
+
+      // An elevated card answers with its shadow
+      &:is(.card-elevated) {
+        &:is(:hover) {
+          --_card-shadow: var(--shadow-md);
+        }
+
+        &:is(:active, :focus-visible) {
+          --_card-shadow: var(--shadow-lg);
+        }
       }
 
       @supports (transition: linear(1, 1, 1)) {
@@ -152,20 +151,31 @@
       }
     }
 
+    // Card selectable
+    &.card-selectable {
+      --_card-selectable-translate: 0 -.25rem;
+
+      & > * {
+        user-select: none;
+      }
+
+      &:is(:hover) {
+        translate: var(--_card-selectable-translate);
+      }
+
+      &:is(:active, :focus-visible) {
+        --_card-border-color: var(--theme-primary-a10);
+      }
+
+      &:is(.selected) {
+        --_card-border-color: var(--theme-primary-a10);
+      }
+    }
+
     // Card link mode (`to`/`href` renders the card root as `a`/`as`)
     &.card-link {
       color: inherit;
-      cursor: pointer;
       @extend .undecorated;
-      transition: background-color 300ms v.$easing-in-fallback, box-shadow 300ms v.$easing-in-fallback;
-
-      &:is(:hover) {
-        --_card-bg-color: var(--theme-surface-a30);
-      }
-
-      &:is(:active) {
-        --_card-bg-color: var(--theme-surface-a40);
-      }
     }
 
     // Card sizes
@@ -178,7 +188,7 @@
       }
 
       &:is(.card-selectable) {
-        --_card-selectable-translate: 0 -.25rem;
+        --_card-selectable-translate: 0 -.125rem;
       }
     }
 
