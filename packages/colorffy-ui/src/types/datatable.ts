@@ -1,3 +1,5 @@
+import type { IButtonProps } from '@/types/button'
+
 /**
  * Interface for the column toggle tooltip in Datatable.
  */
@@ -52,6 +54,47 @@ export interface IDatatableColumn {
    * Optional custom CSS class for the column's body cells.
    */
   tdClass?: string
+}
+
+/**
+ * Button props applied to the Datatable's built-in toolbar buttons (the
+ * column toggle and the column manager), overriding their defaults.
+ */
+export type DatatableToolbarButton = Partial<Pick<IButtonProps, 'variant' | 'color' | 'size' | 'customClass' | 'rounded'>>
+
+/**
+ * Props passed to the `column-toggle` and `column-manager` scoped slots.
+ */
+export interface IDatatableColumnSlotProps {
+  /**
+   * All column definitions, including hidden ones.
+   */
+  columns: IDatatableColumn[]
+
+  /**
+   * True when no column is hidden.
+   */
+  allVisible: boolean
+
+  /**
+   * Returns true when the column is currently shown.
+   */
+  isVisible: (key: string) => boolean
+
+  /**
+   * Returns true for the last visible column, which cannot be hidden.
+   */
+  isLocked: (key: string) => boolean
+
+  /**
+   * Shows or hides a single column.
+   */
+  toggle: (key: string) => void
+
+  /**
+   * Shows every column, or restores the default hidden columns when all are shown.
+   */
+  toggleAll: () => void
 }
 
 /**
@@ -129,11 +172,18 @@ export interface IDatatableProps {
    * When true, the table header sticks to the top of its scroll container
    * while the body scrolls. Pairs with the `.table-responsive-sticky`
    * wrapper class (applied automatically) which caps the wrapper height via
-   * `--_table-sticky-max-height` (default `32rem`, override with a style
-   * binding) and makes it vertically scrollable.
+   * `--_table-sticky-max-height` (default `32rem`, override with
+   * `stickyHeight`) and makes it vertically scrollable.
    * @default false
    */
   stickyHeader?: boolean
+  /**
+   * Max height of the scroll container when `stickyHeader` is on. Accepts any
+   * CSS length ('18rem', '50vh'); a number is read as pixels. Sets
+   * `--_table-sticky-max-height`, which otherwise defaults to `32rem`.
+   * @default null
+   */
+  stickyHeight?: string | number | null
   /**
    * Column `key` to sort by initially.
    * @default ''
@@ -160,15 +210,16 @@ export interface IDatatableProps {
    */
   columnsToggleTooltip?: string | IColumnsToggleTooltip
   /**
-   * Label text for the column manager button.
-   * @default 'Columns'
-   */
-  columnManagerText?: string
-  /**
-   * Tooltip text for the column manager button.
+   * Tooltip text for the icon-only column manager button; also its accessible name.
    * @default 'Manage columns'
    */
   columnManagerTooltip?: string
+  /**
+   * Button props for the built-in toolbar buttons (variant, color, size,
+   * customClass, rounded). Overrides the default outline, small style.
+   * @default null
+   */
+  toolbarButton?: DatatableToolbarButton | null
   /**
    * Title text for the empty state.
    * @default 'No data available'
@@ -176,7 +227,7 @@ export interface IDatatableProps {
   emptyStateTitle?: string
   /**
    * Subtitle text for the empty state.
-   * @default 'Try may want to try using different filters or check back later.'
+   * @default 'You may want to try using different filters or check back later.'
    */
   emptyStateSubtitle?: string
   /**

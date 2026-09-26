@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IDatatableColumn, IDatatableProps } from '@/types/datatable'
-import { computed, ref, useId, watch } from 'vue'
+import type { IDatatableColumn, IDatatableColumnSlotProps, IDatatableProps } from '@/types/datatable'
+import { computed, ref, useId, useSlots, watch } from 'vue'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
 import UiButtonGroup from '../button/ButtonGroup.vue'
@@ -22,15 +22,19 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   sortable: true,
   selectable: false,
   stickyHeader: false,
+  stickyHeight: null,
   columnManager: false,
   columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
-  columnManagerText: 'Columns',
   columnManagerTooltip: 'Manage columns',
+  toolbarButton: null,
   emptyStateTitle: 'No data available',
-  emptyStateSubtitle: 'Try may want to try using different filters or check back later.',
+  emptyStateSubtitle: 'You may want to try using different filters or check back later.',
   emptyStateUseCustomIcon: false,
   emptyStateIconCode: '&#xeb83;'
 })
+
+/** Slots */
+const slots = useSlots()
 
 /** Model */
 const selectedModel = defineModel<(string | number)[]>('selected', { default: () => [] })
@@ -58,8 +62,26 @@ const columnsToggleTooltipText = computed(() => {
 const visibleColumns = computed(() => {
   return props.columns.filter(col => !managedHiddenColumns.value.includes(col.key))
 })
+const stickyStyle = computed(() => {
+  if (!props.stickyHeader || props.stickyHeight == null || props.stickyHeight === '')
+    return undefined
+  const height = typeof props.stickyHeight === 'number' ? `${props.stickyHeight}px` : props.stickyHeight
+  return { '--_table-sticky-max-height': height }
+})
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
 const selectAllId = useId()
+const toolbarId = useId()
+
+const hasToolbarActions = computed(() => defaultHiddenKeys.value.length > 0 || props.columnManager || !!slots['actions-start'] || !!slots['actions-end'])
+const hasToolbar = computed(() => hasToolbarActions.value || !!slots.controls)
+const columnSlotProps = computed<IDatatableColumnSlotProps>(() => ({
+  columns: props.columns,
+  allVisible: areAllColumnsVisible.value,
+  isVisible: isColumnVisible,
+  isLocked: isLastVisibleColumn,
+  toggle: toggleColumnVisibility,
+  toggleAll: toggleShowAllColumns
+}))
 
 const sortedItems = computed(() => {
   if (!sortKey.value) {
@@ -173,53 +195,71 @@ function isLastVisibleColumn(key: string) {
   <div>
     <!-- Table Controls -->
     <div
-      v-if="defaultHiddenKeys.length > 0 || columnManager"
+      v-if="hasToolbar"
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
     >
       <div>
         <slot name="controls" />
       </div>
-      <UiButtonGroup>
-        <UiButtonTooltip
+      <UiButtonGroup v-if="hasToolbarActions">
+        <slot name="actions-start" />
+
+        <!-- Column toggle -->
+        <slot
           v-if="defaultHiddenKeys.length > 0"
-          id="columns-toggle"
-          variant="outline"
-          size="sm"
-          icon icon-variant="shape-sm"
-          :tooltip-text="columnsToggleTooltipText"
-          @on-click="toggleShowAllColumns"
+          name="column-toggle"
+          v-bind="columnSlotProps"
         >
-          <template #icon>
-            <UiIconMaterial
-              :icon-code="!areAllColumnsVisible ? '&#xe946;' : '&#xe944;'"
-              class="rotate-90"
-            />
-          </template>
-        </UiButtonTooltip>
-        <UiButtonMenu
+          <UiButtonTooltip
+            :id="`${toolbarId}-columns-toggle`"
+            variant="outline"
+            size="sm"
+            icon icon-variant="shape-sm"
+            :tooltip-text="columnsToggleTooltipText"
+            v-bind="toolbarButton"
+            @on-click="toggleShowAllColumns"
+          >
+            <template #icon>
+              <UiIconMaterial
+                :icon-code="!areAllColumnsVisible ? '&#xe946;' : '&#xe944;'"
+                class="rotate-90"
+              />
+            </template>
+          </UiButtonTooltip>
+        </slot>
+
+        <!-- Column manager -->
+        <slot
           v-if="columnManager"
-          id="column-manager"
-          variant="outline"
-          size="sm"
-          :text="columnManagerText"
-          :tooltip-text="columnManagerTooltip"
-          icon-trailing
+          name="column-manager"
+          v-bind="columnSlotProps"
         >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe5c5;" />
-          </template>
-          <template #menu>
-            <UiButtonMenuItem
-              v-for="column in columns"
-              :id="`column-${column.key}`"
-              :key="column.key"
-              :item-text="column.label"
-              :icon="isColumnVisible(column.key) ? '&#xe834;' : '&#xe835;'"
-              :disabled="isLastVisibleColumn(column.key)"
-              @click="toggleColumnVisibility(column.key)"
-            />
-          </template>
-        </UiButtonMenu>
+          <UiButtonMenu
+            :id="`${toolbarId}-column-manager`"
+            variant="outline"
+            size="sm"
+            icon icon-variant="shape-sm"
+            :tooltip-text="columnManagerTooltip"
+            v-bind="toolbarButton"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe8ec;" />
+            </template>
+            <template #menu>
+              <UiButtonMenuItem
+                v-for="column in columns"
+                :id="`${toolbarId}-column-${column.key}`"
+                :key="column.key"
+                :item-text="column.label"
+                :icon="isColumnVisible(column.key) ? '&#xe834;' : '&#xe835;'"
+                :disabled="isLastVisibleColumn(column.key)"
+                @click="toggleColumnVisibility(column.key)"
+              />
+            </template>
+          </UiButtonMenu>
+        </slot>
+
+        <slot name="actions-end" />
       </UiButtonGroup>
     </div>
 
@@ -227,6 +267,7 @@ function isLastVisibleColumn(key: string) {
     <div
       class="table-responsive"
       :class="{ 'table-responsive-sticky': stickyHeader }"
+      :style="stickyStyle"
     >
       <table
         class="table table-hover"
