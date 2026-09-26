@@ -31,13 +31,13 @@ defineEmits<IButtonMenuEmits>()
 
 <template>
   <VDropdown
-    :aria-id="`${id}-dropdown`"
+    :aria-id="id ? `${id}-dropdown` : undefined"
     :positioning-disabled="isMobile"
     :placement="placement"
     :class="{ 'w-100': fluid }"
   >
     <VTooltip
-      :aria-id="`${id}-tooltip`"
+      :aria-id="id ? `${id}-tooltip` : undefined"
       :placement="tooltipPlacement"
       :class="{ 'w-100': fluid }"
       class="d-inline-block"

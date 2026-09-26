@@ -6,7 +6,7 @@ import UiButton from './Button.vue'
 /** Props */
 withDefaults(defineProps<IButtonTooltipProps>(), {
   tooltipText: '',
-  id: 'tooltip',
+  id: '',
   title: '',
   text: '',
   variant: 'filled',
@@ -29,7 +29,7 @@ defineEmits<IButtonTooltipEmits>()
 
 <template>
   <VTooltip
-    :aria-id="`${id}-tooltip`"
+    :aria-id="id ? `${id}-tooltip` : undefined"
     :placement="placement"
     :class="{ 'w-100': fluid }"
   >
