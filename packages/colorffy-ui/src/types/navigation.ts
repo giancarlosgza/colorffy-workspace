@@ -1,5 +1,7 @@
 import type { IBadgeProps } from '@/types/badge'
-import type { IBaseLinkProps } from '@/types/shared'
+import type { IBaseLinkProps, SizeLevel } from '@/types/shared'
+
+export type TabsSize = Extract<SizeLevel, 'sm' | 'md'>
 
 /**
  * Shared interface for navigation and menu items.
@@ -166,6 +168,12 @@ export interface ITabsProps {
    * When true, tabs stretch to fill the available width equally.
    */
   fluid?: boolean
+
+  /**
+   * Tab button size ('sm' | 'md'). 'sm' uses the default button height and font size.
+   * Defaults to 'md'.
+   */
+  size?: TabsSize | null
 }
 
 /**
