@@ -189,12 +189,17 @@ function onOverviewTabChange(tabId: string) {
           class="card-pane h-100"
         >
           <template #body>
-            <UiTabs
-              :tabs="overviewTabs"
-              :active-tab="activeOverviewTab"
-              pill-tabs
-              @update-active-tab="onOverviewTabChange"
-            />
+            <div class="row">
+              <div class="col-md-6">
+                <UiTabs
+                  :tabs="overviewTabs"
+                  :active-tab="activeOverviewTab"
+                  pill-tabs
+                  size="sm" fluid
+                  @update-active-tab="onOverviewTabChange"
+                />
+              </div>
+            </div>
 
             <!-- Panels -->
             <div

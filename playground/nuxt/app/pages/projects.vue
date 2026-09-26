@@ -197,10 +197,10 @@ function createProject() {
           caption="Listado de proyectos del equipo"
           selectable
           sticky-header
-          style="--_table-sticky-max-height: 18rem"
+          sticky-height="18rem"
           column-manager
-          column-manager-text="Columnas"
           column-manager-tooltip="Administrar columnas"
+          :toolbar-button="{ variant: 'tonal', color: 'primary' }"
           :columns-toggle-tooltip="{ showAll: 'Mostrar todas', hideDefault: 'Ocultar predeterminadas' }"
           empty-state-title="No se encontraron proyectos"
           empty-state-subtitle="Ajusta el filtro o el término de búsqueda."
@@ -220,6 +220,37 @@ function createProject() {
                 <UiIconMaterial icon-code="&#xe5d5;" />
               </template>
             </UiButton>
+          </template>
+          <template #actions-start>
+            <UiButtonTooltip
+              id="projects-export"
+              variant="tonal"
+              color="info"
+              size="sm"
+              icon
+              icon-variant="shape-sm"
+              tooltip-text="Exportar CSV"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xf090;" />
+              </template>
+            </UiButtonTooltip>
+          </template>
+          <template #actions-end>
+            <UiButtonTooltip
+              id="projects-clear-filters"
+              variant="tonal"
+              color="accent"
+              size="sm"
+              icon
+              icon-variant="shape-sm"
+              tooltip-text="Limpiar filtros"
+              @on-click="clearFilters"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xeb32;" />
+              </template>
+            </UiButtonTooltip>
           </template>
           <template #cell-name="{ item }">
             <span class="d-inline-flex align-items-center gap-2 fw-600">

@@ -198,6 +198,7 @@ function onOtpComplete() {
                   id="avatar"
                   input-label="Subir una foto"
                   label="Foto de perfil"
+                  size="lg"
                 />
               </div>
             </div>
