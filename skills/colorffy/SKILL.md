@@ -18,7 +18,8 @@ Complete framework for building Vue 3 and Nuxt 3 applications with Colorffy UI (
 | **Reference** | **[Components API](references/components.md)** | Full reference for 70+ components |
 | | **[CSS Utilities](references/utilities.md)** | Complete utility class reference |
 | | **[Layout Systems](references/layout.md)** | Grid and Flexbox layout utilities |
-| | **[Official Documentation](https://colorffy-ui-docs.pages.dev/getting-started/introduction)** | Hosted Colorffy documentation |
+| | **[Official Documentation](https://colorffy-ui-docs.pages.dev/)** | Hosted Colorffy documentation |
+| | **[Changelog](https://colorffy-ui-docs.pages.dev/changelog)** | Notable changes per release, newest first |
 | **Patterns** | **[Best Practices](references/best-practices.md)** | Common patterns, workflows, tips |
 
 ## Framework Overview
@@ -209,7 +210,7 @@ Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them
 - `ISegmentedTab.position` and `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
 - Public tokens gain a namespace prefix (planned `--cffy-*`); `m-*`/`p-*`/`gap-*` utilities rebase onto the token scale (`.p-12` = `var(--space-12)`, so old numeric steps change meaning); a `--container-*` width scale absorbs one-offs like `--theme-nav-drawer-width`. None of these exist in 2.x yet — don't reference them until 3.0.
 
-**[See the CSS migration guide →](https://colorffy.com/docs/migration)**
+**[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
 
 ## Support
 
