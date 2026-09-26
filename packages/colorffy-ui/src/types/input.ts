@@ -127,6 +127,7 @@ export interface IFileInputProps extends IBaseInputProps {
 
   /**
    * Renders a larger dropbox variant.
+   * @deprecated Use `size="lg"` instead.
    */
   large?: boolean
 

@@ -30,7 +30,7 @@ const emit = defineEmits<IFileInputEmits>()
 const model = defineModel<File | null>('modelValue', { default: null })
 
 /** Refs */
-const { label, inputLabel, large } = toRefs(props)
+const { label, inputLabel } = toRefs(props)
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
@@ -48,7 +48,7 @@ const dropboxClasses = computed(() => [
   'input-file-dropbox',
   {
     'valid-file': !!model.value,
-    'dropbox-lg': large.value
+    'dropbox-lg': props.size === 'lg' || props.large
   }
 ])
 const fileClasses = computed(() => {
