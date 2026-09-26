@@ -217,12 +217,17 @@
     --_btn-padding-inline: var(--space-8);
     --_btn-height: 32px;
     --_btn-icon-size: 1rem;
+  } @else if ($size == 'md') {
+    --_btn-padding-inline: var(--space-12);
+    --_btn-height: 36px;
+    --_btn-icon-size: 1.15rem;
+
+    font-size: map.get(v.$type-button, font-size);
   } @else if ($size == 'lg') {
     --_btn-padding-inline: var(--space-14);
     --_btn-height: 48px;
     --_btn-icon-size: 1.45rem;
 
-    // Large button font size
     font-size: 14px;
   } @else if ($size == 'fab') {
     --_btn-padding-inline: var(--space-16);
