@@ -7,14 +7,18 @@
   // CARD COMPONENT
   // ==========================================================================
   .card {
-    --_card-gutter-x: var(--space-16);
-    --_card-gutter-y: var(--space-16);
-    --_card-bg-color: var(--theme-surface-a0);
-    --_card-color: var(--theme-on-background);
-    --_card-border: var(--border-width-sm);
-    --_card-border-color: transparent;
-    --_card-radius: #{v.$card-border-radius};
-    --_card-shadow: none;
+    --_card-gutter-x: var(--card-padding-inline, var(--space-16));
+    --_card-gutter-y: var(--card-padding-block, var(--space-16));
+    --_card-bg-color: var(--card-bg-color, var(--theme-surface-a0));
+    --_card-color: var(--card-color, var(--theme-on-background));
+    --_card-border: var(--card-border-width, var(--border-width-sm));
+    --_card-border-color: var(--card-border-color, transparent);
+    --_card-radius: var(--card-radius, #{v.$card-border-radius});
+    --_card-shadow: var(--card-shadow, none);
+    --_card-title-font-size: var(--card-title-font-size, var(--fs-base));
+    --_card-title-font-weight: var(--card-title-font-weight, var(--fw-700));
+    --_card-text-color: var(--card-text-color, var(--theme-muted-a10));
+    --_card-easing-in: var(--card-easing, var(--ease-emphasized));
 
     display: flex;
     flex-direction: column;
@@ -42,11 +46,11 @@
       padding-block: var(--_card-gutter-y) var(--space-8);
       padding-inline: var(--_card-gutter-x);
       margin-bottom: 0;
-      border-radius: v.$card-border-radius v.$card-border-radius 0 0;
+      border-radius: var(--_card-radius) var(--_card-radius) 0 0;
 
       .card-title {
-        font-size: var(--fs-base);
-        font-weight: var(--fw-700);
+        font-size: var(--_card-title-font-size);
+        font-weight: var(--_card-title-font-weight);
         font-family: var(--font-secondary);
         margin-bottom: 0;
       }
@@ -64,7 +68,7 @@
       padding-inline: var(--_card-gutter-x);
 
       p:is(.card-text) {
-        color: var(--theme-muted-a10);
+        color: var(--_card-text-color);
       }
     }
 
@@ -72,7 +76,7 @@
       padding-block: var(--space-6) var(--_card-gutter-y);
       padding-inline: var(--_card-gutter-x);
       margin-top: 0;
-      border-radius: 0 0 v.$card-border-radius v.$card-border-radius;
+      border-radius: 0 0 var(--_card-radius) var(--_card-radius);
 
       // Add flex wrap if card has flex display
       &:is(.d-flex, .d-inline-flex) {
@@ -108,8 +112,6 @@
 
     // Interactive cards (selectable choice or link navigation)
     &:is(.card-selectable, .card-link) {
-      --_card-easing-in: var(--ease-emphasized);
-
       cursor: pointer;
       transition: background-color var(--duration-300) var(--_card-easing-in),
       border-color var(--duration-300) var(--_card-easing-in),
@@ -117,7 +119,7 @@
       translate var(--duration-600) var(--_card-easing-in);
 
       &:is(:hover) {
-        --_card-bg-color: var(--theme-surface-overlay);
+        --_card-bg-color: var(--card-hover-bg-color, var(--theme-surface-overlay));
       }
 
       &:is(:active) {
@@ -160,11 +162,11 @@
       }
 
       &:is(:active, :focus-visible) {
-        --_card-border-color: var(--theme-primary-a10);
+        --_card-border-color: var(--card-selected-border-color, var(--theme-primary-a10));
       }
 
       &:is(.selected) {
-        --_card-border-color: var(--theme-primary-a10);
+        --_card-border-color: var(--card-selected-border-color, var(--theme-primary-a10));
       }
     }
 

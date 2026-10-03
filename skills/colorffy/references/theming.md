@@ -225,6 +225,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Footer** (`.footer`, `UiFooter`): `--footer-bg-color`, `-color`, `-muted-color`, `-border-color`, `-padding-inline`, `-padding-block`, `-margin-block-start`, `-gap`, `-title-font-size`, `-title-font-weight`, `-link-color`, `-link-hover-color`, `-link-font-size`, `-icon-color`
 - **Progress** (`.progress`, `UiProgressBar`): `--progress-bg-color`, `-color`, `-label-color`, `-height`, `-radius`, `-font-size`, `-easing`, `-duration`; spinner `--progress-spinner-color`; skeleton `--skeleton-color`, `--skeleton-radius`; shapes loader `--loading-shapes-color`
 - **Alert** (`.alert`, `UiAlert` / `UiAlertToast`): `--alert-bg-color`, `-border-color`, `-color`, `-icon-color`, `-radius`, `-font-size`, `-font-weight`, `-title-font-size`, `-title-font-weight`, `-icon-size`, `-padding-block`, `-padding-inline`, `-gap`, `-stack-gap`; snackbars `--alert-snackbar-bg-color`, `-snackbar-color`, `--alert-toast-offset`, `-toast-min-width`; PWA prompt `--pwa-alert-bg-color`, `-border-color`, `-shadow`, `-radius`, `-padding`, `-gap`
+- **Card** (`.card`, `UiCard`): `--card-bg-color`, `-color`, `-border-width`, `-border-color`, `-radius`, `-shadow`, `-padding-inline`, `-padding-block`, `-title-font-size`, `-title-font-weight`, `-text-color`, `-hover-bg-color`, `-selected-border-color`, `-easing`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
