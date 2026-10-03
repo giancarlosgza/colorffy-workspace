@@ -21,7 +21,7 @@
   }
 
   .table-responsive.table-responsive-sticky {
-    max-height: var(--_table-sticky-max-height, 32rem);
+    max-height: var(--_table-sticky-max-height, var(--table-sticky-max-height, 32rem));
     overflow-y: auto;
   }
 
@@ -29,15 +29,17 @@
   // STANDARD TABLE COMPONENT
   // ==========================================================================
   .table {
-    --_table-bg-color: transparent;
-    --_table-color: currentColor;
-    --_table-border-color: var(--theme-outline-surface);
-    --_table-border-width: var(--border-width-sm);
-    --_table-gutter-x: var(--space-8);
-    --_table-gutter-y: var(--space-8);
-    --_table-font-size: .75rem;
-    --_table-border-radius: var(--radius-none);
-    --_table-thead-bg-color: var(--theme-surface-a10);
+    --_table-bg-color: var(--table-bg-color, transparent);
+    --_table-color: var(--table-color, currentColor);
+    --_table-border-color: var(--table-border-color, var(--theme-outline-surface));
+    --_table-border-width: var(--table-border-width, var(--border-width-sm));
+    --_table-gutter-x: var(--table-cell-padding-inline, var(--space-8));
+    --_table-gutter-y: var(--table-cell-padding-block, var(--space-8));
+    --_table-font-size: var(--table-font-size, .75rem);
+    --_table-border-radius: var(--table-radius, var(--radius-none));
+    --_table-thead-bg-color: var(--table-header-bg-color, var(--theme-surface-a10));
+    --_table-easing-in: var(--table-easing, ease-in-out);
+    --_table-easing-duration: var(--table-duration, var(--duration-100));
 
     display: table;
     width: 100%;
@@ -52,10 +54,10 @@
 
       tr {
         th {
-          font-size: var(--fs-4xs);
-          font-weight: var(--fw-600);
+          font-size: var(--table-header-font-size, var(--fs-4xs));
+          font-weight: var(--table-header-font-weight, var(--fw-600));
           font-family: var(--font-primary);
-          color: var(--theme-muted-a10);
+          color: var(--table-header-color, var(--theme-muted-a10));
           letter-spacing: 0.0727em;
           text-align: start;
           padding: calc(var(--_table-gutter-y) * 1.5) var(--_table-gutter-x);
@@ -86,7 +88,7 @@
         @include m.text-wrap-pretty;
 
         .td-text {
-          font-size: .75rem;
+          font-size: var(--_table-font-size);
         }
 
         .td-name {
@@ -96,8 +98,8 @@
 
           i {
             font-variation-settings: var(--iw-semi-bold);
-            color: var(--theme-muted-a10);
-            font-size: 1.25rem;
+            color: var(--table-icon-color, var(--theme-muted-a10));
+            font-size: var(--table-icon-size, 1.25rem);
 
             &:is(.text-gradient) {
               font-variation-settings: var(--iw-bold);
@@ -116,7 +118,7 @@
       }
 
       tr.is-selected {
-        background-color: var(--theme-surface-a0);
+        background-color: var(--table-selected-bg-color, var(--theme-surface-a0));
       }
     }
 
@@ -202,7 +204,7 @@
     &.table-striped {
       tbody {
         tr:nth-child(odd) {
-          background-color: var(--theme-surface-container);
+          background-color: var(--table-striped-bg-color, var(--theme-surface-container));
         }
       }
     }
@@ -211,10 +213,10 @@
     &.table-hover {
       tbody {
         tr {
-          transition: background-color var(--duration-100) ease-in-out;
+          transition: background-color var(--_table-easing-duration) var(--_table-easing-in);
 
           &:is(:hover) {
-            background-color: var(--theme-surface-a10);
+            background-color: var(--table-hover-bg-color, var(--theme-surface-a10));
           }
         }
       }
@@ -247,7 +249,7 @@
 
         @supports (container-type: scroll-state) {
           @container scroll-state(scrollable: left) {
-            background: var(--theme-surface-body-pane);
+            background: var(--table-sticky-column-bg-color, var(--theme-surface-body-pane));
             transition: background-color var(--duration-100) var(--ease-decelerate),
             border var(--duration-100) var(--ease-decelerate);
 
