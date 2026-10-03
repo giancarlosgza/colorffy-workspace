@@ -403,8 +403,8 @@ Components use scoped CSS variables (prefixed with `--_`) for internal values. Y
 .card {
   --_card-bg-color: var(--theme-surface-pane);
   --_card-border-radius: 1rem;
-  --_card-gutter-x: 2rem;
-  --_card-gutter-y: 2rem;
+  --_card-padding-inline: 2rem;
+  --_card-padding-block: 2rem;
 }
 
 /* Customize button */

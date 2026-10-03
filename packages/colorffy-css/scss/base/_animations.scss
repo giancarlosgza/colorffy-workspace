@@ -331,11 +331,11 @@
   }
 
   .slide-enter-active {
-    --_slide-easing-in: var(--ease-emphasized);
+    --_slide-easing: var(--ease-emphasized);
 
     overflow-x: clip;
-    transition: opacity var(--duration-600) var(--_slide-easing-in),
-    translate var(--duration-800) var(--_slide-easing-in);
+    transition: opacity var(--duration-600) var(--_slide-easing),
+    translate var(--duration-800) var(--_slide-easing);
   }
 
   .slide-leave-active {
@@ -396,10 +396,10 @@
     transition for tab menu changes
   */
   .slide-inline-enter-active {
-    --_slide-inline-easing-in: var(--ease-emphasized);
+    --_slide-inline-easing: var(--ease-emphasized);
 
-    transition: translate var(--duration-600) var(--_slide-inline-easing-in),
-    opacity var(--duration-600) var(--_slide-inline-easing-in);
+    transition: translate var(--duration-600) var(--_slide-inline-easing),
+    opacity var(--duration-600) var(--_slide-inline-easing);
   }
 
   .slide-inline-leave-active {
@@ -448,10 +448,10 @@
   horizontal transition
   */
   .fade-inline-enter-active {
-    --_fade-inline-easing-in: var(--ease-decelerate);
+    --_fade-inline-easing: var(--ease-decelerate);
 
-    transition: translate var(--duration-400) var(--_fade-inline-easing-in),
-    opacity var(--duration-400) var(--_fade-inline-easing-in);
+    transition: translate var(--duration-400) var(--_fade-inline-easing),
+    opacity var(--duration-400) var(--_fade-inline-easing);
   }
 
   .fade-inline-leave-active {

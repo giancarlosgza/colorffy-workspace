@@ -17,12 +17,12 @@
   .progress {
     --_progress-bg-color: var(--progress-bg-color, var(--theme-surface-container-high));
     --_progress-color: var(--progress-color, var(--theme-primary-a10));
-    --_progress-on-bg-color: var(--progress-label-color, var(--theme-on-primary));
+    --_progress-label-color: var(--progress-label-color, var(--theme-on-primary));
     --_progress-height: var(--progress-height, 0.85rem);
     --_progress-radius: var(--progress-radius, var(--radius-md));
     --_progress-font-size: var(--progress-font-size, var(--fs-4xs));
-    --_progress-easing-in: var(--progress-easing, var(--ease-emphasized));
-    --_progress-easing-duration: var(--progress-duration, var(--duration-800));
+    --_progress-easing: var(--progress-easing, var(--ease-emphasized));
+    --_progress-duration: var(--progress-duration, var(--duration-800));
 
     display: flex;
     overflow: hidden;
@@ -54,10 +54,10 @@
       height: var(--_progress-height);
       text-align: center;
       white-space: nowrap;
-      color: var(--_progress-on-bg-color);
+      color: var(--_progress-label-color);
       background-color: var(--_progress-bg-color);
       border-radius: inherit;
-      transition: width var(--_progress-easing-duration) var(--_progress-easing-in);
+      transition: width var(--_progress-duration) var(--_progress-easing);
 
       // Progress bar with animation
       &.progress-animated {
@@ -76,7 +76,7 @@
       // Indeterminate
       &.progress-indeterminate {
         width: 40%;
-        animation: progress-indeterminate 1.4s var(--_progress-easing-in) infinite;
+        animation: progress-indeterminate 1.4s var(--_progress-easing) infinite;
         will-change: transform;
 
         @media (prefers-reduced-motion: reduce) {
@@ -252,7 +252,7 @@
 
       & .shape {
         --_shape-bg-alpha: 1;
-        --_shape-bg-color: var(--loading-shapes-color, var(--theme-primary-a10));
+        --_loading-shapes-color: var(--loading-shapes-color, var(--theme-primary-a10));
         --_shape-size: 15rem;
 
         position: absolute;
@@ -263,7 +263,7 @@
         aspect-ratio: 1;
         border-radius: 100%;
         opacity: var(--_shape-bg-alpha);
-        background-color: var(--_shape-bg-color);
+        background-color: var(--_loading-shapes-color);
         animation: shape-loading 5s linear infinite;
         transform: translate(
                         calc(cos(var(--shape-angle)) * 3rem),

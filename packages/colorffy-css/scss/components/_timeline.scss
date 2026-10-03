@@ -16,9 +16,9 @@
     --_timeline-time-color: var(--timeline-time-color, var(--theme-muted-a10));
     --_timeline-image-size: var(--timeline-image-size, 2.75rem);
     --_timeline-icon-size: var(--timeline-icon-size, var(--fs-lg));
-    --_timeline-icon-wrapper-padding: var(--timeline-icon-padding, .625rem);
-    --_timeline-title-size: var(--timeline-title-font-size, var(--fs-2xs));
-    --_timeline-subtitle-size: var(--timeline-text-font-size, var(--fs-3xs));
+    --_timeline-icon-padding: var(--timeline-icon-padding, .625rem);
+    --_timeline-title-font-size: var(--timeline-title-font-size, var(--fs-2xs));
+    --_timeline-text-font-size: var(--timeline-text-font-size, var(--fs-3xs));
 
     display: grid;
     grid-template-columns: auto 1fr;
@@ -76,7 +76,7 @@
     & .list-item-icon-wrapper {
       flex-shrink: 0;
       border-radius: var(--timeline-icon-radius, var(--radius-md));
-      padding: var(--_timeline-icon-wrapper-padding);
+      padding: var(--_timeline-icon-padding);
       aspect-ratio: 1;
       background-color: var(--_timeline-icon-bg-color);
 
@@ -99,12 +99,12 @@
         }
 
         &:is(.timeline-title) {
-          font-size: var(--_timeline-title-size);
+          font-size: var(--_timeline-title-font-size);
           font-weight: var(--timeline-title-font-weight, var(--fw-600));
         }
 
         &:is(.timeline-text) {
-          font-size: var(--_timeline-subtitle-size);
+          font-size: var(--_timeline-text-font-size);
           color: var(--timeline-text-color, var(--theme-muted-a10));
         }
       }
@@ -124,9 +124,9 @@
       --_timeline-item-spacing: var(--space-16);
       --_timeline-dot-size: .5rem;
       --_timeline-icon-size: var(--fs-base);
-      --_timeline-icon-wrapper-padding: var(--space-4);
-      --_timeline-title-size: var(--fs-3xs);
-      --_timeline-subtitle-size: var(--fs-4xs);
+      --_timeline-icon-padding: var(--space-4);
+      --_timeline-title-font-size: var(--fs-3xs);
+      --_timeline-text-font-size: var(--fs-4xs);
     }
 
     &.timeline-lg {
@@ -135,9 +135,9 @@
       --_timeline-dot-size: .5rem;
       --_timeline-image-size: 3.75rem;
       --_timeline-icon-size: var(--fs-xl);
-      --_timeline-icon-wrapper-padding: var(--space-12);
-      --_timeline-title-size: var(--fs-sm);
-      --_timeline-subtitle-size: var(--fs-xs);
+      --_timeline-icon-padding: var(--space-12);
+      --_timeline-title-font-size: var(--fs-sm);
+      --_timeline-text-font-size: var(--fs-xs);
     }
 
     // ==========================================================================

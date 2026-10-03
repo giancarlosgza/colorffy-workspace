@@ -11,19 +11,19 @@
     --_popover-border-color: var(--popover-border-color, var(--theme-outline-surface));
     --_popover-shadow: var(--popover-shadow, var(--shadow-lg));
     --_popover-radius: var(--popover-radius, #{v.$dialog-border-radius});
-    --_popover-width: var(--popover-max-width, 20rem);
-    --_popover-height: var(--popover-max-height, 30rem);
-    --_popover-gutter: var(--popover-spacing, var(--space-16));
+    --_popover-max-width: var(--popover-max-width, 20rem);
+    --_popover-max-height: var(--popover-max-height, 30rem);
+    --_popover-spacing: var(--popover-spacing, var(--space-16));
     --_popover-offset: var(--popover-offset, .625rem);
-    --_popover-easing-in: var(--popover-easing, ease-in-out);
-    --_popover-easing-duration: var(--popover-duration, var(--duration-250));
+    --_popover-easing: var(--popover-easing, ease-in-out);
+    --_popover-duration: var(--popover-duration, var(--duration-250));
 
     position: fixed;
     inset: 0;
     margin: auto;
     width: max-content;
-    max-width: var(--_popover-width);
-    max-height: var(--_popover-height);
+    max-width: var(--_popover-max-width);
+    max-height: var(--_popover-max-height);
     border-radius: var(--_popover-radius);
     box-shadow: var(--_popover-shadow);
     background: var(--_popover-bg-color);
@@ -31,25 +31,25 @@
 
     translate: 0 1rem;
     opacity: 0;
-    transition: translate var(--_popover-easing-duration), opacity var(--_popover-easing-duration), display var(--_popover-easing-duration) allow-discrete, overlay var(--_popover-easing-duration) allow-discrete;
-    transition-timing-function: var(--_popover-easing-in);
+    transition: translate var(--_popover-duration), opacity var(--_popover-duration), display var(--_popover-duration) allow-discrete, overlay var(--_popover-duration) allow-discrete;
+    transition-timing-function: var(--_popover-easing);
 
     // ==========================================================================
     // POPOVER SIZES (SM, LG)
     // ==========================================================================
     &.popover-lg {
-      --_popover-height: 40rem;
+      --_popover-max-height: 40rem;
     }
 
     @supports (anchor-name: --foo) {
       &.popover-sm {
-        --_popover-width: anchor-size(width);
+        --_popover-max-width: anchor-size(width);
 
         width: anchor-size(width);
       }
 
       &.popover-lg {
-        --_popover-width: none;
+        --_popover-max-width: none;
 
         width: max(30rem, anchor-size(width));
       }
@@ -106,12 +106,12 @@
     & .popover-content {
       display: flex;
       flex-direction: column;
-      padding: calc(var(--_popover-gutter) / 2);
+      padding: calc(var(--_popover-spacing) / 2);
       color: var(--_popover-color);
       max-height: 25rem;
 
       & .popover-header {
-        margin-bottom: var(--_popover-gutter);
+        margin-bottom: var(--_popover-spacing);
 
         & .popover-title {
           font-size: var(--popover-title-font-size, var(--fs-xs));
@@ -138,7 +138,7 @@
 
       & .popover-footer {
         border-top: var(--border-width-sm) solid var(--_popover-border-color);
-        margin-top: var(--_popover-gutter);
+        margin-top: var(--_popover-spacing);
       }
     }
 
@@ -147,15 +147,15 @@
     // ==========================================================================
     @include m.media-query(768) {
       &.popover {
-        --_popover-width: calc(100dvw - (var(--_popover-gutter) * 2));
-        --_popover-height: calc(100dvh - (var(--_popover-gutter) * 2));
+        --_popover-max-width: calc(100dvw - (var(--_popover-spacing) * 2));
+        --_popover-max-height: calc(100dvh - (var(--_popover-spacing) * 2));
 
         left: 0;
         right: 0;
         margin-inline: auto;
 
         &.popover-lg {
-          --_popover-width: calc(100dvw - (var(--_popover-gutter) * 2));
+          --_popover-max-width: calc(100dvw - (var(--_popover-spacing) * 2));
 
           width: 100%;
         }

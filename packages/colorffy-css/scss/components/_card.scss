@@ -8,18 +8,18 @@
   // CARD COMPONENT
   // ==========================================================================
   .card {
-    --_card-gutter-x: var(--card-padding-inline, var(--space-16));
-    --_card-gutter-y: var(--card-padding-block, var(--space-16));
+    --_card-padding-inline: var(--card-padding-inline, var(--space-16));
+    --_card-padding-block: var(--card-padding-block, var(--space-16));
     --_card-bg-color: var(--card-bg-color, var(--theme-surface-a0));
     --_card-color: var(--card-color, var(--theme-on-background));
-    --_card-border: var(--card-border-width, var(--border-width-sm));
+    --_card-border-width: var(--card-border-width, var(--border-width-sm));
     --_card-border-color: var(--card-border-color, transparent);
     --_card-radius: var(--card-radius, #{v.$card-border-radius});
     --_card-shadow: var(--card-shadow, none);
     --_card-title-font-size: var(--card-title-font-size, var(--fs-base));
     --_card-title-font-weight: var(--card-title-font-weight, var(--fw-700));
     --_card-text-color: var(--card-text-color, var(--theme-muted-a10));
-    --_card-easing-in: var(--card-easing, var(--ease-emphasized));
+    --_card-easing: var(--card-easing, var(--ease-emphasized));
 
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@
     background-color: var(--_card-bg-color);
     color: var(--_card-color);
     box-shadow: var(--_card-shadow);
-    border: var(--_card-border) solid var(--_card-border-color);
+    border: var(--_card-border-width) solid var(--_card-border-color);
     border-radius: var(--_card-radius);
     transition: all var(--duration-300) var(--ease-decelerate);
 
@@ -44,8 +44,8 @@
     }
 
     .card-header {
-      padding-block: var(--_card-gutter-y) var(--space-8);
-      padding-inline: var(--_card-gutter-x);
+      padding-block: var(--_card-padding-block) var(--space-8);
+      padding-inline: var(--_card-padding-inline);
       margin-bottom: 0;
       border-radius: var(--_card-radius) var(--_card-radius) 0 0;
 
@@ -65,8 +65,8 @@
     .card-body {
       color: var(--_card-color);
       flex: 1 1 auto;
-      padding-block: var(--_card-gutter-y) var(--_card-gutter-y);
-      padding-inline: var(--_card-gutter-x);
+      padding-block: var(--_card-padding-block) var(--_card-padding-block);
+      padding-inline: var(--_card-padding-inline);
 
       p:is(.card-text) {
         color: var(--_card-text-color);
@@ -74,8 +74,8 @@
     }
 
     .card-footer {
-      padding-block: var(--space-6) var(--_card-gutter-y);
-      padding-inline: var(--_card-gutter-x);
+      padding-block: var(--space-6) var(--_card-padding-block);
+      padding-inline: var(--_card-padding-inline);
       margin-top: 0;
       border-radius: 0 0 var(--_card-radius) var(--_card-radius);
 
@@ -117,10 +117,10 @@
 
       background-color: f.state-layer(var(--_card-state), var(--_card-bg-color));
       cursor: pointer;
-      transition: background-color var(--duration-300) var(--_card-easing-in),
-      border-color var(--duration-300) var(--_card-easing-in),
-      box-shadow var(--duration-300) var(--_card-easing-in),
-      translate var(--duration-600) var(--_card-easing-in);
+      transition: background-color var(--duration-300) var(--_card-easing),
+      border-color var(--duration-300) var(--_card-easing),
+      box-shadow var(--duration-300) var(--_card-easing),
+      translate var(--duration-600) var(--_card-easing);
 
       &:is(:hover) {
         --_card-state: var(--state-hover-opacity);
@@ -171,11 +171,11 @@
 
     // Card sizes
     &.card-sm {
-      --_card-gutter-x: var(--space-8);
-      --_card-gutter-y: var(--space-8);
+      --_card-padding-inline: var(--space-8);
+      --_card-padding-block: var(--space-8);
 
       .card-body {
-        padding-block: var(--_card-gutter-y);
+        padding-block: var(--_card-padding-block);
       }
 
       &:is(.card-selectable) {
@@ -184,8 +184,8 @@
     }
 
     &.card-xs {
-      --_card-gutter-x: var(--space-12);
-      --_card-gutter-y: var(--space-8);
+      --_card-padding-inline: var(--space-12);
+      --_card-padding-block: var(--space-8);
 
       display: inline-flex;
 

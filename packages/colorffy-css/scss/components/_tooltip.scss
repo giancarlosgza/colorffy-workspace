@@ -6,7 +6,7 @@
   // ==========================================================================
   .v-popper--theme-tooltip {
     --_tooltip-bg-color: var(--tooltip-bg-color, var(--theme-surface-tooltip));
-    --_tooltip-text-color: var(--tooltip-color, #{v.$white});
+    --_tooltip-color: var(--tooltip-color, #{v.$white});
     --_tooltip-padding: var(--tooltip-padding, var(--space-8));
     --_tooltip-kbd-bg-color: var(--tooltip-kbd-bg-color, var(--theme-surface-kbd));
     --_tooltip-kbd-color: var(--tooltip-kbd-color, var(--theme-on-background-inverse));
@@ -19,7 +19,7 @@
     .v-popper__wrapper {
       .v-popper__inner {
         background-color: var(--_tooltip-bg-color);
-        color: var(--_tooltip-text-color);
+        color: var(--_tooltip-color);
         padding: var(--_tooltip-padding);
         box-shadow: var(--tooltip-shadow, none);
         border-radius: var(--tooltip-radius, var(--radius-md));
@@ -27,7 +27,7 @@
         font-weight: var(--tooltip-font-weight, var(--fw-500));
 
         :where(span, p, a) {
-          color: var(--_tooltip-text-color);
+          color: var(--_tooltip-color);
         }
 
         // KBD styles inside the tooltip

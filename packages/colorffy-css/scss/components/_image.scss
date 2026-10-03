@@ -12,15 +12,15 @@
   }
 
   .img-avatar {
-    --_img-avatar-radius: var(--avatar-radius, var(--radius-full));
-    --_img-avatar-easing-in: var(--avatar-easing, var(--ease-spring));
-    --_img-avatar-easing-duration: var(--avatar-duration, var(--duration-600));
+    --_avatar-radius: var(--avatar-radius, var(--radius-full));
+    --_avatar-easing: var(--avatar-easing, var(--ease-spring));
+    --_avatar-duration: var(--avatar-duration, var(--duration-600));
 
     aspect-ratio: 1;
-    border-radius: var(--_img-avatar-radius);
+    border-radius: var(--_avatar-radius);
     object-fit: cover;
-    transition: border-radius var(--_img-avatar-easing-duration) var(--_img-avatar-easing-in),
-    translate var(--_img-avatar-easing-duration) var(--_img-avatar-easing-in);
+    transition: border-radius var(--_avatar-duration) var(--_avatar-easing),
+    translate var(--_avatar-duration) var(--_avatar-easing);
 
     @include m.make-image(100px);
 
@@ -58,11 +58,11 @@
   }
 
   .initials-avatar {
-    --_initials-base-color: var(--avatar-tint-color, var(--theme-accent-base-fixed));
-    --_initials-alpha: var(--avatar-tint-alpha, 25%);
-    --_initials-mix-color: transparent;
-    --_initials-filled-bg-color: var(--theme-accent-a10);
-    --_initials-filled-color: var(--theme-on-accent);
+    --_avatar-tint-color: var(--avatar-tint-color, var(--theme-accent-base-fixed));
+    --_avatar-tint-alpha: var(--avatar-tint-alpha, 25%);
+    --_avatar-initials-mix-color: transparent;
+    --_avatar-initials-filled-bg-color: var(--theme-accent-a10);
+    --_avatar-initials-filled-color: var(--theme-on-accent);
 
     display: inline-grid;
     place-items: center;
@@ -75,14 +75,14 @@
     &:not(:last-child) {
       margin-inline-end: var(--space-4);
     }
-    border-radius: var(--_img-avatar-radius, var(--radius-full));
-    background: color-mix(in oklab, var(--_initials-base-color) var(--_initials-alpha), var(--_initials-mix-color));
+    border-radius: var(--_avatar-radius, var(--radius-full));
+    background: color-mix(in oklab, var(--_avatar-tint-color) var(--_avatar-tint-alpha), var(--_avatar-initials-mix-color));
     font-size: var(--avatar-initials-font-size, var(--fs-4xs));
     font-weight: var(--avatar-initials-font-weight, var(--fw-600));
 
     &.initials-navbar {
-      --_initials-alpha: 35%;
-      --_initials-base-color: var(--theme-primary-a10);
+      --_avatar-tint-alpha: 35%;
+      --_avatar-tint-color: var(--theme-primary-a10);
 
       padding: var(--space-4);
       margin-inline: 0;
@@ -95,30 +95,30 @@
   .img-avatar {
     @each $color in (primary, secondary, accent, success, warning, danger, info) {
       &.avatar-#{$color} {
-        --_initials-base-color: var(--theme-#{$color}-base-fixed);
-        --_initials-filled-bg-color: var(--theme-#{$color}-a10);
-        --_initials-filled-color: var(--theme-on-#{$color});
+        --_avatar-tint-color: var(--theme-#{$color}-base-fixed);
+        --_avatar-initials-filled-bg-color: var(--theme-#{$color}-a10);
+        --_avatar-initials-filled-color: var(--theme-on-#{$color});
       }
     }
 
     &.avatar-neutral {
-      --_initials-base-color: var(--theme-muted-base-fixed);
-      --_initials-filled-bg-color: var(--theme-muted-a10);
-      --_initials-filled-color: var(--theme-on-background-inverse);
+      --_avatar-tint-color: var(--theme-muted-base-fixed);
+      --_avatar-initials-filled-bg-color: var(--theme-muted-a10);
+      --_avatar-initials-filled-color: var(--theme-on-background-inverse);
     }
 
     &.avatar-placeholder:is(.avatar-primary, .avatar-secondary, .avatar-accent, .avatar-success, .avatar-warning, .avatar-danger, .avatar-info, .avatar-neutral) {
-      background: color-mix(in oklab, var(--_initials-base-color) var(--avatar-tint-alpha, 25%), var(--_initials-mix-color, transparent));
+      background: color-mix(in oklab, var(--_avatar-tint-color) var(--avatar-tint-alpha, 25%), var(--_avatar-initials-mix-color, transparent));
     }
 
     // Avatar variants
     &.avatar-tonal {
-      --_initials-mix-color: var(--_avatar-group-ring-color, var(--theme-surface-a0));
+      --_avatar-initials-mix-color: var(--_avatar-group-ring-color, var(--theme-surface-a0));
     }
 
     &.avatar-filled:is(.initials-avatar, .avatar-placeholder:is(.avatar-primary, .avatar-secondary, .avatar-accent, .avatar-success, .avatar-warning, .avatar-danger, .avatar-info, .avatar-neutral)) {
-      background: var(--_initials-filled-bg-color);
-      color: var(--_initials-filled-color);
+      background: var(--_avatar-initials-filled-bg-color);
+      color: var(--_avatar-initials-filled-color);
     }
   }
 

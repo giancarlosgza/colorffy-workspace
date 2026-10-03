@@ -151,13 +151,13 @@
 
   a,
   .anchor-link {
-    --_hyperlink-color: var(--link-color, var(--theme-primary-a10));
-    --_hyperlink-bg-color: var(--link-underline-color, var(--theme-primary-a20));
-    --_hyperlink-radius: var(--radius-full);
-    --_hyperlink-easing-in: var(--link-easing, var(--ease-spring));
-    --_hyperlink-easing-duration: var(--link-duration, var(--duration-800));
+    --_link-color: var(--link-color, var(--theme-primary-a10));
+    --_link-underline-color: var(--link-underline-color, var(--theme-primary-a20));
+    --_link-radius: var(--radius-full);
+    --_link-easing: var(--link-easing, var(--ease-spring));
+    --_link-duration: var(--link-duration, var(--duration-800));
 
-    color: var(--_hyperlink-color);
+    color: var(--_link-color);
     text-decoration: none;
     position: relative;
     cursor: pointer;
@@ -179,14 +179,14 @@
 
       width: 100%;
       height: 2px;
-      background: var(--_hyperlink-bg-color);
-      border-radius: var(--_hyperlink-radius);
+      background: var(--_link-underline-color);
+      border-radius: var(--_link-radius);
 
       opacity: 0;
       scale: 0 0;
 
-      transition: opacity var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in),
-      scale var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in);
+      transition: opacity var(--_link-duration) var(--_link-easing),
+      scale var(--_link-duration) var(--_link-easing);
     }
 
     &:is(:hover) {

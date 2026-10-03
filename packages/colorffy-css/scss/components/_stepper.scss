@@ -8,14 +8,14 @@
     --_stepper-indicator-size: var(--stepper-indicator-size, 2.25rem);
     --_stepper-connector-thickness: var(--stepper-connector-thickness, 2px);
     --_stepper-connector-color: var(--stepper-connector-color, var(--theme-outline-surface));
-    --_stepper-connector-color-active: var(--stepper-completed-connector-color, var(--theme-primary-a10));
+    --_stepper-completed-connector-color: var(--stepper-completed-connector-color, var(--theme-primary-a10));
     --_stepper-indicator-bg-color: var(--stepper-indicator-bg-color, var(--theme-surface-container));
     --_stepper-indicator-color: var(--stepper-indicator-color, var(--theme-muted-a10));
     --_stepper-label-color: var(--stepper-label-color, var(--theme-muted-a10));
     --_stepper-description-color: var(--stepper-description-color, var(--theme-muted-a10));
     --_stepper-gap: var(--stepper-gap, var(--space-24));
-    --_stepper-easing-in: var(--stepper-easing, var(--ease-decelerate));
-    --_stepper-easing-duration: var(--stepper-duration, var(--duration-200));
+    --_stepper-easing: var(--stepper-easing, var(--ease-decelerate));
+    --_stepper-duration: var(--stepper-duration, var(--duration-200));
 
     display: flex;
     flex-direction: row;
@@ -43,12 +43,12 @@
         right: calc(-50% + calc(var(--_stepper-indicator-size) / 2) + var(--space-8));
         height: var(--_stepper-connector-thickness);
         background-color: var(--_stepper-connector-color);
-        transition: background-color var(--_stepper-easing-duration) var(--_stepper-easing-in);
+        transition: background-color var(--_stepper-duration) var(--_stepper-easing);
       }
 
       // Completed steps light up the connector leading to the next step
       &.step-completed:not(:last-child)::after {
-        background-color: var(--_stepper-connector-color-active);
+        background-color: var(--_stepper-completed-connector-color);
       }
 
       .step-trigger {
@@ -94,9 +94,9 @@
         background-color: var(--_stepper-indicator-bg-color);
         color: var(--_stepper-indicator-color);
         border: var(--border-width-sm) solid var(--_stepper-connector-color);
-        transition: background-color var(--_stepper-easing-duration) var(--_stepper-easing-in),
-        color var(--_stepper-easing-duration) var(--_stepper-easing-in),
-        border-color var(--_stepper-easing-duration) var(--_stepper-easing-in);
+        transition: background-color var(--_stepper-duration) var(--_stepper-easing),
+        color var(--_stepper-duration) var(--_stepper-easing),
+        border-color var(--_stepper-duration) var(--_stepper-easing);
 
         .step-number {
           font-size: var(--stepper-indicator-font-size, var(--fs-2xs));
@@ -121,7 +121,7 @@
         font-size: var(--stepper-label-font-size, var(--fs-2xs));
         font-weight: var(--stepper-label-font-weight, var(--fw-600));
         color: var(--_stepper-label-color);
-        transition: color var(--_stepper-easing-duration) var(--_stepper-easing-in);
+        transition: color var(--_stepper-duration) var(--_stepper-easing);
       }
 
       .step-description {

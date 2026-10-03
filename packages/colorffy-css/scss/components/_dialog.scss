@@ -13,7 +13,7 @@
     --_dialog-radius: var(--dialog-radius, #{v.$dialog-border-radius});
     --_dialog-shadow: var(--dialog-shadow, var(--shadow-xl));
     --_dialog-padding: var(--dialog-padding, var(--space-16));
-    --_dialog-gutter: var(--dialog-spacing, calc(var(--space-16) + var(--space-4)));
+    --_dialog-spacing: var(--dialog-spacing, calc(var(--space-16) + var(--space-4)));
     --_dialog-max-size: var(--dialog-max-size, 90%);
     --_dialog-title-font-size: var(--dialog-title-font-size, var(--fs-base));
     --_dialog-title-font-weight: var(--dialog-title-font-weight, var(--fw-700));
@@ -24,8 +24,8 @@
     --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--theme-overlay-backdrop));
     --_dialog-backdrop-blur: var(--dialog-backdrop-blur, 5px);
     --_discrete: allow-discrete;
-    --_dialog-easing-in: var(--dialog-easing, var(--ease-overshoot-soft));
-    --_dialog-easing-duration: var(--dialog-duration, var(--duration-600));
+    --_dialog-easing: var(--dialog-easing, var(--ease-overshoot-soft));
+    --_dialog-duration: var(--dialog-duration, var(--duration-600));
 
     position: fixed;
     inset: 0;
@@ -86,7 +86,7 @@
         flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
-        margin-block: var(--_dialog-gutter);
+        margin-block: var(--_dialog-spacing);
         color: var(--_dialog-color);
 
         & p {
@@ -105,7 +105,7 @@
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: flex-end;
-        gap: calc(var(--_dialog-gutter) / 2);
+        gap: calc(var(--_dialog-spacing) / 2);
 
         & .btn {
           padding-inline: var(--space-16);
@@ -131,10 +131,10 @@
         opacity: 0;
         transition: overlay var(--duration-150) var(--_discrete),
         display var(--duration-600) var(--_discrete),
-        scale var(--_dialog-easing-duration),
-        translate var(--_dialog-easing-duration),
-        opacity calc(var(--_dialog-easing-duration) / 3);
-        transition-timing-function: var(--_dialog-easing-in);
+        scale var(--_dialog-duration),
+        translate var(--_dialog-duration),
+        opacity calc(var(--_dialog-duration) / 3);
+        transition-timing-function: var(--_dialog-easing);
       }
 
       /* 2. On appear transition */
@@ -164,7 +164,7 @@
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
         animation: fade-in-down var(--duration-300) ease-in-out both;
-        animation-timing-function: var(--_dialog-easing-in);
+        animation-timing-function: var(--_dialog-easing);
       }
     }
 
@@ -186,9 +186,9 @@
         opacity: 0;
         transition: overlay var(--duration-150) var(--_discrete),
         display 350ms var(--_discrete),
-        translate var(--_dialog-easing-duration),
-        opacity calc(var(--_dialog-easing-duration));
-        transition-timing-function: var(--_dialog-easing-in);
+        translate var(--_dialog-duration),
+        opacity calc(var(--_dialog-duration));
+        transition-timing-function: var(--_dialog-easing);
       }
 
       &[open] {
@@ -216,7 +216,7 @@
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
         animation: opacity-in var(--duration-300) ease-in-out both;
-        animation-timing-function: var(--_dialog-easing-in);
+        animation-timing-function: var(--_dialog-easing);
       }
 
       & .dialog-content {
@@ -367,8 +367,8 @@
       }
 
       &:is(.dialog-modal) {
-        --_dialog-easing-in: var(--ease-decelerate);
-        --_dialog-easing-duration: var(--duration-500);
+        --_dialog-easing: var(--ease-decelerate);
+        --_dialog-duration: var(--duration-500);
         --_dialog-radius: var(--radius-xl) var(--radius-xl) 0 0;
 
         /* 0. Not visible default state */
@@ -379,9 +379,9 @@
         & {
           transition: overlay var(--duration-100) var(--_discrete),
           display var(--duration-100) var(--_discrete),
-          scale var(--_dialog-easing-duration),
-          translate var(--_dialog-easing-duration),
-          opacity calc(var(--_dialog-easing-duration) / 3);
+          scale var(--_dialog-duration),
+          translate var(--_dialog-duration),
+          opacity calc(var(--_dialog-duration) / 3);
         }
 
         /* 2. On appear transition */
