@@ -226,9 +226,17 @@ $indicator-max-items: 16;
     margin-bottom: var(--space-12);
 
     .tab-segmented-control {
-      --_segmented-control-radius: var(--radius-full);
-      --_segmented-control-easing-in: var(--ease-emphasized);
-      --_segmented-control-easing-duration: var(--duration-600);
+      --_segmented-control-radius: var(--segmented-control-radius, var(--radius-full));
+      --_segmented-control-border-color: var(--segmented-control-border-color, var(--theme-outline-button));
+      --_segmented-control-padding: var(--segmented-control-padding, var(--space-8));
+      --_segmented-control-gap: var(--segmented-control-gap, var(--space-12));
+      --_segmented-control-item-color: var(--segmented-control-item-color, var(--theme-muted-a10));
+      --_segmented-control-item-font-size: var(--segmented-control-item-font-size, var(--fs-2xs));
+      --_segmented-control-item-hover-bg-color: var(--segmented-control-item-hover-bg-color, color-mix(in oklab, var(--theme-primary-base-fixed) 35%, transparent));
+      --_segmented-control-item-active-color: var(--segmented-control-item-active-color, var(--theme-on-background-inverse));
+      --_segmented-control-indicator-bg-color: var(--segmented-control-indicator-bg-color, var(--theme-surface-a90));
+      --_segmented-control-easing-in: var(--segmented-control-easing, var(--ease-emphasized));
+      --_segmented-control-easing-duration: var(--segmented-control-duration, var(--duration-600));
       --_segmented-control-count: 2;
       --_segmented-control-anchor: --segmented-item-1;
 
@@ -237,12 +245,12 @@ $indicator-max-items: 16;
       grid-auto-flow: column;
       grid-auto-columns: 1fr;
 
-      gap: var(--space-12);
+      gap: var(--_segmented-control-gap);
       overflow-x: clip;
       overflow-y: clip;
 
       position: relative;
-      padding: var(--space-8);
+      padding: var(--_segmented-control-padding);
       margin: 0;
       width: max-content;
       height: auto;
@@ -250,13 +258,14 @@ $indicator-max-items: 16;
 
       border-radius: var(--_segmented-control-radius);
       background: transparent;
-      border: var(--border-width-sm) solid var(--theme-outline-button);
+      border: var(--border-width-sm) solid var(--_segmented-control-border-color);
 
       // Tab styles
       &.segmented-control-tab {
         --_segmented-control-radius: var(--radius-sm);
-
-        border-color: transparent;
+        --_segmented-control-border-color: transparent;
+        --_segmented-control-item-active-color: var(--theme-on-background);
+        --_segmented-control-indicator-bg-color: var(--theme-primary-a10);
 
         // Nav tab item
         .segmented-control-item {
@@ -267,10 +276,6 @@ $indicator-max-items: 16;
             padding-inline: .625rem;
             min-width: 5rem;
             width: inherit;
-
-            &:is(.active) {
-              color: var(--theme-on-background);
-            }
           }
         }
 
@@ -280,7 +285,6 @@ $indicator-max-items: 16;
             top: auto;
             bottom: calc(anchor(var(--_segmented-control-anchor) bottom) - .35rem);
             height: 3.5px;
-            background: var(--theme-primary-a10);
             border-radius: var(--radius-sm);
           }
         }
@@ -321,10 +325,10 @@ $indicator-max-items: 16;
           min-width: max-content;
           border-radius: var(--_segmented-control-radius);
           background: transparent;
-          color: var(--theme-muted-a10);
+          color: var(--_segmented-control-item-color);
           border: var(--border-width-sm) solid transparent;
           cursor: pointer;
-          font-size: var(--fs-2xs);
+          font-size: var(--_segmented-control-item-font-size);
           font-weight: var(--fw-400);
           text-align: center;
           @extend .subtitle-1;
@@ -334,12 +338,12 @@ $indicator-max-items: 16;
           font-weight var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
 
           &:is(:hover) {
-            background-color: color-mix(in oklab, var(--theme-primary-base-fixed) 35%, transparent);
+            background-color: var(--_segmented-control-item-hover-bg-color);
           }
 
           &:is(.active) {
             font-weight: var(--fw-600);
-            color: var(--theme-on-background-inverse);
+            color: var(--_segmented-control-item-active-color);
           }
 
           &:is(:disabled, .disabled) {
@@ -373,7 +377,7 @@ $indicator-max-items: 16;
           bottom: anchor(var(--_segmented-control-anchor) bottom);
           left: anchor(var(--_segmented-control-anchor) left);
           right: anchor(var(--_segmented-control-anchor) right);
-          background: var(--theme-surface-a90);
+          background: var(--_segmented-control-indicator-bg-color);
           border-radius: calc(var(--_segmented-control-radius) - 6px);
           z-index: 1;
 
@@ -387,7 +391,7 @@ $indicator-max-items: 16;
       // Fallback
       @supports not (anchor-name: --foo) {
         & .segmented-control-item .segmented-control-link:is(.active) {
-          background-color: var(--theme-surface-a90);
+          background-color: var(--_segmented-control-indicator-bg-color);
           font-weight: var(--fw-700);
         }
       }
