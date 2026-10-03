@@ -10,14 +10,16 @@ $indicator-max-items: 8;
   // BOTTOM NAVIGATION BAR LAYOUT
   // ==========================================================================
   .navigation-bar {
-    --_navigation-bar-easing-in: var(--ease-overshoot-soft);
+    --_navigation-bar-easing-in: var(--navigation-bar-easing, var(--ease-overshoot-soft));
     --_navigation-bar-easing-out: var(--ease-accelerate);
-    --_navigation-bar-easing-duration: var(--duration-600);
+    --_navigation-bar-easing-duration: var(--navigation-bar-duration, var(--duration-600));
     --_navigation-bar-padding-top: 0;
     --_navigation-bar-padding-bottom: 0;
-    --_navigation-bar-font-size: .65rem;
-    --_navigation-bar-icon-size: 1.35rem;
-    --_navigation-bar-bg-color: var(--theme-surface-navigation);
+    --_navigation-bar-font-size: var(--navigation-bar-font-size, .65rem);
+    --_navigation-bar-icon-size: var(--navigation-bar-icon-size, 1.35rem);
+    --_navigation-bar-bg-color: var(--navigation-bar-bg-color, var(--theme-surface-navigation));
+    --_navigation-bar-item-color: var(--navigation-bar-item-color, var(--theme-muted-a10));
+    --_navigation-bar-item-active-color: var(--navigation-bar-item-active-color, var(--theme-primary-a10));
     --_navigation-bar-indicator-anchor: --navigation-bar-item-1;
 
     display: none;
@@ -33,7 +35,7 @@ $indicator-max-items: 8;
     padding-bottom: var(--_navigation-bar-padding-bottom);
     background-color: var(--_navigation-bar-bg-color);
     color: var(--theme-on-background);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--navigation-bar-shadow, var(--shadow-md));
     z-index: v.$z-index-navigation;
 
     &:is(.navigation-bar-frosted) {
@@ -76,13 +78,13 @@ $indicator-max-items: 8;
         }
 
         p, i {
-          color: var(--theme-muted-a10);
+          color: var(--_navigation-bar-item-color);
         }
 
         // Nuxt link active class
         &.router-link-exact-active {
           p, i {
-            color: var(--theme-primary-a10);
+            color: var(--_navigation-bar-item-active-color);
           }
 
           p {
@@ -93,7 +95,7 @@ $indicator-max-items: 8;
 
       &:hover {
         p, i {
-          color: var(--theme-primary-a10);
+          color: var(--navigation-bar-item-hover-color, var(--_navigation-bar-item-active-color));
         }
       }
     }
@@ -119,7 +121,7 @@ $indicator-max-items: 8;
         display: block;
         position: absolute;
         margin: auto;
-        border-radius: var(--radius-xl);
+        border-radius: var(--navigation-bar-indicator-radius, var(--radius-xl));
         width: auto;
         max-width: 100%;
         height: calc(100% - 1rem);
@@ -130,7 +132,7 @@ $indicator-max-items: 8;
         bottom: anchor(var(--_navigation-bar-indicator-anchor) bottom);
         left: anchor(var(--_navigation-bar-indicator-anchor) left);
         right: anchor(var(--_navigation-bar-indicator-anchor) right);
-        background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%);
+        background-color: var(--navigation-bar-indicator-color, color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%));
 
         // Animation
         @media (prefers-reduced-motion: no-preference) {
