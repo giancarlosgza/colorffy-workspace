@@ -243,23 +243,25 @@
   background-image: radial-gradient(circle, $color 10%, transparent 10.01%);
 }
 
-@mixin form-placeholder($opacity) {
-  $opacity: 35% !default;
+@mixin form-placeholder($opacity: 35%, $color: null) {
+  @if not $color {
+    $color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+  }
 
   &::placeholder {
-    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+    color: $color;
   }
 
   &::-webkit-input-placeholder {
-    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+    color: $color;
   }
 
   &::-moz-placeholder {
-    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+    color: $color;
   }
 
   &::-ms-input-placeholder {
-    color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+    color: $color;
   }
 }
 

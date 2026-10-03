@@ -8,7 +8,7 @@
   // ==========================================================================
   .form-group,
   .input-group {
-    --_form-group-gutter-y: var(--space-14);
+    --_form-group-gutter-y: var(--form-group-spacing, var(--space-14));
 
     margin-bottom: var(--_form-group-gutter-y);
 
@@ -16,10 +16,10 @@
     & > .form-label {
       display: block;
       font-family: map.get(v.$type-label, font-family);
-      font-size: map.get(v.$type-label, font-size);
-      font-weight: map.get(v.$type-label, font-weight);
+      font-size: var(--input-label-font-size, #{map.get(v.$type-label, font-size)});
+      font-weight: var(--input-label-font-weight, #{map.get(v.$type-label, font-weight)});
       letter-spacing: map.get(v.$type-label, letter-spacing);
-      margin-bottom: var(--space-8);
+      margin-bottom: var(--input-label-gap, var(--space-8));
     }
 
     &:has(label:empty) {
@@ -33,17 +33,17 @@
     & .form-control,
     & .form-select {
       --_form-width: 100%;
-      --_form-height: 2.5rem;
-      --_form-padding-x: var(--space-8);
-      --_form-padding-y: var(--space-4);
-      --_form-radius: #{v.$form-border-radius};
-      --_form-bg-color: transparent;
-      --_form-color: var(--theme-on-background);
-      --_form-border-width: #{v.$form-border};
-      --_form-border-color: var(--theme-outline-text-field);
-      --_form-easing-in: var(--ease-emphasized);
-      --_form-easing-duration: var(--duration-300);
-      --_form-font-size: 0.875rem;
+      --_form-height: var(--input-height, 2.5rem);
+      --_form-padding-x: var(--input-padding-inline, var(--space-8));
+      --_form-padding-y: var(--input-padding-block, var(--space-4));
+      --_form-radius: var(--input-radius, #{v.$form-border-radius});
+      --_form-bg-color: var(--input-bg-color, transparent);
+      --_form-color: var(--input-color, var(--theme-on-background));
+      --_form-border-width: var(--input-border-width, #{v.$form-border});
+      --_form-border-color: var(--input-border-color, var(--theme-outline-text-field));
+      --_form-easing-in: var(--input-easing, var(--ease-emphasized));
+      --_form-easing-duration: var(--input-duration, var(--duration-300));
+      --_form-font-size: var(--input-font-size, 0.875rem);
 
       position: relative;
       display: inline-block;
@@ -54,7 +54,7 @@
       -webkit-appearance: none;
       border-radius: var(--_form-radius);
       border: var(--_form-border-width) solid var(--_form-border-color);
-      box-shadow: var(--shadow-xs);
+      box-shadow: var(--input-shadow, var(--shadow-xs));
       background-color: var(--_form-bg-color);
       color: var(--_form-color);
       font-weight: var(--fw-400);
@@ -66,11 +66,11 @@
       box-shadow var(--_form-easing-duration) var(--_form-easing-in);
 
       // Placeholder
-      @include m.form-placeholder(35%);
+      @include m.form-placeholder(35%, var(--input-placeholder-color, color-mix(in srgb, var(--theme-muted-a10), transparent 35%)));
 
       // Form control variants
       &:is(.form-filled) {
-        --_form-bg-color: var(--theme-surface-container-high);
+        --_form-bg-color: var(--input-filled-bg-color, var(--theme-surface-container-high));
       }
 
       &:is(.form-outline) {
@@ -116,16 +116,16 @@
 
       // Form control states
       &:is(:hover) {
-        --_form-border-color: var(--theme-on-background);
+        --_form-border-color: var(--input-hover-border-color, var(--theme-on-background));
       }
 
       &:is(:focus, :active, :focus-visible) {
-        --_form-bg-color: var(--theme-surface-container-high);
-        --_form-border-color: var(--theme-primary-a10);
+        --_form-bg-color: var(--input-focus-bg-color, var(--theme-surface-container-high));
+        --_form-border-color: var(--input-focus-border-color, var(--theme-primary-a10));
 
         outline-offset: 0.1em;
         outline: 0;
-        box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-primary-base-fixed) 25%, transparent);
+        box-shadow: 0 0 0 .15rem var(--input-focus-ring-color, color-mix(in oklab, var(--theme-primary-base-fixed) 25%, transparent));
 
         @media (forced-colors: active) {
           outline: var(--border-width-md) solid Highlight;
@@ -156,17 +156,17 @@
 
       // User-invalid state (native browser validation once interacted)
       &:is(:user-invalid) {
-        --_form-border-color: var(--theme-danger-a10);
+        --_form-border-color: var(--input-invalid-color, var(--theme-danger-a10));
 
         &:is(:focus, :active, :focus-visible) {
-          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
+          box-shadow: 0 0 0 .15rem var(--input-invalid-ring-color, color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent));
         }
 
         + .invalid-feedback {
           display: block;
           margin-top: var(--space-6);
           font-size: var(--fs-3xs);
-          color: var(--theme-danger-a10);
+          color: var(--input-invalid-color, var(--theme-danger-a10));
         }
       }
 
@@ -197,16 +197,20 @@
 
     // Range input
     .form-range {
+      --_form-bg-color: transparent;
       --_form-border-color: transparent;
-      --_form-range-bg-color: var(--theme-surface-container-high);
-      --_form-range-thumb-bg-color: color-mix(in oklab, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%);
-      --_form-range-track-size: 0.75rem;
-      --_form-range-slider-height: 1.95rem;
-      --_form-range-slider-width: 0.30rem;
-      --_form-range-slider-margin: calc(var(--_form-range-track-size) - 1.45rem);
+      --_form-range-bg-color: var(--input-range-track-color, var(--theme-surface-container-high));
+      --_form-range-thumb-bg-color: var(--input-range-fill-color, color-mix(in oklab, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%));
+      --_form-range-thumb-ring-color: var(--input-range-thumb-ring-color, var(--theme-surface-body-pane));
+      --_form-range-track-size: var(--input-range-track-size, 0.75rem);
+      --_form-range-radius: var(--input-range-radius, var(--radius-full));
+      --_form-range-slider-height: var(--input-range-thumb-height, 1.95rem);
+      --_form-range-slider-width: var(--input-range-thumb-width, 0.30rem);
+      --_form-range-slider-margin: calc((var(--_form-range-track-size) - var(--_form-range-slider-height)) / 2 - 0.1rem);
       --_form-range-padding-x: var(--space-8);
       --_form-range-padding-y: var(--space-4);
-      --_form-range-easing-in: var(--ease-decelerate);
+      --_form-range-easing-in: var(--input-range-easing, var(--ease-decelerate));
+      --_form-range-easing-duration: var(--input-range-duration, var(--duration-100));
 
       &:is([type="range"]) {
         padding: var(--_form-range-padding-y) var(--_form-range-padding-x);
@@ -216,7 +220,7 @@
         &::-webkit-slider-runnable-track {
           background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
           height: var(--_form-range-track-size);
-          border-radius: var(--radius-full);
+          border-radius: var(--_form-range-radius);
         }
 
         &::-webkit-slider-thumb {
@@ -225,45 +229,44 @@
           width: var(--_form-range-slider-width);
           height: var(--_form-range-slider-height);
           background-color: var(--_form-range-thumb-bg-color);
-          outline: 5px solid var(--theme-surface-body-pane);
+          outline: 5px solid var(--_form-range-thumb-ring-color);
           margin-top: var(--_form-range-slider-margin);
-          border-radius: var(--radius-full);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          border-radius: var(--_form-range-radius);
+          transition: width var(--_form-range-easing-duration) var(--_form-range-easing-in);
         }
 
         &:is(:focus)::-webkit-slider-thumb {
           --_form-range-slider-width: 0.20rem;
 
-          outline: 5px solid var(--theme-surface-body-pane);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          outline: 5px solid var(--_form-range-thumb-ring-color);
+          transition: width var(--_form-range-easing-duration) var(--_form-range-easing-in);
         }
 
         /* Firefox */
         &::-moz-range-track {
           background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
           height: var(--_form-range-track-size);
-          border-radius: var(--radius-full);
+          border-radius: var(--_form-range-radius);
         }
 
         &::-moz-range-thumb {
           border: none;
-          outline: 5px solid var(--theme-surface-body-pane);
+          outline: 5px solid var(--_form-range-thumb-ring-color);
           background-color: var(--_form-range-thumb-bg-color);
           height: var(--_form-range-slider-height);
           width: var(--_form-range-slider-width);
-          border-radius: var(--radius-full);
+          border-radius: var(--_form-range-radius);
         }
 
         &:is(:focus)::-moz-range-thumb {
           --_form-range-slider-width: 0.20rem;
 
-          outline: 5px solid var(--theme-surface-body-pane);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          outline: 5px solid var(--_form-range-thumb-ring-color);
+          transition: width var(--_form-range-easing-duration) var(--_form-range-easing-in);
         }
 
         &:is(:hover) {
           --_form-border-color: transparent;
-          --_form-range-bg-color: var(--theme-surface-container-high);
 
           cursor: pointer;
         }
@@ -271,7 +274,6 @@
         &:is(:focus, :active, :focus-visible) {
           --_form-bg-color: transparent;
           --_form-border-color: transparent;
-          --_form-range-bg-color: var(--theme-surface-container-high);
 
           cursor: grabbing;
         }
@@ -280,10 +282,10 @@
 
     // Color input
     .form-color-group {
-      --_form-group-bg-color: transparent;
-      --_form-group-border-color: var(--theme-outline-text-field);
-      --_form-group-border-width: #{v.$form-border};
-      --_form-group-radius: #{v.$form-border-radius};
+      --_form-group-bg-color: var(--input-bg-color, transparent);
+      --_form-group-border-color: var(--input-border-color, var(--theme-outline-text-field));
+      --_form-group-border-width: var(--input-border-width, #{v.$form-border});
+      --_form-group-radius: var(--input-radius, #{v.$form-border-radius});
 
       display: flex;
       align-items: center;
@@ -293,6 +295,7 @@
       border: var(--_form-group-border-width) solid var(--_form-group-border-color);
 
       .form-control {
+        --_form-bg-color: transparent;
         --_form-border-color: transparent;
       }
 
@@ -348,8 +351,8 @@
 
       // Add focus styles to the form group when the form control is focused
       &:is(:focus-within) {
-        --_form-group-border-color: var(--theme-primary-a10);
-        --_form-group-bg-color: var(--theme-surface-container-high);
+        --_form-group-border-color: var(--input-focus-border-color, var(--theme-primary-a10));
+        --_form-group-bg-color: var(--input-focus-bg-color, var(--theme-surface-container-high));
       }
 
       // Sizing variants
@@ -386,10 +389,10 @@
     &.form-invalid {
       .form-control,
       .form-range {
-        --_form-border-color: var(--theme-danger-a10);
+        --_form-border-color: var(--input-invalid-color, var(--theme-danger-a10));
 
         &:is(:focus, :active, :focus-visible) {
-          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
+          box-shadow: 0 0 0 .15rem var(--input-invalid-ring-color, color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent));
         }
 
         // Show invalid feedback if form control is invalid
@@ -397,7 +400,7 @@
           display: block;
           margin-top: var(--space-6);
           font-size: var(--fs-3xs);
-          color: var(--theme-danger-a10);
+          color: var(--input-invalid-color, var(--theme-danger-a10));
         }
       }
     }
@@ -416,21 +419,21 @@
   // DROPBOX FILE INPUT
   // ==========================================================================
   .input-file-group {
-    --_file-group-gutter-y: var(--space-14);
+    --_file-group-gutter-y: var(--form-group-spacing, var(--space-14));
 
     margin-bottom: var(--_file-group-gutter-y);
 
     .input-file-dropbox {
-      --_file-bg-color: var(--theme-surface-body-pane);
-      --_file-color: var(--theme-on-background);
-      --_file-border-width: var(--border-width-md);
-      --_file-border-color: var(--theme-outline-text-field);
+      --_file-bg-color: var(--input-file-bg-color, var(--theme-surface-body-pane));
+      --_file-color: var(--input-file-color, var(--theme-on-background));
+      --_file-border-width: var(--input-file-border-width, var(--border-width-md));
+      --_file-border-color: var(--input-file-border-color, var(--theme-outline-text-field));
       --_file-padding: var(--space-4) 0;
       --_file-gap: var(--space-4);
-      --_file-radius: var(--radius-md);
-      --_file-easing-in: var(--ease-decelerate);
-      --_file-easing-duration: var(--duration-100);
-      --_file-height: 5rem;
+      --_file-radius: var(--input-file-radius, var(--radius-md));
+      --_file-easing-in: var(--input-file-easing, var(--ease-decelerate));
+      --_file-easing-duration: var(--input-file-duration, var(--duration-100));
+      --_file-height: var(--input-file-height, 5rem);
 
       display: grid;
       place-items: center;
@@ -449,12 +452,11 @@
       transition: all var(--_file-easing-duration) var(--_file-easing-in);
 
       &:is(:hover) {
-        --_file-bg-color: var(--theme-surface-container-high);
-        --_file-color: var(--theme-on-background);
+        --_file-bg-color: var(--input-file-hover-bg-color, var(--theme-surface-container-high));
       }
 
       &:is(:focus, :active) {
-        --_file-bg-color: var(--theme-surface-container-highest);
+        --_file-bg-color: var(--input-file-pressed-bg-color, var(--theme-surface-container-highest));
       }
 
       &:is(.dropbox-lg) {
@@ -475,7 +477,7 @@
 
         & p {
           font-weight: var(--fw-500);
-          font-size: var(--fs-3xs);
+          font-size: var(--input-file-font-size, var(--fs-3xs));
           color: var(--_file-color);
           margin-bottom: 0;
         }
