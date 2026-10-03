@@ -170,6 +170,18 @@ export interface ITabsProps {
   fluid?: boolean
 
   /**
+   * When true, the tab bar is only as wide as its tabs instead of spanning
+   * its container. Ignored when `fluid` is set.
+   */
+  fit?: boolean
+
+  /**
+   * When true, pill tabs and their indicator are fully rounded.
+   * Only applies together with `pillTabs`.
+   */
+  rounded?: boolean
+
+  /**
    * Tab button size ('sm' | 'md'). 'sm' uses the default button height and font size.
    * Defaults to 'md'.
    */

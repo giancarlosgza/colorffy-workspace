@@ -1,4 +1,4 @@
-import type { ClassValue } from '@/types/shared'
+import type { ClassValue, ThemeColor } from '@/types/shared'
 
 export type AvatarMaskShape
   = | 'arch'
@@ -15,6 +15,8 @@ export type AvatarMaskShape
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'navbar' | 'menu'
 
 export type AvatarStatus = 'online' | 'busy' | 'away' | 'offline'
+
+export type AvatarVariant = 'transparent' | 'tonal' | 'filled'
 
 export interface IAvatarProps {
   src?: string
@@ -41,6 +43,20 @@ export interface IAvatarProps {
    * @default null
    */
   status?: AvatarStatus | null
+  /**
+   * Background color for initials and placeholder avatars, as a light tint
+   * of the theme color. Has no effect on image avatars.
+   * @default null
+   */
+  color?: ThemeColor | null
+  /**
+   * Background style for initials and placeholder avatars:
+   * - transparent: light tint that lets what's behind show through
+   * - tonal: the same light tint, opaque
+   * - filled: the full theme color with contrasting text
+   * @default 'transparent'
+   */
+  variant?: AvatarVariant | null
 }
 
 /**
@@ -70,6 +86,21 @@ export interface IAvatarGroupProps {
    * Individual `avatars` entries can override it with their own `size`.
    */
   size?: AvatarSize
+
+  /**
+   * Color applied to every avatar in the group and the overflow avatar.
+   * Individual `avatars` entries can override it with their own `color`.
+   * Slot-composed avatars set their own `color`.
+   */
+  color?: ThemeColor | null
+
+  /**
+   * Background style applied to every avatar in the group and the overflow
+   * avatar. Defaults to 'tonal' so overlapping avatars don't show through.
+   * Individual `avatars` entries can override it.
+   * @default 'tonal'
+   */
+  variant?: AvatarVariant | null
 
   /**
    * Optional custom CSS classes for the group container.

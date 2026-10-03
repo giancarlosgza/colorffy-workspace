@@ -11,6 +11,8 @@ const props = withDefaults(defineProps<ITabsProps>(), {
   contrastTabs: false,
   activeTab: undefined,
   fluid: false,
+  fit: false,
+  rounded: false,
   size: null
 })
 
@@ -27,6 +29,8 @@ const tabsClasses = computed(() => ({
   'tabs-pills': props.pillTabs,
   'tabs-contrast': props.contrastTabs,
   'tabs-fluid': props.fluid,
+  'tabs-fit': props.fit && !props.fluid,
+  'tabs-rounded': props.rounded && props.pillTabs,
   'tabs-sm': props.size === 'sm'
 }))
 

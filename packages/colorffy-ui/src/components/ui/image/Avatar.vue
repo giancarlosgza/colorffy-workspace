@@ -10,7 +10,9 @@ const props = withDefaults(defineProps<IAvatarProps>(), {
   initials: null,
   maskShape: null,
   maskStretch: false,
-  status: null
+  status: null,
+  color: null,
+  variant: null
 })
 
 /** Data */
@@ -35,6 +37,12 @@ const placeholderClasses = computed(() => {
   if (props.size) {
     classes.push(`avatar-${props.size}`)
   }
+  if (props.color) {
+    classes.push(`avatar-${props.color}`)
+  }
+  if (props.variant && props.variant !== 'transparent') {
+    classes.push(`avatar-${props.variant}`)
+  }
   if (props.maskShape) {
     classes.push('mask-shape', `shape-${props.maskShape}`)
     if (props.maskStretch) {
@@ -47,6 +55,12 @@ const initialsAvatarClasses = computed(() => {
   const classes = ['img-avatar', 'initials-avatar']
   if (props.size) {
     classes.push(`avatar-${props.size}`)
+  }
+  if (props.color) {
+    classes.push(`avatar-${props.color}`)
+  }
+  if (props.variant && props.variant !== 'transparent') {
+    classes.push(`avatar-${props.variant}`)
   }
   if (props.maskShape) {
     classes.push('mask-shape', `shape-${props.maskShape}`)

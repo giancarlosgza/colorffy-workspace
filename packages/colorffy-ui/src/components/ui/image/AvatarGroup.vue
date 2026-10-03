@@ -8,6 +8,8 @@ const props = withDefaults(defineProps<IAvatarGroupProps>(), {
   avatars: () => [],
   max: undefined,
   size: 'sm',
+  color: null,
+  variant: 'tonal',
   customClass: null
 })
 
@@ -40,6 +42,12 @@ const overflowClasses = computed(() => {
   if (props.size)
     classes.push(`avatar-${props.size}`)
 
+  if (props.color)
+    classes.push(`avatar-${props.color}`)
+
+  if (props.variant && props.variant !== 'transparent')
+    classes.push(`avatar-${props.variant}`)
+
   return classes
 })
 </script>
@@ -53,6 +61,8 @@ const overflowClasses = computed(() => {
         :key="avatar.initials ?? avatar.src ?? index"
         v-bind="avatar"
         :size="avatar.size ?? size"
+        :color="avatar.color ?? color"
+        :variant="avatar.variant ?? variant"
       />
       <span
         v-if="overflowCount > 0"
