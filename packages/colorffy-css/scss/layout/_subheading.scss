@@ -4,12 +4,12 @@
   // ==========================================================================
   .subheading-content {
     --_subheading-columns: 1fr;
-    --_subheading-columns-gap: var(--subheading-gap, var(--space-16));
+    --_subheading-gap: var(--subheading-gap, var(--space-16));
 
     display: grid;
     grid-template-columns: var(--_subheading-columns);
     align-items: center;
-    gap: var(--_subheading-columns-gap);
+    gap: var(--_subheading-gap);
 
     // Actions
     &:has(.subheading-actions) {

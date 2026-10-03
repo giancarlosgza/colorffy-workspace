@@ -6,15 +6,15 @@
   // ==========================================================================
   .hero-content {
     --_hero-gap: var(--hero-gap, var(--space-8));
-    --_hero-actions-gap: var(--hero-actions-offset, var(--space-24));
-    --_hero-block-end: var(--hero-margin-block-end, var(--space-32));
-    --_hero-measure: var(--hero-max-width, 60ch);
+    --_hero-actions-offset: var(--hero-actions-offset, var(--space-24));
+    --_hero-margin-block-end: var(--hero-margin-block-end, var(--space-32));
+    --_hero-max-width: var(--hero-max-width, 60ch);
 
     display: grid;
     justify-items: start;
     text-align: start;
     gap: var(--_hero-gap);
-    margin-block-end: var(--_hero-block-end);
+    margin-block-end: var(--_hero-margin-block-end);
 
     // Alignment
     &:is(.hero-center) {
@@ -30,7 +30,7 @@
     // Texts
     & .hero-title {
       margin-bottom: 0;
-      max-inline-size: var(--_hero-measure);
+      max-inline-size: var(--_hero-max-width);
       text-wrap: balance;
     }
 
@@ -38,7 +38,7 @@
       font-size: var(--hero-description-font-size, var(--fs-lg));
       line-height: var(--hero-description-line-height, var(--fs-lg--line-height));
       color: var(--hero-description-color, var(--theme-muted-a10));
-      max-inline-size: var(--_hero-measure);
+      max-inline-size: var(--_hero-max-width);
       margin-bottom: 0;
       @include m.text-wrap-pretty;
     }
@@ -55,7 +55,7 @@
       flex-wrap: wrap;
       align-items: center;
       gap: var(--hero-actions-gap, var(--space-12));
-      margin-block-start: calc(var(--_hero-actions-gap) - var(--_hero-gap));
+      margin-block-start: calc(var(--_hero-actions-offset) - var(--_hero-gap));
     }
   }
 }

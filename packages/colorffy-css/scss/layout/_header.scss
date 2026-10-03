@@ -5,44 +5,44 @@
   // HEADER LAYOUT COMPONENT
   // ==========================================================================
   .header-container {
-    --_header-block-end: var(--header-margin-block-end, var(--space-16));
-    --_header-title-size: var(--header-title-font-size, var(--fs-xl));
-    --_header-title-leading: var(--header-title-line-height, var(--fs-xl--line-height));
+    --_header-margin-block-end: var(--header-margin-block-end, var(--space-16));
+    --_header-title-font-size: var(--header-title-font-size, var(--fs-xl));
+    --_header-title-line-height: var(--header-title-line-height, var(--fs-xl--line-height));
 
     container: HeaderContainer / inline-size;
-    margin-block-end: var(--_header-block-end);
+    margin-block-end: var(--_header-margin-block-end);
 
     // Title sizes
     &:is(.header-2xl) {
-      --_header-title-size: var(--fs-2xl);
-      --_header-title-leading: var(--fs-2xl--line-height);
+      --_header-title-font-size: var(--fs-2xl);
+      --_header-title-line-height: var(--fs-2xl--line-height);
     }
 
     &:is(.header-3xl) {
-      --_header-title-size: var(--fs-3xl);
-      --_header-title-leading: var(--fs-3xl--line-height);
+      --_header-title-font-size: var(--fs-3xl);
+      --_header-title-line-height: var(--fs-3xl--line-height);
     }
 
     &:is(.header-4xl) {
-      --_header-title-size: var(--fs-4xl);
-      --_header-title-leading: var(--fs-4xl--line-height);
+      --_header-title-font-size: var(--fs-4xl);
+      --_header-title-line-height: var(--fs-4xl--line-height);
     }
 
     &:is(.header-5xl) {
-      --_header-title-size: var(--fs-5xl);
-      --_header-title-leading: var(--fs-5xl--line-height);
+      --_header-title-font-size: var(--fs-5xl);
+      --_header-title-line-height: var(--fs-5xl--line-height);
     }
 
     & .header {
       --_header-columns: 1fr;
-      --_header-columns-gap: var(--header-gap, var(--space-16));
+      --_header-gap: var(--header-gap, var(--space-16));
       --_header-back-gap: var(--space-4);
 
       position: relative;
       display: grid;
       grid-template-columns: var(--_header-columns);
       align-items: center;
-      gap: var(--_header-columns-gap);
+      gap: var(--_header-gap);
 
       // Text title
       & .header-title {
@@ -52,8 +52,8 @@
         }
 
         & .text-title {
-          font-size: var(--_header-title-size);
-          line-height: var(--_header-title-leading);
+          font-size: var(--_header-title-font-size);
+          line-height: var(--_header-title-line-height);
           letter-spacing: -.15px;
           margin-bottom: 0;
 

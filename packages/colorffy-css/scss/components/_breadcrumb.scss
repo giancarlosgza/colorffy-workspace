@@ -11,8 +11,8 @@
     --_breadcrumb-hover-color: var(--breadcrumb-hover-color, var(--theme-on-background));
     --_breadcrumb-separator-color: var(--breadcrumb-separator-color, var(--theme-muted-a10));
     --_breadcrumb-current-max-width: var(--breadcrumb-current-max-width, 32rem);
-    --_breadcrumb-easing-in: var(--breadcrumb-easing, ease);
-    --_breadcrumb-easing-duration: var(--breadcrumb-duration, var(--duration-150));
+    --_breadcrumb-easing: var(--breadcrumb-easing, ease);
+    --_breadcrumb-duration: var(--breadcrumb-duration, var(--duration-150));
 
     display: block;
     font-size: var(--fs-4xs);
@@ -49,7 +49,7 @@
       color: var(--_breadcrumb-color);
       text-decoration: none;
       border-radius: var(--radius-sm);
-      transition: color var(--_breadcrumb-easing-duration) var(--_breadcrumb-easing-in);
+      transition: color var(--_breadcrumb-duration) var(--_breadcrumb-easing);
 
       &:hover,
       &:focus-visible {

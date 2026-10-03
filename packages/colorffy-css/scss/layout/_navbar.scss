@@ -18,11 +18,11 @@
     @supports (container-type: scroll-state) {
       > .navbar {
         @container scroll-state(stuck: top) {
-          --_nav-bg-color: var(--theme-surface-body-pane);
+          --_navbar-bg-color: var(--theme-surface-body-pane);
 
           &:is(.nav-island) {
-            --_nav-bg-color: var(--theme-surface-body-pane);
-            --_nav-shadow: var(--shadow-md);
+            --_navbar-bg-color: var(--theme-surface-body-pane);
+            --_navbar-shadow: var(--shadow-md);
 
             translate: 0 1rem;
           }
@@ -33,7 +33,7 @@
     @supports not (container-type: scroll-state) {
       > .navbar {
         &:is(.nav-island) {
-          --_nav-bg-color: var(--theme-surface-overlay);
+          --_navbar-bg-color: var(--theme-surface-overlay);
 
           margin-inline: auto;
           max-width: 100%;
@@ -47,36 +47,36 @@
   // MAIN TOP NAVBAR
   // ==========================================================================
   .navbar {
-    --_nav-bg-color: var(--navbar-bg-color, var(--theme-background));
-    --_nav-color: var(--navbar-color, var(--theme-on-background));
-    --_nav-shadow: var(--navbar-shadow, none);
-    --_nav-gutter-x: var(--navbar-padding-inline, 0);
-    --_nav-gutter-y: var(--navbar-padding-block, var(--space-8));
-    --_nav-block-end: var(--navbar-margin-block-end, var(--_nav-gutter-y));
-    --_nav-radius: var(--navbar-radius, var(--radius-none));
-    --_nav-min-height: var(--navbar-min-height, #{v.$navbar-min-height});
-    --_nav-easing-in: var(--navbar-easing, var(--ease-emphasized));
-    --_nav-easing-duration: var(--navbar-duration, var(--duration-600));
-    --_nav-brand-font-size: var(--navbar-brand-font-size, var(--fs-sm));
-    --_nav-brand-font-weight: var(--navbar-brand-font-weight, var(--fw-800));
-    --_nav-brand-size: var(--navbar-brand-size, 50px);
-    --_nav-brand-hover-color: var(--navbar-brand-hover-color, var(--theme-primary-a20));
-    --_nav-title-font-size: var(--navbar-title-font-size, var(--fs-sm));
-    --_nav-title-font-weight: var(--navbar-title-font-weight, var(--fw-600));
+    --_navbar-bg-color: var(--navbar-bg-color, var(--theme-background));
+    --_navbar-color: var(--navbar-color, var(--theme-on-background));
+    --_navbar-shadow: var(--navbar-shadow, none);
+    --_navbar-padding-inline: var(--navbar-padding-inline, 0);
+    --_navbar-padding-block: var(--navbar-padding-block, var(--space-8));
+    --_navbar-margin-block-end: var(--navbar-margin-block-end, var(--_navbar-padding-block));
+    --_navbar-radius: var(--navbar-radius, var(--radius-none));
+    --_navbar-min-height: var(--navbar-min-height, #{v.$navbar-min-height});
+    --_navbar-easing: var(--navbar-easing, var(--ease-emphasized));
+    --_navbar-duration: var(--navbar-duration, var(--duration-600));
+    --_navbar-brand-font-size: var(--navbar-brand-font-size, var(--fs-sm));
+    --_navbar-brand-font-weight: var(--navbar-brand-font-weight, var(--fw-800));
+    --_navbar-brand-size: var(--navbar-brand-size, 50px);
+    --_navbar-brand-hover-color: var(--navbar-brand-hover-color, var(--theme-primary-a20));
+    --_navbar-title-font-size: var(--navbar-title-font-size, var(--fs-sm));
+    --_navbar-title-font-weight: var(--navbar-title-font-weight, var(--fw-600));
 
     position: relative;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: var(--_nav-gutter-y) var(--_nav-gutter-x);
-    background: var(--_nav-bg-color);
-    box-shadow: var(--_nav-shadow);
-    border-radius: var(--_nav-radius);
+    padding: var(--_navbar-padding-block) var(--_navbar-padding-inline);
+    background: var(--_navbar-bg-color);
+    box-shadow: var(--_navbar-shadow);
+    border-radius: var(--_navbar-radius);
     z-index: v.$z-index-navbar;
-    margin-bottom: var(--_nav-block-end);
-    min-height: var(--_nav-min-height);
-    transition: background-color var(--_nav-easing-duration) var(--_nav-easing-in);
+    margin-bottom: var(--_navbar-margin-block-end);
+    min-height: var(--_navbar-min-height);
+    transition: background-color var(--_navbar-duration) var(--_navbar-easing);
 
     > :where(.container, .container-fluid) {
       display: flex;
@@ -90,14 +90,14 @@
       display: flex;
       align-items: center;
       gap: var(--space-6);
-      color: var(--_nav-color);
+      color: var(--_navbar-color);
       margin-bottom: 0;
       margin-inline: var(--space-6) 0;
 
       span, a {
-        font-size: var(--_nav-brand-font-size);
+        font-size: var(--_navbar-brand-font-size);
         font-family: var(--font-secondary);
-        font-weight: var(--_nav-brand-font-weight);
+        font-weight: var(--_navbar-brand-font-weight);
         line-height: 0;
         color: inherit;
         @extend .undecorated;
@@ -105,12 +105,12 @@
 
       img {
         width: 100%;
-        max-width: var(--_nav-brand-size);
-        max-height: var(--_nav-brand-size);
+        max-width: var(--_navbar-brand-size);
+        max-height: var(--_navbar-brand-size);
       }
 
       &:is(:hover) {
-        color: var(--_nav-brand-hover-color);
+        color: var(--_navbar-brand-hover-color);
       }
 
       &:is(:active, :focus) {
@@ -125,17 +125,17 @@
       gap: var(--space-6);
 
       .page-title {
-        font-size: var(--_nav-title-font-size);
-        font-weight: var(--_nav-title-font-weight);
-        color: var(--_nav-color);
+        font-size: var(--_navbar-title-font-size);
+        font-weight: var(--_navbar-title-font-weight);
+        color: var(--_navbar-color);
         letter-spacing: .5px;
         margin-bottom: 0;
         opacity: 0;
         visibility: hidden;
         translate: 0 .5rem;
-        transition: opacity var(--duration-500) var(--_nav-easing-in),
-        visibility var(--duration-500) var(--_nav-easing-in),
-        translate var(--duration-500) var(--_nav-easing-in);
+        transition: opacity var(--duration-500) var(--_navbar-easing),
+        visibility var(--duration-500) var(--_navbar-easing),
+        translate var(--duration-500) var(--_navbar-easing);
 
         /** Show the title when the navbar is sticky */
         @container scroll-state(stuck: top) {
@@ -162,17 +162,17 @@
       align-items: center;
       flex-basis: 100%;
       flex-grow: 1;
-      transition: translate calc(var(--_nav-easing-duration) / 1.75) var(--_nav-easing-in);
+      transition: translate calc(var(--_navbar-duration) / 1.75) var(--_navbar-easing);
 
       .navbar-nav {
-        --_nav-link-gutter-x: var(--navbar-link-padding-inline, 0);
-        --_nav-link-gutter-y: var(--navbar-link-padding-block, var(--space-8));
-        --_nav-link-color: var(--navbar-link-color, var(--theme-muted-a10));
-        --_nav-link-bg-color: transparent;
-        --_nav-link-border-color: transparent;
-        --_nav-link-radius: var(--navbar-link-radius, calc(var(--_nav-radius) + 0.5rem));
-        --_nav-link-font-size: var(--navbar-link-font-size, var(--fs-xs));
-        --_nav-link-font-weight: var(--navbar-link-font-weight, var(--fw-600));
+        --_navbar-link-padding-inline: var(--navbar-link-padding-inline, 0);
+        --_navbar-link-padding-block: var(--navbar-link-padding-block, var(--space-8));
+        --_navbar-link-color: var(--navbar-link-color, var(--theme-muted-a10));
+        --_navbar-link-bg-color: transparent;
+        --_navbar-link-border-color: transparent;
+        --_navbar-link-radius: var(--navbar-link-radius, calc(var(--_navbar-radius) + 0.5rem));
+        --_navbar-link-font-size: var(--navbar-link-font-size, var(--fs-xs));
+        --_navbar-link-font-weight: var(--navbar-link-font-weight, var(--fw-600));
 
         display: flex;
         flex-direction: column;
@@ -191,18 +191,18 @@
 
         .nav-item {
           .nav-link {
-            --_nav-link-state: 0%;
+            --_navbar-link-state: 0%;
 
             position: relative;
             display: block;
-            border-radius: var(--_nav-link-radius);
-            padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
-            background-color: f.state-layer(var(--_nav-link-state), var(--_nav-link-bg-color));
-            color: var(--_nav-link-color);
-            border: var(--border-width-sm) solid var(--_nav-link-border-color);
+            border-radius: var(--_navbar-link-radius);
+            padding: var(--_navbar-link-padding-block) var(--_navbar-link-padding-inline);
+            background-color: f.state-layer(var(--_navbar-link-state), var(--_navbar-link-bg-color));
+            color: var(--_navbar-link-color);
+            border: var(--border-width-sm) solid var(--_navbar-link-border-color);
             font-family: var(--font-primary);
-            font-size: var(--_nav-link-font-size);
-            font-weight: var(--_nav-link-font-weight);
+            font-size: var(--_navbar-link-font-size);
+            font-weight: var(--_navbar-link-font-weight);
             text-transform: none;
             text-decoration: none;
             user-select: none;
@@ -214,8 +214,8 @@
             background-color var(--duration-100) ease-in-out;
 
             &:is(:hover) {
-              --_nav-link-color: var(--navbar-link-hover-color, var(--theme-primary-a10));
-              --_nav-link-state: var(--state-hover-opacity);
+              --_navbar-link-color: var(--navbar-link-hover-color, var(--theme-primary-a10));
+              --_navbar-link-state: var(--state-hover-opacity);
 
               svg {
                 animation: spin 1s ease-in-out both;
@@ -223,11 +223,11 @@
             }
 
             &:is(:active, :focus-visible) {
-              --_nav-link-state: var(--state-pressed-opacity);
+              --_navbar-link-state: var(--state-pressed-opacity);
             }
 
             &:is(.disabled) {
-              --_nav-link-color: var(--theme-muted-a10);
+              --_navbar-link-color: var(--theme-muted-a10);
 
               pointer-events: none;
               cursor: not-allowed;
@@ -236,11 +236,11 @@
 
             // Nuxt and Vue Router active link
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
-              --_nav-link-gutter-x: var(--space-16);
-              --_nav-link-color: var(--navbar-link-active-color, var(--theme-primary-a10));
-              --_nav-link-bg-color: var(--navbar-link-active-bg-color, var(--theme-surface-container));
-              --_nav-link-border-color: var(--_nav-link-bg-color);
-              --_nav-link-font-weight: var(--fw-800);
+              --_navbar-link-padding-inline: var(--space-16);
+              --_navbar-link-color: var(--navbar-link-active-color, var(--theme-primary-a10));
+              --_navbar-link-bg-color: var(--navbar-link-active-bg-color, var(--theme-surface-container));
+              --_navbar-link-border-color: var(--_navbar-link-bg-color);
+              --_navbar-link-font-weight: var(--fw-800);
             }
 
             &:has(img, svg) {
@@ -257,8 +257,8 @@
             }
 
             &:is(.button-link) {
-              --_nav-link-bg-color: var(--theme-primary-a10);
-              --_nav-link-color: var(--theme-on-primary);
+              --_navbar-link-bg-color: var(--theme-primary-a10);
+              --_navbar-link-color: var(--theme-on-primary);
             }
           }
 
@@ -287,14 +287,14 @@
     }
 
     &.nav-transparent {
-      --_nav-bg-color: transparent;
+      --_navbar-bg-color: transparent;
     }
 
     &.nav-island {
-      --_nav-radius: var(--radius-full);
-      --_nav-bg-color: transparent;
+      --_navbar-radius: var(--radius-full);
+      --_navbar-bg-color: transparent;
 
-      transition: translate var(--_nav-easing-duration) var(--_nav-easing-in);
+      transition: translate var(--_navbar-duration) var(--_navbar-easing);
       @include m.container;
     }
 
@@ -304,7 +304,7 @@
         flex-basis: auto;
 
         .navbar-nav {
-          --_nav-link-gutter-x: var(--navbar-link-padding-inline, var(--space-8));
+          --_navbar-link-padding-inline: var(--navbar-link-padding-inline, var(--space-8));
 
           flex-direction: row;
         }
@@ -323,10 +323,10 @@
     --_popover-menu-shadow: var(--popover-menu-shadow, var(--shadow-xl));
     --_popover-menu-padding: var(--popover-menu-padding, var(--space-6));
     --_popover-menu-min-width: var(--popover-menu-min-width, 18rem);
-    --_popover-menu-gutter: var(--popover-menu-spacing, var(--space-16));
-    --_popover-menu-easing-in: var(--popover-menu-easing, var(--ease-spring));
+    --_popover-menu-spacing: var(--popover-menu-spacing, var(--space-16));
+    --_popover-menu-easing: var(--popover-menu-easing, var(--ease-spring));
     --_popover-menu-easing-out: var(--ease-accelerate);
-    --_popover-menu-easing-duration: var(--popover-menu-duration, var(--duration-800));
+    --_popover-menu-duration: var(--popover-menu-duration, var(--duration-800));
     --_popover-menu-easing-out-duration: var(--duration-200);
     --_popover-menu-item-color: var(--popover-menu-item-color, var(--theme-muted-a10));
     --_popover-menu-item-bg-color: transparent;
@@ -341,13 +341,13 @@
 
     & .popover-menu {
       position: absolute;
-      top: var(--_popover-menu-gutter);
+      top: var(--_popover-menu-spacing);
       right: 0;
       width: 100%;
       min-width: var(--_popover-menu-min-width);
-      margin: var(--_popover-menu-gutter) auto;
+      margin: var(--_popover-menu-spacing) auto;
       padding: var(--_popover-menu-padding);
-      max-height: calc(100dvh - #{v.$navbar-min-height} - var(--_popover-menu-gutter) * 2);
+      max-height: calc(100dvh - #{v.$navbar-min-height} - var(--_popover-menu-spacing) * 2);
       overflow-y: auto;
       overscroll-behavior: contain;
       border: var(--border-width-sm) solid var(--_popover-menu-border-color);
@@ -369,9 +369,9 @@
         visibility: visible;
         opacity: 1;
         translate: 0;
-        transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-        opacity calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate),
-        visibility calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate);
+        transition: translate var(--_popover-menu-duration) var(--_popover-menu-easing),
+        opacity calc(var(--_popover-menu-duration) - var(--duration-250)) var(--ease-decelerate),
+        visibility calc(var(--_popover-menu-duration) - var(--duration-250)) var(--ease-decelerate);
       }
 
       // Native popover
@@ -380,9 +380,9 @@
           position: fixed;
           position-anchor: --popover-menu;
           inset: auto;
-          top: calc(anchor(top) + var(--_popover-menu-gutter) * 2);
+          top: calc(anchor(top) + var(--_popover-menu-spacing) * 2);
           right: anchor(right);
-          bottom: var(--_popover-menu-gutter);
+          bottom: var(--_popover-menu-spacing);
           width: auto;
           margin: 0;
           visibility: visible;
@@ -395,10 +395,10 @@
         &:popover-open {
           opacity: 1;
           translate: 0;
-          transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-          opacity calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate),
-          display var(--_popover-menu-easing-duration) allow-discrete,
-          overlay var(--_popover-menu-easing-duration) allow-discrete;
+          transition: translate var(--_popover-menu-duration) var(--_popover-menu-easing),
+          opacity calc(var(--_popover-menu-duration) - var(--duration-250)) var(--ease-decelerate),
+          display var(--_popover-menu-duration) allow-discrete,
+          overlay var(--_popover-menu-duration) allow-discrete;
 
           @starting-style {
             opacity: 0;
@@ -410,8 +410,8 @@
       & .popover-menu-header {
         display: flex;
         align-items: flex-start;
-        gap: calc(var(--_popover-menu-gutter) / 2);
-        padding: calc(var(--_popover-menu-gutter) * .75) calc(var(--_popover-menu-gutter) / 2);
+        gap: calc(var(--_popover-menu-spacing) / 2);
+        padding: calc(var(--_popover-menu-spacing) * .75) calc(var(--_popover-menu-spacing) / 2);
 
         & .popover-menu-header-content {
           flex-grow: 1;
@@ -444,7 +444,7 @@
       & .popover-menu-user {
         display: flex;
         align-items: center;
-        gap: calc(var(--_popover-menu-gutter) / 2);
+        gap: calc(var(--_popover-menu-spacing) / 2);
         min-width: 0;
 
         & .popover-menu-user-content {
@@ -456,7 +456,7 @@
         & .popover-menu-user-trailing {
           display: flex;
           align-items: center;
-          gap: calc(var(--_popover-menu-gutter) / 4);
+          gap: calc(var(--_popover-menu-spacing) / 4);
           margin-inline-start: auto;
         }
       }
@@ -464,17 +464,17 @@
       & .popover-menu-body {
         display: flex;
         flex-direction: column;
-        gap: calc(var(--_popover-menu-gutter) * .75);
-        padding: calc(var(--_popover-menu-gutter) * .75) calc(var(--_popover-menu-gutter) / 2);
+        gap: calc(var(--_popover-menu-spacing) * .75);
+        padding: calc(var(--_popover-menu-spacing) * .75) calc(var(--_popover-menu-spacing) / 2);
 
         // Groups
         & .popover-menu-group {
           display: flex;
           flex-direction: column;
-          gap: calc(var(--_popover-menu-gutter) / 4);
+          gap: calc(var(--_popover-menu-spacing) / 4);
 
           & .popover-menu-group-label {
-            padding: calc(var(--_popover-menu-gutter) / 4) calc(var(--_popover-menu-gutter) / 2);
+            padding: calc(var(--_popover-menu-spacing) / 4) calc(var(--_popover-menu-spacing) / 2);
             font-family: var(--font-secondary);
             font-size: var(--fs-4xs);
             letter-spacing: .08em;
@@ -489,8 +489,8 @@
 
           display: flex;
           align-items: center;
-          gap: calc(var(--_popover-menu-gutter) / 2);
-          padding: calc(var(--_popover-menu-gutter) / 2);
+          gap: calc(var(--_popover-menu-spacing) / 2);
+          padding: calc(var(--_popover-menu-spacing) / 2);
 
           width: 100%;
           border: none;
@@ -521,7 +521,7 @@
           & .popover-menu-item-trailing {
             display: flex;
             align-items: center;
-            gap: calc(var(--_popover-menu-gutter) / 4);
+            gap: calc(var(--_popover-menu-spacing) / 4);
             margin-inline-start: auto;
           }
 
@@ -569,8 +569,8 @@
       & .popover-menu-footer {
         display: flex;
         align-items: center;
-        gap: calc(var(--_popover-menu-gutter) / 2);
-        padding: calc(var(--_popover-menu-gutter) * .75) calc(var(--_popover-menu-gutter) / 2);
+        gap: calc(var(--_popover-menu-spacing) / 2);
+        padding: calc(var(--_popover-menu-spacing) * .75) calc(var(--_popover-menu-spacing) / 2);
         border-top: var(--border-width-sm) solid var(--theme-outline-surface);
       }
     }
@@ -581,56 +581,56 @@
   // ==========================================================================
   .menu-tools-container {
     & .menu-tools {
-      --_menu-tool-bg-color: var(--menu-tools-bg-color, var(--theme-surface-body-pane));
-      --_menu-tool-shadow: var(--menu-tools-shadow, var(--shadow-sm));
-      --_menu-tool-padding: var(--menu-tools-padding, var(--space-12));
-      --_menu-tool-gap: var(--menu-tools-gap, var(--space-14));
-      --_menu-tool-radius: var(--menu-tools-radius, var(--radius-lg));
-      --_menu-tool-max-height: var(--menu-tools-max-height, 28rem);
-      --_menu-tool-tabs-bg-color: var(--menu-tools-tabs-bg-color, var(--theme-background));
-      --_menu-tool-tab-bg-color: transparent;
-      --_menu-tool-tab-active-color: var(--menu-tools-tab-active-color, var(--theme-primary-a30));
-      --_menu-tool-link-bg-color: transparent;
-      --_menu-tool-link-active-color: var(--menu-tools-link-active-color, var(--theme-primary-a10));
-      --_menu-tool-grid-cols: 15rem 2fr 1fr;
-      --_menu-tool-grid-tabs-cols: repeat(3, 1fr);
-      --_menu-tool-grid-tools-cols: repeat(2, 1fr);
-      --_menu-tool-easing-in: var(--menu-tools-easing, var(--ease-emphasized));
-      --_menu-tool-easing-duration: var(--menu-tools-duration, var(--duration-600));
-      --_menu-tool-easing-out: var(--ease-accelerate);
-      --_menu-tool-item-easing-in: var(--ease-decelerate);
-      --_menu-tool-item-easing-duration: var(--duration-500);
+      --_menu-tools-bg-color: var(--menu-tools-bg-color, var(--theme-surface-body-pane));
+      --_menu-tools-shadow: var(--menu-tools-shadow, var(--shadow-sm));
+      --_menu-tools-padding: var(--menu-tools-padding, var(--space-12));
+      --_menu-tools-gap: var(--menu-tools-gap, var(--space-14));
+      --_menu-tools-radius: var(--menu-tools-radius, var(--radius-lg));
+      --_menu-tools-max-height: var(--menu-tools-max-height, 28rem);
+      --_menu-tools-tabs-bg-color: var(--menu-tools-tabs-bg-color, var(--theme-background));
+      --_menu-tools-tab-bg-color: transparent;
+      --_menu-tools-tab-active-color: var(--menu-tools-tab-active-color, var(--theme-primary-a30));
+      --_menu-tools-link-bg-color: transparent;
+      --_menu-tools-link-active-color: var(--menu-tools-link-active-color, var(--theme-primary-a10));
+      --_menu-tools-grid-cols: 15rem 2fr 1fr;
+      --_menu-tools-grid-tabs-cols: repeat(3, 1fr);
+      --_menu-tools-grid-tools-cols: repeat(2, 1fr);
+      --_menu-tools-easing: var(--menu-tools-easing, var(--ease-emphasized));
+      --_menu-tools-duration: var(--menu-tools-duration, var(--duration-600));
+      --_menu-tools-easing-out: var(--ease-accelerate);
+      --_menu-tools-item-easing: var(--ease-decelerate);
+      --_menu-tools-item-duration: var(--duration-500);
 
       position: absolute;
       top: calc(#{v.$navbar-min-height} - .4rem);
       inset-inline: 0;
       width: 100%;
-      background-color: var(--_menu-tool-bg-color);
-      box-shadow: var(--_menu-tool-shadow);
-      border-radius: 0 0 var(--_menu-tool-radius) var(--_menu-tool-radius);
+      background-color: var(--_menu-tools-bg-color);
+      box-shadow: var(--_menu-tools-shadow);
+      border-radius: 0 0 var(--_menu-tools-radius) var(--_menu-tools-radius);
 
       translate: 0 -10rem;
       opacity: 0;
       visibility: hidden;
       transform-origin: top center;
-      transition: translate calc(var(--_menu-tool-easing-duration) / 4) var(--_menu-tool-easing-out),
-      opacity calc(var(--_menu-tool-easing-duration) / 4) var(--_menu-tool-easing-out),
-      visibility calc(var(--_menu-tool-easing-duration) / 4) var(--_menu-tool-easing-out);
+      transition: translate calc(var(--_menu-tools-duration) / 4) var(--_menu-tools-easing-out),
+      opacity calc(var(--_menu-tools-duration) / 4) var(--_menu-tools-easing-out),
+      visibility calc(var(--_menu-tools-duration) / 4) var(--_menu-tools-easing-out);
 
       &.menu-tools-visible {
         translate: 0;
         opacity: 1;
         visibility: visible;
 
-        transition: translate var(--_menu-tool-easing-duration) var(--_menu-tool-easing-in),
-        opacity calc(var(--_menu-tool-easing-duration) / 2) var(--ease-accelerate),
-        visibility calc(var(--_menu-tool-easing-duration) / 2) var(--ease-accelerate);
+        transition: translate var(--_menu-tools-duration) var(--_menu-tools-easing),
+        opacity calc(var(--_menu-tools-duration) / 2) var(--ease-accelerate),
+        visibility calc(var(--_menu-tools-duration) / 2) var(--ease-accelerate);
 
         & .menu-content-wrapper {
           scale: 1;
           opacity: 1;
-          transition: opacity calc(var(--_menu-tool-easing-duration) * 2) var(--_menu-tool-easing-in),
-          scale calc(var(--_menu-tool-easing-duration) * 2) var(--_menu-tool-easing-in);
+          transition: opacity calc(var(--_menu-tools-duration) * 2) var(--_menu-tools-easing),
+          scale calc(var(--_menu-tools-duration) * 2) var(--_menu-tools-easing);
           transition-delay: var(--duration-200);
         }
       }
@@ -638,64 +638,64 @@
       // Content wrapper
       & .menu-content-wrapper {
         display: grid;
-        grid-template-columns: var(--_menu-tool-grid-cols);
+        grid-template-columns: var(--_menu-tools-grid-cols);
         padding-block: var(--space-16) var(--space-32);
         gap: var(--space-16);
         width: 100%;
         min-height: auto;
-        max-height: var(--_menu-tool-max-height);
+        max-height: var(--_menu-tools-max-height);
         overflow-y: auto;
         overscroll-behavior: contain;
 
         scale: 0.98;
         opacity: 0;
         transform-origin: top center;
-        transition: opacity calc(var(--_menu-tool-easing-duration) / 2) var(--_menu-tool-easing-in),
-        scale calc(var(--_menu-tool-easing-duration) / 2) var(--_menu-tool-easing-in);
+        transition: opacity calc(var(--_menu-tools-duration) / 2) var(--_menu-tools-easing),
+        scale calc(var(--_menu-tools-duration) / 2) var(--_menu-tools-easing);
 
         // Tabs section
         & .menu-tabs {
           display: grid;
-          grid-template-rows: var(--_menu-tool-grid-tabs-cols);
-          gap: var(--_menu-tool-gap);
+          grid-template-rows: var(--_menu-tools-grid-tabs-cols);
+          gap: var(--_menu-tools-gap);
           align-self: flex-start;
           height: 100%;
-          padding: var(--_menu-tool-padding);
-          background: var(--_menu-tool-tabs-bg-color);
-          border-radius: calc(var(--_menu-tool-radius) + var(--_menu-tool-padding));
+          padding: var(--_menu-tools-padding);
+          background: var(--_menu-tools-tabs-bg-color);
+          border-radius: calc(var(--_menu-tools-radius) + var(--_menu-tools-padding));
 
           // Items
           & .menu-tab-item {
-            --_menu-tool-tab-state: 0%;
+            --_menu-tools-tab-state: 0%;
 
             display: flex;
             flex-direction: column;
-            padding: var(--_menu-tool-padding);
-            background-color: f.state-layer(var(--_menu-tool-tab-state), var(--_menu-tool-tab-bg-color));
-            border-radius: var(--_menu-tool-radius);
+            padding: var(--_menu-tools-padding);
+            background-color: f.state-layer(var(--_menu-tools-tab-state), var(--_menu-tools-tab-bg-color));
+            border-radius: var(--_menu-tools-radius);
             cursor: pointer;
             user-select: none;
 
             transition-property: background-color, scale;
-            transition-duration: var(--_menu-tool-item-easing-duration);
-            transition-timing-function: var(--_menu-tool-item-easing-in);
+            transition-duration: var(--_menu-tools-item-duration);
+            transition-timing-function: var(--_menu-tools-item-easing);
 
             &:is(:hover) {
-              --_menu-tool-tab-state: var(--state-hover-opacity);
+              --_menu-tools-tab-state: var(--state-hover-opacity);
 
               scale: .98;
             }
 
             &:is(:active, :focus-visible) {
-              --_menu-tool-tab-state: var(--state-pressed-opacity);
+              --_menu-tools-tab-state: var(--state-pressed-opacity);
             }
 
             &:is(.menu-tab-active) {
-              --_menu-tool-tab-bg-color: var(--menu-tools-tab-active-bg-color, var(--theme-surface-body-pane));
+              --_menu-tools-tab-bg-color: var(--menu-tools-tab-active-bg-color, var(--theme-surface-body-pane));
 
               & p {
                 &:is(.subtitle-1) {
-                  color: var(--_menu-tool-tab-active-color);
+                  color: var(--_menu-tools-tab-active-color);
                 }
               }
             }
@@ -706,7 +706,7 @@
         & .menu-grid {
           display: grid;
           grid-template-rows: auto 1fr;
-          gap: var(--_menu-tool-gap);
+          gap: var(--_menu-tools-gap);
           overflow: clip;
 
           & .menu-grid-title {
@@ -716,28 +716,28 @@
 
           & .menu-grid-items-wrapper {
             display: grid;
-            grid-template-columns: var(--_menu-tool-grid-tools-cols);
+            grid-template-columns: var(--_menu-tools-grid-tools-cols);
             grid-template-rows: auto;
             gap: inherit;
             align-self: flex-start;
             overflow: clip;
 
             & .menu-link {
-              --_menu-tool-link-state: 0%;
+              --_menu-tools-link-state: 0%;
 
               display: flex;
               flex-direction: row;
               align-items: center;
-              gap: var(--_menu-tool-gap);
-              padding: calc(var(--_menu-tool-padding) / 2);
+              gap: var(--_menu-tools-gap);
+              padding: calc(var(--_menu-tools-padding) / 2);
               height: 100%;
-              background-color: f.state-layer(var(--_menu-tool-link-state), var(--_menu-tool-link-bg-color));
-              border-radius: var(--_menu-tool-radius);
+              background-color: f.state-layer(var(--_menu-tools-link-state), var(--_menu-tools-link-bg-color));
+              border-radius: var(--_menu-tools-radius);
               user-select: none;
               @extend .undecorated;
 
-              transition: background-color var(--_menu-tool-item-easing-duration) var(--_menu-tool-item-easing-in),
-              border-radius var(--_menu-tool-item-easing-duration) var(--_menu-tool-item-easing-in);
+              transition: background-color var(--_menu-tools-item-duration) var(--_menu-tools-item-easing),
+              border-radius var(--_menu-tools-item-duration) var(--_menu-tools-item-easing);
 
               :where(.icon-wrap:not(.icon-wrap-gradient)) {
                 color: var(--theme-primary-a30);
@@ -761,27 +761,27 @@
                     opacity: 0;
                     visibility: hidden;
 
-                    transition: translate calc(var(--_menu-tool-easing-duration) * 1.5) var(--_menu-tool-easing-in),
-                    opacity var(--_menu-tool-easing-duration) var(--_menu-tool-easing-in),
-                    visibility var(--_menu-tool-easing-duration) var(--_menu-tool-easing-in);
+                    transition: translate calc(var(--_menu-tools-duration) * 1.5) var(--_menu-tools-easing),
+                    opacity var(--_menu-tools-duration) var(--_menu-tools-easing),
+                    visibility var(--_menu-tools-duration) var(--_menu-tools-easing);
                   }
                 }
               }
 
               &:is(:hover) {
-                --_menu-tool-radius: var(--radius-xl);
-                --_menu-tool-link-state: var(--state-hover-opacity);
+                --_menu-tools-radius: var(--radius-xl);
+                --_menu-tools-link-state: var(--state-hover-opacity);
 
                 & .icon-wrap {
-                  border-radius: var(--_menu-tool-radius);
-                  transition: border-radius var(--_menu-tool-easing-duration) var(--_menu-tool-easing-in);
+                  border-radius: var(--_menu-tools-radius);
+                  transition: border-radius var(--_menu-tools-duration) var(--_menu-tools-easing);
                 }
 
                 // When hover the link, show the arrow icon
                 & p {
                   &:is(.subtitle-1) {
                     & i {
-                      --_menu-tool-easing-duration: var(--duration-300);
+                      --_menu-tools-duration: var(--duration-300);
 
                       translate: .25rem;
                       opacity: 1;
@@ -792,20 +792,20 @@
               }
 
               &:is(:active, :focus-visible) {
-                --_menu-tool-link-state: var(--state-pressed-opacity);
+                --_menu-tools-link-state: var(--state-pressed-opacity);
               }
 
               &:is(.router-link-active, .router-link-exact-active) {
-                --_menu-tool-radius: var(--radius-full);
-                --_menu-tool-link-bg-color: var(--menu-tools-link-active-bg-color, var(--theme-surface-container-high));
+                --_menu-tools-radius: var(--radius-full);
+                --_menu-tools-link-bg-color: var(--menu-tools-link-active-bg-color, var(--theme-surface-container-high));
 
                 & .icon-wrap {
-                  border-radius: var(--_menu-tool-radius);
+                  border-radius: var(--_menu-tools-radius);
                 }
 
                 & p {
                   &:is(.subtitle-1) {
-                    color: var(--_menu-tool-link-active-color);
+                    color: var(--_menu-tools-link-active-color);
                   }
                 }
               }
@@ -818,18 +818,18 @@
           display: grid;
           grid-template-rows: repeat(2, auto);
           grid-template-columns: 1fr;
-          gap: var(--_menu-tool-gap);
+          gap: var(--_menu-tools-gap);
 
           & .menu-cta-item {
             position: relative;
             align-content: center;
-            padding: var(--_menu-tool-padding);
+            padding: var(--_menu-tools-padding);
             height: 100%;
             width: 100%;
             cursor: pointer;
             user-select: none;
             border: var(--border-width-sm) solid var(--theme-outline-surface);
-            border-radius: calc(var(--_menu-tool-radius));
+            border-radius: calc(var(--_menu-tools-radius));
 
             & .cta-arrow {
               position: absolute;
@@ -960,7 +960,7 @@
 
     .menu-tools-container {
       & .menu-tools {
-        --_menu-tool-grid-cols: 1fr 2fr;
+        --_menu-tools-grid-cols: 1fr 2fr;
 
         & .menu-body {
           & .menu-news {
@@ -974,15 +974,15 @@
   @include m.media-query(960) {
     .navbar {
       &:has(.menu-tools-visible) {
-        --_nav-bg-color: var(--theme-surface-body-pane);
+        --_navbar-bg-color: var(--theme-surface-body-pane);
       }
     }
 
     .menu-tools-container {
       & .menu-tools {
-        --_menu-tool-grid-cols: auto 1fr;
-        --_menu-tool-grid-tabs-cols: 1fr;
-        --_menu-tool-grid-tools-cols: 1fr;
+        --_menu-tools-grid-cols: auto 1fr;
+        --_menu-tools-grid-tabs-cols: 1fr;
+        --_menu-tools-grid-tools-cols: 1fr;
 
         top: v.$navbar-min-height;
         inset-inline: 0;
@@ -998,8 +998,8 @@
           align-self: flex-start;
 
           & .menu-grid {
-            grid-template-rows: calc(var(--_menu-tool-grid-tools-cols) * 6);
-            grid-template-columns: var(--_menu-tool-grid-tools-cols);
+            grid-template-rows: calc(var(--_menu-tools-grid-tools-cols) * 6);
+            grid-template-columns: var(--_menu-tools-grid-tools-cols);
 
             & .menu-grid-title {
               grid-column: span 1;
@@ -1013,11 +1013,11 @@
   @include m.media-query(768) {
     .navbar {
       &:has(.popover-menu-visible) {
-        --_nav-bg-color: var(--theme-surface-body-pane);
+        --_navbar-bg-color: var(--theme-surface-body-pane);
       }
 
       &:has(.popover-menu:popover-open) {
-        --_nav-bg-color: var(--theme-surface-body-pane);
+        --_navbar-bg-color: var(--theme-surface-body-pane);
       }
     }
 

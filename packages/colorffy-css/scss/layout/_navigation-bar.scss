@@ -10,9 +10,9 @@ $indicator-max-items: 8;
   // BOTTOM NAVIGATION BAR LAYOUT
   // ==========================================================================
   .navigation-bar {
-    --_navigation-bar-easing-in: var(--navigation-bar-easing, var(--ease-overshoot-soft));
+    --_navigation-bar-easing: var(--navigation-bar-easing, var(--ease-overshoot-soft));
     --_navigation-bar-easing-out: var(--ease-accelerate);
-    --_navigation-bar-easing-duration: var(--navigation-bar-duration, var(--duration-600));
+    --_navigation-bar-duration: var(--navigation-bar-duration, var(--duration-600));
     --_navigation-bar-padding-top: 0;
     --_navigation-bar-padding-bottom: 0;
     --_navigation-bar-font-size: var(--navigation-bar-font-size, .65rem);
@@ -136,8 +136,8 @@ $indicator-max-items: 8;
 
         // Animation
         @media (prefers-reduced-motion: no-preference) {
-          transition: background-color var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in),
-          inset var(--_navigation-bar-easing-duration) var(--_navigation-bar-easing-in);
+          transition: background-color var(--_navigation-bar-duration) var(--_navigation-bar-easing),
+          inset var(--_navigation-bar-duration) var(--_navigation-bar-easing);
         }
       }
 
@@ -173,7 +173,7 @@ $indicator-max-items: 8;
           &.nuxt-link-exact-active {
             .indicator {
               scale: 1;
-              transition: opacity var(--duration-600) var(--_navigation-bar-easing-in);
+              transition: opacity var(--duration-600) var(--_navigation-bar-easing);
             }
           }
         }

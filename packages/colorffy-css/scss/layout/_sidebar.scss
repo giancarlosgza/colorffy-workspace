@@ -9,24 +9,24 @@
   // SIDEBAR NAVIGATION DRAWER LAYOUT
   // ==========================================================================
   .navigation-drawer {
-    --_drawer-bg-color: var(--sidebar-bg-color, var(--theme-background));
-    --_drawer-color: var(--sidebar-color, var(--theme-on-background));
-    --_drawer-border-color: var(--sidebar-border-color, var(--theme-outline-surface));
-    --_drawer-shadow: var(--sidebar-shadow, var(--shadow-lg));
-    --_drawer-radius: var(--radius-none) var(--sidebar-radius, var(--radius-xl)) var(--sidebar-radius, var(--radius-xl)) var(--radius-none);
-    --_drawer-padding: var(--sidebar-padding, var(--space-16));
-    --_drawer-gutter: var(--sidebar-spacing, var(--space-8));
-    --_drawer-brand-size: var(--sidebar-brand-size, 2.5rem);
-    --_drawer-item-color: var(--sidebar-item-color, color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%));
-    --_drawer-item-bg-color: transparent;
-    --_drawer-item-shadow: none;
-    --_drawer-item-radius: var(--sidebar-item-radius, #{v.$button-border-radius});
-    --_drawer-item-font-size: var(--sidebar-item-font-size, var(--fs-3xs));
-    --_drawer-item-font-weight: var(--sidebar-item-font-weight, var(--fw-500));
-    --_drawer-item-active-icon-color: var(--sidebar-item-active-icon-color, var(--theme-primary-a10));
-    --_drawer-easing-in: var(--sidebar-easing, var(--ease-emphasized));
-    --_drawer-easing-out: var(--sidebar-easing, var(--ease-emphasized));
-    --_drawer-easing-duration: var(--sidebar-duration, var(--duration-600));
+    --_sidebar-bg-color: var(--sidebar-bg-color, var(--theme-background));
+    --_sidebar-color: var(--sidebar-color, var(--theme-on-background));
+    --_sidebar-border-color: var(--sidebar-border-color, var(--theme-outline-surface));
+    --_sidebar-shadow: var(--sidebar-shadow, var(--shadow-lg));
+    --_sidebar-radius: var(--radius-none) var(--sidebar-radius, var(--radius-xl)) var(--sidebar-radius, var(--radius-xl)) var(--radius-none);
+    --_sidebar-padding: var(--sidebar-padding, var(--space-16));
+    --_sidebar-spacing: var(--sidebar-spacing, var(--space-8));
+    --_sidebar-brand-size: var(--sidebar-brand-size, 2.5rem);
+    --_sidebar-item-color: var(--sidebar-item-color, color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_sidebar-color) 50%));
+    --_sidebar-item-bg-color: transparent;
+    --_sidebar-item-shadow: none;
+    --_sidebar-item-radius: var(--sidebar-item-radius, #{v.$button-border-radius});
+    --_sidebar-item-font-size: var(--sidebar-item-font-size, var(--fs-3xs));
+    --_sidebar-item-font-weight: var(--sidebar-item-font-weight, var(--fw-500));
+    --_sidebar-item-active-icon-color: var(--sidebar-item-active-icon-color, var(--theme-primary-a10));
+    --_sidebar-easing: var(--sidebar-easing, var(--ease-emphasized));
+    --_sidebar-easing-out: var(--sidebar-easing, var(--ease-emphasized));
+    --_sidebar-duration: var(--sidebar-duration, var(--duration-600));
     --_discrete: allow-discrete;
 
     container: DrawerContainer / inline-size;
@@ -36,29 +36,29 @@
     width: var(--theme-nav-drawer-width);
     height: 100dvh;
     max-height: 100dvh;
-    background-color: var(--_drawer-bg-color);
-    color: var(--_drawer-color);
-    box-shadow: var(--_drawer-shadow);
+    background-color: var(--_sidebar-bg-color);
+    color: var(--_sidebar-color);
+    box-shadow: var(--_sidebar-shadow);
     z-index: 99;
-    padding: var(--_drawer-padding);
-    border-radius: var(--_drawer-radius);
+    padding: var(--_sidebar-padding);
+    border-radius: var(--_sidebar-radius);
     will-change: translate, width;
     translate: 0;
-    transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
-      translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
+    transition: width var(--_sidebar-duration) var(--_sidebar-easing-out),
+      translate var(--_sidebar-duration) var(--_sidebar-easing-out);
 
     // Closed sidebar only with icons shown
     &.drawer-rail {
       width: calc(var(--theme-nav-drawer-width) / 2);
-      transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
-        translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
+      transition: width var(--_sidebar-duration) var(--_sidebar-easing-out),
+        translate var(--_sidebar-duration) var(--_sidebar-easing-out);
     }
 
     &.drawer-bordered {
-      --_drawer-radius: var(--radius-none);
-      --_drawer-shadow: none;
+      --_sidebar-radius: var(--radius-none);
+      --_sidebar-shadow: none;
 
-      border-right: var(--border-width-sm) solid var(--_drawer-border-color);
+      border-right: var(--border-width-sm) solid var(--_sidebar-border-color);
     }
 
     & .drawer-content {
@@ -72,31 +72,31 @@
       .drawer-header {
         display: flex;
         justify-content: flex-start;
-        gap: var(--_drawer-gutter);
+        gap: var(--_sidebar-spacing);
         flex-wrap: nowrap;
         word-break: break-all;
         align-items: center;
-        padding: var(--_drawer-gutter);
+        padding: var(--_sidebar-spacing);
 
         :where(img) {
           // Images
-          width: var(--_drawer-brand-size);
-          max-height: var(--_drawer-brand-size);
+          width: var(--_sidebar-brand-size);
+          max-height: var(--_sidebar-brand-size);
           interpolate-size: allow-keywords;
 
           will-change: width, font-size;
-          transition: width var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            max-height var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            font-size var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            translate var(--_drawer-easing-duration) var(--_drawer-easing-in);
+          transition: width var(--_sidebar-duration) var(--_sidebar-easing),
+            max-height var(--_sidebar-duration) var(--_sidebar-easing),
+            font-size var(--_sidebar-duration) var(--_sidebar-easing),
+            translate var(--_sidebar-duration) var(--_sidebar-easing);
         }
 
         :where(i:is(.drawer-brand-icon)) {
           display: grid;
           place-items: center;
-          font-size: calc(var(--_drawer-brand-size) / 1.5);
-          width: var(--_drawer-brand-size);
-          height: var(--_drawer-brand-size);
+          font-size: calc(var(--_sidebar-brand-size) / 1.5);
+          width: var(--_sidebar-brand-size);
+          height: var(--_sidebar-brand-size);
           border-radius: var(--radius-md);
           padding: .25rem;
           background-color: color-mix(in oklab, var(--theme-primary-a10) 35%, transparent);
@@ -107,8 +107,8 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: calc(var(--_drawer-gutter) / 2);
-        padding: var(--_drawer-gutter);
+        gap: calc(var(--_sidebar-spacing) / 2);
+        padding: var(--_sidebar-spacing);
         margin-block: var(--space-16);
         overflow-y: auto;
         overflow-x: hidden;
@@ -124,29 +124,29 @@
         }
 
         .drawer-item {
-          --_drawer-item-state: 0%;
+          --_sidebar-item-state: 0%;
 
           position: relative;
           display: flex;
-          gap: var(--_drawer-gutter);
-          font-size: var(--_drawer-item-font-size);
-          font-weight: var(--_drawer-item-font-weight);
+          gap: var(--_sidebar-spacing);
+          font-size: var(--_sidebar-item-font-size);
+          font-weight: var(--_sidebar-item-font-weight);
           font-family: var(--font-primary);
-          color: var(--_drawer-item-color);
-          background-color: f.state-layer(var(--_drawer-item-state), var(--_drawer-item-bg-color));
-          box-shadow: var(--_drawer-item-shadow);
-          border-radius: var(--_drawer-item-radius);
-          padding: var(--_drawer-gutter);
+          color: var(--_sidebar-item-color);
+          background-color: f.state-layer(var(--_sidebar-item-state), var(--_sidebar-item-bg-color));
+          box-shadow: var(--_sidebar-item-shadow);
+          border-radius: var(--_sidebar-item-radius);
+          padding: var(--_sidebar-spacing);
           letter-spacing: 0.55px;
           cursor: pointer;
           align-items: center;
 
           // Transition
           will-change: background-color, flex-direction, align-items, font-size;
-          transition: background-color var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            flex-direction var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            align-items var(--_drawer-easing-duration) var(--_drawer-easing-in),
-            font-size var(--_drawer-easing-duration) var(--_drawer-easing-in);
+          transition: background-color var(--_sidebar-duration) var(--_sidebar-easing),
+            flex-direction var(--_sidebar-duration) var(--_sidebar-easing),
+            align-items var(--_sidebar-duration) var(--_sidebar-easing),
+            font-size var(--_sidebar-duration) var(--_sidebar-easing);
 
           &:is(a) {
             @extend .undecorated;
@@ -160,14 +160,14 @@
             // Arrow icon for collapsible groups
             &:last-child {
               position: absolute;
-              inset-block: var(--_drawer-gutter);
-              right: var(--_drawer-gutter);
+              inset-block: var(--_sidebar-spacing);
+              right: var(--_sidebar-spacing);
               margin: auto;
             }
           }
 
           &:hover {
-            --_drawer-item-state: var(--state-hover-opacity);
+            --_sidebar-item-state: var(--state-hover-opacity);
 
             i {
               font-variation-settings: var(--iw-semi-bold);
@@ -175,23 +175,23 @@
           }
 
           &:is(:active, :focus-visible) {
-            --_drawer-item-state: var(--state-pressed-opacity);
+            --_sidebar-item-state: var(--state-pressed-opacity);
           }
 
           &:is(.router-link-exact-active, .active) {
-            --_drawer-item-color: var(--sidebar-item-active-color, var(--_drawer-color));
-            --_drawer-item-bg-color: var(--sidebar-item-active-bg-color, var(--theme-surface-body-pane));
-            --_drawer-item-shadow: var(--shadow-sm);
-            --_drawer-item-font-weight: var(--fw-800);
+            --_sidebar-item-color: var(--sidebar-item-active-color, var(--_sidebar-color));
+            --_sidebar-item-bg-color: var(--sidebar-item-active-bg-color, var(--theme-surface-body-pane));
+            --_sidebar-item-shadow: var(--shadow-sm);
+            --_sidebar-item-font-weight: var(--fw-800);
 
             >i:first-child {
               font-variation-settings: var(--iw-bold);
-              color: var(--_drawer-item-active-icon-color);
+              color: var(--_sidebar-item-active-icon-color);
             }
           }
 
           &:is(.drawer-item-disabled) {
-            --_drawer-item-color: var(--theme-muted-a10);
+            --_sidebar-item-color: var(--theme-muted-a10);
 
             opacity: 0.55;
             cursor: not-allowed;
@@ -201,16 +201,16 @@
           &.drawer-item-child {
             margin-left: var(--space-8);
             padding-left: var(--space-14);
-            border-radius: 0 var(--_drawer-item-radius) var(--_drawer-item-radius) 0;
-            border-left: var(--border-width-sm) solid var(--_drawer-border-color);
+            border-radius: 0 var(--_sidebar-item-radius) var(--_sidebar-item-radius) 0;
+            border-left: var(--border-width-sm) solid var(--_sidebar-border-color);
           }
         }
 
         .drawer-text {
-          font-size: var(--_drawer-item-font-size);
-          color: var(--_drawer-item-color);
-          padding-inline: var(--_drawer-gutter);
-          margin-block: var(--_drawer-gutter);
+          font-size: var(--_sidebar-item-font-size);
+          color: var(--_sidebar-item-color);
+          padding-inline: var(--_sidebar-spacing);
+          margin-block: var(--_sidebar-spacing);
         }
       }
 
@@ -219,8 +219,8 @@
         flex-wrap: nowrap;
         flex-direction: column;
         justify-content: flex-start;
-        gap: calc(var(--_drawer-gutter) / 2);
-        padding: var(--_drawer-gutter);
+        gap: calc(var(--_sidebar-spacing) / 2);
+        padding: var(--_sidebar-spacing);
       }
 
       // Dropdown / Static content
@@ -228,7 +228,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        gap: calc(var(--_drawer-gutter) / 2);
+        gap: calc(var(--_sidebar-spacing) / 2);
         align-items: center;
         translate: 0;
         transform-origin: left bottom;
@@ -298,7 +298,7 @@
           align-items: center;
 
           :where(img, i) {
-            --_drawer-brand-size: 3.5rem;
+            --_sidebar-brand-size: 3.5rem;
             translate: 1rem;
           }
         }
@@ -312,7 +312,7 @@
             flex-direction: column;
             align-items: center;
             font-size: var(--fs-4xs);
-            gap: calc(var(--_drawer-gutter) / 2);
+            gap: calc(var(--_sidebar-spacing) / 2);
 
             span {
               display: none;
@@ -341,7 +341,7 @@
   // Media query for reduced motion
   @media (prefers-reduced-motion) {
     .navigation-drawer {
-      --_drawer-easing-duration: var(--duration-300);
+      --_sidebar-duration: var(--duration-300);
 
       transition-timing-function: step-start;
 
@@ -363,17 +363,17 @@
   // SIDEBAR COMPONENT OVERLAY
   // ==========================================================================
   .drawer-overlay {
-    --_drawer-overlay-color: var(--sidebar-overlay-color, color-mix(in srgb, var(--color-brand-black-500) 25%, transparent));
-    --_drawer-overlay-blur: var(--sidebar-overlay-blur, 2px);
+    --_sidebar-overlay-color: var(--sidebar-overlay-color, color-mix(in srgb, var(--color-brand-black-500) 25%, transparent));
+    --_sidebar-overlay-blur: var(--sidebar-overlay-blur, 2px);
 
     display: none;
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100dvh;
-    background: var(--_drawer-overlay-color);
+    background: var(--_sidebar-overlay-color);
     z-index: calc(#{v.$z-index-fullscreen} - 1);
-    backdrop-filter: blur(var(--_drawer-overlay-blur));
+    backdrop-filter: blur(var(--_sidebar-overlay-blur));
     animation: fade-in var(--duration-200) ease-out forwards;
   }
 

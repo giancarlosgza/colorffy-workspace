@@ -11,36 +11,36 @@ $indicator-max-items: 16;
   // TABS COMPONENT
   // ==========================================================================
   .tabs-navigation {
-    --_nav-tabs-gap: var(--tabs-gap, var(--space-8));
-    --_nav-tabs-gutter-x: 0;
-    --_nav-tabs-radius: var(--radius-none);
-    --_nav-tabs-bg-color: transparent;
-    --_nav-tabs-border-color: var(--tabs-border-color, var(--theme-outline-button));
-    --_nav-tabs-indicator-size: var(--tabs-indicator-size, calc(var(--border-width-md) + 1px));
-    --_nav-tabs-indicator-color: var(--tabs-indicator-color, var(--theme-primary-a10));
-    --_nav-tabs-indicator-anchor: --tabs-item-1;
-    --_nav-tabs-indicator-duration: var(--tabs-duration, var(--duration-300));
-    --_nav-tabs-indicator-easing: var(--tabs-easing, var(--ease-decelerate));
-    --_nav-tabs-link-color: var(--tabs-link-color, var(--theme-muted-a10));
-    --_nav-tabs-link-font-weight: var(--tabs-link-font-weight, var(--fw-500));
+    --_tabs-gap: var(--tabs-gap, var(--space-8));
+    --_tabs-margin-inline: 0;
+    --_tabs-radius: var(--radius-none);
+    --_tabs-bg-color: transparent;
+    --_tabs-border-color: var(--tabs-border-color, var(--theme-outline-button));
+    --_tabs-indicator-size: var(--tabs-indicator-size, calc(var(--border-width-md) + 1px));
+    --_tabs-indicator-color: var(--tabs-indicator-color, var(--theme-primary-a10));
+    --_tabs-indicator-anchor: --tabs-item-1;
+    --_tabs-duration: var(--tabs-duration, var(--duration-300));
+    --_tabs-easing: var(--tabs-easing, var(--ease-decelerate));
+    --_tabs-link-color: var(--tabs-link-color, var(--theme-muted-a10));
+    --_tabs-link-font-weight: var(--tabs-link-font-weight, var(--fw-500));
 
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: var(--_nav-tabs-gap);
+    gap: var(--_tabs-gap);
 
     list-style: none;
     padding: 0;
-    margin-inline: var(--_nav-tabs-gutter-x);
+    margin-inline: var(--_tabs-margin-inline);
     margin-block: 0;
 
     min-width: 100%;
     height: auto;
-    background: var(--_nav-tabs-bg-color);
-    border-radius: var(--_nav-tabs-radius);
-    border-bottom: var(--border-width-sm) solid var(--_nav-tabs-border-color);
+    background: var(--_tabs-bg-color);
+    border-radius: var(--_tabs-radius);
+    border-bottom: var(--border-width-sm) solid var(--_tabs-border-color);
 
     scrollbar-width: thin;
     scrollbar-color: var(--theme-muted-base) transparent;
@@ -85,37 +85,37 @@ $indicator-max-items: 16;
 
     // Tabs pill
     &.tabs-pills {
-      --_nav-tabs-item-radius: var(--tabs-pills-radius, var(--radius-lg));
-      --_nav-tabs-radius: calc(var(--_nav-tabs-item-radius) + calc(var(--_nav-tabs-gap) - .15rem));
-      --_nav-tabs-bg-color: var(--tabs-pills-bg-color, var(--theme-surface-container-low));
-      --_nav-tabs-pill-bg-color: var(--tabs-pills-indicator-bg-color, var(--theme-surface-body-pane));
-      --_nav-tabs-pill-shadow: var(--tabs-pills-indicator-shadow, var(--shadow-md));
+      --_tabs-pills-radius: var(--tabs-pills-radius, var(--radius-lg));
+      --_tabs-radius: calc(var(--_tabs-pills-radius) + calc(var(--_tabs-gap) - .15rem));
+      --_tabs-bg-color: var(--tabs-pills-bg-color, var(--theme-surface-container-low));
+      --_tabs-pills-indicator-bg-color: var(--tabs-pills-indicator-bg-color, var(--theme-surface-body-pane));
+      --_tabs-pills-indicator-shadow: var(--tabs-pills-indicator-shadow, var(--shadow-md));
 
-      padding: calc(var(--_nav-tabs-gap) - .15rem);
-      background: var(--_nav-tabs-bg-color);
+      padding: calc(var(--_tabs-gap) - .15rem);
+      background: var(--_tabs-bg-color);
       border-bottom-color: transparent;
 
       // Rounded
       &.tabs-rounded {
-        --_nav-tabs-item-radius: var(--radius-full);
+        --_tabs-pills-radius: var(--radius-full);
       }
 
       .tab-item {
         .tab-link {
-          --_btn-radius: var(--_nav-tabs-item-radius);
+          --_btn-radius: var(--_tabs-pills-radius);
         }
       }
 
       // Indicator
       :where(.tab-indicator) {
         @supports (anchor-name: --foo) {
-          top: anchor(var(--_nav-tabs-indicator-anchor) top);
-          bottom: anchor(var(--_nav-tabs-indicator-anchor) bottom);
+          top: anchor(var(--_tabs-indicator-anchor) top);
+          bottom: anchor(var(--_tabs-indicator-anchor) bottom);
           height: auto;
           z-index: 1;
-          background: var(--_nav-tabs-pill-bg-color);
-          border-radius: var(--_nav-tabs-item-radius);
-          box-shadow: var(--_nav-tabs-pill-shadow);
+          background: var(--_tabs-pills-indicator-bg-color);
+          border-radius: var(--_tabs-pills-radius);
+          box-shadow: var(--_tabs-pills-indicator-shadow);
         }
       }
 
@@ -129,9 +129,9 @@ $indicator-max-items: 16;
       // Fallback
       @supports not (anchor-name: --foo) {
         .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active) {
-          --_btn-shadow: var(--_nav-tabs-pill-shadow);
+          --_btn-shadow: var(--_tabs-pills-indicator-shadow);
 
-          background: var(--_nav-tabs-pill-bg-color);
+          background: var(--_tabs-pills-indicator-bg-color);
           border-bottom: none;
         }
       }
@@ -142,7 +142,7 @@ $indicator-max-items: 16;
 
       .tab-link {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--_nav-tabs-link-color);
+        --_btn-color: var(--_tabs-link-color);
         --_btn-gap: var(--space-4);
         --_btn-radius: var(--radius-md) var(--radius-md) var(--radius-none) var(--radius-none);
         --_btn-padding-block: 0.625rem;
@@ -161,7 +161,7 @@ $indicator-max-items: 16;
           display: flex;
           min-width: max-content;
           background: f.state-layer(var(--_tabs-link-state), var(--_btn-bg-color));
-          font-weight: var(--_nav-tabs-link-font-weight);
+          font-weight: var(--_tabs-link-font-weight);
           text-decoration: none;
           transition: background-color var(--duration-200) var(--ease-decelerate),
           color var(--duration-200) var(--ease-decelerate);
@@ -197,7 +197,7 @@ $indicator-max-items: 16;
       }
 
       &:has(.tab-item:nth-child(#{$i}) .tab-link:is(.active, .router-link-active, .router-link-exact-active)) {
-        --_nav-tabs-indicator-anchor: --tabs-item-#{$i};
+        --_tabs-indicator-anchor: --tabs-item-#{$i};
       }
     }
 
@@ -208,17 +208,17 @@ $indicator-max-items: 16;
       @supports (anchor-name: --foo) {
         display: block;
         position: absolute;
-        position-anchor: var(--_nav-tabs-indicator-anchor);
-        left: anchor(var(--_nav-tabs-indicator-anchor) left);
-        right: anchor(var(--_nav-tabs-indicator-anchor) right);
+        position-anchor: var(--_tabs-indicator-anchor);
+        left: anchor(var(--_tabs-indicator-anchor) left);
+        right: anchor(var(--_tabs-indicator-anchor) right);
         bottom: 0;
-        height: var(--_nav-tabs-indicator-size);
-        background: var(--_nav-tabs-indicator-color);
+        height: var(--_tabs-indicator-size);
+        background: var(--_tabs-indicator-color);
         z-index: 5;
 
         // Animation
         @media (prefers-reduced-motion: no-preference) {
-          transition: inset var(--_nav-tabs-indicator-duration) var(--_nav-tabs-indicator-easing);
+          transition: inset var(--_tabs-duration) var(--_tabs-easing);
         }
       }
     }
@@ -226,12 +226,12 @@ $indicator-max-items: 16;
     // Fallback
     @supports not (anchor-name: --foo) {
       .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active) {
-        border-bottom: var(--_nav-tabs-indicator-size) solid var(--_nav-tabs-indicator-color);
+        border-bottom: var(--_tabs-indicator-size) solid var(--_tabs-indicator-color);
       }
     }
 
     &.tabs-contrast {
-      --_nav-tabs-bg-color: var(--theme-surface-container-high);
+      --_tabs-bg-color: var(--theme-surface-container-high);
     }
   }
 
@@ -252,8 +252,8 @@ $indicator-max-items: 16;
       --_segmented-control-item-hover-bg-color: var(--segmented-control-item-hover-bg-color, color-mix(in oklab, var(--theme-primary-base-fixed) 35%, transparent));
       --_segmented-control-item-active-color: var(--segmented-control-item-active-color, var(--theme-on-background-inverse));
       --_segmented-control-indicator-bg-color: var(--segmented-control-indicator-bg-color, var(--theme-surface-a90));
-      --_segmented-control-easing-in: var(--segmented-control-easing, var(--ease-emphasized));
-      --_segmented-control-easing-duration: var(--segmented-control-duration, var(--duration-600));
+      --_segmented-control-easing: var(--segmented-control-easing, var(--ease-emphasized));
+      --_segmented-control-duration: var(--segmented-control-duration, var(--duration-600));
       --_segmented-control-count: 2;
       --_segmented-control-anchor: --segmented-item-1;
 
@@ -324,7 +324,7 @@ $indicator-max-items: 16;
           width: 100%;
           background: var(--theme-outline-surface);
           border-radius: var(--_segmented-control-radius);
-          transition: width var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
+          transition: width var(--_segmented-control-duration) var(--_segmented-control-easing);
         }
       }
 
@@ -350,9 +350,9 @@ $indicator-max-items: 16;
           text-align: center;
           @extend .subtitle-1;
 
-          transition: background var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in),
-          color var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in),
-          font-weight var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
+          transition: background var(--_segmented-control-duration) var(--_segmented-control-easing),
+          color var(--_segmented-control-duration) var(--_segmented-control-easing),
+          font-weight var(--_segmented-control-duration) var(--_segmented-control-easing);
 
           &:is(:hover) {
             background-color: var(--_segmented-control-item-hover-bg-color);
@@ -400,7 +400,7 @@ $indicator-max-items: 16;
 
           // Animation
           @media (prefers-reduced-motion: no-preference) {
-            transition: inset var(--_segmented-control-easing-duration) var(--_segmented-control-easing-in);
+            transition: inset var(--_segmented-control-duration) var(--_segmented-control-easing);
           }
         }
       }
