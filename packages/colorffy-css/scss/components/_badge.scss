@@ -9,9 +9,9 @@
     --_badge-color: var(--theme-on-background);
     --_badge-bg-color: var(--theme-surface-container-high);
     --_badge-border-color: var(--theme-outline-button);
-    --_badge-radius: #{v.$rounded-full};
+    --_badge-radius: var(--radius-full);
     --_badge-font-size: var(--fs-4xs);
-    --_badge-font-weight: #{v.$fw-500};
+    --_badge-font-weight: var(--fw-500);
     --_badge-gutter-y: var(--space-4);
     --_badge-gutter-x: var(--space-8);
 
@@ -33,7 +33,7 @@
     border-radius: var(--_badge-radius);
     color: var(--_badge-color);
     background-color: var(--_badge-bg-color);
-    border: v.$border-sm solid var(--_badge-border-color);
+    border: var(--border-width-sm) solid var(--_badge-border-color);
 
     // ==========================================================================
     // BADGE STYLING VARIANTS (PRIMARY, OUTLINE, SEMANTIC, TONAL, PILL, GRADIENT)
@@ -135,7 +135,7 @@
     &.badge-pill {
       --_badge-gutter-y: var(--space-4);
       --_badge-gutter-x: var(--space-6);
-      --_badge-font-weight: #{v.$fw-700};
+      --_badge-font-weight: var(--fw-700);
       margin-inline: 0;
       aspect-ratio: 1;
     }
@@ -156,14 +156,14 @@
 
       i {
         color: inherit;
-        font-size: 16px;
+        font-size: 1rem;
         font-variation-settings: var(--iw-bold);
       }
     }
 
     // Size
     &.badge-sm {
-      --_badge-font-size: 10px;
+      --_badge-font-size: .625rem;
       --_badge-gutter-y: var(--space-4);
       --_badge-gutter-x: var(--space-6);
 

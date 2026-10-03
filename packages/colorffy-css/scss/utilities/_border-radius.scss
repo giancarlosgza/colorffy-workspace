@@ -3,12 +3,12 @@
 
 @layer utilities.border-radius {
   $radiuses: (
-    'none': v.$rounded-none,
-    'sm': v.$rounded-sm,
-    'md': v.$rounded-md,
-    'lg': v.$rounded-lg,
-    'xl': v.$rounded-xl,
-    'full': v.$rounded-full
+    'none': var(--radius-none),
+    'sm': var(--radius-sm),
+    'md': var(--radius-md),
+    'lg': var(--radius-lg),
+    'xl': var(--radius-xl),
+    'full': var(--radius-full)
   );
 
   // ==========================================================================

@@ -11,8 +11,8 @@
     @media (prefers-reduced-motion: no-preference) {
       &:focus-visible {
         transition: outline-offset 75ms ease-out;
-        outline-offset: .2rem;
-        outline: var(--theme-on-background) auto;
+        outline-offset: calc(var(--focus-ring-offset) - .1rem);
+        outline: var(--focus-ring-color) auto;
       }
 
       &:not(:active):focus-visible {
@@ -21,8 +21,8 @@
     }
 
     &:not(:active):focus-visible {
-      outline-offset: .3rem;
-      outline: var(--theme-on-background) auto;
+      outline-offset: var(--focus-ring-offset);
+      outline: var(--focus-ring-color) auto;
     }
   }
 
@@ -50,10 +50,10 @@
   body {
     margin: 0;
     font-family: var(--font-secondary);
-    font-weight: v.$fw-400;
+    font-weight: var(--fw-400);
     color: var(--theme-on-background);
     background-color: var(--theme-background);
-    font-size: 14px;
+    font-size: .875rem;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
 
@@ -85,7 +85,7 @@
     overflow: visible;
     height: 1px;
     border: 0;
-    border-top: v.$border-sm solid var(--theme-outline-button);
+    border-top: var(--border-width-sm) solid var(--theme-outline-button);
     opacity: 0.95;
     margin: 1rem 0;
   }
@@ -148,7 +148,7 @@
   }
 
   dt {
-    font-weight: v.$fw-500;
+    font-weight: var(--fw-500);
   }
 
   // Undo browser default
@@ -166,7 +166,7 @@
   // Strong
   b,
   strong {
-    font-weight: v.$fw-800;
+    font-weight: var(--fw-800);
   }
 
   /**
@@ -385,7 +385,7 @@
   }
 
   th {
-    font-weight: v.$fw-500;
+    font-weight: var(--fw-500);
     text-align: inherit;
     text-align: -webkit-match-parent;
   }
@@ -423,12 +423,12 @@
 
       &::-webkit-scrollbar-track {
         background: var(--theme-surface-container-low);
-        border-radius: v.$rounded-full;
+        border-radius: var(--radius-full);
       }
 
       &::-webkit-scrollbar-thumb {
         background-color: var(--theme-surface-container-highest);
-        border-radius: v.$rounded-full;
+        border-radius: var(--radius-full);
       }
     }
   }
@@ -443,12 +443,12 @@
 
   *::-webkit-scrollbar-track {
     background: var(--theme-surface-container-low);
-    border-radius: v.$rounded-full;
+    border-radius: var(--radius-full);
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: var(--theme-surface-container-highest);
-    border-radius: v.$rounded-full;
+    border-radius: var(--radius-full);
   }
 
   details {
@@ -465,7 +465,7 @@
     &[open] {
       background: var(--theme-surface-container);
       padding: .5rem;
-      border-radius: v.$rounded-lg;
+      border-radius: var(--radius-lg);
     }
   }
 

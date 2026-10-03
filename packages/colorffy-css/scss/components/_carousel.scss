@@ -8,7 +8,7 @@
   @mixin carousel-button-base {
     position: fixed;
     font-family: var(--font-icons);
-    font-size: 16px;
+    font-size: 1rem;
     inline-size: 44px;
     aspect-ratio: 1;
     padding: .75rem;
@@ -18,7 +18,7 @@
     background: var(--theme-surface-body-pane);
     color: var(--theme-on-background);
     box-shadow: var(--shadow-sm);
-    border-radius: v.$rounded-full;
+    border-radius: var(--radius-full);
     cursor: pointer;
   }
 

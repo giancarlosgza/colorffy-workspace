@@ -38,7 +38,7 @@
     font-family: var(--font-primary);
     font-optical-sizing: auto;
     letter-spacing: -.15px;
-    transition: font-variation-settings 500ms v.$easing-spring;
+    transition: font-variation-settings 500ms var(--ease-spring);
 
     @if ($bold == true) {
       font-variation-settings: var(--vfs-heading-bold);
@@ -228,14 +228,14 @@
     --_btn-height: 48px;
     --_btn-icon-size: 1.45rem;
 
-    font-size: 14px;
+    font-size: .875rem;
   } @else if ($size == 'fab') {
     --_btn-padding-inline: var(--space-16);
     --_btn-padding-block: var(--space-16);
     --_btn-height: 48px;
     --_btn-icon-size: 1.5rem;
 
-    font-size: 14px;
+    font-size: .875rem;
   }
 }
 
@@ -755,6 +755,10 @@
     background: conic-gradient(from var(--gradient-angle), $colors);
     border-radius: inherit;
     animation: angle-spin 5s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
 
   &::after {
@@ -797,7 +801,7 @@
   position: absolute;
   top: $top;
   left: $left;
-  font-size: 16px;
+  font-size: 1rem;
   font-variation-settings: var(--iw-bold);
   background-clip: text;
   -webkit-background-clip: text;
@@ -842,8 +846,8 @@
   inset-inline: 0;
   margin-inline: auto;
   width: v.$container-island-width;
-  border-radius: #{v.$rounded-full};
-  border: v.$border-sm solid var(--theme-outline-surface);
+  border-radius: var(--radius-full);
+  border: var(--border-width-sm) solid var(--theme-outline-surface);
   box-shadow: var(--shadow-sm);
 
   @if ($edge == top) {

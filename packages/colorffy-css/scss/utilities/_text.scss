@@ -86,23 +86,23 @@
   // FONT WEIGHT UTILITIES
   // ==========================================================================
   .fw-400 {
-    font-weight: v.$fw-400;
+    font-weight: var(--fw-400);
   }
 
   .fw-500 {
-    font-weight: v.$fw-500;
+    font-weight: var(--fw-500);
   }
 
   .fw-600 {
-    font-weight: v.$fw-600;
+    font-weight: var(--fw-600);
   }
 
   .fw-700 {
-    font-weight: v.$fw-700;
+    font-weight: var(--fw-700);
   }
 
   .fw-800 {
-    font-weight: v.$fw-800;
+    font-weight: var(--fw-800);
   }
 
   // ==========================================================================
@@ -251,7 +251,7 @@
   .text-decoration-side-lines {
     --_side-lines-opacity: 35%;
     --_side-lines-height: 1px;
-    --_side-lines-radius: #{v.$rounded-full};
+    --_side-lines-radius: var(--radius-full);
 
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -292,13 +292,13 @@
   // ==========================================================================
   .text-hero {
     font-size: var(--fs-5xl);
-    font-weight: v.$fw-800;
+    font-weight: var(--fw-800);
     line-height: 1.25;
   }
 
   .text-heading {
     font-size: var(--fs-xl);
-    font-weight: v.$fw-800;
+    font-weight: var(--fw-800);
     line-height: 1.25;
     @include m.text-variable(true);
 
@@ -318,7 +318,7 @@
     font-family: var(--font-primary);
     font-size: var(--fs-lg);
     line-height: var(--fs-lg--line-height);
-    font-weight: v.$fw-600;
+    font-weight: var(--fw-600);
     margin-bottom: var(--_text-subheading-gutter);
     position: relative;
     width: fit-content;
@@ -379,7 +379,7 @@
   .text-title-description {
     display: inline-block;
     font-size: var(--fs-base);
-    font-weight: v.$fw-600;
+    font-weight: var(--fw-600);
 
     ~ p:is(.subtitle-1) {
       position: relative;
@@ -393,12 +393,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        border-radius: v.$rounded-sm;
+        border-radius: var(--radius-sm);
         background-color: color-mix(in oklab, var(--theme-muted-base-fixed) 20%, transparent);
         transform-origin: left;
 
         scale: 0 1;
-        transition: scale 200ms v.$easing-out-fallback;
+        transition: scale 200ms var(--ease-accelerate);
       }
     }
 

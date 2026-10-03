@@ -14,19 +14,19 @@
     --_dialog-gutter: calc(var(--space-16) + var(--space-4));
     --_dialog-max-size: 90%;
     --_discrete: allow-discrete;
-    --_dialog-easing-in: #{v.$easing-in-fallback};
-    --_dialog-easing-out: #{v.$easing-out-fallback};
+    --_dialog-easing-in: var(--ease-decelerate);
+    --_dialog-easing-out: var(--ease-accelerate);
     --_dialog-easing-duration: 600ms;
     --_dialog-easing-out-duration: 300ms;
 
     position: fixed;
     inset: 0;
     padding: 0;
-    width: calc(100vh - 20vh);
-    height: calc(100vh - 30vh);
+    width: calc(100dvh - 20dvh);
+    height: calc(100dvh - 30dvh);
     max-width: var(--_dialog-max-size);
     max-height: var(--_dialog-max-size);
-    border: v.$border-sm solid var(--_dialog-border-color);
+    border: var(--border-width-sm) solid var(--_dialog-border-color);
     background-color: var(--_dialog-bg-color);
     box-shadow: var(--_dialog-shadow);
 
@@ -56,14 +56,14 @@
           &:is(.dialog-title) {
             color: var(--theme-on-background);
             font-family: var(--font-primary);
-            font-weight: v.$fw-700;
+            font-weight: var(--fw-700);
             font-size: var(--fs-base);
             margin-bottom: var(--space-4);
           }
 
           &:is(.dialog-subtitle) {
             color: var(--theme-muted-a10);
-            font-weight: v.$fw-500;
+            font-weight: var(--fw-500);
             font-size: var(--fs-2xs);
             margin-bottom: 0;
           }
@@ -112,6 +112,9 @@
 
     // Modal
     &.dialog-modal {
+      --_dialog-easing-in: var(--ease-overshoot-soft);
+      --_dialog-easing-duration: 600ms;
+
       border-radius: var(--_dialog-radius);
 
       /* 0. Not visible default state */
@@ -127,11 +130,6 @@
         translate var(--_dialog-easing-duration),
         opacity calc(var(--_dialog-easing-duration) / 3);
         transition-timing-function: var(--_dialog-easing-in);
-      }
-
-      @supports (transition: all 100ms linear(1, 1, 1)) {
-        --_dialog-easing-in: #{v.$easing-overshoot-soft};
-        --_dialog-easing-duration: 600ms;
       }
 
       /* 2. On appear transition */
@@ -167,6 +165,8 @@
 
     // Side Sheet
     &.dialog-side-sheet {
+      --_dialog-easing-in: var(--ease-overshoot-soft);
+      --_dialog-easing-duration: 600ms;
       --_dialog-radius: #{v.$dialog-border-radius};
 
       inset-inline: auto var(--space-8);
@@ -174,7 +174,7 @@
       margin: auto;
       width: 18rem;
       height: 100%;
-      max-height: calc(100vh - 2rem);
+      max-height: calc(100dvh - 2rem);
       border-radius: var(--_dialog-radius);
       /* 0. Not visible default state */
       translate: 20rem 0;
@@ -188,11 +188,6 @@
         translate var(--_dialog-easing-duration),
         opacity calc(var(--_dialog-easing-duration));
         transition-timing-function: var(--_dialog-easing-in);
-      }
-
-      @supports (transition: all 100ms linear(1, 1, 1)) {
-        --_dialog-easing-in: #{v.$easing-overshoot-soft};
-        --_dialog-easing-duration: 600ms;
       }
 
       &[open] {
@@ -262,7 +257,7 @@
         & p:not(.text-muted) {
           font-size: var(--fs-lg);
           font-family: var(--font-primary);
-          font-weight: v.$fw-700;
+          font-weight: var(--fw-700);
           line-height: 1.35;
           margin-bottom: var(--space-16);
         }
@@ -290,7 +285,7 @@
 
     &.dialog-fullscreen {
       width: calc(100vw - 3rem);
-      height: calc(100vh - 3rem);
+      height: calc(100dvh - 3rem);
       max-width: none;
       max-height: none;
 
@@ -316,7 +311,7 @@
 
             padding: var(--space-14);
             font-size: var(--fs-xl);
-            border-radius: v.$rounded-lg;
+            border-radius: var(--radius-lg);
             color: var(--theme-on-primary);
             background-color: var(--theme-primary-a10);
 
@@ -358,24 +353,26 @@
       margin: 0;
       width: 100%;
       max-width: 100%;
-      height: 75vh;
+      height: 75dvh;
       @supports (height: 100lvh) {
         height: 75lvh;
       }
 
       &:is(.dialog-fullscreen) {
-        height: 100vh;
+        height: 100dvh;
         @supports (height: 100dvh) {
           height: 100dvh;
         }
       }
 
       &:is(.dialog-modal) {
-        --_dialog-radius: #{v.$rounded-xl} #{v.$rounded-xl} 0 0;
+        --_dialog-easing-in: var(--ease-decelerate);
+        --_dialog-easing-duration: 500ms;
+        --_dialog-radius: var(--radius-xl) var(--radius-xl) 0 0;
 
         /* 0. Not visible default state */
         scale: unset;
-        translate: 0 80vh;
+        translate: 0 80dvh;
         transform-origin: bottom center;
 
         & {
@@ -384,11 +381,6 @@
           scale var(--_dialog-easing-duration),
           translate var(--_dialog-easing-duration),
           opacity calc(var(--_dialog-easing-duration) / 3);
-        }
-
-        @supports (transition: all 100ms linear(1, 1, 1)) {
-          --_dialog-easing-in: #{v.$easing-in-fallback};
-          --_dialog-easing-duration: 500ms;
         }
 
         /* 2. On appear transition */
@@ -406,7 +398,7 @@
           }
 
           &[open] {
-            translate: 0 70vh;
+            translate: 0 70dvh;
           }
         }
       }
@@ -419,7 +411,7 @@
       }
 
       &:is(.dialog-confirm) {
-        --_dialog-radius: #{v.$rounded-xl};
+        --_dialog-radius: var(--radius-xl);
 
         width: clamp(18rem, 90vw, 25rem);
         height: fit-content;

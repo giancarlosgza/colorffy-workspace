@@ -25,17 +25,12 @@
     --_dropdown-color: var(--theme-on-background);
     --_dropdown-padding: var(--space-4);
     --_dropdown-shadow: var(--shadow-lg);
-    --_dropdown-radius: #{v.$rounded-lg};
-    --_dropdown-easing-in: #{v.$easing-in-fallback};
-    --_dropdown-easing-out: #{v.$easing-out-fallback};
-    --_dropdown-easing-duration: 400ms;
+    --_dropdown-radius: var(--radius-lg);
+    --_dropdown-easing-in: var(--ease-overshoot-soft);
+    --_dropdown-easing-out: var(--ease-accelerate);
+    --_dropdown-easing-duration: 500ms;
     --_dropdown-item-gutter-x: var(--space-8);
     --_dropdown-item-gutter-y: var(--space-8);
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_dropdown-easing-in: #{v.$easing-overshoot-soft};
-      --_dropdown-easing-duration: 500ms;
-    }
 
     &.v-popper--theme-dropdown {
       isolation: isolate;
@@ -50,14 +45,14 @@
           padding: var(--_dropdown-padding);
           box-shadow: var(--_dropdown-shadow);
           border-radius: var(--_dropdown-radius);
-          border: v.$border-sm solid var(--theme-outline-overlay);
+          border: var(--border-width-sm) solid var(--theme-outline-overlay);
           min-width: 12rem;
 
           & kbd {
             background-color: var(--theme-surface-kbd);
-            border: v.$border-sm solid var(--theme-surface-kbd);
+            border: var(--border-width-sm) solid var(--theme-surface-kbd);
             color: var(--theme-on-background-inverse);
-            font-weight: v.$fw-800;
+            font-weight: var(--fw-800);
           }
 
           // Menu list styles
@@ -73,7 +68,7 @@
                 display: flex;
                 align-items: center;
                 gap: var(--space-6);
-                font-weight: v.$fw-400;
+                font-weight: var(--fw-400);
                 background: inherit;
                 color: var(--_dropdown-color);
 
@@ -104,7 +99,7 @@
                 &.v-text-item {
                   display: inline-block;
                   letter-spacing: 0.45px;
-                  font-weight: v.$fw-700;
+                  font-weight: var(--fw-700);
                   font-family: var(--font-primary);
 
                   &:is(:hover, :focus, :active) {
@@ -120,7 +115,7 @@
                 }
 
                 & .badge {
-                  --_badge-font-size: 8px;
+                  --_badge-font-size: .5rem;
                   --_badge-gutter-y: var(--space-4);
                   --_badge-gutter-x: var(--space-6);
 
@@ -129,7 +124,7 @@
                 }
 
                 i {
-                  font-size: 16px;
+                  font-size: 1rem;
                   font-variation-settings: var(--iw-semi-bold);
                 }
 
@@ -142,7 +137,7 @@
                 &:is(.v-active) {
                   background-color: var(--theme-surface-container-highest);
                   color: var(--theme-on-background);
-                  font-weight: v.$fw-700;
+                  font-weight: var(--fw-700);
 
                   & i {
                     font-variation-settings: var(--iw-bold);
@@ -177,7 +172,7 @@
                 height: 0;
                 margin: var(--space-4);
                 overflow: hidden;
-                border-top: v.$border-sm solid color-mix(in oklab, var(--theme-muted-base-fixed) 50%, transparent);
+                border-top: var(--border-width-sm) solid color-mix(in oklab, var(--theme-muted-base-fixed) 50%, transparent);
                 opacity: 1;
               }
             }
@@ -245,7 +240,7 @@
                 width: 100%;
                 height: 15px;
                 cursor: ew-resize;
-                border-radius: v.$rounded-full;
+                border-radius: var(--radius-full);
                 overflow: hidden;
 
                 & .hue-gradient {
@@ -269,10 +264,10 @@
                   height: 12px;
                   aspect-ratio: 1;
                   background-color: transparent;
-                  border: v.$border-md solid v.$white;
-                  outline: v.$border-md solid v.$dark;
+                  border: var(--border-width-md) solid v.$white;
+                  outline: var(--border-width-md) solid v.$dark;
                   outline-offset: 0;
-                  border-radius: v.$rounded-md;
+                  border-radius: var(--radius-md);
                   box-shadow: var(--shadow-sm);
                   pointer-events: none;
                   box-sizing: border-box;
@@ -291,8 +286,8 @@
                   width: 30px;
                   height: 30px;
                   aspect-ratio: 1;
-                  border: v.$border-sm solid var(--theme-outline-surface);
-                  border-radius: v.$rounded-full;
+                  border: var(--border-width-sm) solid var(--theme-outline-surface);
+                  border-radius: var(--radius-full);
                 }
 
                 & .form-group {
@@ -346,7 +341,9 @@
       // MOBILE DROPDOWN BEHAVIOR (NO POSITIONING)
       // ==========================================================================
       &.v-popper__popper--no-positioning {
-        --_dropdown-easing-duration: 300ms;
+        --_dropdown-easing-in: var(--ease-overshoot-soft);
+        --_dropdown-easing-duration: 500ms;
+
 
         position: fixed;
         bottom: 0;
@@ -358,11 +355,6 @@
         overscroll-behavior: contain;
         z-index: v.$z-index-menu;
 
-        @supports (transition: all 100ms linear(1, 1, 1)) {
-          --_dropdown-easing-in: #{v.$easing-overshoot-soft};
-          --_dropdown-easing-duration: 500ms;
-        }
-
         & .v-popper__backdrop {
           display: block;
           background-color: var(--theme-overlay-backdrop);
@@ -373,7 +365,7 @@
           pointer-events: auto;
 
           & .v-popper__inner {
-            border-radius: v.$rounded-xl;
+            border-radius: var(--radius-xl);
             margin: var(--space-8);
             //padding-block: 12px 24px;
 
@@ -400,7 +392,7 @@
           translate: 0;
 
           .v-popper__wrapper {
-            translate: 0 50vh;
+            translate: 0 50dvh;
             transition: translate calc(var(--_dropdown-easing-duration) / 2) var(--_dropdown-easing-out),
             opacity 100ms ease-in-out,
             visibility 100ms ease-in-out;

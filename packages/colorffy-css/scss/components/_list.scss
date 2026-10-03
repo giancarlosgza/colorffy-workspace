@@ -40,7 +40,7 @@
     --_list-group-item-color-subtitle: var(--theme-muted-a10);
     --_list-group-item-icon-bg-color: var(--theme-surface-container-lowest);
     --_list-group-item-icon-color: var(--theme-on-background);
-    --_list-group-item-radius: #{v.$rounded-md};
+    --_list-group-item-radius: var(--radius-md);
 
     display: grid;
     grid-template-rows: auto;
@@ -57,21 +57,21 @@
       justify-content: space-between;
       width: 100%;
       background-color: var(--_list-group-item-bg-color);
-      border: v.$border-sm solid var(--_list-group-item-border-color);
+      border: var(--border-width-sm) solid var(--_list-group-item-border-color);
       border-radius: var(--_list-group-item-radius);
-      transition: v.$easing-in-fallback;
+      transition: var(--ease-decelerate);
 
       // Border radius
       &:is(:first-child) {
-        --_list-group-item-radius: #{v.$rounded-lg} #{v.$rounded-lg} #{v.$rounded-sm} #{v.$rounded-sm};
+        --_list-group-item-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
       }
 
       &:is(:last-child) {
-        --_list-group-item-radius: #{v.$rounded-sm} #{v.$rounded-sm} #{v.$rounded-lg} #{v.$rounded-lg};
+        --_list-group-item-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
       }
 
       &:not(:first-child, :last-child) {
-        --_list-group-item-radius: #{v.$rounded-md};
+        --_list-group-item-radius: var(--radius-md);
       }
 
       // Item
@@ -94,7 +94,7 @@
         & p {
           &:is(.subtitle-1) {
             font-family: var(--font-primary);
-            font-weight: v.$fw-600;
+            font-weight: var(--fw-600);
             font-size: var(--fs-3xs);
             color: var(--_list-group-item-color);
             margin-bottom: 0;
@@ -115,7 +115,7 @@
 
         // Icon
         & .list-item-icon-wrapper {
-          border-radius: v.$rounded-md;
+          border-radius: var(--radius-md);
           padding: var(--_list-item-icon-padding);
           aspect-ratio: 1;
           background-color: var(--_list-group-item-icon-bg-color);
@@ -131,7 +131,7 @@
           width: var(--_list-item-image-size);
           height: var(--_list-item-image-size);
           flex-shrink: 0;
-          border-radius: v.$rounded-md;
+          border-radius: var(--radius-md);
           object-fit: cover;
         }
       }
@@ -143,7 +143,7 @@
         --_list-group-item-icon-color: var(--theme-on-background-inverse);
 
         z-index: 2;
-        border-width: v.$border-md;
+        border-width: var(--border-width-md);
 
         :where(.list-item-icon-wrapper i) {
           font-variation-settings: var(--iw-bold);
@@ -184,7 +184,7 @@
 
     &:not(:has(.list-group-item:nth-child(2))) {
       .list-group-item:nth-child(1) {
-        --_list-group-item-radius: #{v.$rounded-md};
+        --_list-group-item-radius: var(--radius-md);
       }
     }
 
@@ -225,11 +225,11 @@
       gap: 0;
 
       & .list-group-item {
-        --_list-group-item-radius: #{v.$rounded-none};
+        --_list-group-item-radius: var(--radius-none);
 
         border: transparent;
-        border-radius: #{v.$rounded-none};
-        border-bottom: v.$border-sm solid var(--_list-group-item-border-color);
+        border-radius: var(--radius-none);
+        border-bottom: var(--border-width-sm) solid var(--_list-group-item-border-color);
 
         &:last-child {
           border-bottom: transparent;

@@ -20,21 +20,17 @@
     --_progress-color: var(--theme-primary-a10);
     --_progress-on-bg-color: var(--theme-on-primary);
     --_progress-height: 0.85rem;
-    --_progress-radius: #{v.$rounded-md};
-    --_progress-easing-in: #{v.$easing-in-fallback};
+    --_progress-radius: var(--radius-md);
+    --_progress-easing-in: var(--ease-emphasized);
+    --_progress-easing-duration: 800ms;
 
     display: flex;
     overflow: hidden;
     height: var(--_progress-height);
     font-size: var(--fs-4xs);
-    font-weight: v.$fw-600;
+    font-weight: var(--fw-600);
     background: var(--_progress-bg-color);
     border-radius: var(--_progress-radius);
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_progress-easing-in: #{v.$easing-emphasized};
-      --_progress-easing-duration: 800ms;
-    }
 
     &.progress-sm {
       --_progress-height: 0.5rem;
@@ -42,7 +38,7 @@
 
     &.progress-lg {
       --_progress-height: 2rem;
-      --_progress-radius: #{v.$rounded-xl};
+      --_progress-radius: var(--radius-xl);
     }
 
     // Progress bar
@@ -148,7 +144,7 @@
 
   .skeleton {
     display: inline-block;
-    border-radius: v.$rounded-md;
+    border-radius: var(--radius-md);
     background-color: var(--theme-muted-a10);
     width: 5rem;
     height: .5rem;
@@ -192,7 +188,7 @@
     &.skeleton-ai-generation {
       --_skeleton-thumbnail-size: 200px;
 
-      border-radius: v.$rounded-xl;
+      border-radius: var(--radius-xl);
       min-height: 1rem;
       width: 100%;
       background-color: #444;

@@ -13,13 +13,13 @@ $indicator-max-items: 16;
     --_nav-tabs-gap: var(--space-8);
     --_nav-tabs-gutter-x: 0;
     --_nav-tabs-gutter-y: var(--space-12);
-    --_nav-tabs-radius: #{v.$rounded-none};
+    --_nav-tabs-radius: var(--radius-none);
     --_nav-tabs-bg-color: transparent;
-    --_nav-tabs-indicator-size: calc(#{v.$border-md} + 1px);
+    --_nav-tabs-indicator-size: calc(var(--border-width-md) + 1px);
     --_nav-tabs-indicator-color: var(--theme-primary-a10);
     --_nav-tabs-indicator-anchor: --tabs-item-1;
     --_nav-tabs-indicator-duration: 300ms;
-    --_nav-tabs-indicator-easing: #{v.$easing-in-fallback};
+    --_nav-tabs-indicator-easing: var(--ease-decelerate);
 
     position: relative;
     display: flex;
@@ -37,7 +37,7 @@ $indicator-max-items: 16;
     height: auto;
     background: var(--_nav-tabs-bg-color);
     border-radius: var(--_nav-tabs-radius);
-    border-bottom: v.$border-sm solid var(--theme-outline-button);
+    border-bottom: var(--border-width-sm) solid var(--theme-outline-button);
 
     scrollbar-width: thin;
     scrollbar-color: var(--theme-muted-base) transparent;
@@ -54,6 +54,13 @@ $indicator-max-items: 16;
       }
     }
 
+    // Fit
+    &.tabs-fit {
+      width: fit-content;
+      min-width: 0;
+      max-width: 100%;
+    }
+
     // Small
     &.tabs-sm {
       .tab-item .tab-link {
@@ -65,16 +72,22 @@ $indicator-max-items: 16;
 
     // Tabs pill
     &.tabs-pills {
-      --_nav-tabs-radius: calc(#{v.$rounded-lg} + calc(var(--_nav-tabs-gap) - .15rem));
+      --_nav-tabs-item-radius: var(--radius-lg);
+      --_nav-tabs-radius: calc(var(--_nav-tabs-item-radius) + calc(var(--_nav-tabs-gap) - .15rem));
       --_nav-tabs-bg-color: var(--theme-surface-container-low);
 
       padding: calc(var(--_nav-tabs-gap) - .15rem);
       background: var(--_nav-tabs-bg-color);
       border-bottom-color: transparent;
 
+      // Rounded
+      &.tabs-rounded {
+        --_nav-tabs-item-radius: var(--radius-full);
+      }
+
       .tab-item {
         .tab-link {
-          --_btn-radius: #{v.$rounded-lg};
+          --_btn-radius: var(--_nav-tabs-item-radius);
 
           &:is(.active, .router-link-active, .router-link-exact-active) {
             color: var(--theme-on-background);
@@ -90,7 +103,7 @@ $indicator-max-items: 16;
           height: auto;
           z-index: 1;
           background: var(--theme-surface-body-pane);
-          border-radius: v.$rounded-lg;
+          border-radius: var(--_nav-tabs-item-radius);
           box-shadow: var(--shadow-md);
         }
       }
@@ -120,7 +133,7 @@ $indicator-max-items: 16;
         --_btn-bg-color: transparent;
         --_btn-color: var(--theme-on-background);
         --_btn-gap: var(--space-4);
-        --_btn-radius: #{v.$rounded-md} #{v.$rounded-md} #{v.$rounded-none} #{v.$rounded-none};
+        --_btn-radius: var(--radius-md) var(--radius-md) var(--radius-none) var(--radius-none);
         --_btn-padding-block: 0.625rem;
         --_btn-shadow: none;
 
@@ -135,11 +148,11 @@ $indicator-max-items: 16;
           // Button tab reset styles
           display: flex;
           min-width: max-content;
-          font-weight: v.$fw-500;
+          font-weight: var(--fw-500);
           color: var(--theme-muted-a10);
           text-decoration: none;
-          transition: background-color 200ms v.$easing-in-fallback,
-          color 200ms v.$easing-in-fallback;
+          transition: background-color 200ms var(--ease-decelerate),
+          color 200ms var(--ease-decelerate);
         }
 
         &:is(:hover) {
@@ -148,7 +161,7 @@ $indicator-max-items: 16;
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {
-          font-weight: v.$fw-800;
+          font-weight: var(--fw-800);
           color: var(--theme-on-background);
         }
 
@@ -213,9 +226,9 @@ $indicator-max-items: 16;
     margin-bottom: var(--space-12);
 
     .tab-segmented-control {
-      --_segmented-control-radius: #{v.$rounded-full};
-      --_segmented-control-easing-in: #{v.$easing-in-fallback};
-      --_segmented-control-easing-duration: 400ms;
+      --_segmented-control-radius: var(--radius-full);
+      --_segmented-control-easing-in: var(--ease-emphasized);
+      --_segmented-control-easing-duration: 600ms;
       --_segmented-control-count: 2;
       --_segmented-control-anchor: --segmented-item-1;
 
@@ -237,16 +250,11 @@ $indicator-max-items: 16;
 
       border-radius: var(--_segmented-control-radius);
       background: transparent;
-      border: v.$border-sm solid var(--theme-outline-button);
-
-      @supports (transition: linear(0, 0, 0)) {
-        --_segmented-control-easing-in: #{v.$easing-emphasized};
-        --_segmented-control-easing-duration: 600ms;
-      }
+      border: var(--border-width-sm) solid var(--theme-outline-button);
 
       // Tab styles
       &.segmented-control-tab {
-        --_segmented-control-radius: #{v.$rounded-sm};
+        --_segmented-control-radius: var(--radius-sm);
 
         border-color: transparent;
 
@@ -273,7 +281,7 @@ $indicator-max-items: 16;
             bottom: calc(anchor(var(--_segmented-control-anchor) bottom) - .35rem);
             height: 3.5px;
             background: var(--theme-primary-a10);
-            border-radius: v.$rounded-sm;
+            border-radius: var(--radius-sm);
           }
         }
 
@@ -291,7 +299,7 @@ $indicator-max-items: 16;
           bottom: 0;
           left: 0;
 
-          height: v.$border-sm;
+          height: var(--border-width-sm);
           width: 100%;
           background: var(--theme-outline-surface);
           border-radius: var(--_segmented-control-radius);
@@ -314,10 +322,10 @@ $indicator-max-items: 16;
           border-radius: var(--_segmented-control-radius);
           background: transparent;
           color: var(--theme-muted-a10);
-          border: v.$border-sm solid transparent;
+          border: var(--border-width-sm) solid transparent;
           cursor: pointer;
           font-size: var(--fs-2xs);
-          font-weight: v.$fw-400;
+          font-weight: var(--fw-400);
           text-align: center;
           @extend .subtitle-1;
 
@@ -330,7 +338,7 @@ $indicator-max-items: 16;
           }
 
           &:is(.active) {
-            font-weight: v.$fw-600;
+            font-weight: var(--fw-600);
             color: var(--theme-on-background-inverse);
           }
 
@@ -380,7 +388,7 @@ $indicator-max-items: 16;
       @supports not (anchor-name: --foo) {
         & .segmented-control-item .segmented-control-link:is(.active) {
           background-color: var(--theme-surface-a90);
-          font-weight: v.$fw-700;
+          font-weight: var(--fw-700);
         }
       }
     }

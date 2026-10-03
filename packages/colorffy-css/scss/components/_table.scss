@@ -32,11 +32,11 @@
     --_table-bg-color: var(--theme-surface-container);
     --_table-color: var(--theme-on-background);
     --_table-border-color: var(--theme-outline-surface);
-    --_table-border-width: #{v.$border-sm};
+    --_table-border-width: var(--border-width-sm);
     --_table-gutter-x: var(--space-8);
     --_table-gutter-y: var(--space-8);
-    --_table-font-size: 12px;
-    --_table-border-radius: #{v.$rounded-none};
+    --_table-font-size: .75rem;
+    --_table-border-radius: var(--radius-none);
     --_table-thead-bg-color: var(--theme-surface-a10);
 
     display: table;
@@ -51,7 +51,7 @@
       tr {
         th {
           font-size: var(--fs-4xs);
-          font-weight: v.$fw-600;
+          font-weight: var(--fw-600);
           font-family: var(--font-primary);
           color: var(--theme-muted-a10);
           letter-spacing: 0.0727em;
@@ -84,7 +84,7 @@
         @include m.text-wrap-pretty;
 
         .td-text {
-          font-size: 12px;
+          font-size: .75rem;
         }
 
         .td-name {
@@ -95,7 +95,7 @@
           i {
             font-variation-settings: var(--iw-semi-bold);
             color: var(--theme-muted-a10);
-            font-size: 20px;
+            font-size: 1.25rem;
 
             &:is(.text-gradient) {
               font-variation-settings: var(--iw-bold);
@@ -141,7 +141,7 @@
 
     // Table bordered
     &.table-bordered {
-      --_table-border-radius: #{v.$rounded-md};
+      --_table-border-radius: var(--radius-md);
       --_table-thead-bg-color: var(--theme-surface-container-lowest);
 
       & thead {
@@ -181,7 +181,7 @@
 
     // Table borderless
     &.table-borderless {
-      --_table-border-radius: #{v.$rounded-md};
+      --_table-border-radius: var(--radius-md);
 
       & thead {
         & tr th {
@@ -246,8 +246,8 @@
         @supports (container-type: scroll-state) {
           @container scroll-state(scrollable: left) {
             background: var(--theme-surface-body-pane);
-            transition: background-color 100ms v.$easing-in-fallback,
-            border 100ms v.$easing-in-fallback;
+            transition: background-color 100ms var(--ease-decelerate),
+            border 100ms var(--ease-decelerate);
 
             &:after {
               content: '';

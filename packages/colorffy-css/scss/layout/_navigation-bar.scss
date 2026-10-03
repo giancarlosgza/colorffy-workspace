@@ -10,9 +10,9 @@ $indicator-max-items: 8;
   // BOTTOM NAVIGATION BAR LAYOUT
   // ==========================================================================
   .navigation-bar {
-    --_navigation-bar-easing-in: #{v.$easing-in-fallback};
-    --_navigation-bar-easing-out: #{v.$easing-out-fallback};
-    --_navigation-bar-easing-duration: 300ms;
+    --_navigation-bar-easing-in: var(--ease-overshoot-soft);
+    --_navigation-bar-easing-out: var(--ease-accelerate);
+    --_navigation-bar-easing-duration: 600ms;
     --_navigation-bar-easing-out-duration: 200ms;
     --_navigation-bar-padding-top: 0;
     --_navigation-bar-padding-bottom: 0;
@@ -46,14 +46,9 @@ $indicator-max-items: 8;
       @include m.container-island($position: fixed, $edge: bottom);
     }
 
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_navigation-bar-easing-in: #{v.$easing-overshoot-soft};
-      --_navigation-bar-easing-duration: 600ms;
-    }
-
     & .navigation-bar-item {
       width: 25%;
-      transition: v.$easing-in-fallback;
+      transition: var(--ease-decelerate);
 
       & .navigation-bar-link {
         position: relative;
@@ -68,7 +63,7 @@ $indicator-max-items: 8;
           font-size: var(--_navigation-bar-font-size);
           font-family: var(--font-primary);
           margin-bottom: 0;
-          font-weight: v.$fw-500;
+          font-weight: var(--fw-500);
           z-index: 11;
         }
 
@@ -92,7 +87,7 @@ $indicator-max-items: 8;
           }
 
           p {
-            font-weight: v.$fw-800;
+            font-weight: var(--fw-800);
           }
         }
       }
@@ -125,7 +120,7 @@ $indicator-max-items: 8;
         display: block;
         position: absolute;
         margin: auto;
-        border-radius: v.$rounded-xl;
+        border-radius: var(--radius-xl);
         width: auto;
         max-width: 100%;
         height: calc(100% - 1rem);
@@ -147,7 +142,7 @@ $indicator-max-items: 8;
 
       &:is(.indicator-tab) {
         @supports (anchor-name: --foo) {
-          border-radius: v.$rounded-sm;
+          border-radius: var(--radius-sm);
           height: .25rem;
           background-color: var(--theme-primary-a10);
           top: calc(anchor(var(--_navigation-bar-indicator-anchor) top) - 1rem);
@@ -156,7 +151,7 @@ $indicator-max-items: 8;
       }
 
       &:is(.indicator-frosted) {
-        border: v.$border-sm solid var(--theme-outline-surface);
+        border: var(--border-width-sm) solid var(--theme-outline-surface);
         background-color: var(--theme-frosted-glass-bg);
       }
     }

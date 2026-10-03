@@ -24,7 +24,7 @@
     border-radius: var(--_popover-radius);
     box-shadow: var(--_popover-shadow);
     background: var(--_popover-bg-color);
-    border: v.$border-sm solid var(--_popover-border-color);
+    border: var(--border-width-sm) solid var(--_popover-border-color);
 
     translate: 0 1rem;
     opacity: 0;
@@ -112,7 +112,7 @@
 
         & .popover-title {
           font-size: var(--fs-xs);
-          font-weight: v.$fw-700;
+          font-weight: var(--fw-700);
           color: var(--_popover-color);
           margin-bottom: var(--space-4);
         }
@@ -134,7 +134,7 @@
       }
 
       & .popover-footer {
-        border-top: v.$border-sm solid var(--_popover-border-color);
+        border-top: var(--border-width-sm) solid var(--_popover-border-color);
         margin-top: var(--_popover-gutter);
       }
     }

@@ -331,19 +331,15 @@
   }
 
   .slide-enter-active {
-    --_slide-easing-in: #{v.$easing-in-fallback};
+    --_slide-easing-in: var(--ease-emphasized);
 
     overflow-x: clip;
     transition: opacity 600ms var(--_slide-easing-in),
     translate 800ms var(--_slide-easing-in);
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_slide-easing-in: #{v.$easing-emphasized};
-    }
   }
 
   .slide-leave-active {
-    --_slide-easing-out: #{v.$easing-out-fallback};
+    --_slide-easing-out: var(--ease-accelerate);
 
     transition: opacity 200ms var(--_slide-easing-out),
     translate 300ms var(--_slide-easing-out);
@@ -400,25 +396,17 @@
     transition for tab menu changes
   */
   .slide-inline-enter-active {
-    --_slide-inline-easing-in: #{v.$easing-in-fallback};
+    --_slide-inline-easing-in: var(--ease-emphasized);
 
     transition: translate 600ms var(--_slide-inline-easing-in),
     opacity 600ms var(--_slide-inline-easing-in);
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_slide-inline-easing-in: #{v.$easing-emphasized};
-    }
   }
 
   .slide-inline-leave-active {
-    --_slide-inline-easing-out: #{v.$easing-out-fallback};
+    --_slide-inline-easing-out: var(--ease-emphasized);
 
     transition: translate 300ms var(--_slide-inline-easing-out),
     opacity 300ms var(--_slide-inline-easing-out);
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_slide-inline-easing-out: #{v.$easing-emphasized};
-    }
   }
 
   .slide-inline-enter-from {
@@ -436,13 +424,13 @@
     vertical transition
   */
   .slide-block-enter-active {
-    transition: translate 800ms v.$easing-in-fallback,
-    opacity 400ms v.$easing-in-fallback;
+    transition: translate 800ms var(--ease-decelerate),
+    opacity 400ms var(--ease-decelerate);
   }
 
   .slide-block-leave-active {
-    transition: translate 400ms v.$easing-out-fallback,
-    opacity 200ms v.$easing-out-fallback;
+    transition: translate 400ms var(--ease-accelerate),
+    opacity 200ms var(--ease-accelerate);
   }
 
   .slide-block-enter-from {
@@ -460,14 +448,14 @@
   horizontal transition
   */
   .fade-inline-enter-active {
-    --_fade-inline-easing-in: #{v.$easing-in-fallback};
+    --_fade-inline-easing-in: var(--ease-decelerate);
 
     transition: translate 400ms var(--_fade-inline-easing-in),
     opacity 400ms var(--_fade-inline-easing-in);
   }
 
   .fade-inline-leave-active {
-    --_fade-inline-easing-out: #{v.$easing-out-fallback};
+    --_fade-inline-easing-out: var(--ease-accelerate);
 
     transition: translate 250ms var(--_fade-inline-easing-out),
     opacity 250ms var(--_fade-inline-easing-out);

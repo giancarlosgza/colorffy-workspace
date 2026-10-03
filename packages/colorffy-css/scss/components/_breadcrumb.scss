@@ -46,7 +46,7 @@
       gap: var(--space-4);
       color: var(--_breadcrumb-color);
       text-decoration: none;
-      border-radius: v.$rounded-sm;
+      border-radius: var(--radius-sm);
       transition: color 0.15s ease;
 
       &:hover,
@@ -62,7 +62,7 @@
       gap: var(--space-4);
       min-width: 0;
       color: var(--_breadcrumb-current-color);
-      font-weight: v.$fw-600;
+      font-weight: var(--fw-600);
     }
 
     .breadcrumb-label {

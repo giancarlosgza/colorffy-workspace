@@ -145,11 +145,11 @@
   // SEGMENTED CONTROL COMPONENT
   // ==========================================================================
   .segmented-control {
-    --_sc-easing-in: #{v.$easing-in-fallback};
-    --_sc-easing-duration: 200ms;
+    --_sc-easing-in: var(--ease-spring);
+    --_sc-easing-duration: 800ms;
 
     display: flex;
-    border: v.$border-sm solid var(--theme-outline-button);
+    border: var(--border-width-sm) solid var(--theme-outline-button);
     gap: var(--space-6);
     padding: var(--space-4);
     border-radius: calc(#{v.$button-border-radius} + .25rem);
@@ -190,17 +190,12 @@
       // Calc the size based on inline margin and segmented control size
       width: calc(50% - calc(var(--space-4) * 2));
       height: 85%;
-      border-radius: calc(#{v.$rounded-lg} - 4px);
+      border-radius: calc(var(--radius-lg) - 4px);
       background-color: var(--theme-surface-container-high);
       z-index: 0;
 
       translate: 0;
       transition: translate var(--_sc-easing-duration) var(--_sc-easing-in);
-    }
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_sc-easing-in: #{v.$easing-spring};
-      --_sc-easing-duration: 800ms;
     }
   }
 
@@ -218,9 +213,9 @@
       --_toggle-btn-bg-color: transparent;
       --_toggle-btn-color: var(--theme-on-background);
       --_toggle-btn-subtitle-color: var(--theme-muted-a10);
-      --_toggle-btn-border-size: #{v.$border-sm};
+      --_toggle-btn-border-size: var(--border-width-sm);
       --_toggle-btn-border-color: var(--theme-outline-button);
-      --_toggle-btn-easing-in: #{v.$easing-in-fallback};
+      --_toggle-btn-easing-in: var(--ease-decelerate);
       --_toggle-btn-easing-duration: 300ms;
 
       background: var(--_toggle-btn-bg-color);
@@ -243,7 +238,7 @@
       &.toggle-btn-active {
         --_toggle-btn-bg-color: var(--theme-surface-container-low);
         --_toggle-btn-border-color: var(--theme-primary-a10);
-        --_toggle-btn-border-size: #{v.$border-sm};
+        --_toggle-btn-border-size: var(--border-width-sm);
         --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
 
         box-shadow: inset 0 0 0 1px var(--theme-primary-a10);
@@ -260,7 +255,7 @@
         &:is(:hover, :focus, :active) {
           --_toggle-btn-bg-color: var(--theme-surface-disabled);
           --_toggle-btn-border-color: var(--theme-outline-button);
-          --_toggle-btn-border-size: #{v.$border-sm};
+          --_toggle-btn-border-size: var(--border-width-sm);
           --_toggle-btn-radius: #{v.$button-border-radius};
         }
       }
@@ -280,7 +275,7 @@
           & p {
             &.subtitle-1 {
               font-size: var(--fs-xs);
-              font-weight: v.$fw-600;
+              font-weight: var(--fw-600);
               font-family: var(--font-primary);
               margin-bottom: var(--space-4);
 

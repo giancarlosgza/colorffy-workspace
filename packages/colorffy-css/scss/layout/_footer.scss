@@ -25,7 +25,7 @@
 
       &:is(.footer-title) {
         font-size: var(--fs-lg);
-        font-weight: v.$fw-800;
+        font-weight: var(--fw-800);
         font-family: var(--font-primary);
 
         &:not(:last-child) {
@@ -35,7 +35,7 @@
 
       &:is(.footer-subtitle) {
         font-size: var(--fs-2xs);
-        font-weight: v.$fw-400;
+        font-weight: var(--fw-400);
         font-family: var(--font-secondary);
         margin-bottom: 0;
         color: var(--theme-muted-a10);
@@ -78,7 +78,7 @@
       & p {
         color: var(--_footer-color);
         font-size: var(--fs-xs);
-        font-weight: v.$fw-700;
+        font-weight: var(--fw-700);
         font-family: var(--font-secondary);
 
         &:not(:last-child) {
@@ -97,12 +97,12 @@
         display: inline-block;
         color: var(--theme-muted-a10);
         font-size: var(--fs-2xs);
-        font-weight: v.$fw-500;
+        font-weight: var(--fw-500);
         font-family: var(--font-secondary);
 
         &:is(:hover) {
           color: var(--theme-primary-a10);
-          font-weight: v.$fw-700;
+          font-weight: var(--fw-700);
         }
       }
 
@@ -124,7 +124,7 @@
       gap: var(--_footer-gap);
       margin-block-start: var(--_footer-gap);
       padding-block-start: var(--_footer-gap);
-      border-block-start: v.$border-sm solid var(--theme-outline-surface);
+      border-block-start: var(--border-width-sm) solid var(--theme-outline-surface);
 
       & p {
         color: var(--theme-muted-a10);

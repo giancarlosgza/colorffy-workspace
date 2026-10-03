@@ -41,7 +41,7 @@
         right: calc(-50% + calc(var(--_stepper-indicator-size) / 2) + var(--space-8));
         height: var(--_stepper-connector-thickness);
         background-color: var(--_stepper-connector-color);
-        transition: background-color 200ms v.$easing-in-fallback;
+        transition: background-color 200ms var(--ease-decelerate);
       }
 
       // Completed steps light up the connector leading to the next step
@@ -73,9 +73,9 @@
         }
 
         &:is(:focus-visible) {
-          outline: v.$border-md solid var(--theme-primary-a10);
+          outline: var(--border-width-md) solid var(--theme-primary-a10);
           outline-offset: 2px;
-          border-radius: v.$rounded-sm;
+          border-radius: var(--radius-sm);
         }
       }
 
@@ -88,17 +88,17 @@
 
         width: var(--_stepper-indicator-size);
         height: var(--_stepper-indicator-size);
-        border-radius: v.$rounded-full;
+        border-radius: var(--radius-full);
         background-color: var(--_stepper-indicator-bg-color);
         color: var(--_stepper-indicator-color);
-        border: v.$border-sm solid var(--_stepper-connector-color);
-        transition: background-color 200ms v.$easing-in-fallback,
-        color 200ms v.$easing-in-fallback,
-        border-color 200ms v.$easing-in-fallback;
+        border: var(--border-width-sm) solid var(--_stepper-connector-color);
+        transition: background-color 200ms var(--ease-decelerate),
+        color 200ms var(--ease-decelerate),
+        border-color 200ms var(--ease-decelerate);
 
         .step-number {
           font-size: var(--fs-2xs);
-          font-weight: v.$fw-600;
+          font-weight: var(--fw-600);
           line-height: 1;
         }
 
@@ -117,14 +117,14 @@
 
       .step-label {
         font-size: var(--fs-2xs);
-        font-weight: v.$fw-600;
+        font-weight: var(--fw-600);
         color: var(--_stepper-label-color);
-        transition: color 200ms v.$easing-in-fallback;
+        transition: color 200ms var(--ease-decelerate);
       }
 
       .step-description {
         font-size: var(--fs-4xs);
-        font-weight: v.$fw-400;
+        font-weight: var(--fw-400);
         color: var(--_stepper-description-color);
       }
 

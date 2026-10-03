@@ -11,7 +11,7 @@
     --_card-gutter-y: var(--space-16);
     --_card-bg-color: var(--theme-surface-a0);
     --_card-color: var(--theme-on-background);
-    --_card-border: #{v.$border-sm};
+    --_card-border: var(--border-width-sm);
     --_card-border-color: transparent;
     --_card-radius: #{v.$card-border-radius};
     --_card-shadow: none;
@@ -27,7 +27,7 @@
     box-shadow: var(--_card-shadow);
     border: var(--_card-border) solid var(--_card-border-color);
     border-radius: var(--_card-radius);
-    transition: all 300ms v.$easing-in-fallback;
+    transition: all 300ms var(--ease-decelerate);
 
     // Cover image (imageUrl/#media slot), full-bleed with the card's top radius
     .card-image {
@@ -46,7 +46,7 @@
 
       .card-title {
         font-size: var(--fs-base);
-        font-weight: v.$fw-700;
+        font-weight: var(--fw-700);
         font-family: var(--font-secondary);
         margin-bottom: 0;
       }
@@ -108,7 +108,7 @@
 
     // Interactive cards (selectable choice or link navigation)
     &:is(.card-selectable, .card-link) {
-      --_card-easing-in: #{v.$easing-in-fallback};
+      --_card-easing-in: var(--ease-emphasized);
 
       cursor: pointer;
       transition: background-color 300ms var(--_card-easing-in),
@@ -144,10 +144,6 @@
         &:is(:active, :focus-visible) {
           --_card-shadow: var(--shadow-lg);
         }
-      }
-
-      @supports (transition: linear(1, 1, 1)) {
-        --_card-easing-in: #{v.$easing-emphasized};
       }
     }
 
@@ -204,12 +200,12 @@
         gap: var(--space-6);
 
         i {
-          font-size: 18px;
+          font-size: 1.125rem;
           font-variation-settings: var(--iw-semi-bold);
         }
 
         p {
-          font-weight: v.$fw-800;
+          font-weight: var(--fw-800);
           margin-bottom: 0;
         }
       }

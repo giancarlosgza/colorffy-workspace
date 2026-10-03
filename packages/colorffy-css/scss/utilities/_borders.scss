@@ -4,7 +4,7 @@
 @layer utilities.borders {
   .border {
     --_border-bg-color: var(--theme-outline-surface);
-    --_border-size: #{v.$border-sm};
+    --_border-size: var(--border-width-sm);
 
     border: var(--_border-size) solid var(--_border-bg-color);
 
@@ -12,19 +12,19 @@
     // BORDER SIZES & STYLES
     // ==========================================================================
     &.border-md {
-      --_border-size: #{v.$border-md};
+      --_border-size: var(--border-width-md);
     }
 
     &.border-lg {
-      --_border-size: #{v.$border-md + 1};
+      --_border-size: calc(var(--border-width-md) + 1px);
     }
 
     &.border-xl {
-      --_border-size: #{v.$border-md + 2};
+      --_border-size: calc(var(--border-width-md) + 2px);
     }
 
     &.border-xxl {
-      --_border-size: #{v.$border-md + 3};
+      --_border-size: calc(var(--border-width-md) + 3px);
     }
 
     // Border styles
@@ -103,16 +103,35 @@
       --_border-bg-color: var(--theme-muted-a10);
     }
 
+    &.border-neutral {
+      --_border-bg-color: var(--theme-on-background);
+    }
+
     &.border-white {
-      --_border-bg-color: #{v.$white};
+      --_border-bg-color: var(--color-brand-white-500);
+    }
+
+    &.border-black {
+      --_border-bg-color: var(--color-brand-black-500);
     }
 
     &.border-dark {
-      --_border-bg-color: #{v.$dark};
+      --_border-bg-color: var(--color-brand-dark-500);
     }
 
     &.border-transparent {
       --_border-bg-color: transparent;
+    }
+
+    // Border opacity
+    @each $value, $opacity in v.$opacity {
+      &.border-opacity-#{$value} {
+        --_border-opacity: #{$opacity};
+      }
+    }
+
+    &[class*='border-opacity-'] {
+      border-color: color-mix(in oklab, var(--_border-bg-color) var(--_border-opacity), transparent);
     }
 
     // ==========================================================================
@@ -130,6 +149,8 @@
 
     // Animated borders
     &.border-animated {
+      --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);
+
       position: relative;
       @include m.gradient-glow-border(var(--_border-gradient));
       @include m.generate-static-gradients(v.$static-gradients, true, false);

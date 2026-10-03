@@ -11,11 +11,11 @@
     --_form-check-height: 1.5rem;
     --_form-check-input-size: 1.25rem;
     --_form-check-input-bg-color: transparent;
-    --_form-check-input-border-width: #{v.$border-md};
+    --_form-check-input-border-width: var(--border-width-md);
     --_form-check-input-border-color: var(--theme-outline-text-field);
     --_form-check-input-checked-icon: none;
-    --_form-check-easing-in: #{v.$easing-in-fallback};
-    --_form-check-easing-duration: 200ms;
+    --_form-check-easing-in: var(--ease-emphasized);
+    --_form-check-easing-duration: 300ms;
 
     display: flex;
     align-items: center;
@@ -42,11 +42,6 @@
       --_form-check-gap: var(--space-14);
 
       font-size: var(--fs-base);
-    }
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_form-check-easing-in: #{v.$easing-emphasized};
-      --_form-check-easing-duration: 300ms;
     }
 
     & label,
@@ -126,7 +121,7 @@
         --_form-check-input-bg-color: var(--theme-surface-container);
         --_form-check-input-border-color: var(--theme-outline-surface);
         --_form-check-input-indicator-color: var(--theme-muted-base);
-        --_form-check-input-border-width: #{v.$border-md};
+        --_form-check-input-border-width: var(--border-width-md);
         --_form-check-input-active-bg-color: var(--theme-primary-a10);
         --_form-check-input-active-border-color: var(--theme-primary-a10);
         --_form-check-input-indicator-active-color: var(--theme-surface-container-highest);
@@ -136,7 +131,7 @@
         height: var(--_form-check-input-size);
         background: var(--_form-check-input-bg-color);
         border: var(--_form-check-input-border-width) solid var(--_form-check-input-border-color);
-        border-radius: v.$rounded-full;
+        border-radius: var(--radius-full);
         opacity: 1;
         cursor: pointer;
 

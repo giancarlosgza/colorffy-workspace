@@ -107,7 +107,7 @@
     --fs-4xs: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.6875rem);
     --fs-3xs: clamp(0.6875rem, calc(0.31rem + 1.97vw), 0.75rem);
     --fs-2xs: clamp(0.70rem, calc(0.32rem + 1.69vw), 0.8125rem);
-    --fs-xs: clamp(0.60rem, calc(0.31rem + 1.97vw), 0.875rem);
+    --fs-xs: clamp(0.75rem, calc(0.31rem + 1.97vw), 0.875rem);
     --fs-sm: clamp(0.80rem, calc(0.31rem + 1.97vw), 0.9375rem);
     --fs-base: clamp(0.875rem, calc(0.29rem + 2.28vw), 1rem);
     --fs-lg: clamp(1rem, calc(0.27rem + 2.64vw), 1.25rem);
@@ -204,6 +204,40 @@
     0 10px 10px -2px hsl(var(--theme-shadow-base) / calc(var(--theme-shadow-intensity) + 4%)),
     0 20px 20px -2px hsl(var(--theme-shadow-base) / calc(var(--theme-shadow-intensity) + 5%));
 
+    /* radius */
+    --radius-none: #{v.$rounded-none};
+    --radius-sm: #{v.$rounded-sm};
+    --radius-md: #{v.$rounded-md};
+    --radius-lg: #{v.$rounded-lg};
+    --radius-xl: #{v.$rounded-xl};
+    --radius-full: #{v.$rounded-full};
+
+    /* border widths */
+    --border-width-sm: #{v.$border-sm};
+    --border-width-md: #{v.$border-md};
+
+    /* font weights */
+    --fw-400: #{v.$fw-400};
+    --fw-500: #{v.$fw-500};
+    --fw-600: #{v.$fw-600};
+    --fw-700: #{v.$fw-700};
+    --fw-800: #{v.$fw-800};
+
+    /* easing */
+    --ease-decelerate: #{v.$easing-in-fallback};
+    --ease-accelerate: #{v.$easing-out-fallback};
+    --ease-spring: #{v.$easing-spring};
+    --ease-overshoot-soft: #{v.$easing-overshoot-soft};
+    --ease-emphasized: #{v.$easing-emphasized};
+    --ease-bounce: #{v.$easing-bounce};
+    --ease-power-in: #{v.$easing-power-in};
+    --ease-power-in-out: #{v.$easing-power-in-out};
+    --ease-sine-in-out: #{v.$easing-sine-in-out};
+
+    /* focus ring */
+    --focus-ring-color: var(--theme-on-background);
+    --focus-ring-offset: .3rem;
+
     /* form icons */
     --theme-form-select-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"/></svg>');
     --theme-form-checkbox-icon: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="m382-373.218 328.826-328.826q15.956-15.957 37.826-15.957t37.827 15.957q15.956 15.957 15.956 37.827 0 21.869-15.956 37.826l-366.87 366.87Q403.652-243.565 382-243.565t-37.609-15.956l-170.87-170.87q-15.956-15.957-15.739-37.826.217-21.87 16.174-37.827 15.957-15.957 37.827-15.957 21.869 0 37.826 15.957L382-373.218Z"/></svg>');
@@ -233,5 +267,13 @@
     /* dynamic colors tones overrides for dark mode */
     @include m.surface-dark-tones();
     @include m.semantic-dark-tones();
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --ease-spring: var(--ease-decelerate);
+      --ease-overshoot-soft: var(--ease-decelerate);
+      --ease-bounce: var(--ease-decelerate);
+    }
   }
 }

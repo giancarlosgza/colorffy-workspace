@@ -5,7 +5,7 @@
   // INPUT GROUP COMPONENT
   // ==========================================================================
   .input-group {
-    --_input-group-radius: #{v.$rounded-md};
+    --_input-group-radius: var(--radius-md);
     --_input-group-bg-color: transparent;
     --_input-group-border-width: #{v.$form-border};
     --_input-group-border-color: var(--theme-outline-text-field);

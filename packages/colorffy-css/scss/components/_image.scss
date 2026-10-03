@@ -6,15 +6,15 @@
   // IMAGE COMPONENT
   // ==========================================================================
   .img-fluid {
-    border-radius: v.$rounded-sm;
+    border-radius: var(--radius-sm);
     max-width: 100%;
     height: auto;
   }
 
   .img-avatar {
-    --_img-avatar-radius: #{v.$rounded-full};
-    --_img-avatar-easing-in: #{v.$easing-in-fallback};
-    --_img-avatar-easing-duration: 200ms;
+    --_img-avatar-radius: var(--radius-full);
+    --_img-avatar-easing-in: var(--ease-spring);
+    --_img-avatar-easing-duration: 600ms;
 
     aspect-ratio: 1;
     border-radius: var(--_img-avatar-radius);
@@ -23,10 +23,6 @@
     translate var(--_img-avatar-easing-duration) var(--_img-avatar-easing-in);
 
     @include m.make-image(100px);
-    @supports (transition: linear(0, 0, 0)) {
-      --_img-avatar-easing-in: #{v.$easing-spring};
-      --_img-avatar-easing-duration: 600ms;
-    }
 
     // Avatar placeholder
     &.avatar-placeholder {
@@ -62,6 +58,12 @@
   }
 
   .initials-avatar {
+    --_initials-base-color: var(--theme-accent-base-fixed);
+    --_initials-alpha: 25%;
+    --_initials-mix-color: transparent;
+    --_initials-filled-bg-color: var(--theme-accent-a10);
+    --_initials-filled-color: var(--theme-on-accent);
+
     display: inline-grid;
     place-items: center;
     height: 24px;
@@ -73,10 +75,10 @@
     &:not(:last-child) {
       margin-inline-end: var(--space-4);
     }
-    border-radius: v.$rounded-full;
-    background: rgb(from var(--theme-accent-base-fixed) r g b / 0.25);
+    border-radius: var(--radius-full);
+    background: color-mix(in oklab, var(--_initials-base-color) var(--_initials-alpha), var(--_initials-mix-color));
     font-size: var(--fs-4xs);
-    font-weight: v.$fw-600;
+    font-weight: var(--fw-600);
 
     &.initials-navbar {
       --_initials-alpha: 35%;
@@ -84,12 +86,39 @@
 
       padding: var(--space-4);
       margin-inline: 0;
-      border-radius: v.$rounded-sm;
+      border-radius: var(--radius-sm);
       font-size: var(--fs-4xs) !important;
-      background-color: var(--_initials-base-color);
-      @supports (color: hsl(from white h s l)) {
-        background-color: oklab(from var(--_initials-base-color) l a b / var(--_initials-alpha));
+    }
+  }
+
+  // Avatar colors
+  .img-avatar {
+    @each $color in (primary, secondary, accent, success, warning, danger, info) {
+      &.avatar-#{$color} {
+        --_initials-base-color: var(--theme-#{$color}-base-fixed);
+        --_initials-filled-bg-color: var(--theme-#{$color}-a10);
+        --_initials-filled-color: var(--theme-on-#{$color});
       }
+    }
+
+    &.avatar-neutral {
+      --_initials-base-color: var(--theme-muted-base-fixed);
+      --_initials-filled-bg-color: var(--theme-muted-a10);
+      --_initials-filled-color: var(--theme-on-background-inverse);
+    }
+
+    &.avatar-placeholder:is(.avatar-primary, .avatar-secondary, .avatar-accent, .avatar-success, .avatar-warning, .avatar-danger, .avatar-info, .avatar-neutral) {
+      background: color-mix(in oklab, var(--_initials-base-color) 25%, var(--_initials-mix-color, transparent));
+    }
+
+    // Avatar variants
+    &.avatar-tonal {
+      --_initials-mix-color: var(--_avatar-group-ring-color, var(--theme-surface-a0));
+    }
+
+    &.avatar-filled:is(.initials-avatar, .avatar-placeholder:is(.avatar-primary, .avatar-secondary, .avatar-accent, .avatar-success, .avatar-warning, .avatar-danger, .avatar-info, .avatar-neutral)) {
+      background: var(--_initials-filled-bg-color);
+      color: var(--_initials-filled-color);
     }
   }
 
@@ -145,7 +174,7 @@
     inset-inline-end: var(--_avatar-status-inset);
     width: var(--_avatar-status-size);
     aspect-ratio: 1;
-    border-radius: v.$rounded-full;
+    border-radius: var(--radius-full);
     background-color: var(--_avatar-status-color, var(--theme-muted-a10));
     box-shadow: 0 0 0 var(--_avatar-status-ring-width) var(--_avatar-status-ring-color);
 

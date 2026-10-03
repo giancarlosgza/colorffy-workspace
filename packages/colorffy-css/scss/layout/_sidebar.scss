@@ -8,10 +8,10 @@
   // SIDEBAR NAVIGATION DRAWER LAYOUT
   // ==========================================================================
   .navigation-drawer {
-    --_drawer-radius: #{v.$rounded-none v.$rounded-xl v.$rounded-xl v.$rounded-none};
-    --_drawer-easing-in: #{v.$easing-in-fallback};
-    --_drawer-easing-out: #{v.$easing-out-fallback};
-    --_drawer-easing-duration: 300ms;
+    --_drawer-radius: #{var(--radius-none) var(--radius-xl) var(--radius-xl) var(--radius-none)};
+    --_drawer-easing-in: var(--ease-emphasized);
+    --_drawer-easing-out: var(--ease-emphasized);
+    --_drawer-easing-duration: 600ms;
     --_drawer-gutter: var(--space-8);
     --_discrete: allow-discrete;
     --_drawer-bg-color: var(--theme-background);
@@ -22,8 +22,8 @@
     top: 0;
     display: block;
     width: var(--theme-nav-drawer-width);
-    height: 100vh;
-    max-height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
     background-color: var(--_drawer-bg-color);
     color: var(--_drawer-color);
     box-shadow: var(--shadow-lg);
@@ -35,12 +35,6 @@
     transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
       translate var(--_drawer-easing-duration) var(--_drawer-easing-out);
 
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_drawer-easing-in: #{v.$easing-emphasized};
-      --_drawer-easing-out: #{v.$easing-emphasized};
-      --_drawer-easing-duration: 600ms;
-    }
-
     // Closed sidebar only with icons shown
     &.drawer-rail {
       width: calc(var(--theme-nav-drawer-width) / 2);
@@ -49,10 +43,10 @@
     }
 
     &.drawer-bordered {
-      --_drawer-radius: #{v.$rounded-none};
+      --_drawer-radius: var(--radius-none);
 
       box-shadow: none;
-      border-right: v.$border-sm solid var(--theme-outline-surface);
+      border-right: var(--border-width-sm) solid var(--theme-outline-surface);
     }
 
     & .drawer-content {
@@ -95,7 +89,7 @@
           font-size: calc(var(--_drawer-brand-size) / 1.5);
           width: var(--_drawer-brand-size);
           height: var(--_drawer-brand-size);
-          border-radius: v.$rounded-md;
+          border-radius: var(--radius-md);
           padding: .25rem;
           background-color: var(--theme-primary-a10);
           @supports (color: hsl(from white h s l)) {
@@ -129,7 +123,7 @@
           display: flex;
           gap: var(--_drawer-gutter);
           font-size: var(--fs-3xs);
-          font-weight: v.$fw-500;
+          font-weight: var(--fw-500);
           font-family: var(--font-primary);
           border-radius: v.$button-border-radius;
           padding: var(--_drawer-gutter);
@@ -157,7 +151,7 @@
           }
 
           i {
-            font-size: 20px;
+            font-size: 1.25rem;
             font-variation-settings: var(--iw-semi-bold);
             user-select: none;
 
@@ -182,7 +176,7 @@
             color: var(--_drawer-color);
             background-color: var(--theme-surface-body-pane);
             box-shadow: var(--shadow-sm);
-            font-weight: v.$fw-800;
+            font-weight: var(--fw-800);
 
             >i:first-child {
               font-variation-settings: var(--iw-bold);
@@ -201,7 +195,7 @@
             margin-left: var(--space-8);
             padding-left: var(--space-14);
             border-radius: 0 v.$button-border-radius v.$button-border-radius 0;
-            border-left: v.$border-sm solid var(--theme-outline-surface);
+            border-left: var(--border-width-sm) solid var(--theme-outline-surface);
           }
         }
 
@@ -247,7 +241,7 @@
 
           &:is(:hover) {
             background-color: var(--theme-surface-container);
-            border-radius: v.$rounded-sm;
+            border-radius: var(--radius-sm);
             cursor: pointer;
           }
 
@@ -266,12 +260,12 @@
           & .drawer-dropdown-title {
             font-family: var(--font-primary);
             font-size: var(--fs-sm);
-            font-weight: v.$fw-800;
+            font-weight: var(--fw-800);
           }
 
           & .drawer-dropdown-subtitle {
             font-size: var(--fs-2xs);
-            font-weight: v.$fw-500;
+            font-weight: var(--fw-500);
             color: var(--theme-muted-a10);
           }
 
@@ -370,7 +364,7 @@
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: color-mix(in srgb, var(--color-brand-black-500) 25%, transparent);
     z-index: calc(#{v.$z-index-fullscreen} - 1);
     backdrop-filter: blur(2px);
@@ -391,7 +385,7 @@
       inset-block: 0;
       left: 0;
       margin: 0;
-      height: 100vh;
+      height: 100dvh;
       translate: -100% 0;
       
       &.drawer-rail {

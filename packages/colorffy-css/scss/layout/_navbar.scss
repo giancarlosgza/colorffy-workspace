@@ -34,7 +34,7 @@
         &:is(.nav-island) {
           margin-inline: auto;
           max-width: 100%;
-          border-radius: v.$rounded-none;
+          border-radius: var(--radius-none);
           background: var(--theme-surface-overlay);
         }
       }
@@ -50,9 +50,9 @@
     --_nav-shadow: none;
     --_nav-gutter-x: 0;
     --_nav-gutter-y: var(--space-8);
-    --_nav-radius: #{v.$rounded-none};
-    --_nav-easing-in: #{v.$easing-in-fallback};
-    --_nav-easing-duration: 200ms;
+    --_nav-radius: var(--radius-none);
+    --_nav-easing-in: var(--ease-emphasized);
+    --_nav-easing-duration: 600ms;
 
     position: relative;
     display: flex;
@@ -87,7 +87,7 @@
       span, a {
         font-size: var(--fs-sm);
         font-family: var(--font-secondary);
-        font-weight: v.$fw-800;
+        font-weight: var(--fw-800);
         line-height: 0;
         color: inherit;
         @extend .undecorated;
@@ -116,7 +116,7 @@
 
       .page-title {
         font-size: var(--fs-sm);
-        font-weight: v.$fw-600;
+        font-weight: var(--fw-600);
         color: var(--theme-on-background);
         letter-spacing: .5px;
         margin-bottom: 0;
@@ -181,10 +181,10 @@
             padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
             background-color: transparent;
             color: var(--theme-muted-a10);
-            border: v.$border-sm solid transparent;
+            border: var(--border-width-sm) solid transparent;
             font-family: var(--font-primary);
             font-size: var(--fs-xs);
-            font-weight: v.$fw-600;
+            font-weight: var(--fw-600);
             text-transform: none;
             text-decoration: none;
             user-select: none;
@@ -213,7 +213,7 @@
 
             // Nuxt and Vue Router active link
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
-              font-weight: v.$fw-800;
+              font-weight: var(--fw-800);
               padding-inline: var(--space-16);
               color: var(--theme-primary-a10);
               background-color: var(--theme-surface-container);
@@ -268,17 +268,13 @@
     }
 
     &.nav-island {
-      --_nav-radius: #{v.$rounded-full};
+      --_nav-radius: var(--radius-full);
       --_nav-bg-color: transparent;
 
       transition: translate var(--_nav-easing-duration) var(--_nav-easing-in);
       @include m.container;
     }
 
-    @supports (transition: linear(1, 1, 1)) {
-      --_nav-easing-in: #{v.$easing-emphasized};
-      --_nav-easing-duration: 600ms;
-    }
     @media (width >= 992px) {
       .navbar-collapse {
         display: flex;
@@ -302,17 +298,12 @@
     --_popover-menu-radius: #{v.$dialog-border-radius};
     --_popover-menu-border-color: var(--theme-outline-overlay);
     --_popover-menu-gutter: var(--space-16);
-    --_popover-menu-easing-in: #{v.$easing-in-fallback};
-    --_popover-menu-easing-out: #{v.$easing-out-fallback};
-    --_popover-menu-easing-duration: 300ms;
+    --_popover-menu-easing-in: var(--ease-spring);
+    --_popover-menu-easing-out: var(--ease-accelerate);
+    --_popover-menu-easing-duration: 800ms;
     --_popover-menu-easing-out-duration: 200ms;
 
     position: relative;
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_popover-menu-easing-in: #{v.$easing-spring};
-      --_popover-menu-easing-duration: 800ms;
-    }
 
     @supports (anchor-name: --foo) {
       anchor-name: --popover-menu;
@@ -329,7 +320,7 @@
       max-height: calc(100dvh - #{v.$navbar-min-height} - var(--_popover-menu-gutter) * 2);
       overflow-y: auto;
       overscroll-behavior: contain;
-      border: v.$border-sm solid var(--_popover-menu-border-color);
+      border: var(--border-width-sm) solid var(--_popover-menu-border-color);
       background-color: var(--_popover-menu-bg-color);
       color: var(--_popover-menu-color);
       box-shadow: var(--shadow-xl);
@@ -349,8 +340,8 @@
         opacity: 1;
         translate: 0;
         transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-        opacity calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback},
-        visibility calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback};
+        opacity calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate),
+        visibility calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate);
       }
 
       // Native popover
@@ -375,7 +366,7 @@
           opacity: 1;
           translate: 0;
           transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-          opacity calc(var(--_popover-menu-easing-duration) - 250ms) #{v.$easing-in-fallback},
+          opacity calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate),
           display var(--_popover-menu-easing-duration) allow-discrete,
           overlay var(--_popover-menu-easing-duration) allow-discrete;
 
@@ -408,7 +399,7 @@
           margin-bottom: 0;
 
           &.subtitle-1 {
-            font-weight: v.$fw-800;
+            font-weight: var(--fw-800);
             font-family: var(--font-secondary);
             color: var(--_popover-menu-color);
           }
@@ -507,7 +498,7 @@
             font-size: var(--fs-4xs);
             color: var(--theme-muted-a10);
             background-color: var(--theme-surface-container-high);
-            border-radius: #{v.$rounded-full};
+            border-radius: var(--radius-full);
             padding: var(--space-4) var(--space-6);
           }
 
@@ -525,7 +516,7 @@
             }
 
             :where(p) {
-              font-weight: v.$fw-800;
+              font-weight: var(--fw-800);
             }
 
             background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 85%);
@@ -555,7 +546,7 @@
         align-items: center;
         gap: calc(var(--_popover-menu-gutter) / 2);
         padding: calc(var(--_popover-menu-gutter) * .75) calc(var(--_popover-menu-gutter) / 2);
-        border-top: v.$border-sm solid var(--theme-outline-surface);
+        border-top: var(--border-width-sm) solid var(--theme-outline-surface);
       }
     }
   }
@@ -567,14 +558,14 @@
     & .menu-tools {
       --_menu-tool-padding: var(--space-12);
       --_menu-tool-gap: var(--space-14);
-      --_menu-tool-radius: #{v.$rounded-lg};
+      --_menu-tool-radius: var(--radius-lg);
       --_menu-tool-grid-cols: 15rem 2fr 1fr;
       --_menu-tool-grid-tabs-cols: repeat(3, 1fr);
       --_menu-tool-grid-tools-cols: repeat(2, 1fr);
-      --_menu-tool-easing-in: #{v.$easing-in-fallback};
-      --_menu-tool-easing-duration: 300ms;
-      --_menu-tool-easing-out: #{v.$easing-out-fallback};
-      --_menu-tool-item-easing-in: #{v.$easing-in-fallback};
+      --_menu-tool-easing-in: var(--ease-emphasized);
+      --_menu-tool-easing-duration: 600ms;
+      --_menu-tool-easing-out: var(--ease-accelerate);
+      --_menu-tool-item-easing-in: var(--ease-decelerate);
       --_menu-tool-item-easing-duration: 500ms;
 
       position: absolute;
@@ -593,19 +584,14 @@
       opacity calc(var(--_menu-tool-easing-duration) / 4) var(--_menu-tool-easing-out),
       visibility calc(var(--_menu-tool-easing-duration) / 4) var(--_menu-tool-easing-out);
 
-      @supports (transition: all 100ms linear(1, 1, 1)) {
-        --_menu-tool-easing-in: #{v.$easing-emphasized};
-        --_menu-tool-easing-duration: 600ms;
-      }
-
       &.menu-tools-visible {
         translate: 0;
         opacity: 1;
         visibility: visible;
 
         transition: translate var(--_menu-tool-easing-duration) var(--_menu-tool-easing-in),
-        opacity calc(var(--_menu-tool-easing-duration) / 2) v.$easing-out-fallback,
-        visibility calc(var(--_menu-tool-easing-duration) / 2) v.$easing-out-fallback;
+        opacity calc(var(--_menu-tool-easing-duration) / 2) var(--ease-accelerate),
+        visibility calc(var(--_menu-tool-easing-duration) / 2) var(--ease-accelerate);
 
         & .menu-content-wrapper {
           scale: 1;
@@ -745,7 +731,7 @@
               }
 
               &:is(:hover) {
-                --_menu-tool-radius: #{v.$rounded-xl};
+                --_menu-tool-radius: var(--radius-xl);
 
                 background-color: var(--theme-surface-container-high);
 
@@ -769,7 +755,7 @@
               }
 
               &:is(.router-link-active, .router-link-exact-active) {
-                --_menu-tool-radius: #{v.$rounded-full};
+                --_menu-tool-radius: var(--radius-full);
                 background-color: var(--theme-surface-container-high);
 
                 & .icon-wrap {
@@ -801,7 +787,7 @@
             width: 100%;
             cursor: pointer;
             user-select: none;
-            border: v.$border-sm solid var(--theme-outline-surface);
+            border: var(--border-width-sm) solid var(--theme-outline-surface);
             border-radius: calc(var(--_menu-tool-radius));
 
             & .cta-arrow {
@@ -827,7 +813,7 @@
           &:is(.subtitle-1) {
             font-size: var(--fs-2xs);
             font-family: var(--font-primary);
-            font-weight: v.$fw-700;
+            font-weight: var(--fw-700);
             margin-bottom: var(--space-4);
           }
 
@@ -1000,7 +986,7 @@
         width: 100%;
         height: 100%;
         max-height: calc(100dvh - #{v.$navbar-min-height});
-        border-radius: v.$rounded-none;
+        border-radius: var(--radius-none);
       }
     }
   }

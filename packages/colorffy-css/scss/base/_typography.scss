@@ -11,7 +11,7 @@
   h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
-    font-weight: v.$fw-500;
+    font-weight: var(--fw-500);
     font-style: normal;
     line-height: 1.2;
     color: var(--theme-on-background);
@@ -137,7 +137,7 @@
   // ==========================================================================
   p,
   a {
-    font-weight: v.$fw-400;
+    font-weight: var(--fw-400);
     font-size: var(--fs-xs);
     letter-spacing: 0.4px;
     line-height: 20px;
@@ -153,19 +153,14 @@
   .anchor-link {
     --_hyperlink-color: var(--theme-primary-a10);
     --_hyperlink-bg-color: var(--theme-primary-a20);
-    --_hyperlink-radius: #{v.$rounded-full};
-    --_hyperlink-easing-in: #{v.$easing-in-fallback};
-    --_hyperlink-easing-duration: 200ms;
+    --_hyperlink-radius: var(--radius-full);
+    --_hyperlink-easing-in: var(--ease-spring);
+    --_hyperlink-easing-duration: 800ms;
 
     color: var(--_hyperlink-color);
     text-decoration: none;
     position: relative;
     cursor: pointer;
-
-    @supports (transition: all 100ms linear(1, 1, 1)) {
-      --_hyperlink-easing-in: #{v.$easing-spring};
-      --_hyperlink-easing-duration: 800ms;
-    }
 
     // Remove underline from button and undecorated links
     &:is(.undecorated, .btn) {
@@ -229,13 +224,13 @@
   }
 
   kbd {
-    font-weight: v.$fw-400;
+    font-weight: var(--fw-400);
     font-size: var(--fs-4xs);
     color: var(--theme-on-background);
     background-color: var(--theme-surface-kbd);
-    border: v.$border-sm solid var(--theme-surface-kbd);
+    border: var(--border-width-sm) solid var(--theme-surface-kbd);
     box-shadow: var(--shadow-xs);
-    border-radius: v.$rounded-md;
+    border-radius: var(--radius-md);
     padding: .25rem;
 
     &:is(.kbd-dark) {

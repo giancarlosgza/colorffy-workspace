@@ -189,7 +189,7 @@
     min-height: var(--_pane-content-min-height);
 
     &.pane-content-expanded {
-      --_pane-content-min-height: calc(100vh - 185px);
+      --_pane-content-min-height: calc(100dvh - 185px);
     }
 
     &:has(.border.border-animated) {

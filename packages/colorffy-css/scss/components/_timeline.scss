@@ -59,7 +59,7 @@
       inline-size: var(--_timeline-dot-size);
       block-size: var(--_timeline-dot-size);
       flex-shrink: 0;
-      border-radius: v.$rounded-full;
+      border-radius: var(--radius-full);
       background-color: var(--_timeline-dot-color);
     }
 
@@ -68,14 +68,14 @@
       inline-size: var(--_timeline-image-size);
       block-size: var(--_timeline-image-size);
       flex-shrink: 0;
-      border-radius: v.$rounded-md;
+      border-radius: var(--radius-md);
       object-fit: cover;
     }
 
     // Icon marker
     & .list-item-icon-wrapper {
       flex-shrink: 0;
-      border-radius: v.$rounded-md;
+      border-radius: var(--radius-md);
       padding: var(--_timeline-icon-wrapper-padding);
       aspect-ratio: 1;
       background-color: var(--_timeline-icon-bg-color);
@@ -100,7 +100,7 @@
 
         &:is(.timeline-title) {
           font-size: var(--_timeline-title-size);
-          font-weight: v.$fw-600;
+          font-weight: var(--fw-600);
         }
 
         &:is(.timeline-text) {

@@ -10,7 +10,7 @@
       --_btn-columns: 1fr;
       --_btn-bg-color: var(--theme-surface-container);
       --_btn-color: var(--theme-on-background);
-      --_btn-border: #{v.$border-sm};
+      --_btn-border: var(--border-width-sm);
       --_btn-border-color: transparent;
       --_btn-gap: 0;
       --_btn-radius: #{v.$button-border-radius};
@@ -19,7 +19,7 @@
       --_btn-height: 36px;
       --_btn-icon-size: 1.15rem;
       --_btn-shadow: var(--shadow-sm);
-      --_btn-easing-in: #{v.$easing-in-fallback};
+      --_btn-easing-in: var(--ease-decelerate);
       --_btn-easing-duration: 300ms;
 
       @include m.btn-base();
@@ -274,7 +274,7 @@
       &.btn-chip {
         --_btn-bg-color: transparent;
         --_btn-border-color: var(--theme-outline-button);
-        --_btn-radius: #{v.$rounded-md};
+        --_btn-radius: var(--radius-md);
         --_btn-shadow: none;
 
         @include m.btn-size('sm');
@@ -351,7 +351,7 @@
           }
 
           & .chip-remove {
-            border-radius: #{v.$rounded-full};
+            border-radius: var(--radius-full);
             padding: .1rem;
 
             & i {
@@ -375,7 +375,7 @@
 
         background: linear-gradient(var(--gradient-angle), var(--_gradient-stops)) border-box;
         color: var(--theme-on-primary);
-        transition: all 800ms v.$easing-emphasized, --gradient-angle 800ms v.$easing-emphasized;
+        transition: all 800ms var(--ease-emphasized), --gradient-angle 800ms var(--ease-emphasized);
 
         &:is(:hover) {
           --gradient-angle: 180deg;
@@ -391,7 +391,7 @@
 
       &.btn-frosted {
         --_btn-bg-color: var(--theme-frosted-glass-bg);
-        --_btn-border: #{v.$border-sm};
+        --_btn-border: var(--border-width-sm);
         --_btn-border-color: var(--theme-outline-button);
 
         backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
@@ -415,11 +415,11 @@
 
         // Shapes
         &.shape-sm {
-          --_btn-radius: #{v.$rounded-sm};
+          --_btn-radius: var(--radius-sm);
         }
 
         &.shape-md {
-          --_btn-radius: #{v.$rounded-md};
+          --_btn-radius: var(--radius-md);
         }
 
         // Icon sizes
@@ -433,6 +433,8 @@
       }
 
       &.btn-fab {
+        --_btn-easing-in: var(--ease-sine-in-out);
+        --_btn-easing-duration: 300ms;
         --_btn-columns: 1fr;
         --_btn-gap: 0;
         --_btn-radius: calc(#{v.$button-border-radius} + 8px);
@@ -445,10 +447,6 @@
         animation: scale-in var(--_btn-easing-duration) var(--_btn-easing-in);
 
         @include m.btn-size('fab');
-        @supports (transition: linear(1, 1, 1)) {
-          --_btn-easing-in: #{v.$easing-sine-in-out};
-          --_btn-easing-duration: 300ms;
-        }
 
         &:has(span) {
           --_btn-gap: var(--space-8);
@@ -461,7 +459,7 @@
       }
 
       &.btn-cta {
-        --_btn-radius: #{v.$rounded-full};
+        --_btn-radius: var(--radius-full);
         --_btn-padding-inline: calc(var(--space-32) + var(--space-8));
         --_btn-padding-block: var(--space-24);
 
@@ -470,8 +468,9 @@
 
       // Effects
       &.btn-bounce {
-        --_btn-easing-in: #{v.$easing-bounce};
+        --_btn-easing-in: var(--ease-bounce);
         --_btn-easing-duration: 600ms;
+
 
         transition: scale var(--_btn-easing-duration) var(--_btn-easing-in);
 
@@ -482,11 +481,11 @@
 
       // Modifiers
       &.btn-rounded {
-        --_btn-radius: #{v.$rounded-full};
+        --_btn-radius: var(--radius-full);
       }
 
       &.btn-square {
-        --_btn-radius: #{v.$rounded-none};
+        --_btn-radius: var(--radius-none);
       }
 
       &.btn-block {

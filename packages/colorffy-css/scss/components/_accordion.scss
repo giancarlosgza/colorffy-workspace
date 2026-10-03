@@ -14,7 +14,7 @@
     & .accordion {
       --_accordion-bg-color: var(--theme-surface-accordion);
       --_accordion-color: var(--theme-on-background);
-      --_accordion-radius: #{v.$rounded-lg};
+      --_accordion-radius: var(--radius-lg);
       --_accordion-border-color: transparent;
       --_accordion-padding: var(--space-14);
       --_accordion-icon-gap: 0.625rem;
@@ -22,8 +22,8 @@
       --_accordion-title-fs: var(--fs-xs);
       --_accordion-body-fs: var(--fs-2xs);
       --_accordion-content-gap: var(--space-16);
-      --_accordion-easing-in: #{v.$easing-in-fallback};
-      --_accordion-easing-duration: 200ms;
+      --_accordion-easing-in: var(--ease-overshoot-soft);
+      --_accordion-easing-duration: 600ms;
 
       display: flex;
       flex-direction: column;
@@ -31,7 +31,7 @@
       gap: 0;
       background-color: var(--_accordion-bg-color);
       border-radius: var(--_accordion-radius);
-      border: v.$border-sm solid var(--_accordion-border-color);
+      border: var(--border-width-sm) solid var(--_accordion-border-color);
       block-size: 100%;
       inline-size: 100%;
 
@@ -40,22 +40,17 @@
         interpolate-size: allow-keywords;
       }
 
-      @supports (transition: linear(1, 1, 1)) {
-        --_accordion-easing-in: #{v.$easing-overshoot-soft};
-        --_accordion-easing-duration: 600ms;
-      }
-
       // Border radius
       &:is(:first-child) {
-        --_accordion-radius: #{v.$rounded-lg} #{v.$rounded-lg} #{v.$rounded-sm} #{v.$rounded-sm};
+        --_accordion-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
       }
 
       &:is(:last-child) {
-        --_accordion-radius: #{v.$rounded-sm} #{v.$rounded-sm} #{v.$rounded-lg} #{v.$rounded-lg};
+        --_accordion-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
       }
 
       &:not(:first-child, :last-child) {
-        --_accordion-radius: #{v.$rounded-md};
+        --_accordion-radius: var(--radius-md);
       }
 
       // Details content
@@ -82,7 +77,7 @@
 
           .accordion-title {
             font-size: var(--_accordion-title-fs);
-            font-weight: v.$fw-700;
+            font-weight: var(--fw-700);
             font-family: var(--font-primary);
             color: var(--_accordion-color);
             line-height: 1.5;
@@ -169,7 +164,7 @@
 
     &:not(:has(.accordion:nth-child(2))) {
       .accordion:nth-child(1) {
-        --_accordion-radius: #{v.$rounded-lg};
+        --_accordion-radius: var(--radius-lg);
       }
     }
 
@@ -216,7 +211,7 @@
         border-block-end: none;
 
         &:last-child {
-          border-block-end: v.$border-sm solid var(--_accordion-border-color);
+          border-block-end: var(--border-width-sm) solid var(--_accordion-border-color);
         }
       }
     }
@@ -224,7 +219,7 @@
     // Shapes
     &.accordion-square {
       & .accordion:is(:first-child, :not(:first-child)) {
-        --_accordion-radius: #{v.$rounded-none};
+        --_accordion-radius: var(--radius-none);
       }
     }
   }

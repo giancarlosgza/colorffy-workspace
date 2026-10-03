@@ -41,8 +41,8 @@
       --_form-color: var(--theme-on-background);
       --_form-border-width: #{v.$form-border};
       --_form-border-color: var(--theme-outline-text-field);
-      --_form-easing-in: #{v.$easing-in-fallback};
-      --_form-easing-duration: 200ms;
+      --_form-easing-in: var(--ease-emphasized);
+      --_form-easing-duration: 300ms;
       --_form-font-size: 0.875rem;
 
       position: relative;
@@ -57,7 +57,7 @@
       box-shadow: var(--shadow-xs);
       background-color: var(--_form-bg-color);
       color: var(--_form-color);
-      font-weight: v.$fw-400;
+      font-weight: var(--fw-400);
       font-family: var(--font-secondary);
       font-size: var(--_form-font-size);
       line-height: 1.5;
@@ -65,10 +65,6 @@
       border-color var(--_form-easing-duration) var(--_form-easing-in),
       box-shadow var(--_form-easing-duration) var(--_form-easing-in);
 
-      @supports (transition: all 100ms linear(1, 1, 1)) {
-        --_form-easing-in: #{v.$easing-emphasized};
-        --_form-easing-duration: 300ms;
-      }
       // Placeholder
       @include m.form-placeholder(35%);
 
@@ -83,7 +79,7 @@
 
       &:is(.form-rounded) {
         --_form-padding-x: var(--space-12);
-        --_form-radius: #{v.$rounded-full};
+        --_form-radius: var(--radius-full);
       }
 
       &:is(.form-transparent) {
@@ -130,6 +126,10 @@
         outline-offset: 0.1em;
         outline: 0;
         box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-primary-base-fixed) 25%, transparent);
+
+        @media (forced-colors: active) {
+          outline: var(--border-width-md) solid Highlight;
+        }
       }
 
       // Disabled state
@@ -206,7 +206,7 @@
       --_form-range-slider-margin: calc(var(--_form-range-track-size) - 1.45rem);
       --_form-range-padding-x: var(--space-8);
       --_form-range-padding-y: var(--space-4);
-      --_form-range-easing-in: #{v.$easing-in-fallback};
+      --_form-range-easing-in: var(--ease-decelerate);
 
       &:is([type="range"]) {
         padding: var(--_form-range-padding-y) var(--_form-range-padding-x);
@@ -216,7 +216,7 @@
         &::-webkit-slider-runnable-track {
           background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
           height: var(--_form-range-track-size);
-          border-radius: v.$rounded-full;
+          border-radius: var(--radius-full);
         }
 
         &::-webkit-slider-thumb {
@@ -227,7 +227,7 @@
           background-color: var(--_form-range-thumb-bg-color);
           outline: 5px solid var(--theme-surface-body-pane);
           margin-top: var(--_form-range-slider-margin);
-          border-radius: v.$rounded-full;
+          border-radius: var(--radius-full);
           transition: width 100ms var(--_form-range-easing-in);
         }
 
@@ -242,7 +242,7 @@
         &::-moz-range-track {
           background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
           height: var(--_form-range-track-size);
-          border-radius: v.$rounded-full;
+          border-radius: var(--radius-full);
         }
 
         &::-moz-range-thumb {
@@ -251,7 +251,7 @@
           background-color: var(--_form-range-thumb-bg-color);
           height: var(--_form-range-slider-height);
           width: var(--_form-range-slider-width);
-          border-radius: v.$rounded-full;
+          border-radius: var(--radius-full);
         }
 
         &:is(:focus)::-moz-range-thumb {
@@ -297,7 +297,7 @@
       }
 
       .form-color {
-        --_form-radius: #{v.$rounded-md};
+        --_form-radius: var(--radius-md);
         --_form-bg-color: transparent;
         --_form-color: var(--theme-on-background);
         --_form-border-color: transparent;
@@ -329,9 +329,9 @@
           display: inline-block;
           width: 10px;
           height: 10px;
-          border: v.$border-sm solid var(--theme-outline-surface);
+          border: var(--border-width-sm) solid var(--theme-outline-surface);
           aspect-ratio: 1;
-          border-radius: v.$rounded-sm;
+          border-radius: var(--radius-sm);
           padding: var(--space-14);
           margin-inline-start: var(--space-6);
           background-color: #0000ff;
@@ -423,12 +423,12 @@
     .input-file-dropbox {
       --_file-bg-color: var(--theme-surface-body-pane);
       --_file-color: var(--theme-on-background);
-      --_file-border-width: #{v.$border-md};
+      --_file-border-width: var(--border-width-md);
       --_file-border-color: var(--theme-outline-text-field);
       --_file-padding: var(--space-4) 0;
       --_file-gap: var(--space-4);
-      --_file-radius: #{v.$rounded-md};
-      --_file-easing-in: #{v.$easing-in-fallback};
+      --_file-radius: var(--radius-md);
+      --_file-easing-in: var(--ease-decelerate);
       --_file-easing-duration: 100ms;
       --_file-height: 5rem;
 
@@ -474,7 +474,7 @@
         gap: var(--_file-gap);
 
         & p {
-          font-weight: v.$fw-500;
+          font-weight: var(--fw-500);
           font-size: var(--fs-3xs);
           color: var(--_file-color);
           margin-bottom: 0;
