@@ -1118,7 +1118,7 @@ Dropdown panel (account menus, overflow menus) with `header` / `body` / `footer`
 
 **Emits:** `hideDropdown`, `menuItemClick(to)`.
 
-**Deprecated (removed in v3):** `user`, `avatarUrl`, `avatarCustomClass`, `subtitle` — no longer rendered; use `UiPopoverMenuUser` in the `header` slot. `body-extra` — put the content in `#body`; it is still the only way to append to a `menuItems`-rendered body.
+The default header is a `title` plus the close button; put identity (avatar, name, email) in the `header` slot with `UiPopoverMenuUser`. To add rows to a `menuItems` menu, render the body yourself in `#body`.
 
 ### UiPopoverMenuUser
 Identity block for a popover menu's `header` slot: avatar beside the name and email.

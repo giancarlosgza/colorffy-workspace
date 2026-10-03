@@ -416,27 +416,6 @@ export interface IPopoverMenuProps {
   title?: string | null
 
   /**
-   * @deprecated The default header is a title and the close button only. Put an
-   * identity block in the `header` slot with `UiPopoverMenuUser`. Removed in v3.
-   */
-  subtitle?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `photoUrl`. Removed in v3.
-   */
-  avatarUrl?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `avatarClass`. Removed in v3.
-   */
-  avatarCustomClass?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `user`. Removed in v3.
-   */
-  user?: IUserData | null
-
-  /**
    * Auth state or configuration. Opaque to the component; passed through for
    * consumer use.
    */

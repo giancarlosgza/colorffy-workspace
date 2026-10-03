@@ -41,7 +41,7 @@ const menuClasses = computed(() => [
 ])
 
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.closable))
-const hasBody = computed(() => Boolean(slots.body || slots.default || slots['body-extra'] || listItems.value.length))
+const hasBody = computed(() => Boolean(slots.body || slots.default || listItems.value.length))
 
 /** Methods */
 function handleHideDropdown() {
@@ -172,9 +172,6 @@ watch(() => props.isOpened, (open) => {
             </UiPopoverMenuGroup>
           </slot>
         </slot>
-
-        <!-- Deprecated: use the body slot; removed in v3 -->
-        <slot name="body-extra" />
       </div>
 
       <!-- Footer -->

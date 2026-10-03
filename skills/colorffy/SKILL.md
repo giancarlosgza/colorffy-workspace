@@ -196,14 +196,13 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 ## Breaking changes
 
 - **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
-- **`UiPopoverMenu` default header no longer renders identity:** `user`, `avatarUrl`, `avatarCustomClass` and `subtitle` are deprecated no-ops (removed in v3) — the default header is a `title` plus the close button (`closable` now defaults to `true`). Move the identity into the `header` slot with `UiPopoverMenuUser`, which takes the same `user` object.
+- **`UiPopoverMenu` identity:** the default header is a `title` plus the close button (`closable` defaults to `true`); put identity in the `header` slot with `UiPopoverMenuUser`, which takes a `user` object. The old `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` props and the `body-extra` slot were removed in 3.0.
 - **`UiPopoverMenu` renders as a native popover:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"` with native light dismiss; the `isOpened`/`hideDropdown` contract is unchanged. Custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]` for that branch, or opt out with `:native-popover="false"`.
 
 ## Planned for 3.0
 
-Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them in new code:
+Still to come before 3.0 ships:
 
-- `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
 - Public tokens gain a namespace prefix (planned `--cffy-*`) and a `--container-*` width scale may absorb one-offs like `--theme-nav-drawer-width`. Neither exists yet — don't reference them. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--space-*` tokens).
 
 **[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
