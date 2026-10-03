@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<ITabsProps>(), {
   fluid: false,
   fit: false,
   rounded: false,
+  iconOnly: false,
   size: null
 })
 
@@ -31,7 +32,8 @@ const tabsClasses = computed(() => ({
   'tabs-fluid': props.fluid,
   'tabs-fit': props.fit && !props.fluid,
   'tabs-rounded': props.rounded && props.pillTabs,
-  'tabs-sm': props.size === 'sm'
+  'tabs-sm': props.size === 'sm',
+  'tabs-icon-only': props.iconOnly
 }))
 
 /** Watchers */
@@ -42,6 +44,9 @@ watch(() => props.activeTab, (newVal) => {
 /** Methods */
 function isActiveTab(tab: ITabItem): boolean {
   return activeTabName.value === tab.id
+}
+function isIconOnly(tab: ITabItem): boolean {
+  return props.iconOnly && !!tab.icon
 }
 function setTabButton(el: Element | ComponentPublicInstance | null, index: number) {
   tabButtons.value[index] = (el as HTMLButtonElement) ?? null
@@ -117,6 +122,7 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
         :aria-disabled="tab.disabled"
         :tabindex="isActiveTab(tab) ? 0 : -1"
         :disabled="tab.disabled"
+        :title="isIconOnly(tab) ? tab.label : undefined"
         @click="handleSelectedTab(tab)"
         @keydown="onTabKeydown($event, tabIndex)"
       >
@@ -126,7 +132,13 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
           :icon-code="tab.icon"
         />
 
-        {{ tab.label }}
+        <span
+          v-if="isIconOnly(tab)"
+          class="visually-hidden"
+        >{{ tab.label }}</span>
+        <template v-else>
+          {{ tab.label }}
+        </template>
 
         <!-- Badge -->
         <UiBadge

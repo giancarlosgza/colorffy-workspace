@@ -115,6 +115,20 @@ export const WithIcons: Story = {
   }
 }
 
+// Square icon buttons; the label stays the accessible name and a hover tooltip
+export const IconOnly: Story = {
+  args: {
+    pillTabs: true,
+    rounded: true,
+    iconOnly: true,
+    tabs: [
+      { id: 'overview', label: 'Overview', icon: '&#xe88a;' },
+      { id: 'details', label: 'Details', icon: '&#xe873;', badge: { text: '3', variant: 'primary', pill: true } },
+      { id: 'settings', label: 'Settings', icon: '&#xe8b8;' }
+    ]
+  }
+}
+
 // Fluid tabs stretch equally to fill the available width
 export const Fluid: Story = {
   args: {

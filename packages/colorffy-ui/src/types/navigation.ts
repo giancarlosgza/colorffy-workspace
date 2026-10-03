@@ -182,6 +182,13 @@ export interface ITabsProps {
   rounded?: boolean
 
   /**
+   * When true, tabs with an `icon` show only the icon as a square button. The
+   * label stays the tab's accessible name (visually hidden) and shows as a
+   * native tooltip on hover. Tabs without an `icon` keep their label.
+   */
+  iconOnly?: boolean
+
+  /**
    * Tab button size ('sm' | 'md'). 'sm' uses the default button height and font size.
    * Defaults to 'md'.
    */

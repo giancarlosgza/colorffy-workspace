@@ -72,6 +72,16 @@ $indicator-max-items: 16;
       }
     }
 
+    // Icon only
+    &.tabs-icon-only {
+      .tab-item .tab-link:has(> .visually-hidden) {
+        --_btn-padding-inline: var(--space-8);
+
+        min-width: var(--_btn-height);
+        justify-content: center;
+      }
+    }
+
     // Tabs pill
     &.tabs-pills {
       --_nav-tabs-item-radius: var(--tabs-pills-radius, var(--radius-lg));
