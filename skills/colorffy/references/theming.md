@@ -43,6 +43,8 @@ Theme colors are CSS tokens. Each brand color has a light-mode (`-500`) and dark
 }
 ```
 
+Text colors follow automatically: each `--cffy-on-<name>` picks black or white from the lightness of the solid fill `--cffy-<name>-a10` (whichever contrasts more), and `--cffy-on-<name>-container` is mixed from the base. Set `--cffy-on-<name>` only to force a value.
+
 Or set one value for both modes with the `--cffy-*-base` tokens:
 
 ```css
@@ -52,7 +54,6 @@ Or set one value for both modes with the `--cffy-*-base` tokens:
   --cffy-secondary-base: #22cbff;
   --cffy-accent-base: #0ee9a0;
   --cffy-surface-base: #ffffff;
-  --cffy-on-secondary: #ffffff;
   
   /* Fonts */
   --cffy-font-primary: 'Host Grotesk', sans-serif;
@@ -91,7 +92,6 @@ Colorffy CSS uses semantic CSS variables for dark mode support. Toggle the `.dar
   --cffy-secondary-base: #90deff;
   --cffy-accent-base: #90ffda;
   --cffy-surface-base: #000000;
-  --cffy-on-secondary: #000000;
 }
 ```
 
@@ -366,7 +366,6 @@ Use this to import the framework and define runtime CSS variables (fonts, themes
     --cffy-secondary-base: #22cbff;
     --cffy-accent-base: #0ee9a0;
     --cffy-surface-base: #ffffff;
-    --cffy-on-secondary: #ffffff;
 
     --cffy-font-primary: 'Host Grotesk', Tahoma, Geneva, Verdana, sans-serif;
     --cffy-font-secondary: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
@@ -377,7 +376,6 @@ Use this to import the framework and define runtime CSS variables (fonts, themes
     --cffy-secondary-base: #90deff;
     --cffy-accent-base: #90ffda;
     --cffy-surface-base: #000000;
-    --cffy-on-secondary: #000000;
 }
 ```
 

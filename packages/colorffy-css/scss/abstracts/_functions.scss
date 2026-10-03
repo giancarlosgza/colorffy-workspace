@@ -9,6 +9,11 @@
   @return color-mix(in oklab, #{$base}, var(--cffy-state-layer-color) #{$state});
 }
 
+// On color
+@function on-color($fill) {
+  @return #{'oklch(from #{$fill} clamp(0, (0.58 - l) * 1000, 1) 0 0)'};
+}
+
 // Negation
 @function negate($value) {
   @if meta.type-of($value) == 'number' {

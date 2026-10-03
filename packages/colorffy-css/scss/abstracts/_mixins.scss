@@ -523,6 +523,17 @@
 }
 
 // ==========================================================================
+// ON COLORS
+// ==========================================================================
+@mixin on-colors() {
+  @supports (color: #{f.on-color(red)}) {
+    @each $name in (primary, secondary, accent, success, warning, danger, info) {
+      --cffy-on-#{$name}: #{f.on-color(var(--cffy-#{$name}-a10))};
+    }
+  }
+}
+
+// ==========================================================================
 // FIXED THEME COLOR ASSIGNMENTS
 // ==========================================================================
 @mixin primary-fixed-colors() {

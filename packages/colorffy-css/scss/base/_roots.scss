@@ -37,15 +37,12 @@
 
     /* on background colors */
     --cffy-on-primary: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
-    --cffy-on-primary-inverse: light-dark(var(--cffy-color-brand-black-500), var(--cffy-color-brand-white-500));
     --cffy-on-secondary: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
-    --cffy-on-secondary-inverse: light-dark(var(--cffy-color-brand-black-500), var(--cffy-color-brand-white-500));
     --cffy-on-accent: var(--cffy-color-brand-black-500);
-    --cffy-on-accent-inverse: light-dark(var(--cffy-color-brand-black-500), var(--cffy-color-brand-white-500));
     --cffy-on-success: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
     --cffy-on-warning: var(--cffy-color-brand-black-500);
     --cffy-on-danger: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
-    --cffy-on-info: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
+    --cffy-on-info: var(--cffy-color-brand-black-500);
 
     /* surfaces base colors */
     --cffy-surface-base: light-dark(var(--cffy-color-brand-white-500), var(--cffy-color-brand-black-500));
@@ -248,6 +245,9 @@
     /* dynamic colors tones */
     @include m.surface-light-tones();
     @include m.semantic-light-tones();
+
+    /* readable text on each solid fill */
+    @include m.on-colors();
   }
 
   html.dark-mode {
