@@ -206,11 +206,19 @@
       --_form-range-radius: var(--input-range-radius, var(--radius-full));
       --_form-range-slider-height: var(--input-range-thumb-height, 1.95rem);
       --_form-range-slider-width: var(--input-range-thumb-width, 0.30rem);
+      --_form-range-slider-focus-width: 0.20rem;
       --_form-range-slider-margin: calc((var(--_form-range-track-size) - var(--_form-range-slider-height)) / 2 - 0.1rem);
       --_form-range-padding-x: var(--space-8);
       --_form-range-padding-y: var(--space-4);
       --_form-range-easing-in: var(--input-range-easing, var(--ease-decelerate));
       --_form-range-easing-duration: var(--input-range-duration, var(--duration-100));
+
+      &:is(.form-sm) {
+        --_form-range-track-size: 0.5rem;
+        --_form-range-slider-height: 1.35rem;
+        --_form-range-slider-width: 0.25rem;
+        --_form-range-slider-focus-width: 0.15rem;
+      }
 
       &:is([type="range"]) {
         padding: var(--_form-range-padding-y) var(--_form-range-padding-x);
@@ -236,7 +244,7 @@
         }
 
         &:is(:focus)::-webkit-slider-thumb {
-          --_form-range-slider-width: 0.20rem;
+          --_form-range-slider-width: var(--_form-range-slider-focus-width);
 
           outline: 5px solid var(--_form-range-thumb-ring-color);
           transition: width var(--_form-range-easing-duration) var(--_form-range-easing-in);
@@ -259,7 +267,7 @@
         }
 
         &:is(:focus)::-moz-range-thumb {
-          --_form-range-slider-width: 0.20rem;
+          --_form-range-slider-width: var(--_form-range-slider-focus-width);
 
           outline: 5px solid var(--_form-range-thumb-ring-color);
           transition: width var(--_form-range-easing-duration) var(--_form-range-easing-in);

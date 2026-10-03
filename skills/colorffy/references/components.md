@@ -779,7 +779,7 @@ Stacks avatars with an overlapping ring; from an `avatars` array or by composing
 <UiInputRange v-model="volume" :min="0" :max="100" :step="1" label="Volume" />
 ```
 
-**Props:** `modelValue` (number), `min` (default: 0), `max` (default: 100), `step` (default: 1)
+**Props:** `modelValue` (number), `min` (default: 0), `max` (default: 100), `step` (default: 1), `size` (`'sm'` shrinks the field, track and thumb)
 
 ### UiInputFile
 
