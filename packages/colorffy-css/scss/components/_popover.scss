@@ -6,14 +6,17 @@
   // POPOVER COMPONENT
   // ==========================================================================
   .popover {
-    --_popover-bg-color: var(--theme-surface-overlay);
-    --_popover-color: var(--theme-on-background);
-    --_popover-border-color: var(--theme-outline-surface);
-    --_popover-shadow: var(--shadow-lg);
-    --_popover-radius: #{v.$dialog-border-radius};
-    --_popover-width: 20rem;
-    --_popover-height: 30rem;
-    --_popover-gutter: var(--space-16);
+    --_popover-bg-color: var(--popover-bg-color, var(--theme-surface-overlay));
+    --_popover-color: var(--popover-color, var(--theme-on-background));
+    --_popover-border-color: var(--popover-border-color, var(--theme-outline-surface));
+    --_popover-shadow: var(--popover-shadow, var(--shadow-lg));
+    --_popover-radius: var(--popover-radius, #{v.$dialog-border-radius});
+    --_popover-width: var(--popover-max-width, 20rem);
+    --_popover-height: var(--popover-max-height, 30rem);
+    --_popover-gutter: var(--popover-spacing, var(--space-16));
+    --_popover-offset: var(--popover-offset, .625rem);
+    --_popover-easing-in: var(--popover-easing, ease-in-out);
+    --_popover-easing-duration: var(--popover-duration, var(--duration-250));
 
     position: fixed;
     inset: 0;
@@ -28,8 +31,8 @@
 
     translate: 0 1rem;
     opacity: 0;
-    transition: translate var(--duration-250), opacity var(--duration-250), display var(--duration-250) allow-discrete, overlay var(--duration-250) allow-discrete;
-    transition-timing-function: ease-in-out;
+    transition: translate var(--_popover-easing-duration), opacity var(--_popover-easing-duration), display var(--_popover-easing-duration) allow-discrete, overlay var(--_popover-easing-duration) allow-discrete;
+    transition-timing-function: var(--_popover-easing-in);
 
     // ==========================================================================
     // POPOVER SIZES (SM, LG)
@@ -64,7 +67,7 @@
         inset: auto;
         bottom: anchor(top);
         left: anchor(left);
-        margin-block: .625rem;
+        margin-block: var(--_popover-offset);
 
         // Block axis (vertical)
         &.popover-anchor-top {
@@ -111,15 +114,15 @@
         margin-bottom: var(--_popover-gutter);
 
         & .popover-title {
-          font-size: var(--fs-xs);
-          font-weight: var(--fw-700);
+          font-size: var(--popover-title-font-size, var(--fs-xs));
+          font-weight: var(--popover-title-font-weight, var(--fw-700));
           color: var(--_popover-color);
           margin-bottom: var(--space-4);
         }
 
         & .popover-subtitle {
-          font-size: var(--fs-3xs);
-          color: var(--theme-muted-a10);
+          font-size: var(--popover-subtitle-font-size, var(--fs-3xs));
+          color: var(--popover-subtitle-color, var(--theme-muted-a10));
 
           &:not(:last-child) {
             margin-bottom: var(--space-4);
