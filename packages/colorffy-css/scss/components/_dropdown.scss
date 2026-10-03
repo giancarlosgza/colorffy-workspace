@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 @use '../base/typography';
 
 @layer components.dropdown {
@@ -75,7 +76,9 @@
                 align-items: center;
                 gap: var(--space-6);
                 font-weight: var(--fw-400);
-                background: var(--_dropdown-item-bg-color);
+                --_dropdown-item-state: 0%;
+
+                background: f.state-layer(var(--_dropdown-item-state), var(--_dropdown-item-bg-color));
                 color: var(--_dropdown-item-color);
 
                 padding-block: var(--_dropdown-item-gutter-y);
@@ -166,11 +169,15 @@
 
                 // States
                 &:is(:hover) {
-                  --_dropdown-item-bg-color: var(--dropdown-item-hover-bg-color, var(--theme-surface-container-high));
+                  --_dropdown-item-state: var(--state-hover-opacity);
                   --_dropdown-item-color: var(--dropdown-item-hover-color, var(--theme-on-background));
                 }
 
-                &:is(:focus, :active, .active) {
+                &:is(:active, :focus-visible) {
+                  --_dropdown-item-state: var(--state-pressed-opacity);
+                }
+
+                &:is(.active) {
                   --_dropdown-item-bg-color: var(--dropdown-item-active-bg-color, var(--theme-surface-container-highest));
                   --_dropdown-item-color: var(--dropdown-item-active-color, var(--theme-on-background));
                 }

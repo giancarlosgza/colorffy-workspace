@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.table {
   // ==========================================================================
@@ -117,8 +118,15 @@
         }
       }
 
+      tr {
+        --_table-row-bg-color: transparent;
+        --_table-row-state: 0%;
+
+        background-color: f.state-layer(var(--_table-row-state), var(--_table-row-bg-color));
+      }
+
       tr.is-selected {
-        background-color: var(--table-selected-bg-color, var(--theme-surface-a0));
+        --_table-row-bg-color: var(--table-selected-bg-color, var(--theme-surface-a0));
       }
     }
 
@@ -204,7 +212,7 @@
     &.table-striped {
       tbody {
         tr:nth-child(odd) {
-          background-color: var(--table-striped-bg-color, var(--theme-surface-container));
+          --_table-row-bg-color: var(--table-striped-bg-color, var(--theme-surface-container));
         }
       }
     }
@@ -216,7 +224,7 @@
           transition: background-color var(--_table-easing-duration) var(--_table-easing-in);
 
           &:is(:hover) {
-            background-color: var(--table-hover-bg-color, var(--theme-surface-a10));
+            --_table-row-state: var(--state-hover-opacity);
           }
         }
       }

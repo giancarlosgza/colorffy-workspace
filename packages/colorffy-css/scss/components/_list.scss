@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 @use '../base/typography';
 
 @layer components.list {
@@ -21,12 +22,12 @@
       margin: auto;
     }
 
-    &:is(:hover) {
-      --_list-group-item-bg-color: var(--list-hover-bg-color, var(--theme-surface-container-high));
+    &:is(:hover):not(.list-item-disabled) {
+      --_list-group-item-state: var(--state-hover-opacity);
     }
 
-    &:is(:active, :focus) {
-      --_list-group-item-bg-color: var(--list-pressed-bg-color, var(--theme-surface-container-highest));
+    &:is(:active, :focus-visible, :has(:focus-visible)):not(.list-item-disabled) {
+      --_list-group-item-state: var(--state-pressed-opacity);
     }
   }
 
@@ -56,11 +57,13 @@
     background: transparent;
 
     & .list-group-item {
+      --_list-group-item-state: 0%;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      background-color: var(--_list-group-item-bg-color);
+      background-color: f.state-layer(var(--_list-group-item-state), var(--_list-group-item-bg-color));
       border: var(--border-width-sm) solid var(--_list-group-item-border-color);
       border-radius: var(--_list-group-item-radius);
       transition: background-color var(--_list-group-item-easing-duration) var(--_list-group-item-easing-in),

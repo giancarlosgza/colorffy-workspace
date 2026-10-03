@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.form-control {
   // ==========================================================================
@@ -442,6 +443,7 @@
       --_file-easing-in: var(--input-file-easing, var(--ease-decelerate));
       --_file-easing-duration: var(--input-file-duration, var(--duration-100));
       --_file-height: var(--input-file-height, 5rem);
+      --_file-state: 0%;
 
       display: grid;
       place-items: center;
@@ -449,7 +451,7 @@
       text-align: center;
       cursor: pointer;
       border: var(--_file-border-width) dashed var(--_file-border-color);
-      background: var(--_file-bg-color);
+      background: f.state-layer(var(--_file-state), var(--_file-bg-color));
       color: var(--theme-on-background);
       padding: var(--_file-padding);
       height: 100%;
@@ -460,11 +462,11 @@
       transition: all var(--_file-easing-duration) var(--_file-easing-in);
 
       &:is(:hover) {
-        --_file-bg-color: var(--input-file-hover-bg-color, var(--theme-surface-container-high));
+        --_file-state: var(--state-hover-opacity);
       }
 
-      &:is(:focus, :active) {
-        --_file-bg-color: var(--input-file-pressed-bg-color, var(--theme-surface-container-highest));
+      &:is(:active, :has(:focus-visible)) {
+        --_file-state: var(--state-pressed-opacity);
       }
 
       &:is(.dropbox-lg) {
@@ -472,6 +474,7 @@
       }
 
       &.valid-file {
+        --theme-state-layer-color: var(--theme-success-base);
         --_file-border-color: var(--theme-success-a10);
         --_file-bg-color: color-mix(in oklab, var(--theme-success-base-fixed) 25%, transparent);
         --_file-color: var(--theme-success-a90);

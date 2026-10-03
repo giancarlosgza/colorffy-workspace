@@ -1,5 +1,6 @@
 @use 'sass:math';
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 @use '../abstracts/variables' as v;
 @use '../base/typography';
 
@@ -190,11 +191,13 @@
 
         .nav-item {
           .nav-link {
+            --_nav-link-state: 0%;
+
             position: relative;
             display: block;
             border-radius: var(--_nav-link-radius);
             padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
-            background-color: var(--_nav-link-bg-color);
+            background-color: f.state-layer(var(--_nav-link-state), var(--_nav-link-bg-color));
             color: var(--_nav-link-color);
             border: var(--border-width-sm) solid var(--_nav-link-border-color);
             font-family: var(--font-primary);
@@ -212,11 +215,15 @@
 
             &:is(:hover) {
               --_nav-link-color: var(--navbar-link-hover-color, var(--theme-primary-a10));
-              --_nav-link-bg-color: var(--navbar-link-hover-bg-color, var(--theme-surface-container-high));
+              --_nav-link-state: var(--state-hover-opacity);
 
               svg {
                 animation: spin 1s ease-in-out both;
               }
+            }
+
+            &:is(:active, :focus-visible) {
+              --_nav-link-state: var(--state-pressed-opacity);
             }
 
             &:is(.disabled) {
@@ -478,6 +485,8 @@
         }
 
         & .popover-menu-item {
+          --_popover-menu-item-state: 0%;
+
           display: flex;
           align-items: center;
           gap: calc(var(--_popover-menu-gutter) / 2);
@@ -486,7 +495,7 @@
           width: 100%;
           border: none;
           border-radius: var(--_popover-menu-item-radius);
-          background-color: var(--_popover-menu-item-bg-color);
+          background-color: f.state-layer(var(--_popover-menu-item-state), var(--_popover-menu-item-bg-color));
           text-align: start;
           cursor: pointer;
           transition: color var(--duration-100) var(--_popover-menu-easing-out),
@@ -527,7 +536,11 @@
 
           &:is(:hover) {
             --_popover-menu-item-color: var(--popover-menu-item-hover-color, var(--theme-primary-a30));
-            --_popover-menu-item-bg-color: var(--popover-menu-item-hover-bg-color, color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 90%));
+            --_popover-menu-item-state: var(--state-hover-opacity);
+          }
+
+          &:is(:active, :focus-visible) {
+            --_popover-menu-item-state: var(--state-pressed-opacity);
           }
 
           &:is(.router-link-exact-active, .active) {
@@ -542,10 +555,7 @@
           // Destructive
           &:is(.popover-menu-item-destructive) {
             --_popover-menu-item-color: var(--theme-danger-a10);
-
-            &:is(:hover) {
-              --_popover-menu-item-bg-color: color-mix(in srgb, var(--theme-danger-base), var(--theme-surface-container-high) 90%);
-            }
+            --theme-state-layer-color: var(--theme-danger-base);
           }
 
           &:is(:disabled, .disabled) {
@@ -656,10 +666,12 @@
 
           // Items
           & .menu-tab-item {
+            --_menu-tool-tab-state: 0%;
+
             display: flex;
             flex-direction: column;
             padding: var(--_menu-tool-padding);
-            background-color: var(--_menu-tool-tab-bg-color);
+            background-color: f.state-layer(var(--_menu-tool-tab-state), var(--_menu-tool-tab-bg-color));
             border-radius: var(--_menu-tool-radius);
             cursor: pointer;
             user-select: none;
@@ -669,13 +681,13 @@
             transition-timing-function: var(--_menu-tool-item-easing-in);
 
             &:is(:hover) {
-              --_menu-tool-tab-bg-color: var(--menu-tools-tab-hover-bg-color, var(--theme-surface-container));
+              --_menu-tool-tab-state: var(--state-hover-opacity);
 
               scale: .98;
             }
 
-            &:is(:focus, :active) {
-              --_menu-tool-tab-bg-color: var(--theme-surface-container-high);
+            &:is(:active, :focus-visible) {
+              --_menu-tool-tab-state: var(--state-pressed-opacity);
             }
 
             &:is(.menu-tab-active) {
@@ -711,13 +723,15 @@
             overflow: clip;
 
             & .menu-link {
+              --_menu-tool-link-state: 0%;
+
               display: flex;
               flex-direction: row;
               align-items: center;
               gap: var(--_menu-tool-gap);
               padding: calc(var(--_menu-tool-padding) / 2);
               height: 100%;
-              background-color: var(--_menu-tool-link-bg-color);
+              background-color: f.state-layer(var(--_menu-tool-link-state), var(--_menu-tool-link-bg-color));
               border-radius: var(--_menu-tool-radius);
               user-select: none;
               @extend .undecorated;
@@ -756,7 +770,7 @@
 
               &:is(:hover) {
                 --_menu-tool-radius: var(--radius-xl);
-                --_menu-tool-link-bg-color: var(--menu-tools-link-hover-bg-color, var(--theme-surface-container-high));
+                --_menu-tool-link-state: var(--state-hover-opacity);
 
                 & .icon-wrap {
                   border-radius: var(--_menu-tool-radius);
@@ -775,6 +789,10 @@
                     }
                   }
                 }
+              }
+
+              &:is(:active, :focus-visible) {
+                --_menu-tool-link-state: var(--state-pressed-opacity);
               }
 
               &:is(.router-link-active, .router-link-exact-active) {

@@ -1,4 +1,9 @@
 // ==========================================================================
 // COLORFFY CUSTOM SCSS FUNCTIONS
 // ==========================================================================
-// (Currently all functions migrated to native CSS Relative Color Syntax)
+// (Currently all functions migrated to native CSS Relative Color Syntax)
+
+// State layer
+@function state-layer($state, $base: transparent) {
+  @return color-mix(in oklab, #{$base}, var(--theme-state-layer-color) #{$state});
+}

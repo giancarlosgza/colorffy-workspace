@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as v;
+@use "../abstracts/functions" as f;
 @use '../abstracts/mixins' as m;
 @use '../base/typography';
 
@@ -26,7 +27,6 @@
       --_accordion-body-color: var(--accordion-body-color, var(--theme-muted-a10));
       --_accordion-icon-color: var(--accordion-icon-color, var(--theme-muted-a10));
       --_accordion-hover-color: var(--accordion-hover-color, var(--theme-primary-a10));
-      --_accordion-hover-bg-color: var(--accordion-hover-bg-color, var(--theme-surface-container-high));
       --_accordion-content-gap: var(--space-16);
       --_accordion-easing-in: var(--accordion-easing, var(--ease-overshoot-soft));
       --_accordion-easing-duration: var(--accordion-duration, var(--duration-600));
@@ -66,6 +66,7 @@
 
         &.accordion-header {
           --_accordion-trailing-icon-deg: 0deg;
+          --_accordion-state: 0%;
 
           position: relative;
           display: flex;
@@ -74,7 +75,7 @@
           gap: var(--_accordion-icon-gap);
           padding-inline-end: calc(var(--_accordion-padding) + var(--_accordion-arrow-size) + var(--space-4));
           cursor: pointer;
-          background-color: transparent;
+          background-color: f.state-layer(var(--_accordion-state));
 
           .accordion-icon {
             flex-shrink: 0;
@@ -91,9 +92,15 @@
           }
 
           &:is(:hover) {
+            --_accordion-state: var(--state-hover-opacity);
+
             .accordion-title {
               color: var(--_accordion-hover-color);
             }
+          }
+
+          &:is(:active, :focus-visible) {
+            --_accordion-state: var(--state-pressed-opacity);
           }
 
           // Toggle arrow icon
@@ -142,12 +149,6 @@
       }
 
       // States
-      &:is(:hover) {
-        summary {
-          background-color: var(--_accordion-hover-bg-color);
-        }
-      }
-
       // Content
       .accordion-body {
         padding-inline: var(--_accordion-padding);

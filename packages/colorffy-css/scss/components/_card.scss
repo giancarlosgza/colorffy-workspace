@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as v;
+@use "../abstracts/functions" as f;
 @use '../abstracts/mixins' as m;
 @use '../base/typography';
 
@@ -112,6 +113,9 @@
 
     // Interactive cards (selectable choice or link navigation)
     &:is(.card-selectable, .card-link) {
+      --_card-state: 0%;
+
+      background-color: f.state-layer(var(--_card-state), var(--_card-bg-color));
       cursor: pointer;
       transition: background-color var(--duration-300) var(--_card-easing-in),
       border-color var(--duration-300) var(--_card-easing-in),
@@ -119,22 +123,11 @@
       translate var(--duration-600) var(--_card-easing-in);
 
       &:is(:hover) {
-        --_card-bg-color: var(--card-hover-bg-color, var(--theme-surface-overlay));
+        --_card-state: var(--state-hover-opacity);
       }
 
-      &:is(:active) {
-        --_card-bg-color: var(--theme-surface-a40);
-      }
-
-      // A pane already sits on the overlay surface, so it steps further
-      &:is(.card-pane) {
-        &:is(:hover) {
-          --_card-bg-color: var(--theme-surface-a30);
-        }
-
-        &:is(:active) {
-          --_card-bg-color: var(--theme-surface-a40);
-        }
+      &:is(:active, :focus-visible) {
+        --_card-state: var(--state-pressed-opacity);
       }
 
       // An elevated card answers with its shadow

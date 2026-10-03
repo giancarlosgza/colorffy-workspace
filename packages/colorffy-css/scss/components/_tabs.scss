@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 @use "../abstracts/mixins" as m;
 @use '../base/typography';
 
@@ -146,6 +147,7 @@ $indicator-max-items: 16;
         --_btn-radius: var(--radius-md) var(--radius-md) var(--radius-none) var(--radius-none);
         --_btn-padding-block: 0.625rem;
         --_btn-shadow: none;
+        --_tabs-link-state: 0%;
 
         // Mixin include to apply button base styles
         @include m.btn-base();
@@ -158,6 +160,7 @@ $indicator-max-items: 16;
           // Button tab reset styles
           display: flex;
           min-width: max-content;
+          background: f.state-layer(var(--_tabs-link-state), var(--_btn-bg-color));
           font-weight: var(--_nav-tabs-link-font-weight);
           text-decoration: none;
           transition: background-color var(--duration-200) var(--ease-decelerate),
@@ -165,8 +168,12 @@ $indicator-max-items: 16;
         }
 
         &:is(:hover) {
-          --_btn-bg-color: var(--tabs-link-hover-bg-color, var(--theme-surface-container));
+          --_tabs-link-state: var(--state-hover-opacity);
           --_btn-color: var(--tabs-link-hover-color, var(--theme-on-background));
+        }
+
+        &:is(:active, :focus-visible) {
+          --_tabs-link-state: var(--state-pressed-opacity);
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {

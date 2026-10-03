@@ -1,6 +1,7 @@
 @use "../abstracts/variables" as v;
 @use '../base/typography';
 @use '../abstracts/mixins' as m;
+@use "../abstracts/functions" as f;
 @use '../utilities/text' as t;
 
 @layer layout.sidebar {
@@ -123,6 +124,8 @@
         }
 
         .drawer-item {
+          --_drawer-item-state: 0%;
+
           position: relative;
           display: flex;
           gap: var(--_drawer-gutter);
@@ -130,7 +133,7 @@
           font-weight: var(--_drawer-item-font-weight);
           font-family: var(--font-primary);
           color: var(--_drawer-item-color);
-          background-color: var(--_drawer-item-bg-color);
+          background-color: f.state-layer(var(--_drawer-item-state), var(--_drawer-item-bg-color));
           box-shadow: var(--_drawer-item-shadow);
           border-radius: var(--_drawer-item-radius);
           padding: var(--_drawer-gutter);
@@ -164,11 +167,15 @@
           }
 
           &:hover {
-            --_drawer-item-bg-color: var(--sidebar-item-hover-bg-color, var(--theme-surface-container));
+            --_drawer-item-state: var(--state-hover-opacity);
 
             i {
               font-variation-settings: var(--iw-semi-bold);
             }
+          }
+
+          &:is(:active, :focus-visible) {
+            --_drawer-item-state: var(--state-pressed-opacity);
           }
 
           &:is(.router-link-exact-active, .active) {
@@ -236,7 +243,7 @@
           opacity: 1;
 
           &:is(:hover) {
-            background-color: var(--theme-surface-container);
+            background-color: f.state-layer(var(--state-hover-opacity));
             border-radius: var(--radius-sm);
             cursor: pointer;
           }

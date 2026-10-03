@@ -250,6 +250,11 @@
     --focus-ring-color: var(--theme-on-background);
     --focus-ring-offset: .3rem;
 
+    /* state layer */
+    --theme-state-layer-color: var(--theme-primary-base);
+    --state-hover-opacity: 8%;
+    --state-pressed-opacity: 12%;
+
     /* form icons */
     --theme-form-select-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"/></svg>');
     --theme-form-checkbox-icon: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="m382-373.218 328.826-328.826q15.956-15.957 37.826-15.957t37.827 15.957q15.956 15.957 15.956 37.827 0 21.869-15.956 37.826l-366.87 366.87Q403.652-243.565 382-243.565t-37.609-15.956l-170.87-170.87q-15.956-15.957-15.739-37.826.217-21.87 16.174-37.827 15.957-15.957 37.827-15.957 21.869 0 37.826 15.957L382-373.218Z"/></svg>');
