@@ -10,15 +10,18 @@ $indicator-max-items: 16;
   // TABS COMPONENT
   // ==========================================================================
   .tabs-navigation {
-    --_nav-tabs-gap: var(--space-8);
+    --_nav-tabs-gap: var(--tabs-gap, var(--space-8));
     --_nav-tabs-gutter-x: 0;
     --_nav-tabs-radius: var(--radius-none);
     --_nav-tabs-bg-color: transparent;
-    --_nav-tabs-indicator-size: calc(var(--border-width-md) + 1px);
-    --_nav-tabs-indicator-color: var(--theme-primary-a10);
+    --_nav-tabs-border-color: var(--tabs-border-color, var(--theme-outline-button));
+    --_nav-tabs-indicator-size: var(--tabs-indicator-size, calc(var(--border-width-md) + 1px));
+    --_nav-tabs-indicator-color: var(--tabs-indicator-color, var(--theme-primary-a10));
     --_nav-tabs-indicator-anchor: --tabs-item-1;
-    --_nav-tabs-indicator-duration: var(--duration-300);
-    --_nav-tabs-indicator-easing: var(--ease-decelerate);
+    --_nav-tabs-indicator-duration: var(--tabs-duration, var(--duration-300));
+    --_nav-tabs-indicator-easing: var(--tabs-easing, var(--ease-decelerate));
+    --_nav-tabs-link-color: var(--tabs-link-color, var(--theme-muted-a10));
+    --_nav-tabs-link-font-weight: var(--tabs-link-font-weight, var(--fw-500));
 
     position: relative;
     display: flex;
@@ -36,7 +39,7 @@ $indicator-max-items: 16;
     height: auto;
     background: var(--_nav-tabs-bg-color);
     border-radius: var(--_nav-tabs-radius);
-    border-bottom: var(--border-width-sm) solid var(--theme-outline-button);
+    border-bottom: var(--border-width-sm) solid var(--_nav-tabs-border-color);
 
     scrollbar-width: thin;
     scrollbar-color: var(--theme-muted-base) transparent;
@@ -71,9 +74,11 @@ $indicator-max-items: 16;
 
     // Tabs pill
     &.tabs-pills {
-      --_nav-tabs-item-radius: var(--radius-lg);
+      --_nav-tabs-item-radius: var(--tabs-pills-radius, var(--radius-lg));
       --_nav-tabs-radius: calc(var(--_nav-tabs-item-radius) + calc(var(--_nav-tabs-gap) - .15rem));
-      --_nav-tabs-bg-color: var(--theme-surface-container-low);
+      --_nav-tabs-bg-color: var(--tabs-pills-bg-color, var(--theme-surface-container-low));
+      --_nav-tabs-pill-bg-color: var(--tabs-pills-indicator-bg-color, var(--theme-surface-body-pane));
+      --_nav-tabs-pill-shadow: var(--tabs-pills-indicator-shadow, var(--shadow-md));
 
       padding: calc(var(--_nav-tabs-gap) - .15rem);
       background: var(--_nav-tabs-bg-color);
@@ -87,10 +92,6 @@ $indicator-max-items: 16;
       .tab-item {
         .tab-link {
           --_btn-radius: var(--_nav-tabs-item-radius);
-
-          &:is(.active, .router-link-active, .router-link-exact-active) {
-            --_btn-color: var(--theme-on-background);
-          }
         }
       }
 
@@ -101,9 +102,9 @@ $indicator-max-items: 16;
           bottom: anchor(var(--_nav-tabs-indicator-anchor) bottom);
           height: auto;
           z-index: 1;
-          background: var(--theme-surface-body-pane);
+          background: var(--_nav-tabs-pill-bg-color);
           border-radius: var(--_nav-tabs-item-radius);
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--_nav-tabs-pill-shadow);
         }
       }
 
@@ -117,9 +118,9 @@ $indicator-max-items: 16;
       // Fallback
       @supports not (anchor-name: --foo) {
         .tab-item .tab-link:is(.active, .router-link-active, .router-link-exact-active) {
-          --_btn-shadow: var(--shadow-md);
+          --_btn-shadow: var(--_nav-tabs-pill-shadow);
 
-          background: var(--theme-surface-body-pane);
+          background: var(--_nav-tabs-pill-bg-color);
           border-bottom: none;
         }
       }
@@ -130,7 +131,7 @@ $indicator-max-items: 16;
 
       .tab-link {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--theme-muted-a10);
+        --_btn-color: var(--_nav-tabs-link-color);
         --_btn-gap: var(--space-4);
         --_btn-radius: var(--radius-md) var(--radius-md) var(--radius-none) var(--radius-none);
         --_btn-padding-block: 0.625rem;
@@ -147,19 +148,19 @@ $indicator-max-items: 16;
           // Button tab reset styles
           display: flex;
           min-width: max-content;
-          font-weight: var(--fw-500);
+          font-weight: var(--_nav-tabs-link-font-weight);
           text-decoration: none;
           transition: background-color var(--duration-200) var(--ease-decelerate),
           color var(--duration-200) var(--ease-decelerate);
         }
 
         &:is(:hover) {
-          --_btn-bg-color: var(--theme-surface-container);
-          --_btn-color: var(--theme-on-background);
+          --_btn-bg-color: var(--tabs-link-hover-bg-color, var(--theme-surface-container));
+          --_btn-color: var(--tabs-link-hover-color, var(--theme-on-background));
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {
-          --_btn-color: var(--theme-on-background);
+          --_btn-color: var(--tabs-link-active-color, var(--theme-on-background));
 
           font-weight: var(--fw-800);
         }
