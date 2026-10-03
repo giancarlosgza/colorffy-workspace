@@ -230,6 +230,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Chip** (`.btn-chip`, `UiChip`): `--chip-bg-color`, `-color`, `-border-color`, `-radius`, `-hover-bg-color`
 - **Button groups** (`.btn-group`, `.chip-group`, `.fab-group`, `.toggle-btn-group`): `--btn-group-gap`, `--chip-group-gap`, `--fab-group-offset-block`, `-offset-inline`, `-gap`, `--toggle-btn-group-gap`, `--toggle-btn-bg-color`, `-color`, `-subtitle-color`, `-border-width`, `-border-color`, `-radius`, `-padding`, `-hover-border-color`, `-active-bg-color`, `-active-border-color`, `-easing`, `-duration`
 - **Badge** (`.badge`, `UiBadge`): `--badge-bg-color`, `-color`, `-border-color`, `-radius`, `-font-size`, `-font-weight`, `-padding-block`, `-padding-inline`, `-icon-size`; `--badge-group-gap`
+- **Accordion** (`.accordion`, `UiAccordion`): `--accordion-bg-color`, `-color`, `-border-color`, `-radius`, `-padding`, `-title-font-size`, `-body-font-size`, `-body-color`, `-icon-color`, `-hover-color`, `-hover-bg-color`, `-easing`, `-duration`, `-group-gap`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:

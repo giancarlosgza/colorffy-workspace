@@ -7,23 +7,29 @@
   // ACCORDION COMPONENT
   // ==========================================================================
   .accordion-group {
+    --_accordion-group-gap: var(--accordion-group-gap, var(--space-4));
+
     display: grid;
     grid-template-rows: auto;
-    gap: var(--space-4);
+    gap: var(--_accordion-group-gap);
 
     & .accordion {
-      --_accordion-bg-color: var(--theme-surface-accordion);
-      --_accordion-color: var(--theme-on-background);
-      --_accordion-radius: var(--radius-lg);
-      --_accordion-border-color: transparent;
-      --_accordion-padding: var(--space-14);
+      --_accordion-bg-color: var(--accordion-bg-color, var(--theme-surface-accordion));
+      --_accordion-color: var(--accordion-color, var(--theme-on-background));
+      --_accordion-radius: var(--accordion-radius, var(--radius-lg));
+      --_accordion-border-color: var(--accordion-border-color, transparent);
+      --_accordion-padding: var(--accordion-padding, var(--space-14));
       --_accordion-icon-gap: 0.625rem;
       --_accordion-arrow-size: 24px;
-      --_accordion-title-fs: var(--fs-xs);
-      --_accordion-body-fs: var(--fs-2xs);
+      --_accordion-title-fs: var(--accordion-title-font-size, var(--fs-xs));
+      --_accordion-body-fs: var(--accordion-body-font-size, var(--fs-2xs));
+      --_accordion-body-color: var(--accordion-body-color, var(--theme-muted-a10));
+      --_accordion-icon-color: var(--accordion-icon-color, var(--theme-muted-a10));
+      --_accordion-hover-color: var(--accordion-hover-color, var(--theme-primary-a10));
+      --_accordion-hover-bg-color: var(--accordion-hover-bg-color, var(--theme-surface-container-high));
       --_accordion-content-gap: var(--space-16);
-      --_accordion-easing-in: var(--ease-overshoot-soft);
-      --_accordion-easing-duration: var(--duration-600);
+      --_accordion-easing-in: var(--accordion-easing, var(--ease-overshoot-soft));
+      --_accordion-easing-duration: var(--accordion-duration, var(--duration-600));
 
       display: flex;
       flex-direction: column;
@@ -42,11 +48,11 @@
 
       // Border radius
       &:is(:first-child) {
-        --_accordion-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+        --_accordion-radius: var(--accordion-radius, var(--radius-lg)) var(--accordion-radius, var(--radius-lg)) var(--radius-sm) var(--radius-sm);
       }
 
       &:is(:last-child) {
-        --_accordion-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
+        --_accordion-radius: var(--radius-sm) var(--radius-sm) var(--accordion-radius, var(--radius-lg)) var(--accordion-radius, var(--radius-lg));
       }
 
       &:not(:first-child, :last-child) {
@@ -72,7 +78,7 @@
 
           .accordion-icon {
             flex-shrink: 0;
-            color: var(--theme-muted-a10);
+            color: var(--_accordion-icon-color);
           }
 
           .accordion-title {
@@ -86,7 +92,7 @@
 
           &:is(:hover) {
             .accordion-title {
-              color: var(--theme-primary-a10);
+              color: var(--_accordion-hover-color);
             }
           }
 
@@ -95,7 +101,7 @@
             content: '';
             inline-size: var(--_accordion-arrow-size);
             block-size: var(--_accordion-arrow-size);
-            background-color: var(--theme-muted-a10);
+            background-color: var(--_accordion-icon-color);
             -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
             
@@ -138,7 +144,7 @@
       // States
       &:is(:hover) {
         summary {
-          background-color: var(--theme-surface-container-high);
+          background-color: var(--_accordion-hover-bg-color);
         }
       }
 
@@ -147,7 +153,7 @@
         padding-inline: var(--_accordion-padding);
 
         p {
-          color: var(--theme-muted-a10);
+          color: var(--_accordion-body-color);
           font-size: var(--_accordion-body-fs);
           line-height: 1.75;
           margin-bottom: var(--_accordion-padding);
@@ -164,7 +170,7 @@
 
     &:not(:has(.accordion:nth-child(2))) {
       .accordion:nth-child(1) {
-        --_accordion-radius: var(--radius-lg);
+        --_accordion-radius: var(--accordion-radius, var(--radius-lg));
       }
     }
 
