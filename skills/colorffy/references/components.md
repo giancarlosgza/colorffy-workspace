@@ -1304,7 +1304,7 @@ Chronological event feed with dot/icon/image markers and a connector line.
 - `iconCode` (string, default: '&#xeb83;') - Material icon code used when `useCustomIcon` is true
 - `customClass` (string | string[] | null, optional) - Extra classes
 
-**Slots:** `action` - call-to-action content (usually a `UiButton`) rendered below the title/subtitle; the legacy `button` slot still works as a fallback
+**Slots:** `action` - call-to-action content (usually a `UiButton`) rendered below the title/subtitle
 
 ### UiBaseSkeleton, UiGridSkeleton, UiTableSkeleton
 
