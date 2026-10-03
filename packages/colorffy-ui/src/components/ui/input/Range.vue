@@ -97,7 +97,7 @@ onMounted(() => {
       :step="step"
       :aria-invalid="hasErrors || undefined"
       :aria-describedby="describedById"
-      :style="`--_form-range-track-fill: ${valueAsPercent}%;`"
+      :style="`--_input-range-track-fill: ${valueAsPercent}%;`"
       :disabled="disabled"
     >
 

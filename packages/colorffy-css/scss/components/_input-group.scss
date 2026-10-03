@@ -9,7 +9,7 @@
     --_input-group-bg-color: var(--input-group-bg-color, var(--input-bg-color, transparent));
     --_input-group-border-width: var(--input-border-width, #{v.$form-border});
     --_input-group-border-color: var(--input-border-color, var(--theme-outline-text-field));
-    --_input-group-gutter-x: var(--input-group-padding-inline, .5rem);
+    --_input-group-padding-inline: var(--input-group-padding-inline, .5rem);
     --_input-group-color: var(--input-group-color, var(--theme-muted-a10));
 
     display: flex;
@@ -19,7 +19,7 @@
     :where(.input-group-prefix, .input-group-suffix) {
       display: grid;
       align-items: center;
-      padding-inline: var(--_input-group-gutter-x);
+      padding-inline: var(--_input-group-padding-inline);
       background-color: var(--_input-group-bg-color);
       border: var(--_input-group-border-width) solid var(--_input-group-border-color);
       color: var(--_input-group-color);
