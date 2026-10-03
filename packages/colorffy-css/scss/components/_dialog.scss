@@ -7,15 +7,25 @@
   // DIALOG COMPONENT
   // ==========================================================================
   .dialog {
-    --_dialog-bg-color: var(--theme-surface-overlay);
-    --_dialog-border-color: var(--theme-outline-overlay);
-    --_dialog-radius: #{v.$dialog-border-radius};
-    --_dialog-shadow: var(--shadow-xl);
-    --_dialog-gutter: calc(var(--space-16) + var(--space-4));
-    --_dialog-max-size: 90%;
+    --_dialog-bg-color: var(--dialog-bg-color, var(--theme-surface-overlay));
+    --_dialog-color: var(--dialog-color, var(--theme-on-background));
+    --_dialog-border-color: var(--dialog-border-color, var(--theme-outline-overlay));
+    --_dialog-radius: var(--dialog-radius, #{v.$dialog-border-radius});
+    --_dialog-shadow: var(--dialog-shadow, var(--shadow-xl));
+    --_dialog-padding: var(--dialog-padding, var(--space-16));
+    --_dialog-gutter: var(--dialog-spacing, calc(var(--space-16) + var(--space-4)));
+    --_dialog-max-size: var(--dialog-max-size, 90%);
+    --_dialog-title-font-size: var(--dialog-title-font-size, var(--fs-base));
+    --_dialog-title-font-weight: var(--dialog-title-font-weight, var(--fw-700));
+    --_dialog-subtitle-color: var(--dialog-subtitle-color, var(--theme-muted-a10));
+    --_dialog-subtitle-font-size: var(--dialog-subtitle-font-size, var(--fs-2xs));
+    --_dialog-icon-bg-color: var(--dialog-icon-bg-color, var(--theme-primary-a10));
+    --_dialog-icon-color: var(--dialog-icon-color, var(--theme-on-primary));
+    --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--theme-overlay-backdrop));
+    --_dialog-backdrop-blur: var(--dialog-backdrop-blur, 5px);
     --_discrete: allow-discrete;
-    --_dialog-easing-in: var(--ease-decelerate);
-    --_dialog-easing-duration: var(--duration-600);
+    --_dialog-easing-in: var(--dialog-easing, var(--ease-overshoot-soft));
+    --_dialog-easing-duration: var(--dialog-duration, var(--duration-600));
 
     position: fixed;
     inset: 0;
@@ -40,7 +50,7 @@
       flex-wrap: nowrap;
       height: 100%;
       min-height: 100%;
-      padding: var(--space-16);
+      padding: var(--_dialog-padding);
       overscroll-behavior: contain;
 
       & .dialog-header {
@@ -52,17 +62,17 @@
 
         :where(p) {
           &:is(.dialog-title) {
-            color: var(--theme-on-background);
+            color: var(--_dialog-color);
             font-family: var(--font-primary);
-            font-weight: var(--fw-700);
-            font-size: var(--fs-base);
+            font-weight: var(--_dialog-title-font-weight);
+            font-size: var(--_dialog-title-font-size);
             margin-bottom: var(--space-4);
           }
 
           &:is(.dialog-subtitle) {
-            color: var(--theme-muted-a10);
+            color: var(--_dialog-subtitle-color);
             font-weight: var(--fw-500);
-            font-size: var(--fs-2xs);
+            font-size: var(--_dialog-subtitle-font-size);
             margin-bottom: 0;
           }
         }
@@ -77,11 +87,11 @@
         overflow-y: auto;
         overflow-x: hidden;
         margin-block: var(--_dialog-gutter);
-        color: var(--theme-on-background);
+        color: var(--_dialog-color);
 
         & p {
           :not(.alert, .badge) {
-            color: var(--theme-on-background);
+            color: var(--_dialog-color);
           }
         }
 
@@ -110,9 +120,6 @@
 
     // Modal
     &.dialog-modal {
-      --_dialog-easing-in: var(--ease-overshoot-soft);
-      --_dialog-easing-duration: var(--duration-600);
-
       border-radius: var(--_dialog-radius);
 
       /* 0. Not visible default state */
@@ -163,10 +170,6 @@
 
     // Side Sheet
     &.dialog-side-sheet {
-      --_dialog-easing-in: var(--ease-overshoot-soft);
-      --_dialog-easing-duration: var(--duration-600);
-      --_dialog-radius: #{v.$dialog-border-radius};
-
       inset-inline: auto var(--space-8);
       inset-block: var(--space-16);
       margin: auto;
@@ -310,8 +313,8 @@
             padding: var(--space-14);
             font-size: var(--fs-xl);
             border-radius: var(--radius-lg);
-            color: var(--theme-on-primary);
-            background-color: var(--theme-primary-a10);
+            color: var(--_dialog-icon-color);
+            background-color: var(--_dialog-icon-bg-color);
 
             @extend .mask-shape !optional;
           }
@@ -321,12 +324,12 @@
 
     // Backdrop
     &::backdrop {
-      background: var(--theme-overlay-backdrop);
+      background: var(--_dialog-backdrop-color);
     }
 
     &.dialog-backdrop-blur {
       &::backdrop {
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(var(--_dialog-backdrop-blur));
       }
     }
 
