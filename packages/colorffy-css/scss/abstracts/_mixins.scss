@@ -135,7 +135,7 @@
   user-select: none;
   touch-action: manipulation;
   scale: 1;
-  transition: all var(--_btn-easing-duration) var(--_btn-easing-in);
+  transition: all var(--_btn-duration) var(--_btn-easing);
 
   // If button has an icon add styles to it
   &:has(i, svg) {

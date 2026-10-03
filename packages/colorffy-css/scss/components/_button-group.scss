@@ -116,27 +116,27 @@
   // FAB GROUP COMPONENT
   // ==========================================================================
   .fab-group {
-    --_btn-fab-position-y: var(--fab-group-offset-block, calc(var(--space-24) + var(--space-4)));
-    --_btn-fab-position-x: var(--fab-group-offset-inline, calc(var(--space-24) + var(--space-4)));
-    --_btn-fab-gap: var(--fab-group-gap, var(--space-16));
+    --_fab-group-offset-block: var(--fab-group-offset-block, calc(var(--space-24) + var(--space-4)));
+    --_fab-group-offset-inline: var(--fab-group-offset-inline, calc(var(--space-24) + var(--space-4)));
+    --_fab-group-gap: var(--fab-group-gap, var(--space-16));
 
     position: fixed;
-    bottom: var(--_btn-fab-position-y);
-    right: var(--_btn-fab-position-x);
+    bottom: var(--_fab-group-offset-block);
+    right: var(--_fab-group-offset-inline);
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    gap: var(--_btn-fab-gap);
+    gap: var(--_fab-group-gap);
     isolation: isolate;
     z-index: v.$z-index-fab;
 
     &:is(.fab-top) {
-      top: var(--_btn-fab-position-y);
+      top: var(--_fab-group-offset-block);
       bottom: auto;
     }
 
     &:is(.fab-start) {
-      left: var(--_btn-fab-position-x);
+      left: var(--_fab-group-offset-inline);
       right: auto;
       align-items: flex-start;
     }
@@ -146,8 +146,8 @@
   // SEGMENTED CONTROL COMPONENT
   // ==========================================================================
   .segmented-control {
-    --_sc-easing-in: var(--ease-spring);
-    --_sc-easing-duration: var(--duration-800);
+    --_sc-easing: var(--ease-spring);
+    --_sc-duration: var(--duration-800);
 
     display: flex;
     border: var(--border-width-sm) solid var(--theme-outline-button);
@@ -196,7 +196,7 @@
       z-index: 0;
 
       translate: 0;
-      transition: translate var(--_sc-easing-duration) var(--_sc-easing-in);
+      transition: translate var(--_sc-duration) var(--_sc-easing);
     }
   }
 
@@ -216,20 +216,20 @@
       --_toggle-btn-bg-color: var(--toggle-btn-bg-color, transparent);
       --_toggle-btn-color: var(--toggle-btn-color, var(--theme-on-background));
       --_toggle-btn-subtitle-color: var(--toggle-btn-subtitle-color, var(--theme-muted-a10));
-      --_toggle-btn-border-size: var(--toggle-btn-border-width, var(--border-width-sm));
+      --_toggle-btn-border-width: var(--toggle-btn-border-width, var(--border-width-sm));
       --_toggle-btn-border-color: var(--toggle-btn-border-color, var(--theme-outline-button));
-      --_toggle-btn-easing-in: var(--toggle-btn-easing, var(--ease-decelerate));
-      --_toggle-btn-easing-duration: var(--toggle-btn-duration, var(--duration-300));
+      --_toggle-btn-easing: var(--toggle-btn-easing, var(--ease-decelerate));
+      --_toggle-btn-duration: var(--toggle-btn-duration, var(--duration-300));
 
       background: var(--_toggle-btn-bg-color);
       color: var(--_toggle-btn-color);
       border-radius: var(--_toggle-btn-radius);
-      border: var(--_toggle-btn-border-size) solid var(--_toggle-btn-border-color);
+      border: var(--_toggle-btn-border-width) solid var(--_toggle-btn-border-color);
       padding: var(--_toggle-btn-padding);
       cursor: pointer;
       transition: border-width, border-color, background, color, border-radius;
-      transition-timing-function: var(--_toggle-btn-easing-in);
-      transition-duration: var(--_toggle-btn-easing-duration);
+      transition-timing-function: var(--_toggle-btn-easing);
+      transition-duration: var(--_toggle-btn-duration);
       will-change: border;
 
       &:is(:hover, :active, :focus) {
@@ -241,7 +241,7 @@
       &.toggle-btn-active {
         --_toggle-btn-bg-color: var(--toggle-btn-active-bg-color, var(--theme-surface-container-low));
         --_toggle-btn-border-color: var(--toggle-btn-active-border-color, var(--theme-primary-a10));
-        --_toggle-btn-border-size: var(--border-width-sm);
+        --_toggle-btn-border-width: var(--border-width-sm);
         --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
 
         box-shadow: inset 0 0 0 1px var(--_toggle-btn-border-color);
@@ -258,7 +258,7 @@
         &:is(:hover, :focus, :active) {
           --_toggle-btn-bg-color: var(--theme-surface-disabled);
           --_toggle-btn-border-color: var(--theme-outline-button);
-          --_toggle-btn-border-size: var(--border-width-sm);
+          --_toggle-btn-border-width: var(--border-width-sm);
           --_toggle-btn-radius: #{v.$button-border-radius};
         }
       }
@@ -302,8 +302,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .fab-group {
-      --_btn-fab-position-y: var(--space-20);
-      --_btn-fab-position-x: var(--space-12);
+      --_fab-group-offset-block: var(--space-20);
+      --_fab-group-offset-inline: var(--space-12);
 
       & .btn-fab {
         --_btn-gap: 0;
@@ -318,10 +318,10 @@
 
     // Lift FAB
     body:has(.navigation-bar) .fab-group {
-      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + var(--space-14));
+      --_fab-group-offset-block: calc(#{v.$navigation-bar-min-height} + var(--space-14));
 
       @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
-        --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + 1.35rem);
+        --_fab-group-offset-block: calc(#{v.$navigation-bar-min-height} + 1.35rem);
       }
     }
   }

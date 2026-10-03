@@ -23,8 +23,8 @@
       --_btn-font-size: var(--btn-font-size, #{map.get(v.$type-button, font-size)});
       --_btn-font-weight: var(--btn-font-weight, #{map.get(v.$type-button, font-weight)});
       --_btn-shadow: var(--btn-shadow, var(--shadow-sm));
-      --_btn-easing-in: var(--btn-easing, var(--ease-decelerate));
-      --_btn-easing-duration: var(--btn-duration, var(--duration-300));
+      --_btn-easing: var(--btn-easing, var(--ease-decelerate));
+      --_btn-duration: var(--btn-duration, var(--duration-300));
 
       @include m.btn-base();
 
@@ -439,8 +439,8 @@
       }
 
       &.btn-fab {
-        --_btn-easing-in: var(--ease-sine-in-out);
-        --_btn-easing-duration: var(--duration-300);
+        --_btn-easing: var(--ease-sine-in-out);
+        --_btn-duration: var(--duration-300);
         --_btn-columns: 1fr;
         --_btn-gap: 0;
         --_btn-radius: calc(#{v.$button-border-radius} + 8px);
@@ -450,7 +450,7 @@
         height: fit-content;
         aspect-ratio: 1;
         transform-origin: bottom right;
-        animation: scale-in var(--_btn-easing-duration) var(--_btn-easing-in);
+        animation: scale-in var(--_btn-duration) var(--_btn-easing);
 
         @include m.btn-size('fab');
 
@@ -474,11 +474,11 @@
 
       // Effects
       &.btn-bounce {
-        --_btn-easing-in: var(--ease-bounce);
-        --_btn-easing-duration: var(--duration-600);
+        --_btn-easing: var(--ease-bounce);
+        --_btn-duration: var(--duration-600);
 
 
-        transition: scale var(--_btn-easing-duration) var(--_btn-easing-in);
+        transition: scale var(--_btn-duration) var(--_btn-easing);
 
         &:is(:hover) {
           scale: 0.85;

@@ -12,13 +12,13 @@
     --_badge-radius: var(--badge-radius, var(--radius-full));
     --_badge-font-size: var(--badge-font-size, var(--fs-4xs));
     --_badge-font-weight: var(--badge-font-weight, var(--fw-500));
-    --_badge-gutter-y: var(--badge-padding-block, var(--space-4));
-    --_badge-gutter-x: var(--badge-padding-inline, var(--space-8));
+    --_badge-padding-block: var(--badge-padding-block, var(--space-4));
+    --_badge-padding-inline: var(--badge-padding-inline, var(--space-8));
     --_badge-icon-size: var(--badge-icon-size, 1rem);
 
     display: inline-flex;
-    padding-block: var(--_badge-gutter-y);
-    padding-inline: var(--_badge-gutter-x);
+    padding-block: var(--_badge-padding-block);
+    padding-inline: var(--_badge-padding-inline);
     margin-inline: .15rem;
 
     font-size: var(--_badge-font-size);
@@ -134,8 +134,8 @@
 
     // Pill badge for buttons and notifications use
     &.badge-pill {
-      --_badge-gutter-y: var(--space-4);
-      --_badge-gutter-x: var(--space-6);
+      --_badge-padding-block: var(--space-4);
+      --_badge-padding-inline: var(--space-6);
       --_badge-font-weight: var(--fw-700);
       margin-inline: 0;
       aspect-ratio: 1;
@@ -165,8 +165,8 @@
     // Size
     &.badge-sm {
       --_badge-font-size: .625rem;
-      --_badge-gutter-y: var(--space-4);
-      --_badge-gutter-x: var(--space-6);
+      --_badge-padding-block: var(--space-4);
+      --_badge-padding-inline: var(--space-6);
 
       margin-block: 0;
       margin-inline: 0;
@@ -174,8 +174,8 @@
 
     // Notification Dot
     &.badge-dot {
-      --_badge-gutter-y: 0;
-      --_badge-gutter-x: 0;
+      --_badge-padding-block: 0;
+      --_badge-padding-inline: 0;
 
       width: .5rem;
       height: .5rem;
