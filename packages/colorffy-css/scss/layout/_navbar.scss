@@ -309,15 +309,22 @@
   // USER POPOVER MENU
   // ==========================================================================
   .popover-menu-container {
-    --_popover-menu-bg-color: var(--theme-surface-overlay);
-    --_popover-menu-color: var(--theme-on-background);
-    --_popover-menu-radius: #{v.$dialog-border-radius};
-    --_popover-menu-border-color: var(--theme-outline-overlay);
-    --_popover-menu-gutter: var(--space-16);
-    --_popover-menu-easing-in: var(--ease-spring);
+    --_popover-menu-bg-color: var(--popover-menu-bg-color, var(--theme-surface-overlay));
+    --_popover-menu-color: var(--popover-menu-color, var(--theme-on-background));
+    --_popover-menu-radius: var(--popover-menu-radius, #{v.$dialog-border-radius});
+    --_popover-menu-border-color: var(--popover-menu-border-color, var(--theme-outline-overlay));
+    --_popover-menu-shadow: var(--popover-menu-shadow, var(--shadow-xl));
+    --_popover-menu-padding: var(--popover-menu-padding, var(--space-6));
+    --_popover-menu-min-width: var(--popover-menu-min-width, 18rem);
+    --_popover-menu-gutter: var(--popover-menu-spacing, var(--space-16));
+    --_popover-menu-easing-in: var(--popover-menu-easing, var(--ease-spring));
     --_popover-menu-easing-out: var(--ease-accelerate);
-    --_popover-menu-easing-duration: var(--duration-800);
+    --_popover-menu-easing-duration: var(--popover-menu-duration, var(--duration-800));
     --_popover-menu-easing-out-duration: var(--duration-200);
+    --_popover-menu-item-color: var(--popover-menu-item-color, var(--theme-muted-a10));
+    --_popover-menu-item-bg-color: transparent;
+    --_popover-menu-item-font-size: var(--popover-menu-item-font-size, var(--fs-3xs));
+    --_popover-menu-item-radius: var(--popover-menu-item-radius, calc(var(--_popover-menu-radius) / 2));
 
     position: relative;
 
@@ -330,16 +337,16 @@
       top: var(--_popover-menu-gutter);
       right: 0;
       width: 100%;
-      min-width: 18rem;
+      min-width: var(--_popover-menu-min-width);
       margin: var(--_popover-menu-gutter) auto;
-      padding: var(--space-6);
+      padding: var(--_popover-menu-padding);
       max-height: calc(100dvh - #{v.$navbar-min-height} - var(--_popover-menu-gutter) * 2);
       overflow-y: auto;
       overscroll-behavior: contain;
       border: var(--border-width-sm) solid var(--_popover-menu-border-color);
       background-color: var(--_popover-menu-bg-color);
       color: var(--_popover-menu-color);
-      box-shadow: var(--shadow-xl);
+      box-shadow: var(--_popover-menu-shadow);
       border-radius: var(--_popover-menu-radius);
       z-index: v.$z-index-menu;
       will-change: translate, opacity, visibility;
@@ -478,8 +485,8 @@
 
           width: 100%;
           border: none;
-          border-radius: calc(var(--_popover-menu-radius) / 2);
-          background-color: transparent;
+          border-radius: var(--_popover-menu-item-radius);
+          background-color: var(--_popover-menu-item-bg-color);
           text-align: start;
           cursor: pointer;
           transition: color var(--duration-100) var(--_popover-menu-easing-out),
@@ -489,8 +496,8 @@
 
           & p {
             font-family: var(--font-secondary);
-            font-size: var(--fs-3xs);
-            color: var(--theme-muted-a10);
+            font-size: var(--_popover-menu-item-font-size);
+            color: var(--_popover-menu-item-color);
             align-self: center;
             flex-grow: 1;
             margin-bottom: 0;
@@ -498,7 +505,7 @@
 
           & i {
             font-size: var(--fs-lg);
-            color: var(--theme-muted-a10);
+            color: var(--_popover-menu-item-color);
           }
 
           // Trailing
@@ -519,33 +526,25 @@
           }
 
           &:is(:hover) {
-            background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 90%);
-
-            :where(p, i) {
-              color: var(--theme-primary-a30);
-            }
+            --_popover-menu-item-color: var(--popover-menu-item-hover-color, var(--theme-primary-a30));
+            --_popover-menu-item-bg-color: var(--popover-menu-item-hover-bg-color, color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 90%));
           }
 
           &:is(.router-link-exact-active, .active) {
-            :where(p, i) {
-              color: var(--theme-primary-a90);
-            }
+            --_popover-menu-item-color: var(--popover-menu-item-active-color, var(--theme-primary-a90));
+            --_popover-menu-item-bg-color: var(--popover-menu-item-active-bg-color, color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 85%));
 
             :where(p) {
               font-weight: var(--fw-800);
             }
-
-            background-color: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-container-high) 85%);
           }
 
           // Destructive
           &:is(.popover-menu-item-destructive) {
-            :where(p, i) {
-              color: var(--theme-danger-a10);
-            }
+            --_popover-menu-item-color: var(--theme-danger-a10);
 
             &:is(:hover) {
-              background-color: color-mix(in srgb, var(--theme-danger-base), var(--theme-surface-container-high) 90%);
+              --_popover-menu-item-bg-color: color-mix(in srgb, var(--theme-danger-base), var(--theme-surface-container-high) 90%);
             }
           }
 
