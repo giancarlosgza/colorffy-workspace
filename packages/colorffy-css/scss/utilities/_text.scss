@@ -353,7 +353,7 @@
     // Scale highlight effect on the next p when text-title is hovered
     &:is(:hover) {
       ~ p:is(.subtitle-1) {
-        color: var(--cffy-secondary-a90);
+        color: var(--cffy-on-secondary-container);
 
         &:after {
           scale: 1 1;

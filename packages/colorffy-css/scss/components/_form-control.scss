@@ -477,7 +477,7 @@
         --cffy-state-layer-color: var(--cffy-success-base);
         --_input-file-border-color: var(--cffy-success-a10);
         --_input-file-bg-color: color-mix(in oklab, var(--cffy-success-base-fixed) 25%, transparent);
-        --_input-file-color: var(--cffy-success-a90);
+        --_input-file-color: var(--cffy-on-success-container);
       }
 
       :where(.input-file-text) {

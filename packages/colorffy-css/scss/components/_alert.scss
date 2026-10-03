@@ -279,32 +279,32 @@
       --_alert-icon-color: inherit;
 
       &.tonal-primary {
-        @include m.container-tonal(var(--cffy-primary-a10), var(--cffy-primary-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-primary-a10), var(--cffy-on-primary-container), true, false, alert);
       }
 
       &.tonal-secondary {
-        @include m.container-tonal(var(--cffy-secondary-a10), var(--cffy-secondary-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-secondary-a10), var(--cffy-on-secondary-container), true, false, alert);
       }
 
       &.tonal-accent {
-        @include m.container-tonal(var(--cffy-accent-a10), var(--cffy-accent-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-accent-a10), var(--cffy-on-accent-container), true, false, alert);
       }
 
       // Semantic
       &.tonal-success {
-        @include m.container-tonal(var(--cffy-success-a10), var(--cffy-success-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-success-a10), var(--cffy-on-success-container), true, false, alert);
       }
 
       &.tonal-warning {
-        @include m.container-tonal(var(--cffy-warning-a10), var(--cffy-warning-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-warning-a10), var(--cffy-on-warning-container), true, false, alert);
       }
 
       &.tonal-danger {
-        @include m.container-tonal(var(--cffy-danger-a10), var(--cffy-danger-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-danger-a10), var(--cffy-on-danger-container), true, false, alert);
       }
 
       &.tonal-info {
-        @include m.container-tonal(var(--cffy-info-a10), var(--cffy-info-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-info-a10), var(--cffy-on-info-container), true, false, alert);
       }
 
       &.tonal-default {

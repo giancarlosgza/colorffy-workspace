@@ -147,7 +147,7 @@
       &.list-item-active {
         --_list-bg-color: var(--cffy-list-active-bg-color, color-mix(in oklab, var(--cffy-surface-container-high) 85%, var(--cffy-primary-base) 10%));
         --_list-border-color: var(--cffy-list-active-border-color, color-mix(in oklab, var(--cffy-surface-container-high) 85%, var(--cffy-primary-base) 10%));
-        --_list-icon-bg-color: var(--cffy-list-active-icon-bg-color, var(--cffy-primary-a90));
+        --_list-icon-bg-color: var(--cffy-list-active-icon-bg-color, var(--cffy-on-primary-container));
         --_list-icon-color: var(--cffy-list-active-icon-color, var(--cffy-on-background-inverse));
 
         z-index: 2;
