@@ -151,11 +151,11 @@
 
   a,
   .anchor-link {
-    --_hyperlink-color: var(--theme-primary-a10);
-    --_hyperlink-bg-color: var(--theme-primary-a20);
+    --_hyperlink-color: var(--link-color, var(--theme-primary-a10));
+    --_hyperlink-bg-color: var(--link-underline-color, var(--theme-primary-a20));
     --_hyperlink-radius: var(--radius-full);
-    --_hyperlink-easing-in: var(--ease-spring);
-    --_hyperlink-easing-duration: var(--duration-800);
+    --_hyperlink-easing-in: var(--link-easing, var(--ease-spring));
+    --_hyperlink-easing-duration: var(--link-duration, var(--duration-800));
 
     color: var(--_hyperlink-color);
     text-decoration: none;
@@ -190,7 +190,7 @@
     }
 
     &:is(:hover) {
-      color: var(--theme-primary-a20);
+      color: var(--link-hover-color, var(--theme-primary-a20));
       text-decoration: none;
 
       &:after {
@@ -200,7 +200,7 @@
     }
 
     &:is(:active, :focus) {
-      color: var(--theme-primary-a30);
+      color: var(--link-active-color, var(--theme-primary-a30));
       text-decoration: none;
     }
   }
@@ -216,21 +216,21 @@
   }
 
   code {
-    --_code-color: var(--theme-muted-a10);
+    --_code-color: var(--code-color, var(--theme-muted-a10));
 
-    font-size: var(--fs-3xs);
+    font-size: var(--code-font-size, var(--fs-3xs));
     color: var(--_code-color);
     cursor: pointer;
   }
 
   kbd {
     font-weight: var(--fw-400);
-    font-size: var(--fs-4xs);
-    color: var(--theme-on-background);
-    background-color: var(--theme-surface-kbd);
-    border: var(--border-width-sm) solid var(--theme-surface-kbd);
-    box-shadow: var(--shadow-xs);
-    border-radius: var(--radius-md);
+    font-size: var(--kbd-font-size, var(--fs-4xs));
+    color: var(--kbd-color, var(--theme-on-background));
+    background-color: var(--kbd-bg-color, var(--theme-surface-kbd));
+    border: var(--border-width-sm) solid var(--kbd-bg-color, var(--theme-surface-kbd));
+    box-shadow: var(--kbd-shadow, var(--shadow-xs));
+    border-radius: var(--kbd-radius, var(--radius-md));
     padding: .25rem;
 
     &:is(.kbd-dark) {

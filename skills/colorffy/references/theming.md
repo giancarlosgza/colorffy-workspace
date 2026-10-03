@@ -247,6 +247,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Carousel** (`.carousel` scroll buttons, `.carousel-btn`): `--carousel-btn-size`, `-bg-color`, `-color`, `-shadow`, `-radius`
 - **Header / hero / subheading** (`.header-container`, `.hero-content`, `.subheading-content`): `--header-margin-block-end`, `-gap`, `-title-font-size`, `-title-line-height`, `-description-font-size`, `-description-color`, `-description-max-width`; `--hero-gap`, `-margin-block-end`, `-max-width`, `-description-font-size`, `-description-line-height`, `-description-color`, `-actions-offset`, `-actions-gap`; `--subheading-gap`, `-actions-gap`
 - **Navigation bar** (`.navigation-bar`, `UiNavigationBar`): `--navigation-bar-bg-color`, `-shadow`, `-item-color`, `-item-active-color`, `-item-hover-color`, `-font-size`, `-icon-size`, `-indicator-color`, `-indicator-radius`, `-easing`, `-duration`
+- **Links, code, kbd** (base `a`, `.anchor-link`, `code`, `kbd`): `--link-color`, `-hover-color`, `-active-color`, `-underline-color`, `-easing`, `-duration`; `--code-color`, `-font-size`; `--kbd-bg-color`, `-color`, `-font-size`, `-radius`, `-shadow`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
