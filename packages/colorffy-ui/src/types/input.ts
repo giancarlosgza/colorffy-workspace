@@ -126,12 +126,6 @@ export interface IFileInputProps extends IBaseInputProps {
   inputLabel?: string | null
 
   /**
-   * Renders a larger dropbox variant.
-   * @deprecated Use `size="lg"` instead.
-   */
-  large?: boolean
-
-  /**
    * Bound file value.
    */
   modelValue?: File | null

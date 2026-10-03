@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
   id: null,
   label: null,
   inputLabel: null,
-  large: false,
   modelValue: null,
   errorMessages: () => [],
   placeholder: null,
@@ -48,7 +47,7 @@ const dropboxClasses = computed(() => [
   'input-file-dropbox',
   {
     'valid-file': !!model.value,
-    'dropbox-lg': props.size === 'lg' || props.large
+    'dropbox-lg': props.size === 'lg'
   }
 ])
 const fileClasses = computed(() => {
