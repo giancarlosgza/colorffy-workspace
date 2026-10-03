@@ -6,7 +6,6 @@ import { computed } from 'vue'
 interface IBaseSkeletonProps {
   size?: 'sm' | 'md' | 'lg'
   variant?: 'default' | 'thumbnail' | 'ai-generation' | 'shimmer'
-  isThumbnail?: boolean // Deprecated: use variant="thumbnail" instead
   customClass?: string | string[] | null
   skeletonStyles?: StyleValue
   width?: string | number
@@ -21,7 +20,6 @@ interface IBaseSkeletonProps {
 const props = withDefaults(defineProps<IBaseSkeletonProps>(), {
   size: 'md',
   variant: 'default',
-  isThumbnail: false,
   customClass: null,
   skeletonStyles: null,
   width: undefined,
@@ -40,14 +38,11 @@ const skeletonClasses = computed<(string | string[])[]>(() => {
     classes.push(`skeleton-${props.size}`)
   }
 
-  // Handle both new variant prop and legacy isThumbnail prop
-  const effectiveVariant = props.isThumbnail ? 'thumbnail' : props.variant
-
-  if (effectiveVariant && effectiveVariant !== 'default') {
-    if (effectiveVariant === 'thumbnail') {
+  if (props.variant && props.variant !== 'default') {
+    if (props.variant === 'thumbnail') {
       classes.push('skeleton-thumbnail')
     } else {
-      classes.push(`skeleton-${effectiveVariant}`)
+      classes.push(`skeleton-${props.variant}`)
     }
   }
 
