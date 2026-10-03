@@ -231,6 +231,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Button groups** (`.btn-group`, `.chip-group`, `.fab-group`, `.toggle-btn-group`): `--btn-group-gap`, `--chip-group-gap`, `--fab-group-offset-block`, `-offset-inline`, `-gap`, `--toggle-btn-group-gap`, `--toggle-btn-bg-color`, `-color`, `-subtitle-color`, `-border-width`, `-border-color`, `-radius`, `-padding`, `-hover-border-color`, `-active-bg-color`, `-active-border-color`, `-easing`, `-duration`
 - **Badge** (`.badge`, `UiBadge`): `--badge-bg-color`, `-color`, `-border-color`, `-radius`, `-font-size`, `-font-weight`, `-padding-block`, `-padding-inline`, `-icon-size`; `--badge-group-gap`
 - **Accordion** (`.accordion`, `UiAccordion`): `--accordion-bg-color`, `-color`, `-border-color`, `-radius`, `-padding`, `-title-font-size`, `-body-font-size`, `-body-color`, `-icon-color`, `-hover-color`, `-hover-bg-color`, `-easing`, `-duration`, `-group-gap`
+- **Avatar** (`.img-avatar`, `.initials-avatar`, `.avatar-group`, `UiAvatar`): `--avatar-radius`, `-easing`, `-duration`, `-tint-color`, `-tint-alpha`, `-initials-font-size`, `-initials-font-weight`, `-group-overlap`, `-group-ring-width`, `-group-ring-color`, `-status-size`, `-status-ring-width`, `-status-ring-color`, `-status-online-color`, `-status-busy-color`, `-status-away-color`, `-status-offline-color`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
