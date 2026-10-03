@@ -328,6 +328,8 @@ function onOverviewTabChange(tabId: string) {
             <UiAvatarGroup
               :avatars="teamAvatars"
               :max="3"
+              variant="tonal"
+              color="secondary"
             />
           </div>
           <div class="position-relative d-inline-block">

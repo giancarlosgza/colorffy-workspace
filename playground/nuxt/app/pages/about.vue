@@ -195,6 +195,8 @@ function join() {
           :tabs="principleTabs"
           :active-tab="activePrinciple"
           pill-tabs
+          fit
+          rounded
           @update-active-tab="activePrinciple = $event"
         />
 
@@ -360,7 +362,8 @@ function join() {
               :alt="member.name"
               size="md"
               :mask-shape="member.shape"
-              class="bg-secondary-fixed mx-auto"
+              color="secondary"
+              class="mx-auto"
             />
             <p class="subtitle-1 fw-700 mt-2 mb-0">
               {{ member.name }}

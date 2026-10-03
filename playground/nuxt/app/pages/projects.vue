@@ -254,7 +254,7 @@ function createProject() {
           </template>
           <template #cell-name="{ item }">
             <span class="d-inline-flex align-items-center gap-2 fw-600">
-              <UiAvatar :initials="item.name.charAt(0)" size="sm" mask-shape="pill" class="bg-secondary-fixed" />
+              <UiAvatar :initials="item.name.charAt(0)" size="sm" mask-shape="pill" color="secondary" variant="filled" />
               {{ item.name }}
             </span>
           </template>
@@ -333,7 +333,8 @@ function createProject() {
                   :initials="project.name.charAt(0)"
                   size="sm"
                   mask-shape="pill"
-                  class="bg-secondary-fixed"
+                  color="secondary"
+                  variant="filled"
                 />
                 {{ project.name }}
               </span>
