@@ -216,6 +216,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 
 - **Navbar** (`.navbar`): `--navbar-bg-color`, `-color`, `-shadow`, `-radius`, `-padding-inline`, `-padding-block`, `-margin-block-end`, `-min-height`, `-easing`, `-duration`, `-brand-font-size`, `-brand-font-weight`, `-brand-size`, `-brand-hover-color`, `-title-font-size`, `-title-font-weight`, `-link-color`, `-link-hover-color`, `-link-hover-bg-color`, `-link-active-color`, `-link-active-bg-color`, `-link-font-size`, `-link-font-weight`, `-link-radius`, `-link-padding-inline`, `-link-padding-block`
 - **Popover menu** (`.popover-menu-container`): `--popover-menu-bg-color`, `-color`, `-border-color`, `-radius`, `-shadow`, `-padding`, `-min-width`, `-spacing`, `-easing`, `-duration`, `-item-color`, `-item-font-size`, `-item-radius`, `-item-hover-color`, `-item-hover-bg-color`, `-item-active-color`, `-item-active-bg-color`
+- **Menu tools** (`.menu-tools`): `--menu-tools-bg-color`, `-shadow`, `-radius`, `-padding`, `-gap`, `-max-height`, `-easing`, `-duration`, `-tabs-bg-color`, `-tab-hover-bg-color`, `-tab-active-bg-color`, `-tab-active-color`, `-link-hover-bg-color`, `-link-active-bg-color`, `-link-active-color`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:

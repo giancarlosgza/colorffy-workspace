@@ -571,14 +571,22 @@
   // ==========================================================================
   .menu-tools-container {
     & .menu-tools {
-      --_menu-tool-padding: var(--space-12);
-      --_menu-tool-gap: var(--space-14);
-      --_menu-tool-radius: var(--radius-lg);
+      --_menu-tool-bg-color: var(--menu-tools-bg-color, var(--theme-surface-body-pane));
+      --_menu-tool-shadow: var(--menu-tools-shadow, var(--shadow-sm));
+      --_menu-tool-padding: var(--menu-tools-padding, var(--space-12));
+      --_menu-tool-gap: var(--menu-tools-gap, var(--space-14));
+      --_menu-tool-radius: var(--menu-tools-radius, var(--radius-lg));
+      --_menu-tool-max-height: var(--menu-tools-max-height, 28rem);
+      --_menu-tool-tabs-bg-color: var(--menu-tools-tabs-bg-color, var(--theme-background));
+      --_menu-tool-tab-bg-color: transparent;
+      --_menu-tool-tab-active-color: var(--menu-tools-tab-active-color, var(--theme-primary-a30));
+      --_menu-tool-link-bg-color: transparent;
+      --_menu-tool-link-active-color: var(--menu-tools-link-active-color, var(--theme-primary-a10));
       --_menu-tool-grid-cols: 15rem 2fr 1fr;
       --_menu-tool-grid-tabs-cols: repeat(3, 1fr);
       --_menu-tool-grid-tools-cols: repeat(2, 1fr);
-      --_menu-tool-easing-in: var(--ease-emphasized);
-      --_menu-tool-easing-duration: var(--duration-600);
+      --_menu-tool-easing-in: var(--menu-tools-easing, var(--ease-emphasized));
+      --_menu-tool-easing-duration: var(--menu-tools-duration, var(--duration-600));
       --_menu-tool-easing-out: var(--ease-accelerate);
       --_menu-tool-item-easing-in: var(--ease-decelerate);
       --_menu-tool-item-easing-duration: var(--duration-500);
@@ -587,8 +595,8 @@
       top: calc(#{v.$navbar-min-height} - .4rem);
       inset-inline: 0;
       width: 100%;
-      background-color: var(--theme-surface-body-pane);
-      box-shadow: var(--shadow-sm);
+      background-color: var(--_menu-tool-bg-color);
+      box-shadow: var(--_menu-tool-shadow);
       border-radius: 0 0 var(--_menu-tool-radius) var(--_menu-tool-radius);
 
       translate: 0 -10rem;
@@ -625,7 +633,7 @@
         gap: var(--space-16);
         width: 100%;
         min-height: auto;
-        max-height: 28rem;
+        max-height: var(--_menu-tool-max-height);
         overflow-y: auto;
         overscroll-behavior: contain;
 
@@ -643,7 +651,7 @@
           align-self: flex-start;
           height: 100%;
           padding: var(--_menu-tool-padding);
-          background: var(--theme-background);
+          background: var(--_menu-tool-tabs-bg-color);
           border-radius: calc(var(--_menu-tool-radius) + var(--_menu-tool-padding));
 
           // Items
@@ -651,7 +659,7 @@
             display: flex;
             flex-direction: column;
             padding: var(--_menu-tool-padding);
-            background-color: transparent;
+            background-color: var(--_menu-tool-tab-bg-color);
             border-radius: var(--_menu-tool-radius);
             cursor: pointer;
             user-select: none;
@@ -661,20 +669,21 @@
             transition-timing-function: var(--_menu-tool-item-easing-in);
 
             &:is(:hover) {
-              background-color: var(--theme-surface-container);
+              --_menu-tool-tab-bg-color: var(--menu-tools-tab-hover-bg-color, var(--theme-surface-container));
+
               scale: .98;
             }
 
             &:is(:focus, :active) {
-              background-color: var(--theme-surface-container-high);
+              --_menu-tool-tab-bg-color: var(--theme-surface-container-high);
             }
 
             &:is(.menu-tab-active) {
-              background-color: var(--theme-surface-body-pane);
+              --_menu-tool-tab-bg-color: var(--menu-tools-tab-active-bg-color, var(--theme-surface-body-pane));
 
               & p {
                 &:is(.subtitle-1) {
-                  color: var(--theme-primary-a30);
+                  color: var(--_menu-tool-tab-active-color);
                 }
               }
             }
@@ -708,7 +717,7 @@
               gap: var(--_menu-tool-gap);
               padding: calc(var(--_menu-tool-padding) / 2);
               height: 100%;
-              background-color: transparent;
+              background-color: var(--_menu-tool-link-bg-color);
               border-radius: var(--_menu-tool-radius);
               user-select: none;
               @extend .undecorated;
@@ -747,8 +756,7 @@
 
               &:is(:hover) {
                 --_menu-tool-radius: var(--radius-xl);
-
-                background-color: var(--theme-surface-container-high);
+                --_menu-tool-link-bg-color: var(--menu-tools-link-hover-bg-color, var(--theme-surface-container-high));
 
                 & .icon-wrap {
                   border-radius: var(--_menu-tool-radius);
@@ -771,7 +779,7 @@
 
               &:is(.router-link-active, .router-link-exact-active) {
                 --_menu-tool-radius: var(--radius-full);
-                background-color: var(--theme-surface-container-high);
+                --_menu-tool-link-bg-color: var(--menu-tools-link-active-bg-color, var(--theme-surface-container-high));
 
                 & .icon-wrap {
                   border-radius: var(--_menu-tool-radius);
@@ -779,7 +787,7 @@
 
                 & p {
                   &:is(.subtitle-1) {
-                    color: var(--theme-primary-a10);
+                    color: var(--_menu-tool-link-active-color);
                   }
                 }
               }
