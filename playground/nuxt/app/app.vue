@@ -64,7 +64,7 @@ function closeMenu(): void {
       :open="sidebarCollapse"
       @update:open="sidebarCollapse = $event"
     >
-      <UiSidebarHeader>
+      <template #header>
         <UiIconMaterial v-if="false" icon-code="&#xe88a;" class="drawer-brand-icon" />
         <img
           src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
@@ -81,9 +81,9 @@ function closeMenu(): void {
             icon-class="bg-accent-fixed rounded-sm p-1"
           />
         </UiSidebarDropdown>
-      </UiSidebarHeader>
+      </template>
 
-      <UiSidebarBody>
+      <template #body>
         <UiSidebarText text="Platform" />
         <UiSidebarLink
           :as="NuxtLink"
@@ -141,16 +141,16 @@ function closeMenu(): void {
             tooltip-text="Notifications"
           />
         </UiSidebarGroup>
-      </UiSidebarBody>
+      </template>
 
-      <UiSidebarFooter>
+      <template #footer>
         <div class="d-flex flex-wrap gap-2 align-items-center">
           <UiSidebarDropdown title="Gian" subtitle="giancarlosgza@gmail.com" :interactive="false" />
         </div>
         <div class="mt-2">
           <UiBadge text="v1.0.0" variant="outline" size="sm" icon-code="&#xf5f4;" icon-class="text-accent-fixed" />
         </div>
-      </UiSidebarFooter>
+      </template>
     </UiSidebar>
 
     <!-- Content -->

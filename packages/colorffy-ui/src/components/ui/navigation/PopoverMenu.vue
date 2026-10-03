@@ -41,7 +41,7 @@ const menuClasses = computed(() => [
 ])
 
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.closable))
-const hasBody = computed(() => Boolean(slots.body || slots.default || listItems.value.length))
+const hasBody = computed(() => Boolean(slots.body || listItems.value.length))
 
 /** Methods */
 function handleHideDropdown() {
@@ -160,17 +160,15 @@ watch(() => props.isOpened, (open) => {
         class="popover-menu-body"
       >
         <slot name="body">
-          <slot>
-            <UiPopoverMenuGroup>
-              <UiPopoverMenuItem
-                v-for="item in listItems"
-                :key="item.id"
-                v-bind="item"
-                :active="item.active ?? isActiveMenuItem(item.to)"
-                @click="handleMenuItemClick(item)"
-              />
-            </UiPopoverMenuGroup>
-          </slot>
+          <UiPopoverMenuGroup>
+            <UiPopoverMenuItem
+              v-for="item in listItems"
+              :key="item.id"
+              v-bind="item"
+              :active="item.active ?? isActiveMenuItem(item.to)"
+              @click="handleMenuItemClick(item)"
+            />
+          </UiPopoverMenuGroup>
         </slot>
       </div>
 

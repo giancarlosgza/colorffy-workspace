@@ -116,11 +116,8 @@ export { default as UiProgressSpinner } from './components/ui/progress/ProgressS
 
 // Components - Sidebar
 export { default as UiSidebar } from './components/ui/sidebar/Sidebar.vue'
-export { default as UiSidebarBody } from './components/ui/sidebar/SidebarBody.vue'
 export { default as UiSidebarDropdown } from './components/ui/sidebar/SidebarDropdown.vue'
-export { default as UiSidebarFooter } from './components/ui/sidebar/SidebarFooter.vue'
 export { default as UiSidebarGroup } from './components/ui/sidebar/SidebarGroup.vue'
-export { default as UiSidebarHeader } from './components/ui/sidebar/SidebarHeader.vue'
 export { default as UiSidebarLink } from './components/ui/sidebar/SidebarLink.vue'
 export { default as UiSidebarText } from './components/ui/sidebar/SidebarText.vue'
 

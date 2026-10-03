@@ -1040,11 +1040,11 @@ overlay renders while open (emits `update:open` on dismiss).
 
 ```vue
 <UiSidebar bordered :rail="rail" v-model:open="open" aria-label="Main navigation">
-  <UiSidebarHeader>
+  <template #header>
     <UiSidebarDropdown title="Acme" subtitle="Workspace" />
-  </UiSidebarHeader>
+  </template>
 
-  <UiSidebarBody>
+  <template #body>
     <UiSidebarText text="Platform" />
     <UiSidebarLink :as="NuxtLink" to="/" text="Home" icon="&#xe88a;" tooltip-text="Home" />
 
@@ -1052,11 +1052,11 @@ overlay renders while open (emits `update:open` on dismiss).
       <UiSidebarLink :as="NuxtLink" to="/account" text="Profile" icon="&#xe853;" child />
       <UiSidebarLink :as="NuxtLink" to="/notifications" text="Notifications" icon="&#xe7f4;" child />
     </UiSidebarGroup>
-  </UiSidebarBody>
+  </template>
 
-  <UiSidebarFooter>
+  <template #footer>
     <UiBadge text="v1.0.0" variant="outline" size="sm" />
-  </UiSidebarFooter>
+  </template>
 </UiSidebar>
 ```
 
@@ -1066,9 +1066,11 @@ overlay renders while open (emits `update:open` on dismiss).
 - `bordered` (boolean) - Right border instead of shadow
 - `width` (string) - Sets `--theme-nav-drawer-width`
 - `ariaLabel` (string, default `'Main navigation'`) - `<nav>` landmark name
+- `headerClass` / `bodyClass` / `footerClass` (ClassValue) - Extra classes for the region wrappers
+- **Slots:** `header`, `body`, `footer` — each renders its own `.drawer-header` / `.drawer-body` / `.drawer-footer` wrapper (skipped when empty); there is no default slot
 - **Emits:** `update:open` (overlay dismiss)
 
-**Sub-components:** `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter` (regions), `UiSidebarText` (section label), `UiSidebarGroup` (`collapsible`, `defaultOpen`, `icon`, `text`), `UiSidebarLink` (polymorphic `as`, `to`/`href`, `icon`, `child`, `tooltipText`), `UiSidebarDropdown` (`title`, `subtitle`, `interactive`).
+**Sub-components:** `UiSidebarText` (section label), `UiSidebarGroup` (`collapsible`, `defaultOpen`, `icon`, `text`), `UiSidebarLink` (polymorphic `as`, `to`/`href`, `icon`, `child`, `tooltipText`), `UiSidebarDropdown` (`title`, `subtitle`, `interactive`).
 
 > Pair with `UiNavbarToggle` to drive the states: `<UiNavbarToggle :collapsed="open" @toggle="open = !open" />`.
 
@@ -1114,7 +1116,7 @@ Dropdown panel (account menus, overflow menus) with `header` / `body` / `footer`
 - `menuItems` (array) - Shortcut that renders the body when no body slot is filled; entries take `UiPopoverMenuItem` props plus an `id`
 - `currentRoute` - Active-row detection for `menuItems`
 
-**Slots:** `header`, `body`, `footer`. The default slot is an alias for `body` (handy for simple menus); `body` wins if both are given.
+**Slots:** `header`, `body`, `footer` (no default slot). A filled `body` replaces the `menuItems` rows.
 
 **Emits:** `hideDropdown`, `menuItemClick(to)`.
 

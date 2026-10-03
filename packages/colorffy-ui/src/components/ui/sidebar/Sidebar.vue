@@ -9,7 +9,10 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
   open: false,
   width: null,
   ariaLabel: 'Main navigation',
-  customClass: ''
+  customClass: '',
+  headerClass: null,
+  bodyClass: null,
+  footerClass: null
 })
 
 /** Emits */
@@ -47,10 +50,27 @@ const sidebarStyles = computed(() => {
     :aria-label="ariaLabel"
   >
     <div class="drawer-content">
-      <slot name="header" />
-      <slot name="body" />
-      <slot name="footer" />
-      <slot />
+      <div
+        v-if="$slots.header"
+        class="drawer-header"
+        :class="headerClass"
+      >
+        <slot name="header" />
+      </div>
+      <div
+        v-if="$slots.body"
+        class="drawer-body"
+        :class="bodyClass"
+      >
+        <slot name="body" />
+      </div>
+      <div
+        v-if="$slots.footer"
+        class="drawer-footer"
+        :class="footerClass"
+      >
+        <slot name="footer" />
+      </div>
     </div>
   </nav>
 </template>

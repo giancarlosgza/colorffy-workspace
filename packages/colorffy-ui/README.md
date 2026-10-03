@@ -411,7 +411,6 @@ export default defineNuxtConfig({
 
 #### Sidebar (Navigation Drawer)
 - `UiSidebar` - Drawer container (compact `rail` + responsive `open`)
-- `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter` - Drawer regions
 - `UiSidebarGroup` - Grouped links (optionally collapsible)
 - `UiSidebarLink` - Drawer navigation link (polymorphic `as`)
 - `UiSidebarText` - Section label
@@ -690,11 +689,11 @@ const open = ref(false) // mobile drawer (responsive)
     v-model:open="open"
     aria-label="Main navigation"
   >
-    <UiSidebarHeader>
+    <template #header>
       <UiSidebarDropdown title="Acme" subtitle="Workspace" />
-    </UiSidebarHeader>
+    </template>
 
-    <UiSidebarBody>
+    <template #body>
       <UiSidebarText text="Platform" />
       <UiSidebarLink :as="NuxtLink" to="/" text="Home" icon="&#xe88a;" tooltip-text="Home" />
       <UiSidebarLink :as="NuxtLink" to="/projects" text="Projects" icon="&#xe8ef;" />
@@ -704,11 +703,11 @@ const open = ref(false) // mobile drawer (responsive)
         <UiSidebarLink :as="NuxtLink" to="/account" text="Profile" icon="&#xe853;" child />
         <UiSidebarLink :as="NuxtLink" to="/notifications" text="Notifications" icon="&#xe7f4;" child />
       </UiSidebarGroup>
-    </UiSidebarBody>
+    </template>
 
-    <UiSidebarFooter>
+    <template #footer>
       <UiBadge text="v1.0.0" variant="outline" size="sm" />
-    </UiSidebarFooter>
+    </template>
   </UiSidebar>
 </template>
 ```

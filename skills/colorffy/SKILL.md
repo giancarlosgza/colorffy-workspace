@@ -163,7 +163,7 @@ const name = ref('')
 
 **Layout:** UiHeaderContent, UiPaneContent, UiCard
 **Navigation:** UiTabs, UiNavigationBar, UiSegmentedControls, UiBreadcrumb
-**Sidebar:** UiSidebar, UiSidebarHeader/Body/Footer, UiSidebarGroup, UiSidebarLink, UiSidebarText, UiSidebarDropdown
+**Sidebar:** UiSidebar (`#header` / `#body` / `#footer` slots), UiSidebarGroup, UiSidebarLink, UiSidebarText, UiSidebarDropdown
 **Buttons:** UiButton, UiButtonMenu, UiButtonMenuSubmenu, UiButtonToggleGroup, UiButtonTooltip
 **Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile
 **Dialogs:** UiModal, UiConfirmModal

@@ -36,7 +36,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Shows icons + labels
 
 **Sidebar navigation**
-- Use `UiSidebar` (+ `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter`, `UiSidebarGroup`, `UiSidebarLink`, `UiSidebarText`, `UiSidebarDropdown`) for the navigation drawer
+- Use `UiSidebar` (with `#header` / `#body` / `#footer` slots, plus `UiSidebarGroup`, `UiSidebarLink`, `UiSidebarText`, `UiSidebarDropdown`) for the navigation drawer
 - Two independent states: `rail` (compact, desktop) and `open` (responsive mobile, `v-model:open`)
 - Supports icons, active states, collapsible groups, and nested `child` links
 - Good for dashboards and admin panels
