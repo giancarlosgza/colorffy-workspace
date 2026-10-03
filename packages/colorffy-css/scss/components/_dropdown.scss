@@ -21,16 +21,22 @@
   }
 
   .v-popper__popper {
-    --_dropdown-bg-color: var(--theme-surface-overlay);
-    --_dropdown-color: var(--theme-on-background);
-    --_dropdown-padding: var(--space-4);
-    --_dropdown-shadow: var(--shadow-lg);
-    --_dropdown-radius: var(--radius-lg);
-    --_dropdown-easing-in: var(--ease-overshoot-soft);
+    --_dropdown-bg-color: var(--dropdown-bg-color, var(--theme-surface-overlay));
+    --_dropdown-color: var(--dropdown-color, var(--theme-on-background));
+    --_dropdown-border-color: var(--dropdown-border-color, var(--theme-outline-overlay));
+    --_dropdown-padding: var(--dropdown-padding, var(--space-4));
+    --_dropdown-shadow: var(--dropdown-shadow, var(--shadow-lg));
+    --_dropdown-radius: var(--dropdown-radius, var(--radius-lg));
+    --_dropdown-min-width: var(--dropdown-min-width, 12rem);
+    --_dropdown-easing-in: var(--dropdown-easing, var(--ease-overshoot-soft));
     --_dropdown-easing-out: var(--ease-accelerate);
-    --_dropdown-easing-duration: var(--duration-500);
-    --_dropdown-item-gutter-x: var(--space-8);
-    --_dropdown-item-gutter-y: var(--space-8);
+    --_dropdown-easing-duration: var(--dropdown-duration, var(--duration-500));
+    --_dropdown-item-gutter-x: var(--dropdown-item-padding-inline, var(--space-8));
+    --_dropdown-item-gutter-y: var(--dropdown-item-padding-block, var(--space-8));
+    --_dropdown-item-color: var(--dropdown-item-color, var(--_dropdown-color));
+    --_dropdown-item-bg-color: transparent;
+    --_dropdown-item-radius: var(--dropdown-item-radius, calc(var(--_dropdown-radius) / 2));
+    --_dropdown-item-font-size: var(--dropdown-item-font-size, var(--fs-3xs));
 
     &.v-popper--theme-dropdown {
       isolation: isolate;
@@ -45,8 +51,8 @@
           padding: var(--_dropdown-padding);
           box-shadow: var(--_dropdown-shadow);
           border-radius: var(--_dropdown-radius);
-          border: var(--border-width-sm) solid var(--theme-outline-overlay);
-          min-width: 12rem;
+          border: var(--border-width-sm) solid var(--_dropdown-border-color);
+          min-width: var(--_dropdown-min-width);
 
           & kbd {
             background-color: var(--theme-surface-kbd);
@@ -69,17 +75,17 @@
                 align-items: center;
                 gap: var(--space-6);
                 font-weight: var(--fw-400);
-                background: inherit;
-                color: var(--_dropdown-color);
+                background: var(--_dropdown-item-bg-color);
+                color: var(--_dropdown-item-color);
 
                 padding-block: var(--_dropdown-item-gutter-y);
                 padding-inline: var(--_dropdown-item-gutter-x);
 
                 border: none;
-                border-radius: calc(var(--_dropdown-radius) / 2);
+                border-radius: var(--_dropdown-item-radius);
 
                 font-family: var(--font-primary);
-                font-size: var(--fs-3xs);
+                font-size: var(--_dropdown-item-font-size);
                 text-align: start;
 
                 width: 100%;
@@ -135,8 +141,9 @@
                 }
 
                 &:is(.v-active) {
-                  background-color: var(--theme-surface-container-highest);
-                  color: var(--theme-on-background);
+                  --_dropdown-item-bg-color: var(--dropdown-item-active-bg-color, var(--theme-surface-container-highest));
+                  --_dropdown-item-color: var(--dropdown-item-active-color, var(--theme-on-background));
+
                   font-weight: var(--fw-700);
 
                   & i {
@@ -146,8 +153,9 @@
 
                 &:is(.v-disabled),
                 &:is(:disabled) {
-                  background-color: color-mix(in oklab, var(--theme-muted-base-fixed) 15%, transparent);
-                  color: var(--theme-muted-a10);
+                  --_dropdown-item-bg-color: color-mix(in oklab, var(--theme-muted-base-fixed) 15%, transparent);
+                  --_dropdown-item-color: var(--theme-muted-a10);
+
                   cursor: not-allowed;
                   opacity: 0.75;
 
@@ -158,13 +166,13 @@
 
                 // States
                 &:is(:hover) {
-                  background-color: var(--theme-surface-container-high);
-                  color: var(--theme-on-background);
+                  --_dropdown-item-bg-color: var(--dropdown-item-hover-bg-color, var(--theme-surface-container-high));
+                  --_dropdown-item-color: var(--dropdown-item-hover-color, var(--theme-on-background));
                 }
 
                 &:is(:focus, :active, .active) {
-                  background-color: var(--theme-surface-container-highest);
-                  color: var(--theme-on-background);
+                  --_dropdown-item-bg-color: var(--dropdown-item-active-bg-color, var(--theme-surface-container-highest));
+                  --_dropdown-item-color: var(--dropdown-item-active-color, var(--theme-on-background));
                 }
               }
 
@@ -264,8 +272,8 @@
                   height: 12px;
                   aspect-ratio: 1;
                   background-color: transparent;
-                  border: var(--border-width-md) solid v.$white;
-                  outline: var(--border-width-md) solid v.$dark;
+                  border: var(--border-width-md) solid var(--color-brand-white-500);
+                  outline: var(--border-width-md) solid var(--color-brand-dark-500);
                   outline-offset: 0;
                   border-radius: var(--radius-md);
                   box-shadow: var(--shadow-sm);
@@ -341,10 +349,6 @@
       // MOBILE DROPDOWN BEHAVIOR (NO POSITIONING)
       // ==========================================================================
       &.v-popper__popper--no-positioning {
-        --_dropdown-easing-in: var(--ease-overshoot-soft);
-        --_dropdown-easing-duration: var(--duration-500);
-
-
         position: fixed;
         bottom: 0;
         left: 0;
@@ -376,7 +380,7 @@
             & ul {
               & li {
                 & .v-dropdown-item {
-                  padding-block: var(--space-12);
+                  --_dropdown-item-gutter-y: var(--space-12);
 
                   & i {
                     font-variation-settings: var(--iw-semi-bold);
