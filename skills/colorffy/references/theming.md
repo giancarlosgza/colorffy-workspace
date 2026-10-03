@@ -228,6 +228,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Card** (`.card`, `UiCard`): `--card-bg-color`, `-color`, `-border-width`, `-border-color`, `-radius`, `-shadow`, `-padding-inline`, `-padding-block`, `-title-font-size`, `-title-font-weight`, `-text-color`, `-hover-bg-color`, `-selected-border-color`, `-easing`
 - **Button** (`.btn`, `UiButton`): `--btn-radius`, `-height`, `-padding-inline`, `-padding-block`, `-font-size`, `-font-weight`, `-icon-size`, `-shadow`, `-easing`, `-duration` (colors come from the theme tokens)
 - **Chip** (`.btn-chip`, `UiChip`): `--chip-bg-color`, `-color`, `-border-color`, `-radius`, `-hover-bg-color`
+- **Button groups** (`.btn-group`, `.chip-group`, `.fab-group`, `.toggle-btn-group`): `--btn-group-gap`, `--chip-group-gap`, `--fab-group-offset-block`, `-offset-inline`, `-gap`, `--toggle-btn-group-gap`, `--toggle-btn-bg-color`, `-color`, `-subtitle-color`, `-border-width`, `-border-color`, `-radius`, `-padding`, `-hover-border-color`, `-active-bg-color`, `-active-border-color`, `-easing`, `-duration`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:

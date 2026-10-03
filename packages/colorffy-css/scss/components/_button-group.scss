@@ -6,7 +6,7 @@
   // CHIP GROUP COMPONENT
   // ==========================================================================
   .chip-group {
-    --_chip-group-gap: var(--space-8);
+    --_chip-group-gap: var(--chip-group-gap, var(--space-8));
 
     display: flex;
     flex-direction: row;
@@ -19,7 +19,7 @@
   // BUTTON GROUP COMPONENT
   // ==========================================================================
   .btn-group {
-    --_btn-group-gap: var(--space-12) var(--space-8);
+    --_btn-group-gap: var(--btn-group-gap, var(--space-12) var(--space-8));
 
     display: flex;
     flex-direction: row;
@@ -116,8 +116,9 @@
   // FAB GROUP COMPONENT
   // ==========================================================================
   .fab-group {
-    --_btn-fab-position-y: calc(var(--space-24) + var(--space-4));
-    --_btn-fab-position-x: calc(var(--space-24) + var(--space-4));
+    --_btn-fab-position-y: var(--fab-group-offset-block, calc(var(--space-24) + var(--space-4)));
+    --_btn-fab-position-x: var(--fab-group-offset-inline, calc(var(--space-24) + var(--space-4)));
+    --_btn-fab-gap: var(--fab-group-gap, var(--space-16));
 
     position: fixed;
     bottom: var(--_btn-fab-position-y);
@@ -125,7 +126,7 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    gap: var(--space-16);
+    gap: var(--_btn-fab-gap);
     isolation: isolate;
     z-index: v.$z-index-fab;
 
@@ -203,20 +204,22 @@
   // TOGGLE BUTTON GROUP COMPONENT
   // ==========================================================================
   .toggle-btn-group {
+    --_toggle-btn-group-gap: var(--toggle-btn-group-gap, var(--space-14));
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-    gap: var(--space-14);
+    gap: var(--_toggle-btn-group-gap);
 
     & .toggle-btn {
-      --_toggle-btn-padding: var(--space-12);
-      --_toggle-btn-radius: #{v.$button-border-radius};
-      --_toggle-btn-bg-color: transparent;
-      --_toggle-btn-color: var(--theme-on-background);
-      --_toggle-btn-subtitle-color: var(--theme-muted-a10);
-      --_toggle-btn-border-size: var(--border-width-sm);
-      --_toggle-btn-border-color: var(--theme-outline-button);
-      --_toggle-btn-easing-in: var(--ease-decelerate);
-      --_toggle-btn-easing-duration: var(--duration-300);
+      --_toggle-btn-padding: var(--toggle-btn-padding, var(--space-12));
+      --_toggle-btn-radius: var(--toggle-btn-radius, #{v.$button-border-radius});
+      --_toggle-btn-bg-color: var(--toggle-btn-bg-color, transparent);
+      --_toggle-btn-color: var(--toggle-btn-color, var(--theme-on-background));
+      --_toggle-btn-subtitle-color: var(--toggle-btn-subtitle-color, var(--theme-muted-a10));
+      --_toggle-btn-border-size: var(--toggle-btn-border-width, var(--border-width-sm));
+      --_toggle-btn-border-color: var(--toggle-btn-border-color, var(--theme-outline-button));
+      --_toggle-btn-easing-in: var(--toggle-btn-easing, var(--ease-decelerate));
+      --_toggle-btn-easing-duration: var(--toggle-btn-duration, var(--duration-300));
 
       background: var(--_toggle-btn-bg-color);
       color: var(--_toggle-btn-color);
@@ -230,18 +233,18 @@
       will-change: border;
 
       &:is(:hover, :active, :focus) {
-        --_toggle-btn-border-color: var(--theme-primary-a10);
+        --_toggle-btn-border-color: var(--toggle-btn-hover-border-color, var(--theme-primary-a10));
 
-        box-shadow: inset 0 0 0 .5px var(--theme-primary-a10);
+        box-shadow: inset 0 0 0 .5px var(--_toggle-btn-border-color);
       }
 
       &.toggle-btn-active {
-        --_toggle-btn-bg-color: var(--theme-surface-container-low);
-        --_toggle-btn-border-color: var(--theme-primary-a10);
+        --_toggle-btn-bg-color: var(--toggle-btn-active-bg-color, var(--theme-surface-container-low));
+        --_toggle-btn-border-color: var(--toggle-btn-active-border-color, var(--theme-primary-a10));
         --_toggle-btn-border-size: var(--border-width-sm);
         --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
 
-        box-shadow: inset 0 0 0 1px var(--theme-primary-a10);
+        box-shadow: inset 0 0 0 1px var(--_toggle-btn-border-color);
       }
 
       &.toggle-btn-disabled {
