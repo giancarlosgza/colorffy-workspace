@@ -36,14 +36,14 @@
   // ICON WRAPPER UTILITIES
   // ==========================================================================
   .icon-wrap {
-    --_icon-wrap-padding: 20px;
-    --_icon-wrap-radius: var(--radius-full);
-    --_icon-wrap-bg-color: var(--theme-background);
-    --_icon-wrap-color: var(--theme-primary-a10);
+    --_icon-wrap-padding: var(--icon-wrap-padding, 20px);
+    --_icon-wrap-radius: var(--icon-wrap-radius, var(--radius-full));
+    --_icon-wrap-bg-color: var(--icon-wrap-bg-color, var(--theme-background));
+    --_icon-wrap-color: var(--icon-wrap-color, var(--theme-primary-a10));
     --_icon-wrap-border-size: 0;
     --_icon-wrap-border-color: transparent;
     --_icon-wrap-space: oklab;
-    --_icon-wrap-opacity: 10%;
+    --_icon-wrap-opacity: var(--icon-wrap-tint-alpha, 10%);
 
     padding: var(--_icon-wrap-padding);
     background-color: var(--_icon-wrap-bg-color);
