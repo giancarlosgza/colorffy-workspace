@@ -245,6 +245,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **OTP** (`.form-otp`, `UiInputOtp`): `--input-otp-gap`, `-font-size`, `-font-weight`; boxes follow `--input-height` and the other `--input-*` variables
 - **Divider** (`.divider`, `UiDivider`): `--divider-thickness`, `-color`, `-spacing`, `-inset`, `-text-gap`, `-text-color`, `-text-font-size`
 - **Carousel** (`.carousel` scroll buttons, `.carousel-btn`): `--carousel-btn-size`, `-bg-color`, `-color`, `-shadow`, `-radius`
+- **Header / hero / subheading** (`.header-container`, `.hero-content`, `.subheading-content`): `--header-margin-block-end`, `-gap`, `-title-font-size`, `-title-line-height`, `-description-font-size`, `-description-color`, `-description-max-width`; `--hero-gap`, `-margin-block-end`, `-max-width`, `-description-font-size`, `-description-line-height`, `-description-color`, `-actions-offset`, `-actions-gap`; `--subheading-gap`, `-actions-gap`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:

@@ -5,9 +5,9 @@
   // HEADER LAYOUT COMPONENT
   // ==========================================================================
   .header-container {
-    --_header-block-end: var(--space-16);
-    --_header-title-size: var(--fs-xl);
-    --_header-title-leading: var(--fs-xl--line-height);
+    --_header-block-end: var(--header-margin-block-end, var(--space-16));
+    --_header-title-size: var(--header-title-font-size, var(--fs-xl));
+    --_header-title-leading: var(--header-title-line-height, var(--fs-xl--line-height));
 
     container: HeaderContainer / inline-size;
     margin-block-end: var(--_header-block-end);
@@ -35,7 +35,7 @@
 
     & .header {
       --_header-columns: 1fr;
-      --_header-columns-gap: var(--space-16);
+      --_header-columns-gap: var(--header-gap, var(--space-16));
       --_header-back-gap: var(--space-4);
 
       position: relative;
@@ -63,9 +63,9 @@
         }
 
         & .text-description {
-          font-size: var(--fs-xs);
-          color: var(--theme-muted-a10);
-          max-inline-size: 50ch;
+          font-size: var(--header-description-font-size, var(--fs-xs));
+          color: var(--header-description-color, var(--theme-muted-a10));
+          max-inline-size: var(--header-description-max-width, 50ch);
           margin-bottom: 0;
           @include m.text-wrap-pretty;
         }

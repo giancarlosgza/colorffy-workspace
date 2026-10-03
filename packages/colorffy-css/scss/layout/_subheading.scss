@@ -4,7 +4,7 @@
   // ==========================================================================
   .subheading-content {
     --_subheading-columns: 1fr;
-    --_subheading-columns-gap: var(--space-16);
+    --_subheading-columns-gap: var(--subheading-gap, var(--space-16));
 
     display: grid;
     grid-template-columns: var(--_subheading-columns);
@@ -21,7 +21,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: flex-end;
-      gap: var(--space-8);
+      gap: var(--subheading-actions-gap, var(--space-8));
     }
   }
 }
