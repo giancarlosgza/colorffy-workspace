@@ -6,16 +6,24 @@
   // ==========================================================================
   footer,
   .footer {
-    --_footer-bg-color: var(--theme-surface-body-pane);
-    --_footer-color: var(--theme-on-background);
-    --_footer-gutter-x: 0;
-    --_footer-gutter-y: calc(var(--space-32) + var(--space-8));
-    --_footer-gap: var(--space-16);
+    --_footer-bg-color: var(--footer-bg-color, var(--theme-surface-body-pane));
+    --_footer-color: var(--footer-color, var(--theme-on-background));
+    --_footer-muted-color: var(--footer-muted-color, var(--theme-muted-a10));
+    --_footer-border-color: var(--footer-border-color, var(--theme-outline-surface));
+    --_footer-gutter-x: var(--footer-padding-inline, 0);
+    --_footer-gutter-y: var(--footer-padding-block, calc(var(--space-32) + var(--space-8)));
+    --_footer-block-start: var(--footer-margin-block-start, var(--_footer-gutter-y));
+    --_footer-gap: var(--footer-gap, var(--space-16));
+    --_footer-title-font-size: var(--footer-title-font-size, var(--fs-lg));
+    --_footer-title-font-weight: var(--footer-title-font-weight, var(--fw-800));
+    --_footer-link-color: var(--footer-link-color, var(--_footer-muted-color));
+    --_footer-link-font-size: var(--footer-link-font-size, var(--fs-2xs));
+    --_footer-icon-color: var(--footer-icon-color, var(--theme-secondary-a90));
 
     position: relative;
     background: var(--_footer-bg-color);
     color: var(--_footer-color);
-    margin-top: var(--_footer-gutter-y);
+    margin-top: var(--_footer-block-start);
     padding-block: var(--_footer-gutter-y);
     padding-inline: var(--_footer-gutter-x);
     overflow-x: clip;
@@ -24,8 +32,8 @@
       color: var(--_footer-color);
 
       &:is(.footer-title) {
-        font-size: var(--fs-lg);
-        font-weight: var(--fw-800);
+        font-size: var(--_footer-title-font-size);
+        font-weight: var(--_footer-title-font-weight);
         font-family: var(--font-primary);
 
         &:not(:last-child) {
@@ -38,7 +46,7 @@
         font-weight: var(--fw-400);
         font-family: var(--font-secondary);
         margin-bottom: 0;
-        color: var(--theme-muted-a10);
+        color: var(--_footer-muted-color);
       }
     }
 
@@ -95,13 +103,14 @@
       // Links
       & :is(.footer-item, .anchor-link) {
         display: inline-block;
-        color: var(--theme-muted-a10);
-        font-size: var(--fs-2xs);
+        color: var(--_footer-link-color);
+        font-size: var(--_footer-link-font-size);
         font-weight: var(--fw-500);
         font-family: var(--font-secondary);
 
         &:is(:hover) {
-          color: var(--theme-primary-a10);
+          --_footer-link-color: var(--footer-link-hover-color, var(--theme-primary-a10));
+
           font-weight: var(--fw-700);
         }
       }
@@ -110,7 +119,7 @@
       & .footer-item-icon {
         font-size: var(--fs-sm);
         font-variation-settings: var(--iw-semi-bold);
-        color: var(--theme-secondary-a90);
+        color: var(--_footer-icon-color);
         margin-inline-end: var(--space-4);
       }
     }
@@ -124,10 +133,10 @@
       gap: var(--_footer-gap);
       margin-block-start: var(--_footer-gap);
       padding-block-start: var(--_footer-gap);
-      border-block-start: var(--border-width-sm) solid var(--theme-outline-surface);
+      border-block-start: var(--border-width-sm) solid var(--_footer-border-color);
 
       & p {
-        color: var(--theme-muted-a10);
+        color: var(--_footer-muted-color);
         font-size: var(--fs-2xs);
         font-family: var(--font-secondary);
         margin-bottom: 0;
