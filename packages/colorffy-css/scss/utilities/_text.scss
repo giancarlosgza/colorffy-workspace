@@ -31,58 +31,6 @@
   }
 
   // ==========================================================================
-  // DEPRECATED FONT SIZE UTILITIES — will be removed in v3
-  // Font-size only (no line-height) to preserve legacy rendering
-  // ==========================================================================
-  .fs-xl-100 {
-    font-size: var(--fs-5xl);
-  }
-
-  .fs-100 {
-    font-size: var(--fs-4xl);
-  }
-
-  .fs-200 {
-    font-size: var(--fs-3xl);
-  }
-
-  .fs-300 {
-    font-size: var(--fs-2xl);
-  }
-
-  .fs-400 {
-    font-size: var(--fs-xl);
-  }
-
-  .fs-500 {
-    font-size: var(--fs-lg);
-  }
-
-  .fs-600 {
-    font-size: var(--fs-base);
-  }
-
-  .fs-sm-100 {
-    font-size: var(--fs-sm);
-  }
-
-  .fs-sm-200 {
-    font-size: var(--fs-xs);
-  }
-
-  .fs-sm-300 {
-    font-size: var(--fs-2xs);
-  }
-
-  .fs-sm-400 {
-    font-size: var(--fs-3xs);
-  }
-
-  .fs-sm-500 {
-    font-size: var(--fs-4xs);
-  }
-
-  // ==========================================================================
   // FONT WEIGHT UTILITIES
   // ==========================================================================
   .fw-400 {

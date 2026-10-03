@@ -233,7 +233,7 @@ function onOtpComplete() {
                   v-model="form.accent"
                   label="Color de acento"
                 />
-                <p class="fs-sm-300 text-muted mt-1 mb-0">
+                <p class="fs-2xs text-muted mt-1 mb-0">
                   {{ form.accent }}
                 </p>
               </div>
@@ -380,7 +380,7 @@ function onOtpComplete() {
                 <p class="subtitle-1 fw-600 mb-0">
                   {{ account.name }}
                 </p>
-                <p class="fs-sm-300 text-muted mb-0">
+                <p class="fs-2xs text-muted mb-0">
                   {{ account.detail }}
                 </p>
               </div>

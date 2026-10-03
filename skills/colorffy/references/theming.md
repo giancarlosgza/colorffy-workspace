@@ -258,7 +258,7 @@ Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale ancho
 
 Each size has a unitless line-height companion: `--fs-{step}--line-height` (e.g. `--fs-lg--line-height: 1.4`).
 
-**Deprecated (removed in v3):** the old ordinal names `--fs-100`…`--fs-600`, `--fs-sm-100`…`--fs-sm-500`, `--fs-xl-100` remain as aliases of the new tokens. Note the old scale was inverted (`--fs-100` was the *largest*). Always use the t-shirt names in new code.
+**Removed in 3.0:** the old ordinal names `--fs-100`…`--fs-600`, `--fs-sm-100`…`--fs-sm-500`, `--fs-xl-100`. The old scale was inverted (`--fs-100` was the *largest*); the migration guide has the rename table.
 
 ## Spacing Scale
 

@@ -70,13 +70,13 @@ const ariaAttributes = computed(() => {
     <UiIconMaterial
       v-else
       :icon-code="iconCode"
-      class="fs-100 text-muted mb-3"
+      class="fs-4xl lh-1 text-muted mb-3"
     />
 
     <!-- Title -->
     <h3
       v-if="title"
-      class="fw-800 mb-2 subtitle-1 fs-500"
+      class="fw-800 mb-2 subtitle-1 fs-lg"
     >
       {{ title }}
     </h3>

@@ -337,7 +337,7 @@ function save() {
               text="Hay una actualización disponible"
               icon="&#xe8d7;"
               custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-success fs-300"
+              custom-icon-class="text-success fs-2xl"
               has-actions
             >
               <template #list-action>

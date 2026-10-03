@@ -132,7 +132,7 @@ Add breakpoint prefixes: `sm`, `md`, `lg`, `xl`, `xxl`
 <p class="fs-5xl">Extra large</p>
 ```
 
-**Deprecated (removed in v3):** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` still work (font-size only, no line-height). Do not use in new code.
+**Removed in 3.0:** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` (font-size only). Their t-shirt equivalents also set the paired line-height; add `lh-1` to keep a tight line box (icons).
 
 ### Display Styles
 

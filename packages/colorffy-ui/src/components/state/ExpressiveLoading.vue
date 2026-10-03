@@ -58,11 +58,11 @@ const titleClasses = computed(() => {
   const classes = ['subtitle-1', 'font-primary', 'fw-800']
 
   if (props.size === 'sm') {
-    classes.push('fs-500')
+    classes.push('fs-base')
   } else if (props.size === 'lg') {
-    classes.push('fs-700')
+    classes.push('fs-xl')
   } else {
-    classes.push('fs-600')
+    classes.push('fs-lg')
   }
 
   return classes

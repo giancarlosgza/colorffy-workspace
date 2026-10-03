@@ -35,7 +35,7 @@ const containerClasses = computed<(string | string[])[]>(() => {
   return classes
 })
 const titleClasses = computed(() => {
-  return ['subtitle-1', 'font-primary', 'fw-600', 'mb-0', 'fs-500']
+  return ['subtitle-1', 'font-primary', 'fw-600', 'mb-0', 'fs-lg']
 })
 const ariaAttributes = computed(() => {
   const attributes: Record<string, string> = {}

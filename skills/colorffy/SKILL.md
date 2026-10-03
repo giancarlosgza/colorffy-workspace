@@ -190,7 +190,6 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 - **Spacing:** `var(--space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--space-unit` (override it for runtime density)
 - **Font sizes:** `var(--fs-4xs…5xl)` + `var(--fs-{step}--line-height)` companions
-- **Deprecated (removed in v3):** `--fs-100`-style ordinal tokens and `fs-100`-style classes still work as aliases — do not use in new code
 
 **[See theming reference →](references/theming.md)**
 
@@ -205,10 +204,9 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them in new code:
 
-- Legacy font-size **tokens** (`--fs-100`…`--fs-600`, `--fs-sm-*`, `--fs-xl-100`) and **utility classes** (`.fs-100`…, `.fs-sm-*`) — use the t-shirt scale (`--fs-4xs`–`--fs-5xl`, `.fs-base`, …).
 - `$space-1` / `$space-2` / `$space-3` SCSS variables — use `var(--space-16/32/48)`.
 - `ISegmentedTab.position` and `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
-- Public tokens gain a namespace prefix (planned `--cffy-*`); `m-*`/`p-*`/`gap-*` utilities rebase onto the token scale (`.p-12` = `var(--space-12)`, so old numeric steps change meaning); a `--container-*` width scale absorbs one-offs like `--theme-nav-drawer-width`. None of these exist in 2.x yet — don't reference them until 3.0.
+- Public tokens gain a namespace prefix (planned `--cffy-*`) and a `--container-*` width scale may absorb one-offs like `--theme-nav-drawer-width`. Neither exists yet — don't reference them. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--space-*` tokens).
 
 **[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
 

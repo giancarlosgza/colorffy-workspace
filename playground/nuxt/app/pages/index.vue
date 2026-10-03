@@ -152,7 +152,7 @@ function copyInstall() {
                   class="text-primary"
                 />
               </span>
-              <h2 class="fs-500 fw-800 mb-0">
+              <h2 class="fs-lg fw-800 mb-0">
                 1 · Instalación
               </h2>
             </div>
@@ -163,7 +163,7 @@ function copyInstall() {
             />
             <div class="bg-muted-fixed bg-opacity-10 d-flex align-items-center gap-2 rounded-md p-2 ps-3 mt-3">
               <code
-                class="flex-grow-1 fs-sm-400"
+                class="flex-grow-1 fs-3xs"
                 style="overflow-x: auto;
                 white-space: nowrap;"
               >
@@ -203,7 +203,7 @@ function copyInstall() {
               <span class="icon-wrap icon-wrap-sm icon-wrap-outline">
                 <UiIconMaterial icon-code="&#xe869;" class="text-accent" />
               </span>
-              <h2 class="fs-500 fw-800 mb-0">
+              <h2 class="fs-lg fw-800 mb-0">
                 2 · Configuración
               </h2>
             </div>
@@ -222,7 +222,7 @@ function copyInstall() {
               class="bg-muted-fixed bg-opacity-10 rounded-md p-3 mt-3"
               style="overflow-x: auto;"
             >
-              <pre class="mb-0"><code class="fs-sm-300">{{ nuxtSetup }}</code></pre>
+              <pre class="mb-0"><code class="fs-2xs">{{ nuxtSetup }}</code></pre>
             </div>
             <div
               v-show="activeSetup === 'vue'"
@@ -233,7 +233,7 @@ function copyInstall() {
               class="bg-muted-fixed bg-opacity-10 rounded-md p-3 mt-3"
               style="overflow-x: auto;"
             >
-              <pre class="mb-0"><code class="fs-sm-300">{{ vueSetup }}</code></pre>
+              <pre class="mb-0"><code class="fs-2xs">{{ vueSetup }}</code></pre>
             </div>
           </template>
         </UiCard>
@@ -250,7 +250,7 @@ function copyInstall() {
           <span class="icon-wrap icon-wrap-sm icon-wrap-outline">
             <UiIconMaterial icon-code="&#xe86f;" class="text-success" />
           </span>
-          <h2 class="fs-500 fw-800 mb-0">
+          <h2 class="fs-lg fw-800 mb-0">
             3 · Úsalo
           </h2>
         </div>
@@ -261,7 +261,7 @@ function copyInstall() {
           class="bg-muted-fixed bg-opacity-10 rounded-md p-3"
           style="overflow-x: auto;"
         >
-          <pre class="mb-0"><code class="fs-sm-300">{{ usageSnippet }}</code></pre>
+          <pre class="mb-0"><code class="fs-2xs">{{ usageSnippet }}</code></pre>
         </div>
       </template>
     </UiCard>
@@ -284,7 +284,7 @@ function copyInstall() {
             <h3 class="subtitle-1 fw-700 mb-1">
               {{ link.title }}
             </h3>
-            <p class="fs-sm-300 text-muted mb-0">
+            <p class="fs-2xs text-muted mb-0">
               {{ link.text }}
             </p>
           </template>
@@ -292,7 +292,7 @@ function copyInstall() {
       </div>
     </div>
     <!-- Explore -->
-    <h2 class="fs-500 fw-800 mb-3 mt-section">
+    <h2 class="fs-lg fw-800 mb-3 mt-section">
       Explora la demo
     </h2>
     <div class="row">
@@ -319,7 +319,7 @@ function copyInstall() {
                   <p class="subtitle-1 fw-700 mb-0">
                     {{ page.title }}
                   </p>
-                  <p class="fs-sm-300 text-muted mb-0">
+                  <p class="fs-2xs text-muted mb-0">
                     {{ page.text }}
                   </p>
                 </div>

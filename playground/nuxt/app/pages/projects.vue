@@ -268,7 +268,7 @@ function createProject() {
           </template>
           <template #cell-completion="{ item }">
             <div class="d-grid gap-1" style="min-width: 7rem;">
-              <span class="text-muted text-end tabular-numbers fs-sm-300">{{ item.completion }}%</span>
+              <span class="text-muted text-end tabular-numbers fs-2xs">{{ item.completion }}%</span>
               <UiProgressBar
                 :value="item.completion"
                 size="sm"

@@ -82,7 +82,7 @@ const ariaAttributes = computed(() => {
     </svg>
     <h2
       v-if="title"
-      class="fs-500 fw-800 mb-2"
+      class="fs-lg fw-800 mb-2"
     >
       {{ title }}
     </h2>

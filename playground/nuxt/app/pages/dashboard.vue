@@ -162,7 +162,7 @@ function onOverviewTabChange(tabId: string) {
             <p class="subtitle-2 text-muted mb-1">
               {{ stat.label }}
             </p>
-            <p class="fs-500 fw-800 mb-3">
+            <p class="fs-lg fw-800 mb-3">
               {{ stat.value }}
             </p>
 

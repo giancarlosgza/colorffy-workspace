@@ -152,7 +152,7 @@ function join() {
                 size="sm"
               />
             </div>
-            <p class="fs-600 fw-800 mb-0">
+            <p class="fs-base fw-800 mb-0">
               {{ stat.value }}
             </p>
             <p class="subtitle-2 text-muted mb-0">
@@ -368,7 +368,7 @@ function join() {
             <p class="subtitle-1 fw-700 mt-2 mb-0">
               {{ member.name }}
             </p>
-            <p class="fs-sm-300 text-muted mb-3">
+            <p class="fs-2xs text-muted mb-3">
               {{ member.role }}
             </p>
             <UiIconSvg
@@ -459,7 +459,7 @@ function join() {
       <template #body>
         <div class="row align-items-center">
           <div class="col-md-7 mb-3 mb-md-0">
-            <h3 class="fs-500 fw-800 mb-1">
+            <h3 class="fs-lg fw-800 mb-1">
               Mantente al día
             </h3>
             <p class="subtitle-2 text-muted mb-0">

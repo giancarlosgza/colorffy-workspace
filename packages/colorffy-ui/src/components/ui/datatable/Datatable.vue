@@ -313,12 +313,12 @@ function isLastVisibleColumn(key: string) {
                 <UiIconMaterial
                   v-if="sortKey === column.key"
                   :icon-code="sortOrder === 'asc' ? '&#xf1d2;' : '&#xf1d1;'"
-                  class="fs-sm-100 rotate-90"
+                  class="fs-sm lh-1 rotate-90"
                 />
                 <UiIconMaterial
                   v-else
                   icon-code="&#xf1d2;"
-                  class="fs-sm-100 rotate-90 text-muted opacity-50"
+                  class="fs-sm lh-1 rotate-90 text-muted opacity-50"
                 />
               </template>
             </th>

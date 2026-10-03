@@ -131,20 +131,6 @@
     --fs-4xl--line-height: 1.15;
     --fs-5xl--line-height: 1.1;
 
-    /* DEPRECATED font size aliases — will be removed in v3 */
-    --fs-sm-100: var(--fs-sm);
-    --fs-sm-200: var(--fs-xs);
-    --fs-sm-300: var(--fs-2xs);
-    --fs-sm-400: var(--fs-3xs);
-    --fs-sm-500: var(--fs-4xs);
-    --fs-100: var(--fs-4xl);
-    --fs-200: var(--fs-3xl);
-    --fs-300: var(--fs-2xl);
-    --fs-400: var(--fs-xl);
-    --fs-500: var(--fs-lg);
-    --fs-600: var(--fs-base);
-    --fs-xl-100: var(--fs-5xl);
-
     /* spacing scale */
     --space-unit: .25rem;
     --space-4: var(--space-unit);
