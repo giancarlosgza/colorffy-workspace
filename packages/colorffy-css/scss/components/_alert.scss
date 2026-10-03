@@ -6,7 +6,7 @@
   // ALERT CONTAINER & TOAST/SNACKBAR PLACEMENT
   // ==========================================================================
   .alert-container {
-    --_alert-radius: var(--radius-lg);
+    --_alert-radius: var(--alert-radius, var(--radius-lg));
 
     border-radius: var(--_alert-radius);
     container: AlertContainer / inline-size;
@@ -16,8 +16,8 @@
       z-index: v.$z-index-toast;
 
       // Positioning variables
-      --_alert-toast-spacing: var(--space-32);
-      --_alert-toast-min-width: 300px;
+      --_alert-toast-spacing: var(--alert-toast-offset, var(--space-32));
+      --_alert-toast-min-width: var(--alert-toast-min-width, 300px);
       --_alert-toast-max-width: 90vw;
       --_alert-toast-width: fit-content;
       --_alert-toast-offset-bottom: var(--_alert-toast-spacing);
@@ -111,18 +111,18 @@
   // STANDARD ALERT COMPONENT
   // ==========================================================================
   .alert {
-    --_alert-color: var(--theme-on-background);
-    --_alert-icon-color: var(--theme-on-background);
-    --_alert-bg-color: var(--theme-surface-container-low);
-    --_alert-border-color: var(--theme-surface-container-low);
-    --_alert-radius: var(--radius-lg);
-    --_alert-font-size: var(--fs-3xs);
-    --_alert-font-weight: var(--fw-400);
-    --_alert-icon-size: 1.75em;
-    --_alert-padding-block: var(--space-12);
-    --_alert-padding-inline: var(--space-12);
-    --_alert-gap: var(--space-8);
-    --_alert-stack-gap: var(--_alert-padding-block);
+    --_alert-color: var(--alert-color, var(--theme-on-background));
+    --_alert-icon-color: var(--alert-icon-color, var(--theme-on-background));
+    --_alert-bg-color: var(--alert-bg-color, var(--theme-surface-container-low));
+    --_alert-border-color: var(--alert-border-color, var(--theme-surface-container-low));
+    --_alert-radius: var(--alert-radius, var(--radius-lg));
+    --_alert-font-size: var(--alert-font-size, var(--fs-3xs));
+    --_alert-font-weight: var(--alert-font-weight, var(--fw-400));
+    --_alert-icon-size: var(--alert-icon-size, 1.75em);
+    --_alert-padding-block: var(--alert-padding-block, var(--space-12));
+    --_alert-padding-inline: var(--alert-padding-inline, var(--space-12));
+    --_alert-gap: var(--alert-gap, var(--space-8));
+    --_alert-stack-gap: var(--alert-stack-gap, var(--_alert-padding-block));
     --_alert-columns: 1fr auto;
     --_alert-flex-direction: row;
 
@@ -157,7 +157,6 @@
     }
 
     &:has(i) {
-      --_alert-gap: var(--space-8);
       --_alert-flex-direction: row;
 
       align-items: center;
@@ -185,8 +184,8 @@
       @include m.text-wrap-pretty;
 
       .alert-title {
-        --_alert-font-size: var(--fs-xs);
-        --_alert-font-weight: var(--fw-600);
+        --_alert-font-size: var(--alert-title-font-size, var(--fs-xs));
+        --_alert-font-weight: var(--alert-title-font-weight, var(--fw-600));
 
         font-family: var(--font-secondary);
         color: currentColor;
@@ -321,10 +320,10 @@
 
     // Snackbar
     &.alert-snackbar {
-      --_alert-bg-color: var(--theme-surface-toast);
-      --_alert-border-color: var(--theme-surface-toast);
-      --_alert-color: var(--theme-on-background-inverse);
-      --_alert-icon-color: var(--theme-on-background-inverse);
+      --_alert-bg-color: var(--alert-snackbar-bg-color, var(--theme-surface-toast));
+      --_alert-border-color: var(--_alert-bg-color);
+      --_alert-color: var(--alert-snackbar-color, var(--theme-on-background-inverse));
+      --_alert-icon-color: var(--_alert-color);
 
       margin: auto;
       width: fit-content;
@@ -411,9 +410,12 @@
   .pwa-alert-container {
     --_pwa-alert-position-x: var(--space-16);
     --_pwa-alert-position-y: var(--space-16);
-    --_pwa-alert-padding: var(--space-16);
-    --_pwa-alert-gap: var(--space-12);
-    --_pwa-border-radius: #{v.$card-border-radius};
+    --_pwa-alert-padding: var(--pwa-alert-padding, var(--space-16));
+    --_pwa-alert-gap: var(--pwa-alert-gap, var(--space-12));
+    --_pwa-border-radius: var(--pwa-alert-radius, #{v.$card-border-radius});
+    --_pwa-alert-bg-color: var(--pwa-alert-bg-color, var(--theme-surface-overlay));
+    --_pwa-alert-border-color: var(--pwa-alert-border-color, var(--theme-outline-surface));
+    --_pwa-alert-shadow: var(--pwa-alert-shadow, var(--shadow-lg));
 
     position: fixed;
     right: var(--_pwa-alert-position-x);
@@ -427,9 +429,9 @@
     z-index: v.$z-index-toast;
     padding-block: var(--_pwa-alert-padding);
     padding-inline: var(--_pwa-alert-padding);
-    background: var(--theme-surface-overlay);
-    border: var(--border-width-sm) solid var(--theme-outline-surface);
-    box-shadow: var(--shadow-lg);
+    background: var(--_pwa-alert-bg-color);
+    border: var(--border-width-sm) solid var(--_pwa-alert-border-color);
+    box-shadow: var(--_pwa-alert-shadow);
     border-radius: var(--_pwa-border-radius);
 
     // Content area
