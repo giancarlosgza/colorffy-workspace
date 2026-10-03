@@ -244,6 +244,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **Input prefix/suffix** (`.input-group`): follows `--input-radius`, `--input-border-width`, `--input-border-color`, `--input-bg-color`; own `--input-group-bg-color`, `-color`, `-padding-inline`, `-font-size`, `-icon-size`
 - **OTP** (`.form-otp`, `UiInputOtp`): `--input-otp-gap`, `-font-size`, `-font-weight`; boxes follow `--input-height` and the other `--input-*` variables
 - **Divider** (`.divider`, `UiDivider`): `--divider-thickness`, `-color`, `-spacing`, `-inset`, `-text-gap`, `-text-color`, `-text-font-size`
+- **Carousel** (`.carousel` scroll buttons, `.carousel-btn`): `--carousel-btn-size`, `-bg-color`, `-color`, `-shadow`, `-radius`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:

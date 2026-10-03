@@ -9,16 +9,16 @@
     position: fixed;
     font-family: var(--font-icons);
     font-size: 1rem;
-    inline-size: 44px;
+    inline-size: var(--carousel-btn-size, 44px);
     aspect-ratio: 1;
     padding: .75rem;
     display: grid;
     place-content: center;
     border-color: transparent;
-    background: var(--theme-surface-body-pane);
-    color: var(--theme-on-background);
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius-full);
+    background: var(--carousel-btn-bg-color, var(--theme-surface-body-pane));
+    color: var(--carousel-btn-color, var(--theme-on-background));
+    box-shadow: var(--carousel-btn-shadow, var(--shadow-sm));
+    border-radius: var(--carousel-btn-radius, var(--radius-full));
     cursor: pointer;
   }
 
