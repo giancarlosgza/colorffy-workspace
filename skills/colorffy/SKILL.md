@@ -204,7 +204,6 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 Deprecations that still work in 2.x but are removed in 3.0 — avoid all of them in new code:
 
-- `$space-1` / `$space-2` / `$space-3` SCSS variables — use `var(--space-16/32/48)`.
 - `ISegmentedTab.position` and `UiPopoverMenu`'s `body-extra` slot + identity props (see Breaking changes above).
 - Public tokens gain a namespace prefix (planned `--cffy-*`) and a `--container-*` width scale may absorb one-offs like `--theme-nav-drawer-width`. Neither exists yet — don't reference them. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--space-*` tokens).
 

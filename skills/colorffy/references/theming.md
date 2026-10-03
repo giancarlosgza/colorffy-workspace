@@ -8,28 +8,19 @@ Colorffy uses a **tonal color system** with semantic token naming for intuitive 
 
 ### Theme Colors
 
-**Primary colors:**
-- `$primary` - Main brand color
-- `$secondary` - Secondary brand color
-- `$accent` - Accent/highlight color
+Every color is a CSS token, set per brand color as `--color-brand-<name>-500` (light mode) and `--color-brand-<name>-50` (dark mode), and read through `--theme-<name>-base` and its tonal steps (`--theme-<name>-a10` … `a90`):
 
-**Semantic colors:**
-- `$success` - Success states (green)
-- `$warning` - Warning states (yellow/orange)
-- `$danger` - Error/danger states (red)
-- `$info` - Informational states (blue)
+**Primary colors:** `primary` (main brand), `secondary`, `accent`
 
-**Neutral colors:**
-- `$dark` - Dark text and backgrounds
-- `$light` - Light backgrounds and text
-- `$muted` - Muted/disabled text
-- `$white` - White color
+**Semantic colors:** `success`, `warning`, `danger`, `info`
+
+**Neutral colors:** `muted` (secondary text), plus `--color-brand-black-500` / `--color-brand-white-500` behind `--theme-on-background`
 
 ### Customizing Colors
 
 #### SCSS Variables (Compile-time)
 
-Theme colors and fonts are **not** SCSS-configurable: `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$info`, `$muted`, `$primary-colors` and `$font-*` are deprecated (nothing reads them; removed in v3). Set the CSS tokens below instead. SCSS configures compile-time component values:
+Theme colors and fonts are **not** SCSS-configurable (the old `$primary` … `$muted`, `$primary-colors` and `$font-*` variables were removed in 3.0). Set the CSS tokens below instead. SCSS configures compile-time component values:
 
 ```scss
 // assets/scss/abstracts/_variables.scss
@@ -270,8 +261,6 @@ All component spacing uses the `--space-*` tokens on `:root` — the number is t
 
 Runtime density: override `--space-unit` on `:root` or any subtree to scale all component spacing proportionally (e.g. `--space-unit: .2rem` = 80% density). When writing custom CSS alongside Colorffy, use `var(--space-*)` instead of hardcoded rem/px spacing.
 
-**Deprecated (removed in v3):** the `$space-1` / `$space-2` / `$space-3` SCSS variables (1/2/3rem). Use `var(--space-16)` / `var(--space-32)` / `var(--space-48)` instead — they resolve to the same values and follow density scaling.
-
 ### Utility Class Scale
 
 The `m-*`/`p-*`/`flow-*`/`top-*`/`translate-*` utilities keep their numbered steps but read the tokens, so `--space-unit` rescales them with the components. `px` stays `1px`:
@@ -435,7 +424,7 @@ Components use scoped CSS variables (prefixed with `--_`) for internal values. Y
 
 1. **Use SCSS variables for compile-time customization** - Better performance, smaller CSS
 2. **Use CSS custom properties for runtime changes** - Dynamic theming, dark mode
-3. **Start with semantic colors** - Use `$primary`, `$success`, etc. instead of specific colors
+3. **Start with semantic colors** - Use `var(--theme-primary-a10)`, `var(--theme-success-base)`, etc. instead of specific colors
 4. **Maintain consistent spacing scale** - Keep spacing multiples of base unit
 5. **Test with dark mode** - Ensure sufficient contrast in both modes
 6. **Document custom variables** - Add comments for team reference

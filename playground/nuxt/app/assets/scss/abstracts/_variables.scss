@@ -10,13 +10,6 @@ $custom-rounded-xxl: 35px;
 
 @forward '@colorffy/css/scss/abstracts/variables' with (
   // ==========================================================================
-  // PRIMARY COLORS & GRADIENTS OVERRIDES
-  // ==========================================================================
-  $primary: #002662 !default,
-  $secondary: #22cbff !default,
-  $accent: #0ee9a0 !default,
-
-  // ==========================================================================
   // EXTRA OVERRIDES (BORDER RADII)
   // ==========================================================================
   $card-border-radius: $custom-rounded-sm,

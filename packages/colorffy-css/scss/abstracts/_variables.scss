@@ -10,30 +10,6 @@ $white: hsl(100, 100%, 100%) !default;
 $black: hsl(0, 0%, 0%) !default;
 $dark: hsl(0, 0%, 7.1%) !default;
 
-// DEPRECATED palette — removed in v3
-$primary: #002678 !default;
-$secondary: #0075d6 !default;
-$accent: #fda001 !default;
-$success: hsl(145, 100%, 39%) !default;
-$muted: hsl(210, 7.3%, 35%) !default;
-$warning: hsl(40, 100%, 50%) !default;
-$info: hsl(190, 71%, 50%) !default;
-$danger: hsl(354, 73%, 51%) !default;
-
-$primary-colors: (
-        'primary': $primary,
-        'secondary': $secondary,
-        'accent': $accent,
-        'overlay': $black,
-        'dark': $dark,
-        'white': $white,
-        'success': $success,
-        'info': $info,
-        'warning': $warning,
-        'danger': $danger,
-        'muted': $muted,
-);
-
 // ==========================================================================
 // GRADIENT PRESETS & DYNAMIC MAPS
 // ==========================================================================
@@ -118,12 +94,6 @@ $scheme-colors: (
 // ==========================================================================
 // FONTS & TYPOGRAPHY SCALE TOKENS
 // ==========================================================================
-// DEPRECATED font variables — removed in v3
-$font-primary: var(--font-primary) !default;
-$font-secondary: var(--font-secondary) !default;
-$font-code: var(--font-code) !default;
-$font-icons: var(--font-icons) !default;
-
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
@@ -286,10 +256,6 @@ $dialog-border-radius: $rounded-lg !default;
 $form-border: 1px;
 $border-sm: 1px;
 $border-md: 2px;
-
-$space-1: 1rem;
-$space-2: 2rem;
-$space-3: 3rem;
 
 $spacing-sizes: (
         px: 1px,

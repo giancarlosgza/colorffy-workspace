@@ -120,8 +120,8 @@ Import only the modules you need:
 
 // Use them in your styles
 .custom-button {
-  background: vars.$primary;
-  @include mix.flex-center;
+  border-radius: vars.$button-border-radius;
+  @include mix.text-gradient(45deg, var(--theme-primary-base), var(--theme-accent-base));
 }
 ```
 
@@ -299,8 +299,6 @@ Each brand color has a light-mode (`-500`) and dark-mode (`-50`) token, for `pri
 }
 ```
 
-The `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$info`, `$muted`, `$primary-colors` and `$font-*` SCSS variables are deprecated: nothing reads them, and they will be removed in 3.0. Set the tokens above.
-
 ### Compile-time Variables with @forward
 
 ```scss
@@ -321,12 +319,10 @@ The `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$in
 @use '@colorffy/css/scss/abstracts/functions' as fn;
 
 .your-element {
-  @include mix.flex-center;
-  @include mix.glass-effect;
-  @include mix.text-gradient(45deg, (#ff0080, #ff8c00));
+  @include mix.text-gradient(45deg, #ff0080, #ff8c00);
 
-  // Use color functions
-  background: fn.tonal-color($primary, 10);
+  // Hover and pressed backgrounds from the shared state layer
+  background-color: fn.state-layer(var(--state-hover-opacity), var(--theme-surface-container));
 }
 ```
 
