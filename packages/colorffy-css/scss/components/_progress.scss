@@ -182,7 +182,7 @@
       background: linear-gradient(
         90deg,
         var(--theme-muted-a10) 25%,
-        var(--theme-muted-a5) 50%,
+        color-mix(in oklab, var(--theme-muted-a10) 50%, transparent) 50%,
         var(--theme-muted-a10) 75%
       );
       background-size: 200% 100%;

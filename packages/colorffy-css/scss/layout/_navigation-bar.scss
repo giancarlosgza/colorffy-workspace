@@ -171,13 +171,13 @@ $indicator-max-items: 8;
         .navigation-bar-link {
           .indicator {
             scale: 1;
-            transition: opacity 300ms var(--easing-out);
+            transition: opacity 300ms var(--_navigation-bar-easing-out);
           }
 
           &.nuxt-link-exact-active {
             .indicator {
               scale: 1;
-              transition: opacity 600ms var(--easing-in);
+              transition: opacity 600ms var(--_navigation-bar-easing-in);
             }
           }
         }

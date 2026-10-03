@@ -8,7 +8,7 @@
   // SIDEBAR NAVIGATION DRAWER LAYOUT
   // ==========================================================================
   .navigation-drawer {
-    --_drawer-radius: #{v.$rounded-xl v.$rounded-none v.$rounded-none v.$rounded-xl};
+    --_drawer-radius: #{v.$rounded-none v.$rounded-xl v.$rounded-xl v.$rounded-none};
     --_drawer-easing-in: #{v.$easing-in-fallback};
     --_drawer-easing-out: #{v.$easing-out-fallback};
     --_drawer-easing-duration: 300ms;
@@ -29,8 +29,7 @@
     box-shadow: var(--shadow-lg);
     z-index: 99;
     padding: var(--space-16);
-    border-top-right-radius: v.$rounded-xl;
-    border-bottom-right-radius: v.$rounded-xl;
+    border-radius: var(--_drawer-radius);
     will-change: translate, width;
     translate: 0;
     transition: width var(--_drawer-easing-duration) var(--_drawer-easing-out),
@@ -50,8 +49,9 @@
     }
 
     &.drawer-bordered {
+      --_drawer-radius: #{v.$rounded-none};
+
       box-shadow: none;
-      border-radius: v.$rounded-none;
       border-right: v.$border-sm solid var(--theme-outline-surface);
     }
 

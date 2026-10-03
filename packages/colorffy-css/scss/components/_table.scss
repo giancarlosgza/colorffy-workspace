@@ -58,7 +58,7 @@
           text-align: start;
           padding: calc(var(--_table-gutter-y) * 1.5) var(--_table-gutter-x);
           vertical-align: middle;
-          border-top: var(--_table-border-width) solid var(--theme-outline-surface);
+          border-top: var(--_table-border-width) solid var(--_table-border-color);
 
           &:first-child {
             border-top-left-radius: var(--_table-border-radius);
@@ -76,7 +76,7 @@
         font-size: var(--_table-font-size);
         line-height: 1.5;
 
-        border-top: var(--_table-border-width) solid var(--theme-outline-surface);
+        border-top: var(--_table-border-width) solid var(--_table-border-color);
         padding-inline: var(--_table-gutter-x);
         padding-block: var(--_table-gutter-y);
         vertical-align: middle;
@@ -151,7 +151,7 @@
           border-block: none;
 
           &:not(:first-child, :last-child) {
-            border-inline: var(--_table-border-width) solid var(--theme-outline-surface);
+            border-inline: var(--_table-border-width) solid var(--_table-border-color);
           }
 
           &:first-child {
@@ -166,7 +166,7 @@
 
       & tbody {
         & tr td {
-          border: var(--_table-border-width) solid var(--theme-outline-surface);
+          border: var(--_table-border-width) solid var(--_table-border-color);
 
           &:first-child {
             border-left: none;
@@ -255,7 +255,7 @@
               top: 0;
               right: 0;
               height: 100%;
-              border-right: var(--_table-border-width) solid var(--theme-outline-surface);
+              border-right: var(--_table-border-width) solid var(--_table-border-color);
             }
           }
         }

@@ -220,7 +220,7 @@
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
         animation: opacity-in 300ms ease-in-out both;
-        animation-timing-function: var(--_dialog-easing-duration);
+        animation-timing-function: var(--_dialog-easing-in);
       }
 
       & .dialog-content {

@@ -128,7 +128,7 @@
         --_form-check-input-indicator-color: var(--theme-muted-base);
         --_form-check-input-border-width: #{v.$border-md};
         --_form-check-input-active-bg-color: var(--theme-primary-a10);
-        --_form-check-input-activeborder-color: var(--theme-primary-a10);
+        --_form-check-input-active-border-color: var(--theme-primary-a10);
         --_form-check-input-indicator-active-color: var(--theme-surface-container-highest);
 
         position: relative;
@@ -159,7 +159,7 @@
 
         &:checked {
           background: var(--_form-check-input-active-bg-color);
-          border-color: var(--_form-check-input-active-bg-color);
+          border-color: var(--_form-check-input-active-border-color);
 
           &:after {
             left: 50%;

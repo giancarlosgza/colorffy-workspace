@@ -145,7 +145,7 @@
   // SEGMENTED CONTROL COMPONENT
   // ==========================================================================
   .segmented-control {
-    --_sc_easing-in: #{v.$easing-in-fallback};
+    --_sc-easing-in: #{v.$easing-in-fallback};
     --_sc-easing-duration: 200ms;
 
     display: flex;
