@@ -211,6 +211,11 @@ Components read these `:root` tokens, so they can be overridden at runtime (glob
 
 In custom CSS alongside Colorffy, use these tokens (e.g. `border-radius: var(--radius-md)`) instead of hardcoded values.
 
+### Component CSS Hooks
+Components expose public CSS variables named `--<component>-<prop>` (unprefixed in 2.x, `--cffy-` prefixed in 3.0). Set them on `:root` or any wrapper; each feeds the component's private `--_*` variable, and variants (e.g. `nav-island`) keep their own values. Prefer hooks over overriding `--_*` variables, which also overrides every variant.
+
+- **Navbar** (`.navbar`): `--navbar-bg-color`, `-color`, `-shadow`, `-radius`, `-padding-inline`, `-padding-block`, `-margin-block-end`, `-min-height`, `-easing`, `-duration`, `-brand-font-size`, `-brand-font-weight`, `-brand-size`, `-brand-hover-color`, `-title-font-size`, `-title-font-weight`, `-link-color`, `-link-hover-color`, `-link-hover-bg-color`, `-link-active-color`, `-link-active-bg-color`, `-link-font-size`, `-link-font-weight`, `-link-radius`, `-link-padding-inline`, `-link-padding-block`
+
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
 

@@ -21,8 +21,8 @@
 
           &:is(.nav-island) {
             --_nav-bg-color: var(--theme-surface-body-pane);
+            --_nav-shadow: var(--shadow-md);
 
-            box-shadow: var(--shadow-md);
             translate: 0 1rem;
           }
         }
@@ -32,10 +32,11 @@
     @supports not (container-type: scroll-state) {
       > .navbar {
         &:is(.nav-island) {
+          --_nav-bg-color: var(--theme-surface-overlay);
+
           margin-inline: auto;
           max-width: 100%;
           border-radius: var(--radius-none);
-          background: var(--theme-surface-overlay);
         }
       }
     }
@@ -45,14 +46,22 @@
   // MAIN TOP NAVBAR
   // ==========================================================================
   .navbar {
-    --_nav-bg-color: var(--theme-background);
-    --_nav-color: var(--theme-on-background);
-    --_nav-shadow: none;
-    --_nav-gutter-x: 0;
-    --_nav-gutter-y: var(--space-8);
-    --_nav-radius: var(--radius-none);
-    --_nav-easing-in: var(--ease-emphasized);
-    --_nav-easing-duration: var(--duration-600);
+    --_nav-bg-color: var(--navbar-bg-color, var(--theme-background));
+    --_nav-color: var(--navbar-color, var(--theme-on-background));
+    --_nav-shadow: var(--navbar-shadow, none);
+    --_nav-gutter-x: var(--navbar-padding-inline, 0);
+    --_nav-gutter-y: var(--navbar-padding-block, var(--space-8));
+    --_nav-block-end: var(--navbar-margin-block-end, var(--_nav-gutter-y));
+    --_nav-radius: var(--navbar-radius, var(--radius-none));
+    --_nav-min-height: var(--navbar-min-height, #{v.$navbar-min-height});
+    --_nav-easing-in: var(--navbar-easing, var(--ease-emphasized));
+    --_nav-easing-duration: var(--navbar-duration, var(--duration-600));
+    --_nav-brand-font-size: var(--navbar-brand-font-size, var(--fs-sm));
+    --_nav-brand-font-weight: var(--navbar-brand-font-weight, var(--fw-800));
+    --_nav-brand-size: var(--navbar-brand-size, 50px);
+    --_nav-brand-hover-color: var(--navbar-brand-hover-color, var(--theme-primary-a20));
+    --_nav-title-font-size: var(--navbar-title-font-size, var(--fs-sm));
+    --_nav-title-font-weight: var(--navbar-title-font-weight, var(--fw-600));
 
     position: relative;
     display: flex;
@@ -64,8 +73,8 @@
     box-shadow: var(--_nav-shadow);
     border-radius: var(--_nav-radius);
     z-index: v.$z-index-navbar;
-    margin-bottom: var(--_nav-gutter-y);
-    min-height: v.$navbar-min-height;
+    margin-bottom: var(--_nav-block-end);
+    min-height: var(--_nav-min-height);
     transition: background-color var(--_nav-easing-duration) var(--_nav-easing-in);
 
     > :where(.container, .container-fluid) {
@@ -85,9 +94,9 @@
       margin-inline: var(--space-6) 0;
 
       span, a {
-        font-size: var(--fs-sm);
+        font-size: var(--_nav-brand-font-size);
         font-family: var(--font-secondary);
-        font-weight: var(--fw-800);
+        font-weight: var(--_nav-brand-font-weight);
         line-height: 0;
         color: inherit;
         @extend .undecorated;
@@ -95,12 +104,12 @@
 
       img {
         width: 100%;
-        max-width: 50px;
-        max-height: 50px;
+        max-width: var(--_nav-brand-size);
+        max-height: var(--_nav-brand-size);
       }
 
       &:is(:hover) {
-        color: var(--theme-primary-a20);
+        color: var(--_nav-brand-hover-color);
       }
 
       &:is(:active, :focus) {
@@ -115,9 +124,9 @@
       gap: var(--space-6);
 
       .page-title {
-        font-size: var(--fs-sm);
-        font-weight: var(--fw-600);
-        color: var(--theme-on-background);
+        font-size: var(--_nav-title-font-size);
+        font-weight: var(--_nav-title-font-weight);
+        color: var(--_nav-color);
         letter-spacing: .5px;
         margin-bottom: 0;
         opacity: 0;
@@ -155,8 +164,14 @@
       transition: translate calc(var(--_nav-easing-duration) / 1.75) var(--_nav-easing-in);
 
       .navbar-nav {
-        --_nav-link-gutter-x: 0;
-        --_nav-link-gutter-y: var(--space-8);
+        --_nav-link-gutter-x: var(--navbar-link-padding-inline, 0);
+        --_nav-link-gutter-y: var(--navbar-link-padding-block, var(--space-8));
+        --_nav-link-color: var(--navbar-link-color, var(--theme-muted-a10));
+        --_nav-link-bg-color: transparent;
+        --_nav-link-border-color: transparent;
+        --_nav-link-radius: var(--navbar-link-radius, calc(var(--_nav-radius) + 0.5rem));
+        --_nav-link-font-size: var(--navbar-link-font-size, var(--fs-xs));
+        --_nav-link-font-weight: var(--navbar-link-font-weight, var(--fw-600));
 
         display: flex;
         flex-direction: column;
@@ -177,14 +192,14 @@
           .nav-link {
             position: relative;
             display: block;
-            border-radius: calc(var(--_nav-radius) + 0.5rem);
+            border-radius: var(--_nav-link-radius);
             padding: var(--_nav-link-gutter-y) var(--_nav-link-gutter-x);
-            background-color: transparent;
-            color: var(--theme-muted-a10);
-            border: var(--border-width-sm) solid transparent;
+            background-color: var(--_nav-link-bg-color);
+            color: var(--_nav-link-color);
+            border: var(--border-width-sm) solid var(--_nav-link-border-color);
             font-family: var(--font-primary);
-            font-size: var(--fs-xs);
-            font-weight: var(--fw-600);
+            font-size: var(--_nav-link-font-size);
+            font-weight: var(--_nav-link-font-weight);
             text-transform: none;
             text-decoration: none;
             user-select: none;
@@ -196,8 +211,8 @@
             background-color var(--duration-100) ease-in-out;
 
             &:is(:hover) {
-              color: var(--theme-primary-a10);
-              background-color: var(--theme-surface-container-high);
+              --_nav-link-color: var(--navbar-link-hover-color, var(--theme-primary-a10));
+              --_nav-link-bg-color: var(--navbar-link-hover-bg-color, var(--theme-surface-container-high));
 
               svg {
                 animation: spin 1s ease-in-out both;
@@ -205,7 +220,8 @@
             }
 
             &:is(.disabled) {
-              color: var(--theme-muted-a10);
+              --_nav-link-color: var(--theme-muted-a10);
+
               pointer-events: none;
               cursor: not-allowed;
               opacity: 0.65;
@@ -213,11 +229,11 @@
 
             // Nuxt and Vue Router active link
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
-              font-weight: var(--fw-800);
-              padding-inline: var(--space-16);
-              color: var(--theme-primary-a10);
-              background-color: var(--theme-surface-container);
-              border-color: var(--theme-surface-container);
+              --_nav-link-gutter-x: var(--space-16);
+              --_nav-link-color: var(--navbar-link-active-color, var(--theme-primary-a10));
+              --_nav-link-bg-color: var(--navbar-link-active-bg-color, var(--theme-surface-container));
+              --_nav-link-border-color: var(--_nav-link-bg-color);
+              --_nav-link-font-weight: var(--fw-800);
             }
 
             &:has(img, svg) {
@@ -234,8 +250,8 @@
             }
 
             &:is(.button-link) {
-              background-color: var(--theme-primary-a10);
-              color: var(--theme-on-primary);
+              --_nav-link-bg-color: var(--theme-primary-a10);
+              --_nav-link-color: var(--theme-on-primary);
             }
           }
 
@@ -264,7 +280,7 @@
     }
 
     &.nav-transparent {
-      background: transparent;
+      --_nav-bg-color: transparent;
     }
 
     &.nav-island {
@@ -281,7 +297,7 @@
         flex-basis: auto;
 
         .navbar-nav {
-          --_nav-link-gutter-x: var(--space-8);
+          --_nav-link-gutter-x: var(--navbar-link-padding-inline, var(--space-8));
 
           flex-direction: row;
         }
@@ -933,7 +949,7 @@
   @include m.media-query(960) {
     .navbar {
       &:has(.menu-tools-visible) {
-        background-color: var(--theme-surface-body-pane);
+        --_nav-bg-color: var(--theme-surface-body-pane);
       }
     }
 
@@ -972,11 +988,11 @@
   @include m.media-query(768) {
     .navbar {
       &:has(.popover-menu-visible) {
-        background-color: var(--theme-surface-body-pane);
+        --_nav-bg-color: var(--theme-surface-body-pane);
       }
 
       &:has(.popover-menu:popover-open) {
-        background-color: var(--theme-surface-body-pane);
+        --_nav-bg-color: var(--theme-surface-body-pane);
       }
     }
 
