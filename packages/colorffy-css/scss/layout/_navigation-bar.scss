@@ -12,8 +12,7 @@ $indicator-max-items: 8;
   .navigation-bar {
     --_navigation-bar-easing-in: var(--ease-overshoot-soft);
     --_navigation-bar-easing-out: var(--ease-accelerate);
-    --_navigation-bar-easing-duration: 600ms;
-    --_navigation-bar-easing-out-duration: 200ms;
+    --_navigation-bar-easing-duration: var(--duration-600);
     --_navigation-bar-padding-top: 0;
     --_navigation-bar-padding-bottom: 0;
     --_navigation-bar-font-size: .65rem;
@@ -166,13 +165,13 @@ $indicator-max-items: 8;
         .navigation-bar-link {
           .indicator {
             scale: 1;
-            transition: opacity 300ms var(--_navigation-bar-easing-out);
+            transition: opacity var(--duration-300) var(--_navigation-bar-easing-out);
           }
 
           &.nuxt-link-exact-active {
             .indicator {
               scale: 1;
-              transition: opacity 600ms var(--_navigation-bar-easing-in);
+              transition: opacity var(--duration-600) var(--_navigation-bar-easing-in);
             }
           }
         }

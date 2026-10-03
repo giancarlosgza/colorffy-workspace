@@ -5,7 +5,7 @@
   i:is(.material-symbols-rounded, .material-symbols-outlined, .material-symbols-sharp) {
     display: inline-flex;
     vertical-align: middle;
-    transition: all 0.3s var(--ease-decelerate);
+    transition: all var(--duration-300) var(--ease-decelerate);
     font-variation-settings: var(--iw-semi-bold);
   }
 
@@ -194,7 +194,7 @@
       --_icon-translate-pow: 5;
       --_icon-state-radius: 100%;
       --_icon-state-easing-in: var(--ease-spring);
-      --_icon-state-easing-duration: 800ms;
+      --_icon-state-easing-duration: var(--duration-800);
 
       height: var(--_icon-state-size);
       width: var(--_icon-state-size);
@@ -250,7 +250,7 @@
   .hover-scale {
     &:not(.disabled, :disabled) {
       & i {
-        transition: scale 300ms var(--ease-decelerate);
+        transition: scale var(--duration-300) var(--ease-decelerate);
       }
 
       &:is(:hover) {

@@ -42,7 +42,7 @@
       --_form-border-width: #{v.$form-border};
       --_form-border-color: var(--theme-outline-text-field);
       --_form-easing-in: var(--ease-emphasized);
-      --_form-easing-duration: 300ms;
+      --_form-easing-duration: var(--duration-300);
       --_form-font-size: 0.875rem;
 
       position: relative;
@@ -228,14 +228,14 @@
           outline: 5px solid var(--theme-surface-body-pane);
           margin-top: var(--_form-range-slider-margin);
           border-radius: var(--radius-full);
-          transition: width 100ms var(--_form-range-easing-in);
+          transition: width var(--duration-100) var(--_form-range-easing-in);
         }
 
         &:is(:focus)::-webkit-slider-thumb {
           --_form-range-slider-width: 0.20rem;
 
           outline: 5px solid var(--theme-surface-body-pane);
-          transition: width 100ms var(--_form-range-easing-in);
+          transition: width var(--duration-100) var(--_form-range-easing-in);
         }
 
         /* Firefox */
@@ -258,7 +258,7 @@
           --_form-range-slider-width: 0.20rem;
 
           outline: 5px solid var(--theme-surface-body-pane);
-          transition: width 100ms var(--_form-range-easing-in);
+          transition: width var(--duration-100) var(--_form-range-easing-in);
         }
 
         &:is(:hover) {
@@ -335,7 +335,7 @@
           padding: var(--space-14);
           margin-inline-start: var(--space-6);
           background-color: #0000ff;
-          transition: transform 0.1s ease;
+          transition: transform var(--duration-100) ease;
 
           &.disabled {
             opacity: 0.5;
@@ -429,7 +429,7 @@
       --_file-gap: var(--space-4);
       --_file-radius: var(--radius-md);
       --_file-easing-in: var(--ease-decelerate);
-      --_file-easing-duration: 100ms;
+      --_file-easing-duration: var(--duration-100);
       --_file-height: 5rem;
 
       display: grid;

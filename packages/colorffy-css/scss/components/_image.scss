@@ -14,7 +14,7 @@
   .img-avatar {
     --_img-avatar-radius: var(--radius-full);
     --_img-avatar-easing-in: var(--ease-spring);
-    --_img-avatar-easing-duration: 600ms;
+    --_img-avatar-easing-duration: var(--duration-600);
 
     aspect-ratio: 1;
     border-radius: var(--_img-avatar-radius);

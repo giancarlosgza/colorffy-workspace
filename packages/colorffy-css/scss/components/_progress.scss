@@ -1,4 +1,3 @@
-@use "sass:map";
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
@@ -22,7 +21,7 @@
     --_progress-height: 0.85rem;
     --_progress-radius: var(--radius-md);
     --_progress-easing-in: var(--ease-emphasized);
-    --_progress-easing-duration: 800ms;
+    --_progress-easing-duration: var(--duration-800);
 
     display: flex;
     overflow: hidden;
@@ -43,7 +42,7 @@
 
     // Progress bar
     & .progress-bar {
-      --_progress-bg-color: var(--theme-primary-a10);
+      --_progress-bg-color: var(--_progress-color);
 
       display: flex;
       flex-direction: column;
@@ -251,7 +250,6 @@
         --_shape-bg-alpha: 1;
         --_shape-bg-color: var(--theme-primary-a10);
         --_shape-size: 15rem;
-        --_shape-offset: 5rem;
 
         position: absolute;
         inset: 0;
@@ -304,19 +302,19 @@
 
   @keyframes colors {
     0% {
-      stroke: map.get(v.$primary-colors, primary);
+      stroke: var(--theme-primary-base);
     }
     25% {
-      stroke: map.get(v.$primary-colors, secondary);
+      stroke: var(--theme-secondary-base);
     }
     50% {
-      stroke: map.get(v.$primary-colors, accent);
+      stroke: var(--theme-accent-base);
     }
     75% {
-      stroke: map.get(v.$primary-colors, warning);
+      stroke: var(--theme-warning-base);
     }
     100% {
-      stroke: map.get(v.$primary-colors, success);
+      stroke: var(--theme-success-base);
     }
   }
 

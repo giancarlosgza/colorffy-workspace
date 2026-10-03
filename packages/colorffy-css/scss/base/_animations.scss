@@ -320,7 +320,7 @@
   .page-leave-active,
   .layout-enter-active,
   .layout-leave-active {
-    transition: opacity ease 0.2s;
+    transition: opacity ease var(--duration-200);
   }
 
   .page-enter,
@@ -334,15 +334,15 @@
     --_slide-easing-in: var(--ease-emphasized);
 
     overflow-x: clip;
-    transition: opacity 600ms var(--_slide-easing-in),
-    translate 800ms var(--_slide-easing-in);
+    transition: opacity var(--duration-600) var(--_slide-easing-in),
+    translate var(--duration-800) var(--_slide-easing-in);
   }
 
   .slide-leave-active {
     --_slide-easing-out: var(--ease-accelerate);
 
-    transition: opacity 200ms var(--_slide-easing-out),
-    translate 300ms var(--_slide-easing-out);
+    transition: opacity var(--duration-200) var(--_slide-easing-out),
+    translate var(--duration-300) var(--_slide-easing-out);
     overflow-x: clip;
   }
 
@@ -358,7 +358,7 @@
   .table-move,
   .table-enter-active,
   .table-leave-active {
-    transition: all 0.5s ease;
+    transition: all var(--duration-500) ease;
   }
 
   .table-enter-from,
@@ -378,11 +378,11 @@
     fade transition when isExpanding toggle
   */
   .table-td-fade-enter-active {
-    transition: all 0.5s ease-out;
+    transition: all var(--duration-500) ease-out;
   }
 
   .table-td-fade-leave-active {
-    transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all var(--duration-200) cubic-bezier(1, 0.5, 0.8, 1);
   }
 
   .table-td-fade-enter-from,
@@ -398,15 +398,15 @@
   .slide-inline-enter-active {
     --_slide-inline-easing-in: var(--ease-emphasized);
 
-    transition: translate 600ms var(--_slide-inline-easing-in),
-    opacity 600ms var(--_slide-inline-easing-in);
+    transition: translate var(--duration-600) var(--_slide-inline-easing-in),
+    opacity var(--duration-600) var(--_slide-inline-easing-in);
   }
 
   .slide-inline-leave-active {
     --_slide-inline-easing-out: var(--ease-emphasized);
 
-    transition: translate 300ms var(--_slide-inline-easing-out),
-    opacity 300ms var(--_slide-inline-easing-out);
+    transition: translate var(--duration-300) var(--_slide-inline-easing-out),
+    opacity var(--duration-300) var(--_slide-inline-easing-out);
   }
 
   .slide-inline-enter-from {
@@ -424,13 +424,13 @@
     vertical transition
   */
   .slide-block-enter-active {
-    transition: translate 800ms var(--ease-decelerate),
-    opacity 400ms var(--ease-decelerate);
+    transition: translate var(--duration-800) var(--ease-decelerate),
+    opacity var(--duration-400) var(--ease-decelerate);
   }
 
   .slide-block-leave-active {
-    transition: translate 400ms var(--ease-accelerate),
-    opacity 200ms var(--ease-accelerate);
+    transition: translate var(--duration-400) var(--ease-accelerate),
+    opacity var(--duration-200) var(--ease-accelerate);
   }
 
   .slide-block-enter-from {
@@ -450,15 +450,15 @@
   .fade-inline-enter-active {
     --_fade-inline-easing-in: var(--ease-decelerate);
 
-    transition: translate 400ms var(--_fade-inline-easing-in),
-    opacity 400ms var(--_fade-inline-easing-in);
+    transition: translate var(--duration-400) var(--_fade-inline-easing-in),
+    opacity var(--duration-400) var(--_fade-inline-easing-in);
   }
 
   .fade-inline-leave-active {
     --_fade-inline-easing-out: var(--ease-accelerate);
 
-    transition: translate 250ms var(--_fade-inline-easing-out),
-    opacity 250ms var(--_fade-inline-easing-out);
+    transition: translate var(--duration-250) var(--_fade-inline-easing-out),
+    opacity var(--duration-250) var(--_fade-inline-easing-out);
   }
 
   .fade-inline-enter-from {

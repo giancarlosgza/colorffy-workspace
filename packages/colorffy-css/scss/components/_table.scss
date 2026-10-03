@@ -29,8 +29,8 @@
   // STANDARD TABLE COMPONENT
   // ==========================================================================
   .table {
-    --_table-bg-color: var(--theme-surface-container);
-    --_table-color: var(--theme-on-background);
+    --_table-bg-color: transparent;
+    --_table-color: currentColor;
     --_table-border-color: var(--theme-outline-surface);
     --_table-border-width: var(--border-width-sm);
     --_table-gutter-x: var(--space-8);
@@ -44,6 +44,8 @@
     border-collapse: collapse;
     border-spacing: 0;
     font-size: var(--_table-font-size);
+    background-color: var(--_table-bg-color);
+    color: var(--_table-color);
 
     thead {
       background-color: var(--_table-thead-bg-color);
@@ -209,7 +211,7 @@
     &.table-hover {
       tbody {
         tr {
-          transition: background-color 100ms ease-in-out;
+          transition: background-color var(--duration-100) ease-in-out;
 
           &:is(:hover) {
             background-color: var(--theme-surface-a10);
@@ -246,8 +248,8 @@
         @supports (container-type: scroll-state) {
           @container scroll-state(scrollable: left) {
             background: var(--theme-surface-body-pane);
-            transition: background-color 100ms var(--ease-decelerate),
-            border 100ms var(--ease-decelerate);
+            transition: background-color var(--duration-100) var(--ease-decelerate),
+            border var(--duration-100) var(--ease-decelerate);
 
             &:after {
               content: '';

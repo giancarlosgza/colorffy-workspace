@@ -28,7 +28,7 @@
     --_dropdown-radius: var(--radius-lg);
     --_dropdown-easing-in: var(--ease-overshoot-soft);
     --_dropdown-easing-out: var(--ease-accelerate);
-    --_dropdown-easing-duration: 500ms;
+    --_dropdown-easing-duration: var(--duration-500);
     --_dropdown-item-gutter-x: var(--space-8);
     --_dropdown-item-gutter-y: var(--space-8);
 
@@ -342,7 +342,7 @@
       // ==========================================================================
       &.v-popper__popper--no-positioning {
         --_dropdown-easing-in: var(--ease-overshoot-soft);
-        --_dropdown-easing-duration: 500ms;
+        --_dropdown-easing-duration: var(--duration-500);
 
 
         position: fixed;
@@ -394,8 +394,8 @@
           .v-popper__wrapper {
             translate: 0 50dvh;
             transition: translate calc(var(--_dropdown-easing-duration) / 2) var(--_dropdown-easing-out),
-            opacity 100ms ease-in-out,
-            visibility 100ms ease-in-out;
+            opacity var(--duration-100) ease-in-out,
+            visibility var(--duration-100) ease-in-out;
           }
         }
 
@@ -406,8 +406,8 @@
           .v-popper__wrapper {
             translate: 0;
             transition: translate var(--_dropdown-easing-duration) var(--_dropdown-easing-in),
-            opacity 100ms ease-in-out,
-            visibility 100ms ease-in-out;
+            opacity var(--duration-100) ease-in-out,
+            visibility var(--duration-100) ease-in-out;
           }
         }
       }

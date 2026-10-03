@@ -11,7 +11,7 @@
     --_drawer-radius: #{var(--radius-none) var(--radius-xl) var(--radius-xl) var(--radius-none)};
     --_drawer-easing-in: var(--ease-emphasized);
     --_drawer-easing-out: var(--ease-emphasized);
-    --_drawer-easing-duration: 600ms;
+    --_drawer-easing-duration: var(--duration-600);
     --_drawer-gutter: var(--space-8);
     --_discrete: allow-discrete;
     --_drawer-bg-color: var(--theme-background);
@@ -229,9 +229,9 @@
         align-items: center;
         translate: 0;
         transform-origin: left bottom;
-        transition: opacity 150ms ease-in-out,
-          display 150ms ease-in-out var(--_discrete),
-          translate 150ms ease-in-out;
+        transition: opacity var(--duration-150) ease-in-out,
+          display var(--duration-150) ease-in-out var(--_discrete),
+          translate var(--duration-150) ease-in-out;
 
         &:is(.dropdown-switcher) {
           justify-content: space-between;
@@ -338,7 +338,7 @@
   // Media query for reduced motion
   @media (prefers-reduced-motion) {
     .navigation-drawer {
-      --_drawer-easing-duration: 300ms;
+      --_drawer-easing-duration: var(--duration-300);
 
       transition-timing-function: step-start;
 
@@ -368,7 +368,7 @@
     background: color-mix(in srgb, var(--color-brand-black-500) 25%, transparent);
     z-index: calc(#{v.$z-index-fullscreen} - 1);
     backdrop-filter: blur(2px);
-    animation: fade-in 200ms ease-out forwards;
+    animation: fade-in var(--duration-200) ease-out forwards;
   }
 
   // ==========================================================================

@@ -370,8 +370,8 @@
 
         opacity: 0;
         visibility: hidden;
-        transition: opacity 200ms ease-in-out,
-        visibility 200ms ease-in-out;
+        transition: opacity var(--duration-200) ease-in-out,
+        visibility var(--duration-200) ease-in-out;
       }
     }
   }
@@ -398,7 +398,7 @@
         transform-origin: left;
 
         scale: 0 1;
-        transition: scale 200ms var(--ease-accelerate);
+        transition: scale var(--duration-200) var(--ease-accelerate);
       }
     }
 
@@ -409,7 +409,7 @@
 
         &:after {
           scale: 1 1;
-          transition: scale 300ms ease-in-out;
+          transition: scale var(--duration-300) ease-in-out;
         }
       }
     }
@@ -417,7 +417,7 @@
 
   .text-highlight {
     &:is(.highlight-pulse) {
-      animation: 500ms ease-in-out zoom-in-out both;
+      animation: var(--duration-500) ease-in-out zoom-in-out both;
       animation-iteration-count: 3;
     }
   }

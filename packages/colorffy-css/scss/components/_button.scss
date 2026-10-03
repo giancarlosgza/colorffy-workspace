@@ -20,7 +20,7 @@
       --_btn-icon-size: 1.15rem;
       --_btn-shadow: var(--shadow-sm);
       --_btn-easing-in: var(--ease-decelerate);
-      --_btn-easing-duration: 300ms;
+      --_btn-easing-duration: var(--duration-300);
 
       @include m.btn-base();
 
@@ -375,7 +375,7 @@
 
         background: linear-gradient(var(--gradient-angle), var(--_gradient-stops)) border-box;
         color: var(--theme-on-primary);
-        transition: all 800ms var(--ease-emphasized), --gradient-angle 800ms var(--ease-emphasized);
+        transition: all var(--duration-800) var(--ease-emphasized), --gradient-angle var(--duration-800) var(--ease-emphasized);
 
         &:is(:hover) {
           --gradient-angle: 180deg;
@@ -434,7 +434,7 @@
 
       &.btn-fab {
         --_btn-easing-in: var(--ease-sine-in-out);
-        --_btn-easing-duration: 300ms;
+        --_btn-easing-duration: var(--duration-300);
         --_btn-columns: 1fr;
         --_btn-gap: 0;
         --_btn-radius: calc(#{v.$button-border-radius} + 8px);
@@ -469,7 +469,7 @@
       // Effects
       &.btn-bounce {
         --_btn-easing-in: var(--ease-bounce);
-        --_btn-easing-duration: 600ms;
+        --_btn-easing-duration: var(--duration-600);
 
 
         transition: scale var(--_btn-easing-duration) var(--_btn-easing-in);
@@ -540,7 +540,7 @@
         & svg {
           grid-area: stack;
           visibility: hidden;
-          transition: grid-areas 300ms ease-in-out;
+          transition: grid-areas var(--duration-300) ease-in-out;
         }
 
         &:is(:focus, :active) {

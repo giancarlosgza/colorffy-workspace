@@ -15,9 +15,7 @@
     --_dialog-max-size: 90%;
     --_discrete: allow-discrete;
     --_dialog-easing-in: var(--ease-decelerate);
-    --_dialog-easing-out: var(--ease-accelerate);
-    --_dialog-easing-duration: 600ms;
-    --_dialog-easing-out-duration: 300ms;
+    --_dialog-easing-duration: var(--duration-600);
 
     position: fixed;
     inset: 0;
@@ -113,7 +111,7 @@
     // Modal
     &.dialog-modal {
       --_dialog-easing-in: var(--ease-overshoot-soft);
-      --_dialog-easing-duration: 600ms;
+      --_dialog-easing-duration: var(--duration-600);
 
       border-radius: var(--_dialog-radius);
 
@@ -124,8 +122,8 @@
 
       &, &::backdrop {
         opacity: 0;
-        transition: overlay 150ms var(--_discrete),
-        display 600ms var(--_discrete),
+        transition: overlay var(--duration-150) var(--_discrete),
+        display var(--duration-600) var(--_discrete),
         scale var(--_dialog-easing-duration),
         translate var(--_dialog-easing-duration),
         opacity calc(var(--_dialog-easing-duration) / 3);
@@ -158,7 +156,7 @@
 
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
-        animation: fade-in-down 300ms ease-in-out both;
+        animation: fade-in-down var(--duration-300) ease-in-out both;
         animation-timing-function: var(--_dialog-easing-in);
       }
     }
@@ -166,7 +164,7 @@
     // Side Sheet
     &.dialog-side-sheet {
       --_dialog-easing-in: var(--ease-overshoot-soft);
-      --_dialog-easing-duration: 600ms;
+      --_dialog-easing-duration: var(--duration-600);
       --_dialog-radius: #{v.$dialog-border-radius};
 
       inset-inline: auto var(--space-8);
@@ -183,7 +181,7 @@
 
       &, &::backdrop {
         opacity: 0;
-        transition: overlay 150ms var(--_discrete),
+        transition: overlay var(--duration-150) var(--_discrete),
         display 350ms var(--_discrete),
         translate var(--_dialog-easing-duration),
         opacity calc(var(--_dialog-easing-duration));
@@ -214,7 +212,7 @@
 
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
-        animation: opacity-in 300ms ease-in-out both;
+        animation: opacity-in var(--duration-300) ease-in-out both;
         animation-timing-function: var(--_dialog-easing-in);
       }
 
@@ -367,7 +365,7 @@
 
       &:is(.dialog-modal) {
         --_dialog-easing-in: var(--ease-decelerate);
-        --_dialog-easing-duration: 500ms;
+        --_dialog-easing-duration: var(--duration-500);
         --_dialog-radius: var(--radius-xl) var(--radius-xl) 0 0;
 
         /* 0. Not visible default state */
@@ -376,8 +374,8 @@
         transform-origin: bottom center;
 
         & {
-          transition: overlay 100ms var(--_discrete),
-          display 100ms var(--_discrete),
+          transition: overlay var(--duration-100) var(--_discrete),
+          display var(--duration-100) var(--_discrete),
           scale var(--_dialog-easing-duration),
           translate var(--_dialog-easing-duration),
           opacity calc(var(--_dialog-easing-duration) / 3);

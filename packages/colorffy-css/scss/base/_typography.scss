@@ -155,7 +155,7 @@
     --_hyperlink-bg-color: var(--theme-primary-a20);
     --_hyperlink-radius: var(--radius-full);
     --_hyperlink-easing-in: var(--ease-spring);
-    --_hyperlink-easing-duration: 800ms;
+    --_hyperlink-easing-duration: var(--duration-800);
 
     color: var(--_hyperlink-color);
     text-decoration: none;

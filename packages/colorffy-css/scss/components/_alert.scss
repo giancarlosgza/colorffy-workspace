@@ -124,6 +124,7 @@
     --_alert-gap: var(--space-8);
     --_alert-stack-gap: var(--_alert-padding-block);
     --_alert-columns: 1fr auto;
+    --_alert-flex-direction: row;
 
     display: grid;
     grid-template-columns: var(--_alert-columns);
@@ -178,7 +179,7 @@
 
     .alert-content {
       display: flex;
-      flex-direction: row;
+      flex-direction: var(--_alert-flex-direction);
       gap: var(--_alert-gap);
       align-items: center;
       @include m.text-wrap-pretty;
@@ -332,7 +333,7 @@
 
       &.show {
         display: flex;
-        animation: fade-in-down 300ms ease-in-out;
+        animation: fade-in-down var(--duration-300) ease-in-out;
       }
 
       // Variants
@@ -389,6 +390,10 @@
         --_alert-flex-direction: column;
 
         align-items: flex-start;
+
+        .alert-content {
+          align-items: flex-start;
+        }
       }
     }
 

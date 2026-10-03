@@ -15,7 +15,7 @@
     --_form-check-input-border-color: var(--theme-outline-text-field);
     --_form-check-input-checked-icon: none;
     --_form-check-easing-in: var(--ease-emphasized);
-    --_form-check-easing-duration: 300ms;
+    --_form-check-easing-duration: var(--duration-300);
 
     display: flex;
     align-items: center;

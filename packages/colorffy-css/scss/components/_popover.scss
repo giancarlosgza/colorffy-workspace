@@ -28,7 +28,7 @@
 
     translate: 0 1rem;
     opacity: 0;
-    transition: translate 250ms, opacity 250ms, display 250ms allow-discrete, overlay 250ms allow-discrete;
+    transition: translate var(--duration-250), opacity var(--duration-250), display var(--duration-250) allow-discrete, overlay var(--duration-250) allow-discrete;
     transition-timing-function: ease-in-out;
 
     // ==========================================================================

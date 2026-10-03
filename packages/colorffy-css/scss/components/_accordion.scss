@@ -23,7 +23,7 @@
       --_accordion-body-fs: var(--fs-2xs);
       --_accordion-content-gap: var(--space-16);
       --_accordion-easing-in: var(--ease-overshoot-soft);
-      --_accordion-easing-duration: 600ms;
+      --_accordion-easing-duration: var(--duration-600);
 
       display: flex;
       flex-direction: column;

@@ -38,7 +38,7 @@
     font-family: var(--font-primary);
     font-optical-sizing: auto;
     letter-spacing: -.15px;
-    transition: font-variation-settings 500ms var(--ease-spring);
+    transition: font-variation-settings var(--duration-500) var(--ease-spring);
 
     @if ($bold == true) {
       font-variation-settings: var(--vfs-heading-bold);
@@ -538,7 +538,6 @@
 // ==========================================================================
 @mixin container {
   --_container-gutter-x: 1.5rem;
-  --_container-gutter-y: 0;
 
   margin-inline: auto;
   padding-inline: calc(var(--_container-gutter-x) * .5);
@@ -564,7 +563,6 @@
 // Fluid container styles
 @mixin container-fluid {
   --_container-gutter-x: 1.5rem;
-  --_container-gutter-y: 0;
 
   margin-inline: auto;
   padding-inline: calc(var(--_container-gutter-x) * .5);

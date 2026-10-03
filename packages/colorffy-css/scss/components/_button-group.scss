@@ -146,7 +146,7 @@
   // ==========================================================================
   .segmented-control {
     --_sc-easing-in: var(--ease-spring);
-    --_sc-easing-duration: 800ms;
+    --_sc-easing-duration: var(--duration-800);
 
     display: flex;
     border: var(--border-width-sm) solid var(--theme-outline-button);
@@ -216,7 +216,7 @@
       --_toggle-btn-border-size: var(--border-width-sm);
       --_toggle-btn-border-color: var(--theme-outline-button);
       --_toggle-btn-easing-in: var(--ease-decelerate);
-      --_toggle-btn-easing-duration: 300ms;
+      --_toggle-btn-easing-duration: var(--duration-300);
 
       background: var(--_toggle-btn-bg-color);
       color: var(--_toggle-btn-color);

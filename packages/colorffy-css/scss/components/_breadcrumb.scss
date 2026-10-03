@@ -47,7 +47,7 @@
       color: var(--_breadcrumb-color);
       text-decoration: none;
       border-radius: var(--radius-sm);
-      transition: color 0.15s ease;
+      transition: color var(--duration-150) ease;
 
       &:hover,
       &:focus-visible {

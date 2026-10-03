@@ -6,6 +6,11 @@ $property-prefix: theme- !default;
 // ==========================================================================
 // COLOR PALETTE TOKENS
 // ==========================================================================
+$white: hsl(100, 100%, 100%) !default;
+$black: hsl(0, 0%, 0%) !default;
+$dark: hsl(0, 0%, 7.1%) !default;
+
+// DEPRECATED palette — removed in v3
 $primary: #002678 !default;
 $secondary: #0075d6 !default;
 $accent: #fda001 !default;
@@ -14,9 +19,6 @@ $muted: hsl(210, 7.3%, 35%) !default;
 $warning: hsl(40, 100%, 50%) !default;
 $info: hsl(190, 71%, 50%) !default;
 $danger: hsl(354, 73%, 51%) !default;
-$white: hsl(100, 100%, 100%) !default;
-$black: hsl(0, 0%, 0%) !default;
-$dark: hsl(0, 0%, 7.1%) !default;
 
 $primary-colors: (
         'primary': $primary,
@@ -71,7 +73,7 @@ $gradient-ghost: #715cff, #6851ff !default;
 $gradient-ghost-emphasized: #150a62, #6851ff !default;
 $gradient-amethyst: #8200e7, #bf3eff !default;
 $gradient-forest: #33d655, #29ac4a, #21823e !default;
-$gradient-galaxy: $accent, #715cff, #bf3eff, #ee5aaf, $accent !default;
+$gradient-galaxy: var(--color-brand-accent-500), #715cff, #bf3eff, #ee5aaf, var(--color-brand-accent-500) !default;
 $gradient-darkblue: #292a4b, #47497a, #8587b0, #c4c5d9 !default;
 
 $static-gradients: (
@@ -116,6 +118,7 @@ $scheme-colors: (
 // ==========================================================================
 // FONTS & TYPOGRAPHY SCALE TOKENS
 // ==========================================================================
+// DEPRECATED font variables — removed in v3
 $font-primary: var(--font-primary) !default;
 $font-secondary: var(--font-secondary) !default;
 $font-code: var(--font-code) !default;

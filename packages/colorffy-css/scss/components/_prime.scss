@@ -387,9 +387,9 @@
   // ==========================================================================
   .p-inputswitch {
     --_p-switch-easing-in: var(--ease-decelerate);
-    --_p-switch-easing-duration: 600ms;
+    --_p-switch-easing-duration: var(--duration-600);
     --_p-switch-slider-easing-in: var(--ease-spring);
-    --_p-switch-slider-easing-duration: 800ms;
+    --_p-switch-slider-easing-duration: var(--duration-800);
 
     width: 3rem;
     height: 1.75rem;

@@ -16,7 +16,7 @@
       }
 
       &:not(:active):focus-visible {
-        transition-duration: .25s;
+        transition-duration: var(--duration-250);
       }
     }
 

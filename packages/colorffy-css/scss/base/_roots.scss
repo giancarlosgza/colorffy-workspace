@@ -234,6 +234,18 @@
     --ease-power-in-out: #{v.$easing-power-in-out};
     --ease-sine-in-out: #{v.$easing-sine-in-out};
 
+    /* durations */
+    --duration-unit: 1ms;
+    --duration-100: calc(var(--duration-unit) * 100);
+    --duration-150: calc(var(--duration-unit) * 150);
+    --duration-200: calc(var(--duration-unit) * 200);
+    --duration-250: calc(var(--duration-unit) * 250);
+    --duration-300: calc(var(--duration-unit) * 300);
+    --duration-400: calc(var(--duration-unit) * 400);
+    --duration-500: calc(var(--duration-unit) * 500);
+    --duration-600: calc(var(--duration-unit) * 600);
+    --duration-800: calc(var(--duration-unit) * 800);
+
     /* focus ring */
     --focus-ring-color: var(--theme-on-background);
     --focus-ring-offset: .3rem;

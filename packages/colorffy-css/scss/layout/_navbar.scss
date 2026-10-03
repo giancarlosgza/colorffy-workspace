@@ -52,7 +52,7 @@
     --_nav-gutter-y: var(--space-8);
     --_nav-radius: var(--radius-none);
     --_nav-easing-in: var(--ease-emphasized);
-    --_nav-easing-duration: 600ms;
+    --_nav-easing-duration: var(--duration-600);
 
     position: relative;
     display: flex;
@@ -123,9 +123,9 @@
         opacity: 0;
         visibility: hidden;
         translate: 0 .5rem;
-        transition: opacity 500ms var(--_nav-easing-in),
-        visibility 500ms var(--_nav-easing-in),
-        translate 500ms var(--_nav-easing-in);
+        transition: opacity var(--duration-500) var(--_nav-easing-in),
+        visibility var(--duration-500) var(--_nav-easing-in),
+        translate var(--duration-500) var(--_nav-easing-in);
 
         /** Show the title when the navbar is sticky */
         @container scroll-state(stuck: top) {
@@ -190,10 +190,10 @@
             user-select: none;
             @extend .undecorated;
 
-            transition: color 100ms ease-in-out,
-            border-color 100ms ease-in-out,
-            padding 100ms ease-in-out,
-            background-color 100ms ease-in-out;
+            transition: color var(--duration-100) ease-in-out,
+            border-color var(--duration-100) ease-in-out,
+            padding var(--duration-100) ease-in-out,
+            background-color var(--duration-100) ease-in-out;
 
             &:is(:hover) {
               color: var(--theme-primary-a10);
@@ -300,8 +300,8 @@
     --_popover-menu-gutter: var(--space-16);
     --_popover-menu-easing-in: var(--ease-spring);
     --_popover-menu-easing-out: var(--ease-accelerate);
-    --_popover-menu-easing-duration: 800ms;
-    --_popover-menu-easing-out-duration: 200ms;
+    --_popover-menu-easing-duration: var(--duration-800);
+    --_popover-menu-easing-out-duration: var(--duration-200);
 
     position: relative;
 
@@ -333,15 +333,15 @@
       transform-origin: top right;
       transition: translate var(--_popover-menu-easing-out-duration) var(--_popover-menu-easing-out),
       opacity var(--_popover-menu-easing-out-duration) var(--_popover-menu-easing-out),
-      visibility calc(var(--_popover-menu-easing-out-duration) + 100ms) var(--_popover-menu-easing-out);
+      visibility calc(var(--_popover-menu-easing-out-duration) + var(--duration-100)) var(--_popover-menu-easing-out);
 
       &.popover-menu-visible {
         visibility: visible;
         opacity: 1;
         translate: 0;
         transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-        opacity calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate),
-        visibility calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate);
+        opacity calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate),
+        visibility calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate);
       }
 
       // Native popover
@@ -366,7 +366,7 @@
           opacity: 1;
           translate: 0;
           transition: translate var(--_popover-menu-easing-duration) var(--_popover-menu-easing-in),
-          opacity calc(var(--_popover-menu-easing-duration) - 250ms) var(--ease-decelerate),
+          opacity calc(var(--_popover-menu-easing-duration) - var(--duration-250)) var(--ease-decelerate),
           display var(--_popover-menu-easing-duration) allow-discrete,
           overlay var(--_popover-menu-easing-duration) allow-discrete;
 
@@ -466,9 +466,9 @@
           background-color: transparent;
           text-align: start;
           cursor: pointer;
-          transition: color 100ms var(--_popover-menu-easing-out),
-          background-color 100ms var(--_popover-menu-easing-out),
-          border-radius 300ms var(--_popover-menu-easing-out);
+          transition: color var(--duration-100) var(--_popover-menu-easing-out),
+          background-color var(--duration-100) var(--_popover-menu-easing-out),
+          border-radius var(--duration-300) var(--_popover-menu-easing-out);
           @extend .undecorated;
 
           & p {
@@ -563,10 +563,10 @@
       --_menu-tool-grid-tabs-cols: repeat(3, 1fr);
       --_menu-tool-grid-tools-cols: repeat(2, 1fr);
       --_menu-tool-easing-in: var(--ease-emphasized);
-      --_menu-tool-easing-duration: 600ms;
+      --_menu-tool-easing-duration: var(--duration-600);
       --_menu-tool-easing-out: var(--ease-accelerate);
       --_menu-tool-item-easing-in: var(--ease-decelerate);
-      --_menu-tool-item-easing-duration: 500ms;
+      --_menu-tool-item-easing-duration: var(--duration-500);
 
       position: absolute;
       top: calc(#{v.$navbar-min-height} - .4rem);
@@ -598,7 +598,7 @@
           opacity: 1;
           transition: opacity calc(var(--_menu-tool-easing-duration) * 2) var(--_menu-tool-easing-in),
           scale calc(var(--_menu-tool-easing-duration) * 2) var(--_menu-tool-easing-in);
-          transition-delay: 200ms;
+          transition-delay: var(--duration-200);
         }
       }
 
@@ -744,7 +744,7 @@
                 & p {
                   &:is(.subtitle-1) {
                     & i {
-                      --_menu-tool-easing-duration: 300ms;
+                      --_menu-tool-easing-duration: var(--duration-300);
 
                       translate: .25rem;
                       opacity: 1;
@@ -834,11 +834,11 @@
     .menu-tools-container {
       .menu-tools {
         translate: 0;
-        transition: opacity 200ms ease-out, visibility 200ms ease-out;
+        transition: opacity var(--duration-200) ease-out, visibility var(--duration-200) ease-out;
 
         &.menu-tools-visible {
           translate: 0;
-          transition: opacity 200ms ease-in, visibility 200ms ease-in;
+          transition: opacity var(--duration-200) ease-in, visibility var(--duration-200) ease-in;
         }
       }
     }
@@ -846,19 +846,19 @@
     .popover-menu-container {
       .popover-menu {
         translate: 0;
-        transition: opacity 100ms ease-out, visibility 100ms ease-out;
+        transition: opacity var(--duration-100) ease-out, visibility var(--duration-100) ease-out;
 
         &.popover-menu-visible {
           translate: 0;
-          transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+          transition: opacity var(--duration-150) ease-in-out, visibility var(--duration-150) ease-in-out;
         }
 
         &:where([popover]) {
-          transition: opacity 100ms ease-out, display 100ms allow-discrete, overlay 100ms allow-discrete;
+          transition: opacity var(--duration-100) ease-out, display var(--duration-100) allow-discrete, overlay var(--duration-100) allow-discrete;
         }
 
         &:popover-open {
-          transition: opacity 150ms ease-in-out, display 150ms allow-discrete, overlay 150ms allow-discrete;
+          transition: opacity var(--duration-150) ease-in-out, display var(--duration-150) allow-discrete, overlay var(--duration-150) allow-discrete;
         }
       }
     }

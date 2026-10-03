@@ -27,7 +27,7 @@
     box-shadow: var(--_card-shadow);
     border: var(--_card-border) solid var(--_card-border-color);
     border-radius: var(--_card-radius);
-    transition: all 300ms var(--ease-decelerate);
+    transition: all var(--duration-300) var(--ease-decelerate);
 
     // Cover image (imageUrl/#media slot), full-bleed with the card's top radius
     .card-image {
@@ -111,10 +111,10 @@
       --_card-easing-in: var(--ease-emphasized);
 
       cursor: pointer;
-      transition: background-color 300ms var(--_card-easing-in),
-      border-color 300ms var(--_card-easing-in),
-      box-shadow 300ms var(--_card-easing-in),
-      translate 600ms var(--_card-easing-in);
+      transition: background-color var(--duration-300) var(--_card-easing-in),
+      border-color var(--duration-300) var(--_card-easing-in),
+      box-shadow var(--duration-300) var(--_card-easing-in),
+      translate var(--duration-600) var(--_card-easing-in);
 
       &:is(:hover) {
         --_card-bg-color: var(--theme-surface-overlay);
