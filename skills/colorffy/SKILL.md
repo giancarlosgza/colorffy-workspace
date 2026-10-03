@@ -188,13 +188,14 @@ const name = ref('')
 
 Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values:
 
-- **Spacing:** `var(--space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--space-unit` (override it for runtime density)
-- **Font sizes:** `var(--fs-4xs…5xl)` + `var(--fs-{step}--line-height)` companions
+- **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--cffy-space-unit` (override it for runtime density)
+- **Font sizes:** `var(--cffy-fs-4xs…5xl)` + `var(--cffy-fs-{step}--line-height)` companions
 
 **[See theming reference →](references/theming.md)**
 
 ## Breaking changes
 
+- **Namespace (3.0):** every public custom property is `--cffy-*`. The old `--theme-*` tier swapped `theme-` for the namespace (`--theme-primary-a10` → `--cffy-primary-a10`); every other public name gained it (`--space-16` → `--cffy-space-16`, `--color-brand-primary-500` → `--cffy-color-brand-primary-500`, `--card-bg-color` → `--cffy-card-bg-color`). Privates (`--_*`) and PrimeVue's `--p-*` are unchanged. Never write an unprefixed Colorffy token.
 - **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
 - **`UiPopoverMenu` identity:** the default header is a `title` plus the close button (`closable` defaults to `true`); put identity in the `header` slot with `UiPopoverMenuUser`, which takes a `user` object. The old `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` props and the `body-extra` slot were removed in 3.0.
 - **`UiPopoverMenu` renders as a native popover:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"` with native light dismiss; the `isOpened`/`hideDropdown` contract is unchanged. Custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]` for that branch, or opt out with `:native-popover="false"`.
@@ -203,7 +204,7 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 Still to come before 3.0 ships:
 
-- Public tokens gain a namespace prefix (planned `--cffy-*`) and a `--container-*` width scale may absorb one-offs like `--theme-nav-drawer-width`. Neither exists yet — don't reference them. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--space-*` tokens).
+- A `--cffy-container-*` width scale may absorb one-offs like `--cffy-nav-drawer-width`. It doesn't exist yet — don't reference it. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--cffy-space-*` tokens).
 
 **[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
 

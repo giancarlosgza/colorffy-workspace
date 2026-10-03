@@ -11,18 +11,18 @@ $indicator-max-items: 16;
   // TABS COMPONENT
   // ==========================================================================
   .tabs-navigation {
-    --_tabs-gap: var(--tabs-gap, var(--space-8));
+    --_tabs-gap: var(--cffy-tabs-gap, var(--cffy-space-8));
     --_tabs-margin-inline: 0;
-    --_tabs-radius: var(--radius-none);
+    --_tabs-radius: var(--cffy-radius-none);
     --_tabs-bg-color: transparent;
-    --_tabs-border-color: var(--tabs-border-color, var(--theme-outline-button));
-    --_tabs-indicator-size: var(--tabs-indicator-size, calc(var(--border-width-md) + 1px));
-    --_tabs-indicator-color: var(--tabs-indicator-color, var(--theme-primary-a10));
-    --_tabs-indicator-anchor: --tabs-item-1;
-    --_tabs-duration: var(--tabs-duration, var(--duration-300));
-    --_tabs-easing: var(--tabs-easing, var(--ease-decelerate));
-    --_tabs-link-color: var(--tabs-link-color, var(--theme-muted-a10));
-    --_tabs-link-font-weight: var(--tabs-link-font-weight, var(--fw-500));
+    --_tabs-border-color: var(--cffy-tabs-border-color, var(--cffy-outline-button));
+    --_tabs-indicator-size: var(--cffy-tabs-indicator-size, calc(var(--cffy-border-width-md) + 1px));
+    --_tabs-indicator-color: var(--cffy-tabs-indicator-color, var(--cffy-primary-a10));
+    --_tabs-indicator-anchor: --cffy-tabs-item-1;
+    --_tabs-duration: var(--cffy-tabs-duration, var(--cffy-duration-300));
+    --_tabs-easing: var(--cffy-tabs-easing, var(--cffy-ease-decelerate));
+    --_tabs-link-color: var(--cffy-tabs-link-color, var(--cffy-muted-a10));
+    --_tabs-link-font-weight: var(--cffy-tabs-link-font-weight, var(--cffy-fw-500));
 
     position: relative;
     display: flex;
@@ -40,10 +40,10 @@ $indicator-max-items: 16;
     height: auto;
     background: var(--_tabs-bg-color);
     border-radius: var(--_tabs-radius);
-    border-bottom: var(--border-width-sm) solid var(--_tabs-border-color);
+    border-bottom: var(--cffy-border-width-sm) solid var(--_tabs-border-color);
 
     scrollbar-width: thin;
-    scrollbar-color: var(--theme-muted-base) transparent;
+    scrollbar-color: var(--cffy-muted-base) transparent;
 
     // Fluid
     &.tabs-fluid {
@@ -67,7 +67,7 @@ $indicator-max-items: 16;
     // Small
     &.tabs-sm {
       .tab-item .tab-link {
-        --_btn-padding-block: var(--space-6);
+        --_btn-padding-block: var(--cffy-space-6);
 
         @include m.btn-size('md');
       }
@@ -76,7 +76,7 @@ $indicator-max-items: 16;
     // Icon only
     &.tabs-icon-only {
       .tab-item .tab-link:has(> .visually-hidden) {
-        --_btn-padding-inline: var(--space-8);
+        --_btn-padding-inline: var(--cffy-space-8);
 
         min-width: var(--_btn-height);
         justify-content: center;
@@ -85,11 +85,11 @@ $indicator-max-items: 16;
 
     // Tabs pill
     &.tabs-pills {
-      --_tabs-pills-radius: var(--tabs-pills-radius, var(--radius-lg));
+      --_tabs-pills-radius: var(--cffy-tabs-pills-radius, var(--cffy-radius-lg));
       --_tabs-radius: calc(var(--_tabs-pills-radius) + calc(var(--_tabs-gap) - .15rem));
-      --_tabs-bg-color: var(--tabs-pills-bg-color, var(--theme-surface-container-low));
-      --_tabs-pills-indicator-bg-color: var(--tabs-pills-indicator-bg-color, var(--theme-surface-body-pane));
-      --_tabs-pills-indicator-shadow: var(--tabs-pills-indicator-shadow, var(--shadow-md));
+      --_tabs-bg-color: var(--cffy-tabs-pills-bg-color, var(--cffy-surface-container-low));
+      --_tabs-pills-indicator-bg-color: var(--cffy-tabs-pills-indicator-bg-color, var(--cffy-surface-body-pane));
+      --_tabs-pills-indicator-shadow: var(--cffy-tabs-pills-indicator-shadow, var(--cffy-shadow-md));
 
       padding: calc(var(--_tabs-gap) - .15rem);
       background: var(--_tabs-bg-color);
@@ -97,7 +97,7 @@ $indicator-max-items: 16;
 
       // Rounded
       &.tabs-rounded {
-        --_tabs-pills-radius: var(--radius-full);
+        --_tabs-pills-radius: var(--cffy-radius-full);
       }
 
       .tab-item {
@@ -143,8 +143,8 @@ $indicator-max-items: 16;
       .tab-link {
         --_btn-bg-color: transparent;
         --_btn-color: var(--_tabs-link-color);
-        --_btn-gap: var(--space-4);
-        --_btn-radius: var(--radius-md) var(--radius-md) var(--radius-none) var(--radius-none);
+        --_btn-gap: var(--cffy-space-4);
+        --_btn-radius: var(--cffy-radius-md) var(--cffy-radius-md) var(--cffy-radius-none) var(--cffy-radius-none);
         --_btn-padding-block: 0.625rem;
         --_btn-shadow: none;
         --_tabs-link-state: 0%;
@@ -163,23 +163,23 @@ $indicator-max-items: 16;
           background: f.state-layer(var(--_tabs-link-state), var(--_btn-bg-color));
           font-weight: var(--_tabs-link-font-weight);
           text-decoration: none;
-          transition: background-color var(--duration-200) var(--ease-decelerate),
-          color var(--duration-200) var(--ease-decelerate);
+          transition: background-color var(--cffy-duration-200) var(--cffy-ease-decelerate),
+          color var(--cffy-duration-200) var(--cffy-ease-decelerate);
         }
 
         &:is(:hover) {
-          --_tabs-link-state: var(--state-hover-opacity);
-          --_btn-color: var(--tabs-link-hover-color, var(--theme-on-background));
+          --_tabs-link-state: var(--cffy-state-hover-opacity);
+          --_btn-color: var(--cffy-tabs-link-hover-color, var(--cffy-on-background));
         }
 
         &:is(:active, :focus-visible) {
-          --_tabs-link-state: var(--state-pressed-opacity);
+          --_tabs-link-state: var(--cffy-state-pressed-opacity);
         }
 
         &:is(.active, .router-link-active, .router-link-exact-active) {
-          --_btn-color: var(--tabs-link-active-color, var(--theme-on-background));
+          --_btn-color: var(--cffy-tabs-link-active-color, var(--cffy-on-background));
 
-          font-weight: var(--fw-800);
+          font-weight: var(--cffy-fw-800);
         }
 
         &:is(:disabled, .disabled) {
@@ -193,11 +193,11 @@ $indicator-max-items: 16;
     // Anchors
     @for $i from 1 through $indicator-max-items {
       .tab-item:nth-child(#{$i}) .tab-link {
-        anchor-name: --tabs-item-#{$i};
+        anchor-name: --cffy-tabs-item-#{$i};
       }
 
       &:has(.tab-item:nth-child(#{$i}) .tab-link:is(.active, .router-link-active, .router-link-exact-active)) {
-        --_tabs-indicator-anchor: --tabs-item-#{$i};
+        --_tabs-indicator-anchor: --cffy-tabs-item-#{$i};
       }
     }
 
@@ -231,7 +231,7 @@ $indicator-max-items: 16;
     }
 
     &.tabs-contrast {
-      --_tabs-bg-color: var(--theme-surface-container-high);
+      --_tabs-bg-color: var(--cffy-surface-container-high);
     }
   }
 
@@ -240,22 +240,22 @@ $indicator-max-items: 16;
   // ==========================================================================
   .tab-segmented-control-container {
     overflow-x: auto;
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--cffy-space-12);
 
     .tab-segmented-control {
-      --_segmented-control-radius: var(--segmented-control-radius, var(--radius-full));
-      --_segmented-control-border-color: var(--segmented-control-border-color, var(--theme-outline-button));
-      --_segmented-control-padding: var(--segmented-control-padding, var(--space-8));
-      --_segmented-control-gap: var(--segmented-control-gap, var(--space-12));
-      --_segmented-control-item-color: var(--segmented-control-item-color, var(--theme-muted-a10));
-      --_segmented-control-item-font-size: var(--segmented-control-item-font-size, var(--fs-2xs));
-      --_segmented-control-item-hover-bg-color: var(--segmented-control-item-hover-bg-color, color-mix(in oklab, var(--theme-primary-base-fixed) 35%, transparent));
-      --_segmented-control-item-active-color: var(--segmented-control-item-active-color, var(--theme-on-background-inverse));
-      --_segmented-control-indicator-bg-color: var(--segmented-control-indicator-bg-color, var(--theme-surface-a90));
-      --_segmented-control-easing: var(--segmented-control-easing, var(--ease-emphasized));
-      --_segmented-control-duration: var(--segmented-control-duration, var(--duration-600));
+      --_segmented-control-radius: var(--cffy-segmented-control-radius, var(--cffy-radius-full));
+      --_segmented-control-border-color: var(--cffy-segmented-control-border-color, var(--cffy-outline-button));
+      --_segmented-control-padding: var(--cffy-segmented-control-padding, var(--cffy-space-8));
+      --_segmented-control-gap: var(--cffy-segmented-control-gap, var(--cffy-space-12));
+      --_segmented-control-item-color: var(--cffy-segmented-control-item-color, var(--cffy-muted-a10));
+      --_segmented-control-item-font-size: var(--cffy-segmented-control-item-font-size, var(--cffy-fs-2xs));
+      --_segmented-control-item-hover-bg-color: var(--cffy-segmented-control-item-hover-bg-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 35%, transparent));
+      --_segmented-control-item-active-color: var(--cffy-segmented-control-item-active-color, var(--cffy-on-background-inverse));
+      --_segmented-control-indicator-bg-color: var(--cffy-segmented-control-indicator-bg-color, var(--cffy-surface-a90));
+      --_segmented-control-easing: var(--cffy-segmented-control-easing, var(--cffy-ease-emphasized));
+      --_segmented-control-duration: var(--cffy-segmented-control-duration, var(--cffy-duration-600));
       --_segmented-control-count: 2;
-      --_segmented-control-anchor: --segmented-item-1;
+      --_segmented-control-anchor: --cffy-segmented-item-1;
 
       display: grid;
       grid-template-columns: repeat(var(--_segmented-control-count), 1fr);
@@ -275,21 +275,21 @@ $indicator-max-items: 16;
 
       border-radius: var(--_segmented-control-radius);
       background: transparent;
-      border: var(--border-width-sm) solid var(--_segmented-control-border-color);
+      border: var(--cffy-border-width-sm) solid var(--_segmented-control-border-color);
 
       // Tab styles
       &.segmented-control-tab {
-        --_segmented-control-radius: var(--radius-sm);
+        --_segmented-control-radius: var(--cffy-radius-sm);
         --_segmented-control-border-color: transparent;
-        --_segmented-control-item-active-color: var(--theme-on-background);
-        --_segmented-control-indicator-bg-color: var(--theme-primary-a10);
+        --_segmented-control-item-active-color: var(--cffy-on-background);
+        --_segmented-control-indicator-bg-color: var(--cffy-primary-a10);
 
         // Nav tab item
         .segmented-control-item {
           width: 100%;
 
           .segmented-control-link {
-            padding-block: var(--space-8);
+            padding-block: var(--cffy-space-8);
             padding-inline: .625rem;
             min-width: 5rem;
             width: inherit;
@@ -302,7 +302,7 @@ $indicator-max-items: 16;
             top: auto;
             bottom: calc(anchor(var(--_segmented-control-anchor) bottom) - .35rem);
             height: 3.5px;
-            border-radius: var(--radius-sm);
+            border-radius: var(--cffy-radius-sm);
           }
         }
 
@@ -310,7 +310,7 @@ $indicator-max-items: 16;
         @supports not (anchor-name: --foo) {
           .segmented-control-item .segmented-control-link:is(.active) {
             background: transparent;
-            color: var(--theme-primary-a10);
+            color: var(--cffy-primary-a10);
           }
         }
 
@@ -320,9 +320,9 @@ $indicator-max-items: 16;
           bottom: 0;
           left: 0;
 
-          height: var(--border-width-sm);
+          height: var(--cffy-border-width-sm);
           width: 100%;
-          background: var(--theme-outline-surface);
+          background: var(--cffy-outline-surface);
           border-radius: var(--_segmented-control-radius);
           transition: width var(--_segmented-control-duration) var(--_segmented-control-easing);
         }
@@ -336,17 +336,17 @@ $indicator-max-items: 16;
 
         .segmented-control-link {
           display: block;
-          padding-block: var(--space-8);
-          padding-inline: var(--space-24);
+          padding-block: var(--cffy-space-8);
+          padding-inline: var(--cffy-space-24);
           width: 100%;
           min-width: max-content;
           border-radius: var(--_segmented-control-radius);
           background: transparent;
           color: var(--_segmented-control-item-color);
-          border: var(--border-width-sm) solid transparent;
+          border: var(--cffy-border-width-sm) solid transparent;
           cursor: pointer;
           font-size: var(--_segmented-control-item-font-size);
-          font-weight: var(--fw-400);
+          font-weight: var(--cffy-fw-400);
           text-align: center;
           @extend .subtitle-1;
 
@@ -359,7 +359,7 @@ $indicator-max-items: 16;
           }
 
           &:is(.active) {
-            font-weight: var(--fw-600);
+            font-weight: var(--cffy-fw-600);
             color: var(--_segmented-control-item-active-color);
           }
 
@@ -374,11 +374,11 @@ $indicator-max-items: 16;
       // Anchors
       @for $i from 1 through $indicator-max-items {
         .segmented-control-item:nth-child(#{$i}) .segmented-control-link {
-          anchor-name: --segmented-item-#{$i};
+          anchor-name: --cffy-segmented-item-#{$i};
         }
 
         &:has(.segmented-control-item:nth-child(#{$i}) .segmented-control-link:is(.active)) {
-          --_segmented-control-anchor: --segmented-item-#{$i};
+          --_segmented-control-anchor: --cffy-segmented-item-#{$i};
         }
       }
 
@@ -409,7 +409,7 @@ $indicator-max-items: 16;
       @supports not (anchor-name: --foo) {
         & .segmented-control-item .segmented-control-link:is(.active) {
           background-color: var(--_segmented-control-indicator-bg-color);
-          font-weight: var(--fw-700);
+          font-weight: var(--cffy-fw-700);
         }
       }
     }

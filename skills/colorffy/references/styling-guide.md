@@ -253,11 +253,11 @@ Combine Colorffy CSS with custom overrides for best of both worlds.
 :root {
   --btn-padding: 0.75rem 1.5rem;
   --btn-border-radius: 0.5rem;
-  --btn-font-weight: 600;
+  --cffy-btn-font-weight: 600;
   
   --card-padding: 2rem;
   --card-border-radius: 1rem;
-  --card-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --cffy-card-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 ```
 

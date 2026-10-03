@@ -6,7 +6,7 @@
   // ALERT CONTAINER & TOAST/SNACKBAR PLACEMENT
   // ==========================================================================
   .alert-container {
-    --_alert-radius: var(--alert-radius, var(--radius-lg));
+    --_alert-radius: var(--cffy-alert-radius, var(--cffy-radius-lg));
 
     border-radius: var(--_alert-radius);
     container: AlertContainer / inline-size;
@@ -16,8 +16,8 @@
       z-index: v.$z-index-toast;
 
       // Positioning variables
-      --_alert-toast-offset: var(--alert-toast-offset, var(--space-32));
-      --_alert-toast-min-width: var(--alert-toast-min-width, 300px);
+      --_alert-toast-offset: var(--cffy-alert-toast-offset, var(--cffy-space-32));
+      --_alert-toast-min-width: var(--cffy-alert-toast-min-width, 300px);
       --_alert-toast-max-width: 90vw;
       --_alert-toast-width: fit-content;
       --_alert-toast-offset-bottom: var(--_alert-toast-offset);
@@ -111,18 +111,18 @@
   // STANDARD ALERT COMPONENT
   // ==========================================================================
   .alert {
-    --_alert-color: var(--alert-color, var(--theme-on-background));
-    --_alert-icon-color: var(--alert-icon-color, var(--theme-on-background));
-    --_alert-bg-color: var(--alert-bg-color, var(--theme-surface-container-low));
-    --_alert-border-color: var(--alert-border-color, var(--theme-surface-container-low));
-    --_alert-radius: var(--alert-radius, var(--radius-lg));
-    --_alert-font-size: var(--alert-font-size, var(--fs-3xs));
-    --_alert-font-weight: var(--alert-font-weight, var(--fw-400));
-    --_alert-icon-size: var(--alert-icon-size, 1.75em);
-    --_alert-padding-block: var(--alert-padding-block, var(--space-12));
-    --_alert-padding-inline: var(--alert-padding-inline, var(--space-12));
-    --_alert-gap: var(--alert-gap, var(--space-8));
-    --_alert-stack-gap: var(--alert-stack-gap, var(--_alert-padding-block));
+    --_alert-color: var(--cffy-alert-color, var(--cffy-on-background));
+    --_alert-icon-color: var(--cffy-alert-icon-color, var(--cffy-on-background));
+    --_alert-bg-color: var(--cffy-alert-bg-color, var(--cffy-surface-container-low));
+    --_alert-border-color: var(--cffy-alert-border-color, var(--cffy-surface-container-low));
+    --_alert-radius: var(--cffy-alert-radius, var(--cffy-radius-lg));
+    --_alert-font-size: var(--cffy-alert-font-size, var(--cffy-fs-3xs));
+    --_alert-font-weight: var(--cffy-alert-font-weight, var(--cffy-fw-400));
+    --_alert-icon-size: var(--cffy-alert-icon-size, 1.75em);
+    --_alert-padding-block: var(--cffy-alert-padding-block, var(--cffy-space-12));
+    --_alert-padding-inline: var(--cffy-alert-padding-inline, var(--cffy-space-12));
+    --_alert-gap: var(--cffy-alert-gap, var(--cffy-space-8));
+    --_alert-stack-gap: var(--cffy-alert-stack-gap, var(--_alert-padding-block));
     --_alert-columns: 1fr auto;
     --_alert-flex-direction: row;
 
@@ -139,11 +139,11 @@
     border-radius: var(--_alert-radius);
     color: var(--_alert-color);
     background-color: var(--_alert-bg-color);
-    border: var(--border-width-sm) solid var(--_alert-border-color);
+    border: var(--cffy-border-width-sm) solid var(--_alert-border-color);
 
     i {
       font-size: var(--_alert-icon-size);
-      font-variation-settings: var(--iw-bold);
+      font-variation-settings: var(--cffy-iw-bold);
       color: var(--_alert-icon-color);
     }
 
@@ -172,7 +172,7 @@
 
     // Alert with title
     &:has(.alert-title) {
-      --_alert-gap: var(--space-12);
+      --_alert-gap: var(--cffy-space-12);
       --_alert-columns: 1fr;
     }
 
@@ -184,10 +184,10 @@
       @include m.text-wrap-pretty;
 
       .alert-title {
-        --_alert-font-size: var(--alert-title-font-size, var(--fs-xs));
-        --_alert-font-weight: var(--alert-title-font-weight, var(--fw-600));
+        --_alert-font-size: var(--cffy-alert-title-font-size, var(--cffy-fs-xs));
+        --_alert-font-weight: var(--cffy-alert-title-font-weight, var(--cffy-fw-600));
 
-        font-family: var(--font-secondary);
+        font-family: var(--cffy-font-secondary);
         color: currentColor;
       }
     }
@@ -197,7 +197,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: var(--space-8);
+      gap: var(--cffy-space-8);
     }
 
     // Dismiss button
@@ -209,13 +209,13 @@
       padding: .15rem;
       background: transparent;
       border: none;
-      border-radius: var(--radius-full);
+      border-radius: var(--cffy-radius-full);
       color: inherit;
       cursor: pointer;
 
       i {
         font-size: 1.05rem;
-        font-variation-settings: var(--iw-bold);
+        font-variation-settings: var(--cffy-iw-bold);
         color: inherit;
       }
 
@@ -229,48 +229,48 @@
     // ==========================================================================
     // Contrast variant, only works for banner alerts
     &.alert-contrast {
-      --_alert-bg-color: var(--theme-surface-body-pane);
+      --_alert-bg-color: var(--cffy-surface-body-pane);
     }
 
     // Variants
     &.alert-sm {
       --_alert-icon-size: 1.5em;
-      --_alert-padding-block: var(--space-8);
-      --_alert-padding-inline: var(--space-8);
+      --_alert-padding-block: var(--cffy-space-8);
+      --_alert-padding-inline: var(--cffy-space-8);
     }
 
     &.alert-rounded {
-      --_alert-radius: var(--radius-full);
+      --_alert-radius: var(--cffy-radius-full);
     }
 
     // Banner
     &.alert-banner {
       &.banner-primary {
-        --_alert-icon-color: var(--theme-primary-a10);
+        --_alert-icon-color: var(--cffy-primary-a10);
       }
 
       &.banner-secondary {
-        --_alert-icon-color: var(--theme-secondary-a10);
+        --_alert-icon-color: var(--cffy-secondary-a10);
       }
 
       &.banner-accent {
-        --_alert-icon-color: var(--theme-accent-a10);
+        --_alert-icon-color: var(--cffy-accent-a10);
       }
 
       &.banner-success {
-        --_alert-icon-color: var(--theme-success-a10);
+        --_alert-icon-color: var(--cffy-success-a10);
       }
 
       &.banner-warning {
-        --_alert-icon-color: var(--theme-warning-a10);
+        --_alert-icon-color: var(--cffy-warning-a10);
       }
 
       &.banner-danger {
-        --_alert-icon-color: var(--theme-danger-a10);
+        --_alert-icon-color: var(--cffy-danger-a10);
       }
 
       &.banner-info {
-        --_alert-icon-color: var(--theme-info-a10);
+        --_alert-icon-color: var(--cffy-info-a10);
       }
     }
 
@@ -279,36 +279,36 @@
       --_alert-icon-color: inherit;
 
       &.tonal-primary {
-        @include m.container-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-primary-a10), var(--cffy-primary-a90), true, false, alert);
       }
 
       &.tonal-secondary {
-        @include m.container-tonal(var(--theme-secondary-a10), var(--theme-secondary-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-secondary-a10), var(--cffy-secondary-a90), true, false, alert);
       }
 
       &.tonal-accent {
-        @include m.container-tonal(var(--theme-accent-a10), var(--theme-accent-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-accent-a10), var(--cffy-accent-a90), true, false, alert);
       }
 
       // Semantic
       &.tonal-success {
-        @include m.container-tonal(var(--theme-success-a10), var(--theme-success-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-success-a10), var(--cffy-success-a90), true, false, alert);
       }
 
       &.tonal-warning {
-        @include m.container-tonal(var(--theme-warning-a10), var(--theme-warning-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-warning-a10), var(--cffy-warning-a90), true, false, alert);
       }
 
       &.tonal-danger {
-        @include m.container-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-danger-a10), var(--cffy-danger-a90), true, false, alert);
       }
 
       &.tonal-info {
-        @include m.container-tonal(var(--theme-info-a10), var(--theme-info-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-info-a10), var(--cffy-info-a90), true, false, alert);
       }
 
       &.tonal-default {
-        @include m.container-tonal(var(--theme-surface-a60), var(--theme-surface-a90), true, false, alert);
+        @include m.container-tonal(var(--cffy-surface-a60), var(--cffy-surface-a90), true, false, alert);
       }
     }
 
@@ -320,64 +320,64 @@
 
     // Snackbar
     &.alert-snackbar {
-      --_alert-bg-color: var(--alert-snackbar-bg-color, var(--theme-surface-toast));
+      --_alert-bg-color: var(--cffy-alert-snackbar-bg-color, var(--cffy-surface-toast));
       --_alert-border-color: var(--_alert-bg-color);
-      --_alert-color: var(--alert-snackbar-color, var(--theme-on-background-inverse));
+      --_alert-color: var(--cffy-alert-snackbar-color, var(--cffy-on-background-inverse));
       --_alert-icon-color: var(--_alert-color);
 
       margin: auto;
       width: fit-content;
       max-width: calc(100% - 10%);
-      box-shadow: color-mix(in oklab, var(--theme-white-base-fixed) 50%, transparent) 0 2px 3px inset;
+      box-shadow: color-mix(in oklab, var(--cffy-white-base-fixed) 50%, transparent) 0 2px 3px inset;
 
       &.show {
         display: flex;
-        animation: fade-in-down var(--duration-300) ease-in-out;
+        animation: fade-in-down var(--cffy-duration-300) ease-in-out;
       }
 
       // Variants
       & i {
-        font-variation-settings: var(--iw-bold);
+        font-variation-settings: var(--cffy-iw-bold);
         color: var(--_alert-icon-color);
       }
 
       &.snackbar-primary {
-        --_alert-icon-color: var(--theme-primary-base-fixed);
+        --_alert-icon-color: var(--cffy-primary-base-fixed);
       }
 
       &.snackbar-secondary {
-        --_alert-icon-color: var(--theme-secondary-base-fixed);
+        --_alert-icon-color: var(--cffy-secondary-base-fixed);
       }
 
       &.snackbar-accent {
-        --_alert-icon-color: var(--theme-accent-base-fixed);
+        --_alert-icon-color: var(--cffy-accent-base-fixed);
       }
 
       &.snackbar-success {
-        --_alert-icon-color: var(--theme-success-base-fixed);
+        --_alert-icon-color: var(--cffy-success-base-fixed);
       }
 
       &.snackbar-warning {
-        --_alert-icon-color: var(--theme-warning-base-fixed);
+        --_alert-icon-color: var(--cffy-warning-base-fixed);
       }
 
       &.snackbar-danger {
-        --_alert-icon-color: var(--theme-danger-base-fixed);
+        --_alert-icon-color: var(--cffy-danger-base-fixed);
       }
 
       &.snackbar-info {
-        --_alert-icon-color: var(--theme-info-base-fixed);
+        --_alert-icon-color: var(--cffy-info-base-fixed);
       }
     }
 
     // Critical
     &.alert-critical {
-      --_alert-bg-color: var(--theme-danger-a10);
-      --_alert-border-color: var(--theme-on-danger);
-      --_alert-color: var(--theme-on-danger);
+      --_alert-bg-color: var(--cffy-danger-a10);
+      --_alert-border-color: var(--cffy-on-danger);
+      --_alert-color: var(--cffy-on-danger);
 
       & i {
-        --_alert-icon-color: var(--theme-on-danger);
+        --_alert-icon-color: var(--cffy-on-danger);
       }
     }
 
@@ -408,14 +408,14 @@
   // PWA OFFLINE/INSTALL ALERT CONTAINER
   // ==========================================================================
   .pwa-alert-container {
-    --_pwa-alert-position-x: var(--space-16);
-    --_pwa-alert-position-y: var(--space-16);
-    --_pwa-alert-padding: var(--pwa-alert-padding, var(--space-16));
-    --_pwa-alert-gap: var(--pwa-alert-gap, var(--space-12));
-    --_pwa-alert-radius: var(--pwa-alert-radius, #{v.$card-border-radius});
-    --_pwa-alert-bg-color: var(--pwa-alert-bg-color, var(--theme-surface-overlay));
-    --_pwa-alert-border-color: var(--pwa-alert-border-color, var(--theme-outline-surface));
-    --_pwa-alert-shadow: var(--pwa-alert-shadow, var(--shadow-lg));
+    --_pwa-alert-position-x: var(--cffy-space-16);
+    --_pwa-alert-position-y: var(--cffy-space-16);
+    --_pwa-alert-padding: var(--cffy-pwa-alert-padding, var(--cffy-space-16));
+    --_pwa-alert-gap: var(--cffy-pwa-alert-gap, var(--cffy-space-12));
+    --_pwa-alert-radius: var(--cffy-pwa-alert-radius, #{v.$card-border-radius});
+    --_pwa-alert-bg-color: var(--cffy-pwa-alert-bg-color, var(--cffy-surface-overlay));
+    --_pwa-alert-border-color: var(--cffy-pwa-alert-border-color, var(--cffy-outline-surface));
+    --_pwa-alert-shadow: var(--cffy-pwa-alert-shadow, var(--cffy-shadow-lg));
 
     position: fixed;
     right: var(--_pwa-alert-position-x);
@@ -430,7 +430,7 @@
     padding-block: var(--_pwa-alert-padding);
     padding-inline: var(--_pwa-alert-padding);
     background: var(--_pwa-alert-bg-color);
-    border: var(--border-width-sm) solid var(--_pwa-alert-border-color);
+    border: var(--cffy-border-width-sm) solid var(--_pwa-alert-border-color);
     box-shadow: var(--_pwa-alert-shadow);
     border-radius: var(--_pwa-alert-radius);
 
@@ -441,8 +441,8 @@
       gap: var(--_pwa-alert-gap);
 
       i {
-        font-variation-settings: var(--iw-semi-bold);
-        color: var(--theme-muted-a10);
+        font-variation-settings: var(--cffy-iw-semi-bold);
+        color: var(--cffy-muted-a10);
       }
 
       & .pwa-content-text-wrapper {
@@ -453,12 +453,12 @@
           margin-bottom: 0;
 
           &:is(.subtitle-1) {
-            font-weight: var(--fw-600);
-            font-family: var(--font-primary);
+            font-weight: var(--cffy-fw-600);
+            font-family: var(--cffy-font-primary);
           }
 
           &:is(.subtitle-2) {
-            color: var(--theme-muted-a10);
+            color: var(--cffy-muted-a10);
             max-inline-size: 40ch;
             @include m.text-wrap-pretty;
           }
@@ -484,8 +484,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .pwa-alert-container {
-      --_pwa-alert-position-x: var(--space-8);
-      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + var(--space-16));
+      --_pwa-alert-position-x: var(--cffy-space-8);
+      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-16));
 
       max-width: 100%;
       left: var(--_pwa-alert-position-x);
@@ -493,7 +493,7 @@
 
     .alert-container {
       &:has(.alert-snackbar) {
-        --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + var(--space-16) + env(safe-area-inset-bottom, 0.5vh));
+        --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-16) + env(safe-area-inset-bottom, 0.5vh));
       }
     }
   }

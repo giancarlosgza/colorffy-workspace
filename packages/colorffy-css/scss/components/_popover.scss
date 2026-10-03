@@ -6,17 +6,17 @@
   // POPOVER COMPONENT
   // ==========================================================================
   .popover {
-    --_popover-bg-color: var(--popover-bg-color, var(--theme-surface-overlay));
-    --_popover-color: var(--popover-color, var(--theme-on-background));
-    --_popover-border-color: var(--popover-border-color, var(--theme-outline-surface));
-    --_popover-shadow: var(--popover-shadow, var(--shadow-lg));
-    --_popover-radius: var(--popover-radius, #{v.$dialog-border-radius});
-    --_popover-max-width: var(--popover-max-width, 20rem);
-    --_popover-max-height: var(--popover-max-height, 30rem);
-    --_popover-spacing: var(--popover-spacing, var(--space-16));
-    --_popover-offset: var(--popover-offset, .625rem);
-    --_popover-easing: var(--popover-easing, ease-in-out);
-    --_popover-duration: var(--popover-duration, var(--duration-250));
+    --_popover-bg-color: var(--cffy-popover-bg-color, var(--cffy-surface-overlay));
+    --_popover-color: var(--cffy-popover-color, var(--cffy-on-background));
+    --_popover-border-color: var(--cffy-popover-border-color, var(--cffy-outline-surface));
+    --_popover-shadow: var(--cffy-popover-shadow, var(--cffy-shadow-lg));
+    --_popover-radius: var(--cffy-popover-radius, #{v.$dialog-border-radius});
+    --_popover-max-width: var(--cffy-popover-max-width, 20rem);
+    --_popover-max-height: var(--cffy-popover-max-height, 30rem);
+    --_popover-spacing: var(--cffy-popover-spacing, var(--cffy-space-16));
+    --_popover-offset: var(--cffy-popover-offset, .625rem);
+    --_popover-easing: var(--cffy-popover-easing, ease-in-out);
+    --_popover-duration: var(--cffy-popover-duration, var(--cffy-duration-250));
 
     position: fixed;
     inset: 0;
@@ -27,7 +27,7 @@
     border-radius: var(--_popover-radius);
     box-shadow: var(--_popover-shadow);
     background: var(--_popover-bg-color);
-    border: var(--border-width-sm) solid var(--_popover-border-color);
+    border: var(--cffy-border-width-sm) solid var(--_popover-border-color);
 
     translate: 0 1rem;
     opacity: 0;
@@ -61,7 +61,7 @@
     @supports (anchor-name: --foo) {
       &.popover-anchor {
         position: absolute;
-        position-anchor: --anchor-popover;
+        position-anchor: --cffy-anchor-popover;
         position-try: flip-block, flip-inline;
         margin: 0;
         inset: auto;
@@ -114,18 +114,18 @@
         margin-bottom: var(--_popover-spacing);
 
         & .popover-title {
-          font-size: var(--popover-title-font-size, var(--fs-xs));
-          font-weight: var(--popover-title-font-weight, var(--fw-700));
+          font-size: var(--cffy-popover-title-font-size, var(--cffy-fs-xs));
+          font-weight: var(--cffy-popover-title-font-weight, var(--cffy-fw-700));
           color: var(--_popover-color);
-          margin-bottom: var(--space-4);
+          margin-bottom: var(--cffy-space-4);
         }
 
         & .popover-subtitle {
-          font-size: var(--popover-subtitle-font-size, var(--fs-3xs));
-          color: var(--popover-subtitle-color, var(--theme-muted-a10));
+          font-size: var(--cffy-popover-subtitle-font-size, var(--cffy-fs-3xs));
+          color: var(--cffy-popover-subtitle-color, var(--cffy-muted-a10));
 
           &:not(:last-child) {
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--cffy-space-4);
           }
         }
       }
@@ -137,7 +137,7 @@
       }
 
       & .popover-footer {
-        border-top: var(--border-width-sm) solid var(--_popover-border-color);
+        border-top: var(--cffy-border-width-sm) solid var(--_popover-border-color);
         margin-top: var(--_popover-spacing);
       }
     }

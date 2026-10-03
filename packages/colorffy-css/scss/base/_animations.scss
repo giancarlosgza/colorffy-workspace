@@ -92,7 +92,7 @@
   // ==========================================================================
   @keyframes spin-wheel {
     to {
-      --color-wheel-radius: 50%;
+      --cffy-color-wheel-radius: 50%;
       rotate: 360deg;
     }
   }
@@ -210,17 +210,17 @@
 
   @keyframes angle-spin {
     0% {
-      --gradient-angle: 0deg;
+      --cffy-gradient-angle: 0deg;
     }
 
     100% {
-      --gradient-angle: 360deg;
+      --cffy-gradient-angle: 360deg;
     }
   }
 
   @keyframes angle-glow {
     100% {
-      --gradient-angle: 405deg;
+      --cffy-gradient-angle: 405deg;
     }
   }
 
@@ -232,43 +232,43 @@
 
   @keyframes dots-scroll {
     from {
-      --dots-scroll-position: 250px;
+      --cffy-dots-scroll-position: 250px;
     }
 
     to {
-      --dots-scroll-position: 0;
+      --cffy-dots-scroll-position: 0;
     }
   }
 
   @keyframes animate-gradient-shape-1 {
     from {
-      --gradient-shape-primary: initial;
-      --gradient-shape-angle: 0deg;
+      --cffy-gradient-shape-primary: initial;
+      --cffy-gradient-shape-angle: 0deg;
     }
 
     50% {
-      --gradient-shape-primary: rgba(42, 32, 180, 1);
+      --cffy-gradient-shape-primary: rgba(42, 32, 180, 1);
     }
 
     to {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 360deg;
+      --cffy-gradient-shape-accent: initial;
+      --cffy-gradient-shape-angle: 360deg;
     }
   }
 
   @keyframes animate-gradient-shape-2 {
     from {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 0deg;
+      --cffy-gradient-shape-accent: initial;
+      --cffy-gradient-shape-angle: 0deg;
     }
 
     50% {
-      --gradient-shape-accent: rgba(102, 0, 255, 1)
+      --cffy-gradient-shape-accent: rgba(102, 0, 255, 1)
     }
 
     to {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 360deg;
+      --cffy-gradient-shape-accent: initial;
+      --cffy-gradient-shape-angle: 360deg;
     }
   }
 
@@ -320,7 +320,7 @@
   .page-leave-active,
   .layout-enter-active,
   .layout-leave-active {
-    transition: opacity ease var(--duration-200);
+    transition: opacity ease var(--cffy-duration-200);
   }
 
   .page-enter,
@@ -331,18 +331,18 @@
   }
 
   .slide-enter-active {
-    --_slide-easing: var(--ease-emphasized);
+    --_slide-easing: var(--cffy-ease-emphasized);
 
     overflow-x: clip;
-    transition: opacity var(--duration-600) var(--_slide-easing),
-    translate var(--duration-800) var(--_slide-easing);
+    transition: opacity var(--cffy-duration-600) var(--_slide-easing),
+    translate var(--cffy-duration-800) var(--_slide-easing);
   }
 
   .slide-leave-active {
-    --_slide-easing-out: var(--ease-accelerate);
+    --_slide-easing-out: var(--cffy-ease-accelerate);
 
-    transition: opacity var(--duration-200) var(--_slide-easing-out),
-    translate var(--duration-300) var(--_slide-easing-out);
+    transition: opacity var(--cffy-duration-200) var(--_slide-easing-out),
+    translate var(--cffy-duration-300) var(--_slide-easing-out);
     overflow-x: clip;
   }
 
@@ -358,7 +358,7 @@
   .table-move,
   .table-enter-active,
   .table-leave-active {
-    transition: all var(--duration-500) ease;
+    transition: all var(--cffy-duration-500) ease;
   }
 
   .table-enter-from,
@@ -378,11 +378,11 @@
     fade transition when isExpanding toggle
   */
   .table-td-fade-enter-active {
-    transition: all var(--duration-500) ease-out;
+    transition: all var(--cffy-duration-500) ease-out;
   }
 
   .table-td-fade-leave-active {
-    transition: all var(--duration-200) cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all var(--cffy-duration-200) cubic-bezier(1, 0.5, 0.8, 1);
   }
 
   .table-td-fade-enter-from,
@@ -396,17 +396,17 @@
     transition for tab menu changes
   */
   .slide-inline-enter-active {
-    --_slide-inline-easing: var(--ease-emphasized);
+    --_slide-inline-easing: var(--cffy-ease-emphasized);
 
-    transition: translate var(--duration-600) var(--_slide-inline-easing),
-    opacity var(--duration-600) var(--_slide-inline-easing);
+    transition: translate var(--cffy-duration-600) var(--_slide-inline-easing),
+    opacity var(--cffy-duration-600) var(--_slide-inline-easing);
   }
 
   .slide-inline-leave-active {
-    --_slide-inline-easing-out: var(--ease-emphasized);
+    --_slide-inline-easing-out: var(--cffy-ease-emphasized);
 
-    transition: translate var(--duration-300) var(--_slide-inline-easing-out),
-    opacity var(--duration-300) var(--_slide-inline-easing-out);
+    transition: translate var(--cffy-duration-300) var(--_slide-inline-easing-out),
+    opacity var(--cffy-duration-300) var(--_slide-inline-easing-out);
   }
 
   .slide-inline-enter-from {
@@ -424,13 +424,13 @@
     vertical transition
   */
   .slide-block-enter-active {
-    transition: translate var(--duration-800) var(--ease-decelerate),
-    opacity var(--duration-400) var(--ease-decelerate);
+    transition: translate var(--cffy-duration-800) var(--cffy-ease-decelerate),
+    opacity var(--cffy-duration-400) var(--cffy-ease-decelerate);
   }
 
   .slide-block-leave-active {
-    transition: translate var(--duration-400) var(--ease-accelerate),
-    opacity var(--duration-200) var(--ease-accelerate);
+    transition: translate var(--cffy-duration-400) var(--cffy-ease-accelerate),
+    opacity var(--cffy-duration-200) var(--cffy-ease-accelerate);
   }
 
   .slide-block-enter-from {
@@ -448,17 +448,17 @@
   horizontal transition
   */
   .fade-inline-enter-active {
-    --_fade-inline-easing: var(--ease-decelerate);
+    --_fade-inline-easing: var(--cffy-ease-decelerate);
 
-    transition: translate var(--duration-400) var(--_fade-inline-easing),
-    opacity var(--duration-400) var(--_fade-inline-easing);
+    transition: translate var(--cffy-duration-400) var(--_fade-inline-easing),
+    opacity var(--cffy-duration-400) var(--_fade-inline-easing);
   }
 
   .fade-inline-leave-active {
-    --_fade-inline-easing-out: var(--ease-accelerate);
+    --_fade-inline-easing-out: var(--cffy-ease-accelerate);
 
-    transition: translate var(--duration-250) var(--_fade-inline-easing-out),
-    opacity var(--duration-250) var(--_fade-inline-easing-out);
+    transition: translate var(--cffy-duration-250) var(--_fade-inline-easing-out),
+    opacity var(--cffy-duration-250) var(--_fade-inline-easing-out);
   }
 
   .fade-inline-enter-from {

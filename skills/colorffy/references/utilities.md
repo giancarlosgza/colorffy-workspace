@@ -43,7 +43,7 @@ Complete reference for utility classes in @colorffy/css.
 
 ### Border Colors
 
-**Pattern:** `border border-{color}` with `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `muted`, `neutral`, `white`, `black`, `dark`, `transparent`. `border-neutral` is `--theme-on-background` (flips with dark mode); `white`/`black`/`dark` are fixed.
+**Pattern:** `border border-{color}` with `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `muted`, `neutral`, `white`, `black`, `dark`, `transparent`. `border-neutral` is `--cffy-on-background` (flips with dark mode); `white`/`black`/`dark` are fixed.
 
 **Opacity:** `border-opacity-{0|5|10|20|…|90|100}` fades the border color toward transparent.
 
@@ -54,7 +54,7 @@ Complete reference for utility classes in @colorffy/css.
 
 ## Spacing
 
-Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map). Steps `1`–`10` read the `--space-*` tokens (`1` = 0.25rem, `2` = 0.5rem, `3` = 1rem, `4` = 1.5rem, `5` = 3rem, then 4.5/6/7.5/9/12rem), so `--space-unit` rescales them; `gap-*` steps are `n` × `--space-unit` (0.25rem … 2.5rem).
+Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map). Steps `1`–`10` read the `--cffy-space-*` tokens (`1` = 0.25rem, `2` = 0.5rem, `3` = 1rem, `4` = 1.5rem, `5` = 3rem, then 4.5/6/7.5/9/12rem), so `--cffy-space-unit` rescales them; `gap-*` steps are `n` × `--cffy-space-unit` (0.25rem … 2.5rem).
 
 ### Margin
 
@@ -337,7 +337,7 @@ Blend two colors together:
 - `--_bg-color-mix-opacity`: Mix ratio (default: 90%)
 
 ```html
-<div class="bg-color-mix" style="--_bg-color-one: var(--theme-accent-a10); --_bg-color-mix-opacity: 70%;">
+<div class="bg-color-mix" style="--_bg-color-one: var(--cffy-accent-a10); --_bg-color-mix-opacity: 70%;">
   Custom color mix
 </div>
 ```
@@ -355,7 +355,7 @@ Manipulate colors with relative color syntax:
 - `--_bg-relative-alpha`: Alpha channel (0-1)
 
 ```html
-<div class="bg-relative-color" style="--_bg-relative-base-color: var(--theme-success-a10); --_bg-relative-alpha: 0.5;">
+<div class="bg-relative-color" style="--_bg-relative-base-color: var(--cffy-success-a10); --_bg-relative-alpha: 0.5;">
   Semi-transparent success
 </div>
 ```
@@ -376,7 +376,7 @@ Background with gradient border effect:
 
 ## Borders
 
-Every border class is a modifier on `.border` and does nothing on its own. `.border` draws a 1px solid `--theme-outline-surface` line on all four sides; modifiers change the side, width, style and color.
+Every border class is a modifier on `.border` and does nothing on its own. `.border` draws a 1px solid `--cffy-outline-surface` line on all four sides; modifiers change the side, width, style and color.
 
 ```html
 <div class="border">1px outline border</div>
@@ -421,7 +421,7 @@ Color (`border-primary`, `border-neutral`, …) and opacity (`border-opacity-{0|
 |---|---|
 | `border-gradient` | Static 120° linear gradient edge, primary by default |
 | `border-animated` | Rotating conic glow around the element, primary by default. Needs its own background and an isolated parent (see below) |
-| `border-gradient-spin` | Rotating conic border with a soft halo, `orange` by default. Add `spin-card` to fill the inside with `--theme-surface-body-pane` |
+| `border-gradient-spin` | Rotating conic border with a soft halo, `orange` by default. Add `spin-card` to fill the inside with `--cffy-surface-body-pane` |
 | `border-gradient-corners` | Highlights two opposite corners in the current border color, so pair it with a color modifier |
 
 **Presets:** `gradient-{name}`, either a theme color (`primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `info`) or a fixed palette (`pink`, `magenta`, `emerald`, `cyan`, `rose`, `purple`, `yellow`, `orange`, `lime`, `amber`, `red`, `blue`, `gray`, `white`, `indigo`, `indigo-dark`, `violet`, `green`, `fuchsia`, `navy`). Width modifiers apply to gradient borders too.
@@ -439,7 +439,7 @@ Color (`border-primary`, `border-neutral`, …) and opacity (`border-opacity-{0|
 </div>
 ```
 
-`border-gradient` and `border-gradient-spin` fill the inside with `--theme-background`, so on another surface the box shows the page background, not the surface color.
+`border-gradient` and `border-gradient-spin` fill the inside with `--cffy-background`, so on another surface the box shows the page background, not the surface color.
 
 ### Border Radius
 

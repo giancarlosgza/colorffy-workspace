@@ -57,9 +57,9 @@ app.mount('#app')
 
 // Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -173,9 +173,9 @@ export default defineNuxtConfig({
 ```scss
 // assets/scss/main.scss: theme colors and fonts are CSS tokens (-500 light, -50 dark)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 

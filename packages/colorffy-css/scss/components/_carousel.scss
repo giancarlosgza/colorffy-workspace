@@ -7,18 +7,18 @@
   // ==========================================================================
   @mixin carousel-button-base {
     position: fixed;
-    font-family: var(--font-icons);
+    font-family: var(--cffy-font-icons);
     font-size: 1rem;
-    inline-size: var(--carousel-btn-size, 44px);
+    inline-size: var(--cffy-carousel-btn-size, 44px);
     aspect-ratio: 1;
     padding: .75rem;
     display: grid;
     place-content: center;
     border-color: transparent;
-    background: var(--carousel-btn-bg-color, var(--theme-surface-body-pane));
-    color: var(--carousel-btn-color, var(--theme-on-background));
-    box-shadow: var(--carousel-btn-shadow, var(--shadow-sm));
-    border-radius: var(--carousel-btn-radius, var(--radius-full));
+    background: var(--cffy-carousel-btn-bg-color, var(--cffy-surface-body-pane));
+    color: var(--cffy-carousel-btn-color, var(--cffy-on-background));
+    box-shadow: var(--cffy-carousel-btn-shadow, var(--cffy-shadow-sm));
+    border-radius: var(--cffy-carousel-btn-radius, var(--cffy-radius-full));
     cursor: pointer;
   }
 
@@ -27,12 +27,12 @@
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    anchor-name: --carousel;
+    anchor-name: --cffy-carousel;
 
     // Native scroll buttons
     &::scroll-button(*) {
       @include carousel-button-base;
-      position-anchor: --carousel;
+      position-anchor: --cffy-carousel;
     }
 
     &::scroll-button(right) {
@@ -51,7 +51,7 @@
   // ==========================================================================
   .carousel-btn {
     @include carousel-button-base;
-    position-anchor: --carousel;
+    position-anchor: --cffy-carousel;
     z-index: v.$z-index-fab;
 
     &.btn-next {

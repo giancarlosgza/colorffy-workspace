@@ -29,7 +29,7 @@ const emit = defineEmits<IPopoverMenuEmits>()
 const slots = useSlots()
 const panelRef = ref<HTMLElement | null>(null)
 const supportsNativePopover = ref<boolean>(false)
-const anchorName = `--popover-menu-${useId()}`
+const anchorName = `--cffy-popover-menu-${useId()}`
 let lastNativeDismiss = 0
 
 /** Computed */

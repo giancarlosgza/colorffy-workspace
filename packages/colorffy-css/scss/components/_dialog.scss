@@ -7,25 +7,25 @@
   // DIALOG COMPONENT
   // ==========================================================================
   .dialog {
-    --_dialog-bg-color: var(--dialog-bg-color, var(--theme-surface-overlay));
-    --_dialog-color: var(--dialog-color, var(--theme-on-background));
-    --_dialog-border-color: var(--dialog-border-color, var(--theme-outline-overlay));
-    --_dialog-radius: var(--dialog-radius, #{v.$dialog-border-radius});
-    --_dialog-shadow: var(--dialog-shadow, var(--shadow-xl));
-    --_dialog-padding: var(--dialog-padding, var(--space-16));
-    --_dialog-spacing: var(--dialog-spacing, calc(var(--space-16) + var(--space-4)));
-    --_dialog-max-size: var(--dialog-max-size, 90%);
-    --_dialog-title-font-size: var(--dialog-title-font-size, var(--fs-base));
-    --_dialog-title-font-weight: var(--dialog-title-font-weight, var(--fw-700));
-    --_dialog-subtitle-color: var(--dialog-subtitle-color, var(--theme-muted-a10));
-    --_dialog-subtitle-font-size: var(--dialog-subtitle-font-size, var(--fs-2xs));
-    --_dialog-icon-bg-color: var(--dialog-icon-bg-color, var(--theme-primary-a10));
-    --_dialog-icon-color: var(--dialog-icon-color, var(--theme-on-primary));
-    --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--theme-overlay-backdrop));
-    --_dialog-backdrop-blur: var(--dialog-backdrop-blur, 5px);
+    --_dialog-bg-color: var(--cffy-dialog-bg-color, var(--cffy-surface-overlay));
+    --_dialog-color: var(--cffy-dialog-color, var(--cffy-on-background));
+    --_dialog-border-color: var(--cffy-dialog-border-color, var(--cffy-outline-overlay));
+    --_dialog-radius: var(--cffy-dialog-radius, #{v.$dialog-border-radius});
+    --_dialog-shadow: var(--cffy-dialog-shadow, var(--cffy-shadow-xl));
+    --_dialog-padding: var(--cffy-dialog-padding, var(--cffy-space-16));
+    --_dialog-spacing: var(--cffy-dialog-spacing, calc(var(--cffy-space-16) + var(--cffy-space-4)));
+    --_dialog-max-size: var(--cffy-dialog-max-size, 90%);
+    --_dialog-title-font-size: var(--cffy-dialog-title-font-size, var(--cffy-fs-base));
+    --_dialog-title-font-weight: var(--cffy-dialog-title-font-weight, var(--cffy-fw-700));
+    --_dialog-subtitle-color: var(--cffy-dialog-subtitle-color, var(--cffy-muted-a10));
+    --_dialog-subtitle-font-size: var(--cffy-dialog-subtitle-font-size, var(--cffy-fs-2xs));
+    --_dialog-icon-bg-color: var(--cffy-dialog-icon-bg-color, var(--cffy-primary-a10));
+    --_dialog-icon-color: var(--cffy-dialog-icon-color, var(--cffy-on-primary));
+    --_dialog-backdrop-color: var(--cffy-dialog-backdrop-color, var(--cffy-overlay-backdrop));
+    --_dialog-backdrop-blur: var(--cffy-dialog-backdrop-blur, 5px);
     --_discrete: allow-discrete;
-    --_dialog-easing: var(--dialog-easing, var(--ease-overshoot-soft));
-    --_dialog-duration: var(--dialog-duration, var(--duration-600));
+    --_dialog-easing: var(--cffy-dialog-easing, var(--cffy-ease-overshoot-soft));
+    --_dialog-duration: var(--cffy-dialog-duration, var(--cffy-duration-600));
 
     position: fixed;
     inset: 0;
@@ -34,7 +34,7 @@
     height: calc(100dvh - 30dvh);
     max-width: var(--_dialog-max-size);
     max-height: var(--_dialog-max-size);
-    border: var(--border-width-sm) solid var(--_dialog-border-color);
+    border: var(--cffy-border-width-sm) solid var(--_dialog-border-color);
     background-color: var(--_dialog-bg-color);
     box-shadow: var(--_dialog-shadow);
 
@@ -63,15 +63,15 @@
         :where(p) {
           &:is(.dialog-title) {
             color: var(--_dialog-color);
-            font-family: var(--font-primary);
+            font-family: var(--cffy-font-primary);
             font-weight: var(--_dialog-title-font-weight);
             font-size: var(--_dialog-title-font-size);
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--cffy-space-4);
           }
 
           &:is(.dialog-subtitle) {
             color: var(--_dialog-subtitle-color);
-            font-weight: var(--fw-500);
+            font-weight: var(--cffy-fw-500);
             font-size: var(--_dialog-subtitle-font-size);
             margin-bottom: 0;
           }
@@ -108,7 +108,7 @@
         gap: calc(var(--_dialog-spacing) / 2);
 
         & .btn {
-          padding-inline: var(--space-16);
+          padding-inline: var(--cffy-space-16);
           margin-inline: 0;
         }
 
@@ -129,8 +129,8 @@
 
       &, &::backdrop {
         opacity: 0;
-        transition: overlay var(--duration-150) var(--_discrete),
-        display var(--duration-600) var(--_discrete),
+        transition: overlay var(--cffy-duration-150) var(--_discrete),
+        display var(--cffy-duration-600) var(--_discrete),
         scale var(--_dialog-duration),
         translate var(--_dialog-duration),
         opacity calc(var(--_dialog-duration) / 3);
@@ -163,15 +163,15 @@
 
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
-        animation: fade-in-down var(--duration-300) ease-in-out both;
+        animation: fade-in-down var(--cffy-duration-300) ease-in-out both;
         animation-timing-function: var(--_dialog-easing);
       }
     }
 
     // Side Sheet
     &.dialog-side-sheet {
-      inset-inline: auto var(--space-8);
-      inset-block: var(--space-16);
+      inset-inline: auto var(--cffy-space-8);
+      inset-block: var(--cffy-space-16);
       margin: auto;
       width: 18rem;
       height: 100%;
@@ -184,7 +184,7 @@
 
       &, &::backdrop {
         opacity: 0;
-        transition: overlay var(--duration-150) var(--_discrete),
+        transition: overlay var(--cffy-duration-150) var(--_discrete),
         display 350ms var(--_discrete),
         translate var(--_dialog-duration),
         opacity calc(var(--_dialog-duration));
@@ -215,7 +215,7 @@
 
       /* 2.5. Animation fallback */
       @supports not (transition-behavior: allow-discrete) {
-        animation: opacity-in var(--duration-300) ease-in-out both;
+        animation: opacity-in var(--cffy-duration-300) ease-in-out both;
         animation-timing-function: var(--_dialog-easing);
       }
 
@@ -226,7 +226,7 @@
 
         & .dialog-footer {
           :nth-child(1 of .btn) {
-            padding-inline: var(--space-16);
+            padding-inline: var(--cffy-space-16);
             flex: 1;
             order: 0;
           }
@@ -250,17 +250,17 @@
         place-content: center;
 
         & i {
-          font-size: var(--fs-3xl);
-          font-variation-settings: var(--iw-semi-bold);
-          margin-bottom: var(--space-8);
+          font-size: var(--cffy-fs-3xl);
+          font-variation-settings: var(--cffy-iw-semi-bold);
+          margin-bottom: var(--cffy-space-8);
         }
 
         & p:not(.text-muted) {
-          font-size: var(--fs-lg);
-          font-family: var(--font-primary);
-          font-weight: var(--fw-700);
+          font-size: var(--cffy-fs-lg);
+          font-family: var(--cffy-font-primary);
+          font-weight: var(--cffy-fw-700);
           line-height: 1.35;
-          margin-bottom: var(--space-16);
+          margin-bottom: var(--cffy-space-16);
         }
       }
     }
@@ -300,19 +300,19 @@
       .dialog-content {
         .dialog-header {
           flex-wrap: nowrap;
-          gap: var(--space-12);
+          gap: var(--cffy-space-12);
           text-align: start;
           justify-content: flex-start;
           width: 100%;
-          padding-top: var(--space-12);
+          padding-top: var(--cffy-space-12);
 
           & i {
-            --angle: 45deg;
+            --cffy-angle: 45deg;
             --_gradient-stops: #{v.$gradient-ghost};
 
-            padding: var(--space-14);
-            font-size: var(--fs-xl);
-            border-radius: var(--radius-lg);
+            padding: var(--cffy-space-14);
+            font-size: var(--cffy-fs-xl);
+            border-radius: var(--cffy-radius-lg);
             color: var(--_dialog-icon-color);
             background-color: var(--_dialog-icon-bg-color);
 
@@ -367,9 +367,9 @@
       }
 
       &:is(.dialog-modal) {
-        --_dialog-easing: var(--ease-decelerate);
-        --_dialog-duration: var(--duration-500);
-        --_dialog-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        --_dialog-easing: var(--cffy-ease-decelerate);
+        --_dialog-duration: var(--cffy-duration-500);
+        --_dialog-radius: var(--cffy-radius-xl) var(--cffy-radius-xl) 0 0;
 
         /* 0. Not visible default state */
         scale: unset;
@@ -377,8 +377,8 @@
         transform-origin: bottom center;
 
         & {
-          transition: overlay var(--duration-100) var(--_discrete),
-          display var(--duration-100) var(--_discrete),
+          transition: overlay var(--cffy-duration-100) var(--_discrete),
+          display var(--cffy-duration-100) var(--_discrete),
           scale var(--_dialog-duration),
           translate var(--_dialog-duration),
           opacity calc(var(--_dialog-duration) / 3);
@@ -412,7 +412,7 @@
       }
 
       &:is(.dialog-confirm) {
-        --_dialog-radius: var(--radius-xl);
+        --_dialog-radius: var(--cffy-radius-xl);
 
         width: clamp(18rem, 90vw, 25rem);
         height: fit-content;

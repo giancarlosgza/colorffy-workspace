@@ -117,11 +117,11 @@ export const Sizes: Story = {
     setup: () => ({ args }),
     template: `
       <div>
-        <HeaderContent v-bind="args" title="size sm" subtitle="--fs-xl, the default" />
-        <HeaderContent v-bind="args" size="md" title="size md" subtitle="--fs-2xl" />
-        <HeaderContent v-bind="args" size="lg" title="size lg" subtitle="--fs-3xl" />
-        <HeaderContent v-bind="args" size="xl" title="size xl" subtitle="--fs-4xl, matches the base h1" />
-        <HeaderContent v-bind="args" size="2xl" title="size 2xl" subtitle="--fs-5xl" />
+        <HeaderContent v-bind="args" title="size sm" subtitle="--cffy-fs-xl, the default" />
+        <HeaderContent v-bind="args" size="md" title="size md" subtitle="--cffy-fs-2xl" />
+        <HeaderContent v-bind="args" size="lg" title="size lg" subtitle="--cffy-fs-3xl" />
+        <HeaderContent v-bind="args" size="xl" title="size xl" subtitle="--cffy-fs-4xl, matches the base h1" />
+        <HeaderContent v-bind="args" size="2xl" title="size 2xl" subtitle="--cffy-fs-5xl" />
       </div>
     `
   })

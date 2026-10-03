@@ -172,7 +172,7 @@ export interface IDatatableProps {
    * When true, the table header sticks to the top of its scroll container
    * while the body scrolls. Pairs with the `.table-responsive-sticky`
    * wrapper class (applied automatically) which caps the wrapper height via
-   * `--table-sticky-max-height` (default `32rem`, override with
+   * `--cffy-table-sticky-max-height` (default `32rem`, override with
    * `stickyHeight`) and makes it vertically scrollable.
    * @default false
    */
@@ -180,7 +180,7 @@ export interface IDatatableProps {
   /**
    * Max height of the scroll container when `stickyHeader` is on. Accepts any
    * CSS length ('18rem', '50vh'); a number is read as pixels. Sets
-   * `--table-sticky-max-height`, which otherwise defaults to `32rem`.
+   * `--cffy-table-sticky-max-height`, which otherwise defaults to `32rem`.
    * @default null
    */
   stickyHeight?: string | number | null

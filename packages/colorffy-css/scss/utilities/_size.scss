@@ -20,7 +20,7 @@
   }
 
   .h-fixed {
-    height: var(--h-fixed, fit-content);
+    height: var(--cffy-h-fixed, fit-content);
   }
 
   // Percent Heights
@@ -90,7 +90,7 @@
   }
 
   .w-fixed {
-    width: var(--w-fixed, fit-content);
+    width: var(--cffy-w-fixed, fit-content);
   }
 
   // Percent Widths
@@ -184,7 +184,7 @@
       }
 
       .w-#{$breakpoint}-fixed {
-        width: var(--w-fixed, fit-content);
+        width: var(--cffy-w-fixed, fit-content);
       }
 
       .min-vw-#{$breakpoint}-100 {
@@ -209,7 +209,7 @@
       }
 
       .h-#{$breakpoint}-fixed {
-        height: var(--h-fixed, fit-content);
+        height: var(--cffy-h-fixed, fit-content);
       }
 
       // Viewports (VH)

@@ -3,8 +3,8 @@
 
 @layer utilities.borders {
   .border {
-    --_border-bg-color: var(--theme-outline-surface);
-    --_border-size: var(--border-width-sm);
+    --_border-bg-color: var(--cffy-outline-surface);
+    --_border-size: var(--cffy-border-width-sm);
 
     border: var(--_border-size) solid var(--_border-bg-color);
 
@@ -12,19 +12,19 @@
     // BORDER SIZES & STYLES
     // ==========================================================================
     &.border-md {
-      --_border-size: var(--border-width-md);
+      --_border-size: var(--cffy-border-width-md);
     }
 
     &.border-lg {
-      --_border-size: calc(var(--border-width-md) + 1px);
+      --_border-size: calc(var(--cffy-border-width-md) + 1px);
     }
 
     &.border-xl {
-      --_border-size: calc(var(--border-width-md) + 2px);
+      --_border-size: calc(var(--cffy-border-width-md) + 2px);
     }
 
     &.border-xxl {
-      --_border-size: calc(var(--border-width-md) + 3px);
+      --_border-size: calc(var(--cffy-border-width-md) + 3px);
     }
 
     // Border styles
@@ -75,48 +75,48 @@
     // BORDER COLORS (PRIMARY & SEMANTIC)
     // ==========================================================================
     &.border-primary {
-      --_border-bg-color: var(--theme-primary-a10);
+      --_border-bg-color: var(--cffy-primary-a10);
     }
 
     &.border-secondary {
-      --_border-bg-color: var(--theme-secondary-a10);
+      --_border-bg-color: var(--cffy-secondary-a10);
     }
 
     &.border-accent {
-      --_border-bg-color: var(--theme-accent-a10);
+      --_border-bg-color: var(--cffy-accent-a10);
     }
 
     // Border semantic colors
     &.border-success {
-      --_border-bg-color: var(--theme-success-a10);
+      --_border-bg-color: var(--cffy-success-a10);
     }
 
     &.border-warning {
-      --_border-bg-color: var(--theme-warning-a10);
+      --_border-bg-color: var(--cffy-warning-a10);
     }
 
     &.border-danger {
-      --_border-bg-color: var(--theme-danger-a10);
+      --_border-bg-color: var(--cffy-danger-a10);
     }
 
     &.border-muted {
-      --_border-bg-color: var(--theme-muted-a10);
+      --_border-bg-color: var(--cffy-muted-a10);
     }
 
     &.border-neutral {
-      --_border-bg-color: var(--theme-on-background);
+      --_border-bg-color: var(--cffy-on-background);
     }
 
     &.border-white {
-      --_border-bg-color: var(--color-brand-white-500);
+      --_border-bg-color: var(--cffy-color-brand-white-500);
     }
 
     &.border-black {
-      --_border-bg-color: var(--color-brand-black-500);
+      --_border-bg-color: var(--cffy-color-brand-black-500);
     }
 
     &.border-dark {
-      --_border-bg-color: var(--color-brand-dark-500);
+      --_border-bg-color: var(--cffy-color-brand-dark-500);
     }
 
     &.border-transparent {
@@ -139,9 +139,9 @@
     // ==========================================================================
     &.border-gradient {
       --_border-bg-color: transparent;
-      --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);
+      --_border-gradient: var(--cffy-primary-a10), var(--cffy-primary-a30);
 
-      background: linear-gradient(var(--theme-background), var(--theme-background)) padding-box,
+      background: linear-gradient(var(--cffy-background), var(--cffy-background)) padding-box,
       linear-gradient(120deg, var(--_border-gradient)) border-box;
       @include m.generate-static-gradients(v.$static-gradients, true, false);
       @include m.generate-gradients(v.$dynamic-gradients, true, false);
@@ -149,7 +149,7 @@
 
     // Animated borders
     &.border-animated {
-      --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);
+      --_border-gradient: var(--cffy-primary-a10), var(--cffy-primary-a30);
 
       position: relative;
       @include m.gradient-glow-border(var(--_border-gradient));
@@ -164,8 +164,8 @@
       isolation: isolate;
       animation: angle-glow 5s linear infinite both;
       border: var(--_border-size) solid transparent;
-      background: linear-gradient(var(--theme-background, canvas) 0 0) padding-box,
-      conic-gradient(from var(--gradient-angle), var(--_border-gradient)) border-box;
+      background: linear-gradient(var(--cffy-background, canvas) 0 0) padding-box,
+      conic-gradient(from var(--cffy-gradient-angle), var(--_border-gradient)) border-box;
       @include m.generate-static-gradients(v.$static-gradients, true, false);
       @include m.generate-gradients(v.$dynamic-gradients, true, false);
 
@@ -178,7 +178,7 @@
 
       &:before {
         z-index: -1;
-        background: var(--theme-background, canvas);
+        background: var(--cffy-background, canvas);
         inset: .15rem;
         scale: 1.2 1;
         transform-origin: center;
@@ -188,14 +188,14 @@
       &:after {
         z-index: -2;
         inset: -1.5rem;
-        background: conic-gradient(from var(--gradient-angle), var(--_border-gradient));
+        background: conic-gradient(from var(--cffy-gradient-angle), var(--_border-gradient));
         filter: blur(1rem);
         opacity: 0.125;
       }
 
       &.spin-card {
         &:before {
-          background: var(--theme-surface-body-pane);
+          background: var(--cffy-surface-body-pane);
           inset: .5rem;
           scale: 1;
         }
@@ -209,7 +209,7 @@
     // Corner borders
     &.border-gradient-corners {
       --_border-gradient-start: var(--_border-bg-color);
-      --_border-gradient-end: color-mix(in oklab, var(--_border-bg-color), var(--theme-background) 40%);
+      --_border-gradient-end: color-mix(in oklab, var(--_border-bg-color), var(--cffy-background) 40%);
 
       position: relative;
       border-color: transparent;

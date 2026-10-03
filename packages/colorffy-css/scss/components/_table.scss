@@ -22,7 +22,7 @@
   }
 
   .table-responsive.table-responsive-sticky {
-    --_table-sticky-max-height: var(--table-sticky-max-height, 32rem);
+    --_table-sticky-max-height: var(--cffy-table-sticky-max-height, 32rem);
 
     max-height: var(--_table-sticky-max-height);
     overflow-y: auto;
@@ -32,17 +32,17 @@
   // STANDARD TABLE COMPONENT
   // ==========================================================================
   .table {
-    --_table-bg-color: var(--table-bg-color, transparent);
-    --_table-color: var(--table-color, currentColor);
-    --_table-border-color: var(--table-border-color, var(--theme-outline-surface));
-    --_table-border-width: var(--table-border-width, var(--border-width-sm));
-    --_table-cell-padding-inline: var(--table-cell-padding-inline, var(--space-8));
-    --_table-cell-padding-block: var(--table-cell-padding-block, var(--space-8));
-    --_table-font-size: var(--table-font-size, .75rem);
-    --_table-radius: var(--table-radius, var(--radius-none));
-    --_table-header-bg-color: var(--table-header-bg-color, var(--theme-surface-a10));
-    --_table-easing: var(--table-easing, ease-in-out);
-    --_table-duration: var(--table-duration, var(--duration-100));
+    --_table-bg-color: var(--cffy-table-bg-color, transparent);
+    --_table-color: var(--cffy-table-color, currentColor);
+    --_table-border-color: var(--cffy-table-border-color, var(--cffy-outline-surface));
+    --_table-border-width: var(--cffy-table-border-width, var(--cffy-border-width-sm));
+    --_table-cell-padding-inline: var(--cffy-table-cell-padding-inline, var(--cffy-space-8));
+    --_table-cell-padding-block: var(--cffy-table-cell-padding-block, var(--cffy-space-8));
+    --_table-font-size: var(--cffy-table-font-size, .75rem);
+    --_table-radius: var(--cffy-table-radius, var(--cffy-radius-none));
+    --_table-header-bg-color: var(--cffy-table-header-bg-color, var(--cffy-surface-a10));
+    --_table-easing: var(--cffy-table-easing, ease-in-out);
+    --_table-duration: var(--cffy-table-duration, var(--cffy-duration-100));
 
     display: table;
     width: 100%;
@@ -57,10 +57,10 @@
 
       tr {
         th {
-          font-size: var(--table-header-font-size, var(--fs-4xs));
-          font-weight: var(--table-header-font-weight, var(--fw-600));
-          font-family: var(--font-primary);
-          color: var(--table-header-color, var(--theme-muted-a10));
+          font-size: var(--cffy-table-header-font-size, var(--cffy-fs-4xs));
+          font-weight: var(--cffy-table-header-font-weight, var(--cffy-fw-600));
+          font-family: var(--cffy-font-primary);
+          color: var(--cffy-table-header-color, var(--cffy-muted-a10));
           letter-spacing: 0.0727em;
           text-align: start;
           padding: calc(var(--_table-cell-padding-block) * 1.5) var(--_table-cell-padding-inline);
@@ -96,16 +96,16 @@
 
         .td-name {
           display: inline-flex;
-          gap: var(--space-6);
+          gap: var(--cffy-space-6);
           align-items: center;
 
           i {
-            font-variation-settings: var(--iw-semi-bold);
-            color: var(--table-icon-color, var(--theme-muted-a10));
-            font-size: var(--table-icon-size, 1.25rem);
+            font-variation-settings: var(--cffy-iw-semi-bold);
+            color: var(--cffy-table-icon-color, var(--cffy-muted-a10));
+            font-size: var(--cffy-table-icon-size, 1.25rem);
 
             &:is(.text-gradient) {
-              font-variation-settings: var(--iw-bold);
+              font-variation-settings: var(--cffy-iw-bold);
             }
           }
 
@@ -114,7 +114,7 @@
         &.td-actions {
           .btn {
             &:not(:last-child) {
-              margin-right: var(--space-6);
+              margin-right: var(--cffy-space-6);
             }
           }
         }
@@ -128,7 +128,7 @@
       }
 
       tr.is-selected {
-        --_table-row-bg-color: var(--table-selected-bg-color, var(--theme-surface-a0));
+        --_table-row-bg-color: var(--cffy-table-selected-bg-color, var(--cffy-surface-a0));
       }
     }
 
@@ -155,8 +155,8 @@
 
     // Table bordered
     &.table-bordered {
-      --_table-radius: var(--radius-md);
-      --_table-header-bg-color: var(--theme-surface-container-lowest);
+      --_table-radius: var(--cffy-radius-md);
+      --_table-header-bg-color: var(--cffy-surface-container-lowest);
 
       & thead {
         background-color: var(--_table-header-bg-color);
@@ -195,7 +195,7 @@
 
     // Table borderless
     &.table-borderless {
-      --_table-radius: var(--radius-md);
+      --_table-radius: var(--cffy-radius-md);
 
       & thead {
         & tr th {
@@ -214,7 +214,7 @@
     &.table-striped {
       tbody {
         tr:nth-child(odd) {
-          --_table-row-bg-color: var(--table-striped-bg-color, var(--theme-surface-container));
+          --_table-row-bg-color: var(--cffy-table-striped-bg-color, var(--cffy-surface-container));
         }
       }
     }
@@ -226,7 +226,7 @@
           transition: background-color var(--_table-duration) var(--_table-easing);
 
           &:is(:hover) {
-            --_table-row-state: var(--state-hover-opacity);
+            --_table-row-state: var(--cffy-state-hover-opacity);
           }
         }
       }
@@ -234,13 +234,13 @@
 
     // Table small
     &.table-sm {
-      --_table-cell-padding-inline: var(--space-4);
-      --_table-cell-padding-block: var(--space-4);
+      --_table-cell-padding-inline: var(--cffy-space-4);
+      --_table-cell-padding-block: var(--cffy-space-4);
     }
 
     &.table-lg {
-      --_table-cell-padding-inline: var(--space-14);
-      --_table-cell-padding-block: var(--space-14);
+      --_table-cell-padding-inline: var(--cffy-space-14);
+      --_table-cell-padding-block: var(--cffy-space-14);
     }
   }
 
@@ -259,9 +259,9 @@
 
         @supports (container-type: scroll-state) {
           @container scroll-state(scrollable: left) {
-            background: var(--table-sticky-column-bg-color, var(--theme-surface-body-pane));
-            transition: background-color var(--duration-100) var(--ease-decelerate),
-            border var(--duration-100) var(--ease-decelerate);
+            background: var(--cffy-table-sticky-column-bg-color, var(--cffy-surface-body-pane));
+            transition: background-color var(--cffy-duration-100) var(--cffy-ease-decelerate),
+            border var(--cffy-duration-100) var(--cffy-ease-decelerate);
 
             &:after {
               content: '';

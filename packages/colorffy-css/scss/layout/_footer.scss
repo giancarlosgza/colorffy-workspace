@@ -6,19 +6,19 @@
   // ==========================================================================
   footer,
   .footer {
-    --_footer-bg-color: var(--footer-bg-color, var(--theme-surface-body-pane));
-    --_footer-color: var(--footer-color, var(--theme-on-background));
-    --_footer-muted-color: var(--footer-muted-color, var(--theme-muted-a10));
-    --_footer-border-color: var(--footer-border-color, var(--theme-outline-surface));
-    --_footer-padding-inline: var(--footer-padding-inline, 0);
-    --_footer-padding-block: var(--footer-padding-block, calc(var(--space-32) + var(--space-8)));
-    --_footer-margin-block-start: var(--footer-margin-block-start, var(--_footer-padding-block));
-    --_footer-gap: var(--footer-gap, var(--space-16));
-    --_footer-title-font-size: var(--footer-title-font-size, var(--fs-lg));
-    --_footer-title-font-weight: var(--footer-title-font-weight, var(--fw-800));
-    --_footer-link-color: var(--footer-link-color, var(--_footer-muted-color));
-    --_footer-link-font-size: var(--footer-link-font-size, var(--fs-2xs));
-    --_footer-icon-color: var(--footer-icon-color, var(--theme-secondary-a90));
+    --_footer-bg-color: var(--cffy-footer-bg-color, var(--cffy-surface-body-pane));
+    --_footer-color: var(--cffy-footer-color, var(--cffy-on-background));
+    --_footer-muted-color: var(--cffy-footer-muted-color, var(--cffy-muted-a10));
+    --_footer-border-color: var(--cffy-footer-border-color, var(--cffy-outline-surface));
+    --_footer-padding-inline: var(--cffy-footer-padding-inline, 0);
+    --_footer-padding-block: var(--cffy-footer-padding-block, calc(var(--cffy-space-32) + var(--cffy-space-8)));
+    --_footer-margin-block-start: var(--cffy-footer-margin-block-start, var(--_footer-padding-block));
+    --_footer-gap: var(--cffy-footer-gap, var(--cffy-space-16));
+    --_footer-title-font-size: var(--cffy-footer-title-font-size, var(--cffy-fs-lg));
+    --_footer-title-font-weight: var(--cffy-footer-title-font-weight, var(--cffy-fw-800));
+    --_footer-link-color: var(--cffy-footer-link-color, var(--_footer-muted-color));
+    --_footer-link-font-size: var(--cffy-footer-link-font-size, var(--cffy-fs-2xs));
+    --_footer-icon-color: var(--cffy-footer-icon-color, var(--cffy-secondary-a90));
 
     position: relative;
     background: var(--_footer-bg-color);
@@ -34,17 +34,17 @@
       &:is(.footer-title) {
         font-size: var(--_footer-title-font-size);
         font-weight: var(--_footer-title-font-weight);
-        font-family: var(--font-primary);
+        font-family: var(--cffy-font-primary);
 
         &:not(:last-child) {
-          margin-bottom: var(--space-4);
+          margin-bottom: var(--cffy-space-4);
         }
       }
 
       &:is(.footer-subtitle) {
-        font-size: var(--fs-2xs);
-        font-weight: var(--fw-400);
-        font-family: var(--font-secondary);
+        font-size: var(--cffy-fs-2xs);
+        font-weight: var(--cffy-fw-400);
+        font-family: var(--cffy-font-secondary);
         margin-bottom: 0;
         color: var(--_footer-muted-color);
       }
@@ -58,7 +58,7 @@
       flex-wrap: wrap;
       align-items: baseline;
       gap: var(--_footer-gap);
-      margin-bottom: var(--space-12);
+      margin-bottom: var(--cffy-space-12);
 
       & svg {
         width: 20px;
@@ -67,7 +67,7 @@
 
       &:is(.footer-row) {
         --_footer-group-direction: row;
-        --_footer-gap: var(--space-24);
+        --_footer-gap: var(--cffy-space-24);
 
         // A heading keeps its own line above the links
         &:has(.footer-group-title) {
@@ -85,16 +85,16 @@
       // Title paragraph
       & p {
         color: var(--_footer-color);
-        font-size: var(--fs-xs);
-        font-weight: var(--fw-700);
-        font-family: var(--font-secondary);
+        font-size: var(--cffy-fs-xs);
+        font-weight: var(--cffy-fw-700);
+        font-family: var(--cffy-font-secondary);
 
         &:not(:last-child) {
-          margin-bottom: var(--space-8);
+          margin-bottom: var(--cffy-space-8);
         }
 
         &:is(.footer-group-title-overline) {
-          font-size: var(--fs-3xs);
+          font-size: var(--cffy-fs-3xs);
           letter-spacing: .08em;
           text-transform: uppercase;
         }
@@ -105,22 +105,22 @@
         display: inline-block;
         color: var(--_footer-link-color);
         font-size: var(--_footer-link-font-size);
-        font-weight: var(--fw-500);
-        font-family: var(--font-secondary);
+        font-weight: var(--cffy-fw-500);
+        font-family: var(--cffy-font-secondary);
 
         &:is(:hover) {
-          --_footer-link-color: var(--footer-link-hover-color, var(--theme-primary-a10));
+          --_footer-link-color: var(--cffy-footer-link-hover-color, var(--cffy-primary-a10));
 
-          font-weight: var(--fw-700);
+          font-weight: var(--cffy-fw-700);
         }
       }
 
       // Icons
       & .footer-item-icon {
-        font-size: var(--fs-sm);
-        font-variation-settings: var(--iw-semi-bold);
+        font-size: var(--cffy-fs-sm);
+        font-variation-settings: var(--cffy-iw-semi-bold);
         color: var(--_footer-icon-color);
-        margin-inline-end: var(--space-4);
+        margin-inline-end: var(--cffy-space-4);
       }
     }
 
@@ -133,12 +133,12 @@
       gap: var(--_footer-gap);
       margin-block-start: var(--_footer-gap);
       padding-block-start: var(--_footer-gap);
-      border-block-start: var(--border-width-sm) solid var(--_footer-border-color);
+      border-block-start: var(--cffy-border-width-sm) solid var(--_footer-border-color);
 
       & p {
         color: var(--_footer-muted-color);
-        font-size: var(--fs-2xs);
-        font-family: var(--font-secondary);
+        font-size: var(--cffy-fs-2xs);
+        font-family: var(--cffy-font-secondary);
         margin-bottom: 0;
       }
     }

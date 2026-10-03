@@ -5,12 +5,12 @@
   // INPUT GROUP COMPONENT
   // ==========================================================================
   .input-group {
-    --_input-group-radius: var(--input-radius, var(--radius-md));
-    --_input-group-bg-color: var(--input-group-bg-color, var(--input-bg-color, transparent));
-    --_input-group-border-width: var(--input-border-width, #{v.$form-border});
-    --_input-group-border-color: var(--input-border-color, var(--theme-outline-text-field));
-    --_input-group-padding-inline: var(--input-group-padding-inline, .5rem);
-    --_input-group-color: var(--input-group-color, var(--theme-muted-a10));
+    --_input-group-radius: var(--cffy-input-radius, var(--cffy-radius-md));
+    --_input-group-bg-color: var(--cffy-input-group-bg-color, var(--cffy-input-bg-color, transparent));
+    --_input-group-border-width: var(--cffy-input-border-width, #{v.$form-border});
+    --_input-group-border-color: var(--cffy-input-border-color, var(--cffy-outline-text-field));
+    --_input-group-padding-inline: var(--cffy-input-group-padding-inline, .5rem);
+    --_input-group-color: var(--cffy-input-group-color, var(--cffy-muted-a10));
 
     display: flex;
     flex-direction: row;
@@ -23,12 +23,12 @@
       background-color: var(--_input-group-bg-color);
       border: var(--_input-group-border-width) solid var(--_input-group-border-color);
       color: var(--_input-group-color);
-      font-size: var(--input-group-font-size, var(--fs-2xs));
+      font-size: var(--cffy-input-group-font-size, var(--cffy-fs-2xs));
 
       i {
         color: inherit;
-        font-size: var(--input-group-icon-size, var(--fs-base));
-        font-variation-settings: var(--iw-semi-bold);
+        font-size: var(--cffy-input-group-icon-size, var(--cffy-fs-base));
+        font-variation-settings: var(--cffy-iw-semi-bold);
       }
     }
 

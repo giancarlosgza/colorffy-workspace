@@ -22,22 +22,22 @@
   }
 
   .v-popper__popper {
-    --_dropdown-bg-color: var(--dropdown-bg-color, var(--theme-surface-overlay));
-    --_dropdown-color: var(--dropdown-color, var(--theme-on-background));
-    --_dropdown-border-color: var(--dropdown-border-color, var(--theme-outline-overlay));
-    --_dropdown-padding: var(--dropdown-padding, var(--space-4));
-    --_dropdown-shadow: var(--dropdown-shadow, var(--shadow-lg));
-    --_dropdown-radius: var(--dropdown-radius, var(--radius-lg));
-    --_dropdown-min-width: var(--dropdown-min-width, 12rem);
-    --_dropdown-easing: var(--dropdown-easing, var(--ease-overshoot-soft));
-    --_dropdown-easing-out: var(--ease-accelerate);
-    --_dropdown-duration: var(--dropdown-duration, var(--duration-500));
-    --_dropdown-item-padding-inline: var(--dropdown-item-padding-inline, var(--space-8));
-    --_dropdown-item-padding-block: var(--dropdown-item-padding-block, var(--space-8));
-    --_dropdown-item-color: var(--dropdown-item-color, var(--_dropdown-color));
+    --_dropdown-bg-color: var(--cffy-dropdown-bg-color, var(--cffy-surface-overlay));
+    --_dropdown-color: var(--cffy-dropdown-color, var(--cffy-on-background));
+    --_dropdown-border-color: var(--cffy-dropdown-border-color, var(--cffy-outline-overlay));
+    --_dropdown-padding: var(--cffy-dropdown-padding, var(--cffy-space-4));
+    --_dropdown-shadow: var(--cffy-dropdown-shadow, var(--cffy-shadow-lg));
+    --_dropdown-radius: var(--cffy-dropdown-radius, var(--cffy-radius-lg));
+    --_dropdown-min-width: var(--cffy-dropdown-min-width, 12rem);
+    --_dropdown-easing: var(--cffy-dropdown-easing, var(--cffy-ease-overshoot-soft));
+    --_dropdown-easing-out: var(--cffy-ease-accelerate);
+    --_dropdown-duration: var(--cffy-dropdown-duration, var(--cffy-duration-500));
+    --_dropdown-item-padding-inline: var(--cffy-dropdown-item-padding-inline, var(--cffy-space-8));
+    --_dropdown-item-padding-block: var(--cffy-dropdown-item-padding-block, var(--cffy-space-8));
+    --_dropdown-item-color: var(--cffy-dropdown-item-color, var(--_dropdown-color));
     --_dropdown-item-bg-color: transparent;
-    --_dropdown-item-radius: var(--dropdown-item-radius, calc(var(--_dropdown-radius) / 2));
-    --_dropdown-item-font-size: var(--dropdown-item-font-size, var(--fs-3xs));
+    --_dropdown-item-radius: var(--cffy-dropdown-item-radius, calc(var(--_dropdown-radius) / 2));
+    --_dropdown-item-font-size: var(--cffy-dropdown-item-font-size, var(--cffy-fs-3xs));
 
     &.v-popper--theme-dropdown {
       isolation: isolate;
@@ -52,14 +52,14 @@
           padding: var(--_dropdown-padding);
           box-shadow: var(--_dropdown-shadow);
           border-radius: var(--_dropdown-radius);
-          border: var(--border-width-sm) solid var(--_dropdown-border-color);
+          border: var(--cffy-border-width-sm) solid var(--_dropdown-border-color);
           min-width: var(--_dropdown-min-width);
 
           & kbd {
-            background-color: var(--theme-surface-kbd);
-            border: var(--border-width-sm) solid var(--theme-surface-kbd);
-            color: var(--theme-on-background-inverse);
-            font-weight: var(--fw-800);
+            background-color: var(--cffy-surface-kbd);
+            border: var(--cffy-border-width-sm) solid var(--cffy-surface-kbd);
+            color: var(--cffy-on-background-inverse);
+            font-weight: var(--cffy-fw-800);
           }
 
           // Menu list styles
@@ -74,8 +74,8 @@
               & .v-dropdown-item {
                 display: flex;
                 align-items: center;
-                gap: var(--space-6);
-                font-weight: var(--fw-400);
+                gap: var(--cffy-space-6);
+                font-weight: var(--cffy-fw-400);
                 --_dropdown-item-state: 0%;
 
                 background: f.state-layer(var(--_dropdown-item-state), var(--_dropdown-item-bg-color));
@@ -87,7 +87,7 @@
                 border: none;
                 border-radius: var(--_dropdown-item-radius);
 
-                font-family: var(--font-primary);
+                font-family: var(--cffy-font-primary);
                 font-size: var(--_dropdown-item-font-size);
                 text-align: start;
 
@@ -108,8 +108,8 @@
                 &.v-text-item {
                   display: inline-block;
                   letter-spacing: 0.45px;
-                  font-weight: var(--fw-700);
-                  font-family: var(--font-primary);
+                  font-weight: var(--cffy-fw-700);
+                  font-family: var(--cffy-font-primary);
 
                   &:is(:hover, :focus, :active) {
                     background-color: inherit;
@@ -125,39 +125,39 @@
 
                 & .badge {
                   --_badge-font-size: .5rem;
-                  --_badge-padding-block: var(--space-4);
-                  --_badge-padding-inline: var(--space-6);
+                  --_badge-padding-block: var(--cffy-space-4);
+                  --_badge-padding-inline: var(--cffy-space-6);
 
-                  margin-left: var(--space-6);
+                  margin-left: var(--cffy-space-6);
                   line-height: 1.25;
                 }
 
                 i {
                   font-size: 1rem;
-                  font-variation-settings: var(--iw-semi-bold);
+                  font-variation-settings: var(--cffy-iw-semi-bold);
                 }
 
                 &:is(.v-danger) {
                   & i {
-                    color: var(--theme-danger-a10);
+                    color: var(--cffy-danger-a10);
                   }
                 }
 
                 &:is(.v-active) {
-                  --_dropdown-item-bg-color: var(--dropdown-item-active-bg-color, var(--theme-surface-container-highest));
-                  --_dropdown-item-color: var(--dropdown-item-active-color, var(--theme-on-background));
+                  --_dropdown-item-bg-color: var(--cffy-dropdown-item-active-bg-color, var(--cffy-surface-container-highest));
+                  --_dropdown-item-color: var(--cffy-dropdown-item-active-color, var(--cffy-on-background));
 
-                  font-weight: var(--fw-700);
+                  font-weight: var(--cffy-fw-700);
 
                   & i {
-                    font-variation-settings: var(--iw-bold);
+                    font-variation-settings: var(--cffy-iw-bold);
                   }
                 }
 
                 &:is(.v-disabled),
                 &:is(:disabled) {
-                  --_dropdown-item-bg-color: color-mix(in oklab, var(--theme-muted-base-fixed) 15%, transparent);
-                  --_dropdown-item-color: var(--theme-muted-a10);
+                  --_dropdown-item-bg-color: color-mix(in oklab, var(--cffy-muted-base-fixed) 15%, transparent);
+                  --_dropdown-item-color: var(--cffy-muted-a10);
 
                   cursor: not-allowed;
                   opacity: 0.75;
@@ -169,25 +169,25 @@
 
                 // States
                 &:is(:hover) {
-                  --_dropdown-item-state: var(--state-hover-opacity);
-                  --_dropdown-item-color: var(--dropdown-item-hover-color, var(--theme-on-background));
+                  --_dropdown-item-state: var(--cffy-state-hover-opacity);
+                  --_dropdown-item-color: var(--cffy-dropdown-item-hover-color, var(--cffy-on-background));
                 }
 
                 &:is(:active, :focus-visible) {
-                  --_dropdown-item-state: var(--state-pressed-opacity);
+                  --_dropdown-item-state: var(--cffy-state-pressed-opacity);
                 }
 
                 &:is(.active) {
-                  --_dropdown-item-bg-color: var(--dropdown-item-active-bg-color, var(--theme-surface-container-highest));
-                  --_dropdown-item-color: var(--dropdown-item-active-color, var(--theme-on-background));
+                  --_dropdown-item-bg-color: var(--cffy-dropdown-item-active-bg-color, var(--cffy-surface-container-highest));
+                  --_dropdown-item-color: var(--cffy-dropdown-item-active-color, var(--cffy-on-background));
                 }
               }
 
               &.v-dropdown-divider {
                 height: 0;
-                margin: var(--space-4);
+                margin: var(--cffy-space-4);
                 overflow: hidden;
-                border-top: var(--border-width-sm) solid color-mix(in oklab, var(--theme-muted-base-fixed) 50%, transparent);
+                border-top: var(--cffy-border-width-sm) solid color-mix(in oklab, var(--cffy-muted-base-fixed) 50%, transparent);
                 opacity: 1;
               }
             }
@@ -197,7 +197,7 @@
         // Color Picker Popover
         & .v-popper__inner {
           &:has(.color-picker-popper) {
-            --_dropdown-padding: var(--space-12);
+            --_dropdown-padding: var(--cffy-space-12);
 
             // Color Picker Popover
             .color-picker-popper {
@@ -206,7 +206,7 @@
               display: flex;
               flex-direction: column;
               width: var(--_color-picker-width);
-              gap: var(--space-12);
+              gap: var(--cffy-space-12);
               user-select: none;
 
               /* Color Picker Area */
@@ -255,7 +255,7 @@
                 width: 100%;
                 height: 15px;
                 cursor: ew-resize;
-                border-radius: var(--radius-full);
+                border-radius: var(--cffy-radius-full);
                 overflow: hidden;
 
                 & .hue-gradient {
@@ -279,11 +279,11 @@
                   height: 12px;
                   aspect-ratio: 1;
                   background-color: transparent;
-                  border: var(--border-width-md) solid var(--color-brand-white-500);
-                  outline: var(--border-width-md) solid var(--color-brand-dark-500);
+                  border: var(--cffy-border-width-md) solid var(--cffy-color-brand-white-500);
+                  outline: var(--cffy-border-width-md) solid var(--cffy-color-brand-dark-500);
                   outline-offset: 0;
-                  border-radius: var(--radius-md);
-                  box-shadow: var(--shadow-sm);
+                  border-radius: var(--cffy-radius-md);
+                  box-shadow: var(--cffy-shadow-sm);
                   pointer-events: none;
                   box-sizing: border-box;
                   transform: translate(-50%, -50%);
@@ -294,15 +294,15 @@
               .controls {
                 display: flex;
                 align-items: center;
-                gap: var(--space-8);
+                gap: var(--cffy-space-8);
 
                 & .preview-swatch {
                   flex-shrink: 0;
                   width: 30px;
                   height: 30px;
                   aspect-ratio: 1;
-                  border: var(--border-width-sm) solid var(--theme-outline-surface);
-                  border-radius: var(--radius-full);
+                  border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+                  border-radius: var(--cffy-radius-full);
                 }
 
                 & .form-group {
@@ -368,7 +368,7 @@
 
         & .v-popper__backdrop {
           display: block;
-          background-color: var(--theme-overlay-backdrop);
+          background-color: var(--cffy-overlay-backdrop);
         }
 
         & .v-popper__wrapper {
@@ -376,8 +376,8 @@
           pointer-events: auto;
 
           & .v-popper__inner {
-            border-radius: var(--radius-xl);
-            margin: var(--space-8);
+            border-radius: var(--cffy-radius-xl);
+            margin: var(--cffy-space-8);
             //padding-block: 12px 24px;
 
             .color-picker-popper {
@@ -387,10 +387,10 @@
             & ul {
               & li {
                 & .v-dropdown-item {
-                  --_dropdown-item-padding-block: var(--space-12);
+                  --_dropdown-item-padding-block: var(--cffy-space-12);
 
                   & i {
-                    font-variation-settings: var(--iw-semi-bold);
+                    font-variation-settings: var(--cffy-iw-semi-bold);
                   }
                 }
               }
@@ -405,8 +405,8 @@
           .v-popper__wrapper {
             translate: 0 50dvh;
             transition: translate calc(var(--_dropdown-duration) / 2) var(--_dropdown-easing-out),
-            opacity var(--duration-100) ease-in-out,
-            visibility var(--duration-100) ease-in-out;
+            opacity var(--cffy-duration-100) ease-in-out,
+            visibility var(--cffy-duration-100) ease-in-out;
           }
         }
 
@@ -417,8 +417,8 @@
           .v-popper__wrapper {
             translate: 0;
             transition: translate var(--_dropdown-duration) var(--_dropdown-easing),
-            opacity var(--duration-100) ease-in-out,
-            visibility var(--duration-100) ease-in-out;
+            opacity var(--cffy-duration-100) ease-in-out,
+            visibility var(--cffy-duration-100) ease-in-out;
           }
         }
       }

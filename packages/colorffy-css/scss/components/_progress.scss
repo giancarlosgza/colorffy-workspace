@@ -5,7 +5,7 @@
   // ==========================================================================
   // PROGRESS COMPONENT
   // ==========================================================================
-   @property --shape-angle {
+   @property --cffy-shape-angle {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
@@ -15,20 +15,20 @@
   // PROGRESS BAR COMPONENT
   // ==========================================================================
   .progress {
-    --_progress-bg-color: var(--progress-bg-color, var(--theme-surface-container-high));
-    --_progress-color: var(--progress-color, var(--theme-primary-a10));
-    --_progress-label-color: var(--progress-label-color, var(--theme-on-primary));
-    --_progress-height: var(--progress-height, 0.85rem);
-    --_progress-radius: var(--progress-radius, var(--radius-md));
-    --_progress-font-size: var(--progress-font-size, var(--fs-4xs));
-    --_progress-easing: var(--progress-easing, var(--ease-emphasized));
-    --_progress-duration: var(--progress-duration, var(--duration-800));
+    --_progress-bg-color: var(--cffy-progress-bg-color, var(--cffy-surface-container-high));
+    --_progress-color: var(--cffy-progress-color, var(--cffy-primary-a10));
+    --_progress-label-color: var(--cffy-progress-label-color, var(--cffy-on-primary));
+    --_progress-height: var(--cffy-progress-height, 0.85rem);
+    --_progress-radius: var(--cffy-progress-radius, var(--cffy-radius-md));
+    --_progress-font-size: var(--cffy-progress-font-size, var(--cffy-fs-4xs));
+    --_progress-easing: var(--cffy-progress-easing, var(--cffy-ease-emphasized));
+    --_progress-duration: var(--cffy-progress-duration, var(--cffy-duration-800));
 
     display: flex;
     overflow: hidden;
     height: var(--_progress-height);
     font-size: var(--_progress-font-size);
-    font-weight: var(--fw-600);
+    font-weight: var(--cffy-fw-600);
     background: var(--_progress-bg-color);
     border-radius: var(--_progress-radius);
 
@@ -38,7 +38,7 @@
 
     &.progress-lg {
       --_progress-height: 2rem;
-      --_progress-radius: var(--radius-xl);
+      --_progress-radius: var(--cffy-radius-xl);
     }
 
     // Progress bar
@@ -65,10 +65,10 @@
       }
 
       &.progress-gradient {
-        --angle: 45deg;
+        --cffy-angle: 45deg;
         --_gradient-stops: #{v.$gradient-database};
 
-        @include m.bg-gradient(var(--angle), var(--_gradient-stops));
+        @include m.bg-gradient(var(--cffy-angle), var(--_gradient-stops));
         @include m.generate-static-gradients(v.$static-gradients, false, true);
         @include m.generate-gradients(v.$dynamic-gradients, false, true);
       }
@@ -92,7 +92,7 @@
   // PROGRESS SPINNER COMPONENT
   // ==========================================================================
   .progress-spinner {
-    --_progress-spinner-color: var(--progress-spinner-color, var(--theme-muted-a10));
+    --_progress-spinner-color: var(--cffy-progress-spinner-color, var(--cffy-muted-a10));
     --_progress-spinner-size: 1.25rem;
 
     position: relative;
@@ -101,7 +101,7 @@
     height: var(--_progress-spinner-size);
 
     &:not(:last-child) {
-      margin-bottom: var(--space-12);
+      margin-bottom: var(--cffy-space-12);
     }
 
     &:after {
@@ -124,7 +124,7 @@
     position: relative;
     height: 13rem;
     width: 100%;
-    background-color: var(--theme-surface-container);
+    background-color: var(--cffy-surface-container);
     z-index: 44;
     overflow: hidden;
     border-radius: v.$card-border-radius;
@@ -143,8 +143,8 @@
   }
 
   .skeleton {
-    --_skeleton-color: var(--skeleton-color, var(--theme-muted-a10));
-    --_skeleton-radius: var(--skeleton-radius, var(--radius-md));
+    --_skeleton-color: var(--cffy-skeleton-color, var(--cffy-muted-a10));
+    --_skeleton-radius: var(--cffy-skeleton-radius, var(--cffy-radius-md));
 
     display: inline-block;
     border-radius: var(--_skeleton-radius);
@@ -190,7 +190,7 @@
 
     &.skeleton-ai-generation {
       --_skeleton-thumbnail-size: 200px;
-      --_skeleton-radius: var(--radius-xl);
+      --_skeleton-radius: var(--cffy-radius-xl);
 
       min-height: 1rem;
       width: 100%;
@@ -239,7 +239,7 @@
 
       & p {
         mix-blend-mode: luminosity;
-        color: var(--theme-on-background-inverse);
+        color: var(--cffy-on-background-inverse);
       }
     }
 
@@ -252,7 +252,7 @@
 
       & .shape {
         --_shape-bg-alpha: 1;
-        --_loading-shapes-color: var(--loading-shapes-color, var(--theme-primary-a10));
+        --_loading-shapes-color: var(--cffy-loading-shapes-color, var(--cffy-primary-a10));
         --_shape-size: 15rem;
 
         position: absolute;
@@ -266,8 +266,8 @@
         background-color: var(--_loading-shapes-color);
         animation: shape-loading 5s linear infinite;
         transform: translate(
-                        calc(cos(var(--shape-angle)) * 3rem),
-                        calc(sin(var(--shape-angle)) * 3rem)
+                        calc(cos(var(--cffy-shape-angle)) * 3rem),
+                        calc(sin(var(--cffy-shape-angle)) * 3rem)
         );
 
         &:nth-child(2) {
@@ -306,19 +306,19 @@
 
   @keyframes colors {
     0% {
-      stroke: var(--theme-primary-base);
+      stroke: var(--cffy-primary-base);
     }
     25% {
-      stroke: var(--theme-secondary-base);
+      stroke: var(--cffy-secondary-base);
     }
     50% {
-      stroke: var(--theme-accent-base);
+      stroke: var(--cffy-accent-base);
     }
     75% {
-      stroke: var(--theme-warning-base);
+      stroke: var(--cffy-warning-base);
     }
     100% {
-      stroke: var(--theme-success-base);
+      stroke: var(--cffy-success-base);
     }
   }
 
@@ -352,7 +352,7 @@
 
   @keyframes shape-loading {
     to {
-      --shape-angle: 360deg;
+      --cffy-shape-angle: 360deg;
     }
   }
 

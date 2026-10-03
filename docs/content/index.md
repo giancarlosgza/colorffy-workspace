@@ -93,7 +93,7 @@ description: A complete toolkit for building polished, themeable interfaces.
     Tonal color system
 
     #description
-    Adaptive `--theme-*` tones generated from your brand colors with `color-mix()`.
+    Adaptive `--cffy-*` tones generated from your brand colors with `color-mix()`.
     ::::
 
     ::::u-page-card

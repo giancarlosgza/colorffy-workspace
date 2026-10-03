@@ -10,17 +10,17 @@ $indicator-max-items: 8;
   // BOTTOM NAVIGATION BAR LAYOUT
   // ==========================================================================
   .navigation-bar {
-    --_navigation-bar-easing: var(--navigation-bar-easing, var(--ease-overshoot-soft));
-    --_navigation-bar-easing-out: var(--ease-accelerate);
-    --_navigation-bar-duration: var(--navigation-bar-duration, var(--duration-600));
+    --_navigation-bar-easing: var(--cffy-navigation-bar-easing, var(--cffy-ease-overshoot-soft));
+    --_navigation-bar-easing-out: var(--cffy-ease-accelerate);
+    --_navigation-bar-duration: var(--cffy-navigation-bar-duration, var(--cffy-duration-600));
     --_navigation-bar-padding-top: 0;
     --_navigation-bar-padding-bottom: 0;
-    --_navigation-bar-font-size: var(--navigation-bar-font-size, .65rem);
-    --_navigation-bar-icon-size: var(--navigation-bar-icon-size, 1.35rem);
-    --_navigation-bar-bg-color: var(--navigation-bar-bg-color, var(--theme-surface-navigation));
-    --_navigation-bar-item-color: var(--navigation-bar-item-color, var(--theme-muted-a10));
-    --_navigation-bar-item-active-color: var(--navigation-bar-item-active-color, var(--theme-primary-a10));
-    --_navigation-bar-indicator-anchor: --navigation-bar-item-1;
+    --_navigation-bar-font-size: var(--cffy-navigation-bar-font-size, .65rem);
+    --_navigation-bar-icon-size: var(--cffy-navigation-bar-icon-size, 1.35rem);
+    --_navigation-bar-bg-color: var(--cffy-navigation-bar-bg-color, var(--cffy-surface-navigation));
+    --_navigation-bar-item-color: var(--cffy-navigation-bar-item-color, var(--cffy-muted-a10));
+    --_navigation-bar-item-active-color: var(--cffy-navigation-bar-item-active-color, var(--cffy-primary-a10));
+    --_navigation-bar-indicator-anchor: --cffy-navigation-bar-item-1;
 
     display: none;
     flex-direction: row;
@@ -34,13 +34,13 @@ $indicator-max-items: 8;
     padding-top: var(--_navigation-bar-padding-top); // Set the padding default value to 0 for Windows or Android devices
     padding-bottom: var(--_navigation-bar-padding-bottom);
     background-color: var(--_navigation-bar-bg-color);
-    color: var(--theme-on-background);
-    box-shadow: var(--navigation-bar-shadow, var(--shadow-md));
+    color: var(--cffy-on-background);
+    box-shadow: var(--cffy-navigation-bar-shadow, var(--cffy-shadow-md));
     z-index: v.$z-index-navigation;
 
     &:is(.navigation-bar-frosted) {
-      background-color: var(--theme-frosted-glass-bg);
-      backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+      background-color: var(--cffy-frosted-glass-bg);
+      backdrop-filter: var(--cffy-frosted-glass-backdrop-filter);
     }
 
     &:is(.navigation-bar-island) {
@@ -49,7 +49,7 @@ $indicator-max-items: 8;
 
     & .navigation-bar-item {
       width: 25%;
-      transition: var(--ease-decelerate);
+      transition: var(--cffy-ease-decelerate);
 
       & .navigation-bar-link {
         position: relative;
@@ -62,9 +62,9 @@ $indicator-max-items: 8;
         p {
           position: relative;
           font-size: var(--_navigation-bar-font-size);
-          font-family: var(--font-primary);
+          font-family: var(--cffy-font-primary);
           margin-bottom: 0;
-          font-weight: var(--fw-500);
+          font-weight: var(--cffy-fw-500);
           z-index: 11;
         }
 
@@ -88,14 +88,14 @@ $indicator-max-items: 8;
           }
 
           p {
-            font-weight: var(--fw-800);
+            font-weight: var(--cffy-fw-800);
           }
         }
       }
 
       &:hover {
         p, i {
-          color: var(--navigation-bar-item-hover-color, var(--_navigation-bar-item-active-color));
+          color: var(--cffy-navigation-bar-item-hover-color, var(--_navigation-bar-item-active-color));
         }
       }
     }
@@ -106,11 +106,11 @@ $indicator-max-items: 8;
     // Anchors
     @for $i from 1 through $indicator-max-items {
       & .navigation-bar-item:nth-child(#{$i}) .navigation-bar-link {
-        anchor-name: --navigation-bar-item-#{$i};
+        anchor-name: --cffy-navigation-bar-item-#{$i};
       }
 
       &:has(.navigation-bar-item:nth-child(#{$i}) .navigation-bar-link.router-link-exact-active) {
-        --_navigation-bar-indicator-anchor: --navigation-bar-item-#{$i};
+        --_navigation-bar-indicator-anchor: --cffy-navigation-bar-item-#{$i};
       }
     }
 
@@ -121,7 +121,7 @@ $indicator-max-items: 8;
         display: block;
         position: absolute;
         margin: auto;
-        border-radius: var(--navigation-bar-indicator-radius, var(--radius-xl));
+        border-radius: var(--cffy-navigation-bar-indicator-radius, var(--cffy-radius-xl));
         width: auto;
         max-width: 100%;
         height: calc(100% - 1rem);
@@ -132,7 +132,7 @@ $indicator-max-items: 8;
         bottom: anchor(var(--_navigation-bar-indicator-anchor) bottom);
         left: anchor(var(--_navigation-bar-indicator-anchor) left);
         right: anchor(var(--_navigation-bar-indicator-anchor) right);
-        background-color: var(--navigation-bar-indicator-color, color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-navigation) 90%));
+        background-color: var(--cffy-navigation-bar-indicator-color, color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-navigation) 90%));
 
         // Animation
         @media (prefers-reduced-motion: no-preference) {
@@ -143,17 +143,17 @@ $indicator-max-items: 8;
 
       &:is(.indicator-tab) {
         @supports (anchor-name: --foo) {
-          border-radius: var(--radius-sm);
+          border-radius: var(--cffy-radius-sm);
           height: .25rem;
-          background-color: var(--theme-primary-a10);
+          background-color: var(--cffy-primary-a10);
           top: calc(anchor(var(--_navigation-bar-indicator-anchor) top) - 1rem);
           bottom: unset;
         }
       }
 
       &:is(.indicator-frosted) {
-        border: var(--border-width-sm) solid var(--theme-outline-surface);
-        background-color: var(--theme-frosted-glass-bg);
+        border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+        background-color: var(--cffy-frosted-glass-bg);
       }
     }
   }
@@ -167,13 +167,13 @@ $indicator-max-items: 8;
         .navigation-bar-link {
           .indicator {
             scale: 1;
-            transition: opacity var(--duration-300) var(--_navigation-bar-easing-out);
+            transition: opacity var(--cffy-duration-300) var(--_navigation-bar-easing-out);
           }
 
           &.nuxt-link-exact-active {
             .indicator {
               scale: 1;
-              transition: opacity var(--duration-600) var(--_navigation-bar-easing);
+              transition: opacity var(--cffy-duration-600) var(--_navigation-bar-easing);
             }
           }
         }

@@ -30,20 +30,20 @@
   $bold: false !default;
 
   @supports not (font-variation-settings: 'wght' 500) {
-    font-family: var(--font-secondary);
+    font-family: var(--cffy-font-secondary);
   }
 
   /* Add support for variable font settings */
   @supports (font-variation-settings: 'wght' 500) {
-    font-family: var(--font-primary);
+    font-family: var(--cffy-font-primary);
     font-optical-sizing: auto;
     letter-spacing: -.15px;
-    transition: font-variation-settings var(--duration-500) var(--ease-spring);
+    transition: font-variation-settings var(--cffy-duration-500) var(--cffy-ease-spring);
 
     @if ($bold == true) {
-      font-variation-settings: var(--vfs-heading-bold);
+      font-variation-settings: var(--cffy-vfs-heading-bold);
     } @else {
-      font-variation-settings: var(--vfs-heading);
+      font-variation-settings: var(--cffy-vfs-heading);
     }
   }
 }
@@ -76,7 +76,7 @@
 * Generate badge tonal background colors
 */
 @mixin container-tonal($tonal, $color, $isDark, $isBordered, $prefix) {
-  $mix-color: var(--theme-on-background-inverse);
+  $mix-color: var(--cffy-on-background-inverse);
   $mix-intensity: 70%;
   $isDark: false !default;
   $isBordered: false !default;
@@ -84,9 +84,9 @@
 
   // If the color is dark, set the mix intensity to the dark intensity
   @if ($isDark == true) {
-    $mix-intensity: var(--theme-tonal-dark-intensity);
+    $mix-intensity: var(--cffy-tonal-dark-intensity);
   } @else {
-    $mix-intensity: var(--theme-tonal-light-intensity);
+    $mix-intensity: var(--cffy-tonal-light-intensity);
   }
 
   // If the element is bordered, set the border color the same as the color variable
@@ -140,7 +140,7 @@
   // If button has an icon add styles to it
   &:has(i, svg) {
     --_btn-columns: auto 1fr;
-    --_btn-gap: var(--space-6);
+    --_btn-gap: var(--cffy-space-6);
 
     &:is(.icon-trailing) {
       --_btn-columns: 1fr auto;
@@ -150,7 +150,7 @@
     :where(i, svg) {
       grid-area: icon;
       font-size: var(--_btn-icon-size);
-      font-variation-settings: var(--iw-semi-bold);
+      font-variation-settings: var(--cffy-iw-semi-bold);
       color: inherit;
     }
   }
@@ -161,15 +161,15 @@
   }
 
   &:is(:hover) {
-    --_btn-shadow: var(--shadow-md);
+    --_btn-shadow: var(--cffy-shadow-md);
 
     i:is(.material-symbols-rounded) {
-      font-variation-settings: var(--iw-bold);
+      font-variation-settings: var(--cffy-iw-bold);
     }
   }
 
   &:is(:focus, :active) {
-    --_btn-shadow: var(--shadow-lg);
+    --_btn-shadow: var(--cffy-shadow-lg);
   }
 
   &:is(:active) {
@@ -182,14 +182,14 @@
 * Generate button tonal states
 */
 @mixin btn-tonal($tonal, $color, $isDark) {
-  $mix-color: var(--theme-on-background-inverse);
+  $mix-color: var(--cffy-on-background-inverse);
   $mix-intensity: 70%;
   $isDark: false !default;
 
   @if ($isDark == true) {
-    $mix-intensity: var(--theme-tonal-dark-intensity);
+    $mix-intensity: var(--cffy-tonal-dark-intensity);
   } @else {
-    $mix-intensity: var(--theme-tonal-light-intensity);
+    $mix-intensity: var(--cffy-tonal-light-intensity);
   }
 
   --_btn-bg-color: color-mix(in srgb, #{$tonal}, #{$mix-color} #{$mix-intensity});
@@ -214,24 +214,24 @@
 */
 @mixin btn-size($size) {
   @if ($size == 'sm') {
-    --_btn-padding-inline: var(--space-8);
+    --_btn-padding-inline: var(--cffy-space-8);
     --_btn-height: 32px;
     --_btn-icon-size: 1rem;
   } @else if ($size == 'md') {
-    --_btn-padding-inline: var(--space-12);
+    --_btn-padding-inline: var(--cffy-space-12);
     --_btn-height: 36px;
     --_btn-icon-size: 1.15rem;
 
     font-size: map.get(v.$type-button, font-size);
   } @else if ($size == 'lg') {
-    --_btn-padding-inline: var(--space-14);
+    --_btn-padding-inline: var(--cffy-space-14);
     --_btn-height: 48px;
     --_btn-icon-size: 1.45rem;
 
     font-size: .875rem;
   } @else if ($size == 'fab') {
-    --_btn-padding-inline: var(--space-16);
-    --_btn-padding-block: var(--space-16);
+    --_btn-padding-inline: var(--cffy-space-16);
+    --_btn-padding-block: var(--cffy-space-16);
     --_btn-height: 48px;
     --_btn-icon-size: 1.5rem;
 
@@ -245,7 +245,7 @@
 
 @mixin form-placeholder($opacity: 35%, $color: null) {
   @if not $color {
-    $color: color-mix(in srgb, var(--theme-muted-a10), transparent #{$opacity});
+    $color: color-mix(in srgb, var(--cffy-muted-a10), transparent #{$opacity});
   }
 
   &::placeholder {
@@ -290,114 +290,114 @@
 @mixin surface-light-tones() {
   @supports (color: color-mix(in srgb, white, gray)) {
     /* surfaces */
-    --theme-surface-a0: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 96%);
-    --theme-surface-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 95%);
-    --theme-surface-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 90%);
-    --theme-surface-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 85%);
-    --theme-surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
-    --theme-surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
-    --theme-surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
-    --theme-surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 60%);
-    --theme-surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 50%);
-    --theme-surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 40%);
+    --cffy-surface-a0: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 96%);
+    --cffy-surface-a10: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 95%);
+    --cffy-surface-a20: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 90%);
+    --cffy-surface-a30: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 85%);
+    --cffy-surface-a40: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 80%);
+    --cffy-surface-a50: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 75%);
+    --cffy-surface-a60: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 70%);
+    --cffy-surface-a70: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 60%);
+    --cffy-surface-a80: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 50%);
+    --cffy-surface-a90: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 40%);
 
     /* surfaces states */
-    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-background-inverse), var(--theme-muted-a10) 20%);
+    --cffy-surface-disabled: color-mix(in srgb, var(--cffy-on-background-inverse), var(--cffy-muted-a10) 20%);
 
     /* primaries */
-    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 15%);
-    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 20%);
-    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 25%);
-    --theme-primary-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 35%);
-    --theme-primary-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 45%);
-    --theme-primary-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 55%);
-    --theme-primary-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 65%);
-    --theme-primary-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 75%);
-    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 80%);
+    --cffy-primary-a10: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 15%);
+    --cffy-primary-a20: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 20%);
+    --cffy-primary-a30: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 25%);
+    --cffy-primary-a40: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 35%);
+    --cffy-primary-a50: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 45%);
+    --cffy-primary-a60: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 55%);
+    --cffy-primary-a70: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 65%);
+    --cffy-primary-a80: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 75%);
+    --cffy-primary-a90: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 80%);
 
     /* primaries states */
-    --theme-primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
+    --cffy-primary-disabled: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-muted-a10) 50%);
 
     /* secondaries */
-    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 5%);
-    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 10%);
-    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 15%);
-    --theme-secondary-a40: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 25%);
-    --theme-secondary-a50: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 35%);
-    --theme-secondary-a60: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 45%);
-    --theme-secondary-a70: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 55%);
-    --theme-secondary-a80: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 65%);
-    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 80%);
+    --cffy-secondary-a10: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 5%);
+    --cffy-secondary-a20: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 10%);
+    --cffy-secondary-a30: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 15%);
+    --cffy-secondary-a40: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 25%);
+    --cffy-secondary-a50: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 35%);
+    --cffy-secondary-a60: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 45%);
+    --cffy-secondary-a70: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 55%);
+    --cffy-secondary-a80: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 65%);
+    --cffy-secondary-a90: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 80%);
 
     /* accents */
-    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 5%);
-    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 10%);
-    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 15%);
-    --theme-accent-a40: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 25%);
-    --theme-accent-a50: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 35%);
-    --theme-accent-a60: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 45%);
-    --theme-accent-a70: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 55%);
-    --theme-accent-a80: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 65%);
-    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 80%);
+    --cffy-accent-a10: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 5%);
+    --cffy-accent-a20: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 10%);
+    --cffy-accent-a30: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 15%);
+    --cffy-accent-a40: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 25%);
+    --cffy-accent-a50: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 35%);
+    --cffy-accent-a60: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 45%);
+    --cffy-accent-a70: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 55%);
+    --cffy-accent-a80: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 65%);
+    --cffy-accent-a90: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 80%);
   }
 }
 
 @mixin semantic-light-tones() {
   @supports (color: color-mix(in srgb, white, gray)) {
     /* success */
-    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 15%);
-    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 20%);
-    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 25%);
-    --theme-success-a40: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 35%);
-    --theme-success-a50: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 45%);
-    --theme-success-a60: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 55%);
-    --theme-success-a70: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 65%);
-    --theme-success-a80: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 75%);
-    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 80%);
+    --cffy-success-a10: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 15%);
+    --cffy-success-a20: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 20%);
+    --cffy-success-a30: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 25%);
+    --cffy-success-a40: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 35%);
+    --cffy-success-a50: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 45%);
+    --cffy-success-a60: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 55%);
+    --cffy-success-a70: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 65%);
+    --cffy-success-a80: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 75%);
+    --cffy-success-a90: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 80%);
 
     /* warning */
-    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 15%);
-    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 20%);
-    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 25%);
-    --theme-warning-a40: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 35%);
-    --theme-warning-a50: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 45%);
-    --theme-warning-a60: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 55%);
-    --theme-warning-a70: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 65%);
-    --theme-warning-a80: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 75%);
-    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 80%);
+    --cffy-warning-a10: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 15%);
+    --cffy-warning-a20: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 20%);
+    --cffy-warning-a30: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 25%);
+    --cffy-warning-a40: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 35%);
+    --cffy-warning-a50: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 45%);
+    --cffy-warning-a60: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 55%);
+    --cffy-warning-a70: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 65%);
+    --cffy-warning-a80: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 75%);
+    --cffy-warning-a90: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 80%);
 
     /* danger */
-    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 15%);
-    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 20%);
-    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 25%);
-    --theme-danger-a40: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 35%);
-    --theme-danger-a50: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 45%);
-    --theme-danger-a60: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 55%);
-    --theme-danger-a70: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 65%);
-    --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 75%);
-    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 80%);
+    --cffy-danger-a10: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 15%);
+    --cffy-danger-a20: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 20%);
+    --cffy-danger-a30: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 25%);
+    --cffy-danger-a40: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 35%);
+    --cffy-danger-a50: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 45%);
+    --cffy-danger-a60: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 55%);
+    --cffy-danger-a70: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 65%);
+    --cffy-danger-a80: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 75%);
+    --cffy-danger-a90: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 80%);
 
     /* info */
-    --theme-info-a10: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 15%);
-    --theme-info-a20: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 20%);
-    --theme-info-a30: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 25%);
-    --theme-info-a40: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 35%);
-    --theme-info-a50: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 45%);
-    --theme-info-a60: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 55%);
-    --theme-info-a70: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 65%);
-    --theme-info-a80: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 75%);
-    --theme-info-a90: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 80%);
+    --cffy-info-a10: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 15%);
+    --cffy-info-a20: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 20%);
+    --cffy-info-a30: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 25%);
+    --cffy-info-a40: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 35%);
+    --cffy-info-a50: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 45%);
+    --cffy-info-a60: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 55%);
+    --cffy-info-a70: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 65%);
+    --cffy-info-a80: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 75%);
+    --cffy-info-a90: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 80%);
 
     /* muted */
-    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 15%);
-    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 20%);
-    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 25%);
-    --theme-muted-a40: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 35%);
-    --theme-muted-a50: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 45%);
-    --theme-muted-a60: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 55%);
-    --theme-muted-a70: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 65%);
-    --theme-muted-a80: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 75%);
-    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 80%);
+    --cffy-muted-a10: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 15%);
+    --cffy-muted-a20: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 20%);
+    --cffy-muted-a30: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 25%);
+    --cffy-muted-a40: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 35%);
+    --cffy-muted-a50: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 45%);
+    --cffy-muted-a60: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 55%);
+    --cffy-muted-a70: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 65%);
+    --cffy-muted-a80: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 75%);
+    --cffy-muted-a90: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 80%);
   }
 }
 
@@ -407,114 +407,114 @@
 @mixin surface-dark-tones() {
   @supports (color: color-mix(in srgb, black, gray)) {
     /* surfaces */
-    --theme-surface-a0: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 96%);
-    --theme-surface-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 95%);
-    --theme-surface-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 90%);
-    --theme-surface-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 85%);
-    --theme-surface-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 80%);
-    --theme-surface-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 75%);
-    --theme-surface-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base) 70%);
-    --theme-surface-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 60%);
-    --theme-surface-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 50%);
-    --theme-surface-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-surface-base-inverse) 40%);
+    --cffy-surface-a0: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 96%);
+    --cffy-surface-a10: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 95%);
+    --cffy-surface-a20: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 90%);
+    --cffy-surface-a30: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 85%);
+    --cffy-surface-a40: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 80%);
+    --cffy-surface-a50: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 75%);
+    --cffy-surface-a60: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 70%);
+    --cffy-surface-a70: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base-inverse) 60%);
+    --cffy-surface-a80: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base-inverse) 50%);
+    --cffy-surface-a90: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base-inverse) 40%);
 
     /* surfaces states */
-    --theme-surface-disabled: color-mix(in srgb, var(--theme-on-background-inverse), var(--theme-muted-a10) 30%);
+    --cffy-surface-disabled: color-mix(in srgb, var(--cffy-on-background-inverse), var(--cffy-muted-a10) 30%);
 
     /* primaries */
-    --theme-primary-a10: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 5%);
-    --theme-primary-a20: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 10%);
-    --theme-primary-a30: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 15%);
-    --theme-primary-a40: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 25%);
-    --theme-primary-a50: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 35%);
-    --theme-primary-a60: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 45%);
-    --theme-primary-a70: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 55%);
-    --theme-primary-a80: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background-inverse) 65%);
-    --theme-primary-a90: color-mix(in srgb, var(--theme-primary-base), var(--theme-on-background) 50%);
+    --cffy-primary-a10: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 5%);
+    --cffy-primary-a20: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 10%);
+    --cffy-primary-a30: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 15%);
+    --cffy-primary-a40: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 25%);
+    --cffy-primary-a50: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 35%);
+    --cffy-primary-a60: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 45%);
+    --cffy-primary-a70: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 55%);
+    --cffy-primary-a80: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background-inverse) 65%);
+    --cffy-primary-a90: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-on-background) 50%);
 
     /* primaries states */
-    --theme-primary-disabled: color-mix(in srgb, var(--theme-primary-base), var(--theme-muted-a10) 50%);
+    --cffy-primary-disabled: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-muted-a10) 50%);
 
     /* secondaries */
-    --theme-secondary-a10: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 5%);
-    --theme-secondary-a20: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 10%);
-    --theme-secondary-a30: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 15%);
-    --theme-secondary-a40: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 25%);
-    --theme-secondary-a50: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 35%);
-    --theme-secondary-a60: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 45%);
-    --theme-secondary-a70: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 55%);
-    --theme-secondary-a80: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background-inverse) 65%);
-    --theme-secondary-a90: color-mix(in srgb, var(--theme-secondary-base), var(--theme-on-background) 50%);
+    --cffy-secondary-a10: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 5%);
+    --cffy-secondary-a20: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 10%);
+    --cffy-secondary-a30: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 15%);
+    --cffy-secondary-a40: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 25%);
+    --cffy-secondary-a50: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 35%);
+    --cffy-secondary-a60: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 45%);
+    --cffy-secondary-a70: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 55%);
+    --cffy-secondary-a80: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 65%);
+    --cffy-secondary-a90: color-mix(in srgb, var(--cffy-secondary-base), var(--cffy-on-background) 50%);
 
     /* accents */
-    --theme-accent-a10: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 5%);
-    --theme-accent-a20: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 10%);
-    --theme-accent-a30: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 15%);
-    --theme-accent-a40: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 25%);
-    --theme-accent-a50: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 35%);
-    --theme-accent-a60: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 45%);
-    --theme-accent-a70: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 55%);
-    --theme-accent-a80: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background-inverse) 65%);
-    --theme-accent-a90: color-mix(in srgb, var(--theme-accent-base), var(--theme-on-background) 50%);
+    --cffy-accent-a10: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 5%);
+    --cffy-accent-a20: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 10%);
+    --cffy-accent-a30: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 15%);
+    --cffy-accent-a40: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 25%);
+    --cffy-accent-a50: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 35%);
+    --cffy-accent-a60: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 45%);
+    --cffy-accent-a70: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 55%);
+    --cffy-accent-a80: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background-inverse) 65%);
+    --cffy-accent-a90: color-mix(in srgb, var(--cffy-accent-base), var(--cffy-on-background) 50%);
   }
 }
 
 @mixin semantic-dark-tones() {
   @supports (color: color-mix(in srgb, black, gray)) {
     /* success */
-    --theme-success-a10: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 5%);
-    --theme-success-a20: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 10%);
-    --theme-success-a30: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 15%);
-    --theme-success-a40: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 25%);
-    --theme-success-a50: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 35%);
-    --theme-success-a60: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 45%);
-    --theme-success-a70: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 55%);
-    --theme-success-a80: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 65%);
-    --theme-success-a90: color-mix(in srgb, var(--theme-success-base), var(--theme-on-background) 50%);
+    --cffy-success-a10: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 5%);
+    --cffy-success-a20: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 10%);
+    --cffy-success-a30: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 15%);
+    --cffy-success-a40: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 25%);
+    --cffy-success-a50: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 35%);
+    --cffy-success-a60: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 45%);
+    --cffy-success-a70: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 55%);
+    --cffy-success-a80: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 65%);
+    --cffy-success-a90: color-mix(in srgb, var(--cffy-success-base), var(--cffy-on-background) 50%);
 
     /* warning */
-    --theme-warning-a10: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 5%);
-    --theme-warning-a20: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 10%);
-    --theme-warning-a30: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 15%);
-    --theme-warning-a40: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 25%);
-    --theme-warning-a50: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 35%);
-    --theme-warning-a60: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 45%);
-    --theme-warning-a70: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 55%);
-    --theme-warning-a80: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 65%);
-    --theme-warning-a90: color-mix(in srgb, var(--theme-warning-base), var(--theme-on-background) 50%);
+    --cffy-warning-a10: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 5%);
+    --cffy-warning-a20: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 10%);
+    --cffy-warning-a30: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 15%);
+    --cffy-warning-a40: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 25%);
+    --cffy-warning-a50: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 35%);
+    --cffy-warning-a60: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 45%);
+    --cffy-warning-a70: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 55%);
+    --cffy-warning-a80: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 65%);
+    --cffy-warning-a90: color-mix(in srgb, var(--cffy-warning-base), var(--cffy-on-background) 50%);
 
     /* danger */
-    --theme-danger-a10: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 5%);
-    --theme-danger-a20: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 10%);
-    --theme-danger-a30: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 15%);
-    --theme-danger-a40: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 25%);
-    --theme-danger-a50: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 35%);
-    --theme-danger-a60: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 45%);
-    --theme-danger-a70: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 55%);
-    --theme-danger-a80: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 65%);
-    --theme-danger-a90: color-mix(in srgb, var(--theme-danger-base), var(--theme-on-background) 50%);
+    --cffy-danger-a10: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 5%);
+    --cffy-danger-a20: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 10%);
+    --cffy-danger-a30: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 15%);
+    --cffy-danger-a40: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 25%);
+    --cffy-danger-a50: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 35%);
+    --cffy-danger-a60: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 45%);
+    --cffy-danger-a70: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 55%);
+    --cffy-danger-a80: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 65%);
+    --cffy-danger-a90: color-mix(in srgb, var(--cffy-danger-base), var(--cffy-on-background) 50%);
 
     /* info */
-    --theme-info-a10: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 5%);
-    --theme-info-a20: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 10%);
-    --theme-info-a30: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 15%);
-    --theme-info-a40: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 25%);
-    --theme-info-a50: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 35%);
-    --theme-info-a60: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 45%);
-    --theme-info-a70: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 55%);
-    --theme-info-a80: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 65%);
-    --theme-info-a90: color-mix(in srgb, var(--theme-info-base), var(--theme-on-background) 50%);
+    --cffy-info-a10: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 5%);
+    --cffy-info-a20: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 10%);
+    --cffy-info-a30: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 15%);
+    --cffy-info-a40: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 25%);
+    --cffy-info-a50: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 35%);
+    --cffy-info-a60: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 45%);
+    --cffy-info-a70: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 55%);
+    --cffy-info-a80: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 65%);
+    --cffy-info-a90: color-mix(in srgb, var(--cffy-info-base), var(--cffy-on-background) 50%);
 
     /* muted */
-    --theme-muted-a10: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 5%);
-    --theme-muted-a20: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 10%);
-    --theme-muted-a30: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 15%);
-    --theme-muted-a40: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 25%);
-    --theme-muted-a50: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 35%);
-    --theme-muted-a60: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 45%);
-    --theme-muted-a70: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 55%);
-    --theme-muted-a80: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 65%);
-    --theme-muted-a90: color-mix(in srgb, var(--theme-muted-base), var(--theme-on-background) 50%);
+    --cffy-muted-a10: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 5%);
+    --cffy-muted-a20: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 10%);
+    --cffy-muted-a30: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 15%);
+    --cffy-muted-a40: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 25%);
+    --cffy-muted-a50: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 35%);
+    --cffy-muted-a60: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 45%);
+    --cffy-muted-a70: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 55%);
+    --cffy-muted-a80: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 65%);
+    --cffy-muted-a90: color-mix(in srgb, var(--cffy-muted-base), var(--cffy-on-background) 50%);
   }
 }
 
@@ -522,17 +522,17 @@
 // FIXED THEME COLOR ASSIGNMENTS
 // ==========================================================================
 @mixin primary-fixed-colors() {
-  --theme-primary-base-fixed: var(--color-brand-primary-500);
-  --theme-secondary-base-fixed: var(--color-brand-secondary-500);
-  --theme-accent-base-fixed: var(--color-brand-accent-500);
-  --theme-success-base-fixed: var(--color-brand-success-500);
-  --theme-warning-base-fixed: var(--color-brand-warning-500);
-  --theme-danger-base-fixed: var(--color-brand-danger-500);
-  --theme-info-base-fixed: var(--color-brand-info-500);
-  --theme-muted-base-fixed: var(--color-brand-muted-500);
-  --theme-white-base-fixed: var(--color-brand-white-500);
-  --theme-black-base-fixed: var(--color-brand-black-500);
-  --theme-dark-base-fixed: var(--color-brand-dark-500);
+  --cffy-primary-base-fixed: var(--cffy-color-brand-primary-500);
+  --cffy-secondary-base-fixed: var(--cffy-color-brand-secondary-500);
+  --cffy-accent-base-fixed: var(--cffy-color-brand-accent-500);
+  --cffy-success-base-fixed: var(--cffy-color-brand-success-500);
+  --cffy-warning-base-fixed: var(--cffy-color-brand-warning-500);
+  --cffy-danger-base-fixed: var(--cffy-color-brand-danger-500);
+  --cffy-info-base-fixed: var(--cffy-color-brand-info-500);
+  --cffy-muted-base-fixed: var(--cffy-color-brand-muted-500);
+  --cffy-white-base-fixed: var(--cffy-color-brand-white-500);
+  --cffy-black-base-fixed: var(--cffy-color-brand-black-500);
+  --cffy-dark-base-fixed: var(--cffy-color-brand-dark-500);
 }
 
 // ==========================================================================
@@ -694,49 +694,49 @@
 // ==========================================================================
 // CSS CUSTOM PROPERTY DEFINITIONS
 // ==========================================================================
-@property --gradient-angle {
+@property --cffy-gradient-angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
 
-@property --color-wheel-radius {
+@property --cffy-color-wheel-radius {
   syntax: "<percentage>";
   initial-value: 15%;
   inherits: false;
 }
 
-@property --element-radius {
+@property --cffy-element-radius {
   syntax: "<length>";
   initial-value: 25px;
   inherits: false;
 }
 
-@property --dots-scroll-position {
+@property --cffy-dots-scroll-position {
   syntax: "<length>";
   initial-value: 0px;
   inherits: false;
 }
 
-@property --gradient-shape-angle {
+@property --cffy-gradient-shape-angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
 
-@property --gradient-shape-primary {
+@property --cffy-gradient-shape-primary {
   syntax: "<color>";
   initial-value: rgba(56, 43, 240, 1);
   inherits: false;
 }
 
-@property --gradient-shape-accent {
+@property --cffy-gradient-shape-accent {
   syntax: "<color>";
   initial-value: rgba(200, 27, 212, 1);
   inherits: false;
 }
 
-@property --noise-lines {
+@property --cffy-noise-lines {
   syntax: "<length>";
   inherits: false;
   initial-value: 0.00010px;
@@ -752,7 +752,7 @@
     position: absolute;
     inset: -0.1rem;
     z-index: -1;
-    background: conic-gradient(from var(--gradient-angle), $colors);
+    background: conic-gradient(from var(--cffy-gradient-angle), $colors);
     border-radius: inherit;
     animation: angle-spin 5s linear infinite;
 
@@ -802,7 +802,7 @@
   top: $top;
   left: $left;
   font-size: 1rem;
-  font-variation-settings: var(--iw-bold);
+  font-variation-settings: var(--cffy-iw-bold);
   background-clip: text;
   -webkit-background-clip: text;
   text-fill-color: transparent;
@@ -846,9 +846,9 @@
   inset-inline: 0;
   margin-inline: auto;
   width: v.$container-island-width;
-  border-radius: var(--radius-full);
-  border: var(--border-width-sm) solid var(--theme-outline-surface);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--cffy-radius-full);
+  border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+  box-shadow: var(--cffy-shadow-sm);
 
   @if ($edge == top) {
     top: $offset;

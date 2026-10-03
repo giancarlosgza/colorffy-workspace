@@ -89,9 +89,9 @@ Theme colors and fonts are CSS tokens; SCSS sets compile-time component defaults
 
 // Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -268,9 +268,9 @@ export default defineNuxtConfig({
 
 // Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -719,7 +719,7 @@ Wire `open` to a toggle (e.g. in the navbar) for the mobile drawer:
 ```
 
 **`UiSidebar` props:** `bordered`, `rail` (compact, one-way), `open`
-(`v-model:open`), `width` (sets `--theme-nav-drawer-width`), `ariaLabel`
+(`v-model:open`), `width` (sets `--cffy-nav-drawer-width`), `ariaLabel`
 (landmark name), `customClass`. **Emits:** `update:open`.
 
 ## 🏗️ TypeScript Support
@@ -787,8 +787,8 @@ Override CSS custom properties for runtime theming:
 ```css
 :root {
   /* Theme colors */
-  --theme-primary-base: #4f46e5;
-  --theme-secondary-base: #ec4899;
+  --cffy-primary-base: #4f46e5;
+  --cffy-secondary-base: #ec4899;
 
   /* Component variables */
   --_btn-radius: 50px;

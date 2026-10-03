@@ -6,16 +6,16 @@
   // FORM CHECK COMPONENT
   // ==========================================================================
   .form-check {
-    --_input-check-spacing: var(--input-check-spacing, var(--space-14));
-    --_input-check-gap: var(--input-check-gap, var(--space-12));
+    --_input-check-spacing: var(--cffy-input-check-spacing, var(--cffy-space-14));
+    --_input-check-gap: var(--cffy-input-check-gap, var(--cffy-space-12));
     --_input-check-height: 1.5rem;
-    --_input-check-size: var(--input-check-size, 1.25rem);
-    --_input-check-bg-color: var(--input-check-bg-color, transparent);
-    --_input-check-border-width: var(--input-check-border-width, var(--border-width-md));
-    --_input-check-border-color: var(--input-check-border-color, var(--theme-outline-text-field));
+    --_input-check-size: var(--cffy-input-check-size, 1.25rem);
+    --_input-check-bg-color: var(--cffy-input-check-bg-color, transparent);
+    --_input-check-border-width: var(--cffy-input-check-border-width, var(--cffy-border-width-md));
+    --_input-check-border-color: var(--cffy-input-check-border-color, var(--cffy-outline-text-field));
     --_input-check-checked-icon: none;
-    --_input-check-easing: var(--input-check-easing, var(--ease-emphasized));
-    --_input-check-duration: var(--input-check-duration, var(--duration-300));
+    --_input-check-easing: var(--cffy-input-check-easing, var(--cffy-ease-emphasized));
+    --_input-check-duration: var(--cffy-input-check-duration, var(--cffy-duration-300));
 
     display: flex;
     align-items: center;
@@ -31,17 +31,17 @@
     &:is(.form-sm) {
       --_input-check-height: 1.25rem;
       --_input-check-size: 1rem;
-      --_input-check-gap: var(--space-8);
+      --_input-check-gap: var(--cffy-space-8);
       
-      font-size: var(--fs-3xs);
+      font-size: var(--cffy-fs-3xs);
     }
 
     &:is(.form-lg) {
       --_input-check-height: 1.75rem;
       --_input-check-size: 1.5rem;
-      --_input-check-gap: var(--space-14);
+      --_input-check-gap: var(--cffy-space-14);
 
-      font-size: var(--fs-base);
+      font-size: var(--cffy-fs-base);
     }
 
     & label,
@@ -72,13 +72,13 @@
 
       // Form checked state
       &:is(:checked) {
-        --_input-check-border-color: var(--input-check-checked-color, var(--theme-primary-a10));
-        --_input-check-bg-color: var(--input-check-checked-color, var(--theme-primary-a10));
+        --_input-check-border-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-bg-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
       }
 
       &:is(.form-check-danger:checked) {
-        --_input-check-border-color: var(--theme-danger-a10);
-        --_input-check-bg-color: var(--theme-danger-a10);
+        --_input-check-border-color: var(--cffy-danger-a10);
+        --_input-check-bg-color: var(--cffy-danger-a10);
       }
 
       &:is(:disabled) {
@@ -88,17 +88,17 @@
 
         ~ .form-check-label {
           opacity: .75;
-          color: var(--theme-muted-a10);
+          color: var(--cffy-muted-a10);
         }
       }
     }
 
     // Checkbox exclusive radius and checked state
     & .form-check-input[type="checkbox"] {
-      border-radius: var(--input-check-radius, #{map.get(v.$border-radius, 4)});
+      border-radius: var(--cffy-input-check-radius, #{map.get(v.$border-radius, 4)});
 
       &:is(:checked) {
-        --_input-check-checked-icon: var(--theme-form-checkbox-icon);
+        --_input-check-checked-icon: var(--cffy-form-checkbox-icon);
 
         background-image: var(--_input-check-checked-icon);
       }
@@ -109,7 +109,7 @@
       border-radius: map.get(v.$border-radius, 50);
 
       &:is(:checked) {
-        --_input-check-checked-icon: var(--theme-form-radio-icon);
+        --_input-check-checked-icon: var(--cffy-form-radio-icon);
 
         background-image: var(--_input-check-checked-icon);
       }
@@ -118,19 +118,19 @@
     // Checkbox switch variant
     &.form-check-switch {
       & .form-check-input {
-        --_input-check-bg-color: var(--input-switch-bg-color, var(--theme-surface-container));
-        --_input-check-border-color: var(--input-switch-border-color, var(--theme-outline-surface));
-        --_input-switch-thumb-color: var(--input-switch-thumb-color, var(--theme-muted-base));
-        --_input-switch-checked-bg-color: var(--input-switch-checked-color, var(--input-check-checked-color, var(--theme-primary-a10)));
-        --_input-switch-checked-border-color: var(--input-switch-checked-color, var(--input-check-checked-color, var(--theme-primary-a10)));
-        --_input-switch-checked-thumb-color: var(--input-switch-checked-thumb-color, var(--theme-surface-container-highest));
+        --_input-check-bg-color: var(--cffy-input-switch-bg-color, var(--cffy-surface-container));
+        --_input-check-border-color: var(--cffy-input-switch-border-color, var(--cffy-outline-surface));
+        --_input-switch-thumb-color: var(--cffy-input-switch-thumb-color, var(--cffy-muted-base));
+        --_input-switch-checked-bg-color: var(--cffy-input-switch-checked-color, var(--cffy-input-check-checked-color, var(--cffy-primary-a10)));
+        --_input-switch-checked-border-color: var(--cffy-input-switch-checked-color, var(--cffy-input-check-checked-color, var(--cffy-primary-a10)));
+        --_input-switch-checked-thumb-color: var(--cffy-input-switch-checked-thumb-color, var(--cffy-surface-container-highest));
 
         position: relative;
         width: calc(var(--_input-check-size) * 2);
         height: var(--_input-check-size);
         background: var(--_input-check-bg-color);
         border: var(--_input-check-border-width) solid var(--_input-check-border-color);
-        border-radius: var(--radius-full);
+        border-radius: var(--cffy-radius-full);
         opacity: 1;
         cursor: pointer;
 

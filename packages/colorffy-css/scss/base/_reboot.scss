@@ -11,18 +11,18 @@
     @media (prefers-reduced-motion: no-preference) {
       &:focus-visible {
         transition: outline-offset 75ms ease-out;
-        outline-offset: calc(var(--focus-ring-offset) - .1rem);
-        outline: var(--focus-ring-color) auto;
+        outline-offset: calc(var(--cffy-focus-ring-offset) - .1rem);
+        outline: var(--cffy-focus-ring-color) auto;
       }
 
       &:not(:active):focus-visible {
-        transition-duration: var(--duration-250);
+        transition-duration: var(--cffy-duration-250);
       }
     }
 
     &:not(:active):focus-visible {
-      outline-offset: var(--focus-ring-offset);
-      outline: var(--focus-ring-color) auto;
+      outline-offset: var(--cffy-focus-ring-offset);
+      outline: var(--cffy-focus-ring-color) auto;
     }
   }
 
@@ -49,10 +49,10 @@
   // ==========================================================================
   body {
     margin: 0;
-    font-family: var(--font-secondary);
-    font-weight: var(--fw-400);
-    color: var(--theme-on-background);
-    background-color: var(--theme-background);
+    font-family: var(--cffy-font-secondary);
+    font-weight: var(--cffy-fw-400);
+    color: var(--cffy-on-background);
+    background-color: var(--cffy-background);
     font-size: .875rem;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -85,7 +85,7 @@
     overflow: visible;
     height: 1px;
     border: 0;
-    border-top: var(--border-width-sm) solid var(--theme-outline-button);
+    border-top: var(--cffy-border-width-sm) solid var(--cffy-outline-button);
     opacity: 0.95;
     margin: 1rem 0;
   }
@@ -94,7 +94,7 @@
     display: inline-block;
     width: 1px;
     min-height: 1em;
-    background: var(--theme-outline-button);
+    background: var(--cffy-outline-button);
     opacity: 0.85;
   }
 
@@ -148,7 +148,7 @@
   }
 
   dt {
-    font-weight: var(--fw-500);
+    font-weight: var(--cffy-fw-500);
   }
 
   // Undo browser default
@@ -166,7 +166,7 @@
   // Strong
   b,
   strong {
-    font-weight: var(--fw-800);
+    font-weight: var(--cffy-fw-800);
   }
 
   /**
@@ -385,7 +385,7 @@
   }
 
   th {
-    font-weight: var(--fw-500);
+    font-weight: var(--cffy-fw-500);
     text-align: inherit;
     text-align: -webkit-match-parent;
   }
@@ -408,7 +408,7 @@
     // New Chromium-based & Firefox* browsers scrollbar properties
     @supports (scrollbar-color: auto) {
       scrollbar-width: thin;
-      scrollbar-color: var(--theme-surface-container-highest) var(--theme-surface-container-low);
+      scrollbar-color: var(--cffy-surface-container-highest) var(--cffy-surface-container-low);
       scrollbar-gutter: auto;
     }
 
@@ -422,13 +422,13 @@
       }
 
       &::-webkit-scrollbar-track {
-        background: var(--theme-surface-container-low);
-        border-radius: var(--radius-full);
+        background: var(--cffy-surface-container-low);
+        border-radius: var(--cffy-radius-full);
       }
 
       &::-webkit-scrollbar-thumb {
-        background-color: var(--theme-surface-container-highest);
-        border-radius: var(--radius-full);
+        background-color: var(--cffy-surface-container-highest);
+        border-radius: var(--cffy-radius-full);
       }
     }
   }
@@ -442,18 +442,18 @@
   }
 
   *::-webkit-scrollbar-track {
-    background: var(--theme-surface-container-low);
-    border-radius: var(--radius-full);
+    background: var(--cffy-surface-container-low);
+    border-radius: var(--cffy-radius-full);
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: var(--theme-surface-container-highest);
-    border-radius: var(--radius-full);
+    background-color: var(--cffy-surface-container-highest);
+    border-radius: var(--cffy-radius-full);
   }
 
   details {
     summary {
-      color: var(--theme-muted-a10);
+      color: var(--cffy-muted-a10);
       list-style: none;
       user-select: none;
 
@@ -463,9 +463,9 @@
     }
 
     &[open] {
-      background: var(--theme-surface-container);
+      background: var(--cffy-surface-container);
       padding: .5rem;
-      border-radius: var(--radius-lg);
+      border-radius: var(--cffy-radius-lg);
     }
   }
 
@@ -476,6 +476,6 @@
     --_selection-opacity: 45%;
     --_selection-space: oklab;
 
-    background: color-mix(in var(--_selection-space), var(--theme-primary-base-fixed) var(--_selection-opacity), transparent);
+    background: color-mix(in var(--_selection-space), var(--cffy-primary-base-fixed) var(--_selection-opacity), transparent);
   }
 }
