@@ -54,7 +54,7 @@ Complete reference for utility classes in @colorffy/css.
 
 ## Spacing
 
-Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map).
+Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map). Steps `1`–`10` read the `--space-*` tokens (`1` = 0.25rem, `2` = 0.5rem, `3` = 1rem, `4` = 1.5rem, `5` = 3rem, then 4.5/6/7.5/9/12rem), so `--space-unit` rescales them; `gap-*` steps are `n` × `--space-unit` (0.25rem … 2.5rem).
 
 ### Margin
 

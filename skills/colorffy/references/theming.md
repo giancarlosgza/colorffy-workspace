@@ -272,26 +272,19 @@ Runtime density: override `--space-unit` on `:root` or any subtree to scale all 
 
 **Deprecated (removed in v3):** the `$space-1` / `$space-2` / `$space-3` SCSS variables (1/2/3rem). Use `var(--space-16)` / `var(--space-32)` / `var(--space-48)` instead — they resolve to the same values and follow density scaling.
 
-### Utility Class Scale (separate from the tokens)
+### Utility Class Scale
 
-The `m-*`/`p-*`/`gap-*` utility classes are generated from the `$spacing-sizes` SCSS map, which keeps its own historical scale until v3:
+The `m-*`/`p-*`/`flow-*`/`top-*`/`translate-*` utilities keep their numbered steps but read the tokens, so `--space-unit` rescales them with the components. `px` stays `1px`:
 
-```scss
-$spacing-sizes: (
-  px: 1px,
-  0: 0,
-  1: 0.25rem,
-  2: 0.5rem,
-  3: 1rem,
-  4: 1.5rem,
-  5: 3rem,
-  6: 4.5rem,
-  7: 6rem,
-  8: 7.5rem,
-  9: 9rem,
-  10: 12rem
-);
-```
+| Step | Value | Step | Value |
+|------|-------|------|-------|
+| `1` | `--space-4` (0.25rem) | `6` | `--space-unit` × 18 (4.5rem) |
+| `2` | `--space-8` (0.5rem) | `7` | × 24 (6rem) |
+| `3` | `--space-16` (1rem) | `8` | × 30 (7.5rem) |
+| `4` | `--space-24` (1.5rem) | `9` | × 36 (9rem) |
+| `5` | `--space-48` (3rem) | `10` | × 48 (12rem) |
+
+`gap-*` uses a finer scale: step `n` = `n` × `--space-unit` (`gap-3` = `--space-12` = 0.75rem, `gap-10` = 2.5rem).
 
 ## Border Radius
 
