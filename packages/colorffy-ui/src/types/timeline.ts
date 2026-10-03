@@ -31,7 +31,7 @@ export interface ITimelineItem {
   text?: string | null
 
   /**
-   * Optional timestamp/label rendered above the title (e.g. "Hace 2 horas").
+   * Optional timestamp/label rendered above the title (e.g. "2 hours ago").
    * Can be a string or null.
    */
   time?: string | null

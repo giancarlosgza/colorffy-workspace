@@ -21,9 +21,9 @@ export const Default: Story = {
     components: { UiDivider },
     template: `
       <div>
-        <p>Primer párrafo de contenido separado por una línea divisoria.</p>
+        <p>First paragraph of content, separated by a divider line.</p>
         <UiDivider />
-        <p>Segundo párrafo que sigue al divisor horizontal.</p>
+        <p>Second paragraph, following the horizontal divider.</p>
       </div>
     `
   })
@@ -34,8 +34,8 @@ export const WithText: Story = {
     components: { UiDivider },
     template: `
       <div>
-        <p>Inicia sesión con tu cuenta.</p>
-        <UiDivider text="o continúa con" />
+        <p>Sign in to your account.</p>
+        <UiDivider text="or continue with" />
         <p>Otras opciones de acceso.</p>
       </div>
     `
@@ -62,7 +62,7 @@ export const Inset: Story = {
       <div>
         <p>Elemento con contenido indentado.</p>
         <UiDivider inset />
-        <p>Elemento siguiente alineado tras el divisor con sangría.</p>
+        <p>Next item, aligned after the inset divider.</p>
       </div>
     `
   })

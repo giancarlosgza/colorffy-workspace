@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   options: () => [],
   optionLabel: null,
   optionValue: null,
-  placeholder: 'Clic para seleccionar',
+  placeholder: 'Select an option',
   disabled: false,
   required: false,
   optionalLabel: false,

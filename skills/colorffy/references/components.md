@@ -1264,8 +1264,8 @@ Chronological event feed with dot/icon/image markers and a connector line.
 
 ```vue
 <UiTimeline :items="[
-  { id: '1', title: 'Nuevo despliegue', text: 'Atlas v2.4.0 publicado', time: 'Hace 2 h', icon: '&#xe1b6;', variant: 'success' },
-  { id: '2', title: 'Comentario', text: 'Ana respondió en Proyecto Nébula', time: 'Hace 1 día', icon: '&#xe0b9;', variant: 'primary' }
+  { id: '1', title: 'New deployment', text: 'Atlas v2.4.0 released', time: '2 h ago', icon: '&#xe1b6;', variant: 'success' },
+  { id: '2', title: 'Comment', text: 'Ana replied in Project Nebula', time: '1 day ago', icon: '&#xe0b9;', variant: 'primary' }
 ]" />
 ```
 
