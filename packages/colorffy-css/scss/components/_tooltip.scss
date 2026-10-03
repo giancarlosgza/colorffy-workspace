@@ -5,9 +5,11 @@
   // TOOLTIP COMPONENT
   // ==========================================================================
   .v-popper--theme-tooltip {
-    --_tooltip-bg-color: var(--theme-surface-tooltip);
-    --_tooltip-text-color: #{v.$white};
-    --_tooltip-padding: var(--space-8);
+    --_tooltip-bg-color: var(--tooltip-bg-color, var(--theme-surface-tooltip));
+    --_tooltip-text-color: var(--tooltip-color, #{v.$white});
+    --_tooltip-padding: var(--tooltip-padding, var(--space-8));
+    --_tooltip-kbd-bg-color: var(--tooltip-kbd-bg-color, var(--theme-surface-kbd));
+    --_tooltip-kbd-color: var(--tooltip-kbd-color, var(--theme-on-background-inverse));
 
     isolation: isolate;
     position: relative;
@@ -19,10 +21,10 @@
         background-color: var(--_tooltip-bg-color);
         color: var(--_tooltip-text-color);
         padding: var(--_tooltip-padding);
-        box-shadow: none;
-        border-radius: var(--radius-md);
-        font-size: .6875rem;
-        font-weight: var(--fw-500);
+        box-shadow: var(--tooltip-shadow, none);
+        border-radius: var(--tooltip-radius, var(--radius-md));
+        font-size: var(--tooltip-font-size, .6875rem);
+        font-weight: var(--tooltip-font-weight, var(--fw-500));
 
         :where(span, p, a) {
           color: var(--_tooltip-text-color);
@@ -30,9 +32,9 @@
 
         // KBD styles inside the tooltip
         kbd {
-          background-color: var(--theme-surface-kbd);
-          border: var(--border-width-sm) solid var(--theme-surface-kbd);
-          color: var(--theme-on-background-inverse);
+          background-color: var(--_tooltip-kbd-bg-color);
+          border: var(--border-width-sm) solid var(--_tooltip-kbd-bg-color);
+          color: var(--_tooltip-kbd-color);
           font-weight: var(--fw-800);
         }
       }
