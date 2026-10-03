@@ -22,7 +22,9 @@
   }
 
   .table-responsive.table-responsive-sticky {
-    max-height: var(--_table-sticky-max-height, var(--table-sticky-max-height, 32rem));
+    --_table-sticky-max-height: var(--table-sticky-max-height, 32rem);
+
+    max-height: var(--_table-sticky-max-height);
     overflow-y: auto;
   }
 
@@ -34,13 +36,13 @@
     --_table-color: var(--table-color, currentColor);
     --_table-border-color: var(--table-border-color, var(--theme-outline-surface));
     --_table-border-width: var(--table-border-width, var(--border-width-sm));
-    --_table-gutter-x: var(--table-cell-padding-inline, var(--space-8));
-    --_table-gutter-y: var(--table-cell-padding-block, var(--space-8));
+    --_table-cell-padding-inline: var(--table-cell-padding-inline, var(--space-8));
+    --_table-cell-padding-block: var(--table-cell-padding-block, var(--space-8));
     --_table-font-size: var(--table-font-size, .75rem);
-    --_table-border-radius: var(--table-radius, var(--radius-none));
-    --_table-thead-bg-color: var(--table-header-bg-color, var(--theme-surface-a10));
-    --_table-easing-in: var(--table-easing, ease-in-out);
-    --_table-easing-duration: var(--table-duration, var(--duration-100));
+    --_table-radius: var(--table-radius, var(--radius-none));
+    --_table-header-bg-color: var(--table-header-bg-color, var(--theme-surface-a10));
+    --_table-easing: var(--table-easing, ease-in-out);
+    --_table-duration: var(--table-duration, var(--duration-100));
 
     display: table;
     width: 100%;
@@ -51,7 +53,7 @@
     color: var(--_table-color);
 
     thead {
-      background-color: var(--_table-thead-bg-color);
+      background-color: var(--_table-header-bg-color);
 
       tr {
         th {
@@ -61,16 +63,16 @@
           color: var(--table-header-color, var(--theme-muted-a10));
           letter-spacing: 0.0727em;
           text-align: start;
-          padding: calc(var(--_table-gutter-y) * 1.5) var(--_table-gutter-x);
+          padding: calc(var(--_table-cell-padding-block) * 1.5) var(--_table-cell-padding-inline);
           vertical-align: middle;
           border-top: var(--_table-border-width) solid var(--_table-border-color);
 
           &:first-child {
-            border-top-left-radius: var(--_table-border-radius);
+            border-top-left-radius: var(--_table-radius);
           }
 
           &:last-child {
-            border-top-right-radius: var(--_table-border-radius);
+            border-top-right-radius: var(--_table-radius);
           }
         }
       }
@@ -82,8 +84,8 @@
         line-height: 1.5;
 
         border-top: var(--_table-border-width) solid var(--_table-border-color);
-        padding-inline: var(--_table-gutter-x);
-        padding-block: var(--_table-gutter-y);
+        padding-inline: var(--_table-cell-padding-inline);
+        padding-block: var(--_table-cell-padding-block);
         vertical-align: middle;
 
         @include m.text-wrap-pretty;
@@ -148,16 +150,16 @@
       position: sticky;
       top: 0;
       z-index: 2;
-      background-color: var(--_table-thead-bg-color);
+      background-color: var(--_table-header-bg-color);
     }
 
     // Table bordered
     &.table-bordered {
-      --_table-border-radius: var(--radius-md);
-      --_table-thead-bg-color: var(--theme-surface-container-lowest);
+      --_table-radius: var(--radius-md);
+      --_table-header-bg-color: var(--theme-surface-container-lowest);
 
       & thead {
-        background-color: var(--_table-thead-bg-color);
+        background-color: var(--_table-header-bg-color);
 
         & tr th {
           border-block: none;
@@ -193,7 +195,7 @@
 
     // Table borderless
     &.table-borderless {
-      --_table-border-radius: var(--radius-md);
+      --_table-radius: var(--radius-md);
 
       & thead {
         & tr th {
@@ -221,7 +223,7 @@
     &.table-hover {
       tbody {
         tr {
-          transition: background-color var(--_table-easing-duration) var(--_table-easing-in);
+          transition: background-color var(--_table-duration) var(--_table-easing);
 
           &:is(:hover) {
             --_table-row-state: var(--state-hover-opacity);
@@ -232,13 +234,13 @@
 
     // Table small
     &.table-sm {
-      --_table-gutter-x: var(--space-4);
-      --_table-gutter-y: var(--space-4);
+      --_table-cell-padding-inline: var(--space-4);
+      --_table-cell-padding-block: var(--space-4);
     }
 
     &.table-lg {
-      --_table-gutter-x: var(--space-14);
-      --_table-gutter-y: var(--space-14);
+      --_table-cell-padding-inline: var(--space-14);
+      --_table-cell-padding-block: var(--space-14);
     }
   }
 

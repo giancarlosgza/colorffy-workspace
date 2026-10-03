@@ -66,7 +66,7 @@ const stickyStyle = computed(() => {
   if (!props.stickyHeader || props.stickyHeight == null || props.stickyHeight === '')
     return undefined
   const height = typeof props.stickyHeight === 'number' ? `${props.stickyHeight}px` : props.stickyHeight
-  return { '--_table-sticky-max-height': height }
+  return { '--table-sticky-max-height': height }
 })
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
 const selectAllId = useId()
