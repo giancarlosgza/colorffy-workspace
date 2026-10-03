@@ -275,20 +275,21 @@
 
       // Chip
       &.btn-chip {
-        --_btn-bg-color: transparent;
-        --_btn-border-color: var(--theme-outline-button);
-        --_btn-radius: var(--radius-md);
+        --_btn-bg-color: var(--chip-bg-color, transparent);
+        --_btn-color: var(--chip-color, var(--theme-on-background));
+        --_btn-border-color: var(--chip-border-color, var(--theme-outline-button));
+        --_btn-radius: var(--chip-radius, var(--radius-md));
         --_btn-shadow: none;
 
         @include m.btn-size('sm');
 
         &:is(:hover) {
-          --_btn-bg-color: var(--theme-surface-container-high);
+          --_btn-bg-color: var(--chip-hover-bg-color, var(--theme-surface-container-high));
           --_btn-shadow: var(--shadow-xs);
         }
 
         &:is(:focus, :active) {
-          --_btn-bg-color: var(--theme-surface-container-high);
+          --_btn-bg-color: var(--chip-hover-bg-color, var(--theme-surface-container-high));
           --_btn-shadow: var(--shadow-xs);
         }
 
