@@ -182,14 +182,18 @@
         padding-left: 0;
 
         &.nav-start {
-          margin-left: auto;
+          margin-inline-end: auto;
         }
 
         &.nav-end {
-          margin-right: auto;
+          margin-inline-start: auto;
         }
 
         .nav-item {
+          & > .form-group {
+            margin-bottom: 0;
+          }
+
           .nav-link {
             --_navbar-link-state: 0%;
 
