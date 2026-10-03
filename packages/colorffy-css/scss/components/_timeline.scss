@@ -5,20 +5,20 @@
   // TIMELINE COMPONENT
   // ==========================================================================
   .timeline {
-    --_timeline-gap: var(--space-16);
-    --_timeline-item-spacing: var(--space-24);
-    --_timeline-connector-thickness: 2px;
-    --_timeline-connector-color: var(--theme-outline-surface);
-    --_timeline-dot-size: .75rem;
-    --_timeline-dot-color: var(--theme-muted-a10);
-    --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
-    --_timeline-icon-color: var(--theme-on-background);
-    --_timeline-time-color: var(--theme-muted-a10);
-    --_timeline-image-size: 2.75rem;
-    --_timeline-icon-size: var(--fs-lg);
-    --_timeline-icon-wrapper-padding: .625rem;
-    --_timeline-title-size: var(--fs-2xs);
-    --_timeline-subtitle-size: var(--fs-3xs);
+    --_timeline-gap: var(--timeline-gap, var(--space-16));
+    --_timeline-item-spacing: var(--timeline-item-spacing, var(--space-24));
+    --_timeline-connector-thickness: var(--timeline-connector-thickness, 2px);
+    --_timeline-connector-color: var(--timeline-connector-color, var(--theme-outline-surface));
+    --_timeline-dot-size: var(--timeline-dot-size, .75rem);
+    --_timeline-dot-color: var(--timeline-dot-color, var(--theme-muted-a10));
+    --_timeline-icon-bg-color: var(--timeline-icon-bg-color, var(--theme-surface-container-lowest));
+    --_timeline-icon-color: var(--timeline-icon-color, var(--theme-on-background));
+    --_timeline-time-color: var(--timeline-time-color, var(--theme-muted-a10));
+    --_timeline-image-size: var(--timeline-image-size, 2.75rem);
+    --_timeline-icon-size: var(--timeline-icon-size, var(--fs-lg));
+    --_timeline-icon-wrapper-padding: var(--timeline-icon-padding, .625rem);
+    --_timeline-title-size: var(--timeline-title-font-size, var(--fs-2xs));
+    --_timeline-subtitle-size: var(--timeline-text-font-size, var(--fs-3xs));
 
     display: grid;
     grid-template-columns: auto 1fr;
@@ -68,14 +68,14 @@
       inline-size: var(--_timeline-image-size);
       block-size: var(--_timeline-image-size);
       flex-shrink: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--timeline-image-radius, var(--radius-md));
       object-fit: cover;
     }
 
     // Icon marker
     & .list-item-icon-wrapper {
       flex-shrink: 0;
-      border-radius: var(--radius-md);
+      border-radius: var(--timeline-icon-radius, var(--radius-md));
       padding: var(--_timeline-icon-wrapper-padding);
       aspect-ratio: 1;
       background-color: var(--_timeline-icon-bg-color);
@@ -100,12 +100,12 @@
 
         &:is(.timeline-title) {
           font-size: var(--_timeline-title-size);
-          font-weight: var(--fw-600);
+          font-weight: var(--timeline-title-font-weight, var(--fw-600));
         }
 
         &:is(.timeline-text) {
           font-size: var(--_timeline-subtitle-size);
-          color: var(--theme-muted-a10);
+          color: var(--timeline-text-color, var(--theme-muted-a10));
         }
       }
 
@@ -122,11 +122,7 @@
     &.timeline-sm {
       --_timeline-gap: var(--space-12);
       --_timeline-item-spacing: var(--space-16);
-      --_timeline-connector-thickness: 2px;
       --_timeline-dot-size: .5rem;
-      --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
-      --_timeline-icon-color: var(--theme-on-background);
-      --_timeline-image-size: 2.75rem;
       --_timeline-icon-size: var(--fs-base);
       --_timeline-icon-wrapper-padding: var(--space-4);
       --_timeline-title-size: var(--fs-3xs);
@@ -136,10 +132,7 @@
     &.timeline-lg {
       --_timeline-gap: var(--space-20);
       --_timeline-item-spacing: var(--space-32);
-      --_timeline-connector-thickness: 2px;
       --_timeline-dot-size: .5rem;
-      --_timeline-icon-bg-color: var(--theme-surface-container-lowest);
-      --_timeline-icon-color: var(--theme-on-background);
       --_timeline-image-size: 3.75rem;
       --_timeline-icon-size: var(--fs-xl);
       --_timeline-icon-wrapper-padding: var(--space-12);
