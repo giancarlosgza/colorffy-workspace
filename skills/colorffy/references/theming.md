@@ -29,7 +29,7 @@ Colorffy uses a **tonal color system** with semantic token naming for intuitive 
 
 #### SCSS Variables (Compile-time)
 
-Theme colors and fonts are **not** SCSS-configurable: `$primary`, `$secondary`, `$accent` and `$font-*` only feed compile-time details (button ripple, spinner). Set the CSS tokens below instead. SCSS configures compile-time component values:
+Theme colors and fonts are **not** SCSS-configurable: `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$info`, `$muted`, `$primary-colors` and `$font-*` are deprecated (nothing reads them; removed in v3). Set the CSS tokens below instead. SCSS configures compile-time component values:
 
 ```scss
 // assets/scss/abstracts/_variables.scss
@@ -179,7 +179,7 @@ onMounted(() => {
 
 ### Font Families
 
-Fonts are CSS tokens (the `$font-*` SCSS variables don't change them):
+Fonts are CSS tokens (the `$font-*` SCSS variables are deprecated and have no effect):
 
 ```css
 :root {
@@ -207,6 +207,7 @@ Components read these `:root` tokens, so they can be overridden at runtime (glob
 - Font weight: `--fw-400` … `--fw-800`
 - Easing: `--ease-decelerate` (enter), `--ease-accelerate` (exit), plus `linear()` curves `--ease-spring`, `--ease-overshoot-soft`, `--ease-emphasized`, `--ease-bounce`, `--ease-power-in`, `--ease-power-in-out`, `--ease-sine-in-out`. Under `prefers-reduced-motion: reduce`, spring / overshoot-soft / bounce resolve to `--ease-decelerate`
 - Focus ring: `--focus-ring-color` (`--theme-on-background`) · `--focus-ring-offset` (`.3rem`)
+- Duration: `--duration-100` · `-150` · `-200` · `-250` · `-300` · `-400` · `-500` · `-600` · `-800` (ms), each `calc(var(--duration-unit) * N)` with `--duration-unit: 1ms`; override `--duration-unit` to speed up or slow down all motion. Use these instead of hardcoded ms in custom transitions
 
 In custom CSS alongside Colorffy, use these tokens (e.g. `border-radius: var(--radius-md)`) instead of hardcoded values.
 

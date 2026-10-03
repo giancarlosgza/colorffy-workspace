@@ -299,7 +299,7 @@ Each brand color has a light-mode (`-500`) and dark-mode (`-50`) token, for `pri
 }
 ```
 
-The `$primary`, `$secondary`, `$accent` and `$font-*` SCSS variables don't recolor components or change fonts; set the tokens above.
+The `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$info`, `$muted`, `$primary-colors` and `$font-*` SCSS variables are deprecated: nothing reads them, and they will be removed in 3.0. Set the tokens above.
 
 ### Compile-time Variables with @forward
 
