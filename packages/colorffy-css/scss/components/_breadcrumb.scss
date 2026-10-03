@@ -5,12 +5,14 @@
   // BREADCRUMB COMPONENT
   // ==========================================================================
   .breadcrumb-nav {
-    --_breadcrumb-gap: var(--space-8);
-    --_breadcrumb-color: var(--theme-muted-a10);
-    --_breadcrumb-current-color: var(--theme-on-background);
-    --_breadcrumb-hover-color: var(--theme-on-background);
-    --_breadcrumb-separator-color: var(--theme-muted-a10);
-    --_breadcrumb-current-max-width: 32rem;
+    --_breadcrumb-gap: var(--breadcrumb-gap, var(--space-8));
+    --_breadcrumb-color: var(--breadcrumb-color, var(--theme-muted-a10));
+    --_breadcrumb-current-color: var(--breadcrumb-current-color, var(--theme-on-background));
+    --_breadcrumb-hover-color: var(--breadcrumb-hover-color, var(--theme-on-background));
+    --_breadcrumb-separator-color: var(--breadcrumb-separator-color, var(--theme-muted-a10));
+    --_breadcrumb-current-max-width: var(--breadcrumb-current-max-width, 32rem);
+    --_breadcrumb-easing-in: var(--breadcrumb-easing, ease);
+    --_breadcrumb-easing-duration: var(--breadcrumb-duration, var(--duration-150));
 
     display: block;
     font-size: var(--fs-4xs);
@@ -36,7 +38,7 @@
     
     & span, 
     & a {
-      font-size: var(--fs-xs);
+      font-size: var(--breadcrumb-font-size, var(--fs-xs));
       font-family: var(--font-secondary);
     }
 
@@ -47,7 +49,7 @@
       color: var(--_breadcrumb-color);
       text-decoration: none;
       border-radius: var(--radius-sm);
-      transition: color var(--duration-150) ease;
+      transition: color var(--_breadcrumb-easing-duration) var(--_breadcrumb-easing-in);
 
       &:hover,
       &:focus-visible {
@@ -62,7 +64,7 @@
       gap: var(--space-4);
       min-width: 0;
       color: var(--_breadcrumb-current-color);
-      font-weight: var(--fw-600);
+      font-weight: var(--breadcrumb-current-font-weight, var(--fw-600));
     }
 
     .breadcrumb-label {
@@ -90,8 +92,8 @@
     user-select: none;
 
     & i {
-      font-size: var(--fs-base);
-      color: var(--theme-muted-a10);
+      font-size: var(--breadcrumb-icon-size, var(--fs-base));
+      color: var(--_breadcrumb-separator-color);
     }
   }
 
@@ -104,7 +106,7 @@
   }
 
   .breadcrumb-icon {
-    font-size: var(--fs-base);
-    color: var(--theme-muted-a10);
+    font-size: var(--breadcrumb-icon-size, var(--fs-base));
+    color: var(--breadcrumb-icon-color, var(--theme-muted-a10));
   }
 }

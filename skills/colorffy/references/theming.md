@@ -235,6 +235,7 @@ Components expose public CSS variables named `--<component>-<prop>` (unprefixed 
 - **List** (`.list-group`, `UiListGroup`): `--list-gap`, `-bg-color`, `-border-color`, `-color`, `-subtitle-color`, `-title-font-size`, `-title-font-weight`, `-subtitle-font-size`, `-radius`, `-item-radius`, `-item-padding`, `-item-gap`, `-icon-bg-color`, `-icon-color`, `-icon-size`, `-icon-padding`, `-icon-radius`, `-image-size`, `-image-radius`, `-hover-bg-color`, `-pressed-bg-color`, `-arrow-color`, `-active-bg-color`, `-active-border-color`, `-active-icon-bg-color`, `-active-icon-color`, `-easing`, `-duration`
 - **Popover** (`.popover`, `UiPopover`): `--popover-bg-color`, `-color`, `-border-color`, `-radius`, `-shadow`, `-max-width`, `-max-height`, `-spacing`, `-offset`, `-title-font-size`, `-title-font-weight`, `-subtitle-font-size`, `-subtitle-color`, `-easing`, `-duration`
 - **Tooltip** (`.v-popper--theme-tooltip`, `UiTooltip`; set on `:root`): `--tooltip-bg-color`, `-color`, `-padding`, `-radius`, `-shadow`, `-font-size`, `-font-weight`, `-kbd-bg-color`, `-kbd-color`
+- **Breadcrumb** (`.breadcrumb-nav`, `UiBreadcrumb`): `--breadcrumb-gap`, `-color`, `-hover-color`, `-current-color`, `-current-font-weight`, `-current-max-width`, `-separator-color`, `-font-size`, `-icon-size`, `-icon-color`, `-easing`, `-duration`
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
