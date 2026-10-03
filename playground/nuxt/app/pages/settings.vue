@@ -1,387 +1,1039 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { IDialogDisplay, ITabItem } from '@colorffy/ui'
 
-definePageMeta({ pageTitle: 'Configuración' })
+definePageMeta({ pageTitle: 'Settings' })
 
-/** Data */
-// Settings categories switched via the segmented control (with panels)
-const sectionTabs = ref([
-  { id: 'general', label: 'General', position: 0, panelId: 'panel-general' },
-  { id: 'notifications', label: 'Notificaciones', position: 1, panelId: 'panel-notifications' },
-  { id: 'system', label: 'Sistema', position: 2, panelId: 'panel-system' }
+type TabId = 'profile' | 'appearance' | 'notifications' | 'security'
+type EventId = 'mentions' | 'assignments' | 'status' | 'digest'
+type ChannelId = 'email' | 'push' | 'slack'
+
+const route = useRoute()
+const colorMode = useColorMode()
+const { notify } = useNotify()
+
+const DEFAULT_BRAND = '#004617'
+const HEX_PATTERN = /^#[0-9a-f]{6}$/i
+
+// Timers
+const timers = new Set<ReturnType<typeof setTimeout>>()
+function later(callback: () => void, delay: number): void {
+  const id = setTimeout(() => {
+    timers.delete(id)
+    callback()
+  }, delay)
+  timers.add(id)
+}
+
+function isValidEmail(value: string): boolean {
+  const [local, domain, ...rest] = value.trim().split('@')
+  return !rest.length && !!local && !!domain && domain.includes('.') && !domain.startsWith('.') && !domain.endsWith('.') && !/\s/.test(value.trim())
+}
+
+// Tabs
+const tabIds: TabId[] = ['profile', 'appearance', 'notifications', 'security']
+const activeTab = ref<TabId>(tabIds.find(id => id === route.query.tab) ?? 'profile')
+
+const twoFactorEnabled = ref(false)
+
+const tabs = computed<ITabItem[]>(() => [
+  { id: 'profile', label: 'Profile', icon: '&#xe7fd;', panelId: 'settings-profile' },
+  { id: 'appearance', label: 'Appearance', icon: '&#xe40a;', panelId: 'settings-appearance' },
+  { id: 'notifications', label: 'Notifications', icon: '&#xe7f4;', panelId: 'settings-notifications' },
+  {
+    id: 'security',
+    label: 'Security',
+    icon: '&#xe897;',
+    panelId: 'settings-security',
+    badge: twoFactorEnabled.value ? null : { text: '1', variant: 'warning', pill: true }
+  }
 ])
-const activeSection = ref('general')
 
-// Toggle state
-const darkMode = ref(false)
-const reduceMotion = ref(false)
-const notifEmail = ref(true)
-const notifPush = ref(true)
-const notifSms = ref(false)
-const weeklyDigest = ref(true)
-
-const isSaving = ref(false)
-
-/** Methods */
-function changeSection(sectionId: string) {
-  activeSection.value = sectionId
+function selectTab(id: string): void {
+  const match = tabIds.find(tabId => tabId === id)
+  if (match)
+    activeTab.value = match
 }
-function save() {
-  isSaving.value = true
-  setTimeout(() => {
-    isSaving.value = false
-  }, 1400)
+
+// Profile
+const profile = reactive<{
+  name: string | number | null
+  email: string | number | null
+  title: string | number | null
+  phone: string | null
+  bio: string | null
+  timezone: string | number | Record<string, unknown> | null
+}>({
+  name: currentUser.name,
+  email: currentUser.email,
+  title: currentUser.title,
+  phone: '4155550132',
+  bio: 'Product lead at Orbit. I keep the roadmap honest and the standups short.',
+  timezone: 'America/New_York'
+})
+
+const BIO_LIMIT = 160
+const bioLength = computed(() => (profile.bio ?? '').length)
+
+const timezones = [
+  { label: '(GMT-08:00) Pacific Time — Los Angeles', value: 'America/Los_Angeles' },
+  { label: '(GMT-06:00) Central Time — Mexico City', value: 'America/Mexico_City' },
+  { label: '(GMT-05:00) Eastern Time — New York', value: 'America/New_York' },
+  { label: '(GMT+00:00) London', value: 'Europe/London' },
+  { label: '(GMT+01:00) Central European Time — Berlin', value: 'Europe/Berlin' },
+  { label: '(GMT+05:30) India — Kolkata', value: 'Asia/Kolkata' }
+]
+
+const profileErrors = computed(() => ({
+  name: String(profile.name ?? '').trim() ? [] : ['Add your name so teammates can find you.'],
+  email: isValidEmail(String(profile.email ?? '')) ? [] : ['Enter a valid email, like gian@orbit.app.']
+}))
+const profileInvalid = computed(() => profileErrors.value.name.length > 0 || profileErrors.value.email.length > 0)
+
+const photo = ref<File | null>(null)
+const photoPreview = ref<string | null>(null)
+const photoErrors = ref<string[]>([])
+const avatarSrc = computed(() => photoPreview.value ?? currentUser.avatar)
+
+watch(photo, (file) => {
+  if (photoPreview.value)
+    URL.revokeObjectURL(photoPreview.value)
+  photoPreview.value = null
+  photoErrors.value = []
+  if (!file)
+    return
+  if (!file.type.startsWith('image/')) {
+    photoErrors.value = ['Choose a JPG, PNG or WebP image.']
+    return
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    photoErrors.value = ['Photos can be up to 5 MB.']
+    return
+  }
+  photoPreview.value = URL.createObjectURL(file)
+})
+
+const savingProfile = ref(false)
+function saveProfile(): void {
+  if (profileInvalid.value)
+    return
+  savingProfile.value = true
+  later(() => {
+    savingProfile.value = false
+    notify('Profile updated', 'Teammates will see your changes right away.')
+  }, 700)
 }
+
+// Appearance
+const themeOptions = [
+  { label: 'System', value: 'system' },
+  { label: 'Light', value: 'light' },
+  { label: 'Dark', value: 'dark' }
+]
+
+const brandColor = useState<string | null>('orbit-brand-color', () => DEFAULT_BRAND)
+const brandPresets = [
+  { name: 'Orbit green', hex: '#004617' },
+  { name: 'Violet', hex: '#6d28d9' },
+  { name: 'Teal', hex: '#0e7c86' },
+  { name: 'Coral', hex: '#ff7a59' },
+  { name: 'Lime', hex: '#a3e635' }
+]
+const brandErrors = computed(() => !brandColor.value || HEX_PATTERN.test(brandColor.value) ? [] : ['Use a 6-digit hex value, like #004617.'])
+const isCustomBrand = computed(() => (brandColor.value ?? DEFAULT_BRAND).toLowerCase() !== DEFAULT_BRAND)
+const leadProject = projects[0]!
+
+watch(brandColor, (hex) => {
+  if (!import.meta.client || !hex || !HEX_PATTERN.test(hex))
+    return
+  const style = document.documentElement.style
+  if (hex.toLowerCase() === DEFAULT_BRAND) {
+    style.removeProperty('--cffy-color-brand-primary-500')
+    style.removeProperty('--cffy-color-brand-primary-50')
+    return
+  }
+  style.setProperty('--cffy-color-brand-primary-500', hex)
+  style.setProperty('--cffy-color-brand-primary-50', `color-mix(in oklab, ${hex} 25%, white)`)
+})
+
+function resetBrand(): void {
+  brandColor.value = DEFAULT_BRAND
+}
+
+const textScale = ref<string | number | null>(100)
+const reduceMotion = ref<string | boolean | null>(false)
+
+// Notifications
+const channels: { id: ChannelId, label: string }[] = [
+  { id: 'email', label: 'Email' },
+  { id: 'push', label: 'Push' },
+  { id: 'slack', label: 'Slack' }
+]
+const events: { id: EventId, label: string, description: string }[] = [
+  { id: 'mentions', label: 'Mentions', description: 'Someone @mentions you in a task, doc or comment.' },
+  { id: 'assignments', label: 'Assignments', description: 'A task is assigned to you or its due date moves.' },
+  { id: 'status', label: 'Status changes', description: 'A project you follow goes at risk or off track.' },
+  { id: 'digest', label: 'Weekly digest', description: 'A Monday summary of progress across your projects.' }
+]
+const notificationPrefs = reactive<Record<EventId, Record<ChannelId, string | boolean | null>>>({
+  mentions: { email: true, push: true, slack: true },
+  assignments: { email: true, push: true, slack: false },
+  status: { email: false, push: true, slack: true },
+  digest: { email: true, push: false, slack: false }
+})
+
+const quietHoursOn = ref<string | boolean | null>(true)
+const quietStart = ref<string | number | null>(20)
+const quietLabel = computed(() => {
+  const hour = Number(quietStart.value ?? 20)
+  return `${hour > 12 ? hour - 12 : hour}:00 ${hour >= 12 ? 'PM' : 'AM'}`
+})
+
+const savingNotifications = ref(false)
+function saveNotifications(): void {
+  savingNotifications.value = true
+  later(() => {
+    savingNotifications.value = false
+    notify('Notification preferences saved', 'Changes apply to new activity from now on.')
+  }, 600)
+}
+
+// Security
+const setupKey = 'ORBT 7K2Q 9XMD 41PL'
+const otp = ref('')
+const otpErrors = ref<string[]>([])
+const verifyingOtp = ref(false)
+
+watch(otp, () => {
+  otpErrors.value = []
+})
+
+function verifyTwoFactor(): void {
+  if (verifyingOtp.value)
+    return
+  if (otp.value.length < 6) {
+    otpErrors.value = ['Enter all 6 digits from your authenticator app.']
+    return
+  }
+  verifyingOtp.value = true
+  later(() => {
+    verifyingOtp.value = false
+    if (otp.value === '000000') {
+      otpErrors.value = ['That code didn\'t match. Codes refresh every 30 seconds.']
+      return
+    }
+    twoFactorEnabled.value = true
+    otp.value = ''
+    notify('Two-factor authentication is on', 'You\'ll enter a code from your authenticator when you sign in on a new device.')
+  }, 800)
+}
+
+function turnOffTwoFactor(): void {
+  twoFactorEnabled.value = false
+  notify('Two-factor authentication is off', 'Your account is now protected by your password only.', 'warning')
+}
+
+const recoveryCodes = ['4F7K-29QD', 'X8M2-LP4C', 'T6NV-93RA', 'H2JW-58EK', 'Q9BZ-17YU', 'D3RS-60MF', 'W5GA-82TN', 'K7CX-44PV']
+
+async function copyRecoveryCodes(): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(recoveryCodes.join('\n'))
+    notify('Recovery codes copied', 'Keep them in your password manager, not in a shared doc.')
+  } catch {
+    notify('Couldn\'t copy the codes', 'Select the codes and copy them manually.', 'danger')
+  }
+}
+
+const sessions = ref([
+  { id: 's1', device: 'MacBook Pro · Chrome', detail: 'New York, US · Active now', icon: '&#xe320;', current: true },
+  { id: 's2', device: 'iPhone 15 · Orbit for iOS', detail: 'New York, US · 2 hours ago', icon: '&#xe32c;', current: false },
+  { id: 's3', device: 'Windows · Edge', detail: 'Austin, US · Sep 28', icon: '&#xe30c;', current: false }
+])
+const otherSessions = computed(() => sessions.value.filter(session => !session.current).length)
+
+function signOutSession(id: string): void {
+  const session = sessions.value.find(item => item.id === id)
+  sessions.value = sessions.value.filter(item => item.id !== id)
+  if (session)
+    notify('Session signed out', `${session.device} no longer has access to Orbit.`)
+}
+
+function signOutOthers(): void {
+  const count = otherSessions.value
+  sessions.value = sessions.value.filter(session => session.current)
+  notify('Other sessions signed out', `Signed out of ${count} other ${count === 1 ? 'device' : 'devices'}.`)
+}
+
+const deleteModal = ref<IDialogDisplay | null>(null)
+const deletingWorkspace = ref(false)
+const deleteSummary = `All ${projects.length} projects, ${tasks.length} tasks and ${files.length} shared files will be removed for ${members.length} members after a 14-day grace period.`
+
+function confirmDeleteWorkspace(): void {
+  deletingWorkspace.value = true
+  later(() => {
+    deletingWorkspace.value = false
+    deleteModal.value?.closeDialog()
+    notify('Workspace scheduled for deletion', 'Orbit will be deleted on Oct 17. Restore it from Settings before then.', 'danger')
+  }, 1000)
+}
+
+onBeforeUnmount(() => {
+  timers.forEach(id => clearTimeout(id))
+  timers.clear()
+  if (photoPreview.value)
+    URL.revokeObjectURL(photoPreview.value)
+})
 </script>
 
 <template>
   <div class="container mt-3 mb-5">
-    <!-- Header -->
     <UiHeaderContent
-      title="Configuración"
-      subtitle="Administra las preferencias de tu cuenta y del sistema"
-      view-transition-name="page-title"
-    >
-      <template #actions>
-        <UiButton
-          text="Guardar"
-          variant="filled"
-          color="success"
-          :loading="isSaving"
-          @on-click="save"
-        >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe161;" />
-          </template>
-        </UiButton>
-      </template>
-    </UiHeaderContent>
+      title="Settings"
+      subtitle="Manage your profile, how Orbit looks, what reaches you and how your account is protected."
+    />
 
-    <!-- Section switcher -->
-    <div class="mt-section mb-4">
-      <UiSegmentedControls
-        :tabs="sectionTabs"
-        :active-tab="activeSection"
-        @update-active-tab="changeSection"
-      />
-    </div>
+    <UiTabs
+      :tabs="tabs"
+      :active-tab="activeTab"
+      class="mb-4"
+      @update-active-tab="selectTab"
+    />
 
-    <!-- General -->
-    <div
-      v-show="activeSection === 'general'"
-      id="panel-general"
+    <!-- Profile -->
+    <section
+      v-if="activeTab === 'profile'"
+      id="settings-profile"
       role="tabpanel"
-      aria-labelledby="tab-general"
-      tabindex="0"
+      aria-labelledby="tab-profile"
+      class="d-grid gap-6"
     >
-      <UiSubheadingContent
-        title="Cuenta"
-      />
-      <UiCard
-        variant="outline"
-        size="sm"
-        class="card-pane mb-4"
-      >
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Profile
+          </p>
+          <p class="caption text-muted mb-0">
+            This is how teammates see you across {{ workspace.name }}.
+          </p>
+        </template>
+
         <template #body>
-          <UiListGroup
-            is-interactive
-            variant="flush"
-            size="md"
-          >
-            <UiListItem
-              title="Perfil"
-              text="Nombre, foto e información pública"
-              image-url="https://i.pravatar.cc/88?img=12"
-              image-alt="Foto de perfil de Giancarlos"
-              has-actions
-            >
-              <template #list-action>
-                <span class="subtitle-2 text-muted d-inline-flex align-items-center gap-2 me-4">
-                  Giancarlos
-                </span>
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="Correo electrónico"
-              text="Dirección usada para iniciar sesión"
-              icon="&#xe0be;"
-              custom-icon-wrapper-class="bg-accent-fixed rounded-full"
-              custom-icon-class="text-accent-emphasis"
-              has-actions
-            >
-              <template #list-action>
-                <span class="d-inline-flex align-items-center gap-2 me-4">
-                  <UiBadge
-                    text="Verificado"
-                    variant="tonal tonal-success"
-                    size="sm" icon-code="&#xe8e8;"
-                  />
-                </span>
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="Idioma y región"
-              text="Idioma de la interfaz y formato regional"
-              icon="&#xe8e2;"
-              custom-icon-wrapper-class="bg-secondary-fixed rounded-full"
-              custom-icon-class="text-secondary-emphasis"
-              has-actions
-            >
-              <template #list-action>
-                <span class="subtitle-2 text-muted d-inline-flex align-items-center gap-2 me-4">
-                  Español
-                </span>
-              </template>
-            </UiListItem>
-          </UiListGroup>
+          <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+              <p class="fw-700 mb-1">
+                Photo
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                JPG, PNG or WebP, at least 400 × 400 px. Up to 5 MB.
+              </p>
+            </div>
+            <div class="col-12 col-md-8 d-flex align-items-center gap-4">
+              <UiAvatar :src="avatarSrc" :alt="`${currentUser.name} profile photo`" size="md" class="flex-shrink-0" />
+              <div class="flex-grow-1">
+                <UiInputFile
+                  id="profile-photo"
+                  v-model="photo"
+                  label="Profile photo"
+                  hide-label
+                  input-label="Upload photo"
+                  :error-messages="photoErrors"
+                />
+                <UiButton
+                  v-if="photo"
+                  text="Remove photo"
+                  variant="text"
+                  size="sm"
+                  class="mt-2"
+                  @on-click="photo = null"
+                />
+              </div>
+            </div>
+          </div>
+
+          <UiDivider custom-class="my-4" />
+
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <p class="fw-700 mb-1">
+                Personal details
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Used for @mentions, invites and email notifications.
+              </p>
+            </div>
+            <div class="col-12 col-md-8 d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-inline-4">
+              <UiInputText
+                id="profile-name"
+                v-model="profile.name"
+                label="Full name"
+                required
+                :error-messages="profileErrors.name"
+              />
+              <UiInputText
+                id="profile-email"
+                v-model="profile.email"
+                type="email"
+                label="Email"
+                required
+                :maxlength="80"
+                :error-messages="profileErrors.email"
+              />
+              <UiInputText
+                id="profile-title"
+                v-model="profile.title"
+                label="Job title"
+                placeholder="What do you do at Orbit?"
+              />
+              <UiInputPhoneNumber
+                id="profile-phone"
+                v-model="profile.phone"
+                label="Phone"
+                placeholder="415-555-0132"
+                :maxlength="14"
+                optional-label
+              />
+            </div>
+          </div>
+
+          <UiDivider custom-class="my-4" />
+
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <p class="fw-700 mb-1">
+                About
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Shown on your profile card when someone hovers your name.
+              </p>
+            </div>
+            <div class="col-12 col-md-8">
+              <UiInputTextarea
+                id="profile-bio"
+                v-model="profile.bio"
+                label="Bio"
+                placeholder="A line or two about what you work on."
+                :rows="3"
+                :maxlength="BIO_LIMIT"
+                class="mb-1"
+              />
+              <p
+                class="caption text-end mb-3"
+                :class="bioLength >= BIO_LIMIT - 20 ? 'text-warning-emphasis' : 'text-muted'"
+              >
+                {{ bioLength }}/{{ BIO_LIMIT }} characters
+              </p>
+              <UiInputSelect
+                id="profile-timezone"
+                v-model="profile.timezone"
+                label="Time zone"
+                placeholder="Select a time zone"
+                :options="timezones"
+                option-label="label"
+                option-value="value"
+              />
+            </div>
+          </div>
+        </template>
+
+        <template #footer>
+          <div class="d-flex justify-content-end gap-2">
+            <UiButton
+              text="Save changes"
+              variant="filled"
+              color="primary"
+              :loading="savingProfile"
+              :disabled="profileInvalid"
+              @on-click="saveProfile"
+            />
+          </div>
+        </template>
+      </UiCard>
+    </section>
+
+    <!-- Appearance -->
+    <section
+      v-else-if="activeTab === 'appearance'"
+      id="settings-appearance"
+      role="tabpanel"
+      aria-labelledby="tab-appearance"
+      class="d-grid gap-6"
+    >
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Brand color
+          </p>
+          <p class="caption text-muted mb-0">
+            Orbit tints buttons, links and highlights with this color. Text on top of it switches between light and dark by itself, so it stays readable whatever you pick.
+          </p>
+        </template>
+
+        <template #body>
+          <div class="row">
+            <div class="col-12 col-lg-5">
+              <UiInputColorPicker
+                id="brand-color"
+                v-model="brandColor"
+                label="Custom color"
+                :error-messages="brandErrors"
+              />
+              <p class="caption text-muted mb-2">
+                Presets
+              </p>
+              <div class="d-flex flex-wrap gap-3 mb-4">
+                <button
+                  v-for="preset in brandPresets"
+                  :key="preset.hex"
+                  type="button"
+                  class="brand-swatch rounded-full border"
+                  :style="{ backgroundColor: preset.hex }"
+                  :title="preset.name"
+                  :aria-label="preset.name"
+                  :aria-pressed="brandColor?.toLowerCase() === preset.hex"
+                  @click="brandColor = preset.hex"
+                />
+              </div>
+              <UiButton
+                text="Reset to Orbit green"
+                variant="outline"
+                size="sm"
+                :disabled="!isCustomBrand"
+                class="mb-4 mb-lg-0"
+                @on-click="resetBrand"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xf053;" />
+                </template>
+              </UiButton>
+            </div>
+
+            <div class="col-12 col-lg-7">
+              <div class="border rounded-lg p-3 d-grid gap-3" aria-label="Brand color preview" role="group">
+                <p class="overline text-muted mb-0">
+                  Preview
+                </p>
+                <div class="d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-3">
+                  <div class="bg-primary text-on-primary rounded-lg p-3 d-flex align-items-center gap-2">
+                    <UiIconMaterial icon-code="&#xe145;" class="fs-lg" />
+                    <span class="fw-700 fs-xs">New project</span>
+                  </div>
+                  <div class="bg-primary-container text-on-primary-container rounded-lg p-3">
+                    <p class="fw-700 mb-1">
+                      Sprint 14 starts Monday
+                    </p>
+                    <p class="caption mb-0">
+                      Planning is at 10:00 AM. Bring your estimates.
+                    </p>
+                  </div>
+                </div>
+                <p class="text-primary-emphasis fw-700 mb-0">
+                  {{ leadProject.name }} is {{ leadProject.progress }}% done, with {{ leadProject.tasksTotal - leadProject.tasksDone }} tasks left before {{ leadProject.dueDate }}.
+                </p>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                  <UiBadge :text="workspace.plan" variant="primary" />
+                  <UiBadge text="In review" variant="tonal tonal-primary" icon-code="&#xe8f4;" />
+                  <UiBadge text="Design system" variant="outline" />
+                  <UiBadge text="3" variant="primary" size="sm" pill />
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                  <UiButton text="Publish" variant="filled" color="primary" size="sm" />
+                  <UiButton text="Share" variant="tonal" color="primary" size="sm" />
+                  <UiButton text="Cancel" variant="text" size="sm" />
+                </div>
+              </div>
+            </div>
+          </div>
         </template>
       </UiCard>
 
-      <UiSubheadingContent
-        title="Apariencia"
-      />
-      <UiCard
-        variant="outline"
-        size="sm"
-        class="card-pane"
-      >
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Interface
+          </p>
+          <p class="caption text-muted mb-0">
+            Changes apply right away on this device.
+          </p>
+        </template>
+
         <template #body>
-          <UiListGroup is-interactive is-undecorated variant="flush" size="md">
-            <UiListItem
-              title="Modo oscuro"
-              text="Usa el tema oscuro en toda la aplicación"
-              icon="&#xe51c;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <UiInputCheck
-                  id="dark-mode"
-                  v-model="darkMode"
-                  label="Modo oscuro"
-                  variant="switch"
-                  size="lg"
+          <div class="row align-items-center">
+            <div class="col-12 col-md-5">
+              <p class="fw-700 mb-1">
+                Theme
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Pick a theme or follow your operating system.
+              </p>
+            </div>
+            <div class="col-12 col-md-7">
+              <ClientOnly>
+                <UiInputRadio
+                  id="theme"
+                  v-model="colorMode.preference"
+                  label="Theme"
                   hide-label
-                  class="gap-0 mb-0"
+                  :options="themeOptions"
+                  option-label="label"
+                  option-value="value"
+                  class="mb-0"
                 />
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="Reducir movimiento"
-              text="Minimiza animaciones y transiciones"
-              icon="&#xe9e4;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <UiInputCheck
-                  id="reduce-motion"
-                  v-model="reduceMotion"
-                  label="Reducir movimiento"
-                  variant="switch"
-                  size="lg"
-                  hide-label
-                  class="gap-0 mb-0"
-                />
-              </template>
-            </UiListItem>
-          </UiListGroup>
+                <template #fallback>
+                  <UiInputRadio
+                    id="theme-fallback"
+                    model-value="system"
+                    label="Theme"
+                    hide-label
+                    :options="themeOptions"
+                    option-label="label"
+                    option-value="value"
+                    disabled
+                    class="mb-0"
+                  />
+                </template>
+              </ClientOnly>
+            </div>
+          </div>
+
+          <UiDivider custom-class="my-4" />
+
+          <div class="row align-items-center">
+            <div class="col-12 col-md-5">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <p class="fw-700 mb-0">
+                  Text size
+                </p>
+                <UiBadge :text="`${textScale}%`" variant="tonal tonal-primary" size="sm" />
+              </div>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Scales task lists, comments and docs.
+              </p>
+            </div>
+            <div class="col-12 col-md-7">
+              <UiInputRange
+                id="text-scale"
+                v-model="textScale"
+                label="Text size"
+                hide-label
+                size="sm"
+                :min="90"
+                :max="125"
+                :step="5"
+                class="mb-0"
+              />
+            </div>
+          </div>
+
+          <UiDivider custom-class="my-4" />
+
+          <div class="row align-items-center">
+            <div class="col-12 col-md-5">
+              <p class="fw-700 mb-1">
+                Reduce motion
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Turns off animated transitions between boards and pages.
+              </p>
+            </div>
+            <div class="col-12 col-md-7">
+              <UiInputCheck
+                id="reduce-motion"
+                v-model="reduceMotion"
+                variant="switch"
+                :label="reduceMotion ? 'On' : 'Off'"
+              />
+            </div>
+          </div>
         </template>
       </UiCard>
-    </div>
+    </section>
 
     <!-- Notifications -->
-    <div
-      v-show="activeSection === 'notifications'"
-      id="panel-notifications"
+    <section
+      v-else-if="activeTab === 'notifications'"
+      id="settings-notifications"
       role="tabpanel"
       aria-labelledby="tab-notifications"
-      tabindex="0"
+      class="d-grid gap-6"
     >
-      <UiSubheadingContent
-        title="Canales de notificación"
-      />
-      <UiCard
-        variant="outline"
-        size="sm"
-        class="card-pane"
-      >
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Notify me about
+          </p>
+          <p class="caption text-muted mb-0">
+            Slack messages go to you as direct messages from the Orbit app.
+          </p>
+        </template>
+
         <template #body>
-          <UiListGroup is-interactive is-undecorated variant="flush" size="md">
-            <UiListItem
-              title="Correo electrónico"
-              text="Recibe alertas en tu bandeja de entrada"
-              icon="&#xe0be;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <UiInputCheck
-                  id="n-email"
-                  v-model="notifEmail"
-                  label="Correo"
-                  variant="switch"
-                  size="lg"
-                  hide-label
-                  class="gap-0 mb-0"
-                />
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="Notificaciones push"
-              text="Avisos en tiempo real en tus dispositivos"
-              icon="&#xe7f4;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <UiInputCheck
-                  id="n-push"
-                  v-model="notifPush"
-                  label="Push"
-                  variant="switch"
-                  size="lg"
-                  hide-label
-                  class="gap-0 mb-0"
-                />
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="SMS"
-              text="Mensajes de texto para eventos críticos"
-              icon="&#xe0b7;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <UiInputCheck
-                  id="n-sms"
-                  v-model="notifSms"
-                  label="SMS"
-                  variant="switch"
-                  size="lg"
-                  hide-label
-                  class="gap-0 mb-0"
-                />
-              </template>
-            </UiListItem>
-            <UiListItem
-              title="Resumen semanal"
-              text="Un correo cada lunes con la actividad"
-              icon="&#xe8f0;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-              has-actions
-            >
-              <template #list-action>
-                <span class="d-inline-flex align-items-center gap-2">
-                  <UiBadge
-                    text="Nuevo"
-                    variant="tonal tonal-accent"
-                    size="sm"
-                  />
-                  <UiInputCheck
-                    id="n-digest"
-                    v-model="weeklyDigest"
-                    label="Resumen"
-                    variant="switch"
-                    size="lg"
-                    hide-label
-                    class="gap-0 mb-0"
-                  />
-                </span>
-              </template>
-            </UiListItem>
-          </UiListGroup>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Event
+                  </th>
+                  <th v-for="channel in channels" :key="channel.id" scope="col" class="text-center">
+                    {{ channel.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="event in events" :key="event.id">
+                  <td>
+                    <p class="fw-700 fs-xs mb-0">
+                      {{ event.label }}
+                    </p>
+                    <p class="caption text-muted mb-0">
+                      {{ event.description }}
+                    </p>
+                  </td>
+                  <td v-for="channel in channels" :key="channel.id" class="text-center">
+                    <UiInputCheck
+                      :id="`notify-${event.id}-${channel.id}`"
+                      v-model="notificationPrefs[event.id][channel.id]"
+                      variant="switch"
+                      :label="`${channel.label} notifications for ${event.label.toLowerCase()}`"
+                      hide-label
+                      class="d-inline-flex gap-0"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </template>
       </UiCard>
-    </div>
 
-    <!-- System -->
-    <div
-      v-show="activeSection === 'system'"
-      id="panel-system"
-      role="tabpanel"
-      aria-labelledby="tab-system"
-      tabindex="0"
-    >
-      <UiSubheadingContent
-        title="Información del sistema"
-      />
-      <UiCard
-        variant="outline"
-        size="sm"
-        class="card-pane"
-      >
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Quiet hours
+          </p>
+          <p class="caption text-muted mb-0">
+            Pause push and Slack notifications after work. Email still arrives.
+          </p>
+        </template>
+
         <template #body>
-          <UiAlert
-            message="Tu sistema está actualizado."
-            type="tonal"
-            variant="success"
-            rounded
+          <UiInputCheck
+            id="quiet-hours"
+            v-model="quietHoursOn"
+            variant="switch"
+            label="Pause notifications on weeknights"
+            class="mb-4"
           />
+          <div class="row align-items-center">
+            <div class="col-12 col-md-5">
+              <p class="fw-700 mb-1">
+                Starts at {{ quietLabel }}
+              </p>
+              <p class="caption text-muted mb-3 mb-md-0">
+                Ends at 8:00 AM, Monday to Friday.
+              </p>
+            </div>
+            <div class="col-12 col-md-7">
+              <UiInputRange
+                id="quiet-start"
+                v-model="quietStart"
+                label="Quiet hours start"
+                hide-label
+                size="sm"
+                :min="18"
+                :max="23"
+                :disabled="!quietHoursOn"
+                class="mb-0"
+              />
+            </div>
+          </div>
+        </template>
 
-          <UiListGroup
-            is-interactive
-            variant="flush"
-            size="md"
-            class="mt-2"
+        <template #footer>
+          <div class="d-flex justify-content-end">
+            <UiButton
+              text="Save preferences"
+              variant="filled"
+              color="primary"
+              :loading="savingNotifications"
+              @on-click="saveNotifications"
+            />
+          </div>
+        </template>
+      </UiCard>
+    </section>
+
+    <!-- Security -->
+    <section
+      v-else
+      id="settings-security"
+      role="tabpanel"
+      aria-labelledby="tab-security"
+      class="d-grid gap-6"
+    >
+      <UiCard variant="outline">
+        <template #header>
+          <div class="d-flex align-items-start justify-content-between gap-3">
+            <div>
+              <p class="card-title">
+                Two-factor authentication
+              </p>
+              <p class="caption text-muted mb-0">
+                Ask for a code from your phone, on top of your password, when you sign in.
+              </p>
+            </div>
+            <UiBadge
+              v-if="twoFactorEnabled"
+              text="On"
+              variant="tonal tonal-success"
+              icon-code="&#xe86c;"
+            />
+            <UiBadge
+              v-else
+              text="Off"
+              variant="tonal tonal-warning"
+              icon-code="&#xe002;"
+            />
+          </div>
+        </template>
+
+        <template #body>
+          <div
+            v-if="twoFactorEnabled"
+            class="bg-success-container text-on-success-container rounded-lg p-3 d-flex flex-wrap align-items-center gap-3"
+            role="status"
           >
+            <UiIconMaterial icon-code="&#xe86c;" class="fs-2xl" />
+            <div class="flex-grow-1">
+              <p class="fw-700 mb-1">
+                Two-factor authentication is on
+              </p>
+              <p class="caption mb-0">
+                Orbit asks for a code from your authenticator app when you sign in on a new device.
+              </p>
+            </div>
+            <UiButton text="Turn off" variant="text" size="sm" @on-click="turnOffTwoFactor" />
+          </div>
+
+          <div v-else class="row">
+            <div class="col-12 col-md-7">
+              <div class="d-grid gap-3 mb-4">
+                <div class="d-flex align-items-start gap-3">
+                  <UiBadge text="1" variant="tonal tonal-primary" pill />
+                  <div>
+                    <p class="fw-700 mb-0">
+                      Install an authenticator app
+                    </p>
+                    <p class="caption text-muted mb-0">
+                      1Password, Authy and Google Authenticator all work.
+                    </p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start gap-3">
+                  <UiBadge text="2" variant="tonal tonal-primary" pill />
+                  <div>
+                    <p class="fw-700 mb-0">
+                      Scan the QR code
+                    </p>
+                    <p class="caption text-muted mb-0">
+                      Or type the setup key <span class="font-code">{{ setupKey }}</span> into the app.
+                    </p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start gap-3">
+                  <UiBadge text="3" variant="tonal tonal-primary" pill />
+                  <div>
+                    <p class="fw-700 mb-0">
+                      Enter the 6-digit code
+                    </p>
+                    <p class="caption text-muted mb-0">
+                      The app shows a new code every 30 seconds.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <UiInputOtp
+                id="two-factor-code"
+                v-model="otp"
+                label="Verification code"
+                :length="6"
+                :disabled="verifyingOtp"
+                :error-messages="otpErrors"
+                @complete="verifyTwoFactor"
+              />
+              <UiButton
+                text="Verify and turn on"
+                variant="filled"
+                color="primary"
+                :loading="verifyingOtp"
+                :disabled="otp.length < 6"
+                @on-click="verifyTwoFactor"
+              />
+            </div>
+            <div class="col-12 col-md-5 mt-4 mt-md-0">
+              <div class="bg-muted-container text-on-muted-container rounded-lg p-4 d-grid place-items-center gap-2 text-center h-100">
+                <UiIconMaterial icon-code="&#xe00a;" class="fs-5xl lh-1" />
+                <p class="caption mb-0">
+                  Scan with your authenticator app
+                </p>
+              </div>
+            </div>
+          </div>
+        </template>
+      </UiCard>
+
+      <UiCard variant="outline">
+        <template #header>
+          <div class="d-flex align-items-start justify-content-between gap-3">
+            <div>
+              <p class="card-title">
+                Recovery codes
+              </p>
+              <p class="caption text-muted mb-0">
+                Use one of these if you lose your phone. Each code works once.
+              </p>
+            </div>
+            <UiButtonTooltip
+              text="Copy"
+              variant="outline"
+              size="sm"
+              tooltip-text="Copy all 8 codes"
+              :disabled="!twoFactorEnabled"
+              @on-click="copyRecoveryCodes"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe14d;" />
+              </template>
+            </UiButtonTooltip>
+          </div>
+        </template>
+
+        <template #body>
+          <div
+            v-if="twoFactorEnabled"
+            class="bg-muted-container text-on-muted-container rounded-lg p-3 d-grid grid-repeat-cols-2 grid-repeat-cols-md-4 gap-3 font-code"
+          >
+            <span v-for="code in recoveryCodes" :key="code" class="fs-xs">{{ code }}</span>
+          </div>
+          <p v-else class="caption text-muted mb-0">
+            Turn on two-factor authentication to generate your recovery codes.
+          </p>
+        </template>
+      </UiCard>
+
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title">
+            Active sessions
+          </p>
+          <p class="caption text-muted mb-0">
+            Devices signed in to your Orbit account in the last 30 days.
+          </p>
+        </template>
+
+        <template #body>
+          <UiListGroup variant="flush">
             <UiListItem
-              title="Actualización de software"
-              text="Hay una actualización disponible"
-              icon="&#xe8d7;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-success fs-2xl"
+              v-for="session in sessions"
+              :key="session.id"
+              :title="session.device"
+              :text="session.detail"
+              :icon="session.icon"
+              custom-icon-wrapper-class="bg-secondary-container"
+              custom-icon-class="text-on-secondary-container"
               has-actions
             >
               <template #list-action>
                 <UiBadge
-                  text="v1.7.2"
-                  variant="outline"
+                  v-if="session.current"
+                  text="This device"
+                  variant="tonal tonal-success"
                   size="sm"
-                  class="me-4"
-                  icon-code="&#xf5f4;"
-                  icon-class="text-success"
+                />
+                <UiButton
+                  v-else
+                  text="Sign out"
+                  variant="text"
+                  size="sm"
+                  @on-click="signOutSession(session.id)"
                 />
               </template>
             </UiListItem>
-            <UiListItem
-              title="Almacenamiento"
-              text="Modelo, espacio, datos, etc."
-              icon="&#xe1db;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-            />
-            <UiListItem
-              title="Acerca de"
-              text="Versión, términos y avisos legales"
-              icon="&#xe88e;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-            />
-            <UiListItem
-              title="Soporte"
-              text="Contacto, garantía, ayuda"
-              icon="&#xef73;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-            />
-            <UiListItem
-              title="Accesibilidad"
-              text="Control por voz, zoom, tamaño de texto"
-              icon="&#xe84e;"
-              custom-icon-wrapper-class="bg-transparent"
-              custom-icon-class="text-muted"
-            />
           </UiListGroup>
         </template>
+
+        <template #footer>
+          <UiButton
+            text="Sign out of all other sessions"
+            variant="outline"
+            size="sm"
+            :disabled="otherSessions === 0"
+            @on-click="signOutOthers"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe9ba;" />
+            </template>
+          </UiButton>
+        </template>
       </UiCard>
-    </div>
+
+      <UiCard variant="outline">
+        <template #header>
+          <p class="card-title text-danger">
+            Danger zone
+          </p>
+          <p class="caption text-muted mb-0">
+            Only workspace owners can see this section.
+          </p>
+        </template>
+
+        <template #body>
+          <UiAlert
+            type="tonal"
+            variant="danger"
+            title="Delete this workspace"
+            :message="`Removes ${workspace.name} for everyone, including projects, files and comments. Billing stops at the end of the current period.`"
+          >
+            <template #actions>
+              <UiButton
+                text="Delete workspace"
+                variant="filled"
+                color="danger"
+                size="sm"
+                @on-click="deleteModal?.showDialog()"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe872;" />
+                </template>
+              </UiButton>
+            </template>
+          </UiAlert>
+        </template>
+      </UiCard>
+
+      <UiConfirmModal
+        ref="deleteModal"
+        :title="`Delete the ${workspace.name} workspace?`"
+        :message="deleteSummary"
+        confirm-label="Delete workspace"
+        loading-label="Deleting…"
+        :is-loading="deletingWorkspace"
+        @confirm="confirmDeleteWorkspace"
+      />
+    </section>
   </div>
 </template>
+
+<style scoped>
+.brand-swatch {
+  inline-size: 2rem;
+  aspect-ratio: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.brand-swatch[aria-pressed='true'] {
+  outline: var(--cffy-border-width-md) solid var(--cffy-on-background);
+  outline-offset: var(--cffy-space-4);
+}
+</style>
