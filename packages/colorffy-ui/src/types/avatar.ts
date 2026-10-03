@@ -19,6 +19,9 @@ export type AvatarStatus = 'online' | 'busy' | 'away' | 'offline'
 export type AvatarVariant = 'transparent' | 'tonal' | 'filled'
 
 export interface IAvatarProps {
+  /**
+   * Image URL. Takes precedence over `initials`.
+   */
   src?: string
   /**
    * Alternative text / accessible name for the avatar image.
@@ -26,6 +29,9 @@ export interface IAvatarProps {
    */
   alt?: string
   size?: AvatarSize
+  /**
+   * Initials shown when there is no `src` or the image fails to load.
+   */
   initials?: string | null
   /**
    * Apply a mask shape to the avatar

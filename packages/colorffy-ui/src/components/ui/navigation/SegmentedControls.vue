@@ -2,6 +2,8 @@
 import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
+import UiBadge from '../badge/Badge.vue'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
@@ -105,7 +107,26 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
           @click="handleSelectedTab(tab)"
           @keydown="onTabKeydown($event, tabIndex)"
         >
+          <!-- Leading icon -->
+          <UiIconMaterial
+            v-if="tab.icon"
+            :icon-code="tab.icon"
+          />
+
           {{ tab.label }}
+
+          <!-- Badge -->
+          <UiBadge
+            v-if="tab.badge"
+            size="sm"
+            :variant="tab.badge.variant"
+            :text="tab.badge.text"
+            :icon-code="tab.badge.iconCode"
+            :icon-class="tab.badge.iconClass"
+            :icon-style="tab.badge.iconStyle"
+            :pill="tab.badge.pill"
+            :custom-class="tab.badge.customClass"
+          />
         </button>
       </li>
 

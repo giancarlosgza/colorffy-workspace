@@ -69,6 +69,10 @@ function closeDialog() {
   dialogRef?.value?.close()
   emit('onCloseDialog')
 }
+function closeFromOutside() {
+  if (props.closeOnClickOutside && dialogRef.value?.open)
+    closeDialog()
+}
 
 defineExpose({
   showDialog,
@@ -85,17 +89,31 @@ defineExpose({
     aria-modal="true"
   >
     <div
-      v-on-click-outside="closeOnClickOutside ? closeDialog : () => {}"
+      v-on-click-outside="closeFromOutside"
       class="dialog-content"
     >
       <div class="dialog-header">
-        <slot name="header" />
+        <slot name="header">
+          <p
+            v-if="title"
+            class="dialog-title"
+          >
+            {{ title }}
+          </p>
+        </slot>
       </div>
       <div
         class="dialog-body"
         :class="props.bodyDialogClass"
       >
-        <slot name="body" />
+        <slot name="body">
+          <p
+            v-if="message"
+            class="mb-0"
+          >
+            {{ message }}
+          </p>
+        </slot>
       </div>
       <div class="dialog-footer">
         <slot name="footer" />

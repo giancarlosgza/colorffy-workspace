@@ -400,6 +400,12 @@ export interface IButtonMenuItemProps {
    * CSS classes for the trailing icon.
    */
   iconTrailingClass?: string | string[] | null
+
+  /**
+   * Keep the menu open after this item is clicked (for toggles and multi-step choices).
+   * @default false
+   */
+  keepOpen?: boolean
 }
 
 /**

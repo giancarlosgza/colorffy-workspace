@@ -185,6 +185,12 @@
       --_timeline-icon-color: var(--cffy-on-info);
     }
 
+    & .timeline-item-neutral {
+      --_timeline-dot-color: var(--cffy-muted-base);
+      --_timeline-icon-bg-color: var(--cffy-muted-container);
+      --_timeline-icon-color: var(--cffy-on-muted-container);
+    }
+
     // ==========================================================================
     // TIMELINE ALTERNATE ALIGNMENT
     // ==========================================================================

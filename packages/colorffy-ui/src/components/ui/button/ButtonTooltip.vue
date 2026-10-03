@@ -52,6 +52,10 @@ defineEmits<IButtonTooltipEmits>()
       :aria-label="text ? undefined : (title || tooltipText)"
       :aria-expanded="ariaExpanded"
       :aria-controls="ariaControls"
+      :type="type"
+      :to="to"
+      :href="href"
+      :as="as"
       @click="$emit('onClick')"
     >
       <!-- Icon slot -->

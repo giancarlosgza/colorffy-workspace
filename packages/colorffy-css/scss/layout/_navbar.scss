@@ -503,7 +503,7 @@
           border-radius var(--cffy-duration-300) var(--_popover-menu-easing-out);
           @extend .undecorated;
 
-          & p {
+          & > p {
             font-family: var(--cffy-font-secondary);
             font-size: var(--_popover-menu-item-font-size);
             color: var(--_popover-menu-item-color);
@@ -512,7 +512,8 @@
             margin-bottom: 0;
           }
 
-          & i {
+          & > i,
+          & > .popover-menu-item-trailing > i {
             font-size: var(--cffy-fs-lg);
             color: var(--_popover-menu-item-color);
           }

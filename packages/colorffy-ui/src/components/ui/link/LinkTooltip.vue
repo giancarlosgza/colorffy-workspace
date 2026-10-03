@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   icon: false,
   iconVariant: undefined,
   iconTrailing: false,
+  placement: 'top',
   disabled: false,
   loading: false,
   customClass: '',
@@ -114,6 +115,7 @@ const linkProps = computed(() => {
 <template>
   <VTooltip
     :aria-id="id ? `${id}-tooltip` : undefined"
+    :placement="placement"
     class="d-inline-block"
   >
     <component

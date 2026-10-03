@@ -93,22 +93,22 @@ function handleImageError() {
     v-if="status"
     :class="statusWrapperClasses"
   >
-    <!-- Initial Avatar -->
-    <span
-      v-if="initials"
-      :class="initialsAvatarClasses"
-    >
-      {{ initials }}
-    </span>
-
     <!-- Image Avatar -->
     <img
-      v-else-if="src && !imageError"
+      v-if="src && !imageError"
       :src="src"
       :class="avatarClasses"
       :alt="alt"
       @error="handleImageError"
     >
+
+    <!-- Initial Avatar -->
+    <span
+      v-else-if="initials"
+      :class="initialsAvatarClasses"
+    >
+      {{ initials }}
+    </span>
     <!-- Placeholder Avatar -->
     <div
       v-else
@@ -126,14 +126,6 @@ function handleImageError() {
   <!-- Default markup, unchanged when no status is set. Kept as a direct -->
   <!-- v-else-if chain (no <template> wrapper) so Vue still treats the -->
   <!-- component as single-root and inherits fallthrough attrs like class -->
-  <!-- Initial Avatar -->
-  <span
-    v-else-if="initials"
-    :class="initialsAvatarClasses"
-  >
-    {{ initials }}
-  </span>
-
   <!-- Image Avatar -->
   <img
     v-else-if="src && !imageError"
@@ -142,6 +134,15 @@ function handleImageError() {
     :alt="alt"
     @error="handleImageError"
   >
+
+  <!-- Initial Avatar -->
+  <span
+    v-else-if="initials"
+    :class="initialsAvatarClasses"
+  >
+    {{ initials }}
+  </span>
+
   <!-- Placeholder Avatar -->
   <div
     v-else

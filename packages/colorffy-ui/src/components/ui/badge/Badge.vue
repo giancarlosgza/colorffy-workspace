@@ -59,7 +59,7 @@ const displayText = computed(() => {
 </script>
 
 <template>
-  <div
+  <span
     class="badge"
     :class="badgeClasses"
   >
@@ -70,5 +70,5 @@ const displayText = computed(() => {
       :style="iconStyle"
     />
     <span v-if="text && !dot" v-text="displayText" />
-  </div>
+  </span>
 </template>

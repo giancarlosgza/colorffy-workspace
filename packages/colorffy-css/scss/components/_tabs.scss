@@ -335,7 +335,10 @@ $indicator-max-items: 16;
         z-index: 2;
 
         .segmented-control-link {
-          display: block;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--cffy-space-6);
           padding-block: var(--cffy-space-8);
           padding-inline: var(--cffy-space-24);
           width: 100%;
@@ -353,6 +356,10 @@ $indicator-max-items: 16;
           transition: background var(--_segmented-control-duration) var(--_segmented-control-easing),
           color var(--_segmented-control-duration) var(--_segmented-control-easing),
           font-weight var(--_segmented-control-duration) var(--_segmented-control-easing);
+
+          & > i {
+            font-size: 1.25em;
+          }
 
           &:is(:hover) {
             background-color: var(--_segmented-control-item-hover-bg-color);

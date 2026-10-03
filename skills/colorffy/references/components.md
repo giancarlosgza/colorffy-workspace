@@ -333,6 +333,7 @@ Menu item for UiButtonMenu.
 - `iconTrailing` (string, optional) - Trailing icon code (placed on the right side)
 - `iconTrailingClass` (string | string[], optional) - CSS classes for the trailing icon
 - `iconTrailingStyle` (string | object, optional) - Inline styles for the trailing icon
+- `keepOpen` (boolean, default: false) - Keep the menu open after a click; by default a click closes the menu and any parent submenu
 - `disabled` (boolean)
 - `badge` (object, optional) - Badge options (`text`, `variant`, etc.)
 - `shortcut` (string, optional) - Keyboard shortcut text

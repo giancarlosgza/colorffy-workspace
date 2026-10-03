@@ -38,12 +38,12 @@ export interface IDialogProps {
   size?: DialogSize | null
 
   /**
-   * Optional title text shown in the dialog header (if used by the template).
+   * Title shown in the dialog header when the `header` slot is empty.
    */
   title?: string | null
 
   /**
-   * Optional message text shown in the dialog body.
+   * Message shown in the dialog body when the `body` slot is empty.
    */
   message?: string | null
 
@@ -129,4 +129,9 @@ export interface IConfirmModalEmits {
    * Emitted when the confirm button is clicked.
    */
   (e: 'confirm'): void
+
+  /**
+   * Emitted whenever the dialog closes: cancel button, click outside or `closeDialog()`.
+   */
+  (e: 'onCloseDialog'): void
 }

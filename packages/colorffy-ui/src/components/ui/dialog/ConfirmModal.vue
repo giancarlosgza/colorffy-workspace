@@ -113,7 +113,10 @@ function showDialog() {
   }
 }
 function closeDialog() {
-  dialogRef?.value?.close()
+  if (!dialogRef.value?.open)
+    return
+  dialogRef.value.close()
+  emit('onCloseDialog')
 }
 
 defineExpose({
@@ -163,7 +166,7 @@ defineExpose({
         <UiButton
           variant="filled"
           :class="buttonClass"
-          :text="confirmLabel"
+          :text="isLoading ? loadingLabel : confirmLabel"
           :loading="isLoading"
           :disabled="isLoading"
           @click="emit('confirm')"
