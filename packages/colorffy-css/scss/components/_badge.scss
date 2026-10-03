@@ -6,14 +6,15 @@
   // BADGE COMPONENT
   // ==========================================================================
   .badge {
-    --_badge-color: var(--theme-on-background);
-    --_badge-bg-color: var(--theme-surface-container-high);
-    --_badge-border-color: var(--theme-outline-button);
-    --_badge-radius: var(--radius-full);
-    --_badge-font-size: var(--fs-4xs);
-    --_badge-font-weight: var(--fw-500);
-    --_badge-gutter-y: var(--space-4);
-    --_badge-gutter-x: var(--space-8);
+    --_badge-color: var(--badge-color, var(--theme-on-background));
+    --_badge-bg-color: var(--badge-bg-color, var(--theme-surface-container-high));
+    --_badge-border-color: var(--badge-border-color, var(--theme-outline-button));
+    --_badge-radius: var(--badge-radius, var(--radius-full));
+    --_badge-font-size: var(--badge-font-size, var(--fs-4xs));
+    --_badge-font-weight: var(--badge-font-weight, var(--fw-500));
+    --_badge-gutter-y: var(--badge-padding-block, var(--space-4));
+    --_badge-gutter-x: var(--badge-padding-inline, var(--space-8));
+    --_badge-icon-size: var(--badge-icon-size, 1rem);
 
     display: inline-flex;
     padding-block: var(--_badge-gutter-y);
@@ -156,7 +157,7 @@
 
       i {
         color: inherit;
-        font-size: 1rem;
+        font-size: var(--_badge-icon-size);
         font-variation-settings: var(--iw-bold);
       }
     }
@@ -197,10 +198,12 @@
   // BADGE GROUP LAYOUT CONTAINER
   // ==========================================================================
   .badge-group {
+    --_badge-group-gap: var(--badge-group-gap, var(--space-6) var(--space-8));
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--space-6) var(--space-8);
+    gap: var(--_badge-group-gap);
 
     .badge {
       margin: 0;
