@@ -72,7 +72,7 @@ const ariaAttributes = computed(() => {
           <StateBaseSkeleton
             size="lg"
             class="col-12 h-fixed rounded-lg"
-            style="--fixed-size: 6.25rem;"
+            style="--cffy-h-fixed: 6.25rem;"
             :aria-label="`Loading preview for item ${skeletonGridIndex}`"
           />
         </div>

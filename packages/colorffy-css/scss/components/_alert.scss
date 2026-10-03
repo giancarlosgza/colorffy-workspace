@@ -1,5 +1,6 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
+@use '../abstracts/functions' as f;
 
 @layer components.alert {
   // ==========================================================================
@@ -279,36 +280,36 @@
       --_alert-icon-color: inherit;
 
       &.tonal-primary {
-        @include m.container-tonal(var(--cffy-primary-a10), var(--cffy-on-primary-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-primary-container), var(--cffy-on-primary-container), false, alert);
       }
 
       &.tonal-secondary {
-        @include m.container-tonal(var(--cffy-secondary-a10), var(--cffy-on-secondary-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-secondary-container), var(--cffy-on-secondary-container), false, alert);
       }
 
       &.tonal-accent {
-        @include m.container-tonal(var(--cffy-accent-a10), var(--cffy-on-accent-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-accent-container), var(--cffy-on-accent-container), false, alert);
       }
 
       // Semantic
       &.tonal-success {
-        @include m.container-tonal(var(--cffy-success-a10), var(--cffy-on-success-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-success-container), var(--cffy-on-success-container), false, alert);
       }
 
       &.tonal-warning {
-        @include m.container-tonal(var(--cffy-warning-a10), var(--cffy-on-warning-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-warning-container), var(--cffy-on-warning-container), false, alert);
       }
 
       &.tonal-danger {
-        @include m.container-tonal(var(--cffy-danger-a10), var(--cffy-on-danger-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-danger-container), var(--cffy-on-danger-container), false, alert);
       }
 
       &.tonal-info {
-        @include m.container-tonal(var(--cffy-info-a10), var(--cffy-on-info-container), true, false, alert);
+        @include m.container-tonal(var(--cffy-info-container), var(--cffy-on-info-container), false, alert);
       }
 
       &.tonal-default {
-        @include m.container-tonal(var(--cffy-surface-a60), var(--cffy-surface-a90), true, false, alert);
+        @include m.container-tonal(f.tonal(var(--cffy-surface-a60)), var(--cffy-surface-a90), false, alert);
       }
     }
 

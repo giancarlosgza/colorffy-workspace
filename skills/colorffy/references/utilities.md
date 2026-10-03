@@ -284,6 +284,14 @@ For variable Material Icons:
 <div class="bg-frosted">Frosted glass</div>
 ```
 
+### Container Backgrounds
+
+**Pattern:** `bg-{color}-container` with `text-on-{color}-container` (tinted surface and its text, for primary, secondary, accent, success, warning, danger, info, muted; adapts to dark mode)
+
+```html
+<div class="bg-success-container text-on-success-container">Payment received</div>
+```
+
 ### Emphasis Backgrounds
 
 **Pattern:** `bg-{color}-emphasis` (darker variants for primary, secondary, accent, success, warning, danger)

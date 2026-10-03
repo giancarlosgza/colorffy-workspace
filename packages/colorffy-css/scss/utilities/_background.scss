@@ -101,6 +101,15 @@
   }
 
   // ==========================================================================
+  // CONTAINER BACKGROUNDS
+  // ==========================================================================
+  @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+    .bg-#{$name}-container {
+      @include m.bg-color(var(--cffy-#{$name}-container));
+    }
+  }
+
+  // ==========================================================================
   // FIXED & OPACITY BACKGROUNDS
   // ==========================================================================
   .bg-primary-fixed {

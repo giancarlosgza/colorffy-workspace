@@ -248,6 +248,9 @@
 
     /* readable text on each solid fill */
     @include m.on-colors();
+
+    /* tinted surfaces */
+    @include m.container-colors();
   }
 
   html.dark-mode {

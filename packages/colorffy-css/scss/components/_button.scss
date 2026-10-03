@@ -162,36 +162,36 @@
 
         // Primaries
         &.tonal-primary {
-          @include m.btn-tonal(var(--cffy-primary-a10), var(--cffy-on-primary-container), true);
+          @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
         }
 
         &.tonal-secondary {
-          @include m.btn-tonal(var(--cffy-secondary-a10), var(--cffy-on-secondary-container), true);
+          @include m.btn-tonal(var(--cffy-secondary-container), var(--cffy-secondary-a10), var(--cffy-on-secondary-container));
         }
 
         &.tonal-accent {
-          @include m.btn-tonal(var(--cffy-accent-a10), var(--cffy-on-accent-container), true);
+          @include m.btn-tonal(var(--cffy-accent-container), var(--cffy-accent-a10), var(--cffy-on-accent-container));
         }
 
         // Semantic
         &.tonal-success {
-          @include m.btn-tonal(var(--cffy-success-a10), var(--cffy-on-success-container), true);
+          @include m.btn-tonal(var(--cffy-success-container), var(--cffy-success-a10), var(--cffy-on-success-container));
         }
 
         &.tonal-warning {
-          @include m.btn-tonal(var(--cffy-warning-a10), var(--cffy-on-warning-container), true);
+          @include m.btn-tonal(var(--cffy-warning-container), var(--cffy-warning-a10), var(--cffy-on-warning-container));
         }
 
         &.tonal-danger {
-          @include m.btn-tonal(var(--cffy-danger-a10), var(--cffy-on-danger-container), true);
+          @include m.btn-tonal(var(--cffy-danger-container), var(--cffy-danger-a10), var(--cffy-on-danger-container));
         }
 
         &.tonal-info {
-          @include m.btn-tonal(var(--cffy-info-a10), var(--cffy-on-info-container), true);
+          @include m.btn-tonal(var(--cffy-info-container), var(--cffy-info-a10), var(--cffy-on-info-container));
         }
 
         &.tonal-neutral {
-          @include m.btn-tonal(var(--cffy-surface-a40), var(--cffy-surface-a90), false);
+          @include m.btn-tonal(f.tonal(var(--cffy-surface-a40), var(--cffy-tonal-light-intensity)), var(--cffy-surface-a40), var(--cffy-surface-a90));
         }
       }
 
@@ -243,12 +243,12 @@
 
         &:is(:hover) {
           --_btn-shadow: none;
-          @include m.btn-tonal(var(--cffy-primary-a10), var(--cffy-on-primary-container), true);
+          @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
         }
 
         &:is(:focus, :active) {
           --_btn-shadow: none;
-          @include m.btn-tonal(var(--cffy-primary-a20), var(--cffy-on-primary-container), true);
+          @include m.btn-tonal(f.tonal(var(--cffy-primary-a20)), var(--cffy-primary-a20), var(--cffy-on-primary-container));
         }
       }
 
@@ -317,7 +317,7 @@
           &:not(.chip-secondary, .chip-neutral) {
             --_chip-state: 0%;
 
-            @include m.btn-tonal(var(--cffy-primary-a10), var(--cffy-on-primary-container), true);
+            @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
 
             --_btn-border-color: var(--_btn-bg-color);
           }
@@ -325,7 +325,7 @@
           &:is(.chip-secondary) {
             --_chip-state: 0%;
 
-            @include m.btn-tonal(var(--cffy-secondary-a10), var(--cffy-on-secondary-container), true);
+            @include m.btn-tonal(var(--cffy-secondary-container), var(--cffy-secondary-a10), var(--cffy-on-secondary-container));
 
             --_btn-border-color: var(--_btn-bg-color);
           }

@@ -122,7 +122,7 @@ Colorffy maps brand tokens to semantic base theme properties depending on the ac
   ```
 
 #### Dynamic Tones (Opacity Blending)
-Colorffy generates the tonal ramps (`a10` to `a90`) by blending each base color toward black with `color-mix(in oklab)` (`--cffy-on-background` in light mode, `--cffy-on-background-inverse` in dark mode), so every step is darker than the one before in both modes. Text and icons on a tinted surface read `--cffy-on-<name>-container` instead: the darkest tone in light mode, a light tint in dark mode. Surfaces blend `--cffy-primary-base` into `--cffy-surface-base`:
+Colorffy generates the tonal ramps (`a10` to `a90`) by blending each base color toward black with `color-mix(in oklab)` (`--cffy-on-background` in light mode, `--cffy-on-background-inverse` in dark mode), so every step is darker than the one before in both modes. A tinted surface (tonal button, badge or alert) is `--cffy-<name>-container`, with `--cffy-on-<name>-container` for its text: the darkest tone in light mode, a light tint in dark mode. Surfaces blend `--cffy-primary-base` into `--cffy-surface-base`:
 ```css
 --cffy-primary-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 11%);
 --cffy-surface-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 90%);

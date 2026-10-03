@@ -172,6 +172,12 @@
     @include m.text-color(var(--cffy-on-info));
   }
 
+  @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+    .text-on-#{$name}-container {
+      @include m.text-color(var(--cffy-on-#{$name}-container));
+    }
+  }
+
   .text-on-body {
     @include m.text-color(var(--cffy-on-background));
   }
