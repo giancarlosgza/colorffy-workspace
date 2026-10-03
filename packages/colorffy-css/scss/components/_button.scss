@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
@@ -13,14 +14,16 @@
       --_btn-border: var(--border-width-sm);
       --_btn-border-color: transparent;
       --_btn-gap: 0;
-      --_btn-radius: #{v.$button-border-radius};
-      --_btn-padding-inline: var(--space-12);
-      --_btn-padding-block: var(--space-6);
-      --_btn-height: 36px;
-      --_btn-icon-size: 1.15rem;
-      --_btn-shadow: var(--shadow-sm);
-      --_btn-easing-in: var(--ease-decelerate);
-      --_btn-easing-duration: var(--duration-300);
+      --_btn-radius: var(--btn-radius, #{v.$button-border-radius});
+      --_btn-padding-inline: var(--btn-padding-inline, var(--space-12));
+      --_btn-padding-block: var(--btn-padding-block, var(--space-6));
+      --_btn-height: var(--btn-height, 36px);
+      --_btn-icon-size: var(--btn-icon-size, 1.15rem);
+      --_btn-font-size: var(--btn-font-size, #{map.get(v.$type-button, font-size)});
+      --_btn-font-weight: var(--btn-font-weight, #{map.get(v.$type-button, font-weight)});
+      --_btn-shadow: var(--btn-shadow, var(--shadow-sm));
+      --_btn-easing-in: var(--btn-easing, var(--ease-decelerate));
+      --_btn-easing-duration: var(--btn-duration, var(--duration-300));
 
       @include m.btn-base();
 

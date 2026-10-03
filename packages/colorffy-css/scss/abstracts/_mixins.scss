@@ -125,8 +125,8 @@
   box-shadow: var(--_btn-shadow);
 
   font-family: map.get(v.$type-button, font-family);
-  font-weight: map.get(v.$type-button, font-weight);
-  font-size: map.get(v.$type-button, font-size);
+  font-weight: var(--_btn-font-weight, #{map.get(v.$type-button, font-weight)});
+  font-size: var(--_btn-font-size, #{map.get(v.$type-button, font-size)});
   letter-spacing: map.get(v.$type-button, letter-spacing);
   text-transform: inherit;
   line-height: 1;
