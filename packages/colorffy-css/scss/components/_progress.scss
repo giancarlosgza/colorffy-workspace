@@ -15,18 +15,19 @@
   // PROGRESS BAR COMPONENT
   // ==========================================================================
   .progress {
-    --_progress-bg-color: var(--theme-surface-container-high);
-    --_progress-color: var(--theme-primary-a10);
-    --_progress-on-bg-color: var(--theme-on-primary);
-    --_progress-height: 0.85rem;
-    --_progress-radius: var(--radius-md);
-    --_progress-easing-in: var(--ease-emphasized);
-    --_progress-easing-duration: var(--duration-800);
+    --_progress-bg-color: var(--progress-bg-color, var(--theme-surface-container-high));
+    --_progress-color: var(--progress-color, var(--theme-primary-a10));
+    --_progress-on-bg-color: var(--progress-label-color, var(--theme-on-primary));
+    --_progress-height: var(--progress-height, 0.85rem);
+    --_progress-radius: var(--progress-radius, var(--radius-md));
+    --_progress-font-size: var(--progress-font-size, var(--fs-4xs));
+    --_progress-easing-in: var(--progress-easing, var(--ease-emphasized));
+    --_progress-easing-duration: var(--progress-duration, var(--duration-800));
 
     display: flex;
     overflow: hidden;
     height: var(--_progress-height);
-    font-size: var(--fs-4xs);
+    font-size: var(--_progress-font-size);
     font-weight: var(--fw-600);
     background: var(--_progress-bg-color);
     border-radius: var(--_progress-radius);
@@ -91,7 +92,7 @@
   // PROGRESS SPINNER COMPONENT
   // ==========================================================================
   .progress-spinner {
-    --_progress-spinner-color: var(--theme-muted-a10);
+    --_progress-spinner-color: var(--progress-spinner-color, var(--theme-muted-a10));
     --_progress-spinner-size: 1.25rem;
 
     position: relative;
@@ -142,9 +143,12 @@
   }
 
   .skeleton {
+    --_skeleton-color: var(--skeleton-color, var(--theme-muted-a10));
+    --_skeleton-radius: var(--skeleton-radius, var(--radius-md));
+
     display: inline-block;
-    border-radius: var(--radius-md);
-    background-color: var(--theme-muted-a10);
+    border-radius: var(--_skeleton-radius);
+    background-color: var(--_skeleton-color);
     width: 5rem;
     height: .5rem;
     opacity: 0.85;
@@ -176,9 +180,9 @@
     &.skeleton-shimmer {
       background: linear-gradient(
         90deg,
-        var(--theme-muted-a10) 25%,
-        color-mix(in oklab, var(--theme-muted-a10) 50%, transparent) 50%,
-        var(--theme-muted-a10) 75%
+        var(--_skeleton-color) 25%,
+        color-mix(in oklab, var(--_skeleton-color) 50%, transparent) 50%,
+        var(--_skeleton-color) 75%
       );
       background-size: 200% 100%;
       animation: skeleton-shimmer 1.5s infinite linear;
@@ -186,8 +190,8 @@
 
     &.skeleton-ai-generation {
       --_skeleton-thumbnail-size: 200px;
+      --_skeleton-radius: var(--radius-xl);
 
-      border-radius: var(--radius-xl);
       min-height: 1rem;
       width: 100%;
       background-color: #444;
@@ -248,7 +252,7 @@
 
       & .shape {
         --_shape-bg-alpha: 1;
-        --_shape-bg-color: var(--theme-primary-a10);
+        --_shape-bg-color: var(--loading-shapes-color, var(--theme-primary-a10));
         --_shape-size: 15rem;
 
         position: absolute;
