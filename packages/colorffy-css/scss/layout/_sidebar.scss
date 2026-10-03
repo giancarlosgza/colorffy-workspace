@@ -8,14 +8,25 @@
   // SIDEBAR NAVIGATION DRAWER LAYOUT
   // ==========================================================================
   .navigation-drawer {
-    --_drawer-radius: #{var(--radius-none) var(--radius-xl) var(--radius-xl) var(--radius-none)};
-    --_drawer-easing-in: var(--ease-emphasized);
-    --_drawer-easing-out: var(--ease-emphasized);
-    --_drawer-easing-duration: var(--duration-600);
-    --_drawer-gutter: var(--space-8);
+    --_drawer-bg-color: var(--sidebar-bg-color, var(--theme-background));
+    --_drawer-color: var(--sidebar-color, var(--theme-on-background));
+    --_drawer-border-color: var(--sidebar-border-color, var(--theme-outline-surface));
+    --_drawer-shadow: var(--sidebar-shadow, var(--shadow-lg));
+    --_drawer-radius: var(--radius-none) var(--sidebar-radius, var(--radius-xl)) var(--sidebar-radius, var(--radius-xl)) var(--radius-none);
+    --_drawer-padding: var(--sidebar-padding, var(--space-16));
+    --_drawer-gutter: var(--sidebar-spacing, var(--space-8));
+    --_drawer-brand-size: var(--sidebar-brand-size, 2.5rem);
+    --_drawer-item-color: var(--sidebar-item-color, color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%));
+    --_drawer-item-bg-color: transparent;
+    --_drawer-item-shadow: none;
+    --_drawer-item-radius: var(--sidebar-item-radius, #{v.$button-border-radius});
+    --_drawer-item-font-size: var(--sidebar-item-font-size, var(--fs-3xs));
+    --_drawer-item-font-weight: var(--sidebar-item-font-weight, var(--fw-500));
+    --_drawer-item-active-icon-color: var(--sidebar-item-active-icon-color, var(--theme-primary-a10));
+    --_drawer-easing-in: var(--sidebar-easing, var(--ease-emphasized));
+    --_drawer-easing-out: var(--sidebar-easing, var(--ease-emphasized));
+    --_drawer-easing-duration: var(--sidebar-duration, var(--duration-600));
     --_discrete: allow-discrete;
-    --_drawer-bg-color: var(--theme-background);
-    --_drawer-color: var(--theme-on-background);
 
     container: DrawerContainer / inline-size;
     position: sticky;
@@ -26,9 +37,9 @@
     max-height: 100dvh;
     background-color: var(--_drawer-bg-color);
     color: var(--_drawer-color);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--_drawer-shadow);
     z-index: 99;
-    padding: var(--space-16);
+    padding: var(--_drawer-padding);
     border-radius: var(--_drawer-radius);
     will-change: translate, width;
     translate: 0;
@@ -44,9 +55,9 @@
 
     &.drawer-bordered {
       --_drawer-radius: var(--radius-none);
+      --_drawer-shadow: none;
 
-      box-shadow: none;
-      border-right: var(--border-width-sm) solid var(--theme-outline-surface);
+      border-right: var(--border-width-sm) solid var(--_drawer-border-color);
     }
 
     & .drawer-content {
@@ -67,8 +78,6 @@
         padding: var(--_drawer-gutter);
 
         :where(img) {
-          --_drawer-brand-size: 2.5rem;
-
           // Images
           width: var(--_drawer-brand-size);
           max-height: var(--_drawer-brand-size);
@@ -82,8 +91,6 @@
         }
 
         :where(i:is(.drawer-brand-icon)) {
-          --_drawer-brand-size: 2.5rem;
-
           display: grid;
           place-items: center;
           font-size: calc(var(--_drawer-brand-size) / 1.5);
@@ -91,10 +98,7 @@
           height: var(--_drawer-brand-size);
           border-radius: var(--radius-md);
           padding: .25rem;
-          background-color: var(--theme-primary-a10);
-          @supports (color: hsl(from white h s l)) {
-            background-color: oklab(from var(--theme-primary-a10) l a b / 35%);
-          }
+          background-color: color-mix(in oklab, var(--theme-primary-a10) 35%, transparent);
         }
       }
 
@@ -122,10 +126,13 @@
           position: relative;
           display: flex;
           gap: var(--_drawer-gutter);
-          font-size: var(--fs-3xs);
-          font-weight: var(--fw-500);
+          font-size: var(--_drawer-item-font-size);
+          font-weight: var(--_drawer-item-font-weight);
           font-family: var(--font-primary);
-          border-radius: v.$button-border-radius;
+          color: var(--_drawer-item-color);
+          background-color: var(--_drawer-item-bg-color);
+          box-shadow: var(--_drawer-item-shadow);
+          border-radius: var(--_drawer-item-radius);
           padding: var(--_drawer-gutter);
           letter-spacing: 0.55px;
           cursor: pointer;
@@ -137,14 +144,6 @@
             flex-direction var(--_drawer-easing-duration) var(--_drawer-easing-in),
             align-items var(--_drawer-easing-duration) var(--_drawer-easing-in),
             font-size var(--_drawer-easing-duration) var(--_drawer-easing-in);
-
-          &:not(.router-link-exact-active) {
-            color: var(--theme-muted-a10);
-
-            @supports (color: color-mix(in srgb, red, blue)) {
-              color: color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%);
-            }
-          }
 
           &:is(a) {
             @extend .undecorated;
@@ -165,7 +164,7 @@
           }
 
           &:hover {
-            background-color: var(--theme-surface-container);
+            --_drawer-item-bg-color: var(--sidebar-item-hover-bg-color, var(--theme-surface-container));
 
             i {
               font-variation-settings: var(--iw-semi-bold);
@@ -173,19 +172,20 @@
           }
 
           &:is(.router-link-exact-active, .active) {
-            color: var(--_drawer-color);
-            background-color: var(--theme-surface-body-pane);
-            box-shadow: var(--shadow-sm);
-            font-weight: var(--fw-800);
+            --_drawer-item-color: var(--sidebar-item-active-color, var(--_drawer-color));
+            --_drawer-item-bg-color: var(--sidebar-item-active-bg-color, var(--theme-surface-body-pane));
+            --_drawer-item-shadow: var(--shadow-sm);
+            --_drawer-item-font-weight: var(--fw-800);
 
             >i:first-child {
               font-variation-settings: var(--iw-bold);
-              color: var(--_drawer-active-color, var(--theme-primary-a10));
+              color: var(--_drawer-item-active-icon-color);
             }
           }
 
           &:is(.drawer-item-disabled) {
-            color: var(--theme-muted-a10);
+            --_drawer-item-color: var(--theme-muted-a10);
+
             opacity: 0.55;
             cursor: not-allowed;
             pointer-events: none;
@@ -194,20 +194,16 @@
           &.drawer-item-child {
             margin-left: var(--space-8);
             padding-left: var(--space-14);
-            border-radius: 0 v.$button-border-radius v.$button-border-radius 0;
-            border-left: var(--border-width-sm) solid var(--theme-outline-surface);
+            border-radius: 0 var(--_drawer-item-radius) var(--_drawer-item-radius) 0;
+            border-left: var(--border-width-sm) solid var(--_drawer-border-color);
           }
         }
 
         .drawer-text {
-          font-size: var(--fs-3xs);
-          color: var(--theme-muted-a10);
+          font-size: var(--_drawer-item-font-size);
+          color: var(--_drawer-item-color);
           padding-inline: var(--_drawer-gutter);
           margin-block: var(--_drawer-gutter);
-
-          @supports (color: color-mix(in srgb, red, blue)) {
-            color: color-mix(in srgb, var(--theme-muted-a10) 30%, var(--_drawer-color) 50%);
-          }
         }
       }
 
@@ -360,14 +356,17 @@
   // SIDEBAR COMPONENT OVERLAY
   // ==========================================================================
   .drawer-overlay {
+    --_drawer-overlay-color: var(--sidebar-overlay-color, color-mix(in srgb, var(--color-brand-black-500) 25%, transparent));
+    --_drawer-overlay-blur: var(--sidebar-overlay-blur, 2px);
+
     display: none;
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100dvh;
-    background: color-mix(in srgb, var(--color-brand-black-500) 25%, transparent);
+    background: var(--_drawer-overlay-color);
     z-index: calc(#{v.$z-index-fullscreen} - 1);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(var(--_drawer-overlay-blur));
     animation: fade-in var(--duration-200) ease-out forwards;
   }
 
