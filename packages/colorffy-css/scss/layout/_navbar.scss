@@ -545,7 +545,7 @@
 
           &:is(.router-link-exact-active, .active) {
             --_popover-menu-item-color: var(--cffy-popover-menu-item-active-color, var(--cffy-primary-a90));
-            --_popover-menu-item-bg-color: var(--cffy-popover-menu-item-active-bg-color, color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-container-high) 85%));
+            --_popover-menu-item-bg-color: var(--cffy-popover-menu-item-active-bg-color, color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-container-high) 85%));
 
             :where(p) {
               font-weight: var(--cffy-fw-800);

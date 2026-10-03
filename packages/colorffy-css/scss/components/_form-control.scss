@@ -67,7 +67,7 @@
       box-shadow var(--_input-duration) var(--_input-easing);
 
       // Placeholder
-      @include m.form-placeholder(35%, var(--cffy-input-placeholder-color, color-mix(in srgb, var(--cffy-muted-a10), transparent 35%)));
+      @include m.form-placeholder(35%, var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%)));
 
       // Form control variants
       &:is(.form-filled) {

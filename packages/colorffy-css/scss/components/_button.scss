@@ -134,11 +134,11 @@
           --_btn-color: var(--cffy-color-brand-black-500);
 
           &:is(:hover) {
-            --_btn-bg-color: color-mix(in srgb, var(--cffy-color-brand-white-500) 90%, var(--cffy-color-brand-black-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-white-500) 92%, var(--cffy-color-brand-black-500));
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: color-mix(in srgb, var(--cffy-color-brand-white-500) 80%, var(--cffy-color-brand-black-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-white-500) 84%, var(--cffy-color-brand-black-500));
           }
         }
 
@@ -147,11 +147,11 @@
           --_btn-color: var(--cffy-color-brand-white-500);
 
           &:is(:hover) {
-            --_btn-bg-color: color-mix(in srgb, var(--cffy-color-brand-black-500) 90%, var(--cffy-color-brand-white-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-black-500) 78%, var(--cffy-color-brand-white-500));
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: color-mix(in srgb, var(--cffy-color-brand-black-500) 80%, var(--cffy-color-brand-white-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-black-500) 68%, var(--cffy-color-brand-white-500));
           }
         }
       }

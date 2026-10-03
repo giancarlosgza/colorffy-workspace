@@ -122,15 +122,15 @@ Colorffy maps brand tokens to semantic base theme properties depending on the ac
   ```
 
 #### Dynamic Tones (Opacity Blending)
-Colorffy generates dynamic color opacity tones (e.g. `a10` to `a90`) by blending base color tokens with background surfaces using `color-mix(in srgb)` to ensure consistent visibility and contrast:
+Colorffy generates the tonal ramps (`a10` to `a90`) by blending each base color toward `--cffy-on-background` (surfaces blend `--cffy-primary-base` into `--cffy-surface-base`) with `color-mix(in oklab)`. The percentages are tuned so each step keeps a steady lightness across hues:
 ```css
-/* Generating a 10% opacity primary blend */
---cffy-primary-a10: color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-base) 95%);
+--cffy-primary-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 11%);
+--cffy-surface-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 90%);
 ```
 
 #### Color Mix Best Practices
 - **Opacity utilities (e.g., `bg-primary/50`)**: Use `color-mix(in oklab, color, transparent)`.
-- **Tinted surfaces & borders**: Use `color-mix(in srgb, color, background)`.
+- **Tinted surfaces & borders**: Use `color-mix(in oklab, color, background)`.
 - **Blending two vibrant colors**: Use `color-mix(in oklch, colorA, colorB)` to avoid muddy middle tones.
 
 ### Manual Dark Mode Toggle

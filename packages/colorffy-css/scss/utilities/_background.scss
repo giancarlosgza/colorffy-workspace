@@ -225,10 +225,7 @@
     --_bg-color-two: #{v.$white};
     --_bg-color-mix-opacity: 90%;
 
-    background-color: var(--_bg-color-one);
-    @supports (color: color-mix(in srgb, white, black)) {
-      background-color: color-mix(in srgb, var(--_bg-color-one) var(--_bg-color-mix-opacity), var(--_bg-color-two));
-    }
+    background-color: color-mix(in oklab, var(--_bg-color-one) var(--_bg-color-mix-opacity), var(--_bg-color-two));
   }
 
   // Relative color

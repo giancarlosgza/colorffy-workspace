@@ -31,7 +31,7 @@
       }
 
       .p-placeholder {
-        --p-multiselect-placeholder-color: color-mix(in srgb, var(--cffy-muted-a10), transparent 35%);
+        --p-multiselect-placeholder-color: color-mix(in oklab, var(--cffy-muted-a10), transparent 35%);
       }
     }
 
@@ -76,7 +76,7 @@
           font-size: var(--cffy-fs-2xs) !important;
 
           &::placeholder {
-            color: color-mix(in srgb, var(--cffy-muted-a10), transparent 35%) !important;
+            color: color-mix(in oklab, var(--cffy-muted-a10), transparent 35%) !important;
           }
         }
       }
@@ -150,7 +150,7 @@
     }
 
     .p-placeholder {
-      --p-select-placeholder-color: color-mix(in srgb, var(--cffy-muted-a10), transparent 35%);
+      --p-select-placeholder-color: color-mix(in oklab, var(--cffy-muted-a10), transparent 35%);
     }
 
     &.p-disabled {
@@ -188,7 +188,7 @@
           font-size: var(--cffy-fs-2xs) !important;
 
           &::placeholder {
-            color: color-mix(in srgb, var(--cffy-muted-a10), transparent 35%) !important;
+            color: color-mix(in oklab, var(--cffy-muted-a10), transparent 35%) !important;
           }
         }
       }

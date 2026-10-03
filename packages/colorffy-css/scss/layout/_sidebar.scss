@@ -17,7 +17,7 @@
     --_sidebar-padding: var(--cffy-sidebar-padding, var(--cffy-space-16));
     --_sidebar-spacing: var(--cffy-sidebar-spacing, var(--cffy-space-8));
     --_sidebar-brand-size: var(--cffy-sidebar-brand-size, 2.5rem);
-    --_sidebar-item-color: var(--cffy-sidebar-item-color, color-mix(in srgb, var(--cffy-muted-a10) 30%, var(--_sidebar-color) 50%));
+    --_sidebar-item-color: var(--cffy-sidebar-item-color, color-mix(in oklab, var(--cffy-muted-a10) 37%, var(--_sidebar-color) 43%));
     --_sidebar-item-bg-color: transparent;
     --_sidebar-item-shadow: none;
     --_sidebar-item-radius: var(--cffy-sidebar-item-radius, #{v.$button-border-radius});
@@ -363,7 +363,7 @@
   // SIDEBAR COMPONENT OVERLAY
   // ==========================================================================
   .drawer-overlay {
-    --_sidebar-overlay-color: var(--cffy-sidebar-overlay-color, color-mix(in srgb, var(--cffy-color-brand-black-500) 25%, transparent));
+    --_sidebar-overlay-color: var(--cffy-sidebar-overlay-color, color-mix(in oklab, var(--cffy-color-brand-black-500) 25%, transparent));
     --_sidebar-overlay-blur: var(--cffy-sidebar-overlay-blur, 2px);
 
     display: none;

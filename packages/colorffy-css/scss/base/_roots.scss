@@ -80,7 +80,7 @@
 
     --cffy-surface-text-field: transparent;
     --cffy-surface-tooltip: var(--cffy-dark-base);
-    --cffy-surface-kbd: light-dark(color-mix(var(--cffy-muted-base), var(--cffy-white-base) 85%), var(--cffy-dark-base));
+    --cffy-surface-kbd: light-dark(color-mix(in oklab, var(--cffy-muted-base), var(--cffy-white-base) 85%), var(--cffy-dark-base));
     --cffy-surface-toast: light-dark(var(--cffy-dark-base), var(--cffy-white-base));
     --cffy-surface-body-pane: light-dark(var(--cffy-surface-base), var(--cffy-surface-a20));
     --cffy-surface-overlay: light-dark(var(--cffy-surface-body-pane), var(--cffy-surface-a30));
@@ -254,8 +254,8 @@
   html.dark-mode {
     color-scheme: dark;
 
-    --cffy-tonal-dark-intensity: 70%;
-    --cffy-tonal-light-intensity: 15%;
+    --cffy-tonal-dark-intensity: 58%;
+    --cffy-tonal-light-intensity: 8%;
 
     /* non-color variables overrides */
     --cffy-shadow-base: 0 0% 0%;

@@ -132,7 +132,7 @@ $indicator-max-items: 8;
         bottom: anchor(var(--_navigation-bar-indicator-anchor) bottom);
         left: anchor(var(--_navigation-bar-indicator-anchor) left);
         right: anchor(var(--_navigation-bar-indicator-anchor) right);
-        background-color: var(--cffy-navigation-bar-indicator-color, color-mix(in srgb, var(--cffy-primary-base), var(--cffy-surface-navigation) 90%));
+        background-color: var(--cffy-navigation-bar-indicator-color, color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-navigation) 90%));
 
         // Animation
         @media (prefers-reduced-motion: no-preference) {
