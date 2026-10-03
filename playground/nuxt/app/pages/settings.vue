@@ -306,7 +306,7 @@ onBeforeUnmount(() => {
       aria-labelledby="tab-profile"
       class="d-grid gap-6"
     >
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Profile
@@ -457,7 +457,7 @@ onBeforeUnmount(() => {
       aria-labelledby="tab-appearance"
       class="d-grid gap-6"
     >
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Brand color
@@ -545,7 +545,7 @@ onBeforeUnmount(() => {
         </template>
       </UiCard>
 
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Interface
@@ -655,7 +655,7 @@ onBeforeUnmount(() => {
       aria-labelledby="tab-notifications"
       class="d-grid gap-6"
     >
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Notify me about
@@ -705,7 +705,7 @@ onBeforeUnmount(() => {
         </template>
       </UiCard>
 
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Quiet hours
@@ -770,7 +770,7 @@ onBeforeUnmount(() => {
       aria-labelledby="tab-security"
       class="d-grid gap-6"
     >
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <div class="d-flex align-items-start justify-content-between gap-3">
             <div>
@@ -882,7 +882,7 @@ onBeforeUnmount(() => {
         </template>
       </UiCard>
 
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <div class="d-flex align-items-start justify-content-between gap-3">
             <div>
@@ -921,7 +921,7 @@ onBeforeUnmount(() => {
         </template>
       </UiCard>
 
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title">
             Active sessions
@@ -977,7 +977,7 @@ onBeforeUnmount(() => {
         </template>
       </UiCard>
 
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #header>
           <p class="card-title text-danger">
             Danger zone

@@ -44,10 +44,14 @@ const groups = computed(() => groupOrder
   .map(label => ({ label, items: filtered.value.filter(item => item.group === label) }))
   .filter(group => group.items.length))
 
-const filterTabs = computed<ISegmentedTab[]>(() => filters.map(filter => ({
-  id: filter.id,
-  label: `${filter.label} · ${items.value.filter(item => matches(item, filter.id)).length}`
-})))
+const filterTabs = computed<ISegmentedTab[]>(() => filters.map((filter) => {
+  const count = items.value.filter(item => matches(item, filter.id)).length
+  return {
+    id: filter.id,
+    label: filter.label,
+    badge: count ? { text: String(count), variant: 'tonal tonal-primary', pill: true } : null
+  }
+}))
 
 const selected = computed(() => items.value.find(item => item.id === selectedId.value) ?? null)
 const selectedActor = computed(() => (selected.value ? memberById(selected.value.actorId) : null))
@@ -158,30 +162,32 @@ function enableDesktopNotifications() {
   <div class="container-fluid mt-3 mb-5">
     <UiHeaderContent title="Inbox" :subtitle="headerSubtitle" view-transition-name="page-title">
       <template #actions>
-        <UiButton
-          text="Mark all as read"
-          variant="tonal"
-          color="primary"
-          size="sm"
-          :disabled="!unreadCount"
-          @on-click="markAllRead"
-        >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe877;" />
-          </template>
-        </UiButton>
-        <UiButtonTooltip
-          variant="text"
-          icon
-          size="sm"
-          custom-class="text-neutral"
-          tooltip-text="Notification settings"
-          @on-click="navigateTo('/settings')"
-        >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe429;" />
-          </template>
-        </UiButtonTooltip>
+        <UiButtonGroup>
+          <UiButton
+            text="Mark all as read"
+            variant="tonal"
+            color="primary"
+            size="sm"
+            :disabled="!unreadCount"
+            @on-click="markAllRead"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe877;" />
+            </template>
+          </UiButton>
+          <UiButtonTooltip
+            variant="text"
+            icon
+            size="sm"
+            custom-class="text-neutral"
+            tooltip-text="Notification settings"
+            @on-click="navigateTo('/settings')"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe429;" />
+            </template>
+          </UiButtonTooltip>
+        </UiButtonGroup>
       </template>
     </UiHeaderContent>
 
@@ -390,7 +396,9 @@ function enableDesktopNotifications() {
               v-if="selectedProject"
               :as="NuxtLink"
               :to="`/projects/${selectedProject.id}`"
-              variant="outline"
+
+              variant="pane"
+              class="shadow-sm"
             >
               <template #body>
                 <div class="d-flex align-items-center gap-3 mb-3">

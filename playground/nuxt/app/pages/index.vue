@@ -214,23 +214,25 @@ function runQuickAction(id: string) {
       view-transition-name="page-title"
     >
       <template #actions>
-        <UiButton :as="NuxtLink" to="/team" text="Invite" variant="outline" size="sm">
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe7fe;" />
-          </template>
-        </UiButton>
-        <UiButton text="New task" variant="filled" color="primary" size="sm" @on-click="createTask">
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe145;" />
-          </template>
-        </UiButton>
+        <UiButtonGroup>
+          <UiButton :as="NuxtLink" to="/team" text="Invite" variant="outline" size="sm">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe7fe;" />
+            </template>
+          </UiButton>
+          <UiButton text="New task" variant="filled" color="primary" size="sm" @on-click="createTask">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+        </UiButtonGroup>
       </template>
     </UiHeaderContent>
 
     <!-- Stats -->
     <div class="row mt-section">
       <div class="col-6 col-xl-3 mb-3">
-        <UiCard custom-class="bg-primary h-100">
+        <UiCard custom-class="bg-primary h-100" variant="pane" class="shadow-sm">
           <template #body>
             <div class="text-on-primary">
               <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
@@ -251,7 +253,7 @@ function runQuickAction(id: string) {
       </div>
 
       <div v-for="stat in stats" :key="stat.id" class="col-6 col-xl-3 mb-3">
-        <UiCard variant="outline" custom-class="h-100">
+        <UiCard custom-class="h-100" variant="pane" class="shadow-sm">
           <template #body>
             <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
               <div class="d-flex align-items-center gap-1">
@@ -293,7 +295,7 @@ function runQuickAction(id: string) {
     <div class="row">
       <!-- My tasks -->
       <div class="col-lg-7 mb-3">
-        <UiCard variant="outline" custom-class="h-100">
+        <UiCard custom-class="h-100" variant="pane" class="shadow-sm">
           <template #header>
             <UiSubheadingContent as="h2" title="My tasks" gutter="none">
               <template #actions>
@@ -359,7 +361,7 @@ function runQuickAction(id: string) {
 
       <!-- Projects -->
       <div class="col-lg-5 mb-3">
-        <UiCard variant="outline" custom-class="h-100">
+        <UiCard custom-class="h-100" variant="pane" class="shadow-sm">
           <template #header>
             <UiSubheadingContent as="h2" title="Projects" gutter="none">
               <template #actions>
@@ -415,7 +417,7 @@ function runQuickAction(id: string) {
     </div>
 
     <!-- Recent activity -->
-    <UiCard variant="outline">
+    <UiCard variant="pane" class="shadow-sm">
       <template #header>
         <UiSubheadingContent
           as="h2"

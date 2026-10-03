@@ -266,7 +266,9 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
             <UiCard
               v-for="article in results"
               :key="article.id"
-              variant="outline"
+
+              variant="pane"
+              class="shadow-sm"
             >
               <template #header>
                 <UiBadge
@@ -303,10 +305,12 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
         <UiCard
           v-for="(category, index) in categories"
           :key="category.id"
-          variant="outline"
           :as="NuxtLink"
           :to="{ query: { topic: category.id } }"
           :custom-class="index === 0 ? 'grid-span-col-sm-2' : null"
+
+          variant="pane"
+          class="shadow-sm"
         >
           <template #body>
             <div class="d-flex align-items-start gap-3">

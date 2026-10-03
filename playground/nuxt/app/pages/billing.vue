@@ -176,7 +176,7 @@ function downloadAll(): void {
     <div class="row gap-block-4 mb-4">
       <!-- Current plan -->
       <div class="col-12 col-xl-5">
-        <UiCard custom-class="bg-primary text-on-primary h-100">
+        <UiCard custom-class="bg-primary text-on-primary h-100" variant="pane" class="shadow-sm">
           <template #body>
             <div class="d-flex flex-column gap-4 text-on-primary">
               <div class="d-flex justify-content-between align-items-start gap-2">
@@ -240,7 +240,7 @@ function downloadAll(): void {
 
       <!-- Usage -->
       <div class="col-12 col-xl-7">
-        <UiCard variant="outline" custom-class="h-100">
+        <UiCard custom-class="h-100" variant="pane" class="shadow-sm">
           <template #header>
             <div class="d-flex justify-content-between align-items-center gap-2">
               <p class="card-title">
@@ -289,7 +289,7 @@ function downloadAll(): void {
 
     <!-- Plans -->
     <section id="plans" class="mb-4" aria-labelledby="plans-title">
-      <UiCard variant="outline">
+      <UiCard variant="pane" class="shadow-sm">
         <template #body>
           <div class="row align-items-center gap-block-3 mb-4">
             <div class="col-12 col-md-6">
@@ -307,7 +307,7 @@ function downloadAll(): void {
 
           <div class="row gap-block-4">
             <div v-for="plan in plans" :key="plan.id" class="col-12 col-xl-4">
-              <UiCard variant="outline" selectable :custom-class="planCardClass(plan)" @click="selectedPlanId = plan.id">
+              <UiCard selectable :custom-class="planCardClass(plan)" variant="pane" class="shadow-sm" @click="selectedPlanId = plan.id">
                 <template #body>
                   <div class="d-flex flex-column gap-3">
                     <div class="d-flex justify-content-between align-items-start gap-2">
@@ -391,7 +391,7 @@ function downloadAll(): void {
     </section>
 
     <!-- Payment method -->
-    <UiCard variant="outline" title="Payment method" custom-class="mb-4">
+    <UiCard title="Payment method" custom-class="mb-4" variant="pane" class="shadow-sm">
       <template #body>
         <UiAlert
           v-if="failedInvoice"
@@ -444,7 +444,7 @@ function downloadAll(): void {
     </UiCard>
 
     <!-- Invoices -->
-    <UiCard variant="outline" title="Invoices">
+    <UiCard title="Invoices" variant="pane" class="shadow-sm">
       <template #body>
         <div v-if="invoicesLoading" class="table-responsive">
           <table class="table table-hover">

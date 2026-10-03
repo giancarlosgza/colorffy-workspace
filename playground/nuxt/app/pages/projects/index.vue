@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { IAvatarProps, IChipOption, IDatatableColumn, IDialogDisplay, ISegmentedTab, IStepItem } from '@colorffy/ui'
 import type { Intent, Member, Project, ProjectStatus } from '~/utils/workspace'
-import { vClosePopper } from 'floating-vue'
 import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Projects' })
@@ -255,16 +254,18 @@ onMounted(() => {
     <!-- Header -->
     <UiHeaderContent title="Projects" :subtitle="headerSubtitle">
       <template #actions>
-        <UiButton text="Export" variant="outline" @click="exportProjects">
-          <template #icon>
-            <UiIconMaterial icon-code="&#xf090;" />
-          </template>
-        </UiButton>
-        <UiButton text="New project" variant="filled" color="primary" @click="openWizard">
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe145;" />
-          </template>
-        </UiButton>
+        <UiButtonGroup>
+          <UiButton text="Export" variant="outline" @click="exportProjects">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xf090;" />
+            </template>
+          </UiButton>
+          <UiButton text="New project" variant="filled" color="primary" @click="openWizard">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe145;" />
+            </template>
+          </UiButton>
+        </UiButtonGroup>
       </template>
     </UiHeaderContent>
 
@@ -323,7 +324,7 @@ onMounted(() => {
     />
 
     <!-- No results -->
-    <UiCard v-else-if="!filteredProjects.length" variant="outline">
+    <UiCard v-else-if="!filteredProjects.length" variant="pane" class="shadow-sm">
       <template #body>
         <UiEmpty
           :title="hasFilters ? 'No projects match these filters' : 'No projects yet'"
@@ -344,7 +345,9 @@ onMounted(() => {
         :key="project.id"
         :as="NuxtLink"
         :to="`/projects/${project.id}`"
-        variant="outline"
+
+        variant="pane"
+        class="shadow-sm"
       >
         <template #body>
           <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
@@ -389,7 +392,7 @@ onMounted(() => {
     </div>
 
     <!-- List view -->
-    <UiCard v-else variant="outline">
+    <UiCard v-else variant="pane" class="shadow-sm">
       <template #body>
         <UiDatatable
           :columns="columns"
@@ -471,20 +474,20 @@ onMounted(() => {
               </template>
               <template #menu>
                 <UiButtonMenuText :item-text="`${item.project.key} · ${item.name}`" />
-                <UiButtonMenuItem v-close-popper item-text="View" icon="&#xe8f4;" @click="navigateTo(`/projects/${item.id}`)" />
-                <UiButtonMenuItem v-close-popper item-text="Rename" icon="&#xe3c9;" shortcut="R" @click="openRename(item.project)" />
-                <UiButtonMenuItem v-close-popper item-text="Duplicate" icon="&#xe14d;" shortcut="⌘D" @click="duplicateProject(item.project)" />
+                <UiButtonMenuItem item-text="View" icon="&#xe8f4;" @click="navigateTo(`/projects/${item.id}`)" />
+                <UiButtonMenuItem item-text="Rename" icon="&#xe3c9;" shortcut="R" @click="openRename(item.project)" />
+                <UiButtonMenuItem item-text="Duplicate" icon="&#xe14d;" shortcut="⌘D" @click="duplicateProject(item.project)" />
                 <UiButtonMenuSubmenu item-text="Move to" icon="&#xe2c8;" icon-trailing="&#xe5cc;" placement="left-start">
                   <UiButtonMenuItem
                     v-for="portfolio in portfolios"
                     :key="portfolio"
-                    v-close-popper.all
+
                     :item-text="portfolio"
                     @click="moveProject(item.project, portfolio)"
                   />
                 </UiButtonMenuSubmenu>
                 <UiButtonMenuDivider />
-                <UiButtonMenuItem v-close-popper item-text="Archive" icon="&#xe149;" is-destructive @click="confirmArchive(item.project)" />
+                <UiButtonMenuItem item-text="Archive" icon="&#xe149;" is-destructive @click="confirmArchive(item.project)" />
               </template>
             </UiButtonMenu>
           </template>

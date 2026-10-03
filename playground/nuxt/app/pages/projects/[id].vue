@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { IAvatarProps, ITabItem, ITimelineItem, ThemeColor } from '@colorffy/ui'
 import type { FileItem, Intent, Member, NotificationType, ProjectStatus, Task, TaskStatus } from '~/utils/workspace'
-import { vClosePopper } from 'floating-vue'
 import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Project' })
@@ -313,39 +312,41 @@ watch(() => route.params.id, () => {
           class="flex-grow-1"
         >
           <template #actions>
-            <UiButtonTooltip text="Share" variant="outline" tooltip-text="Copy a link to this project" @on-click="copyLink">
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe157;" />
-              </template>
-            </UiButtonTooltip>
-            <UiButtonMenu
-              id="project-status"
-              text="Status"
-              variant="tonal"
-              :color="statusMeta[status].color"
-              icon-trailing
-              tooltip-text="Change the project status"
-              placement="bottom-end"
-            >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe5cf;" />
-              </template>
-              <template #menu>
-                <UiButtonMenuText item-text="Set project status" />
-                <UiButtonMenuItem
-                  v-for="key in STATUS_ORDER"
-                  :key="key"
-                  v-close-popper
-                  :item-text="statusMeta[key].label"
-                  :icon="statusMeta[key].icon"
-                  :icon-class="`text-${statusMeta[key].color}`"
-                  :icon-trailing="key === status ? '&#xe5ca;' : null"
-                  @click="setStatus(key)"
-                />
-                <UiButtonMenuDivider />
-                <UiButtonMenuItem v-close-popper item-text="View status history" icon="&#xe889;" @click="activeTab = 'activity'" />
-              </template>
-            </UiButtonMenu>
+            <UiButtonGroup>
+              <UiButtonTooltip text="Share" variant="outline" tooltip-text="Copy a link to this project" @on-click="copyLink">
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe157;" />
+                </template>
+              </UiButtonTooltip>
+              <UiButtonMenu
+                id="project-status"
+                text="Status"
+                variant="tonal"
+                :color="statusMeta[status].color"
+                icon-trailing
+                tooltip-text="Change the project status"
+                placement="bottom-end"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe5cf;" />
+                </template>
+                <template #menu>
+                  <UiButtonMenuText item-text="Set project status" />
+                  <UiButtonMenuItem
+                    v-for="key in STATUS_ORDER"
+                    :key="key"
+
+                    :item-text="statusMeta[key].label"
+                    :icon="statusMeta[key].icon"
+                    :icon-class="`text-${statusMeta[key].color}`"
+                    :icon-trailing="key === status ? '&#xe5ca;' : null"
+                    @click="setStatus(key)"
+                  />
+                  <UiButtonMenuDivider />
+                  <UiButtonMenuItem item-text="View status history" icon="&#xe889;" @click="activeTab = 'activity'" />
+                </template>
+              </UiButtonMenu>
+            </UiButtonGroup>
           </template>
         </UiHeaderContent>
       </div>
@@ -377,7 +378,7 @@ watch(() => route.params.id, () => {
       <section v-show="activeTab === 'overview'" id="project-panel-overview" role="tabpanel" aria-labelledby="tab-overview">
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
-            <UiCard variant="outline" title="Progress" class="h-100">
+            <UiCard title="Progress" class="h-100 shadow-sm" variant="pane">
               <template #body>
                 <div class="d-flex align-items-end justify-content-between gap-2 mb-2">
                   <p class="fs-3xl fw-700 tabular-numbers mb-0">
@@ -401,7 +402,7 @@ watch(() => route.params.id, () => {
           </div>
 
           <div class="col-12 col-md-6 mb-3">
-            <UiCard variant="outline" title="Budget" class="h-100">
+            <UiCard title="Budget" class="h-100 shadow-sm" variant="pane">
               <template #body>
                 <div class="d-flex align-items-end justify-content-between gap-2 mb-2">
                   <p class="fs-3xl fw-700 tabular-numbers mb-0">
@@ -444,7 +445,7 @@ watch(() => route.params.id, () => {
           </div>
 
           <div class="col-12 col-lg-7 mb-3">
-            <UiCard variant="outline" title="Milestones" class="h-100">
+            <UiCard title="Milestones" class="h-100 shadow-sm" variant="pane">
               <template #body>
                 <UiTimeline :items="milestones" size="sm" />
               </template>
@@ -500,7 +501,7 @@ watch(() => route.params.id, () => {
 
       <!-- Tasks -->
       <section v-show="activeTab === 'tasks'" id="project-panel-tasks" role="tabpanel" aria-labelledby="tab-tasks">
-        <UiCard v-if="!taskGroups.length" variant="outline">
+        <UiCard v-if="!taskGroups.length" variant="pane" class="shadow-sm">
           <template #body>
             <UiEmpty title="No tasks yet" :subtitle="`Tasks you add to ${project.name} show up here, grouped by status.`" />
           </template>
@@ -616,7 +617,7 @@ watch(() => route.params.id, () => {
 
       <!-- Activity -->
       <section v-show="activeTab === 'activity'" id="project-panel-activity" role="tabpanel" aria-labelledby="tab-activity">
-        <UiCard variant="outline">
+        <UiCard variant="pane" class="shadow-sm">
           <template #body>
             <UiTimeline :items="activityItems" />
           </template>
@@ -625,7 +626,7 @@ watch(() => route.params.id, () => {
     </template>
 
     <!-- Unknown project -->
-    <UiCard v-else variant="outline" class="mt-5">
+    <UiCard v-else class="mt-5 shadow-sm" variant="pane">
       <template #body>
         <UiEmpty
           title="Project not found"

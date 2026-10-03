@@ -198,26 +198,28 @@ async function removeMember(): Promise<void> {
       subtitle="Manage who can access Orbit, what they can do and who still has to accept an invite."
     >
       <template #actions>
-        <UiButtonTooltip
-          text="Copy invite link"
-          variant="outline"
-          tooltip-text="Anyone with the link joins as a Member"
-          @on-click="copyInviteLink"
-        >
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe157;" />
-          </template>
-        </UiButtonTooltip>
-        <UiButton text="Invite members" variant="filled" color="primary" @click="openInvite">
-          <template #icon>
-            <UiIconMaterial icon-code="&#xe7fe;" />
-          </template>
-        </UiButton>
+        <UiButtonGroup>
+          <UiButtonTooltip
+            text="Copy invite link"
+            variant="outline"
+            tooltip-text="Anyone with the link joins as a Member"
+            @on-click="copyInviteLink"
+          >
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe157;" />
+            </template>
+          </UiButtonTooltip>
+          <UiButton text="Invite members" variant="filled" color="primary" @click="openInvite">
+            <template #icon>
+              <UiIconMaterial icon-code="&#xe7fe;" />
+            </template>
+          </UiButton>
+        </UiButtonGroup>
       </template>
     </UiHeaderContent>
 
     <!-- Seats -->
-    <UiCard variant="outline" custom-class="mb-4">
+    <UiCard custom-class="mb-4" variant="pane" class="shadow-sm">
       <template #body>
         <div class="d-flex flex-wrap align-items-center gap-4">
           <span class="d-inline-flex bg-primary-container text-on-primary-container rounded-lg p-2">
@@ -257,7 +259,7 @@ async function removeMember(): Promise<void> {
     </UiCard>
 
     <!-- Members -->
-    <UiCard variant="outline">
+    <UiCard variant="pane" class="shadow-sm">
       <template #body>
         <UiDatatable
           :columns="columns"

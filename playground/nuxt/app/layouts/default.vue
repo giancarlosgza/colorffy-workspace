@@ -133,23 +133,23 @@ function closeMenu(): void {
         <UiNavbarCollapse>
           <UiNavbarNav position="start">
             <UiNavbarItem>
-              <div class="input-group">
-                <div class="input-group-prefix border border-transparent px-0">
+              <UiInputText
+                id="global-search"
+                label="Search"
+                hide-label
+                placeholder="Search Orbit"
+                variant="transparent"
+                rounded
+              >
+                <template #prefix>
                   <UiIconMaterial icon-code="&#xe8b6;" />
-                </div>
-                <UiInputText
-                  placeholder="Search projects, tasks and people"
-                  variant="transparent"
-                  rounded
-                  custom-class="px-2"
-                  aria-label="Search"
-                />
-              </div>
+                </template>
+              </UiInputText>
             </UiNavbarItem>
-            <UiNavbarLink :as="NuxtLink" to="/help" text="Help" />
           </UiNavbarNav>
 
           <UiNavbarNav position="end">
+            <UiNavbarLink :as="NuxtLink" to="/help" text="Help" />
             <UiNavbarItem>
               <UiButtonMenu id="create-menu" text="New" variant="filled" color="primary" size="sm" placement="bottom-end">
                 <template #icon>
@@ -290,7 +290,7 @@ function closeMenu(): void {
               <template #media>
                 <UiAvatar
                   :src="memberById(item.actorId).avatar"
-                  :initials="memberById(item.actorId).avatar ? null : memberById(item.actorId).initials"
+                  :initials="memberById(item.actorId).initials"
                   :color="avatarColor(memberById(item.actorId).color)"
                   size="sm"
                 />
