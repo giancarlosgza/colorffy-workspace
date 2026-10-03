@@ -109,21 +109,9 @@ export interface ITabItem {
 }
 
 /**
- * Interface for segmented tab items used in SegmentedControls component.
+ * Segmented tab items used in the SegmentedControls component.
  */
-export interface ISegmentedTab extends ITabItem {
-  /**
-   * Numerical position of the tab.
-   *
-   * @deprecated Unused since the indicator moved to CSS anchor positioning. Omit it; removed in v3.
-   */
-  position?: number
-
-  /**
-   * When true, the tab is disabled and cannot be selected.
-   */
-  disabled?: boolean
-}
+export type ISegmentedTab = ITabItem
 
 /**
  * Interface props for the SegmentedControls component.

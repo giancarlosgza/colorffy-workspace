@@ -38,10 +38,10 @@ const viewOptions = [
 // Status filter (SegmentedControls)
 const statusFilter = ref('all')
 const statusTabs = [
-  { id: 'all', label: 'Todos', position: 0 },
-  { id: 'active', label: 'Activos', position: 1 },
-  { id: 'pending', label: 'Pendientes', position: 2 },
-  { id: 'archived', label: 'Archivados', position: 3 }
+  { id: 'all', label: 'Todos' },
+  { id: 'active', label: 'Activos' },
+  { id: 'pending', label: 'Pendientes' },
+  { id: 'archived', label: 'Archivados' }
 ]
 
 const search = ref('')

@@ -990,7 +990,7 @@ Compact segmented switcher with an animated active pill.
 ```
 
 **Props:**
-- `tabs` (array) - Items: `{ id, label, disabled? }` (`position` is deprecated and ignored)
+- `tabs` (array) - Items: `{ id, label, disabled? }`
 - `activeTab` (string) - Id of the active tab; defaults to the first tab
 
 **Emits:**

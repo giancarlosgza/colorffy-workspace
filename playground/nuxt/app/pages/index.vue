@@ -6,9 +6,9 @@ definePageMeta({ pageTitle: 'Inicio' })
 /** Data */
 // Package manager switcher for the install command
 const pmTabs = [
-  { id: 'pnpm', label: 'pnpm', position: 0 },
-  { id: 'npm', label: 'npm', position: 1 },
-  { id: 'yarn', label: 'yarn', position: 2 }
+  { id: 'pnpm', label: 'pnpm' },
+  { id: 'npm', label: 'npm' },
+  { id: 'yarn', label: 'yarn' }
 ]
 const activePm = ref('pnpm')
 const installCommands: Record<string, string> = {
