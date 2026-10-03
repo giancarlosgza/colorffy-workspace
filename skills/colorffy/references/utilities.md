@@ -43,10 +43,13 @@ Complete reference for utility classes in @colorffy/css.
 
 ### Border Colors
 
-**Pattern:** `border-{color}` (same colors as text)
+**Pattern:** `border border-{color}` with `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `muted`, `neutral`, `white`, `black`, `dark`, `transparent`. `border-neutral` is `--theme-on-background` (flips with dark mode); `white`/`black`/`dark` are fixed.
+
+**Opacity:** `border-opacity-{0|5|10|20|…|90|100}` fades the border color toward transparent.
 
 ```html
 <div class="border border-primary">Primary border</div>
+<div class="border border-neutral border-opacity-10">Subtle neutral divider</div>
 ```
 
 ## Spacing
@@ -373,34 +376,78 @@ Background with gradient border effect:
 
 ## Borders
 
+Every border class is a modifier on `.border` and does nothing on its own. `.border` draws a 1px solid `--theme-outline-surface` line on all four sides; modifiers change the side, width, style and color.
+
+```html
+<div class="border">1px outline border</div>
+<div class="border border-md border-primary">Thicker, primary-colored</div>
+<div class="border border-dashed border-top">Dashed, top side only</div>
+```
+
+There are no Bootstrap-style `border-0`, `border-top-0`, `border-start`/`border-end` or numeric `border-{1-5}` classes. To remove a border, leave `.border` off.
+
 ### Border Sides
 
-```html
-<!-- All sides -->
-<div class="border">All borders</div>
+**Pattern:** `border border-{side}`
 
-<!-- Individual sides -->
-<div class="border-top">Top border</div>
-<div class="border-end">Right border</div>
-<div class="border-bottom">Bottom border</div>
-<div class="border-start">Left border</div>
+- **Physical:** `border-top`, `border-bottom`, `border-left`, `border-right`
+- **Logical:** `border-block-start`, `border-block-end`, `border-inline-start`, `border-inline-end`, `border-block` (top + bottom), `border-inline` (start + end)
 
-<!-- Remove borders -->
-<div class="border-0">No border</div>
-<div class="border-top-0">No top border</div>
-```
-
-### Border Width
-
-**Pattern:** `border-{1-5}` (must combine with `border` class)
+The physical names are aliases of the logical ones (`border-left` = `border-inline-start`), so `border-left` and `border-right` swap sides in RTL.
 
 ```html
-<div class="border border-3">3px border</div>
+<div class="border border-bottom">Bottom divider</div>
+<div class="border border-block">Top and bottom</div>
+<div class="border border-md border-primary border-inline-start">Accent bar on the start side</div>
 ```
+
+### Border Width & Style
+
+- **Width:** `border-md` (2px), `border-lg` (3px), `border-xl` (4px), `border-xxl` (5px). Plain `.border` is 1px.
+- **Style:** `border-dashed`, `border-dotted`. Plain `.border` is solid.
+
+```html
+<div class="border border-lg border-dashed">3px dashed border</div>
+<div class="border border-dotted border-bottom">Dotted bottom divider</div>
+```
+
+### Border Colors
+
+Color (`border-primary`, `border-neutral`, …) and opacity (`border-opacity-{0|5|10|20|…|90|100}`) modifiers are listed under [Border Colors](#border-colors) in the Colors section.
+
+### Gradient Borders
+
+| Class | Effect |
+|---|---|
+| `border-gradient` | Static 120° linear gradient edge, primary by default |
+| `border-animated` | Rotating conic glow around the element, primary by default. Needs its own background and an isolated parent (see below) |
+| `border-gradient-spin` | Rotating conic border with a soft halo, `orange` by default. Add `spin-card` to fill the inside with `--theme-surface-body-pane` |
+| `border-gradient-corners` | Highlights two opposite corners in the current border color, so pair it with a color modifier |
+
+**Presets:** `gradient-{name}`, either a theme color (`primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `info`) or a fixed palette (`pink`, `magenta`, `emerald`, `cyan`, `rose`, `purple`, `yellow`, `orange`, `lime`, `amber`, `red`, `blue`, `gray`, `white`, `indigo`, `indigo-dark`, `violet`, `green`, `fuchsia`, `navy`). Width modifiers apply to gradient borders too.
+
+```html
+<div class="border border-gradient">Primary gradient edge</div>
+<div class="border border-md border-gradient gradient-cyan">Cyan gradient edge</div>
+<div class="border border-md border-gradient-spin rounded-lg">Spinning border</div>
+<div class="border border-md border-primary border-gradient-corners rounded-lg">Corner highlights</div>
+
+<!-- The glow sits at z-index -1: without a background it fills the box,
+     and without an isolated parent (.pane-content already isolates) it is hidden -->
+<div class="isolate">
+  <div class="border border-animated gradient-accent bg-surface-pane rounded-lg">Animated glow</div>
+</div>
+```
+
+`border-gradient` and `border-gradient-spin` fill the inside with `--theme-background`, so on another surface the box shows the page background, not the surface color.
 
 ### Border Radius
 
-**Pattern:** `rounded-{none,sm,md,lg,xl,full}`, `rounded-{t|r|b|l}-{none,sm,md,lg,xl,full}`, `border-radius-{value}`
+Radius classes work without `.border`.
+
+**Pattern:** `rounded-{none|sm|md|lg|xl|full}`, per side `rounded-{t|r|b|l}-{none|sm|md|lg|xl|full}`, raw `border-radius-{0|4|6|8|12|25|50}` (px)
+
+**Scale:** `none` 0, `sm` 6px, `md` 8px, `lg` 12px, `xl` 25px, `full` 50px. `rounded-full` is a fixed 50px, not 50%, so it only gives a circle on squares up to 100px.
 
 ```html
 <!-- All corners -->
@@ -410,10 +457,8 @@ Background with gradient border effect:
 <!-- Individual sides (t=top, r=right, b=bottom, l=left) -->
 <div class="rounded-t-lg">Top corners</div>
 <div class="rounded-r-none">No right corners</div>
+<div class="border-radius-4">4px corners</div>
 ```
-
-### Border Colors
-See [Colors](#colors) section above.
 
 ## Shadows
 

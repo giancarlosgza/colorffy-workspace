@@ -47,14 +47,20 @@ app.mount('#app')
 
 ```scss
 // src/assets/variables.scss
-// Override Colorffy CSS variables
+// Optional: compile-time component defaults
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5 !default,
-  $secondary: #ec4899 !default,
-  $accent: #0ea5e9 !default,
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
 );
 
 @use '@colorffy/css/scss/main';
+
+// Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
+:root {
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --font-primary: 'Inter', sans-serif;
+}
 ```
 
 ```typescript
@@ -157,12 +163,20 @@ export default defineNuxtConfig({
 ```
 
 ```scss
-// assets/scss/variables.scss
+// assets/scss/variables.scss: compile-time component defaults
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5 !default,
-  $secondary: #ec4899 !default,
-  $accent: #0ea5e9 !default,
+  $button-border-radius: 4px !default,
+  $card-border-radius: 8px !default,
 );
+```
+
+```scss
+// assets/scss/main.scss: theme colors and fonts are CSS tokens (-500 light, -50 dark)
+:root {
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --font-primary: 'Inter', sans-serif;
+}
 ```
 
 ### Option 3: Auto-Import Components (Nuxt)

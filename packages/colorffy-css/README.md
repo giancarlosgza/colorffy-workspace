@@ -71,20 +71,33 @@ Import the full SCSS framework:
 @use '@colorffy/css/scss/main';
 ```
 
-### Customize SCSS Variables
+### Customize the Theme
 
-Use `@forward` to override variables before importing:
+Theme colors and fonts are CSS custom properties. Override them in your own stylesheet, with the compiled CSS or the SCSS source:
+
+```css
+:root {
+  /* each theme color has a light-mode (-500) and dark-mode (-50) tone */
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --color-brand-secondary-500: oklch(62% 0.2 350);
+  --color-brand-secondary-50: oklch(92% 0.05 350);
+
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+}
+```
+
+Compile-time component defaults are SCSS variables, set with `@forward` before importing:
 
 ```scss
-// your-variables.scss
-// Override variables using @forward
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5,
-  $secondary: #ec4899,
-  $accent: #0ea5e9,
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
+  $form-border-radius: 4px,
+  $dialog-border-radius: 12px,
 );
 
-// Then import the full framework
 @use '@colorffy/css/scss/main';
 ```
 
@@ -129,11 +142,10 @@ createApp(App).mount('#app')
 **Option 2: Customize with SCSS**
 ```scss
 // src/assets/variables.scss
-// Override Colorffy CSS variables
+// Compile-time component defaults
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5,
-  $secondary: #ec4899,
-  $accent: #0ea5e9,
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
 );
 
 // Import the full framework
@@ -144,9 +156,11 @@ createApp(App).mount('#app')
 // src/assets/main.scss
 @use 'variables' as *;
 
-// Your custom styles
+// Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --custom-var: value;
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -268,36 +282,36 @@ For complete documentation, examples, and API reference, visit:
 
 ## 🛠️ Customization
 
-### Override Variables with @forward
+### Theme Colors and Fonts (CSS tokens)
 
-The recommended way to customize Colorffy CSS is using `@forward` to override SCSS variables:
+Each brand color has a light-mode (`-500`) and dark-mode (`-50`) token, for `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `info` and `muted`. Every tonal step and component derives from them:
 
-```scss
-// variables.scss
-// Step 1: Forward variables with your custom values
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5,
-  $secondary: #ec4899,
-  $accent: #0ea5e9,
-);
+```css
+:root {
+  /* each theme color has a light-mode (-500) and dark-mode (-50) tone */
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --color-brand-secondary-500: oklch(62% 0.2 350);
+  --color-brand-secondary-50: oklch(92% 0.05 350);
 
-// Step 2: Import the main framework
-@use '@colorffy/css/scss/main';
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+}
 ```
 
-**Available Variables to Override:**
+The `$primary`, `$secondary`, `$accent` and `$font-*` SCSS variables don't recolor components or change fonts; set the tokens above.
+
+### Compile-time Variables with @forward
+
 ```scss
-// Colors
-$primary: #002678;
-$secondary: #0075d6;
-$accent: #fda001;
+@forward '@colorffy/css/scss/abstracts/variables' with (
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
+  $form-border-radius: 4px,
+  $dialog-border-radius: 12px,
+);
 
-// Typography (defined in abstracts/_variables.scss)
-$font-primary: 'Your Font Family';
-$font-secondary: 'Your Font Family';
-
-// Spacing (defined in abstracts/_variables.scss)
-// Border radius, shadows, etc.
+@use '@colorffy/css/scss/main';
 ```
 
 ### Use Mixins & Functions

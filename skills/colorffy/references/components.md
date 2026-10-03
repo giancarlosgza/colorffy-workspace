@@ -660,6 +660,8 @@ User avatar component; shows an image (`src`) or falls back to `initials`, with 
 - `maskShape` ('arch' | 'pill' | 'sunny' | 'gem' | 'cookie-6' | 'cookie-9' | 'cookie-12' | 'clover-4' | 'clover-8' | 'bum' | null, optional) - Decorative mask
 - `maskStretch` (boolean, default: false) - Stretch the mask to 115%
 - `status` ('online' | 'busy' | 'away' | 'offline' | null, optional) - Presence indicator dot on the avatar's bottom-end corner; passed through by `UiAvatarGroup`'s `avatars` entries
+- `color` ('primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | null, optional) - Tints initials and placeholder avatars (fixed tone at 25%); no effect on image avatars. Use it instead of `bg-*-fixed` classes
+- `variant` ('transparent' | 'tonal' | 'filled' | null, default: 'transparent') - Background style for initials/placeholder: see-through tint, opaque tint, or full theme color with on-color text
 
 ### UiAvatarGroup
 Stacks avatars with an overlapping ring; from an `avatars` array or by composing `UiAvatar` via the default slot.
@@ -672,6 +674,8 @@ Stacks avatars with an overlapping ring; from an `avatars` array or by composing
 - `avatars` (`IAvatarProps[]`) - Avatars to render, in order; alternative to composing `UiAvatar` via the default slot
 - `max` (number) - Caps rendered avatars, collapsing the remainder into a "+N" overflow avatar; only applies to `avatars`, not the slot
 - `size` ('sm' | 'md' | 'lg' | 'navbar' | 'menu', default: 'sm') - Applied to every avatar in the group (and the overflow avatar)
+- `color` (same values as `UiAvatar`, optional) - Tint for every avatar and the overflow avatar; `avatars` entries can override it, slot-composed avatars set their own
+- `variant` ('transparent' | 'tonal' | 'filled' | null, default: 'tonal') - Background style for every avatar and the overflow avatar; opaque by default so overlapping avatars don't show through
 - `customClass`
 
 **Slots:** `default` - compose `UiAvatar` instances directly (always render in full, unaffected by `max`)
@@ -961,6 +965,9 @@ Horizontal tab navigation.
 - `tabs` (array) - Tab items: `{ id, label, disabled?, panelId?, badge?, icon? }`; `badge` accepts `Partial<IBadgeProps>` (`text`, `variant`, `pill`, `iconCode`, ...) rendered after the label; `icon` is a Material Symbols entity code rendered before the label
 - `pillTabs` / `contrastTabs` (boolean) - Styling variants
 - `fluid` (boolean, default: false) - Stretches every tab to fill the available width equally
+- `fit` (boolean, default: false) - The tab bar is only as wide as its tabs instead of spanning the container; ignored when `fluid` is set
+- `rounded` (boolean, default: false) - Fully rounded pill tabs and indicator; only with `pillTabs`
+- `size` ('sm' | 'md' | null, default: null) - `'sm'` uses the default button height and font size
 
 The active indicator (underline, or the raised pill with `pillTabs`) is placed and animated with pure CSS anchor positioning; where anchor positioning is unsupported the active tab falls back to its own border/background.
 

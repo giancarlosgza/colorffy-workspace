@@ -69,15 +69,14 @@ app.mount('#app')
 
 ### Option 2: Customize Colorffy CSS with SCSS
 
-For full customization, use SCSS to override variables:
+Theme colors and fonts are CSS tokens; SCSS sets compile-time component defaults:
 
 ```scss
 // src/assets/variables.scss
-// Override Colorffy CSS variables
+// Compile-time component defaults
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5,
-  $secondary: #ec4899,
-  $accent: #0ea5e9,
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
 );
 
 // Import the framework
@@ -88,9 +87,11 @@ For full customization, use SCSS to override variables:
 // src/assets/main.scss
 @use 'variables' as *;
 
-// Your custom styles
+// Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --custom-var: value;
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -254,14 +255,23 @@ export default defineNuxtConfig({
 ```
 
 ```scss
-// assets/scss/variables.scss
+// assets/scss/variables.scss: injected into every SCSS file, so configuration only
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $primary: #4f46e5,
-  $secondary: #ec4899,
-  $accent: #0ea5e9,
+  $button-border-radius: 4px,
+  $card-border-radius: 8px,
 );
+```
 
+```scss
+// assets/scss/main.scss
 @use '@colorffy/css/scss/main';
+
+// Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
+:root {
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+  --font-primary: 'Inter', sans-serif;
+}
 ```
 
 Then use components anywhere in your Nuxt app:

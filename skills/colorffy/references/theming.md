@@ -29,18 +29,11 @@ Colorffy uses a **tonal color system** with semantic token naming for intuitive 
 
 #### SCSS Variables (Compile-time)
 
+Theme colors and fonts are **not** SCSS-configurable: `$primary`, `$secondary`, `$accent` and `$font-*` only feed compile-time details (button ripple, spinner). Set the CSS tokens below instead. SCSS configures compile-time component values:
+
 ```scss
 // assets/scss/abstracts/_variables.scss
-/**
- * Override Colorffy CSS variables
- */
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  // Theme colors
-  $primary: #002662,
-  $secondary: #22cbff,
-  $accent: #0ee9a0,
-  
-  // Component tokens
   $card-border-radius: 8px,
   $form-border-radius: 4px,
   $button-border-radius: 4px,
@@ -50,7 +43,16 @@ Colorffy uses a **tonal color system** with semantic token naming for intuitive 
 
 #### CSS Custom Properties (Runtime)
 
-Override at runtime with CSS variables:
+Theme colors are CSS tokens. Each brand color has a light-mode (`-500`) and dark-mode (`-50`) tone, for `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `info` and `muted`; every tonal step and component derives from them:
+
+```css
+:root {
+  --color-brand-primary-500: oklch(45% 0.2 275);
+  --color-brand-primary-50: oklch(90% 0.06 275);
+}
+```
+
+Or set one value for both modes with the `--theme-*-base` tokens:
 
 ```css
 :root {
@@ -177,13 +179,14 @@ onMounted(() => {
 
 ### Font Families
 
-```scss
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  $font-primary: var(--font-primary),
-  $font-secondary: var(--font-secondary),
-  $font-code: var(--font-code),
-  $font-icons: var(--font-icons)
-);
+Fonts are CSS tokens (the `$font-*` SCSS variables don't change them):
+
+```css
+:root {
+  --font-primary: 'Plus Jakarta Sans', sans-serif;
+  --font-secondary: 'DM Sans', sans-serif;
+  --font-code: monospace;
+}
 ```
 
 ### Font Weights
@@ -195,6 +198,17 @@ $fw-600: 600; // Semibold
 $fw-700: 700; // Bold
 $fw-800: 800; // Extrabold
 ```
+
+### Shape, Weight & Motion Tokens (CSS Custom Properties)
+Components read these `:root` tokens, so they can be overridden at runtime (globally or per subtree) without recompiling. The SCSS variables above set their defaults.
+
+- Radius: `--radius-none` (0) · `--radius-sm` (6px) · `--radius-md` (8px) · `--radius-lg` (12px) · `--radius-xl` (25px) · `--radius-full` (50px)
+- Border width: `--border-width-sm` (1px) · `--border-width-md` (2px)
+- Font weight: `--fw-400` … `--fw-800`
+- Easing: `--ease-decelerate` (enter), `--ease-accelerate` (exit), plus `linear()` curves `--ease-spring`, `--ease-overshoot-soft`, `--ease-emphasized`, `--ease-bounce`, `--ease-power-in`, `--ease-power-in-out`, `--ease-sine-in-out`. Under `prefers-reduced-motion: reduce`, spring / overshoot-soft / bounce resolve to `--ease-decelerate`
+- Focus ring: `--focus-ring-color` (`--theme-on-background`) · `--focus-ring-offset` (`.3rem`)
+
+In custom CSS alongside Colorffy, use these tokens (e.g. `border-radius: var(--radius-md)`) instead of hardcoded values.
 
 ### Font Sizes (CSS Custom Properties)
 Font sizes are fluid `clamp()` values on `:root`, named on a t-shirt scale anchored at `--fs-base` (16px max), since v2.5:
@@ -308,12 +322,7 @@ $custom-rounded-sm: 4px;
 $custom-rounded-md: 8px;
 
 @forward '@colorffy/css/scss/abstracts/variables' with (
-    // Brand colors
-    $primary: #002662,
-    $secondary: #22cbff,
-    $accent: #0ee9a0,
-
-    // Component overrides
+    // Component overrides (brand colors are CSS tokens, see above)
     $card-border-radius: $custom-rounded-sm,
     $form-border-radius: $custom-rounded-md,
     $button-border-radius: $custom-rounded-sm,
