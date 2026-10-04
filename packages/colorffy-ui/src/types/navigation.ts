@@ -190,7 +190,7 @@ export interface ITabEmits {
   /**
    * Emitted when a tab is selected.
    */
-  (e: 'updateActiveTab', tabId: string): void
+  (e: 'update:activeTab', tabId: string): void
 }
 
 /**

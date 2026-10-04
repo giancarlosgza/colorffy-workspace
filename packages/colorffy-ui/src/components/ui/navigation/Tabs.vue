@@ -56,7 +56,7 @@ function handleSelectedTab(tab: ITabItem) {
     return
 
   activeTabName.value = tab.id
-  emit('updateActiveTab', tab.id)
+  emit('update:activeTab', tab.id)
 }
 function nextEnabledIndex(from: number, direction: number): number {
   const count = tabs.value.length

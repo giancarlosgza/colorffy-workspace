@@ -98,7 +98,7 @@ export const OverflowScroll: Story = {
 
 /**
  * The component keeps its own active tab, so it works uncontrolled. Bind `activeTab` and
- * listen to `updateActiveTab` when the selection has to drive something else on the page.
+ * listen to `update:activeTab` (or bind `v-model:active-tab`) when the selection has to drive something else on the page.
  */
 export const Controlled: Story = {
   args: {
@@ -115,9 +115,7 @@ export const Controlled: Story = {
       <div>
         <UiSegmentedControls
           :tabs="tabs"
-          :active-tab="active"
-          @update-active-tab="active = $event"
-        />
+          v-model:active-tab="active" />
         <p style="font-size: 0.85rem; margin-top: 1rem;">Selected: {{ active }}</p>
       </div>
     `

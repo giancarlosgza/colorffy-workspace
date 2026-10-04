@@ -956,9 +956,7 @@ Horizontal tab navigation.
     { id: 'inbox', label: 'Inbox', badge: { text: '12', variant: 'primary', pill: true } },
     { id: 'archived', label: 'Archived' }
   ]"
-  :active-tab="activeTab"
-  @update-active-tab="activeTab = $event"
-/>
+  v-model:active-tab="activeTab" />
 ```
 
 **Props:**
@@ -974,7 +972,7 @@ Horizontal tab navigation.
 The active indicator (underline, or the raised pill with `pillTabs`) is placed and animated with pure CSS anchor positioning; where anchor positioning is unsupported the active tab falls back to its own border/background.
 
 **Emits:**
-- `updateActiveTab` (tabId: string) - Fired when a tab is selected
+- `update:activeTab` (tabId: string) - Fired when a tab is selected; use `v-model:active-tab`
 
 ### UiSegmentedControls
 Compact segmented switcher with an animated active pill.
@@ -985,9 +983,7 @@ Compact segmented switcher with an animated active pill.
     { id: 'grid', label: 'Grid' },
     { id: 'list', label: 'List' }
   ]"
-  :active-tab="view"
-  @update-active-tab="view = $event"
-/>
+  v-model:active-tab="view" />
 ```
 
 **Props:**
@@ -995,7 +991,7 @@ Compact segmented switcher with an animated active pill.
 - `activeTab` (string) - Id of the active tab; defaults to the first tab
 
 **Emits:**
-- `updateActiveTab(tabId)` - Fired when a tab is selected
+- `update:activeTab(tabId)` - Fired when a tab is selected; use `v-model:active-tab`
 
 The pill is placed and animated with pure CSS anchor positioning, falling back to a bolder label on a filled background where anchor positioning is unsupported. Same mechanism as `UiTabs` and `UiNavigationBar` — see [component-guide.md](./component-guide.md).
 
@@ -1174,15 +1170,13 @@ Horizontal or vertical progress indicator for multi-step flows (checkout, onboar
 ```vue
 <UiStepper
   :steps="steps"
-  :active-step="activeStep"
-  @update-active-step="activeStep = $event"
-/>
+  v-model:active-step="activeStep" />
 
 <!-- Vertical layout -->
-<UiStepper :steps="steps" :active-step="activeStep" vertical @update-active-step="activeStep = $event" />
+<UiStepper :steps="steps" v-model:active-step="activeStep" vertical  />
 
 <!-- Linear mode: blocks selecting a step ahead of the current one -->
-<UiStepper :steps="steps" :active-step="activeStep" linear @update-active-step="activeStep = $event" />
+<UiStepper :steps="steps" v-model:active-step="activeStep" linear  />
 ```
 
 **Props:**
@@ -1192,7 +1186,7 @@ Horizontal or vertical progress indicator for multi-step flows (checkout, onboar
 - `linear` (boolean, default: false) - Blocks selecting a step ahead of the current one, forcing sequential progression
 - `customClass`
 
-**Emits:** `updateActiveStep(stepId)` - Fired when a step is selected
+**Emits:** `update:activeStep(stepId)` - Fired when a step is selected; use `v-model:active-step`
 
 ## Tables
 

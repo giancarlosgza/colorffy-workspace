@@ -58,7 +58,7 @@ function handleSelectedStep(step: IStepItem, index: number) {
     return
 
   activeStepId.value = step.id
-  emit('updateActiveStep', step.id)
+  emit('update:activeStep', step.id)
 }
 function nextEnabledIndex(from: number, direction: number): number {
   const count = steps.value.length

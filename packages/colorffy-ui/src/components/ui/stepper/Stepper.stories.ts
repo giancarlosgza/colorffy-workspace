@@ -42,7 +42,7 @@ export const Linear: Story = {
     },
     template: `
       <div>
-        <UiStepper :steps="steps" :active-step="activeStep" linear @update-active-step="activeStep = $event" />
+        <UiStepper :steps="steps" v-model:active-step="activeStep" linear  />
         <p style="font-size: 0.85rem; margin-top: 1rem;">Active step: {{ activeStep }}</p>
       </div>
     `
