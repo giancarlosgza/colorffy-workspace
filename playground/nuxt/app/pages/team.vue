@@ -288,6 +288,7 @@ async function removeMember(): Promise<void> {
           :columns="columns"
           :items="visibleRows"
           column-manager
+          :toolbar-button="{ variant: 'text', customClass: 'text-neutral' }"
           :empty-state-title="emptyState.title"
           :empty-state-subtitle="emptyState.subtitle"
           empty-state-use-custom-icon
@@ -306,7 +307,8 @@ async function removeMember(): Promise<void> {
 
           <template #actions-start>
             <UiButtonTooltip
-              variant="outline"
+              variant="text"
+              custom-class="text-neutral"
               size="sm"
               icon
               tooltip-text="Refresh"
@@ -317,12 +319,12 @@ async function removeMember(): Promise<void> {
                 <UiIconMaterial icon-code="&#xe5d5;" />
               </template>
             </UiButtonTooltip>
-            <UiButtonTooltip variant="outline" size="sm" icon tooltip-text="Copy emails" @click="copyEmails">
+            <UiButtonTooltip variant="text" custom-class="text-neutral" size="sm" icon tooltip-text="Copy emails" @click="copyEmails">
               <template #icon>
                 <UiIconMaterial icon-code="&#xe14d;" />
               </template>
             </UiButtonTooltip>
-            <UiButtonTooltip variant="outline" size="sm" icon tooltip-text="Export CSV" @click="exportMembers">
+            <UiButtonTooltip variant="text" custom-class="text-neutral" size="sm" icon tooltip-text="Export CSV" @click="exportMembers">
               <template #icon>
                 <UiIconMaterial icon-code="&#xf090;" />
               </template>
@@ -330,7 +332,7 @@ async function removeMember(): Promise<void> {
           </template>
 
           <template #actions-end>
-            <UiButtonMenu variant="outline" size="sm" icon placement="bottom-end" tooltip-text="More">
+            <UiButtonMenu variant="text" custom-class="text-neutral" size="sm" icon placement="bottom-end" tooltip-text="More">
               <template #icon>
                 <UiIconMaterial icon-code="&#xe5d4;" />
               </template>
