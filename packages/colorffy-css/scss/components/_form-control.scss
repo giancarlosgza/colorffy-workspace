@@ -412,6 +412,14 @@
           color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
         }
       }
+
+      // Inputs with a prefix or suffix: the message follows the group
+      .input-group + .invalid-feedback {
+        display: block;
+        margin-top: var(--cffy-space-6);
+        font-size: var(--cffy-fs-3xs);
+        color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
+      }
     }
   }
 
