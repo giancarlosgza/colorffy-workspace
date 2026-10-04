@@ -1,19 +1,4 @@
 // ==========================================================================
 // COLORFFY CSS VARIABLE OVERRIDES
 // ==========================================================================
-$custom-rounded-none: 0;
-$custom-rounded-sm: 4px;
-$custom-rounded-md: 8px;
-$custom-rounded-lg: 12px;
-$custom-rounded-xl: 25px;
-$custom-rounded-xxl: 35px;
-
-@forward '@colorffy/css/scss/abstracts/variables' with (
-  // ==========================================================================
-  // EXTRA OVERRIDES (BORDER RADII)
-  // ==========================================================================
-  $card-border-radius: $custom-rounded-sm,
-  $form-border-radius: $custom-rounded-md,
-  $button-border-radius: $custom-rounded-sm,
-  $dialog-border-radius: $custom-rounded-md
-);
+@forward '@colorffy/css/scss/abstracts/variables';

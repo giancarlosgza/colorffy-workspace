@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IDialogDisplay, ITabItem } from '@colorffy/ui'
+import type { IButtonToggleOption, IChipOption, IDialogDisplay, ITabItem } from '@colorffy/ui'
 
 definePageMeta({ pageTitle: 'Settings' })
 
@@ -157,6 +157,71 @@ watch(brandColor, (hex) => {
 
 function resetBrand(): void {
   brandColor.value = DEFAULT_BRAND
+}
+
+const SHAPE_ROLES = ['container', 'field', 'control'] as const
+const shapePresets: Record<string, Record<typeof SHAPE_ROLES[number], string>> = {
+  sharp: { container: 'var(--cffy-radius-none)', field: 'var(--cffy-radius-none)', control: 'var(--cffy-radius-none)' },
+  subtle: { container: 'var(--cffy-radius-sm)', field: 'var(--cffy-radius-md)', control: 'var(--cffy-radius-sm)' },
+  default: { container: 'var(--cffy-radius-lg)', field: 'var(--cffy-radius-md)', control: 'var(--cffy-radius-md)' },
+  soft: { container: 'var(--cffy-radius-xl)', field: 'var(--cffy-radius-lg)', control: 'var(--cffy-radius-lg)' },
+  pill: { container: 'var(--cffy-radius-xl)', field: 'var(--cffy-radius-full)', control: 'var(--cffy-radius-full)' }
+}
+const shapeOptions: IButtonToggleOption[] = [
+  { id: 'sharp', icon: '&#xe3c6;', title: 'Sharp', text: 'Square corners everywhere' },
+  { id: 'subtle', icon: '&#xe920;', title: 'Subtle', text: 'Tight cards and buttons' },
+  { id: 'default', icon: '&#xe835;', title: 'Default', text: 'Balanced panels, fields and buttons' },
+  { id: 'soft', icon: '&#xe836;', title: 'Soft', text: 'Rounder panels and controls' },
+  { id: 'pill', icon: '&#xe9f5;', title: 'Pill', text: 'Pill buttons and fields' }
+]
+const previewRoles: IChipOption[] = [
+  { id: 'editor', text: 'Editor' },
+  { id: 'viewer', text: 'Viewer' }
+]
+const shape = useState<string>('orbit-shape', () => 'default')
+const previewEmail = ref('')
+const previewRole = ref('editor')
+const previewWelcome = ref<string | boolean | null>(true)
+
+watch(shape, (preset) => {
+  if (!import.meta.client)
+    return
+  const style = document.documentElement.style
+  const radii = shapePresets[preset]
+  SHAPE_ROLES.forEach((role) => {
+    if (radii && preset !== 'default')
+      style.setProperty(`--cffy-shape-${role}`, radii[role])
+    else
+      style.removeProperty(`--cffy-shape-${role}`)
+  })
+})
+
+interface ThemePreset { id: string, name: string, description: string, brand: string, shape: string }
+const themePresets: ThemePreset[] = [
+  { id: 'orbit', name: 'Orbit', description: 'Forest green with balanced corners', brand: DEFAULT_BRAND, shape: 'default' },
+  { id: 'luxury', name: 'Luxury', description: 'Black ink and square edges', brand: '#111111', shape: 'sharp' },
+  { id: 'playful', name: 'Playful', description: 'Bright blue on pill-shaped controls', brand: '#2f6bff', shape: 'pill' },
+  { id: 'enterprise', name: 'Enterprise', description: 'Navy with balanced corners', brand: '#1e3a8a', shape: 'default' },
+  { id: 'wellness', name: 'Wellness', description: 'Sage green and soft, rounded panels', brand: '#4f7a5c', shape: 'soft' },
+  { id: 'studio', name: 'Studio', description: 'Violet with tight, subtle corners', brand: '#6d28d9', shape: 'subtle' }
+]
+const activePreset = computed(() => {
+  const brand = (brandColor.value ?? DEFAULT_BRAND).toLowerCase()
+  return themePresets.find(preset => preset.brand === brand && preset.shape === shape.value)?.id ?? null
+})
+
+function applyPreset(preset: ThemePreset): void {
+  brandColor.value = preset.brand
+  shape.value = preset.shape
+}
+function presetPreviewStyle(preset: ThemePreset): Record<string, string> {
+  const radii = shapePresets[preset.shape]!
+  return {
+    '--preset-color': `light-dark(${preset.brand}, color-mix(in oklab, ${preset.brand} 25%, white))`,
+    '--preset-container': radii.container,
+    '--preset-field': radii.field,
+    '--preset-control': radii.control
+  }
 }
 
 const textScale = ref<string | number | null>(100)
@@ -460,6 +525,52 @@ onBeforeUnmount(() => {
       >
         <UiCard variant="pane" class="shadow-sm">
           <template #header>
+            <div class="d-flex align-items-start justify-content-between gap-3">
+              <div>
+                <p class="card-title">
+                  Theme presets
+                </p>
+                <p class="caption text-muted mb-0">
+                  Each preset pairs a brand color with a shape. Pick one, then fine-tune its color and corners below.
+                </p>
+              </div>
+              <UiBadge v-if="!activePreset" text="Custom" variant="tonal tonal-primary" icon-code="&#xe429;" />
+            </div>
+          </template>
+
+          <template #body>
+            <div class="toggle-btn-group theme-presets grid-repeat-cols-1 grid-repeat-cols-sm-2 grid-repeat-cols-lg-3" role="radiogroup" aria-label="Theme presets">
+              <label
+                v-for="preset in themePresets"
+                :key="preset.id"
+                class="toggle-btn"
+                :class="{ 'toggle-btn-active': activePreset === preset.id }"
+              >
+                <input
+                  type="radio"
+                  name="theme-preset"
+                  class="visually-hidden"
+                  :value="preset.id"
+                  :checked="activePreset === preset.id"
+                  @change="applyPreset(preset)"
+                >
+                <span class="theme-preview" :style="presetPreviewStyle(preset)" aria-hidden="true">
+                  <span class="theme-preview-line" />
+                  <span class="theme-preview-line theme-preview-line-short" />
+                  <span class="theme-preview-row">
+                    <span class="theme-preview-field" />
+                    <span class="theme-preview-button" />
+                  </span>
+                </span>
+                <span class="d-block fw-700 fs-xs mt-3">{{ preset.name }}</span>
+                <span class="d-block caption text-muted">{{ preset.description }}</span>
+              </label>
+            </div>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
             <p class="card-title">
               Brand color
             </p>
@@ -541,6 +652,53 @@ onBeforeUnmount(() => {
                     <UiButton text="Cancel" variant="text" size="sm" />
                   </div>
                 </div>
+              </div>
+            </div>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Shape
+            </p>
+            <p class="caption text-muted mb-0">
+              Sets the corners of panels, fields and buttons across Orbit. Badges and avatars keep their round shape.
+            </p>
+          </template>
+
+          <template #body>
+            <div class="row">
+              <div class="col-12">
+                <UiButtonToggleGroup v-model="shape" :options="shapeOptions" aria-label="Corner shape" class="mb-4" />
+              </div>
+
+              <div class="col-12 col-lg-7">
+                <UiCard variant="outline" role="group" aria-label="Shape preview">
+                  <template #body>
+                    <p class="overline text-muted mb-1">
+                      Preview
+                    </p>
+                    <p class="fw-700 mb-3">
+                      Invite someone to {{ leadProject.name }}
+                    </p>
+                    <UiInputText
+                      id="shape-preview-email"
+                      v-model="previewEmail"
+                      type="email"
+                      label="Email"
+                      placeholder="name@company.com"
+                    />
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                      <UiChipGroup v-model="previewRole" :options="previewRoles" aria-label="Role" />
+                      <UiInputCheck id="shape-preview-welcome" v-model="previewWelcome" label="Send a welcome email" />
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-end gap-2">
+                      <UiButton text="Cancel" variant="text" size="sm" />
+                      <UiButton text="Send invite" variant="filled" color="primary" size="sm" />
+                    </div>
+                  </template>
+                </UiCard>
               </div>
             </div>
           </template>
@@ -1043,5 +1201,50 @@ onBeforeUnmount(() => {
 .brand-swatch[aria-pressed='true'] {
   outline: var(--cffy-border-width-md) solid var(--cffy-on-background);
   outline-offset: var(--cffy-space-4);
+}
+
+.theme-presets .toggle-btn:has(:focus-visible) {
+  outline: var(--cffy-border-width-md) solid var(--cffy-focus-ring-color);
+  outline-offset: var(--cffy-space-4);
+}
+
+.theme-preview {
+  display: grid;
+  gap: var(--cffy-space-6);
+  padding: var(--cffy-space-12);
+  border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
+  border-radius: var(--preset-container);
+  background-color: var(--cffy-surface-container-low);
+}
+
+.theme-preview-line {
+  block-size: 0.375rem;
+  inline-size: 70%;
+  border-radius: var(--cffy-radius-full);
+  background-color: color-mix(in oklab, var(--cffy-on-background) 18%, transparent);
+}
+
+.theme-preview-line-short {
+  inline-size: 45%;
+}
+
+.theme-preview-row {
+  display: flex;
+  gap: var(--cffy-space-6);
+  margin-block-start: var(--cffy-space-6);
+}
+
+.theme-preview-field {
+  flex: 1;
+  block-size: 1.25rem;
+  border: var(--cffy-border-width-sm) solid var(--cffy-outline-text-field);
+  border-radius: var(--preset-field);
+}
+
+.theme-preview-button {
+  inline-size: 2.5rem;
+  block-size: 1.25rem;
+  border-radius: var(--preset-control);
+  background-color: var(--preset-color);
 }
 </style>
