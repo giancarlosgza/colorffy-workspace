@@ -1008,6 +1008,36 @@ Picks one value from a list you can search. The list is a `popover` anchored to 
 
 `modelValue`: string | number | object | null
 
+### UiInputMultiSelect
+Several values from the same searchable list as `UiInputCombobox` (same popover, keyboard and option props). The field is a `.form-tags.multiselect` with a removable chip per value.
+
+```vue
+<UiInputMultiSelect
+  id="projects"
+  v-model="projectIds"
+  label="Add to projects"
+  placeholder="Search projects"
+  :options="projects"
+  option-label="name"
+  option-value="id"
+  option-group="status"
+  :max="5"
+  clearable
+/>
+```
+
+**Additional props (beyond the combobox's `options`, `optionLabel`, `optionValue`, `optionGroup`, `optionDisabled`, `filterable`, `clearable`, `emptyText`, `clearLabel`, `toggleLabel`):**
+- `max` (number | null) - Cap; once reached, unselected options are disabled
+- `maxChips` (number | null, default: null) - Most chips shown; with more values the field shows the `maxChipsLabel` summary instead. Setting it keeps the field to one row (`.multiselect-single-row`: chip labels ellipsize, the summary hides while searching); `0` = always the summary (toolbar filters)
+- `maxChipsLabel` (string, default: '{count} selected') - Summary past `maxChips`; `{count}` is replaced
+- `removeLabel` (string, default: 'Remove') - Chip remove button name prefix (`'Remove Maya Chen'`)
+
+**Emits:** `update:modelValue`, `update`, `add(value)`, `remove(value)`
+
+**Behavior:** Enter or click toggles the highlighted option and the list stays open; a search clears after each pick; Backspace on an empty field removes the last chip (chips mode); Esc closes. The listbox is `aria-multiselectable`, changes are announced, and the field's `aria-describedby` lists the selected labels.
+
+`modelValue`: (string | number | object)[] — in pick order
+
 ### UiInputCheck
 
 ```vue

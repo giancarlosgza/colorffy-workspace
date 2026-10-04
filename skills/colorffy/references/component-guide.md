@@ -82,6 +82,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 **Dropdowns**
 - Use `UiInputSelect` for single-choice from list
 - Use `UiInputCombobox` when users need to search the list, or options need groups, disabled entries or custom rows
+- Use `UiInputMultiSelect` for several values from a fixed list (chips; `max-chips` swaps them for "3 selected" past a count, `0` in toolbars); for free-typed values use `UiInputTags`
 - Provide `options`; for objects set `option-label` and `option-value`
 - Supports placeholder and required state
 
@@ -330,4 +331,5 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - `v-text-field` → `UiInputText`
 - `v-select` → `UiInputSelect`
 - `v-autocomplete` / PrimeVue `Select` with `filter` → `UiInputCombobox`
+- `v-select multiple` / PrimeVue `MultiSelect` → `UiInputMultiSelect`
 - `v-dialog` → `UiModal`
