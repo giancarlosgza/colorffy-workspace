@@ -9,8 +9,8 @@ items below is breaking, so they can ship in any 3.x release.
 
 **Status (2026-10-04, branch `v3`).** Items 1 (UiPagination) and 2 (small input
 family) shipped with 3.0, stories included. Item 3 is decided (drop PrimeVue's
-Select and MultiSelect) and goes into 3.0 too: phase 1 (`UiInputCombobox`) is
-built; phases 2 (`UiInputMultiSelect`) and 3 (remote search, free text) are next.
+Select and MultiSelect) and goes into 3.0 too: phases 1 (`UiInputCombobox`) and
+2 (`UiInputMultiSelect`) are built; phase 3 (remote search, free text) is next.
 
 ## Conventions (apply to every item)
 
@@ -124,8 +124,13 @@ Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
   type-to-jump), reused by the multi-select.
 - **Phase 1 (done):** `UiInputCombobox`, `.listbox-*` styles and
   `--cffy-listbox-*` hooks, second inline suffix, playground wizard lead picker.
-- **Phase 2:** `UiInputMultiSelect` on the `.form-tags` field (chips, Backspace
-  removes), checkmarks, stays open, `max`, `display: 'count'`.
+- **Phase 2 (done):** `UiInputMultiSelect` on the `.form-tags` field (chips,
+  Backspace removes), checkmarks, stays open, `max` (disables the rest),
+  `maxChips` + `maxChipsLabel` (PrimeVue's `maxSelectedLabels`; `0` = always the
+  summary), `add`/`remove` events, live announcements
+  and a selected-labels description. `useListbox` now owns option ids,
+  scrolling and type-to-jump (repeating a letter cycles). Playground: the team
+  invite dialog's "Add to projects".
 - **Phase 3:** `@search` + `loading` for remote options, `freeText` autocomplete.
 - **Later (4.0):** `_prime.scss` becomes an opt-in import.
 
