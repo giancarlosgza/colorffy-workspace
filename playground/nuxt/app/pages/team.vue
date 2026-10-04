@@ -14,6 +14,9 @@ const ASSIGNABLE_ROLES: Role[] = ['Admin', 'Member', 'Guest']
 const SKILL_TONES = ['primary', 'secondary', 'accent', 'info', 'success'] as const
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
 const INVITE_LINK = 'https://orbit.app/join/product-team-7f3k'
+const PROJECT_OPTIONS = projects
+  .filter(project => project.status !== 'completed')
+  .map(project => ({ id: project.id, name: project.name, status: statusMeta[project.status].label }))
 
 const columns: IDatatableColumn[] = [
   { key: 'name', label: 'Member' },
@@ -28,6 +31,7 @@ const proPlan = plans.find(plan => plan.id === 'pro')!
 
 const teamMembers = ref<Member[]>(members.map(member => ({ ...member, skills: [...member.skills] })))
 const activeTab = ref<TeamTab>('members')
+const skillFilter = ref<string[]>([])
 const resendingId = ref<string | null>(null)
 const isRefreshing = ref(false)
 
@@ -36,7 +40,7 @@ const memberToRemove = ref<Member | null>(null)
 const isRemoving = ref(false)
 
 const inviteModal = ref<InstanceType<typeof UiModal> | null>(null)
-const inviteForm = reactive({ emails: [] as string[], phone: '', role: 'Member', message: '', sendCopy: true })
+const inviteForm = reactive({ emails: [] as string[], projectIds: [] as string[], phone: '', role: 'Member', message: '', sendCopy: true })
 const inviteErrors = ref<string[]>([])
 const isSending = ref(false)
 
@@ -50,7 +54,9 @@ const tabs = computed<ITabItem[]>(() => [
   { id: 'guests', label: 'Guests', badge: { text: String(guests.value.length), variant: 'tonal tonal-info', pill: true } }
 ])
 
-const visibleRows = computed(() => {
+const skillOptions = computed(() => [...new Set(teamMembers.value.flatMap(member => member.skills))].sort((a, b) => a.localeCompare(b)))
+
+const tabRows = computed(() => {
   if (activeTab.value === 'pending')
     return pendingInvites.value
   if (activeTab.value === 'guests')
@@ -58,7 +64,14 @@ const visibleRows = computed(() => {
   return activeMembers.value
 })
 
+const visibleRows = computed(() => {
+  const skills = skillFilter.value
+  return skills.length ? tabRows.value.filter(member => member.skills.some(skill => skills.includes(skill))) : tabRows.value
+})
+
 const emptyState = computed(() => {
+  if (skillFilter.value.length && tabRows.value.length)
+    return { title: 'No one with these skills', subtitle: 'Pick fewer skills, or look in another tab.' }
   if (activeTab.value === 'pending')
     return { title: 'No pending invites', subtitle: 'Everyone you invited has joined Orbit.' }
   if (activeTab.value === 'guests')
@@ -114,7 +127,7 @@ async function copyInviteLink(): Promise<void> {
 }
 
 function openInvite(): void {
-  Object.assign(inviteForm, { emails: [], phone: '', role: 'Member', message: '', sendCopy: true })
+  Object.assign(inviteForm, { emails: [], projectIds: [], phone: '', role: 'Member', message: '', sendCopy: true })
   inviteErrors.value = []
   inviteModal.value?.showDialog()
 }
@@ -152,8 +165,10 @@ async function sendInvites(): Promise<void> {
   activeTab.value = 'pending'
 
   const people = emails.length === 1 ? emails[0] : `${emails.length} people`
+  const projectCount = inviteForm.projectIds.length
+  const joins = projectCount ? ` They'll join ${projectCount} ${projectCount === 1 ? 'project' : 'projects'} too.` : ''
   const copy = inviteForm.sendCopy ? ' A copy is on its way to your inbox.' : ''
-  notify('Invites sent', `${people} can now join Orbit as ${role}.${copy}`)
+  notify('Invites sent', `${people} can now join Orbit as ${role}.${joins}${copy}`)
 }
 
 async function resendInvite(id: string): Promise<void> {
@@ -295,14 +310,30 @@ async function removeMember(): Promise<void> {
           empty-state-icon-code="&#xe7ef;"
         >
           <template #controls>
-            <UiTabs
-              :tabs="tabs"
-              :active-tab="activeTab"
-              pill-tabs
-              fit
-              size="sm"
-              @update:active-tab="selectTab"
-            />
+            <div class="d-flex flex-wrap align-items-center gap-3">
+              <UiTabs
+                :tabs="tabs"
+                :active-tab="activeTab"
+                pill-tabs
+                fit
+                size="sm"
+                @update:active-tab="selectTab"
+              />
+              <UiInputMultiSelect
+                id="team-skill-filter"
+                v-model="skillFilter"
+                label="Filter by skill"
+                hide-label
+                placeholder="All skills"
+                :options="skillOptions"
+                :max-chips="0"
+                max-chips-label="{count} skills"
+                size="sm"
+                clearable
+                class="mb-0"
+                style="flex: 0 1 12rem;"
+              />
+            </div>
           </template>
 
           <template #actions-start>
@@ -494,6 +525,20 @@ async function removeMember(): Promise<void> {
               />
             </div>
           </div>
+
+          <UiInputMultiSelect
+            id="invite-projects"
+            v-model="inviteForm.projectIds"
+            label="Add to projects"
+            placeholder="Search projects"
+            :options="PROJECT_OPTIONS"
+            option-label="name"
+            option-value="id"
+            option-group="status"
+            :max-chips="2"
+            clearable
+            optional-label
+          />
 
           <UiInputTextarea
             id="invite-message"
