@@ -1469,6 +1469,28 @@ SEO-friendly breadcrumb trail. Pass an ordered `items` list (root → current). 
 - `customClass` (ClassValue) - Classes on the `<nav>`
 - **Emits:** `itemClick(item, index)` (link entries only) · **Slots:** `#item="{ item, index, isCurrent }"`, `#separator`
 
+### UiPagination
+Page buttons in a `<nav>`. Pages start at 1; the current one gets `aria-current="page"`. For rows already loaded, use `UiDatatable`'s `pagination` prop instead.
+
+```vue
+<UiPagination v-model:page="page" :total="248" :page-size="20" />
+<!-- Server paging: the page count comes from the response -->
+<UiPagination v-model:page="page" :total-pages="data.pageCount" show-edges />
+```
+
+**Props:**
+- `page` (number, default `1`) - Current page, bound via `v-model:page`; moved to the last page when the count drops below it
+- `total` (number, default `0`) + `pageSize` (number, default `10`) - Item count and page size; or `totalPages` (number) directly, which wins
+- `siblingCount` (number, default `1`) - Pages on each side of the current one; first and last always show, the rest collapse to `…` with a constant button count
+- `showEdges` (boolean, default `false`) - First-page and last-page buttons
+- `compact` (boolean, default `false`) - `‹ Page 3 of 12 ›` at every width (automatic below 600px)
+- `size` ('sm' | 'md' | 'lg', default `'sm'`) - Button size
+- `disabled` (boolean) · `ariaLabel` (string, default `'Pagination'`; unique per page) · `customClass` (ClassValue)
+- `labels` (`Partial<IPaginationLabels>`) - `first`, `previous`, `next`, `last` (arrow names) and `status` (default `'Page {page} of {total}'`; `{page}` / `{total}` are replaced)
+- **Emits:** `update:page(page)`
+
+Arrows at the ends are `aria-disabled` (focus stays put); page moves are announced through a polite live region.
+
 ### UiSidebar (Navigation Drawer)
 Composable navigation drawer. It keeps two **independent** states:
 - `rail` - compact icons-only mode, a desktop concern; one-way and parent-controlled.
@@ -1697,8 +1719,10 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `columnsToggleTooltip` (string | `{ showAll, hideDefault }`) - Tooltip of the "show all / restore hidden" button, which appears automatically when any column is `hidden`
 - `toolbarButton` (`{ variant?, color?, size?, customClass?, rounded? }`) - Restyles both built-in toolbar buttons (default: outline, `sm`)
 - `rowKey` (string) - Row field used as the stable `v-for` key (falls back to `id`, then index); also the row-selection identity
-- `selectable` (boolean, default: false) - Leading checkbox column; the header checkbox selects/clears all rows and goes indeterminate when only some are selected. Pair with `v-model:selected`
+- `selectable` (boolean, default: false) - Leading checkbox column; the header checkbox selects/clears the rows on screen (the current page with `pagination`) and goes indeterminate when only some are selected. Pair with `v-model:selected`
 - `selected` (`(string | number)[]`, default: `[]`) - Selected row identities, bound via `v-model:selected`
+- `pagination` (`{ pageSize, siblingCount?, showEdges?, compact?, size?, ariaLabel?, labels? }`, default: null) - Shows one page of the sorted rows with a `UiPagination` under the table (hidden when everything fits on one page); the page resets to 1 when the sort, page size or row count changes
+- `page` (number, default: 1) - Current page with `pagination`, bound via `v-model:page`
 - `stickyHeader` (boolean, default: false) - Sticks the header while the body scrolls; wraps the table in `.table-responsive-sticky`
 - `stickyHeight` (string | number, default: `32rem`) - Max height of the sticky scroll area (numbers are px); sets `--cffy-table-sticky-max-height`
 - `isLoading` (boolean, default: false) + `skeletonRows` (number, default: 10) - Built-in loading skeleton (one cell per visible column)
@@ -1726,9 +1750,9 @@ const selected = ref<(string | number)[]>([])
 </template>
 ```
 
-**Emits:** `update:selected` (row identities array)
+**Emits:** `update:selected` (row identities array), `update:page` (page number)
 
-> **Note:** Pagination and filtering are not built in — paginate/filter `items` in the parent and pass the current page.
+> **Note:** Filtering is not built in: filter `items` in the parent (with `pagination`, a new row count starts again at page 1). To page on the server, leave `pagination` off, pass the current page's rows and render `UiPagination` yourself.
 
 ## Timeline
 

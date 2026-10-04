@@ -202,7 +202,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Built-in loading skeleton (`is-loading`) and empty state; custom cells via `#cell-<key>`
 - Set `selectable` + `v-model:selected` for a row-selection checkbox column (identity from `rowKey`, falling back to `id`, then index)
 - Set `sticky-header` to keep the header visible while the body scrolls (wraps in `.table-responsive-sticky`)
-- Pagination and filtering are not built in — handle them in the parent and pass the current `items`
+- Set `:pagination="{ pageSize: 20 }"` (+ optional `v-model:page`) to show one page at a time; filtering stays in the parent
+- For server paging, pass one page of `items` and render `UiPagination` with `total-pages`
 - Best for structured data with many rows
 
 **Lists**
@@ -270,6 +271,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Mobile bottom → `UiNavigationBar`
 - Sidebar / drawer → `UiSidebar` + `UiSidebarLink`
 - Breadcrumb trail → `UiBreadcrumb`
+- Pages of a long list → `UiPagination` (or `UiDatatable`'s `pagination` prop)
 - Dropdown menu → `UiButtonMenu`
 - Multi-step flow / wizard progress → `UiStepper`
 
