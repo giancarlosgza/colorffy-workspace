@@ -182,6 +182,22 @@ export const invoices: Invoice[] = [
   { id: 'INV-2026-007', date: 'Jul 1, 2026', period: 'Jul 1 – Jul 31', plan: 'Pro · 7 seats', amount: 84, status: 'paid' },
   { id: 'INV-2026-006', date: 'Jun 1, 2026', period: 'Jun 1 – Jun 30', plan: 'Pro · 7 seats', amount: 84, status: 'failed' },
   { id: 'INV-2026-005', date: 'May 1, 2026', period: 'May 1 – May 31', plan: 'Pro · 6 seats', amount: 72, status: 'paid' },
+  { id: 'INV-2026-004', date: 'Apr 1, 2026', period: 'Apr 1 – Apr 30', plan: 'Pro · 6 seats', amount: 72, status: 'paid' },
+  { id: 'INV-2026-003', date: 'Mar 1, 2026', period: 'Mar 1 – Mar 31', plan: 'Pro · 6 seats', amount: 72, status: 'paid' },
+  { id: 'INV-2026-002', date: 'Feb 1, 2026', period: 'Feb 1 – Feb 28', plan: 'Pro · 6 seats', amount: 72, status: 'paid' },
+  { id: 'INV-2026-001', date: 'Jan 1, 2026', period: 'Jan 1 – Jan 31', plan: 'Pro · 6 seats', amount: 72, status: 'paid' },
+  { id: 'INV-2025-012', date: 'Dec 1, 2025', period: 'Dec 1 – Dec 31', plan: 'Pro · 5 seats', amount: 60, status: 'paid' },
+  { id: 'INV-2025-011', date: 'Nov 1, 2025', period: 'Nov 1 – Nov 30', plan: 'Pro · 5 seats', amount: 60, status: 'paid' },
+  { id: 'INV-2025-010', date: 'Oct 1, 2025', period: 'Oct 1 – Oct 31', plan: 'Pro · 5 seats', amount: 60, status: 'paid' },
+  { id: 'INV-2025-009', date: 'Sep 1, 2025', period: 'Sep 1 – Sep 30', plan: 'Pro · 5 seats', amount: 60, status: 'paid' },
+  { id: 'INV-2025-008', date: 'Aug 1, 2025', period: 'Aug 1 – Aug 31', plan: 'Pro · 4 seats', amount: 48, status: 'paid' },
+  { id: 'INV-2025-007', date: 'Jul 1, 2025', period: 'Jul 1 – Jul 31', plan: 'Pro · 4 seats', amount: 48, status: 'paid' },
+  { id: 'INV-2025-006', date: 'Jun 1, 2025', period: 'Jun 1 – Jun 30', plan: 'Pro · 4 seats', amount: 48, status: 'paid' },
+  { id: 'INV-2025-005', date: 'May 1, 2025', period: 'May 1 – May 31', plan: 'Pro · 4 seats', amount: 48, status: 'paid' },
+  { id: 'INV-2025-004', date: 'Apr 1, 2025', period: 'Apr 1 – Apr 30', plan: 'Pro · 3 seats', amount: 36, status: 'paid' },
+  { id: 'INV-2025-003', date: 'Mar 1, 2025', period: 'Mar 1 – Mar 31', plan: 'Pro · 3 seats', amount: 36, status: 'paid' },
+  { id: 'INV-2025-002', date: 'Feb 1, 2025', period: 'Feb 1 – Feb 28', plan: 'Pro · 3 seats', amount: 36, status: 'paid' },
+  { id: 'INV-2025-001', date: 'Jan 1, 2025', period: 'Jan 1 – Jan 31', plan: 'Pro · 3 seats', amount: 36, status: 'paid' },
   { id: 'INV-2026-010', date: 'Oct 1, 2026', period: 'Oct 1 – Oct 31', plan: 'Pro · 8 seats', amount: 96, status: 'due' }
 ]
 

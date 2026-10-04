@@ -465,6 +465,7 @@ function downloadAll(): void {
           :items="invoiceRows"
           default-sort-key="id"
           default-sort-order="desc"
+          :pagination="{ pageSize: 8, ariaLabel: 'Invoice pages' }"
           caption="Amounts in USD. Taxes are included where they apply."
         >
           <template #cell-id="{ item }">
