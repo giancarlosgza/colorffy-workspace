@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ITextInputEmits, ITextInputProps } from '@/types/input'
-import { computed, useSlots, watch } from 'vue'
+import { computed, watch } from 'vue'
 
 /** Props */
 const props = withDefaults(defineProps<ITextInputProps>(), {
@@ -48,13 +48,7 @@ const inputModel = computed<string | number | null>({
   }
 })
 
-/** Composable */
-const slots = useSlots()
-
 /** Computed */
-const hasPrefix = computed(() => !!slots.prefix)
-const hasSuffix = computed(() => !!slots.suffix)
-const hasGroup = computed(() => hasPrefix.value || hasSuffix.value)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
@@ -121,11 +115,11 @@ watch(model, (value) => {
       {{ label }}{{ required ? ' *' : '' }}
     </label>
     <div
-      v-if="hasGroup"
+      v-if="$slots.prefix || $slots.suffix"
       class="input-group"
     >
       <span
-        v-if="hasPrefix"
+        v-if="$slots.prefix"
         class="input-group-prefix"
       >
         <slot name="prefix" />
@@ -135,7 +129,7 @@ watch(model, (value) => {
         v-bind="inputAttrs"
       >
       <span
-        v-if="hasSuffix"
+        v-if="$slots.suffix"
         class="input-group-suffix"
       >
         <slot name="suffix" />
