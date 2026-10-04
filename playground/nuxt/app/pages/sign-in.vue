@@ -5,9 +5,8 @@ type Step = 'credentials' | 'loading' | 'verify'
 
 const step = ref<Step>('credentials')
 const email = ref<string | number | null>('')
-const password = ref<string | number | null>('')
+const password = ref<string | null>('')
 const remember = ref<string | boolean | null>(true)
-const showPassword = ref(false)
 const emailErrors = ref<string[]>([])
 const passwordErrors = ref<string[]>([])
 const resetSentTo = ref<string | null>(null)
@@ -156,32 +155,14 @@ onBeforeUnmount(() => clearTimeout(timer))
               :maxlength="80"
               :error-messages="emailErrors"
             />
-            <UiInputText
+            <UiInputPassword
               id="sign-in-password"
               v-model="password"
-              :type="showPassword ? 'text' : 'password'"
               label="Password"
               placeholder="Enter your password"
               :maxlength="64"
               :error-messages="passwordErrors"
-            >
-              <template #suffix>
-                <UiButton
-                  variant="text"
-                  icon
-                  size="sm"
-                  custom-class="text-neutral"
-                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
-                  :aria-pressed="showPassword"
-                  @click="showPassword = !showPassword"
-                >
-                  <template #icon>
-                    <UiIconMaterial v-if="showPassword" icon-code="&#xe8f5;" />
-                    <UiIconMaterial v-else icon-code="&#xe8f4;" />
-                  </template>
-                </UiButton>
-              </template>
-            </UiInputText>
+            />
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
               <UiInputCheck id="sign-in-remember" v-model="remember" label="Remember me for 30 days" class="mb-0" />

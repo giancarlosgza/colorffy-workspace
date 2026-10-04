@@ -99,7 +99,7 @@ const faqs = [
 
 const loadingTitles = ['Searching articles…', 'Checking the changelog…', 'Ranking the best answers…']
 
-const query = ref<string | number | null>('')
+const query = ref<string | null>('')
 const selectedTopic = ref<string | null>(null)
 const status = ref<SearchStatus>('idle')
 const resultsLabel = ref('')
@@ -199,7 +199,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
 
       <form id="help-search" class="row mb-3" role="search" @submit.prevent="submitSearch">
         <div class="col-12 max-w-2xl mx-auto d-flex align-items-start gap-2">
-          <UiInputText
+          <UiInputSearch
             id="help-query"
             v-model="query"
             label="Search the help center"
@@ -209,11 +209,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
             :maxlength="80"
             placeholder="Search for “guest access” or “export data”"
             class="flex-grow-1 mb-0"
-          >
-            <template #prefix>
-              <UiIconMaterial icon-code="&#xe8b6;" />
-            </template>
-          </UiInputText>
+          />
           <UiButton
             type="submit"
             text="Search"

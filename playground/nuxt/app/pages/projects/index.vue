@@ -271,18 +271,14 @@ onMounted(() => {
 
     <!-- Toolbar -->
     <div class="d-flex flex-wrap align-items-start gap-2">
-      <UiInputText
+      <UiInputSearch
         id="project-search"
         v-model="search"
         label="Search projects"
         hide-label
         placeholder="Search by name, key or description"
         class="flex-grow-1 mb-0"
-      >
-        <template #prefix>
-          <UiIconMaterial icon-code="&#xe8b6;" />
-        </template>
-      </UiInputText>
+      />
       <UiInputSelect
         id="project-sort"
         v-model="sortKey"

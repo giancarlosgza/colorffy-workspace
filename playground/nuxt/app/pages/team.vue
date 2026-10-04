@@ -36,7 +36,7 @@ const memberToRemove = ref<Member | null>(null)
 const isRemoving = ref(false)
 
 const inviteModal = ref<InstanceType<typeof UiModal> | null>(null)
-const inviteForm = reactive({ emails: '', phone: '', role: 'Member', message: '', sendCopy: true })
+const inviteForm = reactive({ emails: [] as string[], phone: '', role: 'Member', message: '', sendCopy: true })
 const inviteErrors = ref<string[]>([])
 const isSending = ref(false)
 
@@ -114,15 +114,16 @@ async function copyInviteLink(): Promise<void> {
 }
 
 function openInvite(): void {
-  Object.assign(inviteForm, { emails: '', phone: '', role: 'Member', message: '', sendCopy: true })
+  Object.assign(inviteForm, { emails: [], phone: '', role: 'Member', message: '', sendCopy: true })
   inviteErrors.value = []
   inviteModal.value?.showDialog()
 }
 
 async function sendInvites(): Promise<void> {
-  const emails = inviteForm.emails.split(/[\s,;]+/).filter(Boolean)
-  if (!emails.length || emails.some(email => !EMAIL_PATTERN.test(email))) {
-    inviteErrors.value = ['Enter one or more valid email addresses, separated by commas.']
+  const emails = inviteForm.emails
+  const invalid = emails.filter(email => !EMAIL_PATTERN.test(email))
+  if (!emails.length || invalid.length) {
+    inviteErrors.value = [invalid.length ? `Check ${invalid.join(', ')}: that isn't a valid email address.` : 'Add at least one email address.']
     return
   }
 
@@ -457,15 +458,16 @@ async function removeMember(): Promise<void> {
 
       <template #body>
         <form id="invite-form" novalidate @submit.prevent="sendInvites">
-          <UiInputText
+          <UiInputTags
             id="invite-emails"
             v-model="inviteForm.emails"
             label="Email addresses"
             placeholder="maria@orbit.app, sam@studio.co"
-            maxlength="500"
+            :max="10"
+            :maxlength="80"
+            remove-label="Remove"
             :error-messages="inviteErrors"
             required
-            autofocus
           />
 
           <div class="row">

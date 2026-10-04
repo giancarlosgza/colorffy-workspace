@@ -133,18 +133,14 @@ function closeMenu(): void {
         <UiNavbarCollapse>
           <UiNavbarNav position="start">
             <UiNavbarItem>
-              <UiInputText
+              <UiInputSearch
                 id="global-search"
                 label="Search"
                 hide-label
                 placeholder="Search Orbit"
                 variant="transparent"
                 rounded
-              >
-                <template #prefix>
-                  <UiIconMaterial icon-code="&#xe8b6;" />
-                </template>
-              </UiInputText>
+              />
             </UiNavbarItem>
           </UiNavbarNav>
 
