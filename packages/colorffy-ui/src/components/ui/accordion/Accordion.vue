@@ -21,7 +21,7 @@ const isOpen = defineModel<boolean>('open', { default: false })
 
 <template>
   <details
-    :id="id ? `accordion-${id}` : undefined"
+    :id="id || undefined"
     :name="name || undefined"
     class="accordion"
     :class="[customClass, size && size !== 'md' ? `accordion-${size}` : null, { 'is-disabled': disabled }]"

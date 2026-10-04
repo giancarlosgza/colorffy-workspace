@@ -140,7 +140,7 @@ function onLinkClick(event: MouseEvent) {
 <template>
   <button
     v-if="!isLink"
-    v-bind="{ title: title || undefined, id: id ? `button-${id}` : undefined }"
+    v-bind="{ title: title || undefined, id: id || undefined }"
     class="btn"
     :class="buttonClasses"
     :type="type"
@@ -168,7 +168,7 @@ function onLinkClick(event: MouseEvent) {
   <component
     :is="linkTag"
     v-else
-    v-bind="{ title: title || undefined, id: id ? `button-${id}` : undefined, ...linkAttrs }"
+    v-bind="{ title: title || undefined, id: id || undefined, ...linkAttrs }"
     class="btn"
     :class="linkClasses"
     @click="onLinkClick"

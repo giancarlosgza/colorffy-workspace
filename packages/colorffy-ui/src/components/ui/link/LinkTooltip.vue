@@ -85,7 +85,7 @@ const buttonClasses = computed(() => {
 })
 const linkProps = computed(() => {
   const baseProps = {
-    id: props.id ? `link-${props.id}` : undefined,
+    id: props.id || undefined,
     title: props.title || undefined,
     class: ['btn', ...buttonClasses.value],
     disabled: props.disabled

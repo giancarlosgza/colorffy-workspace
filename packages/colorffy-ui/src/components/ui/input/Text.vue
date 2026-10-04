@@ -56,7 +56,7 @@ const hasPrefix = computed(() => !!slots.prefix)
 const hasSuffix = computed(() => !!slots.suffix)
 const hasGroup = computed(() => hasPrefix.value || hasSuffix.value)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-text` : undefined))
+const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
 

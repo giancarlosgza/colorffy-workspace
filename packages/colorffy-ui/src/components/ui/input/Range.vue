@@ -29,7 +29,7 @@ const model = defineModel<string | number | null>('modelValue', { default: null 
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-range` : undefined))
+const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 
 const groupClasses = computed(() => [

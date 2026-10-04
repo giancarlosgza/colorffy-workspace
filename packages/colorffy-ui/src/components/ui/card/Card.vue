@@ -81,7 +81,7 @@ const cardClasses = computed(() => {
 <template>
   <component
     :is="resolvedTag"
-    v-bind="{ id: id ? `card-${id}` : undefined, ...linkAttrs }"
+    v-bind="{ id: id || undefined, ...linkAttrs }"
     class="card"
     :class="cardClasses"
   >

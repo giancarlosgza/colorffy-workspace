@@ -30,7 +30,7 @@ const model = defineModel<string | number | Record<string, unknown> | null>('mod
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const selectId = computed(() => (props.id ? `${props.id}-select` : undefined))
+const selectId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
 

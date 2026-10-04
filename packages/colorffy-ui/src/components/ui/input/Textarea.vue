@@ -33,7 +33,7 @@ const model = defineModel<string | null>('modelValue', { default: null })
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-textarea` : undefined))
+const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
 const textareaStyle = computed(() => ({

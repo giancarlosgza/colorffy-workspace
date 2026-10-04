@@ -29,8 +29,8 @@ const model = defineModel<string | null>('modelValue', { default: null })
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputIdColor = computed(() => props.id ? `${props.id}-input-color` : undefined)
-const inputIdText = computed(() => props.id ? `${props.id}-input-text` : undefined)
+const inputIdColor = computed(() => props.id ?? undefined)
+const inputIdText = computed(() => props.id ? `${props.id}-text` : undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 
 const groupClasses = computed(() => [

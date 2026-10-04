@@ -34,7 +34,7 @@ const { formatPhoneNumber } = useTextUtils()
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const baseId = computed(() => props.id ?? undefined)
-const inputId = computed(() => (baseId.value ? `${baseId.value}-input-text` : undefined))
+const inputId = computed(() => baseId.value)
 const describedById = computed(() => (hasErrors.value && baseId.value ? `${baseId.value}-error-0` : undefined))
 const value = computed({
   get: () => {
