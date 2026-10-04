@@ -445,3 +445,128 @@ export interface IComboboxInputEmits {
   (e: 'update:modelValue', value: ComboboxValue | null): void
   (e: 'update', value: ComboboxValue | null): void
 }
+
+/**
+ * Interface props for the MultiSelect component.
+ */
+export interface IMultiSelectInputProps extends IBaseInputProps {
+  /**
+   * The selected values (`v-model`), in the order they were picked: each
+   * option's `optionValue` field, or the option itself when `optionValue` is
+   * not set.
+   * @default []
+   */
+  modelValue?: ComboboxValue[]
+
+  /**
+   * Options to choose from: strings, numbers or objects.
+   * @default []
+   */
+  options?: unknown[]
+
+  /**
+   * Field shown as each option's label. Leave it out for string or number
+   * options.
+   * @default null
+   */
+  optionLabel?: string | null
+
+  /**
+   * Field stored in the model. Leave it out to store the whole option; object
+   * options are then matched by reference.
+   * @default null
+   */
+  optionValue?: string | null
+
+  /**
+   * Boolean field that disables an option.
+   * @default null
+   */
+  optionDisabled?: string | null
+
+  /**
+   * Field that groups the options under headings, in the order each group
+   * first appears.
+   * @default null
+   */
+  optionGroup?: string | null
+
+  /**
+   * When true, typing in the field filters the options, ignoring case and
+   * accents. When false, typing jumps to the first option that starts with
+   * the typed text.
+   * @default true
+   */
+  filterable?: boolean
+
+  /**
+   * When true, shows a button that clears every selected value.
+   * @default false
+   */
+  clearable?: boolean
+
+  /**
+   * Maximum number of values. Once it's reached, the other options are
+   * disabled until one is removed.
+   * @default null
+   */
+  max?: number | null
+
+  /**
+   * Most chips the field shows. With more values than this, the chips give
+   * way to the `maxChipsLabel` summary. Setting it also keeps the field to one
+   * row: long chip labels are cut with an ellipsis and the summary steps aside
+   * while you search. `0` always shows the summary.
+   * @default null
+   */
+  maxChips?: number | null
+
+  /**
+   * Summary shown instead of the chips once there are more values than
+   * `maxChips`; `{count}` is replaced with the number of values.
+   * @default '{count} selected'
+   */
+  maxChipsLabel?: string
+
+  /**
+   * Text shown in the list when no option matches.
+   * @default 'No results'
+   */
+  emptyText?: string
+
+  /**
+   * Accessible name of the clear button.
+   * @default 'Clear selection'
+   */
+  clearLabel?: string
+
+  /**
+   * Accessible name of the button that opens the list.
+   * @default 'Show options'
+   */
+  toggleLabel?: string
+
+  /**
+   * Start of each chip's remove button name, followed by the option's label
+   * (`'Remove Maya Chen'`).
+   * @default 'Remove'
+   */
+  removeLabel?: string
+}
+
+/**
+ * Interface emits for the MultiSelect component.
+ */
+export interface IMultiSelectInputEmits {
+  (e: 'update:modelValue', value: ComboboxValue[]): void
+  (e: 'update', value: ComboboxValue[]): void
+  /**
+   * A value was selected.
+   */
+  (e: 'add', value: ComboboxValue): void
+  /**
+   * A value was removed, from the list, its chip, or Backspace on an empty
+   * field.
+   */
+  (e: 'remove', value: ComboboxValue): void
+}
