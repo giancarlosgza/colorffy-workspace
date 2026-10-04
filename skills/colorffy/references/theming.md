@@ -25,10 +25,9 @@ Theme colors and fonts are **not** SCSS-configurable (the old `$primary` … `$m
 ```scss
 // assets/scss/abstracts/_variables.scss
 @forward '@colorffy/css/scss/abstracts/variables' with (
-  $card-border-radius: 8px,
-  $form-border-radius: 4px,
-  $button-border-radius: 4px,
-  $dialog-border-radius: 8px
+  $shape-container: 8px,  // default of --cffy-shape-container
+  $shape-field: 4px,      // default of --cffy-shape-field
+  $shape-control: 4px     // default of --cffy-shape-control
 );
 ```
 
@@ -184,7 +183,8 @@ $fw-800: 800; // Extrabold
 ### Shape, Weight & Motion Tokens (CSS Custom Properties)
 Components read these `:root` tokens, so they can be overridden at runtime (globally or per subtree) without recompiling. The SCSS variables above set their defaults.
 
-- Radius: `--cffy-radius-none` (0) · `--cffy-radius-sm` (6px) · `--cffy-radius-md` (8px) · `--cffy-radius-lg` (12px) · `--cffy-radius-xl` (25px) · `--cffy-radius-full` (50px)
+- Radius: `--cffy-radius-none` (0) · `--cffy-radius-sm` (6px) · `--cffy-radius-md` (8px) · `--cffy-radius-lg` (12px) · `--cffy-radius-xl` (25px) · `--cffy-radius-full` (9999px)
+- Shape roles (what components read; set these to reshape the whole UI): `--cffy-shape-container` (`--cffy-radius-lg`: cards, pane content, dialogs, popovers, popover menus, dropdowns, listboxes, alerts, accordions, list groups) · `--cffy-shape-field` (`--cffy-radius-md`: text fields, selects, tags, input groups, color field, file drop zone; checkboxes half, max `--cffy-radius-sm`) · `--cffy-shape-control` (`--cffy-radius-md`: buttons, chips, toggle buttons, sidebar items; tab pills 1.5×, FAB 2×). Nested shapes derive from them (menu items half the panel, grouped list/accordion inner corners ≤ container); textarea, file drop zone and toggle tiles are capped at the container radius; mobile sheets use 2× container on top corners. Badges, avatars, pagination and segmented controls stay `--cffy-radius-full`. Presets: Sharp = all three `0`; Pill = container `--cffy-radius-xl`, field and control `--cffy-radius-full`. A component hook (`--cffy-card-radius`) still overrides its role. SCSS: `$shape-container` / `$shape-field` / `$shape-control` set the defaults; `$card-border-radius`, `$dialog-border-radius`, `$form-border-radius`, `$button-border-radius` follow their role unless set, and a component set to a different value is compiled in and no longer follows the role at runtime
 - Border width: `--cffy-border-width-sm` (1px) · `--cffy-border-width-md` (2px)
 - Font weight: `--cffy-fw-400` … `--cffy-fw-800`
 - Easing: `--cffy-ease-decelerate` (enter), `--cffy-ease-accelerate` (exit), plus `linear()` curves `--cffy-ease-spring`, `--cffy-ease-overshoot-soft`, `--cffy-ease-emphasized`, `--cffy-ease-bounce`, `--cffy-ease-power-in`, `--cffy-ease-power-in-out`, `--cffy-ease-sine-in-out`. Under `prefers-reduced-motion: reduce`, spring / overshoot-soft / bounce resolve to `--cffy-ease-decelerate`
@@ -289,7 +289,7 @@ $rounded-sm:   map.get($border-radius, 6);
 $rounded-md:   map.get($border-radius, 8);
 $rounded-lg:   map.get($border-radius, 12);
 $rounded-xl:   map.get($border-radius, 25);
-$rounded-full: map.get($border-radius, 50);
+$rounded-full: 9999px;
 ```
 
 ## Shadows (CSS Custom Properties)
@@ -338,11 +338,10 @@ $custom-rounded-sm: 4px;
 $custom-rounded-md: 8px;
 
 @forward '@colorffy/css/scss/abstracts/variables' with (
-    // Component overrides (brand colors are CSS tokens, see above)
-    $card-border-radius: $custom-rounded-sm,
-    $form-border-radius: $custom-rounded-md,
-    $button-border-radius: $custom-rounded-sm,
-    $dialog-border-radius: $custom-rounded-md
+    // Shape roles (brand colors are CSS tokens, see above)
+    $shape-container: $custom-rounded-sm,
+    $shape-field: $custom-rounded-md,
+    $shape-control: $custom-rounded-sm
 );
 ```
 

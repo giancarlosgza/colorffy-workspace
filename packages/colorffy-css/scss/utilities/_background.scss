@@ -188,7 +188,7 @@
   .pane-content {
     --_pane-content-gutter-inline: 1rem;
     --_pane-content-gutter-block: 1rem;
-    --_pane-content-radius: #{v.$card-border-radius};
+    --_pane-content-radius: #{f.shape(container, v.$card-border-radius)};
     --_pane-content-min-height: auto;
 
     background-color: var(--cffy-surface-body-pane);

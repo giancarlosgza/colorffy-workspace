@@ -85,7 +85,7 @@ $indicator-max-items: 16;
 
     // Tabs pill
     &.tabs-pills {
-      --_tabs-pills-radius: var(--cffy-tabs-pills-radius, var(--cffy-radius-lg));
+      --_tabs-pills-radius: var(--cffy-tabs-pills-radius, calc(var(--cffy-shape-control) * 1.5));
       --_tabs-radius: calc(var(--_tabs-pills-radius) + calc(var(--_tabs-gap) - .15rem));
       --_tabs-bg-color: var(--cffy-tabs-pills-bg-color, var(--cffy-surface-container-low));
       --_tabs-pills-indicator-bg-color: var(--cffy-tabs-pills-indicator-bg-color, var(--cffy-surface-body-pane));

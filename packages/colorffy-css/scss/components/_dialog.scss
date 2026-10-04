@@ -1,6 +1,7 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 @use "../utilities/mask";
+@use "../abstracts/functions" as f;
 
 @layer components.dialog {
   // ==========================================================================
@@ -10,7 +11,7 @@
     --_dialog-bg-color: var(--cffy-dialog-bg-color, var(--cffy-surface-overlay));
     --_dialog-color: var(--cffy-dialog-color, var(--cffy-on-background));
     --_dialog-border-color: var(--cffy-dialog-border-color, var(--cffy-outline-overlay));
-    --_dialog-radius: var(--cffy-dialog-radius, #{v.$dialog-border-radius});
+    --_dialog-radius: var(--cffy-dialog-radius, #{f.shape(container, v.$dialog-border-radius)});
     --_dialog-shadow: var(--cffy-dialog-shadow, var(--cffy-shadow-xl));
     --_dialog-padding: var(--cffy-dialog-padding, var(--cffy-space-16));
     --_dialog-spacing: var(--cffy-dialog-spacing, calc(var(--cffy-space-16) + var(--cffy-space-4)));
@@ -378,7 +379,7 @@
       &:is(.dialog-modal) {
         --_dialog-easing: var(--cffy-ease-decelerate);
         --_dialog-duration: var(--cffy-duration-500);
-        --_dialog-radius: var(--cffy-radius-xl) var(--cffy-radius-xl) 0 0;
+        --_dialog-radius: calc(#{f.shape(container, v.$dialog-border-radius)} * 2) calc(#{f.shape(container, v.$dialog-border-radius)} * 2) 0 0;
 
         /* 0. Not visible default state */
         scale: unset;
@@ -421,7 +422,7 @@
       }
 
       &:is(.dialog-confirm) {
-        --_dialog-radius: var(--cffy-radius-xl);
+        --_dialog-radius: calc(#{f.shape(container, v.$dialog-border-radius)} * 2);
 
         width: clamp(var(--cffy-container-2xs), 90vw, var(--cffy-container-sm));
         height: fit-content;

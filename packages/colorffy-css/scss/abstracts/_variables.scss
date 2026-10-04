@@ -224,12 +224,16 @@ $rounded-sm: map.get($border-radius, 6);
 $rounded-md: map.get($border-radius, 8);
 $rounded-lg: map.get($border-radius, 12);
 $rounded-xl: map.get($border-radius, 25);
-$rounded-full: map.get($border-radius, 50);
+$rounded-full: 9999px;
 
-$card-border-radius: $rounded-lg !default;
-$form-border-radius: $rounded-md !default;
-$button-border-radius: $rounded-md !default;
-$dialog-border-radius: $rounded-lg !default;
+$shape-container: $rounded-lg !default;
+$shape-field: $rounded-md !default;
+$shape-control: $rounded-md !default;
+
+$card-border-radius: $shape-container !default;
+$form-border-radius: $shape-field !default;
+$button-border-radius: $shape-control !default;
+$dialog-border-radius: $shape-container !default;
 
 $form-border: 1px;
 $border-sm: 1px;

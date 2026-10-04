@@ -17,7 +17,7 @@
     & .accordion {
       --_accordion-bg-color: var(--cffy-accordion-bg-color, var(--cffy-surface-accordion));
       --_accordion-color: var(--cffy-accordion-color, var(--cffy-on-background));
-      --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-radius-lg));
+      --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-shape-container));
       --_accordion-border-color: var(--cffy-accordion-border-color, transparent);
       --_accordion-padding: var(--cffy-accordion-padding, var(--cffy-space-14));
       --_accordion-icon-gap: 0.625rem;
@@ -48,15 +48,15 @@
 
       // Border radius
       &:is(:first-child) {
-        --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-radius-lg)) var(--cffy-accordion-radius, var(--cffy-radius-lg)) var(--cffy-radius-sm) var(--cffy-radius-sm);
+        --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-shape-container)) var(--cffy-accordion-radius, var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container));
       }
 
       &:is(:last-child) {
-        --_accordion-radius: var(--cffy-radius-sm) var(--cffy-radius-sm) var(--cffy-accordion-radius, var(--cffy-radius-lg)) var(--cffy-accordion-radius, var(--cffy-radius-lg));
+        --_accordion-radius: min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) var(--cffy-accordion-radius, var(--cffy-shape-container)) var(--cffy-accordion-radius, var(--cffy-shape-container));
       }
 
       &:not(:first-child, :last-child) {
-        --_accordion-radius: var(--cffy-radius-md);
+        --_accordion-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
       }
 
       // Details content
@@ -184,7 +184,7 @@
 
     &:not(:has(.accordion:nth-child(2))) {
       .accordion:nth-child(1) {
-        --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-radius-lg));
+        --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-shape-container));
       }
     }
 

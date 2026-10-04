@@ -318,7 +318,7 @@
   .popover-menu-container {
     --_popover-menu-bg-color: var(--cffy-popover-menu-bg-color, var(--cffy-surface-overlay));
     --_popover-menu-color: var(--cffy-popover-menu-color, var(--cffy-on-background));
-    --_popover-menu-radius: var(--cffy-popover-menu-radius, #{v.$dialog-border-radius});
+    --_popover-menu-radius: var(--cffy-popover-menu-radius, #{f.shape(container, v.$dialog-border-radius)});
     --_popover-menu-border-color: var(--cffy-popover-menu-border-color, var(--cffy-outline-overlay));
     --_popover-menu-shadow: var(--cffy-popover-menu-shadow, var(--cffy-shadow-xl));
     --_popover-menu-padding: var(--cffy-popover-menu-padding, var(--cffy-space-6));

@@ -43,7 +43,7 @@
     --_list-icon-bg-color: var(--cffy-list-icon-bg-color, var(--cffy-surface-container-lowest));
     --_list-icon-color: var(--cffy-list-icon-color, var(--cffy-on-background));
     --_list-arrow-color: var(--cffy-list-arrow-color, var(--cffy-muted-a10));
-    --_list-item-radius: var(--cffy-list-item-radius, var(--cffy-radius-md));
+    --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
     --_list-easing: var(--cffy-list-easing, var(--cffy-ease-decelerate));
     --_list-duration: var(--cffy-list-duration, var(--cffy-duration-200));
 
@@ -71,15 +71,15 @@
 
       // Border radius
       &:is(:first-child) {
-        --_list-item-radius: var(--cffy-list-radius, var(--cffy-radius-lg)) var(--cffy-list-radius, var(--cffy-radius-lg)) var(--cffy-radius-sm) var(--cffy-radius-sm);
+        --_list-item-radius: var(--cffy-list-radius, var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container));
       }
 
       &:is(:last-child) {
-        --_list-item-radius: var(--cffy-radius-sm) var(--cffy-radius-sm) var(--cffy-list-radius, var(--cffy-radius-lg)) var(--cffy-list-radius, var(--cffy-radius-lg));
+        --_list-item-radius: min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container));
       }
 
       &:not(:first-child, :last-child) {
-        --_list-item-radius: var(--cffy-list-item-radius, var(--cffy-radius-md));
+        --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       }
 
       // Item
@@ -197,7 +197,7 @@
 
     &:not(:has(.list-group-item:nth-child(2))) {
       .list-group-item:nth-child(1) {
-        --_list-item-radius: var(--cffy-list-item-radius, var(--cffy-radius-md));
+        --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       }
     }
 

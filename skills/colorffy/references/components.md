@@ -550,7 +550,7 @@ Groups multiple buttons (including UiButtonMenu / UiButtonTooltip) into one layo
 - `customClass` (string | null) - Custom CSS classes
 
 **SCSS Styling Behavior:**
-- Under `.btn-group-connected`, `.btn-icon` buttons fall back to `v.$button-border-radius` (instead of a circle) to align with their neighbors.
+- Under `.btn-group-connected`, `.btn-icon` buttons fall back to the control shape, `--cffy-shape-control` (instead of a circle), to align with their neighbors.
 - Under `.btn-group-connected.btn-group-joined` (horizontal and vertical), the gap is `0` and every button gets `--_btn-radius: 0`; the group's outer corners keep the connected radius.
 - A group whose buttons are all `.btn-text` uses a `--cffy-space-4` gap (text buttons have no visible edge); any other variant in the group keeps the `--cffy-btn-group-gap` default.
 

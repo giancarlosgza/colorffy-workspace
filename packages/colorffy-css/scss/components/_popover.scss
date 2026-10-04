@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.popover {
   // ==========================================================================
@@ -10,7 +11,7 @@
     --_popover-color: var(--cffy-popover-color, var(--cffy-on-background));
     --_popover-border-color: var(--cffy-popover-border-color, var(--cffy-outline-surface));
     --_popover-shadow: var(--cffy-popover-shadow, var(--cffy-shadow-lg));
-    --_popover-radius: var(--cffy-popover-radius, #{v.$dialog-border-radius});
+    --_popover-radius: var(--cffy-popover-radius, #{f.shape(container, v.$dialog-border-radius)});
     --_popover-max-width: var(--cffy-popover-max-width, var(--cffy-container-xs));
     --_popover-max-height: var(--cffy-popover-max-height, 30rem);
     --_popover-spacing: var(--cffy-popover-spacing, var(--cffy-space-16));

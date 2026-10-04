@@ -14,7 +14,7 @@
     --_card-color: var(--cffy-card-color, var(--cffy-on-background));
     --_card-border-width: var(--cffy-card-border-width, var(--cffy-border-width-sm));
     --_card-border-color: var(--cffy-card-border-color, transparent);
-    --_card-radius: var(--cffy-card-radius, #{v.$card-border-radius});
+    --_card-radius: var(--cffy-card-radius, #{f.shape(container, v.$card-border-radius)});
     --_card-shadow: var(--cffy-card-shadow, none);
     --_card-title-font-size: var(--cffy-card-title-font-size, var(--cffy-fs-base));
     --_card-title-font-weight: var(--cffy-card-title-font-weight, var(--cffy-fw-700));

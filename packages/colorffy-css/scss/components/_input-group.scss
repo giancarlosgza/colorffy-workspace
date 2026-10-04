@@ -1,11 +1,12 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 
 @layer components.input-group {
   // ==========================================================================
   // INPUT GROUP COMPONENT
   // ==========================================================================
   .input-group {
-    --_input-group-radius: var(--cffy-input-radius, var(--cffy-radius-md));
+    --_input-group-radius: var(--cffy-input-radius, #{f.shape(field, v.$form-border-radius)});
     --_input-group-bg-color: var(--cffy-input-group-bg-color, var(--cffy-input-bg-color, transparent));
     --_input-group-border-width: var(--cffy-input-border-width, #{v.$form-border});
     --_input-group-border-color: var(--cffy-input-border-color, var(--cffy-outline-text-field));

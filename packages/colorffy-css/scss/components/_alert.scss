@@ -7,7 +7,7 @@
   // ALERT CONTAINER & TOAST/SNACKBAR PLACEMENT
   // ==========================================================================
   .alert-container {
-    --_alert-radius: var(--cffy-alert-radius, var(--cffy-radius-lg));
+    --_alert-radius: var(--cffy-alert-radius, var(--cffy-shape-container));
 
     border-radius: var(--_alert-radius);
     container: AlertContainer / inline-size;
@@ -116,7 +116,7 @@
     --_alert-icon-color: var(--cffy-alert-icon-color, var(--cffy-on-background));
     --_alert-bg-color: var(--cffy-alert-bg-color, var(--cffy-surface-container-low));
     --_alert-border-color: var(--cffy-alert-border-color, var(--cffy-surface-container-low));
-    --_alert-radius: var(--cffy-alert-radius, var(--cffy-radius-lg));
+    --_alert-radius: var(--cffy-alert-radius, var(--cffy-shape-container));
     --_alert-font-size: var(--cffy-alert-font-size, var(--cffy-fs-3xs));
     --_alert-font-weight: var(--cffy-alert-font-weight, var(--cffy-fw-400));
     --_alert-icon-size: var(--cffy-alert-icon-size, 1.75em);

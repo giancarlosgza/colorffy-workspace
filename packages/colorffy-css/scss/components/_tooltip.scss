@@ -22,7 +22,7 @@
         color: var(--_tooltip-color);
         padding: var(--_tooltip-padding);
         box-shadow: var(--cffy-tooltip-shadow, none);
-        border-radius: var(--cffy-tooltip-radius, var(--cffy-radius-md));
+        border-radius: var(--cffy-tooltip-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
         font-size: var(--cffy-tooltip-font-size, .6875rem);
         font-weight: var(--cffy-tooltip-font-weight, var(--cffy-fw-500));
 

@@ -21,7 +21,7 @@
     --_sidebar-item-color: var(--cffy-sidebar-item-color, color-mix(in oklab, var(--cffy-muted-a10) 37%, var(--_sidebar-color) 43%));
     --_sidebar-item-bg-color: transparent;
     --_sidebar-item-shadow: none;
-    --_sidebar-item-radius: var(--cffy-sidebar-item-radius, #{v.$button-border-radius});
+    --_sidebar-item-radius: var(--cffy-sidebar-item-radius, #{f.shape(control, v.$button-border-radius)});
     --_sidebar-item-font-size: var(--cffy-sidebar-item-font-size, var(--cffy-fs-3xs));
     --_sidebar-item-font-weight: var(--cffy-sidebar-item-font-weight, var(--cffy-fw-500));
     --_sidebar-item-active-icon-color: var(--cffy-sidebar-item-active-icon-color, var(--cffy-primary-a10));

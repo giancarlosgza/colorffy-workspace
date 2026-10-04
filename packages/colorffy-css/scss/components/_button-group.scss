@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.buttons {
   // ==========================================================================
@@ -50,7 +51,7 @@
 
       // Prevent circular icon buttons when grouped; they should match standard button shape
       .btn-icon {
-        --_btn-radius: #{v.$button-border-radius};
+        --_btn-radius: #{f.shape(control, v.$button-border-radius)};
       }
 
       // Handle v-popper wrapped buttons
@@ -159,7 +160,7 @@
 
     & .toggle-btn {
       --_toggle-btn-padding: var(--cffy-toggle-btn-padding, var(--cffy-space-12));
-      --_toggle-btn-radius: var(--cffy-toggle-btn-radius, #{v.$button-border-radius});
+      --_toggle-btn-radius: var(--cffy-toggle-btn-radius, min(#{f.shape(control, v.$button-border-radius)}, var(--cffy-shape-container)));
       --_toggle-btn-bg-color: var(--cffy-toggle-btn-bg-color, transparent);
       --_toggle-btn-color: var(--cffy-toggle-btn-color, var(--cffy-on-background));
       --_toggle-btn-subtitle-color: var(--cffy-toggle-btn-subtitle-color, var(--cffy-muted-a10));
@@ -189,7 +190,7 @@
         --_toggle-btn-bg-color: var(--cffy-toggle-btn-active-bg-color, var(--cffy-surface-container-low));
         --_toggle-btn-border-color: var(--cffy-toggle-btn-active-border-color, var(--cffy-primary-a10));
         --_toggle-btn-border-width: var(--cffy-border-width-sm);
-        --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
+        --_toggle-btn-radius: min(calc(#{f.shape(control, v.$button-border-radius)} * 3), calc(var(--cffy-shape-container) * 2));
 
         box-shadow: inset 0 0 0 1px var(--_toggle-btn-border-color);
       }
@@ -206,7 +207,7 @@
           --_toggle-btn-bg-color: var(--cffy-surface-disabled);
           --_toggle-btn-border-color: var(--cffy-outline-button);
           --_toggle-btn-border-width: var(--cffy-border-width-sm);
-          --_toggle-btn-radius: #{v.$button-border-radius};
+          --_toggle-btn-radius: min(#{f.shape(control, v.$button-border-radius)}, var(--cffy-shape-container));
         }
       }
 

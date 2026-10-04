@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.prime {
   // ==========================================================================
@@ -12,7 +13,7 @@
   .p-multiselect {
     --p-multiselect-background: transparent;
     --p-multiselect-border-color: var(--cffy-outline-text-field);
-    --p-multiselect-border-radius: #{v.$form-border-radius};
+    --p-multiselect-border-radius: #{f.shape(field, v.$form-border-radius)};
     --p-multiselect-shadow: none;
 
     background: inherit;
@@ -44,7 +45,7 @@
     --p-multiselect-overlay-background: var(--cffy-surface-overlay);
     --p-multiselect-overlay-color: var(--cffy-on-background);
     --p-multiselect-overlay-border-color: var(--cffy-outline-surface);
-    --p-multiselect-overlay-border-radius: #{v.$form-border-radius};
+    --p-multiselect-overlay-border-radius: #{f.shape(field, v.$form-border-radius)};
     --p-multiselect-overlay-shadow: var(--cffy-shadow-md);
 
     margin-top: var(--cffy-space-6);
@@ -141,7 +142,7 @@
   .p-select {
     --p-select-background: transparent;
     --p-select-border-color: var(--cffy-outline-text-field);
-    --p-select-border-radius: #{v.$form-border-radius};
+    --p-select-border-radius: #{f.shape(field, v.$form-border-radius)};
     --p-select-shadow: none;
 
     .p-select-label {
@@ -163,7 +164,7 @@
     --p-select-overlay-background: var(--cffy-surface-overlay);
     --p-select-overlay-color: var(--cffy-on-background);
     --p-select-overlay-border-color: var(--cffy-outline-surface);
-    --p-select-overlay-border-radius: #{v.$form-border-radius};
+    --p-select-overlay-border-radius: #{f.shape(field, v.$form-border-radius)};
     --p-select-overlay-shadow: var(--cffy-shadow-md);
 
     margin-top: var(--cffy-space-6);

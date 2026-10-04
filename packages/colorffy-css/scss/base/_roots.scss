@@ -186,6 +186,11 @@
     --cffy-radius-xl: #{v.$rounded-xl};
     --cffy-radius-full: #{v.$rounded-full};
 
+    /* shape roles */
+    --cffy-shape-container: #{v.$shape-container};
+    --cffy-shape-field: #{v.$shape-field};
+    --cffy-shape-control: #{v.$shape-control};
+
     /* border widths */
     --cffy-border-width-sm: #{v.$border-sm};
     --cffy-border-width-md: #{v.$border-md};

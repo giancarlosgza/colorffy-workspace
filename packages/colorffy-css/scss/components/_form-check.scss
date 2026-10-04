@@ -1,5 +1,6 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 
 @layer components.form-check {
   // ==========================================================================
@@ -95,7 +96,7 @@
 
     // Checkbox exclusive radius and checked state
     & .form-check-input[type="checkbox"] {
-      border-radius: var(--cffy-input-check-radius, #{map.get(v.$border-radius, 4)});
+      border-radius: var(--cffy-input-check-radius, min(calc(#{f.shape(field, v.$form-border-radius)} / 2), var(--cffy-radius-sm)));
 
       &:is(:checked) {
         --_input-check-checked-icon: var(--cffy-form-checkbox-icon);

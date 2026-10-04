@@ -15,7 +15,7 @@
       --_btn-border: var(--cffy-border-width-sm);
       --_btn-border-color: transparent;
       --_btn-gap: 0;
-      --_btn-radius: var(--cffy-btn-radius, #{v.$button-border-radius});
+      --_btn-radius: var(--cffy-btn-radius, #{f.shape(control, v.$button-border-radius)});
       --_btn-padding-inline: var(--cffy-btn-padding-inline, var(--cffy-space-12));
       --_btn-padding-block: var(--cffy-btn-padding-block, var(--cffy-space-6));
       --_btn-height: var(--cffy-btn-height, 36px);
@@ -279,7 +279,7 @@
         --_btn-bg-color: var(--cffy-chip-bg-color, transparent);
         --_btn-color: var(--cffy-chip-color, var(--cffy-on-background));
         --_btn-border-color: var(--cffy-chip-border-color, var(--cffy-outline-button));
-        --_btn-radius: var(--cffy-chip-radius, var(--cffy-radius-md));
+        --_btn-radius: var(--cffy-chip-radius, var(--cffy-shape-control));
         --_btn-shadow: none;
         --_chip-state: 0%;
 
@@ -443,7 +443,7 @@
         --_btn-duration: var(--cffy-duration-300);
         --_btn-columns: 1fr;
         --_btn-gap: 0;
-        --_btn-radius: calc(#{v.$button-border-radius} + 8px);
+        --_btn-radius: calc(#{f.shape(control, v.$button-border-radius)} * 2);
         --_btn-shadow: var(--cffy-shadow-lg);
 
         width: fit-content;
