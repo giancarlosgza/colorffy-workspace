@@ -31,6 +31,8 @@ npm install @colorffy/ui @colorffy/css
 npm install @vueuse/components floating-vue
 ```
 
+`@colorffy/css` is an optional peer dependency of `@colorffy/ui`: keep both on the same major version (3.x), since the components set `--cffy-*` variables that only CSS 3.x reads.
+
 ```typescript
 // main.ts
 import { createApp } from 'vue'
