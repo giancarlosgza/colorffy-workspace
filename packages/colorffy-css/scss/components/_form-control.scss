@@ -216,7 +216,7 @@
         }
       }
 
-      &:has(> .form-tags-input:disabled) {
+      &:has(> .form-tags-input:is(:disabled, [aria-disabled="true"])) {
         --_input-bg-color: var(--cffy-surface-disabled);
         --_input-color: var(--cffy-muted-a10);
         --_input-border-color: var(--cffy-surface-disabled);

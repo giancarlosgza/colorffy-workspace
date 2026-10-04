@@ -157,7 +157,7 @@
   // ==========================================================================
   // COMBOBOX FIELD
   // ==========================================================================
-  .combobox {
+  :is(.combobox, .multiselect) {
     .combobox-toggle i {
       transition: rotate var(--cffy-duration-150) var(--cffy-ease-decelerate);
     }
@@ -170,7 +170,9 @@
       --_btn-bg-color: transparent;
       --_btn-border-color: transparent;
     }
+  }
 
+  .combobox {
     // Select-only field
     .combobox-select {
       display: flex;
@@ -187,6 +189,72 @@
     }
 
     .combobox-placeholder {
+      color: var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%));
+    }
+  }
+
+  // ==========================================================================
+  // MULTISELECT FIELD
+  // ==========================================================================
+  .multiselect {
+    padding-inline-end: var(--_input-height);
+
+    &:has(.multiselect-action + .multiselect-action) {
+      padding-inline-end: calc(var(--_input-height) * 2);
+    }
+
+    // Actions on the first row
+    .multiselect-actions {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      display: flex;
+      height: calc(var(--_input-height) - 2 * var(--_input-border-width));
+    }
+
+    .multiselect-action {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      aspect-ratio: 1;
+    }
+
+    .multiselect-count {
+      white-space: nowrap;
+    }
+
+    // One row
+    &.multiselect-single-row {
+      flex-wrap: nowrap;
+      overflow: hidden;
+
+      .btn-chip {
+        --_btn-columns: minmax(4ch, 1fr) auto;
+      }
+
+      .chip-content {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .form-tags-input {
+        flex: 1 1 0;
+        min-width: 2rem;
+      }
+    }
+
+    // Select-only field
+    .multiselect-select {
+      display: inline-flex;
+      align-items: center;
+      cursor: default;
+      user-select: none;
+    }
+
+    .multiselect-placeholder {
       color: var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%));
     }
   }
