@@ -39,7 +39,9 @@ const selectedModel = defineModel<(string | number)[]>('selected', { default: ()
 /** Data */
 const sortKey = ref(props.defaultSortKey)
 const sortOrder = ref(props.defaultSortOrder)
-const defaultHiddenKeys = computed(() => props.columns.filter(col => col.hidden).map(col => col.key))
+// An unlabeled column can't be named in the column manager, so it isn't hideable by default
+const hideableColumns = computed(() => props.columns.filter(col => col.hideable ?? !!col.label?.trim()))
+const defaultHiddenKeys = computed(() => hideableColumns.value.filter(col => col.hidden).map(col => col.key))
 const managedHiddenColumns = ref<string[]>([...defaultHiddenKeys.value])
 
 watch(defaultHiddenKeys, (val) => {
@@ -72,7 +74,7 @@ const toolbarId = useId()
 const hasToolbarActions = computed(() => defaultHiddenKeys.value.length > 0 || props.columnManager || !!slots['actions-start'] || !!slots['actions-end'])
 const hasToolbar = computed(() => hasToolbarActions.value || !!slots.controls)
 const columnSlotProps = computed<IDatatableColumnSlotProps>(() => ({
-  columns: props.columns,
+  columns: hideableColumns.value,
   allVisible: areAllColumnsVisible.value,
   isVisible: isColumnVisible,
   isLocked: isLastVisibleColumn,
@@ -166,8 +168,8 @@ function sortBy(key: string) {
     sortOrder.value = 'asc'
   }
 }
-function alignClass(column: IDatatableColumn) {
-  return column.align ? `text-${column.align}` : undefined
+function cellClasses(column: IDatatableColumn) {
+  return [column.align ? `text-${column.align}` : null, { 'table-col-fit': column.fit }]
 }
 function toggleShowAllColumns() {
   managedHiddenColumns.value = managedHiddenColumns.value.length > 0 ? [] : [...defaultHiddenKeys.value]
@@ -176,15 +178,19 @@ function toggleColumnVisibility(key: string) {
   const index = managedHiddenColumns.value.indexOf(key)
   if (index > -1) {
     managedHiddenColumns.value.splice(index, 1)
-  } else if (visibleColumns.value.length > 1) {
+  } else if (visibleHideableCount() > 1 && hideableColumns.value.some(col => col.key === key)) {
     managedHiddenColumns.value.push(key)
   }
 }
 function isColumnVisible(key: string) {
   return !managedHiddenColumns.value.includes(key)
 }
+// Always-visible columns don't count, so at least one data column stays on screen
+function visibleHideableCount() {
+  return hideableColumns.value.filter(col => isColumnVisible(col.key)).length
+}
 function isLastVisibleColumn(key: string) {
-  return visibleColumns.value.length === 1 && isColumnVisible(key)
+  return visibleHideableCount() === 1 && isColumnVisible(key)
 }
 </script>
 
@@ -244,7 +250,7 @@ function isLastVisibleColumn(key: string) {
             </template>
             <template #menu>
               <UiButtonMenuItem
-                v-for="column in columns"
+                v-for="column in hideableColumns"
                 :id="`${toolbarId}-column-${column.key}`"
                 :key="column.key"
                 :item-text="column.label"
@@ -298,14 +304,17 @@ function isLastVisibleColumn(key: string) {
               v-for="column in visibleColumns"
               :key="column.key"
               scope="col"
-              :class="[{ sortable: isSortable(column), sorted: sortKey === column.key }, alignClass(column), column.thClass]"
+              :class="[{ sortable: isSortable(column), sorted: sortKey === column.key }, cellClasses(column), column.thClass]"
               :tabindex="isSortable(column) ? 0 : undefined"
               :aria-sort="ariaSortFor(column)"
               @click="isSortable(column) ? sortBy(column.key) : undefined"
               @keydown.enter.prevent="isSortable(column) ? sortBy(column.key) : undefined"
               @keydown.space.prevent="isSortable(column) ? sortBy(column.key) : undefined"
             >
-              {{ column.label }}
+              <span v-if="column.hideLabel" class="visually-hidden">{{ column.label }}</span>
+              <template v-else>
+                {{ column.label }}
+              </template>
               <template v-if="isSortable(column)">
                 <UiIconMaterial
                   v-if="sortKey === column.key"
@@ -353,7 +362,7 @@ function isLastVisibleColumn(key: string) {
             <td
               v-for="column in visibleColumns"
               :key="column.key"
-              :class="[alignClass(column), column.tdClass]"
+              :class="[cellClasses(column), column.tdClass]"
             >
               <slot :name="`cell-${column.key}`" :item="item">
                 {{ item[column.key] }}

@@ -21,9 +21,32 @@ export interface IDatatableColumn {
   key: string
 
   /**
-   * Display label rendered in the column header.
+   * Display label rendered in the column header and listed in the column
+   * manager. Give utility columns (actions, toggles) a label too and set
+   * `hideLabel`, so screen readers can still name the column.
    */
   label: string
+
+  /**
+   * When true, the label stays in the header for screen readers but is hidden
+   * visually.
+   * @default false
+   */
+  hideLabel?: boolean
+
+  /**
+   * When false, the column always shows: it is left out of the column manager
+   * and the show-all toggle, and ignores `hidden`. Defaults to false for a
+   * column with an empty `label`, true otherwise.
+   */
+  hideable?: boolean
+
+  /**
+   * When true, the column is only as wide as its content and doesn't wrap,
+   * for icon buttons, toggles or checkboxes.
+   * @default false
+   */
+  fit?: boolean
 
   /**
    * When false, the column cannot be sorted. Falls back to the table-level
@@ -67,7 +90,8 @@ export type DatatableToolbarButton = Partial<Pick<IButtonProps, 'variant' | 'col
  */
 export interface IDatatableColumnSlotProps {
   /**
-   * All column definitions, including hidden ones.
+   * The columns the user can show or hide, including hidden ones. Columns that
+   * aren't hideable are left out.
    */
   columns: IDatatableColumn[]
 

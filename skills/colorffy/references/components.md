@@ -1576,9 +1576,12 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 
 **Column (`IDatatableColumn`):**
 - `key` (string) - Data field on each row; also the sort key and `cell-<key>` slot name
-- `label` (string) - Header text shown to the user (decoupled from `key` for i18n)
+- `label` (string) - Header text shown to the user (decoupled from `key` for i18n); give utility columns one too
+- `hideLabel` (boolean) - Keeps the label for screen readers but hides it in the header (actions, toggles)
 - `sortable` (boolean) - Per-column sort opt-out; defaults to the table-level `sortable`
 - `hidden` (boolean) - Starts hidden; toggleable via the column toggle / column manager
+- `hideable` (boolean) - `false` keeps the column on screen and out of the column manager and show-all toggle; defaults to `false` for an empty `label`, `true` otherwise
+- `fit` (boolean) - Column only as wide as its content, no wrapping (icon buttons, checkboxes)
 - `align` ('start' | 'center' | 'end') - Text alignment for the header and cells
 - `thClass` / `tdClass` (string) - Custom classes for the header / body cells
 
@@ -1604,7 +1607,9 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `cell-<key>` (`{ item }`) - Custom cell
 - `controls` - Left side of the toolbar (search, filters, bulk actions)
 - `actions-start` / `actions-end` - Your buttons before / after the built-in ones, in the same button group
-- `column-toggle` / `column-manager` - Replace a built-in button; scoped with `{ columns, allVisible, isVisible(key), isLocked(key), toggle(key), toggleAll() }`
+- `column-toggle` / `column-manager` - Replace a built-in button; scoped with `{ columns, allVisible, isVisible(key), isLocked(key), toggle(key), toggleAll() }`, where `columns` lists the hideable columns
+
+Utility column: `{ key: 'actions', label: 'Actions', hideLabel: true, hideable: false, fit: true, sortable: false, align: 'end' }`. The column manager always keeps one hideable column visible.
 
 The toolbar renders when any of these slots is used, a column is `hidden`, or `columnManager` is set.
 

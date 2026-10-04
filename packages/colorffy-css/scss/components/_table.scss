@@ -145,6 +145,13 @@
       }
     }
 
+    // Fit-content column
+    th.table-col-fit,
+    td.table-col-fit {
+      width: 1%;
+      white-space: nowrap;
+    }
+
     // Sticky header
     &.table-sticky-header thead th {
       position: sticky;
