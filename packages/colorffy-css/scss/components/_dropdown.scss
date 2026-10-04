@@ -39,6 +39,9 @@
     --_dropdown-item-radius: var(--cffy-dropdown-item-radius, calc(var(--_dropdown-radius) / 2));
     --_dropdown-item-font-size: var(--cffy-dropdown-item-font-size, var(--cffy-fs-3xs));
 
+    top: 0;
+    left: 0;
+
     &.v-popper--theme-dropdown {
       isolation: isolate;
       position: relative;

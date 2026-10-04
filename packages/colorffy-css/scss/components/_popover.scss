@@ -28,6 +28,7 @@
     box-shadow: var(--_popover-shadow);
     background: var(--_popover-bg-color);
     border: var(--cffy-border-width-sm) solid var(--_popover-border-color);
+    overflow: visible;
 
     translate: 0 1rem;
     opacity: 0;

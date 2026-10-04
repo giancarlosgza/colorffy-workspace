@@ -37,6 +37,7 @@
     border: var(--cffy-border-width-sm) solid var(--_dialog-border-color);
     background-color: var(--_dialog-bg-color);
     box-shadow: var(--_dialog-shadow);
+    overflow: visible;
 
     &[open]:not(:modal) {
       z-index: v.$z-index-fullscreen;
