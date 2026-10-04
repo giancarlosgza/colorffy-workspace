@@ -294,38 +294,34 @@ watch(() => route.params.id, () => {
       <UiBreadcrumb
         :as="NuxtLink"
         :items="[{ label: 'Projects', to: '/projects', icon: '&#xe2c7;' }, { label: project.name }]"
-        separator-icon="&#xe5cc;"
-        :structured-data="false"
-        class="mb-3"
+        separator-icon="&#xe5cc;" :structured-data="false" class="mb-3"
       />
 
       <!-- Header -->
       <div class="d-flex align-items-start gap-3">
-        <span class="d-inline-flex p-3 rounded-lg flex-shrink-0" :class="`bg-${project.color}-container text-on-${project.color}-container`">
+        <span
+          class="d-inline-flex p-3 rounded-lg flex-shrink-0"
+          :class="`bg-${project.color}-container text-on-${project.color}-container`"
+        >
           <UiIconMaterial :icon-code="project.icon" class="fs-2xl lh-1" />
         </span>
         <UiHeaderContent
-          :headline="`${project.key} · Led by ${owner.name}`"
-          :title="project.name"
-          :subtitle="project.description"
-          size="md"
-          class="flex-grow-1"
+          :headline="`${project.key} · Led by ${owner.name}`" :title="project.name"
+          :subtitle="project.description" size="md" class="flex-grow-1"
         >
           <template #actions>
             <UiButtonGroup>
-              <UiButtonTooltip text="Share" variant="outline" tooltip-text="Copy a link to this project" @click="copyLink">
+              <UiButtonTooltip
+                text="Share" variant="outline" tooltip-text="Copy a link to this project"
+                @click="copyLink"
+              >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe157;" />
                 </template>
               </UiButtonTooltip>
               <UiButtonMenu
-                id="project-status"
-                text="Status"
-                variant="tonal"
-                :color="statusMeta[status].color"
-                icon-trailing
-                tooltip-text="Change the project status"
-                placement="bottom-end"
+                id="project-status" text="Status" variant="tonal" :color="statusMeta[status].color"
+                icon-trailing tooltip-text="Change the project status" placement="bottom-end"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe5cf;" />
@@ -333,14 +329,9 @@ watch(() => route.params.id, () => {
                 <template #menu>
                   <UiButtonMenuText item-text="Set project status" />
                   <UiButtonMenuItem
-                    v-for="key in STATUS_ORDER"
-                    :key="key"
-
-                    :item-text="statusMeta[key].label"
-                    :icon="statusMeta[key].icon"
-                    :icon-class="`text-${statusMeta[key].color}`"
-                    :icon-trailing="key === status ? '&#xe5ca;' : null"
-                    @click="setStatus(key)"
+                    v-for="key in STATUS_ORDER" :key="key" :item-text="statusMeta[key].label"
+                    :icon="statusMeta[key].icon" :icon-class="`text-${statusMeta[key].color}`"
+                    :icon-trailing="key === status ? '&#xe5ca;' : null" @click="setStatus(key)"
                   />
                   <UiButtonMenuDivider />
                   <UiButtonMenuItem item-text="View status history" icon="&#xe889;" @click="activeTab = 'activity'" />
@@ -354,8 +345,7 @@ watch(() => route.params.id, () => {
       <!-- Properties -->
       <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
         <UiBadge
-          :text="statusMeta[status].label"
-          :variant="tonal(statusMeta[status].color)"
+          :text="statusMeta[status].label" :variant="tonal(statusMeta[status].color)"
           :icon-code="statusMeta[status].icon"
         />
         <UiBadge
@@ -375,7 +365,10 @@ watch(() => route.params.id, () => {
       <UiTabs :tabs="tabs" :active-tab="activeTab" class="mb-4" @update-active-tab="activeTab = $event" />
 
       <!-- Overview -->
-      <section v-show="activeTab === 'overview'" id="project-panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+      <section
+        v-show="activeTab === 'overview'" id="project-panel-overview" role="tabpanel"
+        aria-labelledby="tab-overview"
+      >
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
             <UiCard title="Progress" class="h-100 shadow-sm" variant="pane">
@@ -389,8 +382,7 @@ watch(() => route.params.id, () => {
                   </p>
                 </div>
                 <UiProgressBar
-                  :value="progress"
-                  :aria-label="`${project.name} progress`"
+                  :value="progress" :aria-label="`${project.name} progress`"
                   :bar-class="status === 'completed' ? 'bg-success' : null"
                 />
                 <div class="d-flex justify-content-between caption text-muted mt-2">
@@ -413,8 +405,7 @@ watch(() => route.params.id, () => {
                   </p>
                 </div>
                 <UiProgressBar
-                  :value="spentPercent"
-                  :aria-label="`${project.name} budget spent`"
+                  :value="spentPercent" :aria-label="`${project.name} budget spent`"
                   :bar-class="budgetAtRisk ? 'bg-warning' : null"
                 />
                 <div
@@ -455,10 +446,7 @@ watch(() => route.params.id, () => {
           <div class="col-12 col-lg-5 mb-3">
             <UiAccordionGroup>
               <UiAccordion
-                id="project-brief"
-                v-model:open="briefOpen"
-                name="project-notes"
-                title="Brief"
+                id="project-brief" v-model:open="briefOpen" name="project-notes" title="Brief"
                 icon="&#xe873;"
               >
                 <template #content>
@@ -480,11 +468,8 @@ watch(() => route.params.id, () => {
                 </template>
               </UiAccordion>
               <UiAccordion
-                id="project-risks"
-                name="project-notes"
-                :title="`Risks · ${notes.risks.length}`"
-                icon="&#xe002;"
-                icon-class="text-warning"
+                id="project-risks" name="project-notes" :title="`Risks · ${notes.risks.length}`"
+                icon="&#xe002;" icon-class="text-warning"
               >
                 <template #content>
                   <ul class="ps-3 mb-0">
@@ -503,45 +488,41 @@ watch(() => route.params.id, () => {
       <section v-show="activeTab === 'tasks'" id="project-panel-tasks" role="tabpanel" aria-labelledby="tab-tasks">
         <UiCard v-if="!taskGroups.length" variant="pane" class="shadow-sm">
           <template #body>
-            <UiEmpty title="No tasks yet" :subtitle="`Tasks you add to ${project.name} show up here, grouped by status.`" />
+            <UiEmpty
+              title="No tasks yet"
+              :subtitle="`Tasks you add to ${project.name} show up here, grouped by status.`"
+            />
           </template>
         </UiCard>
 
         <div v-for="group in taskGroups" :key="group.status" class="mb-4">
           <div class="d-flex align-items-center gap-2 mb-2">
-            <UiBadge :text="taskStatusMeta[group.status].label" :variant="tonal(taskStatusMeta[group.status].color)" size="sm" />
+            <UiBadge
+              :text="taskStatusMeta[group.status].label" :variant="tonal(taskStatusMeta[group.status].color)"
+              size="sm"
+            />
             <span class="caption text-muted tabular-numbers">{{ group.items.length }}</span>
           </div>
           <UiListGroup>
             <UiListItem
-              v-for="task in group.items"
-              :key="task.id"
-              :title="task.title"
+              v-for="task in group.items" :key="task.id" :title="task.title"
               :text="`${memberById(task.assigneeId).name} · Due ${task.due}`"
-              :custom-class="{ 'opacity-70': task.status === 'done' }"
-              has-actions
+              :custom-class="{ 'opacity-70': task.status === 'done' }" has-actions
             >
               <template #media>
                 <UiInputCheck
-                  :id="`task-${task.id}`"
-                  :model-value="task.status === 'done'"
-                  :label="`Mark ${task.title} as done`"
-                  hide-label
-                  @update:model-value="toggleTask(task, $event)"
+                  :id="`task-${task.id}`" :model-value="task.status === 'done'"
+                  :label="`Mark ${task.title} as done`" hide-label @update:model-value="toggleTask(task, $event)"
                 />
               </template>
               <template #list-action>
                 <div class="d-flex align-items-center gap-2">
                   <UiBadge
-                    v-if="task.overdue && task.status !== 'done'"
-                    text="Overdue"
-                    variant="danger"
-                    icon-code="&#xe8b5;"
-                    size="sm"
+                    v-if="task.overdue && task.status !== 'done'" text="Overdue" variant="danger"
+                    icon-code="&#xe8b5;" size="sm"
                   />
                   <UiBadge
-                    :text="priorityMeta[task.priority].label"
-                    :variant="tonal(priorityMeta[task.priority].color)"
+                    :text="priorityMeta[task.priority].label" :variant="tonal(priorityMeta[task.priority].color)"
                     size="sm"
                   />
                   <UiTooltip :text="`Assigned to ${memberById(task.assigneeId).name}`">
@@ -557,13 +538,8 @@ watch(() => route.params.id, () => {
       <!-- Files -->
       <section v-show="activeTab === 'files'" id="project-panel-files" role="tabpanel" aria-labelledby="tab-files">
         <UiInputFile
-          id="project-upload"
-          :model-value="pendingFile"
-          label="Upload a file"
-          hide-label
-          input-label="Drop a file here or click to browse · up to 25 MB"
-          size="lg"
-          class="mb-4"
+          id="project-upload" :model-value="pendingFile" label="Upload a file" hide-label
+          input-label="Drop a file here or click to browse · up to 25 MB" size="lg" class="mb-4"
           @update:model-value="onFileSelected"
         />
 
@@ -575,11 +551,8 @@ watch(() => route.params.id, () => {
         </div>
         <UiListGroup>
           <UiListItem
-            v-for="upload in uploading"
-            :key="upload.id"
-            :title="upload.name"
-            :text="`Uploading · ${upload.size}`"
-            has-actions
+            v-for="upload in uploading" :key="upload.id" :title="upload.name"
+            :text="`Uploading · ${upload.size}`" has-actions
           >
             <template #media>
               <span class="d-inline-flex p-2 rounded-md bg-muted-container text-on-muted-container">
@@ -588,23 +561,16 @@ watch(() => route.params.id, () => {
             </template>
           </UiListItem>
           <UiListItem
-            v-for="file in fileList"
-            :key="file.id"
-            :title="file.name"
+            v-for="file in fileList" :key="file.id" :title="file.name"
             :text="`${file.size} · ${memberById(file.ownerId).name} · ${file.updated}`"
             :icon="fileTypeMeta[file.type].icon"
             :custom-icon-wrapper-class="`bg-${fileTypeMeta[file.type].color}-container`"
-            :custom-icon-class="`text-on-${fileTypeMeta[file.type].color}-container`"
-            has-actions
+            :custom-icon-class="`text-on-${fileTypeMeta[file.type].color}-container`" has-actions
           >
             <template #list-action>
               <UiButtonTooltip
-                variant="text"
-                icon
-                icon-variant="compact"
-                size="sm"
-                :tooltip-text="`Download ${file.name}`"
-                @click="downloadFile(file)"
+                variant="text" icon icon-variant="compact" size="sm"
+                :tooltip-text="`Download ${file.name}`" @click="downloadFile(file)"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xf090;" />
@@ -616,7 +582,10 @@ watch(() => route.params.id, () => {
       </section>
 
       <!-- Activity -->
-      <section v-show="activeTab === 'activity'" id="project-panel-activity" role="tabpanel" aria-labelledby="tab-activity">
+      <section
+        v-show="activeTab === 'activity'" id="project-panel-activity" role="tabpanel"
+        aria-labelledby="tab-activity"
+      >
         <UiCard variant="pane" class="shadow-sm">
           <template #body>
             <UiTimeline :items="activityItems" />
@@ -629,10 +598,8 @@ watch(() => route.params.id, () => {
     <UiCard v-else class="mt-5 shadow-sm" variant="pane">
       <template #body>
         <UiEmpty
-          title="Project not found"
-          subtitle="It may have been archived, or the link is missing a character."
-          use-custom-icon
-          icon-code="&#xe2c7;"
+          title="Project not found" subtitle="It may have been archived, or the link is missing a character."
+          use-custom-icon icon-code="&#xe2c7;"
         >
           <template #action>
             <UiButton :as="NuxtLink" to="/projects" text="Back to projects" variant="filled" color="primary">

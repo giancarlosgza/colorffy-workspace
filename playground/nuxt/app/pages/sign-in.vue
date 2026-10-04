@@ -117,7 +117,7 @@ onBeforeUnmount(() => clearTimeout(timer))
 
     <!-- Form -->
     <section class="d-flex flex-column align-items-center justify-content-center p-4 p-md-5">
-      <div class="sign-in-panel w-100">
+      <div class="w-100 max-w-sm">
         <div class="d-flex d-lg-none align-items-center gap-2 mb-5">
           <span class="logo-mark d-grid place-items-center rounded-md fw-800 bg-primary text-on-primary" aria-hidden="true">O</span>
           <span class="fs-lg fw-800">{{ workspace.name }}</span>
@@ -265,10 +265,6 @@ onBeforeUnmount(() => clearTimeout(timer))
 </template>
 
 <style scoped>
-.sign-in-panel {
-  max-inline-size: 26rem;
-}
-
 .logo-mark {
   inline-size: 2.25rem;
   aspect-ratio: 1;

@@ -198,7 +198,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
       />
 
       <form id="help-search" class="row mb-3" role="search" @submit.prevent="submitSearch">
-        <div class="col-12 col-md-10 col-lg-7 mx-auto d-flex align-items-start gap-2">
+        <div class="col-12 max-w-2xl mx-auto d-flex align-items-start gap-2">
           <UiInputText
             id="help-query"
             v-model="query"

@@ -227,12 +227,12 @@ function enableDesktopNotifications() {
       </template>
     </UiAlert>
 
+    <UiSegmentedControls :tabs="filterTabs" :active-tab="activeFilter" @update-active-tab="setFilter" />
+
     <div class="row">
       <!-- Notification list -->
       <div class="col-xl-5 col-xxl-4" :class="{ 'd-none d-xl-block': selected }">
         <UiPaneContent aria-label="Notifications" is-full-height custom-class="mb-3">
-          <UiSegmentedControls :tabs="filterTabs" :active-tab="activeFilter" @update-active-tab="setFilter" />
-
           <UiShapeLoading
             v-if="filterLoading"
             :title="`Loading ${currentFilter.label.toLowerCase()}`"
