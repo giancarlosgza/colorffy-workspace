@@ -30,6 +30,11 @@
       margin: 0;
     }
 
+    // Text buttons only
+    &:not(:has(.btn:not(.btn-text))) {
+      --_btn-group-gap: var(--cffy-space-4);
+    }
+
     // Group Variants
     &:is(.btn-group-vertical) {
       flex-direction: column;
