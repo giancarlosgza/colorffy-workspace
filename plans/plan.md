@@ -7,6 +7,10 @@ UiTooltip, UiStepper, UiTimeline, UiInputOtp, and all of Phase 4 (badge
 selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
 items below is breaking, so they can ship in any 3.x release.
 
+**Status (2026-10-04, branch `v3`).** Item 2 (small input family) shipped with
+3.0; its Storybook stories are still to add. Next: item 1 (UiPagination). Item 3
+waits on the PrimeVue decision.
+
 ## Conventions (apply to every item)
 
 - Props typed in `packages/colorffy-ui/src/types/<name>.ts` with JSDoc per prop;
@@ -42,9 +46,29 @@ but cannot page.
 - **Acceptance**: keyboard focusable buttons, ellipsis correctness at edges,
   datatable slice + sort + selection interplay covered by stories.
 
-## 2. Small input family (S each)
+## 2. Small input family (S each) — shipped in 3.0
 
-All extend `IBaseInputProps` and build on the prefix/suffix slots.
+Commits 75209d1 → 16efc76. Built as planned, with these decisions:
+
+- **CSS first:** the attached prefix/suffix boxes didn't fit an eye or clear
+  button (separate box, and focus only highlighted the input), so
+  `.input-group-inline` puts the adornments inside the field as squares the
+  height of the input. The input stays the bordered element, so focus, invalid,
+  variants and sizes needed no new rules. `UiInputText` exposes it as
+  `adornments="inline"` and gained `autocomplete` (attributes on the component
+  land on its wrapper, not the field).
+- **Tags** use a field-styled wrapper, `.form-tags` (reads the `--cffy-input-*`
+  hooks, `:focus-within` for focus, new `--cffy-input-tags-gap`), with chips
+  rendered from the `.btn-chip.chip-closable` classes, not `UiChip`: a closable
+  `UiChip` adds a second, inert button per tag. The separator is read from the
+  text (mobile keyboards send no usable key name), adds are batched into one
+  model update, and adds/removals are announced through a live region.
+- **Fixed on the way:** `UiInputText` cached slot existence in a `computed`, so a
+  suffix added later never rendered; error messages under an `.input-group`
+  weren't styled.
+- **Still to do:** Storybook stories for the three inputs (the convention above).
+
+Original spec:
 
 1. **UiInputPassword** — wraps the text input with `type` toggling and a suffix
    visibility button (`&#xe8f4;` / `&#xe8f5;`); `revealed` v-model optional.
