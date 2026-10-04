@@ -7,9 +7,9 @@ UiTooltip, UiStepper, UiTimeline, UiInputOtp, and all of Phase 4 (badge
 selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
 items below is breaking, so they can ship in any 3.x release.
 
-**Status (2026-10-04, branch `v3`).** Item 2 (small input family) shipped with
-3.0; its Storybook stories are still to add. Next: item 1 (UiPagination). Item 3
-waits on the PrimeVue decision.
+**Status (2026-10-04, branch `v3`).** Items 1 (UiPagination) and 2 (small input
+family) shipped with 3.0, stories included. Only item 3 is left, and it waits on
+the PrimeVue decision.
 
 ## Conventions (apply to every item)
 
@@ -27,10 +27,35 @@ waits on the PrimeVue decision.
 - Verify via `pnpm --filter @colorffy/ui build` + playground preview
   (rebuild dist + restart dev server for new components).
 
-## 1. UiPagination (M) — highest priority
+## 1. UiPagination (M) — shipped in 3.0
 
-The biggest functional hole: `UiDatatable` sorts, selects and manages columns
-but cannot page.
+Built as planned, with these decisions:
+
+- **Pages start at 1**; `v-model:page`, sized from `total` + `pageSize` or
+  `totalPages`. A page past the end moves to the last page.
+- **Collapsing keeps a fixed slot count** (`2 × siblingCount + 5`): first and
+  last always show, an ellipsis never hides a single page, and the arrows
+  don't move between pages.
+- **Narrow screens** (below 600px, or `compact`) show `‹ Page 3 of 12 ›`.
+  A media query, not a container query: inline-size containment would collapse
+  the nav to zero width inside a flex row.
+- **Accessibility:** arrows at the ends are `aria-disabled`, not `disabled`, so
+  focus stays on them; the user's own page moves are announced through a polite
+  live region (counts changed by filtering aren't, so typing a filter stays
+  quiet). Labels are one `labels` object with a `{page}` / `{total}` template.
+- **CSS:** `.pagination-nav` / `.pagination`, the buttons are
+  `.btn.btn-text.btn-icon` with the current page styled through
+  `[aria-current="page"]`; hooks for gap, radius, current colors and status
+  color.
+- **Datatable:** `pagination: { pageSize, …pagination options }` +
+  `v-model:page`. It sorts every row then slices; select-all covers the current
+  page; row identity falls back to the absolute index. The page resets to 1 on
+  a new sort, page size or row count, except when the first rows arrive (so a
+  page restored from the URL survives loading). Trade-off: deleting a row also
+  changes the count and goes back to page 1. The pager hides at one page.
+- **Playground:** billing invoices (22 months of history, 8 per page).
+
+Original spec:
 
 - **Types** (`types/pagination.ts`): `IPaginationProps` — `page: number` (v-model),
   `total?: number` + `pageSize?: number` (or `totalPages?: number` directly),
@@ -48,7 +73,7 @@ but cannot page.
 
 ## 2. Small input family (S each) — shipped in 3.0
 
-Commits 75209d1 → 16efc76. Built as planned, with these decisions:
+Commits 75209d1 → 16efc76, stories in 0ca5db9. Built as planned, with these decisions:
 
 - **CSS first:** the attached prefix/suffix boxes didn't fit an eye or clear
   button (separate box, and focus only highlighted the input), so
@@ -66,7 +91,6 @@ Commits 75209d1 → 16efc76. Built as planned, with these decisions:
 - **Fixed on the way:** `UiInputText` cached slot existence in a `computed`, so a
   suffix added later never rendered; error messages under an `.input-group`
   weren't styled.
-- **Still to do:** Storybook stories for the three inputs (the convention above).
 
 Original spec:
 
