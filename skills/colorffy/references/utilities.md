@@ -18,6 +18,7 @@ Complete reference for utility classes in @colorffy/css.
 - [Transforms](#transforms)
 - [Cursors](#cursors)
 - [Opacity](#opacity)
+- [Transitions](#transitions)
 
 ## Colors
 
@@ -680,6 +681,23 @@ Radius classes work without `.border`.
 <div class="user-select-all">Select all</div>
 <div class="user-select-auto">Auto select</div>
 ```
+
+## Transitions
+
+Names for Vue's `<Transition>` / `<TransitionGroup>`: `fade`, `slide-up`, `slide-down`, `slide-start`, `slide-end` (inline, RTL-aware), `scale`, `list` (TransitionGroup; moves the remaining items), `page` and `layout` (Nuxt `app.pageTransition` / `layoutTransition`; don't combine with `experimental.viewTransition`). `slide-block` is the older vertical slide used by toasts.
+
+```vue
+<Transition name="fade" mode="out-in">
+  <span v-if="saved" key="saved">Saved</span>
+  <span v-else key="idle">Unsaved changes</span>
+</Transition>
+
+<TransitionGroup name="list" tag="ul" class="list-group">
+  <li v-for="item in items" :key="item.id" class="list-group-item">…</li>
+</TransitionGroup>
+```
+
+Hooks (on `:root` or a wrapper): `--cffy-transition-enter-duration` (`--cffy-duration-300`), `-leave-duration` (`--cffy-duration-200`), `-enter-easing` (`--cffy-ease-decelerate`), `-leave-easing` (`--cffy-ease-accelerate`), `-distance` (`--cffy-space-16`), `-scale` (`0.95`). Reduced motion keeps the fade and drops movement and scaling. Removed in 3.0: `slide` / `slide-inline` (use `slide-start`), `fade-inline` (use `slide-end`), `table` (use `list`), `table-td-fade`.
 
 ## Quick Reference: Common Patterns
 
