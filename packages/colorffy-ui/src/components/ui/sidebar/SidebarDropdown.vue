@@ -2,6 +2,7 @@
 import type { ISidebarDropdownProps } from '@/types/sidebar'
 import { Dropdown as VDropdown } from 'floating-vue'
 import { computed, ref } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<ISidebarDropdownProps>(), {
 })
 
 /** Data */
+const floatingProps = useFloatingContainer()
 const isShown = ref(false)
 
 /** Computed */
@@ -33,7 +35,7 @@ function toggleDropdown() {
 
 <template>
   <!-- Interactive version with VDropdown -->
-  <VDropdown v-if="interactive" v-model:shown="isShown" class="d-flex flex-grow-1" :placement="placement">
+  <VDropdown v-if="interactive" v-model:shown="isShown" class="d-flex flex-grow-1" v-bind="floatingProps" :placement="placement">
     <!-- Trigger content -->
     <div
       :class="contentClasses"

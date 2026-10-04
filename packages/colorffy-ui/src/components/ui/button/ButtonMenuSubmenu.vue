@@ -2,6 +2,7 @@
 import type { IButtonMenuSubmenuProps } from '@/types/button'
 import { Dropdown as VDropdown } from 'floating-vue'
 import { computed } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -38,11 +39,15 @@ const itemClasses = computed(() => {
 
   return classes
 })
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <li>
     <VDropdown
+      v-bind="floatingProps"
       :aria-id="id ? `${id}-submenu` : undefined"
       :positioning-disabled="isMobile"
       :placement="placement"

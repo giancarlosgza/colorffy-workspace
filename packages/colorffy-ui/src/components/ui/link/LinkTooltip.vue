@@ -2,6 +2,7 @@
 import type { ILinkTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 
 /** Props */
 const props = withDefaults(defineProps<ILinkTooltipProps>(), {
@@ -114,10 +115,14 @@ const linkProps = computed(() => {
     to: linkTarget.value
   }
 })
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VTooltip
+    v-bind="floatingProps"
     :aria-id="id ? `${id}-tooltip` : undefined"
     :placement="placement"
     :class="fluid ? 'w-100' : 'd-inline-block'"

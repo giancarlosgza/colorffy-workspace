@@ -137,8 +137,9 @@ defineExpose({
     aria-modal="true"
     @close="emit('close')"
   >
+    <!-- Menus and tooltips opened from the dialog render outside this box -->
     <div
-      v-on-click-outside="closeFromOutside"
+      v-on-click-outside="[closeFromOutside, { ignore: ['.v-popper__popper'] }]"
       class="dialog-content"
     >
       <div class="dialog-body">

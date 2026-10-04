@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IButtonMenuEmits, IButtonMenuProps } from '@/types/button'
 import { Dropdown as VDropdown, Tooltip as VTooltip } from 'floating-vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiButton from './Button.vue'
 
 /** Props */
@@ -27,16 +28,21 @@ withDefaults(defineProps<IButtonMenuProps>(), {
 
 /** Emits */
 defineEmits<IButtonMenuEmits>()
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VDropdown
+    v-bind="floatingProps"
     :aria-id="id ? `${id}-dropdown` : undefined"
     :positioning-disabled="isMobile"
     :placement="placement"
     :class="{ 'w-100': fluid }"
   >
     <VTooltip
+      v-bind="floatingProps"
       :aria-id="id ? `${id}-tooltip` : undefined"
       :placement="tooltipPlacement"
       :class="{ 'w-100': fluid }"

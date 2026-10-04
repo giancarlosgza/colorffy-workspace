@@ -2,6 +2,7 @@
 import type { ISidebarLinkProps } from '@/types/sidebar'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -70,11 +71,15 @@ const linkProps = computed(() => {
     to: target
   }
 })
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VTooltip
     v-if="tooltipText"
+    v-bind="floatingProps"
     :aria-id="tooltipId"
     class="d-inline-block"
     :placement="tooltipPlacement"

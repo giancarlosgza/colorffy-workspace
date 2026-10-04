@@ -2,6 +2,7 @@
 import type { ITooltipProps } from '@/types/tooltip'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { useId } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 
 /** Props */
 const props = withDefaults(defineProps<ITooltipProps>(), {
@@ -16,10 +17,14 @@ const props = withDefaults(defineProps<ITooltipProps>(), {
 // server and client and trigger hydration attribute mismatches
 const fallbackAriaId = useId()
 const resolvedAriaId = props.ariaId ?? fallbackAriaId
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VTooltip
+    v-bind="floatingProps"
     class="d-inline-block"
     :class="customClass"
     :aria-id="resolvedAriaId"

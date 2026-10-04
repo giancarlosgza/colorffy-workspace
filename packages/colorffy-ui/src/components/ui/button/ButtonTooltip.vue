@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IButtonTooltipEmits, IButtonTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiButton from './Button.vue'
 
 /** Props */
@@ -25,10 +26,14 @@ withDefaults(defineProps<IButtonTooltipProps>(), {
 
 /** Emits */
 defineEmits<IButtonTooltipEmits>()
+
+/** Data */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VTooltip
+    v-bind="floatingProps"
     :aria-id="id ? `${id}-tooltip` : undefined"
     :placement="placement"
     :class="{ 'w-100': fluid }"
