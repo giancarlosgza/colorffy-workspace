@@ -120,6 +120,19 @@
       &:has(> .input-group-suffix) .form-control {
         padding-inline-end: var(--_input-height);
       }
+
+      // Two suffixes
+      .input-group-suffix:has(+ .input-group-suffix) {
+        translate: -100% 0;
+
+        &:dir(rtl) {
+          translate: 100% 0;
+        }
+      }
+
+      &:has(> .input-group-suffix + .input-group-suffix) .form-control {
+        padding-inline-end: calc(var(--_input-height) * 2);
+      }
     }
   }
 }

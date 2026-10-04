@@ -1,0 +1,193 @@
+@use "../abstracts/functions" as f;
+
+@layer components.listbox {
+  // ==========================================================================
+  // LISTBOX POPUP
+  // ==========================================================================
+  .listbox-popup {
+    --_listbox-bg-color: var(--cffy-listbox-bg-color, var(--cffy-surface-overlay));
+    --_listbox-color: var(--cffy-listbox-color, var(--cffy-on-background));
+    --_listbox-border-color: var(--cffy-listbox-border-color, var(--cffy-outline-overlay));
+    --_listbox-padding: var(--cffy-listbox-padding, var(--cffy-space-4));
+    --_listbox-shadow: var(--cffy-listbox-shadow, var(--cffy-shadow-lg));
+    --_listbox-radius: var(--cffy-listbox-radius, var(--cffy-radius-lg));
+    --_listbox-max-height: var(--cffy-listbox-max-height, 18rem);
+    --_listbox-offset: var(--cffy-listbox-offset, var(--cffy-space-4));
+    --_listbox-option-padding-block: var(--cffy-listbox-option-padding-block, var(--cffy-space-8));
+    --_listbox-option-padding-inline: var(--cffy-listbox-option-padding-inline, var(--cffy-space-8));
+    --_listbox-option-radius: var(--cffy-listbox-option-radius, calc(var(--_listbox-radius) / 2));
+    --_listbox-option-font-size: var(--cffy-listbox-option-font-size, var(--cffy-fs-2xs));
+    --_listbox-selected-bg-color: var(--cffy-listbox-selected-bg-color, var(--cffy-surface-container-highest));
+    --_listbox-selected-color: var(--cffy-listbox-selected-color, var(--cffy-on-background));
+    --_listbox-group-color: var(--cffy-listbox-group-color, var(--cffy-muted-a10));
+    --_listbox-easing: var(--cffy-listbox-easing, var(--cffy-ease-decelerate));
+    --_listbox-duration: var(--cffy-listbox-duration, var(--cffy-duration-150));
+
+    // Fallback position
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    margin-block: var(--_listbox-offset);
+    box-sizing: border-box;
+    max-height: var(--_listbox-max-height);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    padding: var(--_listbox-padding);
+    background: var(--_listbox-bg-color);
+    color: var(--_listbox-color);
+    border: var(--cffy-border-width-sm) solid var(--_listbox-border-color);
+    border-radius: var(--_listbox-radius);
+    box-shadow: var(--_listbox-shadow);
+
+    opacity: 1;
+    translate: 0;
+    transition: opacity var(--_listbox-duration) var(--_listbox-easing), translate var(--_listbox-duration) var(--_listbox-easing);
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 calc(var(--_listbox-offset) * -1);
+    }
+
+    @supports (position-try-fallbacks: flip-block) {
+      &.listbox-popup-anchored {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: flip-block;
+        min-width: anchor-size(width);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // ==========================================================================
+  // LISTBOX OPTIONS
+  // ==========================================================================
+  .listbox,
+  .listbox-group > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .listbox-group + .listbox-group {
+    margin-top: var(--cffy-space-4);
+  }
+
+  .listbox-group-label {
+    display: block;
+    padding: var(--cffy-space-6) var(--_listbox-option-padding-inline) var(--cffy-space-4);
+    color: var(--_listbox-group-color);
+    font-size: var(--cffy-fs-4xs);
+    font-weight: var(--cffy-fw-700);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .listbox-option {
+    --_listbox-option-state: 0%;
+    --_listbox-option-bg-color: transparent;
+    --_listbox-option-color: var(--_listbox-color);
+
+    display: flex;
+    align-items: center;
+    gap: var(--cffy-space-8);
+    padding: var(--_listbox-option-padding-block) var(--_listbox-option-padding-inline);
+    border-radius: var(--_listbox-option-radius);
+    background: f.state-layer(var(--_listbox-option-state), var(--_listbox-option-bg-color));
+    color: var(--_listbox-option-color);
+    font-size: var(--_listbox-option-font-size);
+    line-height: 1.4;
+    cursor: pointer;
+    user-select: none;
+
+    // States
+    &.active {
+      --_listbox-option-state: var(--cffy-state-hover-opacity);
+    }
+
+    &:active {
+      --_listbox-option-state: var(--cffy-state-pressed-opacity);
+    }
+
+    &.selected {
+      --_listbox-option-bg-color: var(--_listbox-selected-bg-color);
+      --_listbox-option-color: var(--_listbox-selected-color);
+
+      font-weight: var(--cffy-fw-600);
+    }
+
+    &[aria-disabled="true"] {
+      --_listbox-option-state: 0%;
+      --_listbox-option-color: var(--cffy-muted-a10);
+
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    @media (forced-colors: active) {
+      &.active {
+        outline: var(--cffy-border-width-md) solid Highlight;
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  .listbox-option-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .listbox-check {
+    flex: none;
+    margin-inline-start: auto;
+    font-size: 1rem;
+  }
+
+  .listbox-empty {
+    margin: 0;
+    padding: var(--_listbox-option-padding-block) var(--_listbox-option-padding-inline);
+    color: var(--cffy-muted-a10);
+    font-size: var(--_listbox-option-font-size);
+  }
+
+  // ==========================================================================
+  // COMBOBOX FIELD
+  // ==========================================================================
+  .combobox {
+    .combobox-toggle i {
+      transition: rotate var(--cffy-duration-150) var(--cffy-ease-decelerate);
+    }
+
+    &:has([aria-expanded="true"]) .combobox-toggle i {
+      rotate: 180deg;
+    }
+
+    .combobox-toggle:disabled {
+      --_btn-bg-color: transparent;
+      --_btn-border-color: transparent;
+    }
+
+    // Select-only field
+    .combobox-select {
+      display: flex;
+      align-items: center;
+      cursor: default;
+      user-select: none;
+    }
+
+    .combobox-value {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .combobox-placeholder {
+      color: var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%));
+    }
+  }
+}
