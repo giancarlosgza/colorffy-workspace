@@ -11,6 +11,10 @@ const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
 const isMenuActive = ref<boolean>(false)
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
 
+// The saved preference only exists on the client, so the picker follows it after mount
+const isMounted = ref<boolean>(false)
+const themePreference = computed(() => isMounted.value ? colorMode.preference : 'system')
+
 const unreadCount = computed(() => notifications.filter(n => n.unread).length)
 const latestNotifications = notifications.slice(0, 3)
 
@@ -33,7 +37,10 @@ const accountLinks = [
   { id: 'billing', to: '/billing', icon: '&#xe870;', text: 'Billing' }
 ]
 
-onMounted(() => register(toastRef.value))
+onMounted(() => {
+  register(toastRef.value)
+  isMounted.value = true
+})
 
 function avatarColor(color: Intent): Exclude<Intent, 'muted'> | 'neutral' {
   return color === 'muted' ? 'neutral' : color
@@ -231,8 +238,8 @@ function closeMenu(): void {
                     <UiButton
                       v-for="theme in themes"
                       :key="theme.id"
-                      :variant="theme.id === colorMode.preference ? 'filled' : 'outline'"
-                      :color="theme.id === colorMode.preference ? 'primary' : ''"
+                      :variant="theme.id === themePreference ? 'filled' : 'outline'"
+                      :color="theme.id === themePreference ? 'primary' : ''"
                       :aria-label="theme.label"
                       icon
                       size="sm"
