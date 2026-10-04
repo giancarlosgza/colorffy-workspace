@@ -8,8 +8,9 @@ selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
 items below is breaking, so they can ship in any 3.x release.
 
 **Status (2026-10-04, branch `v3`).** Items 1 (UiPagination) and 2 (small input
-family) shipped with 3.0, stories included. Only item 3 is left, and it waits on
-the PrimeVue decision.
+family) shipped with 3.0, stories included. Item 3 is decided (drop PrimeVue's
+Select and MultiSelect) and goes into 3.0 too: phase 1 (`UiInputCombobox`) is
+built; phases 2 (`UiInputMultiSelect`) and 3 (remote search, free text) are next.
 
 ## Conventions (apply to every item)
 
@@ -103,11 +104,32 @@ Original spec:
    Backspace on empty input removes last tag. Emits `update:modelValue`,
    `add(tag)`, `remove(tag)`.
 
-## 3. UiInputAutocomplete / UiInputMultiSelect (L) — decide first
+## 3. UiInputCombobox / UiInputMultiSelect (L) — in progress for 3.0
 
-- Native replacements for the PrimeVue components themed in `_prime.scss`
-  (`.p-select`, `.p-multiselect`). Only worth building if dropping the PrimeVue
-  dependency is a goal — decide before starting.
+Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
+`UiInputCombobox` (one value; `freeText` later makes it an autocomplete) and
+`UiInputMultiSelect`; filtering on by default; released with 3.0.
+
+- **Popup:** a `popover="manual"` element in the top layer (works inside
+  `UiModal`'s `showModal()`, never clipped), placed with CSS anchor positioning
+  (`position-area`, `flip-block`, `anchor-size(width)`), gated on
+  `@supports (position-try-fallbacks: flip-block)` plus a JS check. Anchor
+  positioning is ~86% (caniuse, 2026-10), so the ~40-line fallback in
+  `useAnchoredPopup` is first-class: fixed coordinates from the field's rect,
+  flip above, height capped to the space, updated on scroll/resize. The
+  `PositionFallback` story forces it. FloatingVue was rejected: it teleports to
+  `<body>`, which is inert behind a modal dialog, and swapping it in only for
+  old browsers would mean different markup and a hydration mismatch.
+- **Keyboard core:** `useListbox` (normalize, filter, group, active option,
+  type-to-jump), reused by the multi-select.
+- **Phase 1 (done):** `UiInputCombobox`, `.listbox-*` styles and
+  `--cffy-listbox-*` hooks, second inline suffix, playground wizard lead picker.
+- **Phase 2:** `UiInputMultiSelect` on the `.form-tags` field (chips, Backspace
+  removes), checkmarks, stays open, `max`, `display: 'count'`.
+- **Phase 3:** `@search` + `loading` for remote options, `freeText` autocomplete.
+- **Later (4.0):** `_prime.scss` becomes an opt-in import.
+
+Original notes:
 - Scope if built: filterable listbox (combobox ARIA pattern), keyboard nav,
   `options`/`optionLabel`/`optionValue` API matching `UiInputSelect`, chips for
   multiselect values (reuse UiChip), no virtual scrolling in v1.
