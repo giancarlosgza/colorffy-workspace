@@ -8,6 +8,7 @@ import UiButtonMenu from '../button/ButtonMenu.vue'
 import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
 import UiButtonTooltip from '../button/ButtonTooltip.vue'
 import UiIconMaterial from '../icon/Material.vue'
+import UiPagination from '../navigation/Pagination.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IDatatableProps>(), {
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   selectable: false,
   stickyHeader: false,
   stickyHeight: null,
+  pagination: null,
   columnManager: false,
   columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
   columnManagerTooltip: 'Manage columns',
@@ -35,6 +37,7 @@ const slots = useSlots()
 
 /** Model */
 const selectedModel = defineModel<(string | number)[]>('selected', { default: () => [] })
+const pageModel = defineModel<number>('page', { default: 1 })
 
 /** Data */
 const sortKey = ref(props.defaultSortKey)
@@ -69,6 +72,7 @@ const stickyStyle = computed(() => {
 })
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
 const selectAllId = useId()
+const selectAllLabel = computed(() => (props.pagination ? 'Select all rows on this page' : 'Select all rows'))
 const toolbarId = useId()
 
 const hasToolbarActions = computed(() => defaultHiddenKeys.value.length > 0 || props.columnManager || !!slots['actions-start'] || !!slots['actions-end'])
@@ -105,7 +109,18 @@ const sortedItems = computed(() => {
   })
 })
 
-const rowKeys = computed(() => sortedItems.value.map((item, index) => getRowKey(item, index)))
+const pageSize = computed(() => Math.max(1, Math.floor(props.pagination?.pageSize ?? 0)))
+const pageCount = computed(() => Math.max(1, Math.ceil(sortedItems.value.length / pageSize.value)))
+const currentPage = computed(() => Math.min(Math.max(1, Math.trunc(pageModel.value) || 1), pageCount.value))
+const pageOffset = computed(() => (props.pagination ? (currentPage.value - 1) * pageSize.value : 0))
+const pageItems = computed(() => {
+  if (!props.pagination)
+    return sortedItems.value
+  return sortedItems.value.slice(pageOffset.value, pageOffset.value + pageSize.value)
+})
+const paginationAttrs = computed(() => ({ ...props.pagination, pageSize: pageSize.value }))
+
+const rowKeys = computed(() => pageItems.value.map((item, index) => getRowKey(item, pageOffset.value + index)))
 const selectedKeySet = computed(() => new Set(selectedModel.value))
 const isAllSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every(key => selectedKeySet.value.has(key)))
 const isSomeSelected = computed(() => !isAllSelected.value && rowKeys.value.some(key => selectedKeySet.value.has(key)))
@@ -192,6 +207,18 @@ function visibleHideableCount() {
 function isLastVisibleColumn(key: string) {
   return visibleHideableCount() === 1 && isColumnVisible(key)
 }
+function resetPage() {
+  if (props.pagination && pageModel.value !== 1)
+    pageModel.value = 1
+}
+
+/** Watchers */
+watch([sortKey, sortOrder, () => props.pagination?.pageSize], resetPage)
+// The first rows to arrive keep the page, so a page restored from the URL survives loading
+watch(() => props.items.length, (_length, previous) => {
+  if (previous > 0)
+    resetPage()
+})
 </script>
 
 <template>
@@ -294,10 +321,10 @@ function isLastVisibleColumn(key: string) {
                   :checked="isAllSelected"
                   :indeterminate="isSomeSelected"
                   :disabled="rowKeys.length === 0"
-                  aria-label="Select all rows"
+                  :aria-label="selectAllLabel"
                   @change="toggleSelectAll"
                 >
-                <label :for="selectAllId" class="visually-hidden">Select all rows</label>
+                <label :for="selectAllId" class="visually-hidden">{{ selectAllLabel }}</label>
               </div>
             </th>
             <th
@@ -338,11 +365,11 @@ function isLastVisibleColumn(key: string) {
         />
 
         <!-- Table Content -->
-        <tbody v-else-if="sortedItems.length > 0">
+        <tbody v-else-if="pageItems.length > 0">
           <tr
-            v-for="(item, index) in sortedItems"
-            :key="getRowKey(item, index)"
-            :class="{ 'is-selected': selectable && isRowSelected(item, index) }"
+            v-for="(item, index) in pageItems"
+            :key="getRowKey(item, pageOffset + index)"
+            :class="{ 'is-selected': selectable && isRowSelected(item, pageOffset + index) }"
           >
             <td
               v-if="selectable"
@@ -353,9 +380,9 @@ function isLastVisibleColumn(key: string) {
                 <input
                   type="checkbox"
                   class="form-check-input"
-                  :checked="isRowSelected(item, index)"
-                  :aria-label="`Select row ${index + 1}`"
-                  @change="toggleRowSelection(item, index)"
+                  :checked="isRowSelected(item, pageOffset + index)"
+                  :aria-label="`Select row ${pageOffset + index + 1}`"
+                  @change="toggleRowSelection(item, pageOffset + index)"
                 >
               </div>
             </td>
@@ -386,5 +413,15 @@ function isLastVisibleColumn(key: string) {
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination -->
+    <UiPagination
+      v-if="pagination && pageCount > 1"
+      v-model:page="pageModel"
+      v-bind="paginationAttrs"
+      :total="sortedItems.length"
+      :disabled="isLoading"
+      class="d-flex justify-content-end mt-3"
+    />
   </div>
 </template>

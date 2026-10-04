@@ -1,4 +1,5 @@
 import type { IButtonProps } from '@/types/button'
+import type { IPaginationProps } from '@/types/pagination'
 
 /**
  * Interface for the column toggle tooltip in Datatable.
@@ -84,6 +85,17 @@ export interface IDatatableColumn {
  * column toggle and the column manager), overriding their defaults.
  */
 export type DatatableToolbarButton = Partial<Pick<IButtonProps, 'variant' | 'color' | 'size' | 'customClass' | 'rounded'>>
+
+/**
+ * Client-side paging for the Datatable: `pageSize` plus the UiPagination
+ * options to pass through.
+ */
+export interface IDatatablePagination extends Pick<IPaginationProps, 'siblingCount' | 'showEdges' | 'compact' | 'size' | 'ariaLabel' | 'labels'> {
+  /**
+   * Rows per page.
+   */
+  pageSize: number
+}
 
 /**
  * Props passed to the `column-toggle` and `column-manager` scoped slots.
@@ -179,6 +191,21 @@ export interface IDatatableProps {
    */
   selected?: (string | number)[]
   /**
+   * Splits the rows into pages and renders a UiPagination under the table.
+   * Sorting covers every row; the select-all checkbox covers the current page.
+   * The page goes back to 1 when the sort, the page size or the number of rows
+   * changes. To page on the server, leave it off, pass one page of `items` and
+   * render UiPagination yourself.
+   * @default null
+   */
+  pagination?: IDatatablePagination | null
+  /**
+   * Current page when `pagination` is set, starting at 1. Bind via
+   * `v-model:page` to read it or set it from outside.
+   * @default 1
+   */
+  page?: number
+  /**
    * When true, the table header sticks to the top of its scroll container
    * while the body scrolls. Pairs with the `.table-responsive-sticky`
    * wrapper class (applied automatically) which caps the wrapper height via
@@ -257,4 +284,5 @@ export interface IDatatableProps {
  */
 export interface IDatatableEmits {
   (e: 'update:selected', value: (string | number)[]): void
+  (e: 'update:page', value: number): void
 }
