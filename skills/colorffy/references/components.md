@@ -552,6 +552,7 @@ Groups multiple buttons (including UiButtonMenu / UiButtonTooltip) into one layo
 **SCSS Styling Behavior:**
 - Under `.btn-group-connected`, `.btn-icon` buttons fall back to `v.$button-border-radius` (instead of a circle) to align with their neighbors.
 - Under `.btn-group-connected.btn-group-joined` (horizontal and vertical), the gap is `0` and every button gets `--_btn-radius: 0`; the group's outer corners keep the connected radius.
+- A group whose buttons are all `.btn-text` uses a `--cffy-space-4` gap (text buttons have no visible edge); any other variant in the group keeps the `--cffy-btn-group-gap` default.
 
 ### UiButtonFabGroup
 Floating action buttons pinned to a corner of the viewport (`position: fixed`), bottom-right by default. Buttons stack upward: the first child sits at the bottom.
@@ -1717,7 +1718,7 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `tableClass` ('table-bordered' | 'table-striped' | 'table-borderless' | string, default: '') - Classes on the `<table>`
 - `columnManager` (boolean, default: false) - Icon-only show/hide column menu; `columnManagerTooltip` (string, default: 'Manage columns') is its tooltip and accessible name
 - `columnsToggleTooltip` (string | `{ showAll, hideDefault }`) - Tooltip of the "show all / restore hidden" button, which appears automatically when any column is `hidden`
-- `toolbarButton` (`{ variant?, color?, size?, customClass?, rounded? }`) - Restyles both built-in toolbar buttons (default: outline, `sm`)
+- `toolbarButton` (`{ variant?, color?, size?, customClass?, rounded? }`) - Restyles both built-in toolbar buttons (default: outline, `sm`); for an icon-row toolbar use `{ variant: 'text', customClass: 'text-neutral' }` with text buttons in the slots, and the group tightens its gap
 - `rowKey` (string) - Row field used as the stable `v-for` key (falls back to `id`, then index); also the row-selection identity
 - `selectable` (boolean, default: false) - Leading checkbox column; the header checkbox selects/clears the rows on screen (the current page with `pagination`) and goes indeterminate when only some are selected. Pair with `v-model:selected`
 - `selected` (`(string | number)[]`, default: `[]`) - Selected row identities, bound via `v-model:selected`
