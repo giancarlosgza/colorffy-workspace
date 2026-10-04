@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import UiButton from '../button/Button.vue'
+import UiButtonMenu from '../button/ButtonMenu.vue'
+import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
+import UiButtonTooltip from '../button/ButtonTooltip.vue'
+import UiIconMaterial from '../icon/Material.vue'
 import UiModal from './Modal.vue'
 
 const meta = {
@@ -133,6 +137,44 @@ export const SmallModal: Story = {
           </template>
           <template #body>
             <p>This is a small modal.</p>
+          </template>
+        </UiModal>
+      </div>
+    `
+  })
+}
+
+export const WithMenusAndTooltips: Story = {
+  render: _args => ({
+    components: { UiModal, UiButton, UiButtonMenu, UiButtonMenuItem, UiButtonTooltip, UiIconMaterial },
+    setup() {
+      const modalRef = ref<InstanceType<typeof UiModal> | null>(null)
+      const picked = ref('none')
+      return { modalRef, picked }
+    },
+    template: `
+      <div>
+        <UiButton variant="filled" text="Open modal" @click="modalRef?.showDialog()" />
+        <UiModal ref="modalRef" title="Share project" size="sm">
+          <template #body>
+            <p>Menus and tooltips opened inside a modal show above it and stay clickable.</p>
+            <div class="d-flex align-items-center gap-2">
+              <UiButtonMenu id="modal-story-menu" variant="outline" size="sm" text="Permission" icon-trailing>
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe5cf;" />
+                </template>
+                <template #menu>
+                  <UiButtonMenuItem id="modal-story-view" item-text="Can view" @click="picked = 'view'" />
+                  <UiButtonMenuItem id="modal-story-edit" item-text="Can edit" @click="picked = 'edit'" />
+                </template>
+              </UiButtonMenu>
+              <UiButtonTooltip variant="text" custom-class="text-neutral" size="sm" icon tooltip-text="Copy link">
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe157;" />
+                </template>
+              </UiButtonTooltip>
+            </div>
+            <p class="caption text-muted mt-2">Picked: {{ picked }}</p>
           </template>
         </UiModal>
       </div>
