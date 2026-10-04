@@ -970,6 +970,44 @@ Not every input uses every base prop (`readonly` only applies to `UiInputText`, 
 
 `modelValue`: string | number | object | null
 
+Native `<select>`: best on phones for short lists. For a searchable, grouped or rich list use `UiInputCombobox`.
+
+### UiInputCombobox
+Picks one value from a list you can search. The list is a `popover` anchored to the field with CSS anchor positioning (a small script places it in browsers without it), so it opens over `UiModal` and outside clipping containers, and flips above the field when there's no room.
+
+```vue
+<UiInputCombobox
+  id="lead"
+  v-model="leadId"
+  label="Project lead"
+  placeholder="Search the team"
+  :options="members"
+  option-label="name"
+  option-value="id"
+  option-group="team"
+  option-disabled="away"
+  clearable
+>
+  <template #option="{ option }">
+    <UiAvatar :src="option.avatar" size="sm" /> {{ option.name }}
+  </template>
+</UiInputCombobox>
+```
+
+**Additional props:**
+- `options` / `optionLabel` / `optionValue` - Same as `UiInputSelect`; without `optionValue` the model holds the whole option (objects match by reference)
+- `optionGroup` (string | null) - Field that groups options under headings, in order of first appearance
+- `optionDisabled` (string | null) - Boolean field that disables an option
+- `filterable` (boolean, default: true) - Typing filters by label (case- and accent-insensitive) and highlights the first match; `false` = select-only field where typing jumps to the first option starting with the letters
+- `clearable` (boolean, default: false) - Clear button inside the field
+- `emptyText` (string, default: 'No results') · `clearLabel` (default: 'Clear selection') · `toggleLabel` (default: 'Show options')
+
+**Slots:** `#option="{ option, selected, active }"`, `#empty="{ query }"`
+
+**Behavior:** ↓/↑ open and move (Alt+↓ opens without moving), Page Up/Down jump 10, Home/End in select-only, Enter picks, Esc closes then (with `clearable`) clears; inside a dialog only the following Esc closes it. Leaving the field with text that exactly matches an option selects it; an emptied field sets `null`; other text reverts to the selected label. Errors use `errorMessages` like the other inputs (native `required` validation doesn't apply).
+
+`modelValue`: string | number | object | null
+
 ### UiInputCheck
 
 ```vue

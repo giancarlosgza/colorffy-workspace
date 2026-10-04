@@ -167,7 +167,7 @@ const name = ref('')
 **Navigation:** UiNavbar (with UiNavbarBrand, UiNavbarTitle, UiNavbarToggle, UiNavbarCollapse, UiNavbarNav, UiNavbarLink, UiNavbarItem, UiNavbarAvatar, UiNavbarMobileMenu), UiTabs, UiNavigationBar, UiSegmentedControls, UiBreadcrumb, UiPagination, UiPopoverMenu
 **Sidebar:** UiSidebar (`#header` / `#body` / `#footer` slots), UiSidebarGroup, UiSidebarLink, UiSidebarText, UiSidebarDropdown
 **Buttons:** UiButton, UiButtonMenu, UiButtonMenuSubmenu, UiButtonToggleGroup, UiButtonTooltip
-**Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile, UiInputPassword, UiInputSearch, UiInputTags, UiInputOtp, UiInputColorPicker, UiInputPhoneNumber
+**Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCombobox, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile, UiInputPassword, UiInputSearch, UiInputTags, UiInputOtp, UiInputColorPicker, UiInputPhoneNumber
 **Dialogs:** UiModal, UiConfirmModal
 **Feedback:** UiAlert, UiAlertToast, UiLoading, UiEmpty
 **Data:** UiDatatable, UiListGroup, UiAccordion

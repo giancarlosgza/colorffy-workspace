@@ -81,6 +81,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Dropdowns**
 - Use `UiInputSelect` for single-choice from list
+- Use `UiInputCombobox` when users need to search the list, or options need groups, disabled entries or custom rows
 - Provide `options`; for objects set `option-label` and `option-value`
 - Supports placeholder and required state
 
@@ -255,7 +256,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 ### "I need a way for users to choose one option"
 - 2-5 options, visible → `UiInputRadio`
-- 6+ options → `UiInputSelect`
+- 6+ options → `UiInputSelect` (native, best on phones)
+- Long list to search, grouped options or rich rows (avatars, descriptions) → `UiInputCombobox`
 - Button-style toggle → `UiButtonToggleGroup`
 - Visual options (tabs) → `UiTabs` or `UiSegmentedControls`
 - Filter-style pills (single or multi-select) → `UiChipGroup`
@@ -327,4 +329,5 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - `v-card` → `UiCard`
 - `v-text-field` → `UiInputText`
 - `v-select` → `UiInputSelect`
+- `v-autocomplete` / PrimeVue `Select` with `filter` → `UiInputCombobox`
 - `v-dialog` → `UiModal`
