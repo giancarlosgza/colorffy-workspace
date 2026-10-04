@@ -174,7 +174,6 @@
     // Alert with title
     &:has(.alert-title) {
       --_alert-gap: var(--cffy-space-12);
-      --_alert-columns: 1fr;
     }
 
     .alert-content {

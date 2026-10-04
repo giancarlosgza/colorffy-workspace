@@ -70,7 +70,7 @@ const ariaAttributes = computed(() => {
       </p>
       <p
         v-if="subtitle"
-        class="subtitle-2 text-muted mt-1 mb-0"
+        class="subtitle-2 mt-1 mb-0"
       >
         {{ subtitle }}
       </p>

@@ -354,8 +354,7 @@ $indicator-max-items: 16;
           @extend .subtitle-1;
 
           transition: background var(--_segmented-control-duration) var(--_segmented-control-easing),
-          color var(--_segmented-control-duration) var(--_segmented-control-easing),
-          font-weight var(--_segmented-control-duration) var(--_segmented-control-easing);
+          color var(--_segmented-control-duration) var(--_segmented-control-easing);
 
           & > i {
             font-size: 1.25em;

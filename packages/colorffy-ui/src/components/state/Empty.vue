@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import UiButtonGroup from '../ui/button/ButtonGroup.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
 /** Interfaces */
@@ -90,6 +91,11 @@ const ariaAttributes = computed(() => {
     </p>
 
     <!-- Action slot -->
-    <slot name="action" />
+    <UiButtonGroup
+      v-if="$slots.action"
+      custom-class="justify-content-center"
+    >
+      <slot name="action" />
+    </UiButtonGroup>
   </div>
 </template>

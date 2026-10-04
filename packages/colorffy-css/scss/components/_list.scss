@@ -96,7 +96,8 @@
         gap: var(--_list-item-gap);
         padding: var(--_list-item-padding);
         border-radius: var(--_list-item-radius);
-        width: 100%;
+        flex: 1 1 0;
+        min-width: 0;
 
         // Text
         & p {
@@ -186,6 +187,10 @@
       }
 
       & .list-item-actions {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--cffy-space-8);
         padding-right: var(--cffy-space-16);
       }
     }

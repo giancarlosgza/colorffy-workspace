@@ -294,13 +294,13 @@
     @container DrawerContainer (width <=9rem) {
       & .drawer-content {
         & .drawer-header {
-          // justify-content: center;
+          justify-content: center;
+          gap: 0;
           flex-wrap: nowrap;
           align-items: center;
 
           :where(img, i) {
             --_sidebar-brand-size: 3.5rem;
-            translate: 1rem;
           }
         }
 
