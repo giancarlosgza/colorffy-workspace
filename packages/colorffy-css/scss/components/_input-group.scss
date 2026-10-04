@@ -68,5 +68,58 @@
         border-bottom-right-radius: 0;
       }
     }
+
+    // Inline: the prefix and suffix sit inside the field
+    &.input-group-inline {
+      position: relative;
+
+      :where(.input-group-prefix, .input-group-suffix) {
+        position: absolute;
+        inset-block: 0;
+        z-index: 1;
+        aspect-ratio: 1;
+        place-items: center;
+        padding-inline: 0;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .input-group-prefix {
+        inset-inline-start: 0;
+
+        &:not(:has(button, a, input)) {
+          pointer-events: none;
+        }
+      }
+
+      .input-group-suffix {
+        inset-inline-end: 0;
+      }
+
+      .form-control {
+        border-radius: var(--_input-radius);
+
+        &::-webkit-search-cancel-button {
+          -webkit-appearance: none;
+        }
+
+        &::-ms-reveal {
+          display: none;
+        }
+
+        &::-ms-clear {
+          display: none;
+        }
+      }
+
+      &:has(> .input-group-prefix) .form-control {
+        padding-inline-start: var(--_input-height);
+      }
+
+      &:has(> .input-group-suffix) .form-control {
+        padding-inline-end: var(--_input-height);
+      }
+    }
   }
 }

@@ -32,7 +32,8 @@
     }
 
     & .form-control,
-    & .form-select {
+    & .form-select,
+    & .form-tags {
       --_input-width: 100%;
       --_input-height: var(--cffy-input-height, 2.5rem);
       --_input-padding-inline: var(--cffy-input-padding-inline, var(--cffy-space-8));
@@ -184,6 +185,57 @@
         &::-webkit-calendar-picker-indicator {
           filter: var(--cffy-img-filter-invert);
         }
+      }
+    }
+
+    // Tags field: chips and a borderless input wrap inside the field
+    & .form-tags {
+      --_input-tags-gap: var(--cffy-input-tags-gap, var(--cffy-space-4));
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--_input-tags-gap);
+      height: auto;
+      min-height: var(--_input-height);
+      cursor: text;
+
+      &:is(:focus-within) {
+        --_input-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
+        --_input-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
+
+        box-shadow: 0 0 0 .15rem var(--cffy-input-focus-ring-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 25%, transparent));
+
+        @media (forced-colors: active) {
+          outline: var(--cffy-border-width-md) solid Highlight;
+        }
+      }
+
+      &:has(> .form-tags-input:disabled) {
+        --_input-bg-color: var(--cffy-surface-disabled);
+        --_input-color: var(--cffy-muted-a10);
+        --_input-border-color: var(--cffy-surface-disabled);
+
+        cursor: default;
+      }
+
+      .btn-chip {
+        --cffy-btn-height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
+        --cffy-btn-padding-inline: var(--cffy-space-8);
+      }
+
+      .form-tags-input {
+        flex: 1 0 6rem;
+        min-width: 6rem;
+        height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        outline: 0;
+
+        @include m.form-placeholder(35%, var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%)));
       }
     }
 
@@ -397,7 +449,8 @@
     // Invalid form control
     &.form-invalid {
       .form-control,
-      .form-range {
+      .form-range,
+      .form-tags {
         --_input-border-color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
 
         &:is(:focus, :active, :focus-visible) {
@@ -411,6 +464,10 @@
           font-size: var(--cffy-fs-3xs);
           color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
         }
+      }
+
+      .form-tags:is(:focus-within) {
+        box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
       }
 
       // Inputs with a prefix or suffix: the message follows the group
