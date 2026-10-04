@@ -102,6 +102,29 @@ export const WithSuffix: Story = {
   })
 }
 
+export const InlineAdornments: Story = {
+  render: () => ({
+    components: { UiInputText, UiIconMaterial },
+    template: `
+      <div style="display: flex; flex-direction: column; max-width: 400px;">
+        <UiInputText id="story-inline-website" label="Website" placeholder="orbit.app" adornments="inline">
+          <template #prefix>
+            <UiIconMaterial icon-code="&#xe894;" />
+          </template>
+        </UiInputText>
+        <UiInputText id="story-inline-handle" label="Username" placeholder="maya" adornments="inline" rounded>
+          <template #prefix>
+            <UiIconMaterial icon-code="&#xe0e6;" />
+          </template>
+          <template #suffix>
+            <UiIconMaterial icon-code="&#xe86c;" class="text-success" />
+          </template>
+        </UiInputText>
+      </div>
+    `
+  })
+}
+
 export const WithPrefixAndSuffix: Story = {
   render: () => ({
     components: { UiInputText, UiIconMaterial },
