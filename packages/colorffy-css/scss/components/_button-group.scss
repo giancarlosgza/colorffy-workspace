@@ -148,64 +148,6 @@
   }
 
   // ==========================================================================
-  // SEGMENTED CONTROL COMPONENT
-  // ==========================================================================
-  .segmented-control {
-    --_sc-easing: var(--cffy-ease-spring);
-    --_sc-duration: var(--cffy-duration-800);
-
-    display: flex;
-    border: var(--cffy-border-width-sm) solid var(--cffy-outline-button);
-    gap: var(--cffy-space-6);
-    padding: var(--cffy-space-4);
-    border-radius: calc(#{v.$button-border-radius} + .25rem);
-    position: relative;
-
-    & .v-popper {
-      z-index: 1;
-
-      .btn:is(.btn-chip) {
-        margin: 0;
-        padding-block: var(--cffy-space-4);
-
-        &:is(:hover, :focus, :active) {
-          background: transparent;
-        }
-
-        &.segmented-control-active i {
-          color: var(--cffy-on-primary);
-        }
-      }
-    }
-
-    &:has(.segmented-control-active.active-grid) {
-      &:after {
-        translate: calc(100% + calc(var(--cffy-space-4) * 2));
-      }
-    }
-
-    &:after {
-      --_sc-bg-position: 0;
-
-      position: absolute;
-      content: '';
-      inset-block: 0;
-      left: var(--_sc-bg-position);
-      margin-block: auto;
-      margin-inline: var(--cffy-space-4);
-      // Calc the size based on inline margin and segmented control size
-      width: calc(50% - calc(var(--cffy-space-4) * 2));
-      height: 85%;
-      border-radius: calc(var(--cffy-radius-lg) - 4px);
-      background-color: var(--cffy-surface-container-high);
-      z-index: 0;
-
-      translate: 0;
-      transition: translate var(--_sc-duration) var(--_sc-easing);
-    }
-  }
-
-  // ==========================================================================
   // TOGGLE BUTTON GROUP COMPONENT
   // ==========================================================================
   .toggle-btn-group {

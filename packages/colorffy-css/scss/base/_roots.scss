@@ -74,7 +74,6 @@
     --cffy-surface-container-high: light-dark(var(--cffy-surface-a30), var(--cffy-surface-a40));
     --cffy-surface-container-highest: light-dark(var(--cffy-surface-a40), var(--cffy-surface-a50));
 
-    --cffy-surface-text-field: transparent;
     --cffy-surface-tooltip: var(--cffy-dark-base);
     --cffy-surface-kbd: light-dark(color-mix(in oklab, var(--cffy-muted-base), var(--cffy-white-base) 85%), var(--cffy-dark-base));
     --cffy-surface-toast: light-dark(var(--cffy-dark-base), var(--cffy-white-base));
@@ -92,8 +91,6 @@
 
     /* image filters */
     --cffy-img-filter-invert: none;
-    --cffy-img-testimonial-filter: grayscale(1) invert(0);
-    --cffy-img-testimonial-filter-invert: grayscale(1) invert(1);
     --cffy-frosted-glass-bg: light-dark(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
     --cffy-frosted-glass-backdrop-filter: blur(30px) saturate(100%) contrast(45%) brightness(130%);
     --cffy-frosted-glass-bg-dark: rgb(30 30 30 / 65%);
@@ -150,13 +147,6 @@
     --cffy-font-secondary: 'DM Sans', "Roboto", -apple-system, "Segoe UI", sans-serif;
     --cffy-font-code: monospace;
     --cffy-font-icons: 'Material Symbols Rounded', sans-serif;
-
-    /* variable fonts weights */
-    --cffy-vfw-400: 'wght' 400;
-    --cffy-vfw-500: 'wght' 500;
-    --cffy-vfw-600: 'wght' 600;
-    --cffy-vfw-700: 'wght' 700;
-    --cffy-vfw-800: 'wght' 800;
 
     /* variable fonts settings */
     --cffy-vfs-heading: 'wght' 700, 'GRAD' 0, 'wdth' 125;
@@ -267,8 +257,6 @@
     /* non-color variables overrides */
     --cffy-shadow-base: 0 0% 0%;
     --cffy-img-filter-invert: brightness(0) invert(1);
-    --cffy-img-testimonial-filter: grayscale(1) invert(1);
-    --cffy-img-testimonial-filter-invert: grayscale(1) invert(0);
     --cffy-frosted-glass-backdrop-filter: blur(20px) saturate(150%) contrast(100%) brightness(100%);
     --cffy-form-select-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"/></svg>');
     --cffy-form-checkbox-icon: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="black" height="24" viewBox="0 -960 960 960" width="24"><path d="m382-373.218 328.826-328.826q15.956-15.957 37.826-15.957t37.827 15.957q15.956 15.957 15.956 37.827 0 21.869-15.956 37.826l-366.87 366.87Q403.652-243.565 382-243.565t-37.609-15.956l-170.87-170.87q-15.956-15.957-15.739-37.826.217-21.87 16.174-37.827 15.957-15.957 37.827-15.957 21.869 0 37.826 15.957L382-373.218Z"/></svg>');

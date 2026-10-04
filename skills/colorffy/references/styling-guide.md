@@ -271,7 +271,7 @@ Import only specific Colorffy CSS modules:
 @use '@colorffy/css/scss/base/typography';
 @use '@colorffy/css/scss/utilities/spacing';
 @use '@colorffy/css/scss/utilities/colors';
-@use '@colorffy/css/scss/layout/grid';
+@use '@colorffy/css/scss/layout/flex-container';
 
 // Then add custom component styles
 @import './custom-buttons';

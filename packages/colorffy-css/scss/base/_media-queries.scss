@@ -8,19 +8,11 @@
   @include m.media-query(1024) {
     // Prevent body from scrolling when sheets, mobile drawers, or menus are open
     body {
-      &:has(.navigation-drawer.sheet.sheet-filters:is(.sheet-active)) {
-        overflow-y: hidden;
-      }
-
       &:has(.navigation-drawer:is(.drawer-open)) {
         overflow-y: hidden;
       }
 
       &:has(.popover-menu:is(.popover-menu-visible)) {
-        overflow-y: hidden;
-      }
-
-      &:has(.menu-tools:is(.menu-tools-visible)) {
         overflow-y: hidden;
       }
     }

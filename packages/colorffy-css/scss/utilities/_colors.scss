@@ -209,8 +209,8 @@
     -webkit-text-fill-color: transparent;
 
     @include m.text-gradient(var(--cffy-angle), var(--_gradient-stops));
-    @include m.generate-static-gradients(v.$static-gradients, false, false);
-    @include m.generate-gradients(v.$dynamic-gradients, false, false);
+    @include m.generate-gradients(v.$static-gradients, false);
+    @include m.generate-gradients(v.$dynamic-gradients, false);
 
     // Set background-clip property after background to ensure it applies correctly
     & {

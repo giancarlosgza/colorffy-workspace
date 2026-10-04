@@ -401,84 +401,6 @@
 
     @container AlertContainer (width <= 450px) {
       --_alert-columns: 1fr;
-
-      // &.alert-snackbar {
-      // }
-    }
-  }
-
-  // ==========================================================================
-  // PWA OFFLINE/INSTALL ALERT CONTAINER
-  // ==========================================================================
-  .pwa-alert-container {
-    --_pwa-alert-position-x: var(--cffy-space-16);
-    --_pwa-alert-position-y: var(--cffy-space-16);
-    --_pwa-alert-padding: var(--cffy-pwa-alert-padding, var(--cffy-space-16));
-    --_pwa-alert-gap: var(--cffy-pwa-alert-gap, var(--cffy-space-12));
-    --_pwa-alert-radius: var(--cffy-pwa-alert-radius, #{v.$card-border-radius});
-    --_pwa-alert-bg-color: var(--cffy-pwa-alert-bg-color, var(--cffy-surface-overlay));
-    --_pwa-alert-border-color: var(--cffy-pwa-alert-border-color, var(--cffy-outline-surface));
-    --_pwa-alert-shadow: var(--cffy-pwa-alert-shadow, var(--cffy-shadow-lg));
-
-    position: fixed;
-    right: var(--_pwa-alert-position-x);
-    bottom: var(--_pwa-alert-position-y);
-    display: grid;
-    gap: var(--_pwa-alert-gap);
-    grid-template-columns: 1fr auto;
-    width: fit-content;
-    max-width: 40%;
-    margin: auto;
-    z-index: v.$z-index-toast;
-    padding-block: var(--_pwa-alert-padding);
-    padding-inline: var(--_pwa-alert-padding);
-    background: var(--_pwa-alert-bg-color);
-    border: var(--cffy-border-width-sm) solid var(--_pwa-alert-border-color);
-    box-shadow: var(--_pwa-alert-shadow);
-    border-radius: var(--_pwa-alert-radius);
-
-    // Content area
-    & .pwa-content {
-      display: flex;
-      align-items: center;
-      gap: var(--_pwa-alert-gap);
-
-      i {
-        font-variation-settings: var(--cffy-iw-semi-bold);
-        color: var(--cffy-muted-a10);
-      }
-
-      & .pwa-content-text-wrapper {
-        display: grid;
-        gap: calc(var(--_pwa-alert-gap) / 2);
-
-        p {
-          margin-bottom: 0;
-
-          &:is(.subtitle-1) {
-            font-weight: var(--cffy-fw-600);
-            font-family: var(--cffy-font-primary);
-          }
-
-          &:is(.subtitle-2) {
-            color: var(--cffy-muted-a10);
-            max-inline-size: 40ch;
-            @include m.text-wrap-pretty;
-          }
-        }
-      }
-    }
-
-    // CTA actions
-    & .pwa-actions {
-      place-content: flex-end;
-      display: flex;
-      align-items: center;
-      gap: calc(var(--_pwa-alert-gap) / 2);
-
-      .btn {
-        margin: 0;
-      }
     }
   }
 
@@ -486,14 +408,6 @@
   // MEDIA QUERIES & RESPONSIVE BEHAVIORS
   // ==========================================================================
   @include m.media-query(1024) {
-    .pwa-alert-container {
-      --_pwa-alert-position-x: var(--cffy-space-8);
-      --_pwa-alert-position-y: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-16));
-
-      max-width: 100%;
-      left: var(--_pwa-alert-position-x);
-    }
-
     .alert-container {
       &:has(.alert-snackbar) {
         --_alert-toast-offset-bottom: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-16) + env(safe-area-inset-bottom, 0.5vh));

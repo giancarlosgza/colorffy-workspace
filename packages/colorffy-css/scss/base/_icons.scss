@@ -115,8 +115,8 @@
       --_gradient-stops: #{v.$gradient-primary};
 
       @include m.bg-gradient(var(--cffy-angle), var(--_gradient-stops));
-      @include m.generate-static-gradients(v.$static-gradients, false, true);
-      @include m.generate-gradients(v.$dynamic-gradients, false, true);
+      @include m.generate-gradients(v.$static-gradients, false);
+      @include m.generate-gradients(v.$dynamic-gradients, false);
 
       i {
         font-variation-settings: var(--cffy-iw-bold);
@@ -226,37 +226,6 @@
       @container state-wrapper (width <=500px) {
         --_icon-translate: 5px;
         --_icon-translate-pow: 2.5;
-      }
-    }
-  }
-
-  // ==========================================================================
-  // ICON MICRO-INTERACTIONS
-  // ==========================================================================
-  .hover-rotate {
-    &:not(.disabled, :disabled) {
-      & i {
-        transition: rotate 2500ms var(--cffy-ease-spring);
-      }
-
-      &:is(:hover) {
-        & i {
-          rotate: 360deg;
-        }
-      }
-    }
-  }
-
-  .hover-scale {
-    &:not(.disabled, :disabled) {
-      & i {
-        transition: scale var(--cffy-duration-300) var(--cffy-ease-decelerate);
-      }
-
-      &:is(:hover) {
-        & i {
-          scale: 1.2;
-        }
       }
     }
   }

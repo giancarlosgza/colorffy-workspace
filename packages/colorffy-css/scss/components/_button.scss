@@ -219,8 +219,8 @@
 
         background: linear-gradient(var(--_btn-bg-gradient)) padding-box,
         linear-gradient(120deg, var(--_border-gradient)) border-box;
-        @include m.generate-static-gradients(v.$static-gradients, true, false);
-        @include m.generate-gradients(v.$dynamic-gradients, true, false);
+        @include m.generate-gradients(v.$static-gradients, true);
+        @include m.generate-gradients(v.$dynamic-gradients, true);
 
         &:is(.bg-gradient-pane) {
           --_btn-bg-gradient: var(--cffy-surface-body-pane), var(--cffy-surface-body-pane);
@@ -391,8 +391,8 @@
           --cffy-gradient-angle: 360deg;
         }
 
-        @include m.generate-static-gradients(v.$static-gradients, false, true);
-        @include m.generate-gradients(v.$dynamic-gradients, false, true);
+        @include m.generate-gradients(v.$static-gradients, false);
+        @include m.generate-gradients(v.$dynamic-gradients, false);
       }
 
       &.btn-frosted {

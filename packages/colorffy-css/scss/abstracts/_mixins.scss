@@ -752,19 +752,7 @@
 // ==========================================================================
 // GRADIENT GENERATION UTILITIES
 // ==========================================================================
-@mixin generate-gradients($colors, $isBordered: false, $isBg: false) {
-  @each $name, $gradient in $colors {
-    &.gradient-#{$name} {
-      @if ($isBordered == true) {
-        --_border-gradient: #{$gradient};
-      } @else {
-        --_gradient-stops: #{$gradient};
-      }
-    }
-  }
-}
-
-@mixin generate-static-gradients($colors, $isBordered: false, $isBg: false) {
+@mixin generate-gradients($colors, $isBordered: false) {
   @each $name, $gradient in $colors {
     &.gradient-#{$name} {
       @if ($isBordered == true) {

@@ -70,8 +70,8 @@
         --_gradient-stops: #{v.$gradient-database};
 
         @include m.bg-gradient(var(--cffy-angle), var(--_gradient-stops));
-        @include m.generate-static-gradients(v.$static-gradients, false, true);
-        @include m.generate-gradients(v.$dynamic-gradients, false, true);
+        @include m.generate-gradients(v.$static-gradients, false);
+        @include m.generate-gradients(v.$dynamic-gradients, false);
       }
 
       // Indeterminate
@@ -121,28 +121,6 @@
   // ==========================================================================
   // PLACEHOLDER & SKELETON LOADERS
   // ==========================================================================
-  .placeholder-list {
-    position: relative;
-    height: 13rem;
-    width: 100%;
-    background-color: var(--cffy-surface-container);
-    z-index: 44;
-    overflow: hidden;
-    border-radius: v.$card-border-radius;
-
-    .placeholder-loader {
-      position: absolute;
-      left: -45%;
-      height: 100%;
-      width: 45%;
-      background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      animation: placeholderLoading 1s infinite;
-      z-index: 45;
-    }
-  }
-
   .skeleton {
     --_skeleton-color: var(--cffy-skeleton-color, var(--cffy-muted-a10));
     --_skeleton-radius: var(--cffy-skeleton-radius, var(--cffy-radius-md));
@@ -212,7 +190,7 @@
   // SPINNER COMPONENT
   // ==========================================================================
   .spinner {
-    animation: rotator v.$spinner-duration linear infinite;
+    animation: spin v.$spinner-duration linear infinite;
   }
 
   .path {
@@ -294,15 +272,6 @@
     }
     100% {
       transform: translateX(250%);
-    }
-  }
-
-  @keyframes rotator {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
     }
   }
 

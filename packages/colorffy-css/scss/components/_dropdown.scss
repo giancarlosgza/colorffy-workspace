@@ -9,15 +9,6 @@
   .v-popper {
     &:is(.v-popper--theme-dropdown) {
       display: inline-block;
-
-      // Rotate trailing icon when dropdown is open
-      &.v-popper--theme-dropdown:is(.v-popper--shown) {
-        .btn {
-          i:is(.i-search) {
-            rotate: 180deg;
-          }
-        }
-      }
     }
   }
 
@@ -197,132 +188,6 @@
           }
         }
 
-        // Color Picker Popover
-        & .v-popper__inner {
-          &:has(.color-picker-popper) {
-            --_dropdown-padding: var(--cffy-space-12);
-
-            // Color Picker Popover
-            .color-picker-popper {
-              --_color-picker-width: 240px;
-
-              display: flex;
-              flex-direction: column;
-              width: var(--_color-picker-width);
-              gap: var(--cffy-space-12);
-              user-select: none;
-
-              /* Color Picker Area */
-              & .saturation-value-area {
-                position: relative;
-                width: 100%;
-                height: 150px;
-                cursor: crosshair;
-                overflow: hidden;
-                border-radius: calc(var(--_dropdown-radius) / 1.25);
-
-                & .saturation-gradient {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  background: linear-gradient(to right, white, transparent);
-                }
-
-                & .value-gradient {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  background: linear-gradient(to top, black, transparent);
-                }
-
-                & .sv-marker {
-                  position: absolute;
-                  width: 12px;
-                  height: 12px;
-                  border-radius: 50%;
-                  border: 2px solid white;
-                  box-shadow: 0 0 0 1.5px black, inset 0 0 0 1.5px black; /* Make marker visible on any background */
-                  transform: translate(-50%, -50%);
-                  pointer-events: none; /* Prevent marker from interfering with clicks */
-                  box-sizing: border-box;
-                }
-              }
-
-              /* Hue Slider Area */
-              & .hue-slider-area {
-                position: relative;
-                width: 100%;
-                height: 15px;
-                cursor: ew-resize;
-                border-radius: var(--cffy-radius-full);
-                overflow: hidden;
-
-                & .hue-gradient {
-                  position: absolute;
-                  inset: 0;
-                  background: linear-gradient(to right,
-                          hsl(0, 100%, 50%),
-                          hsl(60, 100%, 50%),
-                          hsl(120, 100%, 50%),
-                          hsl(180, 100%, 50%),
-                          hsl(240, 100%, 50%),
-                          hsl(300, 100%, 50%),
-                          hsl(360, 100%, 50%)
-                  );
-                }
-
-                & .hue-marker {
-                  position: absolute;
-                  top: 50%;
-                  width: 12px;
-                  height: 12px;
-                  aspect-ratio: 1;
-                  background-color: transparent;
-                  border: var(--cffy-border-width-md) solid var(--cffy-color-brand-white-500);
-                  outline: var(--cffy-border-width-md) solid var(--cffy-color-brand-dark-500);
-                  outline-offset: 0;
-                  border-radius: var(--cffy-radius-md);
-                  box-shadow: var(--cffy-shadow-sm);
-                  pointer-events: none;
-                  box-sizing: border-box;
-                  transform: translate(-50%, -50%);
-                }
-              }
-
-              /* Controls Area */
-              .controls {
-                display: flex;
-                align-items: center;
-                gap: var(--cffy-space-8);
-
-                & .preview-swatch {
-                  flex-shrink: 0;
-                  width: 30px;
-                  height: 30px;
-                  aspect-ratio: 1;
-                  border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
-                  border-radius: var(--cffy-radius-full);
-                }
-
-                & .form-group {
-                  flex-grow: 1;
-                  align-items: center;
-
-                  & label {
-                    position: absolute;
-                    block-size: 0;
-                    visibility: hidden;
-                  }
-                }
-              }
-            }
-          }
-        }
-
         // Hide default arrow
         & .v-popper__arrow-container {
           & .v-popper__arrow-outer,
@@ -382,10 +247,6 @@
             border-radius: var(--cffy-radius-xl);
             margin: var(--cffy-space-8);
             //padding-block: 12px 24px;
-
-            .color-picker-popper {
-              --_color-picker-width: 100%;
-            }
 
             & ul {
               & li {

@@ -6,7 +6,6 @@
 // ==========================================================================
 $white: hsl(100, 100%, 100%) !default;
 $black: hsl(0, 0%, 0%) !default;
-$dark: hsl(0, 0%, 7.1%) !default;
 
 // ==========================================================================
 // GRADIENT PRESETS & DYNAMIC MAPS
@@ -72,22 +71,6 @@ $static-gradients: (
   'fuchsia':          $gradient-galaxy,
   'navy':             $gradient-darkblue,
 ) !default;
-
-// Color wheel scheme colors
-$scheme-colors: (
-        'Red': hsl(0, 100%, 50%),
-        'Red-Orange': hsl(30, 100%, 50%),
-        'Orange': hsl(39, 100%, 50%),
-        'Yellow-Orange': hsl(45, 100%, 50%),
-        'Yellow': hsl(60, 100%, 50%),
-        'Yellow-Green': hsl(80, 61%, 50%),
-        'Green': hsl(120, 100%, 25%),
-        'Blue-Green': hsl(147, 50%, 47%),
-        'Blue': hsl(240, 100%, 50%),
-        'Blue-Violet': hsl(271, 76%, 53%),
-        'Violet': hsl(274, 100%, 25%),
-        'Red-Violet': hsl(322, 81%, 43%),
-);
 
 // ==========================================================================
 // FONTS & TYPOGRAPHY SCALE TOKENS
@@ -222,9 +205,6 @@ $type-overline: (
         font-size: var(--cffy-fs-xs),
         letter-spacing: -0.01em,
 );
-
-
-$fs-table: clamp(0.75rem, 2.5cqw, 0.80rem);
 
 // ==========================================================================
 // BORDER RADIUS, BORDERS & SPACES

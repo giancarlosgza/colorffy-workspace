@@ -62,11 +62,6 @@
       overflow-y: hidden;
     }
 
-    // Prevent an overflow issue when the page has a transition
-    &:has(.slide-enter-active, .slide-leave-active) {
-      overflow-x: hidden;
-    }
-
     // Prevent an overflow when a mobile menu is open
     &:has(.v-popper__popper--no-positioning) {
       overflow-y: hidden;
@@ -88,14 +83,6 @@
     border-top: var(--cffy-border-width-sm) solid var(--cffy-outline-button);
     opacity: 0.95;
     margin: 1rem 0;
-  }
-
-  .vr {
-    display: inline-block;
-    width: 1px;
-    min-height: 1em;
-    background: var(--cffy-outline-button);
-    opacity: 0.85;
   }
 
   code,
@@ -197,17 +184,6 @@
   // ==========================================================================
   // FORM ELEMENTS RESETS
   // ==========================================================================
-  button,
-  input,
-  optgroup,
-  select,
-  textarea {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0;
-  }
-
   a:not([href]):not([class]) {
     &,
     &:hover {
@@ -373,11 +349,6 @@
     display: block;
   }
 
-  // Add the correct display in all browsers
-  summary {
-    display: list-item;
-  }
-
   // Table
   table {
     caption-side: bottom;
@@ -431,24 +402,6 @@
         border-radius: var(--cffy-radius-full);
       }
     }
-  }
-
-  /* Works on Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    --_scrollbar-size: 10px;
-
-    width: var(--_scrollbar-size);
-    height: var(--_scrollbar-size);
-  }
-
-  *::-webkit-scrollbar-track {
-    background: var(--cffy-surface-container-low);
-    border-radius: var(--cffy-radius-full);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: var(--cffy-surface-container-highest);
-    border-radius: var(--cffy-radius-full);
   }
 
   details {

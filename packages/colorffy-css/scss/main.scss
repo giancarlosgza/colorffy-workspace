@@ -17,7 +17,6 @@
 @use './components/badge';
 @use './components/breadcrumb';
 @use './components/button';
-@use './components/button-effects';
 @use './components/button-group';
 @use './components/card';
 @use './components/carousel';
@@ -33,7 +32,6 @@
 @use './components/listbox';
 @use './components/pagination';
 @use './components/popover';
-@use './components/prime';
 @use './components/progress';
 @use './components/stepper';
 @use './components/tabs';
@@ -73,6 +71,3 @@
 @use "./utilities/transform";
 @use "./utilities/visibility";
 @use "./utilities/z-index";
-
-// Pages styles
-@use './pages/core';

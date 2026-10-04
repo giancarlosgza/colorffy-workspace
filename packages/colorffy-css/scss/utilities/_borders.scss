@@ -143,8 +143,8 @@
 
       background: linear-gradient(var(--cffy-background), var(--cffy-background)) padding-box,
       linear-gradient(120deg, var(--_border-gradient)) border-box;
-      @include m.generate-static-gradients(v.$static-gradients, true, false);
-      @include m.generate-gradients(v.$dynamic-gradients, true, false);
+      @include m.generate-gradients(v.$static-gradients, true);
+      @include m.generate-gradients(v.$dynamic-gradients, true);
     }
 
     // Animated borders
@@ -153,8 +153,8 @@
 
       position: relative;
       @include m.gradient-glow-border(var(--_border-gradient));
-      @include m.generate-static-gradients(v.$static-gradients, true, false);
-      @include m.generate-gradients(v.$dynamic-gradients, true, false);
+      @include m.generate-gradients(v.$static-gradients, true);
+      @include m.generate-gradients(v.$dynamic-gradients, true);
     }
 
     &.border-gradient-spin {
@@ -166,8 +166,8 @@
       border: var(--_border-size) solid transparent;
       background: linear-gradient(var(--cffy-background, canvas) 0 0) padding-box,
       conic-gradient(from var(--cffy-gradient-angle), var(--_border-gradient)) border-box;
-      @include m.generate-static-gradients(v.$static-gradients, true, false);
-      @include m.generate-gradients(v.$dynamic-gradients, true, false);
+      @include m.generate-gradients(v.$static-gradients, true);
+      @include m.generate-gradients(v.$dynamic-gradients, true);
 
       &:before,
       &:after {

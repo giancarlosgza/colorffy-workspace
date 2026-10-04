@@ -397,26 +397,6 @@
           border: 0;
           border-radius: calc(var(--_input-radius) / 2);
         }
-
-        &:is(.color-swatch) {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border: var(--cffy-border-width-sm) solid var(--cffy-outline-surface);
-          aspect-ratio: 1;
-          border-radius: var(--cffy-radius-sm);
-          padding: var(--cffy-space-14);
-          margin-inline-start: var(--cffy-space-6);
-          background-color: #0000ff;
-          transition: transform var(--cffy-duration-100) ease;
-
-          &.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            filter: grayscale(0.3);
-            pointer-events: none;
-          }
-        }
       }
 
       // Add focus styles to the form group when the form control is focused
@@ -491,15 +471,6 @@
 
   .form-group > .input-group {
     margin-bottom: 0;
-  }
-
-  .form-color-picker-wrapper {
-    position: relative;
-    display: block;
-
-    & .v-popper {
-      width: 100%;
-    }
   }
 
   // ==========================================================================
