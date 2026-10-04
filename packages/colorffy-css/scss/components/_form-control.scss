@@ -200,6 +200,11 @@
       min-height: var(--_input-height);
       cursor: text;
 
+      // Tags sit the same distance from every edge; an empty field keeps the text padding
+      &:has(> .btn-chip) {
+        padding-inline-start: var(--_input-padding-block);
+      }
+
       &:is(:focus-within) {
         --_input-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
         --_input-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
@@ -220,8 +225,12 @@
       }
 
       .btn-chip {
-        --cffy-btn-height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
-        --cffy-btn-padding-inline: var(--cffy-space-8);
+        --_btn-height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
+        --_btn-padding-block: 0;
+        --_btn-padding-inline: var(--cffy-space-8);
+        --_btn-radius: max(2px, calc(var(--_input-radius) - var(--_input-border-width) - var(--_input-padding-block)));
+
+        font-size: inherit;
       }
 
       .form-tags-input {
