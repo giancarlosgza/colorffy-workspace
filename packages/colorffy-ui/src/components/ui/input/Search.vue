@@ -39,7 +39,7 @@ function onKeydown(event: KeyboardEvent): void {
     emit('search', model.value ?? '')
 
   // First Esc empties the field; a dialog around it only closes on the next one
-  if (event.key === 'Escape' && hasValue.value) {
+  if (event.key === 'Escape' && hasValue.value && !props.disabled && !props.readonly) {
     event.preventDefault()
     event.stopPropagation()
     clear()

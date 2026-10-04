@@ -21,7 +21,8 @@ withDefaults(defineProps<IButtonTooltipProps>(), {
   customClass: '',
   rounded: false,
   fluid: false,
-  placement: 'top' as const
+  placement: 'top' as const,
+  ariaExpanded: undefined
 })
 
 /** Emits */

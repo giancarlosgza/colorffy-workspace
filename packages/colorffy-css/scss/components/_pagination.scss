@@ -67,8 +67,9 @@
   }
 
   .pagination-ellipsis {
-    padding-inline: var(--cffy-space-4);
-    color: var(--cffy-muted-a10);
+    --_btn-color: var(--cffy-muted-a10);
+
+    pointer-events: none;
     user-select: none;
   }
 

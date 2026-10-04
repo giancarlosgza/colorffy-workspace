@@ -11,9 +11,11 @@
   // RESPONSIVE TABLE CONTAINER
   // ==========================================================================
   .table-responsive {
+    position: relative;
     display: block;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -128,7 +130,7 @@
       }
 
       tr.is-selected {
-        --_table-row-bg-color: var(--cffy-table-selected-bg-color, var(--cffy-surface-a0));
+        --_table-row-bg-color: var(--cffy-table-selected-bg-color, var(--cffy-primary-container));
       }
     }
 

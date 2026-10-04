@@ -336,7 +336,7 @@ async function removeMember(): Promise<void> {
                 size="sm"
                 clearable
                 class="mb-0"
-                style="flex: 0 1 12rem;"
+                style="width: 12rem;"
               />
             </div>
           </template>

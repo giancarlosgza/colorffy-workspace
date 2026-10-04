@@ -102,6 +102,15 @@
 
         background-image: var(--_input-check-checked-icon);
       }
+
+      &:is(:indeterminate) {
+        --_input-check-border-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-bg-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-checked-icon: linear-gradient(var(--cffy-on-primary), var(--cffy-on-primary));
+
+        background-image: var(--_input-check-checked-icon);
+        background-size: 55% var(--cffy-border-width-md);
+      }
     }
 
     // Radio exclusive radius and checked state

@@ -129,7 +129,10 @@ watch([pageCount, page], () => {
         class="pagination-item pagination-page"
         :aria-hidden="typeof item === 'string' || undefined"
       >
-        <span v-if="typeof item === 'string'" class="pagination-ellipsis">&hellip;</span>
+        <span
+          v-if="typeof item === 'string'"
+          class="pagination-ellipsis" :class="[buttonClasses]"
+        >&hellip;</span>
         <button
           v-else
           type="button"

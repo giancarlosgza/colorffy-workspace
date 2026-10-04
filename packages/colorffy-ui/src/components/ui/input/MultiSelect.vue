@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IMultiSelectInputEmits, IMultiSelectInputProps } from '@/types/input'
-import { computed, ref, useId, watch } from 'vue'
+import { computed, nextTick, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
 import { useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
@@ -104,6 +104,11 @@ const fieldAria = computed(() => ({
 }))
 
 /** Methods */
+// Cleared first, so the same message twice is still read out
+function announce(text: string): void {
+  announcement.value = ''
+  nextTick(() => (announcement.value = text))
+}
 function isSelected(item: ListboxItem): boolean {
   return selectedValues.value.has(item.value as ComboboxValue)
 }
@@ -131,7 +136,7 @@ function closeList(): void {
 function remove(item: ListboxItem): void {
   model.value = model.value.filter(value => !Object.is(value, item.value))
   emit('remove', item.value as ComboboxValue)
-  announcement.value = `Removed ${item.label}`
+  announce(`Removed ${item.label}`)
 }
 // The list stays open; a search is cleared so the next one starts fresh
 function toggle(item: ListboxItem): void {
@@ -142,7 +147,7 @@ function toggle(item: ListboxItem): void {
   } else if (!isUnavailable(item)) {
     model.value = [...model.value, item.value as ComboboxValue]
     emit('add', item.value as ComboboxValue)
-    announcement.value = `Added ${item.label}`
+    announce(`Added ${item.label}`)
   }
   if (query.value) {
     query.value = ''
@@ -158,6 +163,7 @@ function clear(): void {
   const removed = selectedItems.value
   model.value = []
   removed.forEach(item => emit('remove', item.value as ComboboxValue))
+  announce('Selection cleared')
   fieldRef.value?.focus()
 }
 function onToggleClick(): void {

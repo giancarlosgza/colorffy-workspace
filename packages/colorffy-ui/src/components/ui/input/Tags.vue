@@ -99,12 +99,15 @@ function onKeydown(event: KeyboardEvent): void {
     removeAt(model.value.length - 1)
   }
 }
+// A list is split here, before the field's maxlength can cut the paste short
 function onPaste(event: ClipboardEvent): void {
   const text = event.clipboardData?.getData('text') ?? ''
-  if (!text.includes('\n'))
+  if (!text.includes('\n') && !(props.separator && text.includes(props.separator)))
     return
   event.preventDefault()
-  addTags(text.split(/\r?\n/).flatMap(line => line.split(props.separator)))
+  const lines = `${draft.value}${text}`.split(/\r?\n/)
+  addTags(props.separator ? lines.flatMap(line => line.split(props.separator)) : lines)
+  draft.value = ''
 }
 function focusInput(event: MouseEvent): void {
   if (event.target === event.currentTarget)

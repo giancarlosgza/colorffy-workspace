@@ -280,6 +280,7 @@ watch(() => props.items.length, (_length, previous) => {
                 v-for="column in hideableColumns"
                 :id="`${toolbarId}-column-${column.key}`"
                 :key="column.key"
+                keep-open
                 :item-text="column.label"
                 :icon="isColumnVisible(column.key) ? '&#xe834;' : '&#xe835;'"
                 :disabled="isLastVisibleColumn(column.key)"
