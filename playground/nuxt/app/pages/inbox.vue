@@ -227,7 +227,7 @@ function enableDesktopNotifications() {
       </template>
     </UiAlert>
 
-    <UiSegmentedControls :tabs="filterTabs" :active-tab="activeFilter" @update-active-tab="setFilter" />
+    <UiSegmentedControls :tabs="filterTabs" :active-tab="activeFilter" @update:active-tab="setFilter" />
 
     <div class="row">
       <!-- Notification list -->

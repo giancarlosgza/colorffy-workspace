@@ -362,7 +362,7 @@ watch(() => route.params.id, () => {
       </div>
 
       <!-- Tabs -->
-      <UiTabs :tabs="tabs" :active-tab="activeTab" class="mb-4" @update-active-tab="activeTab = $event" />
+      <UiTabs v-model:active-tab="activeTab" :tabs="tabs" class="mb-4" />
 
       <!-- Overview -->
       <section

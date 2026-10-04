@@ -276,7 +276,7 @@ async function removeMember(): Promise<void> {
               pill-tabs
               fit
               size="sm"
-              @update-active-tab="selectTab"
+              @update:active-tab="selectTab"
             />
           </template>
 

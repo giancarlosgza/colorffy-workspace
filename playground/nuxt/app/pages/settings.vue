@@ -295,7 +295,7 @@ onBeforeUnmount(() => {
       :tabs="tabs"
       :active-tab="activeTab"
       class="mb-4"
-      @update-active-tab="selectTab"
+      @update:active-tab="selectTab"
     />
 
     <!-- Profile -->

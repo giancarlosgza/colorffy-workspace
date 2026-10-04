@@ -305,10 +305,9 @@ function runQuickAction(id: string) {
           </template>
           <template #body>
             <UiTabs
+              v-model:active-tab="taskTab"
               :tabs="taskTabs"
-              :active-tab="taskTab"
               size="sm"
-              @update-active-tab="taskTab = $event"
             />
 
             <div

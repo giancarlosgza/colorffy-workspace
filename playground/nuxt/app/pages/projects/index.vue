@@ -293,7 +293,7 @@ onMounted(() => {
         option-label="label"
         option-value="value"
       />
-      <UiSegmentedControls :tabs="viewTabs" :active-tab="view" @update-active-tab="view = $event" />
+      <UiSegmentedControls v-model:active-tab="view" :tabs="viewTabs" />
     </div>
 
     <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
@@ -515,11 +515,10 @@ onMounted(() => {
 
       <template #body>
         <UiStepper
+          v-model:active-step="wizardStep"
           :steps="wizardSteps"
-          :active-step="wizardStep"
           linear
           class="mb-4"
-          @update-active-step="wizardStep = $event"
         />
 
         <!-- Details -->
