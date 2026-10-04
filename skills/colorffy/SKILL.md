@@ -164,7 +164,7 @@ const name = ref('')
 ## Component Categories Quick Reference
 
 **Layout:** UiHeaderContent, UiPaneContent, UiCard
-**Navigation:** UiTabs, UiNavigationBar, UiSegmentedControls, UiBreadcrumb
+**Navigation:** UiNavbar (with UiNavbarBrand, UiNavbarTitle, UiNavbarToggle, UiNavbarCollapse, UiNavbarNav, UiNavbarLink, UiNavbarItem, UiNavbarAvatar, UiNavbarMobileMenu), UiTabs, UiNavigationBar, UiSegmentedControls, UiBreadcrumb, UiPopoverMenu
 **Sidebar:** UiSidebar (`#header` / `#body` / `#footer` slots), UiSidebarGroup, UiSidebarLink, UiSidebarText, UiSidebarDropdown
 **Buttons:** UiButton, UiButtonMenu, UiButtonMenuSubmenu, UiButtonToggleGroup, UiButtonTooltip
 **Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile

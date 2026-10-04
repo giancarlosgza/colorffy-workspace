@@ -202,7 +202,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning â
 
 **Lists**
 - Use `UiListGroup` with `UiListItem` for simple lists
-- Items support icons, active state, clickable prop
+- Items take `title`, `text` and a leading `icon` or image; `is-interactive` on `UiListGroup` adds hover and the trailing arrow
 - Pass `to` or `href` to render a row as a navigable link (`as` picks the tag/component, e.g. `NuxtLink`); link mode implies the hover/active/arrow styling automatically
 - Lighter weight than tables
 - Good for navigation lists, option lists
