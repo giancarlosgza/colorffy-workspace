@@ -112,7 +112,6 @@ const tableRows = computed(() => filteredProjects.value.map(project => ({
 const wizardIndex = computed(() => wizardSteps.findIndex(step => step.id === wizardStep.value))
 const isLastStep = computed(() => wizardIndex.value === wizardSteps.length - 1)
 const teamMembers = computed(() => members.filter(member => team[member.id]))
-const leadOptions = computed(() => teamMembers.value.map(member => ({ label: member.name, value: member.id })))
 const nameErrors = computed(() => (showErrors.value && !draft.name.trim() ? ['Give the project a name to continue'] : []))
 const dueErrors = computed(() => (draft.start && draft.due && draft.due < draft.start ? ['The due date has to come after the start date'] : []))
 const visibilityLabel = computed(() => (draft.visibility === 'private' ? 'Private' : 'Workspace'))
@@ -234,8 +233,8 @@ function archiveProject() {
 }
 
 /** Watchers */
-watch(leadOptions, (options) => {
-  if (!options.some(option => option.value === draft.leadId))
+watch(teamMembers, (team) => {
+  if (!team.some(member => member.id === draft.leadId))
     draft.leadId = currentUser.id
 })
 watch(() => route.query.new, openFromQuery)
@@ -587,15 +586,24 @@ onMounted(() => {
               </template>
             </UiListItem>
           </UiListGroup>
-          <UiInputSelect
+          <UiInputCombobox
             id="new-project-lead"
             v-model="draft.leadId"
             label="Project lead"
-            placeholder="Choose a lead"
-            :options="leadOptions"
-            option-label="label"
-            option-value="value"
-          />
+            placeholder="Search the team"
+            :options="teamMembers"
+            option-label="name"
+            option-value="id"
+            empty-text="Add them to the team first"
+          >
+            <template #option="{ option }">
+              <UiAvatar v-bind="avatarOf(option as Member)" size="sm" />
+              <span class="d-flex flex-column">
+                <span>{{ (option as Member).name }}</span>
+                <span class="caption text-muted">{{ (option as Member).title }}</span>
+              </span>
+            </template>
+          </UiInputCombobox>
         </div>
 
         <!-- Review -->
