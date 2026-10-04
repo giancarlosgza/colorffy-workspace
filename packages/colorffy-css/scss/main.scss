@@ -2,7 +2,7 @@
 *** Colorffy Design System Stylesheet v1.5.0 (Orion)
 **/
 @use './abstracts/variables';
-@use './abstracts/mixins';
+@use './base/properties';
 
 @use './base/layers';
 @use './base/roots';

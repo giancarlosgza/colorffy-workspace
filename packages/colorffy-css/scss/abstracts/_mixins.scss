@@ -33,7 +33,7 @@
     font-family: var(--cffy-font-secondary);
   }
 
-  /* Add support for variable font settings */
+  // Add support for variable font settings
   @supports (font-variation-settings: 'wght' 500) {
     font-family: var(--cffy-font-primary);
     font-optical-sizing: auto;
@@ -71,10 +71,8 @@
   height: $size;
 }
 
-/*
-* Tonal badges
-* Generate badge tonal background colors
-*/
+// Tonal badges
+// Generate badge tonal background colors
 @mixin container-tonal($bg, $color, $isBordered: false, $prefix: badge) {
   @if ($isBordered == true) {
     --_#{$prefix}-border-color: #{$color};
@@ -162,10 +160,8 @@
   }
 }
 
-/*
-* Tonal button
-* Generate button tonal states
-*/
+// Tonal button
+// Generate button tonal states
 @mixin btn-tonal($bg, $tone, $color) {
   --_btn-bg-color: #{$bg};
   --_btn-color: #{$color};
@@ -179,10 +175,8 @@
   }
 }
 
-/*
-* Button sizes
-* Generate button sizes
-*/
+// Button sizes
+// Generate button sizes
 @mixin btn-size($size) {
   @if ($size == 'sm') {
     --_btn-padding-inline: var(--cffy-space-8);
@@ -236,11 +230,9 @@
   }
 }
 
-/*
-* Helper to use media queries with breakpoints
-* @author Giancarlos Garza
-* @param {Breakpoints} $breakpoints
-*/
+// Helper to use media queries with breakpoints
+// @author Giancarlos Garza
+// @param {Breakpoints} $breakpoints
 @mixin media-query($key) {
   $size: map.get(v.$breakpoints, $key);
 
@@ -249,17 +241,15 @@
   }
 }
 
-/**
-* Color tones 
-* Generate colors tones method using color-mix() css function
-* @author Giancarlos Garza
-*/
+// Color tones
+// Generate colors tones method using color-mix() css function
+// @author Giancarlos Garza
 
 // ==========================================================================
 // COLOR MIX LIGHT & SEMANTIC LIGHT TONES
 // ==========================================================================
 @mixin surface-light-tones() {
-  /* surfaces */
+  // surfaces
   --cffy-surface-a0: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 96%);
   --cffy-surface-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 95%);
   --cffy-surface-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 90%);
@@ -271,10 +261,10 @@
   --cffy-surface-a80: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 34%);
   --cffy-surface-a90: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 27%);
 
-  /* surfaces states */
+  // surfaces states
   --cffy-surface-disabled: color-mix(in oklab, var(--cffy-on-background-inverse), var(--cffy-muted-a10) 20%);
 
-  /* primaries */
+  // primaries
   --cffy-primary-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 11%);
   --cffy-primary-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 15%);
   --cffy-primary-a30: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 19%);
@@ -286,10 +276,10 @@
   --cffy-primary-a90: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 65%);
   --cffy-on-primary-container: var(--cffy-primary-a90);
 
-  /* primaries states */
+  // primaries states
   --cffy-primary-disabled: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-muted-a10) 50%);
 
-  /* secondaries */
+  // secondaries
   --cffy-secondary-a10: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background) 4%);
   --cffy-secondary-a20: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background) 8%);
   --cffy-secondary-a30: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background) 11%);
@@ -301,7 +291,7 @@
   --cffy-secondary-a90: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background) 65%);
   --cffy-on-secondary-container: var(--cffy-secondary-a90);
 
-  /* accents */
+  // accents
   --cffy-accent-a10: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background) 4%);
   --cffy-accent-a20: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background) 8%);
   --cffy-accent-a30: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background) 11%);
@@ -315,7 +305,7 @@
 }
 
 @mixin semantic-light-tones() {
-  /* success */
+  // success
   --cffy-success-a10: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background) 11%);
   --cffy-success-a20: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background) 15%);
   --cffy-success-a30: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background) 19%);
@@ -327,7 +317,7 @@
   --cffy-success-a90: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background) 65%);
   --cffy-on-success-container: var(--cffy-success-a90);
 
-  /* warning */
+  // warning
   --cffy-warning-a10: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background) 11%);
   --cffy-warning-a20: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background) 15%);
   --cffy-warning-a30: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background) 19%);
@@ -339,7 +329,7 @@
   --cffy-warning-a90: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background) 65%);
   --cffy-on-warning-container: var(--cffy-warning-a90);
 
-  /* danger */
+  // danger
   --cffy-danger-a10: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background) 11%);
   --cffy-danger-a20: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background) 15%);
   --cffy-danger-a30: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background) 19%);
@@ -351,7 +341,7 @@
   --cffy-danger-a90: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background) 65%);
   --cffy-on-danger-container: var(--cffy-danger-a90);
 
-  /* info */
+  // info
   --cffy-info-a10: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background) 11%);
   --cffy-info-a20: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background) 15%);
   --cffy-info-a30: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background) 19%);
@@ -363,7 +353,7 @@
   --cffy-info-a90: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background) 65%);
   --cffy-on-info-container: var(--cffy-info-a90);
 
-  /* muted */
+  // muted
   --cffy-muted-a10: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background) 11%);
   --cffy-muted-a20: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background) 15%);
   --cffy-muted-a30: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background) 19%);
@@ -380,7 +370,7 @@
 // COLOR MIX DARK & SEMANTIC DARK TONES
 // ==========================================================================
 @mixin surface-dark-tones() {
-  /* surfaces */
+  // surfaces
   --cffy-surface-a0: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 85%);
   --cffy-surface-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 84%);
   --cffy-surface-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base) 78%);
@@ -392,10 +382,10 @@
   --cffy-surface-a80: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base-inverse) 50%);
   --cffy-surface-a90: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-surface-base-inverse) 40%);
 
-  /* surfaces states */
+  // surfaces states
   --cffy-surface-disabled: color-mix(in oklab, var(--cffy-on-background-inverse), var(--cffy-muted-a10) 43%);
 
-  /* primaries */
+  // primaries
   --cffy-primary-a10: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background-inverse) 4%);
   --cffy-primary-a20: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background-inverse) 8%);
   --cffy-primary-a30: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background-inverse) 11%);
@@ -407,10 +397,10 @@
   --cffy-primary-a90: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-primary-container: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-on-background) 50%);
 
-  /* primaries states */
+  // primaries states
   --cffy-primary-disabled: color-mix(in oklab, var(--cffy-primary-base), var(--cffy-muted-a10) 50%);
 
-  /* secondaries */
+  // secondaries
   --cffy-secondary-a10: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 4%);
   --cffy-secondary-a20: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 8%);
   --cffy-secondary-a30: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 11%);
@@ -422,7 +412,7 @@
   --cffy-secondary-a90: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-secondary-container: color-mix(in oklab, var(--cffy-secondary-base), var(--cffy-on-background) 50%);
 
-  /* accents */
+  // accents
   --cffy-accent-a10: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background-inverse) 4%);
   --cffy-accent-a20: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background-inverse) 8%);
   --cffy-accent-a30: color-mix(in oklab, var(--cffy-accent-base), var(--cffy-on-background-inverse) 11%);
@@ -436,7 +426,7 @@
 }
 
 @mixin semantic-dark-tones() {
-  /* success */
+  // success
   --cffy-success-a10: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background-inverse) 4%);
   --cffy-success-a20: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background-inverse) 8%);
   --cffy-success-a30: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background-inverse) 11%);
@@ -448,7 +438,7 @@
   --cffy-success-a90: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-success-container: color-mix(in oklab, var(--cffy-success-base), var(--cffy-on-background) 50%);
 
-  /* warning */
+  // warning
   --cffy-warning-a10: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background-inverse) 4%);
   --cffy-warning-a20: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background-inverse) 8%);
   --cffy-warning-a30: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background-inverse) 11%);
@@ -460,7 +450,7 @@
   --cffy-warning-a90: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-warning-container: color-mix(in oklab, var(--cffy-warning-base), var(--cffy-on-background) 50%);
 
-  /* danger */
+  // danger
   --cffy-danger-a10: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background-inverse) 4%);
   --cffy-danger-a20: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background-inverse) 8%);
   --cffy-danger-a30: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background-inverse) 11%);
@@ -472,7 +462,7 @@
   --cffy-danger-a90: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-danger-container: color-mix(in oklab, var(--cffy-danger-base), var(--cffy-on-background) 50%);
 
-  /* info */
+  // info
   --cffy-info-a10: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background-inverse) 4%);
   --cffy-info-a20: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background-inverse) 8%);
   --cffy-info-a30: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background-inverse) 11%);
@@ -484,7 +474,7 @@
   --cffy-info-a90: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background-inverse) 60%);
   --cffy-on-info-container: color-mix(in oklab, var(--cffy-info-base), var(--cffy-on-background) 50%);
 
-  /* muted */
+  // muted
   --cffy-muted-a10: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background-inverse) 4%);
   --cffy-muted-a20: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background-inverse) 8%);
   --cffy-muted-a30: color-mix(in oklab, var(--cffy-muted-base), var(--cffy-on-background-inverse) 11%);
@@ -567,10 +557,8 @@
   width: 100%;
 }
 
-/*
-* Row
-* Generate row
-*/
+// Row
+// Generate row
 @mixin make-row {
   --_row-gutter-x: 1.5rem;
   --_row-gutter-y: 0;
@@ -582,10 +570,8 @@
   margin-left: calc(-.5 * var(--_row-gutter-x));
 }
 
-/*
-* Columns
-* Generate columns mixin
-*/
+// Columns
+// Generate columns mixin
 @mixin make-col-ready {
   flex-shrink: 0;
   width: 100%;
@@ -657,19 +643,15 @@
   }
 }
 
-/*
-* Opacity
-* Generate opacity mixin
-*/
+// Opacity
+// Generate opacity mixin
 @mixin opacity($level) {
   $opacity-value: math.div($level, 1);
   opacity: $opacity-value;
 }
 
-/*
-* Radius
-* Generate radius mixin
-*/
+// Radius
+// Generate radius mixin
 @mixin make-radius($direction, $radius) {
   @if $direction == 't' {
     border-top-left-radius: $radius;
@@ -686,57 +668,6 @@
   }
 }
 
-
-// ==========================================================================
-// CSS CUSTOM PROPERTY DEFINITIONS
-// ==========================================================================
-@property --cffy-gradient-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@property --cffy-color-wheel-radius {
-  syntax: "<percentage>";
-  initial-value: 15%;
-  inherits: false;
-}
-
-@property --cffy-element-radius {
-  syntax: "<length>";
-  initial-value: 25px;
-  inherits: false;
-}
-
-@property --cffy-dots-scroll-position {
-  syntax: "<length>";
-  initial-value: 0px;
-  inherits: false;
-}
-
-@property --cffy-gradient-shape-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@property --cffy-gradient-shape-primary {
-  syntax: "<color>";
-  initial-value: rgba(56, 43, 240, 1);
-  inherits: false;
-}
-
-@property --cffy-gradient-shape-accent {
-  syntax: "<color>";
-  initial-value: rgba(200, 27, 212, 1);
-  inherits: false;
-}
-
-@property --cffy-noise-lines {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0.00010px;
-}
 
 // ==========================================================================
 // GRADIENT & GLOWING BORDER MIXINS

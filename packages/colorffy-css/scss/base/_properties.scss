@@ -1,0 +1,50 @@
+// ==========================================================================
+// CSS CUSTOM PROPERTY DEFINITIONS
+// ==========================================================================
+@property --cffy-gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --cffy-color-wheel-radius {
+  syntax: "<percentage>";
+  initial-value: 15%;
+  inherits: false;
+}
+
+@property --cffy-element-radius {
+  syntax: "<length>";
+  initial-value: 25px;
+  inherits: false;
+}
+
+@property --cffy-dots-scroll-position {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --cffy-gradient-shape-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --cffy-gradient-shape-primary {
+  syntax: "<color>";
+  initial-value: rgba(56, 43, 240, 1);
+  inherits: false;
+}
+
+@property --cffy-gradient-shape-accent {
+  syntax: "<color>";
+  initial-value: rgba(200, 27, 212, 1);
+  inherits: false;
+}
+
+@property --cffy-noise-lines {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0.00010px;
+}
