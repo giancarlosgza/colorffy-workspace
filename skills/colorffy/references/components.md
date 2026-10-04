@@ -932,7 +932,10 @@ Not every input uses every base prop (`readonly` only applies to `UiInputText`, 
 - `min` / `max` (number | null) - Only applied when `type="number"`
 - `autofocus` (boolean, default: false)
 
-**Slots:** `#prefix`, `#suffix` - render a bordered box attached to the input (e.g. an icon or a "USD" label)
+- `autocomplete` (string | null) - Native autocomplete hint, set on the field
+- `adornments` ('attached' | 'inline', default: 'attached') - `inline` puts the prefix/suffix inside the field (icons, icon buttons)
+
+**Slots:** `#prefix`, `#suffix` - a bordered box attached to the input (e.g. a "USD" label), or inside the field with `adornments="inline"`
 
 ### UiInputTextarea
 
@@ -1072,6 +1075,41 @@ Segmented PIN/verification code input; auto-advances focus per box, supports Bac
 **Props:** `modelValue` (string), `length` (number, default: 6) - number of boxes, `integerOnly` (boolean, default: true) - numeric-only input; set `false` to allow alphanumeric codes, `autofocus` (boolean) - focuses the first empty box on mount, `label` (string | null) - group label, also used in each box's `aria-label`, `id` (string | null) - boxes get `<id>-otp-<index>`, `placeholder` (string | null) - shown in every box, plus the base props `errorMessages`, `disabled`, `required`, `readonly`, `optionalLabel`, `variant`, `size`, `rounded`, `hideLabel`, `customClass` (on every box)
 
 **Events:** `update:modelValue`, `update`, `complete` (fires with the full value once every box is filled)
+
+### UiInputPassword
+Password field with a show/hide eye button inside the field.
+
+```vue
+<UiInputPassword id="password" v-model="password" label="Password" autocomplete="new-password" />
+```
+
+**Props:** every `UiInputText` prop except `type`, `adornments`, `min`, `max`, plus `revealLabel` (string, default: 'Show password') - the toggle's constant accessible name (its `aria-pressed` tells the state). `autocomplete` defaults to `'current-password'`, `maxlength` to 128.
+
+**Events:** `update:modelValue`, `update`, `update:revealed` (`v-model:revealed`)
+
+### UiInputSearch
+Search field with a search icon and a clear button inside the field.
+
+```vue
+<UiInputSearch id="search" v-model="query" label="Search projects" hide-label placeholder="Search" @search="run" />
+```
+
+**Props:** every `UiInputText` prop except `type`, `adornments`, `min`, `max`, plus `clearLabel` (string, default: 'Clear search'). `autocomplete` defaults to `'off'`.
+
+**Events:** `update:modelValue`, `update`, `search(value)` on Enter, `clear` when the clear button or Esc empties it (the first Esc inside a dialog clears instead of closing it)
+
+### UiInputTags
+Tags field: chips and a text cursor wrap inside one field-styled box (`.form-tags`).
+
+```vue
+<UiInputTags id="emails" v-model="emails" label="Invite by email" placeholder="name@company.com" :max="10" @add="onAdd" />
+```
+
+**Props:** the shared input props, plus `modelValue` (string[], default: []), `max` (number | null), `allowDuplicates` (boolean, default: false; duplicates compare without case), `separator` (string, default: ','), `maxlength` (number, default: 50, per tag), `removeLabel` (string, default: 'Remove'; each remove button reads "Remove <tag>")
+
+**Keys:** Enter or the separator adds the typed tag (an empty Enter still submits the form), Backspace on an empty field removes the last tag, pasted lines become one tag each. Adds and removals are announced to screen readers.
+
+**Events:** `update:modelValue`, `update`, `add(tag)`, `remove(tag)`
 
 ## Links
 

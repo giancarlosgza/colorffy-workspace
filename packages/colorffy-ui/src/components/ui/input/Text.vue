@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
   rounded: false,
   customClass: null,
   size: null,
-  hideLabel: false
+  hideLabel: false,
+  autocomplete: null,
+  adornments: 'attached'
 })
 
 /** Emits */
@@ -95,6 +97,7 @@ const inputAttrs = computed(() => ({
   'required': props.required,
   'readonly': props.readonly,
   'autofocus': props.autofocus,
+  'autocomplete': props.autocomplete ?? undefined,
   'aria-invalid': hasErrors.value || undefined,
   'aria-describedby': describedById.value
 }))
@@ -117,6 +120,7 @@ watch(model, (value) => {
     <div
       v-if="$slots.prefix || $slots.suffix"
       class="input-group"
+      :class="{ 'input-group-inline': adornments === 'inline' }"
     >
       <span
         v-if="$slots.prefix"

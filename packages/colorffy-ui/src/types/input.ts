@@ -10,6 +10,18 @@ export interface ITextInputProps extends IBaseInputProps {
   autofocus?: boolean
   min?: number | null
   max?: number | null
+
+  /**
+   * Native `autocomplete` hint for the field (e.g. `'email'`, `'current-password'`).
+   */
+  autocomplete?: string | null
+
+  /**
+   * Where the `#prefix` and `#suffix` slots render: `'attached'` boxes beside the
+   * field, or `'inline'` inside it, for icons and icon buttons.
+   * @default 'attached'
+   */
+  adornments?: 'attached' | 'inline'
 }
 
 /**
@@ -18,6 +30,60 @@ export interface ITextInputProps extends IBaseInputProps {
 export interface ITextInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
   (e: 'update', value: string | number | null): void
+}
+
+/**
+ * Interface props for the PasswordInput component. Takes every text input prop
+ * except `type`, `adornments`, `min` and `max`.
+ */
+export interface IPasswordInputProps extends Omit<ITextInputProps, 'modelValue' | 'type' | 'adornments' | 'min' | 'max'> {
+  modelValue?: string | null
+
+  /**
+   * Accessible name of the show/hide toggle. The label stays the same; the
+   * button's `aria-pressed` tells whether the password is visible.
+   * @default 'Show password'
+   */
+  revealLabel?: string
+}
+
+/**
+ * Interface emits for the PasswordInput component.
+ */
+export interface IPasswordInputEmits {
+  (e: 'update:modelValue', value: string | null): void
+  (e: 'update', value: string | null): void
+  (e: 'update:revealed', value: boolean): void
+}
+
+/**
+ * Interface props for the SearchInput component. Takes every text input prop
+ * except `type`, `adornments`, `min` and `max`.
+ */
+export interface ISearchInputProps extends Omit<ITextInputProps, 'modelValue' | 'type' | 'adornments' | 'min' | 'max'> {
+  modelValue?: string | null
+
+  /**
+   * Accessible name of the clear button.
+   * @default 'Clear search'
+   */
+  clearLabel?: string
+}
+
+/**
+ * Interface emits for the SearchInput component.
+ */
+export interface ISearchInputEmits {
+  (e: 'update:modelValue', value: string | null): void
+  (e: 'update', value: string | null): void
+  /**
+   * Enter pressed in the field, with the current value.
+   */
+  (e: 'search', value: string): void
+  /**
+   * The clear button or Esc emptied the field.
+   */
+  (e: 'clear'): void
 }
 
 /**
@@ -229,4 +295,62 @@ export interface IInputOtpEmits {
   (e: 'update:modelValue', value: string): void
   (e: 'update', value: string): void
   (e: 'complete', value: string): void
+}
+
+/**
+ * Interface props for the TagsInput component.
+ */
+export interface ITagsInputProps extends IBaseInputProps {
+  /**
+   * The tags (`v-model`).
+   * @default []
+   */
+  modelValue?: string[]
+
+  /**
+   * Maximum number of tags; further entries are ignored.
+   */
+  max?: number | null
+
+  /**
+   * When true, a tag can repeat. Duplicates are compared without case.
+   * @default false
+   */
+  allowDuplicates?: boolean
+
+  /**
+   * Character that commits the typed tag, besides Enter. Pasted text is split
+   * on it and on line breaks.
+   * @default ','
+   */
+  separator?: string
+
+  /**
+   * Maximum length of a single tag.
+   * @default 50
+   */
+  maxlength?: number
+
+  /**
+   * Start of each remove button's accessible name, followed by the tag
+   * (`'Remove design'`).
+   * @default 'Remove'
+   */
+  removeLabel?: string
+}
+
+/**
+ * Interface emits for the TagsInput component.
+ */
+export interface ITagsInputEmits {
+  (e: 'update:modelValue', value: string[]): void
+  (e: 'update', value: string[]): void
+  /**
+   * A tag was added.
+   */
+  (e: 'add', tag: string): void
+  /**
+   * A tag was removed, by its button or by Backspace on an empty field.
+   */
+  (e: 'remove', tag: string): void
 }

@@ -65,9 +65,14 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 ## Forms & Inputs
 
 **Text input**
-- Use `UiInputText` for single-line text
-- Types: `text`, `email`, `password`, `url`, `tel`
-- Supports label, placeholder, error messages, hints
+- Use `UiInputText` for single-line text (`type`: `text`, `email`, `url`, `tel`, `number`, …)
+- Supports label, placeholder and `errorMessages`; pass an `id` so the label and error link to the field
+- Icons inside the field: `adornments="inline"` with the `#prefix` / `#suffix` slots; units beside it: the default attached slots
+
+**Passwords, search and tags**
+- Password with a show/hide toggle → `UiInputPassword` (not `UiInputText type="password"` plus a hand-made button)
+- Search box with a clear button and `search` on Enter → `UiInputSearch`
+- A list of short values typed in one field (emails, labels, keywords) → `UiInputTags`; for picking from a fixed set, use `UiChipGroup` instead
 
 **Multi-line text**
 - Use `UiInputTextarea` for longer text content
@@ -76,17 +81,17 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Dropdowns**
 - Use `UiInputSelect` for single-choice from list
-- Provide `options` array with `label` and `value`
+- Provide `options`; for objects set `option-label` and `option-value`
 - Supports placeholder and required state
 
 **Checkboxes**
 - Use `UiInputCheck` for boolean choices
 - Use multiple checkboxes for multi-select
-- Supports custom colors
+- `variant="switch"` for an on/off setting
 
 **Radio buttons**
 - Use `UiInputRadio` for exclusive choices
-- Group by `name` prop
+- Pass `options` (with `option-label` / `option-value` for objects) and an `id`, which names the group
 - Better than select for 2-5 options
 
 **Sliders**
