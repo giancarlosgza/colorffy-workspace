@@ -34,7 +34,7 @@ Complete framework for building Vue 3 and Nuxt 3 applications with Colorffy UI (
 - Expressive SCSS framework with tonal color system
 - Complete utility class library
 - Flexible grid and flexbox layouts
-- Dark mode support, customizable via SCSS variables
+- Dark mode support, customizable at runtime through `--cffy-*` CSS tokens
 
 **Key Insight:** Colorffy UI components are unstyled by default. Style with Colorffy CSS, custom CSS, or any CSS framework.
 
@@ -81,7 +81,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 import { ref } from 'vue'
 import { UiButton, UiCard, UiInputText, UiModal } from '@colorffy/ui'
 
-const isOpen = ref(false)
+const modal = ref()
 const name = ref('')
 </script>
 
@@ -90,22 +90,24 @@ const name = ref('')
   <UiCard class="shadow-lg rounded-lg">
     <template #body>
       <h2 class="text-primary fw-bold mb-3">Welcome</h2>
-      <UiInputText 
-        v-model="name" 
+      <UiInputText
+        id="name"
+        v-model="name"
         label="Name"
         placeholder="Enter your name"
         class="mb-3"
       />
-      <UiButton 
-        variant="filled" 
+      <UiButton
+        variant="filled"
         color="primary"
         text="Open Modal"
-        @click="isOpen = true"
+        @click="modal.showDialog()"
       />
     </template>
   </UiCard>
 
-  <UiModal v-model="isOpen" title="Hello">
+  <!-- Dialogs open through their exposed showDialog() / closeDialog() -->
+  <UiModal ref="modal" title="Hello" size="sm">
     <template #body>
       <p>Hello, {{ name }}!</p>
     </template>
@@ -184,27 +186,34 @@ const name = ref('')
 
 **[See complete utilities reference →](references/utilities.md)**
 
-## Design Tokens (v2.5+)
+## Design Tokens
 
-Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values:
+Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values. Every public token is `--cffy-*`; never write an unprefixed Colorffy name, and never set a private `--_*` variable (set the component's `--cffy-<component>-<property>` hook instead).
 
 - **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--cffy-space-unit` (override it for runtime density)
 - **Font sizes:** `var(--cffy-fs-4xs…5xl)` + `var(--cffy-fs-{step}--line-height)` companions
+- **Widths:** `var(--cffy-container-3xs…7xl)` (16rem … 80rem), also as `max-w-{size}` utilities
+- **Colors:** `--cffy-<color>-a10` for a solid fill with `--cffy-on-<color>` text; `--cffy-<color>-container` for a tinted surface with `--cffy-on-<color>-container` text
 
 **[See theming reference →](references/theming.md)**
 
-## Breaking changes
+## Upgrading from 2.x
 
-- **Namespace (3.0):** every public custom property is `--cffy-*`. The old `--theme-*` tier swapped `theme-` for the namespace (`--theme-primary-a10` → `--cffy-primary-a10`); every other public name gained it (`--space-16` → `--cffy-space-16`, `--color-brand-primary-500` → `--cffy-color-brand-primary-500`, `--card-bg-color` → `--cffy-card-bg-color`). Privates (`--_*`) and PrimeVue's `--p-*` are unchanged. Never write an unprefixed Colorffy token.
-- **Tabs markup (hand-written HTML only):** `.tabs-navigation` now draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. Without it the active tab shows no underline (or pill) in browsers that support anchor positioning. `UiTabs` renders it already — only raw `@colorffy/css` markup must be updated.
-- **`UiPopoverMenu` identity:** the default header is a `title` plus the close button (`closable` defaults to `true`); put identity in the `header` slot with `UiPopoverMenuUser`, which takes a `user` object. The old `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` props and the `body-extra` slot were removed in 3.0.
-- **`UiPopoverMenu` renders as a native popover:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"` with native light dismiss; the `isOpened`/`hideDropdown` contract is unchanged. Custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]` for that branch, or opt out with `:native-popover="false"`.
+3.0 is a breaking release. When existing code uses a 2.x name, rewrite it following the [migration guide](https://colorffy-ui-docs.pages.dev/migration#upgrading-to-30), in this order:
 
-## Planned for 3.0
+1. **Deprecations removed:** ordinal font sizes (`--fs-100`, `.fs-500`, …) → the t-shirt scale (`--cffy-fs-4xl`, `.fs-lg`; the classes also set the paired line-height). `$space-1/2/3` → `var(--cffy-space-16/32/48)`. The `$primary` … `$muted`, `$primary-colors` and `$font-*` SCSS variables are gone → set the `--cffy-color-brand-*` / `--cffy-font-*` tokens.
+2. **Namespace:** `--theme-*` swapped `theme-` for `--cffy-` (`--theme-primary-a10` → `--cffy-primary-a10`); every other public name gained the prefix (`--space-16` → `--cffy-space-16`, `--card-bg-color` → `--cffy-card-bg-color`). `--theme-nav-drawer-width` → `--cffy-sidebar-width`. Private `--_*` variables were renamed after their hooks, so overrides of old privates silently stop applying: set the public hook. PrimeVue's `--p-*` are unchanged.
+3. **Tonal colors:** text on a tinted surface reads `--cffy-on-<color>-container`, not `a90` (now the darkest ramp step in both modes). `--cffy-on-<color>-inverse` → `--cffy-on-background`. SCSS `btn-tonal()` / `container-tonal()` take the container token instead of an `$isDark` flag.
+4. **Removed component API:** `UiPopoverMenu` `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` (→ `UiPopoverMenuUser` in `#header`), `#body-extra` and the default slot (→ `#body`); `UiSidebarHeader` / `Body` / `Footer` and `UiSidebar`'s default slot (→ `#header` / `#body` / `#footer`, with `header-class` / `body-class` / `footer-class`); `UiEmpty` `#button` (→ `#action`); `UiInputFile` `large` (→ `size="lg"`); `BaseSkeleton` `isThumbnail` (→ `variant="thumbnail"`); `ISegmentedTab.position`.
+5. **Events:** no `on` prefix — `@click`, `@update`, `@close` (dialogs), `@option-click`. Tabs and segmented controls use `v-model:active-tab`, the stepper `v-model:active-step`.
+6. **ids:** the `id` prop renders unchanged on the main element or field (2.x wrote `button-<id>`, `<id>-input-text`, …); the color picker's text field is `<id>-text`.
 
-Still to come before 3.0 ships:
+Hand-written `@colorffy/css` markup also needs, since 2.5:
 
-- Widths use the `--cffy-container-*` scale (`3xs` 16rem … `7xl` 80rem) and the `max-w-{size}` utilities; the sidebar width hook is `--cffy-sidebar-width`. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--cffy-space-*` tokens).
+- **Tabs:** `.tabs-navigation` draws its active indicator with CSS anchor positioning, so the list needs a final `<li class="tab-indicator" aria-hidden="true" role="presentation"></li>`. `UiTabs` renders it already.
+- **Chips:** `.btn-chip` is the outline container and `.chip-elevated` the raised one; a color class (`.chip-secondary`, `.chip-neutral`) only applies together with `.chip-active`.
+- **Cards:** `.card-outline` / `.card-pane` / `.card-elevated` are static surfaces (one per card); add `.card-selectable` or `.card-link` for hover and press feedback.
+- **Popover menu:** in browsers with the Popover API and CSS anchor positioning the panel is a top-layer `popover="auto"`; custom CSS that repositioned `.popover-menu` must target `.popover-menu[popover]`, or opt out with `:native-popover="false"`.
 
 **[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
 

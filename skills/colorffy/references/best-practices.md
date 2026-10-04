@@ -63,51 +63,39 @@ const submit = () => {
 
 ### Modal with Actions
 
+Dialogs open and close through their exposed `showDialog()` / `closeDialog()`; there is no `v-model`.
+
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UiModal, UiButton, UiInputText } from '@colorffy/ui'
 
-const isOpen = ref(false)
+const modal = ref()
 const itemName = ref('')
 
 const handleSave = () => {
   console.log('Saving:', itemName.value)
-  isOpen.value = false
-  itemName.value = ''
-}
-
-const handleCancel = () => {
-  isOpen.value = false
-  itemName.value = ''
+  modal.value.closeDialog()
 }
 </script>
 
 <template>
-  <UiButton text="Edit Item" @click="isOpen = true" />
-  
-  <UiModal v-model="isOpen" title="Edit Item" size="md">
+  <UiButton text="Edit Item" @click="modal.showDialog()" />
+
+  <UiModal ref="modal" title="Edit Item" size="md" @close="itemName = ''">
     <template #body>
       <UiInputText
+        id="item-name"
         v-model="itemName"
         label="Item Name"
         placeholder="Enter item name"
       />
     </template>
     <template #footer>
-      <div class="d-flex gap-2 justify-content-end">
-        <UiButton 
-          text="Cancel" 
-          variant="outline"
-          @click="handleCancel" 
-        />
-        <UiButton 
-          text="Save" 
-          variant="filled"
-          color="primary"
-          @click="handleSave" 
-        />
-      </div>
+      <UiButtonGroup class="justify-content-end">
+        <UiButton text="Cancel" variant="outline" @click="modal.closeDialog()" />
+        <UiButton text="Save" variant="filled" color="primary" @click="handleSave" />
+      </UiButtonGroup>
     </template>
   </UiModal>
 </template>
@@ -118,30 +106,31 @@ const handleCancel = () => {
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { UiConfirmModal } from '@colorffy/ui'
+import { UiButton, UiConfirmModal } from '@colorffy/ui'
 
-const showConfirm = ref(false)
+const confirm = ref()
+const deleting = ref(false)
 
-const handleDelete = () => {
-  console.log('Item deleted')
+const handleDelete = async () => {
+  deleting.value = true
+  await deleteItem()
+  deleting.value = false
+  confirm.value.closeDialog()
 }
 </script>
 
 <template>
-  <UiButton 
-    text="Delete"
-    variant="filled"
-    color="danger"
-    @click="showConfirm = true"
-  />
-  
+  <UiButton text="Delete" variant="filled" color="danger" @click="confirm.showDialog()" />
+
   <UiConfirmModal
-    v-model="showConfirm"
-    title="Confirm Deletion"
-    message="Are you sure you want to delete this item? This action cannot be undone."
-    confirm-text="Delete"
-    cancel-text="Cancel"
+    ref="confirm"
     variant="danger"
+    title="Delete this item?"
+    message="This action cannot be undone."
+    confirm-label="Delete"
+    cancel-label="Cancel"
+    :is-loading="deleting"
+    loading-label="Deleting..."
     @confirm="handleDelete"
   />
 </template>
@@ -433,7 +422,7 @@ errors.value.email = 'Please enter a valid email address'
 <UiCard v-show="isVisible">Content</UiCard>
 
 <!-- ✅ For conditional rendering -->
-<UiModal v-if="isOpen">Content</UiModal>
+<UiAlert v-if="hasError" variant="danger" message="Could not save" />
 ```
 
 ### 8. TypeScript Usage

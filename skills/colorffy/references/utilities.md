@@ -31,6 +31,11 @@ Complete reference for utility classes in @colorffy/css.
 <p class="text-muted">Muted text</p>
 ```
 
+**Related patterns:**
+- `text-{color}-emphasis` - the color's `--cffy-on-{color}-container` tone, for text and icons on a tinted surface (primary … info, muted)
+- `text-on-{color}` - `--cffy-on-{color}`, black or white picked for a solid `bg-{color}` fill (primary … info)
+- `text-on-{color}-container` - pairs with `bg-{color}-container` (see [Container Backgrounds](#container-backgrounds))
+
 ### Background Colors
 
 **Pattern:** `bg-{color}` (same colors as text), plus `bg-{color}-fixed` for tonal variants

@@ -43,7 +43,9 @@ Theme colors are CSS tokens. Each brand color has a light-mode (`-500`) and dark
 }
 ```
 
-Text colors follow automatically: each `--cffy-on-<name>` picks black or white from the lightness of the solid fill `--cffy-<name>-a10` (whichever contrasts more), and `--cffy-on-<name>-container` is mixed from the base. Set `--cffy-on-<name>` only to force a value.
+Text colors follow automatically: each `--cffy-on-<name>` picks black or white from the lightness of the solid fill `--cffy-<name>-a10` (whichever contrasts more), and `--cffy-on-<name>-container` is mixed from the base. Set `--cffy-on-<name>` only to force a value. Browsers without relative color syntax (and Safari 16.4–17, which implements an older draft) keep fixed fallback values.
+
+`--cffy-<name>-container` is the tinted surface for that color: `a10` mixed toward the background by `--cffy-tonal-dark-intensity` (`80%` in light mode, `58%` in dark mode). Lower it for stronger tints; the mix runs in `oklab`.
 
 Or set one value for both modes with the `--cffy-*-base` tokens:
 
@@ -83,7 +85,7 @@ Colorffy automatically generates tonal variants for each color:
 
 ### CSS Variables
 
-Colorffy CSS uses semantic CSS variables for dark mode support. Toggle the `.dark-mode` class on a root element (like `<html>` or `<body>`).
+Colorffy CSS uses semantic CSS variables for dark mode support. Toggle the `.dark-mode` class on `<html>` (the tokens switch on `html.dark-mode`).
 
 ```css
 /* Define dark mode colors */
@@ -97,29 +99,16 @@ Colorffy CSS uses semantic CSS variables for dark mode support. Toggle the `.dar
 
 ### Brand Tokens & Theme Mappings
 
-Colorffy maps brand tokens to semantic base theme properties depending on the active theme mode:
+Each base token picks its brand tone with `light-dark()`, and `html.dark-mode` switches `color-scheme` to `dark`, so one declaration on `:root` covers both modes:
 
-#### Base Dark Tokens
-- **Definition**: `--cffy-color-brand-dark-500` (light mode value) and `--cffy-color-brand-dark-50` (dark mode value).
-- **Base Light Token (`:root`)**:
-  ```css
-  --cffy-dark-base: var(--cffy-color-brand-dark-500);
-  ```
-- **Base Dark Token (`.dark-mode`)**:
-  ```css
-  --cffy-dark-base: var(--cffy-color-brand-dark-50);
-  ```
+```css
+:root {
+  --cffy-primary-base: light-dark(var(--cffy-color-brand-primary-500), var(--cffy-color-brand-primary-50));
+  --cffy-dark-base: light-dark(var(--cffy-color-brand-dark-500), var(--cffy-color-brand-dark-50));
+}
+```
 
-#### Primary Brand & Dynamic Tones
-- **Definition**: `--cffy-color-brand-primary-500` (light mode value) and `--cffy-color-brand-primary-50` (dark mode value).
-- **Base Light Token (`:root`)**:
-  ```css
-  --cffy-primary-base: var(--cffy-color-brand-primary-500);
-  ```
-- **Base Dark Token (`.dark-mode`)**:
-  ```css
-  --cffy-primary-base: var(--cffy-color-brand-primary-50);
-  ```
+Set the `-500` / `-50` brand tokens to change both modes, or a `--cffy-<name>-base` token to pin one value.
 
 #### Dynamic Tones (Opacity Blending)
 Colorffy generates the tonal ramps (`a10` to `a90`) by blending each base color toward black with `color-mix(in oklab)` (`--cffy-on-background` in light mode, `--cffy-on-background-inverse` in dark mode), so every step is darker than the one before in both modes. A tinted surface (tonal button, badge or alert) is `--cffy-<name>-container`, with `--cffy-on-<name>-container` for its text: the darkest tone in light mode, a light tint in dark mode. Surfaces blend `--cffy-primary-base` into `--cffy-surface-base`:
@@ -170,7 +159,7 @@ onMounted(() => {
 
 ### Font Families
 
-Fonts are CSS tokens (the `$font-*` SCSS variables are deprecated and have no effect):
+Fonts are CSS tokens (there are no `$font-*` SCSS variables):
 
 ```css
 :root {
@@ -204,7 +193,7 @@ Components read these `:root` tokens, so they can be overridden at runtime (glob
 In custom CSS alongside Colorffy, use these tokens (e.g. `border-radius: var(--cffy-radius-md)`) instead of hardcoded values.
 
 ### Component CSS Hooks
-Components expose public CSS variables named `--<component>-<prop>` (unprefixed in 2.x, `--cffy-` prefixed in 3.0). Set them on `:root` or any wrapper; each feeds the component's private `--_*` variable, and variants (e.g. `nav-island`) keep their own values. Prefer hooks over overriding `--_*` variables, which also overrides every variant.
+Components expose public CSS variables named `--cffy-<component>-<property>`. Set them on `:root` or any wrapper; each feeds the component's private `--_<component>-<property>` variable, and variants (e.g. `nav-island`) keep their own values. Always set the hook, never the private variable: privates are internal, get renamed, and overriding one also overrides every variant. Interactive surfaces take their hover and pressed backgrounds from the state layer tokens above.
 
 - **Navbar** (`.navbar`): `--cffy-navbar-bg-color`, `-color`, `-shadow`, `-radius`, `-padding-inline`, `-padding-block`, `-margin-block-end`, `-min-height`, `-easing`, `-duration`, `-brand-font-size`, `-brand-font-weight`, `-brand-size`, `-brand-hover-color`, `-title-font-size`, `-title-font-weight`, `-link-color`, `-link-hover-color`, `-link-active-color`, `-link-active-bg-color`, `-link-font-size`, `-link-font-weight`, `-link-radius`, `-link-padding-inline`, `-link-padding-block`
 - **Popover menu** (`.popover-menu-container`): `--cffy-popover-menu-bg-color`, `-color`, `-border-color`, `-radius`, `-shadow`, `-padding`, `-min-width`, `-spacing`, `-easing`, `-duration`, `-item-color`, `-item-font-size`, `-item-radius`, `-item-hover-color`, `-item-active-color`, `-item-active-bg-color`
@@ -394,29 +383,26 @@ Import your abstracts in the correct order.
 
 ## Per-Component Customization
 
-Components use scoped CSS variables (prefixed with `--_`) for internal values. You can override these variables to customize specific components.
+Set a component's public hooks (listed under [Component CSS Hooks](#component-css-hooks)) on `:root` for every instance, or on a wrapper or class for some of them. Never set the private `--_*` variables: they are internal, and overriding one also flattens every variant.
 
 ```css
-/* Customize card */
-.card {
-  --_card-bg-color: var(--cffy-surface-pane);
-  --_card-border-radius: 1rem;
-  --_card-padding-inline: 2rem;
-  --_card-padding-block: 2rem;
+/* Every card */
+:root {
+  --cffy-card-bg-color: var(--cffy-surface-pane);
+  --cffy-card-radius: var(--cffy-radius-lg);
+  --cffy-card-padding-inline: var(--cffy-space-32);
+  --cffy-card-padding-block: var(--cffy-space-32);
 }
 
-/* Customize button */
-.btn {
-  --_btn-height: 48px;
-  --_btn-radius: 999px;
-  --_btn-padding-inline: 2rem;
-}
-
-/* Customize specific variants */
-.btn-filled {
-  --_btn-bg-color: var(--cffy-primary-base);
+/* Buttons inside the hero only */
+.hero-content {
+  --cffy-btn-height: 3rem;
+  --cffy-btn-radius: var(--cffy-radius-full);
+  --cffy-btn-padding-inline: var(--cffy-space-32);
 }
 ```
+
+Button colors come from the theme tokens (`--cffy-<color>-a10`, `--cffy-on-<color>`, `--cffy-<color>-container`), so recolor a variant by setting those on a wrapper rather than a per-variant variable.
 
 ## Best Practices
 
