@@ -8,6 +8,7 @@ import UiIconMaterial from '../icon/Material.vue'
 /** Props */
 const props = withDefaults(defineProps<IConfirmModalProps>(), {
   showAsModal: true,
+  closeOnClickOutside: true,
   mode: undefined,
   size: undefined,
   title: null,
@@ -112,11 +113,13 @@ function showDialog() {
       dialogRef.value.show()
   }
 }
+// The native close event emits `close`, so Esc reports it too
 function closeDialog() {
-  if (!dialogRef.value?.open)
-    return
-  dialogRef.value.close()
-  emit('close')
+  dialogRef.value?.close()
+}
+function closeFromOutside() {
+  if (props.closeOnClickOutside && dialogRef.value?.open)
+    closeDialog()
 }
 
 defineExpose({
@@ -132,9 +135,10 @@ defineExpose({
     :class="dialogClasses"
     role="dialog"
     aria-modal="true"
+    @close="emit('close')"
   >
     <div
-      v-on-click-outside="closeDialog"
+      v-on-click-outside="closeFromOutside"
       class="dialog-content"
     >
       <div class="dialog-body">

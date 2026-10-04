@@ -117,25 +117,11 @@ export interface IDatatableProps {
    */
   isLoading?: boolean
   /**
-   * Number of skeleton rows to show while loading.
+   * Number of skeleton rows to show while loading. The skeleton always has one
+   * cell per visible column.
    * @default 10
    */
   skeletonRows?: number
-  /**
-   * Number of skeleton columns to show while loading.
-   * @default 5
-   */
-  skeletonCols?: number
-  /**
-   * index of the column to show as expanded in the skeleton.
-   * @default 7
-   */
-  skeletonColExpanded?: number
-  /**
-   * When true, renders the table as expanded.
-   * @default false
-   */
-  isExpanded?: boolean
   /**
    * Column definitions. A single explicit list that drives headers, sorting,
    * hidden state, and the `cell-<key>` slots.

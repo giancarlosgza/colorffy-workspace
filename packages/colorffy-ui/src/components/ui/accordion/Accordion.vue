@@ -26,10 +26,15 @@ const isOpen = defineModel<boolean>('open', { default: false })
     class="accordion"
     :class="[customClass, size && size !== 'md' ? `accordion-${size}` : null, { 'is-disabled': disabled }]"
     :open="isOpen || undefined"
-    :aria-disabled="disabled || undefined"
     @toggle="isOpen = ($event.target as HTMLDetailsElement).open"
   >
-    <summary class="accordion-header">
+    <!-- Enter and Space also reach the summary as a click -->
+    <summary
+      class="accordion-header"
+      :aria-disabled="disabled || undefined"
+      :tabindex="disabled ? -1 : undefined"
+      @click="disabled && $event.preventDefault()"
+    >
       <slot name="header">
         <UiIconMaterial
           v-if="icon"

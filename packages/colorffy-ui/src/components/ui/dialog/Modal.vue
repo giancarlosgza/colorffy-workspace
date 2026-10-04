@@ -65,9 +65,9 @@ function showDialog() {
       dialogRef.value.show()
   }
 }
+// The native close event emits `close`, so Esc and form[method=dialog] report it too
 function closeDialog() {
-  dialogRef?.value?.close()
-  emit('close')
+  dialogRef.value?.close()
 }
 function closeFromOutside() {
   if (props.closeOnClickOutside && dialogRef.value?.open)
@@ -87,6 +87,7 @@ defineExpose({
     :class="dialogClasses"
     role="dialog"
     aria-modal="true"
+    @close="emit('close')"
   >
     <div
       v-on-click-outside="closeFromOutside"

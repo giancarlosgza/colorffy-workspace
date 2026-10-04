@@ -282,14 +282,10 @@ export interface IButtonToggleGroupProps {
   options: IButtonToggleOption[]
 
   /**
-   * ARIA label for accessibility.
+   * Accessible name of the radiogroup.
+   * @default 'Toggle button group'
    */
   ariaLabel?: string
-
-  /**
-   * Group label for accessibility.
-   */
-  groupLabel?: string
 }
 
 /**

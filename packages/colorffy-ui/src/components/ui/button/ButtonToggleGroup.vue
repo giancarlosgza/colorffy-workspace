@@ -11,8 +11,7 @@ import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {
-  ariaLabel: 'Toggle button group',
-  groupLabel: ''
+  ariaLabel: 'Toggle button group'
 })
 
 /** Emits */

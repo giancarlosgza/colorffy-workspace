@@ -56,6 +56,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
 <template>
   <div
     v-if="closable"
+    :id="id || undefined"
     :class="chipClasses"
     :aria-disabled="disabled || undefined"
   >
@@ -86,6 +87,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
 
   <button
     v-else
+    :id="id || undefined"
     type="button"
     :class="chipClasses"
     :disabled="disabled"

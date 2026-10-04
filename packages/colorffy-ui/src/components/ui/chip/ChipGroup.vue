@@ -53,7 +53,6 @@ function toggle(option: IChipOption) {
   >
     <UiChip
       v-for="option in options"
-      :id="option.id"
       :key="option.id"
       :text="option.text"
       :icon-code="option.iconCode"

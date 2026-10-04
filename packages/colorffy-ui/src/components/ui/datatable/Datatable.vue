@@ -14,9 +14,6 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   tableClass: '',
   isLoading: false,
   skeletonRows: 10,
-  skeletonCols: 5,
-  skeletonColExpanded: 7,
-  isExpanded: false,
   defaultSortKey: '',
   defaultSortOrder: 'asc',
   sortable: true,
@@ -328,9 +325,7 @@ function isLastVisibleColumn(key: string) {
         <StateTableSkeleton
           v-if="isLoading"
           :skeleton-cols="columnCount"
-          :skeleton-col-expanded="skeletonColExpanded"
           :skeleton-rows="skeletonRows"
-          :is-expanded="isExpanded"
         />
 
         <!-- Table Content -->

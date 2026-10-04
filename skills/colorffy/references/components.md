@@ -173,7 +173,7 @@ Single collapsible item built on a native `<details>`.
 - `text` (string | null, default: '') - Body text rendered before the `content` slot
 - `open` (boolean, default: false) - Open state; use `v-model:open`
 - `size` ('sm' | 'md' | null) - Per-item size override; defaults to the group size
-- `disabled` (boolean, default: false) - Sets `aria-disabled` and `.is-disabled`
+- `disabled` (boolean, default: false) - The header can't be clicked or focused, so the item keeps its open state (`v-model:open` can still change it)
 - `customClass` (string | string[] | object | null)
 
 **Events:** `update:open` (via `v-model:open`)
@@ -609,6 +609,7 @@ Single interactive chip (filter, input, or plain). Renders a `<button>`; a closa
 ```
 
 **Props:**
+- `id` (string | null) - Rendered unchanged on the chip's root element
 - `text` (string | null) - Chip label
 - `iconCode` (string | null) - Leading Material Symbols code, replaced by a check mark while `selected`
 - `variant` ('outline' | 'elevated', default: 'outline') - Container style while unselected
@@ -687,7 +688,7 @@ const modal = ref<IDialogDisplay | null>(null)
 
 **Exposed:** `showDialog()`, `closeDialog()`
 
-**Events:** `close` - emitted by `closeDialog()`, including outside clicks (closing with Esc is native and does not emit it)
+**Events:** `close` - emitted whenever the dialog closes: `closeDialog()`, an outside click, or Esc
 
 **Slots:**
 - `header` - Custom header (overrides `title`)
@@ -740,13 +741,14 @@ async function handleConfirm() {
 - `isLoading` (boolean, default: false) - Confirm button shows `loadingLabel` with a spinner and is disabled
 - `loadingLabel` (string, default: 'Deleting...')
 - `size` ('sm' | 'lg') - Other sizes have no effect here
+- `closeOnClickOutside` (boolean, default: true) - Clicking outside the content closes the dialog
 - `mode` ('modal' | 'side-sheet' | 'headless'), `showAsModal` (boolean, default: true), `customClass`
 
 **Exposed:** `showDialog()`, `closeDialog()`
 
 **Events:**
 - `confirm` - Confirm button clicked (the dialog stays open)
-- `close` - Cancel button, outside click, or `closeDialog()` (outside clicks always close it)
+- `close` - Cancel button, outside click (unless `closeOnClickOutside` is false), Esc, or `closeDialog()`
 
 **Slots:** `messages` - extra content below the message
 
@@ -775,14 +777,17 @@ Separator for lists, forms, and sections. Renders a plain `<hr>`, or a labelled/
 - `ariaLabel` (string | null) - Accessible name; required when `decorative` is `false`
 
 ### UiIconMaterial
-Material Symbols glyph (`<i class="material-symbols-rounded">`). It does not apply `size`/`color` props: size and color it with a class or inline style on the icon.
+Material Symbols glyph (`<i class="material-symbols-rounded">`). Without `size` or `color` it follows the surrounding text.
 
 ```vue
 <UiIconMaterial icon-code="&#xe8b6;" />
-<UiIconMaterial icon-code="&#xe8b6;" class="text-primary" style="font-size: 2rem" :decorative="false" aria-label="Search" />
+<UiIconMaterial icon-code="&#xe8b6;" size="md" color="var(--cffy-primary-base)" :decorative="false" aria-label="Search" />
 ```
 
-**Props:** `iconCode` (string, required) - Material Symbols entity (e.g. `&#xe8b6;`)
+**Props:**
+- `iconCode` (string, required) - Material Symbols entity (e.g. `&#xe8b6;`)
+- `size` ('xs' | 'sm' | 'md' | 'lg' | 'xl' | number | null) - 20/24/32/40/48px; a number is px; unset follows the text size
+- `color` (string | null) - Any CSS color; unset follows the text color
 
 ### UiIconShapes
 Decorative multi-color shapes with fixed gradients (`color` has no effect).
@@ -1066,6 +1071,7 @@ Button-styled link with a tooltip (same styling props as `UiButton`; `variant` d
 - `placement` (`FloatingPlacement`, default: 'top')
 - `variant` ('filled' | 'tonal' | 'outline' | 'text' | 'link' | …, default: 'filled'), `color`, `size` ('sm' | 'md' | 'lg') - Button styling
 - `icon`, `iconVariant`, `iconTrailing`, `rounded`, `loading` - Same as `UiButton`
+- `fluid` (boolean, default: false) - Full-width link (`btn-block`)
 - `disabled` (boolean) - Removes the link target
 - `id` (string | null) - Set on the link; the tooltip content gets `<id>-tooltip`
 - `title`, `customClass`

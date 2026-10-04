@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   loading: false,
   customClass: '',
   rounded: false,
+  fluid: false,
   as: 'a'
 })
 
@@ -78,6 +79,9 @@ const buttonClasses = computed(() => {
   if (props?.rounded)
     classes.push('btn-rounded')
 
+  if (props?.fluid)
+    classes.push('btn-block')
+
   if (props.customClass)
     classes.push(props.customClass)
 
@@ -116,7 +120,7 @@ const linkProps = computed(() => {
   <VTooltip
     :aria-id="id ? `${id}-tooltip` : undefined"
     :placement="placement"
-    class="d-inline-block"
+    :class="fluid ? 'w-100' : 'd-inline-block'"
   >
     <component
       :is="props.as"

@@ -149,6 +149,19 @@
       }
 
       // States
+      summary.accordion-header[aria-disabled='true'] {
+        opacity: 0.55;
+        cursor: not-allowed;
+
+        &:is(:hover, :active) {
+          --_accordion-state: 0%;
+
+          .accordion-title {
+            color: var(--_accordion-color);
+          }
+        }
+      }
+
       // Content
       .accordion-body {
         padding-inline: var(--_accordion-padding);
