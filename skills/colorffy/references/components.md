@@ -753,7 +753,7 @@ Stacks avatars with an overlapping ring; from an `avatars` array or by composing
 - `hideLabel` (boolean) - hides label text visually while keeping it accessible
 - Also shares the common base props: `errorMessages`, `required`, `optionalLabel`
 
-**Events:** `update:modelValue`, `onUpdate` (fires with the same value)
+**Events:** `update:modelValue`, `update` (fires with the same value)
 
 ### UiInputRadio
 
@@ -796,7 +796,7 @@ Stacks avatars with an overlapping ring; from an `avatars` array or by composing
 <UiInputColorPicker v-model="color" label="Choose color" :maxlength="7" />
 ```
 
-**Props:** `modelValue` (string, hex color), `maxlength` (number, default: 7), plus the common base props `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`. `v-model` works as expected (no separate `@on-update` wiring needed).
+**Props:** `modelValue` (string, hex color), `maxlength` (number, default: 7), plus the common base props `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`. `v-model` works as expected (no separate `@update` wiring needed).
 
 **Breaking change:** the length-limit prop was renamed `maxLength` → `maxlength` (lowercase).
 
@@ -817,7 +817,7 @@ Segmented PIN/verification code input; auto-advances focus per box, supports pas
 
 **Props:** `modelValue` (string), `length` (number, default: 6) - number of boxes, `integerOnly` (boolean, default: true) - numeric-only input; set `false` to allow alphanumeric codes, `autofocus` (boolean), plus the common base input props `errorMessages`, `disabled`, `required`, `readonly`, `variant`, `size`, `rounded`, `hideLabel`
 
-**Events:** `update:modelValue`, `onUpdate`, `complete` (fires with the full value once every box is filled)
+**Events:** `update:modelValue`, `update`, `complete` (fires with the full value once every box is filled)
 
 ## Links
 

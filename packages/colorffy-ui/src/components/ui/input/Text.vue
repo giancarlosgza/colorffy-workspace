@@ -107,7 +107,7 @@ const inputAttrs = computed(() => ({
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 

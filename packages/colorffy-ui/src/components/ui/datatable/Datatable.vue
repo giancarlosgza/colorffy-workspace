@@ -217,7 +217,7 @@ function isLastVisibleColumn(key: string) {
             icon icon-variant="shape-sm"
             :tooltip-text="columnsToggleTooltipText"
             v-bind="toolbarButton"
-            @on-click="toggleShowAllColumns"
+            @click="toggleShowAllColumns"
           >
             <template #icon>
               <UiIconMaterial

@@ -71,7 +71,7 @@ function handleBackClick() {
           icon icon-variant="compact"
           :tooltip-text="backButtonLabel"
           :aria-label="backButtonLabel"
-          @on-click="handleBackClick"
+          @click="handleBackClick"
         >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5c4;" />

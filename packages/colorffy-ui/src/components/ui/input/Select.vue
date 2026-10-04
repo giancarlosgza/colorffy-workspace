@@ -67,7 +67,7 @@ function getField(option: unknown, key: string): unknown {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 

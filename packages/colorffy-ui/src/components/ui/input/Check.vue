@@ -52,7 +52,7 @@ const checkClasses = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 

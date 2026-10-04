@@ -56,7 +56,7 @@ defineEmits<IButtonTooltipEmits>()
       :to="to"
       :href="href"
       :as="as"
-      @click="$emit('onClick')"
+      @click="$emit('click', $event)"
     >
       <!-- Icon slot -->
       <template #icon>

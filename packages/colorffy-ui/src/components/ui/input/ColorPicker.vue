@@ -90,7 +90,7 @@ const textClasses = computed(() => {
         :required="required"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
-        @change="emit('onUpdate', model)"
+        @change="emit('update', model)"
       >
       <!-- Text -->
       <input
@@ -102,7 +102,7 @@ const textClasses = computed(() => {
         :disabled="disabled"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
-        @change="emit('onUpdate', model)"
+        @change="emit('update', model)"
       >
     </div>
 

@@ -46,7 +46,7 @@ const value = computed({
     // Store raw digits so modelValue stays clean, not dash-formatted.
     const digits = (value ?? '').replace(/\D/g, '')
     model.value = digits
-    emit('onUpdate', digits)
+    emit('update', digits)
   }
 })
 const placeholderText = computed(() => props.placeholder ?? undefined)

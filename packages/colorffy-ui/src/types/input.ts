@@ -17,7 +17,7 @@ export interface ITextInputProps extends IBaseInputProps {
  */
 export interface ITextInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
-  (e: 'onUpdate', value: string | number | null): void
+  (e: 'update', value: string | number | null): void
 }
 
 /**
@@ -37,7 +37,7 @@ export interface ITextareaInputProps extends IBaseInputProps {
  */
 export interface ITextareaInputEmits {
   (e: 'update:modelValue', value: string | null): void
-  (e: 'onUpdate', value: string | null): void
+  (e: 'update', value: string | null): void
 }
 
 /**
@@ -55,7 +55,7 @@ export interface ISelectInputProps extends IBaseInputProps {
  */
 export interface ISelectInputEmits {
   (e: 'update:modelValue', value: string | number | Record<string, unknown> | null): void
-  (e: 'onUpdate', value: string | number | Record<string, unknown> | null): void
+  (e: 'update', value: string | number | Record<string, unknown> | null): void
 }
 
 /**
@@ -73,7 +73,7 @@ export interface IRangeInputProps extends IBaseInputProps {
  */
 export interface IRangeInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
-  (e: 'onUpdate', value: string | number | null): void
+  (e: 'update', value: string | number | null): void
 }
 
 /**
@@ -92,7 +92,7 @@ export interface IRadioInputProps extends IBaseInputProps {
  */
 export interface IRadioInputEmits {
   (e: 'update:modelValue', value: string | number | null): void
-  (e: 'onUpdate', value: string | number | null): void
+  (e: 'update', value: string | number | null): void
 }
 
 /**
@@ -109,7 +109,7 @@ export interface IPhoneNumberInputProps extends IBaseInputProps {
  */
 export interface IPhoneNumberInputEmits {
   (e: 'update:modelValue', value: string | null): void
-  (e: 'onUpdate', value: string | null): void
+  (e: 'update', value: string | null): void
 }
 
 /**
@@ -136,7 +136,7 @@ export interface IFileInputProps extends IBaseInputProps {
  */
 export interface IFileInputEmits {
   (e: 'update:modelValue', value: File | null): void
-  (e: 'onUpdate', value: File | null): void
+  (e: 'update', value: File | null): void
 }
 
 /**
@@ -159,7 +159,7 @@ export interface IColorPickerProps extends IBaseInputProps {
  */
 export interface IColorPickerEmits {
   (e: 'update:modelValue', value: string | null): void
-  (e: 'onUpdate', value: string | null): void
+  (e: 'update', value: string | null): void
 }
 
 /**
@@ -192,7 +192,7 @@ export interface ICheckProps extends Omit<IBaseInputProps, 'variant'> {
  */
 export interface ICheckEmits {
   (e: 'update:modelValue', value: string | boolean | null): void
-  (e: 'onUpdate', value: string | boolean | null): void
+  (e: 'update', value: string | boolean | null): void
 }
 
 /**
@@ -227,6 +227,6 @@ export interface IInputOtpProps extends IBaseInputProps {
  */
 export interface IInputOtpEmits {
   (e: 'update:modelValue', value: string): void
-  (e: 'onUpdate', value: string): void
+  (e: 'update', value: string): void
   (e: 'complete', value: string): void
 }

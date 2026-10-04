@@ -95,7 +95,7 @@ export interface IDialogEmits {
   /**
    * Emitted when the dialog is closed.
    */
-  (e: 'onCloseDialog'): void
+  (e: 'close'): void
 }
 
 /**
@@ -133,5 +133,5 @@ export interface IConfirmModalEmits {
   /**
    * Emitted whenever the dialog closes: cancel button, click outside or `closeDialog()`.
    */
-  (e: 'onCloseDialog'): void
+  (e: 'close'): void
 }

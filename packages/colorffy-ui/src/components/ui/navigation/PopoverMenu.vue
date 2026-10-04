@@ -146,7 +146,7 @@ watch(() => props.isOpened, (open) => {
           icon
           custom-class="popover-menu-close"
           aria-label="Close menu"
-          @on-click="handleHideDropdown"
+          @click="handleHideDropdown"
         >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5cd;" aria-hidden="true" />

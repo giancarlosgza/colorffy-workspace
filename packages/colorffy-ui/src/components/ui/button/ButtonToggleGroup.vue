@@ -42,7 +42,7 @@ function setOptionRef(el: Element | ComponentPublicInstance | null, index: numbe
 function selectOption(event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void {
   if (!item.disabled) {
     model.value = item.id
-    emit('onOptionClick', event, item)
+    emit('optionClick', event, item)
   }
 }
 function nextEnabledIndex(from: number, direction: number): number {

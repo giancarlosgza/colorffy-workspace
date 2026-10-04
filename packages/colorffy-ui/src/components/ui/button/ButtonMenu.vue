@@ -59,7 +59,7 @@ defineEmits<IButtonMenuEmits>()
         :loading="loading"
         :disabled="disabled"
         :aria-label="text ? undefined : (title || tooltipText)"
-        @click="$emit('onClick')"
+        @click="$emit('click', $event)"
       >
         <!-- Icon slot -->
         <template #icon>

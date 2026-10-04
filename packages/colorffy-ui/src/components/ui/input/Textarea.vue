@@ -67,7 +67,7 @@ const textareaClasses = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 

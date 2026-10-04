@@ -69,7 +69,7 @@ const valueAsPercent = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 
 // Seed an empty model with min so the native thumb matches the stored value

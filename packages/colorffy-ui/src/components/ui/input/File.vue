@@ -64,7 +64,7 @@ function handleInput(event: Event) {
   const file = target.files?.[0] ?? null
 
   model.value = file
-  emit('onUpdate', file)
+  emit('update', file)
 }
 </script>
 

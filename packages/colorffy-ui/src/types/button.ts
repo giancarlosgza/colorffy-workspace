@@ -141,7 +141,7 @@ export interface IButtonEmits {
   /**
    * Emitted when the button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**
@@ -221,7 +221,7 @@ export interface IButtonTooltipEmits {
   /**
    * Emitted when the button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**
@@ -299,7 +299,7 @@ export interface IButtonToggleGroupEmits {
   /**
    * Emitted when an option is activated by pointer or keyboard.
    */
-  (e: 'onOptionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void
+  (e: 'optionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void
 }
 
 /**
@@ -334,7 +334,7 @@ export interface IButtonMenuEmits {
   /**
    * Emitted when the menu button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**

@@ -116,7 +116,7 @@ function closeDialog() {
   if (!dialogRef.value?.open)
     return
   dialogRef.value.close()
-  emit('onCloseDialog')
+  emit('close')
 }
 
 defineExpose({

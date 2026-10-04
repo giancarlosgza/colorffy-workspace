@@ -95,7 +95,7 @@ function sanitizeValue(value: string) {
 
 function setValue(value: string) {
   model.value = value
-  emit('onUpdate', value)
+  emit('update', value)
   if (value.length === props.length) {
     emit('complete', value)
   }

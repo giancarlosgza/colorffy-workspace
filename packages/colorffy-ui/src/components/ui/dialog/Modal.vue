@@ -67,7 +67,7 @@ function showDialog() {
 }
 function closeDialog() {
   dialogRef?.value?.close()
-  emit('onCloseDialog')
+  emit('close')
 }
 function closeFromOutside() {
   if (props.closeOnClickOutside && dialogRef.value?.open)

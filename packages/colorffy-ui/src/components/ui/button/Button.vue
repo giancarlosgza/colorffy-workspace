@@ -133,7 +133,7 @@ function onLinkClick(event: MouseEvent) {
     event.stopPropagation()
     return
   }
-  emit('onClick')
+  emit('click', event)
 }
 </script>
 
@@ -146,7 +146,7 @@ function onLinkClick(event: MouseEvent) {
     :type="type"
     :disabled="disabled || loading"
     :aria-busy="loading || undefined"
-    @click="emit('onClick')"
+    @click="emit('click', $event)"
   >
     <slot name="icon" />
     <span v-if="text">{{ text }}</span>
