@@ -343,7 +343,7 @@ onBeforeUnmount(() => {
                   variant="text"
                   size="sm"
                   class="mt-2"
-                  @on-click="photo = null"
+                  @click="photo = null"
                 />
               </div>
             </div>
@@ -442,7 +442,7 @@ onBeforeUnmount(() => {
               color="primary"
               :loading="savingProfile"
               :disabled="profileInvalid"
-              @on-click="saveProfile"
+              @click="saveProfile"
             />
           </div>
         </template>
@@ -498,7 +498,7 @@ onBeforeUnmount(() => {
                 size="sm"
                 :disabled="!isCustomBrand"
                 class="mb-4 mb-lg-0"
-                @on-click="resetBrand"
+                @click="resetBrand"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xf053;" />
@@ -755,7 +755,7 @@ onBeforeUnmount(() => {
               variant="filled"
               color="primary"
               :loading="savingNotifications"
-              @on-click="saveNotifications"
+              @click="saveNotifications"
             />
           </div>
         </template>
@@ -811,7 +811,7 @@ onBeforeUnmount(() => {
                 Orbit asks for a code from your authenticator app when you sign in on a new device.
               </p>
             </div>
-            <UiButton text="Turn off" variant="text" size="sm" @on-click="turnOffTwoFactor" />
+            <UiButton text="Turn off" variant="text" size="sm" @click="turnOffTwoFactor" />
           </div>
 
           <div v-else class="row">
@@ -867,7 +867,7 @@ onBeforeUnmount(() => {
                 color="primary"
                 :loading="verifyingOtp"
                 :disabled="otp.length < 6"
-                @on-click="verifyTwoFactor"
+                @click="verifyTwoFactor"
               />
             </div>
             <div class="col-12 col-md-5 mt-4 mt-md-0">
@@ -899,7 +899,7 @@ onBeforeUnmount(() => {
               size="sm"
               tooltip-text="Copy all 8 codes"
               :disabled="!twoFactorEnabled"
-              @on-click="copyRecoveryCodes"
+              @click="copyRecoveryCodes"
             >
               <template #icon>
                 <UiIconMaterial icon-code="&#xe14d;" />
@@ -955,7 +955,7 @@ onBeforeUnmount(() => {
                   text="Sign out"
                   variant="text"
                   size="sm"
-                  @on-click="signOutSession(session.id)"
+                  @click="signOutSession(session.id)"
                 />
               </template>
             </UiListItem>
@@ -968,7 +968,7 @@ onBeforeUnmount(() => {
             variant="outline"
             size="sm"
             :disabled="otherSessions === 0"
-            @on-click="signOutOthers"
+            @click="signOutOthers"
           >
             <template #icon>
               <UiIconMaterial icon-code="&#xe9ba;" />
@@ -1000,7 +1000,7 @@ onBeforeUnmount(() => {
                 variant="filled"
                 color="danger"
                 size="sm"
-                @on-click="deleteModal?.showDialog()"
+                @click="deleteModal?.showDialog()"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe872;" />

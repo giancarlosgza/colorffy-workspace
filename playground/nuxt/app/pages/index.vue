@@ -220,7 +220,7 @@ function runQuickAction(id: string) {
               <UiIconMaterial icon-code="&#xe7fe;" />
             </template>
           </UiButton>
-          <UiButton text="New task" variant="filled" color="primary" size="sm" @on-click="createTask">
+          <UiButton text="New task" variant="filled" color="primary" size="sm" @click="createTask">
             <template #icon>
               <UiIconMaterial icon-code="&#xe145;" />
             </template>
@@ -465,7 +465,7 @@ function runQuickAction(id: string) {
         custom-class="btn-fab fab-mobile"
         :aria-label="fabOpen ? 'Close quick create' : 'Quick create'"
         :aria-expanded="fabOpen"
-        @on-click="fabOpen = !fabOpen"
+        @click="fabOpen = !fabOpen"
       >
         <template #icon>
           <UiIconMaterial :icon-code="fabOpen ? '&#xe5cd;' : '&#xe145;'" />
@@ -480,7 +480,7 @@ function runQuickAction(id: string) {
           variant="tonal"
           color="primary"
           custom-class="btn-fab fab-mobile"
-          @on-click="runQuickAction(action.id)"
+          @click="runQuickAction(action.id)"
         >
           <template #icon>
             <UiIconMaterial :icon-code="action.icon" />

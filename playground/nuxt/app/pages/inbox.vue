@@ -169,7 +169,7 @@ function enableDesktopNotifications() {
             color="primary"
             size="sm"
             :disabled="!unreadCount"
-            @on-click="markAllRead"
+            @click="markAllRead"
           >
             <template #icon>
               <UiIconMaterial icon-code="&#xe877;" />
@@ -181,7 +181,7 @@ function enableDesktopNotifications() {
             size="sm"
             custom-class="text-neutral"
             tooltip-text="Notification settings"
-            @on-click="navigateTo('/settings')"
+            @click="navigateTo('/settings')"
           >
             <template #icon>
               <UiIconMaterial icon-code="&#xe429;" />
@@ -223,7 +223,7 @@ function enableDesktopNotifications() {
       @dismiss="showDesktopTip = false"
     >
       <template #actions>
-        <UiButton text="Turn on" variant="filled" color="primary" size="sm" @on-click="enableDesktopNotifications" />
+        <UiButton text="Turn on" variant="filled" color="primary" size="sm" @click="enableDesktopNotifications" />
       </template>
     </UiAlert>
 
@@ -318,7 +318,7 @@ function enableDesktopNotifications() {
                 size="sm"
                 custom-class="text-neutral"
                 tooltip-text="Back to inbox"
-                @on-click="selectedId = null"
+                @click="selectedId = null"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe5c4;" />
@@ -337,7 +337,7 @@ function enableDesktopNotifications() {
                   size="sm"
                   custom-class="text-neutral"
                   :tooltip-text="selected.unread ? 'Mark as read' : 'Mark as unread'"
-                  @on-click="toggleRead"
+                  @click="toggleRead"
                 >
                   <template #icon>
                     <UiIconMaterial :icon-code="selected.unread ? '&#xe151;' : '&#xf18a;'" />
@@ -349,7 +349,7 @@ function enableDesktopNotifications() {
                   size="sm"
                   custom-class="text-neutral"
                   tooltip-text="Archive"
-                  @on-click="archive"
+                  @click="archive"
                 >
                   <template #icon>
                     <UiIconMaterial icon-code="&#xe149;" />
@@ -362,7 +362,7 @@ function enableDesktopNotifications() {
                   custom-class="text-neutral"
                   tooltip-text="Open project"
                   :disabled="!selectedProject"
-                  @on-click="openProject"
+                  @click="openProject"
                 >
                   <template #icon>
                     <UiIconMaterial icon-code="&#xe89e;" />
@@ -458,7 +458,7 @@ function enableDesktopNotifications() {
                   variant="tonal"
                   color="primary"
                   size="sm"
-                  @on-click="setFilter('unread')"
+                  @click="setFilter('unread')"
                 />
                 <UiButton
                   v-else-if="!unreadCount"

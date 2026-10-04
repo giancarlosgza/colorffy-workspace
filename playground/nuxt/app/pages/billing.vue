@@ -490,7 +490,7 @@ function downloadAll(): void {
               size="sm"
               icon
               :tooltip-text="`Download ${item.id}`"
-              @on-click="downloadInvoice(item.id)"
+              @click="downloadInvoice(item.id)"
             >
               <template #icon>
                 <UiIconMaterial icon-code="&#xe2c4;" />

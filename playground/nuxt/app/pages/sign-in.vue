@@ -137,7 +137,7 @@ onBeforeUnmount(() => clearTimeout(timer))
             size="lg"
             fluid
             :loading="googleLoading"
-            @on-click="continueWithGoogle"
+            @click="continueWithGoogle"
           >
             <template #icon>
               <UiIconSvg :content="brandIcons.google" size="xs" />
@@ -173,7 +173,7 @@ onBeforeUnmount(() => clearTimeout(timer))
                   custom-class="text-neutral"
                   :aria-label="showPassword ? 'Hide password' : 'Show password'"
                   :aria-pressed="showPassword"
-                  @on-click="showPassword = !showPassword"
+                  @click="showPassword = !showPassword"
                 >
                   <template #icon>
                     <UiIconMaterial v-if="showPassword" icon-code="&#xe8f5;" />
@@ -244,7 +244,7 @@ onBeforeUnmount(() => clearTimeout(timer))
           </p>
 
           <div class="d-flex flex-wrap justify-content-between gap-2">
-            <UiButton text="Back" variant="text" size="sm" @on-click="backToCredentials">
+            <UiButton text="Back" variant="text" size="sm" @click="backToCredentials">
               <template #icon>
                 <UiIconMaterial icon-code="&#xe5c4;" />
               </template>

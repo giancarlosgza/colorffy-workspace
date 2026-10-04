@@ -313,7 +313,7 @@ watch(() => route.params.id, () => {
         >
           <template #actions>
             <UiButtonGroup>
-              <UiButtonTooltip text="Share" variant="outline" tooltip-text="Copy a link to this project" @on-click="copyLink">
+              <UiButtonTooltip text="Share" variant="outline" tooltip-text="Copy a link to this project" @click="copyLink">
                 <template #icon>
                   <UiIconMaterial icon-code="&#xe157;" />
                 </template>
@@ -604,7 +604,7 @@ watch(() => route.params.id, () => {
                 icon-variant="compact"
                 size="sm"
                 :tooltip-text="`Download ${file.name}`"
-                @on-click="downloadFile(file)"
+                @click="downloadFile(file)"
               >
                 <template #icon>
                   <UiIconMaterial icon-code="&#xf090;" />

@@ -203,7 +203,7 @@ async function removeMember(): Promise<void> {
             text="Copy invite link"
             variant="outline"
             tooltip-text="Anyone with the link joins as a Member"
-            @on-click="copyInviteLink"
+            @click="copyInviteLink"
           >
             <template #icon>
               <UiIconMaterial icon-code="&#xe157;" />
@@ -366,7 +366,7 @@ async function removeMember(): Promise<void> {
               size="sm"
               icon
               :tooltip-text="`Remove ${item.name}`"
-              @on-click="askRemove(item.id)"
+              @click="askRemove(item.id)"
             >
               <template #icon>
                 <UiIconMaterial icon-code="&#xef66;" />
