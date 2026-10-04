@@ -935,17 +935,21 @@ Bottom navigation bar.
 
 ```vue
 <UiNavigationBar
-  v-model="activeTab"
+  :as="NuxtLink"
+  :active-item="route.path"
   :items="[
-    { label: 'Home', value: 'home', icon: '&#xe88a;' },
-    { label: 'Profile', value: 'profile', icon: '&#xe7fd;' }
+    { id: 'home', to: '/', icon: '&#xe88a;', text: 'Home', ariaLabel: 'Go to home' },
+    { id: 'profile', to: '/profile', icon: '&#xe7fd;', text: 'Profile', ariaLabel: 'Go to profile' }
   ]"
+  indicator-tab
 />
 ```
 
 **Props:**
-- `modelValue` (string) - Active item value
-- `items` (array) - Nav items with `label`, `value`, `icon`
+- `items` (array) - Nav items with `id`, `to`, `icon`, `text`, `ariaLabel`
+- `activeItem` (string) - The current route path; the matching item is marked active
+- `as` (string | object) - Link component (e.g. `NuxtLink`)
+- `indicatorTab`, `frosted`, `island` (boolean) - Indicator style and surface variants
 
 ### UiTabs
 Horizontal tab navigation.
