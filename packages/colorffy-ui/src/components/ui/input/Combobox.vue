@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IComboboxInputEmits, IComboboxInputProps } from '@/types/input'
-import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
+import { computed, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
 import { normalizeText, useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
@@ -47,11 +47,13 @@ const popupRef = ref<HTMLElement | null>(null)
 const fieldRef = ref<HTMLElement | null>(null)
 const query = ref('')
 const inputText = ref('')
-let typeahead = ''
-let typeaheadTimer: ReturnType<typeof setTimeout> | undefined
+const fieldId = computed(() => props.id ?? `${uid}-combobox`)
+const labelId = computed(() => `${fieldId.value}-label`)
+const listboxId = computed(() => `${fieldId.value}-listbox`)
 
 const { isOpen, isAnchored, anchorName, open, close } = useAnchoredPopup(anchorRef, popupRef)
 const listbox = useListbox({
+  id: () => listboxId.value,
   options: () => props.options,
   optionLabel: () => props.optionLabel,
   optionValue: () => props.optionValue,
@@ -59,12 +61,9 @@ const listbox = useListbox({
   optionGroup: () => props.optionGroup,
   query: () => query.value
 })
-const { groups, visible, activeItem } = listbox
+const { groups, visible, activeItem, optionId, scrollToActive } = listbox
 
 /** Computed */
-const fieldId = computed(() => props.id ?? `${uid}-combobox`)
-const labelId = computed(() => `${fieldId.value}-label`)
-const listboxId = computed(() => `${fieldId.value}-listbox`)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const describedById = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : undefined))
 const isLocked = computed(() => props.disabled || props.readonly)
@@ -91,15 +90,6 @@ const fieldAria = computed(() => ({
 }))
 
 /** Methods */
-function optionId(item: ListboxItem): string {
-  return `${listboxId.value}-${item.key}`
-}
-function scrollToActive(): void {
-  nextTick(() => {
-    if (activeItem.value)
-      document.getElementById(optionId(activeItem.value))?.scrollIntoView({ block: 'nearest' })
-  })
-}
 function openList(start: 'selected' | 'last' | 'none' = 'selected'): void {
   if (isLocked.value)
     return
@@ -165,20 +155,6 @@ function onInput(event: Event): void {
     listbox.activeIndex.value = -1
   scrollToActive()
 }
-function onTypeahead(char: string): void {
-  clearTimeout(typeaheadTimer)
-  typeahead += char
-  typeaheadTimer = setTimeout(() => (typeahead = ''), 500)
-  // Repeating one letter cycles through the options that start with it
-  const from = typeahead.length === 1 ? listbox.activeIndex.value : listbox.activeIndex.value - 1
-  const index = listbox.findByPrefix(typeahead, from)
-  if (index < 0)
-    return
-  if (!isOpen.value)
-    openList('none')
-  listbox.activeIndex.value = index
-  scrollToActive()
-}
 function onKeydown(event: KeyboardEvent): void {
   if (isLocked.value)
     return
@@ -221,7 +197,7 @@ function onKeydown(event: KeyboardEvent): void {
       event.stopPropagation()
       clear()
     }
-  } else if (!props.filterable && key === ' ' && !typeahead) {
+  } else if (!props.filterable && key === ' ' && !listbox.isTyping()) {
     event.preventDefault()
     if (isOpen.value && activeItem.value)
       select(activeItem.value)
@@ -229,7 +205,8 @@ function onKeydown(event: KeyboardEvent): void {
       openList()
   } else if (!props.filterable && key.length === 1 && !event.ctrlKey && !event.metaKey) {
     event.preventDefault()
-    onTypeahead(key)
+    if (listbox.typeahead(key) && !isOpen.value)
+      openList('none')
   }
 }
 function onFieldClick(): void {
@@ -260,8 +237,6 @@ watch(selectedLabel, (label) => {
 watch(model, (value) => {
   emit('update', value)
 })
-
-onBeforeUnmount(() => clearTimeout(typeaheadTimer))
 </script>
 
 <template>

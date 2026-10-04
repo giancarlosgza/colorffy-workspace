@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref } from 'vue'
 
 /**
  * An option normalized for rendering and keyboard navigation.
@@ -22,6 +22,7 @@ export interface ListboxGroup {
 }
 
 interface ListboxSource {
+  id: () => string
   options: () => unknown[]
   optionLabel: () => string | null
   optionValue: () => string | null
@@ -44,7 +45,8 @@ export function normalizeText(text: string): string {
 /**
  * Options, filtering, grouping and the active (highlighted) option of a
  * listbox popup. Keyboard handlers move `activeIndex` through the visible
- * options, skipping disabled ones.
+ * options, skipping disabled ones; each option's element id comes from
+ * `optionId()` under the `id` prefix.
  */
 export function useListbox(source: ListboxSource) {
   const items = computed<ListboxItem[]>(() => {
@@ -129,6 +131,17 @@ export function useListbox(source: ListboxSource) {
     }
   }
 
+  function optionId(item: ListboxItem): string {
+    return `${source.id()}-${item.key}`
+  }
+
+  function scrollToActive(): void {
+    nextTick(() => {
+      if (activeItem.value)
+        document.getElementById(optionId(activeItem.value))?.scrollIntoView({ block: 'nearest' })
+    })
+  }
+
   // Next enabled option after `from` whose label starts with `prefix`, wrapping around
   function findByPrefix(prefix: string, from: number): number {
     const search = normalizeText(prefix)
@@ -142,5 +155,29 @@ export function useListbox(source: ListboxSource) {
     return -1
   }
 
-  return { items, groups, visible, activeIndex, activeItem, activate, activateFirst, activateLast, move, findByPrefix }
+  let typed = ''
+  let typedTimer: ReturnType<typeof setTimeout> | undefined
+
+  // Moves to the next option starting with the typed text; repeating one letter cycles through its options
+  function typeahead(char: string): boolean {
+    clearTimeout(typedTimer)
+    typed += char.toLowerCase()
+    typedTimer = setTimeout(() => (typed = ''), 500)
+    const repeated = [...typed].every(letter => letter === typed[0])
+    const from = repeated || typed.length === 1 ? activeIndex.value : activeIndex.value - 1
+    const index = findByPrefix(repeated ? typed[0]! : typed, from)
+    if (index < 0)
+      return false
+    activeIndex.value = index
+    scrollToActive()
+    return true
+  }
+
+  function isTyping(): boolean {
+    return typed !== ''
+  }
+
+  onBeforeUnmount(() => clearTimeout(typedTimer))
+
+  return { items, groups, visible, activeIndex, activeItem, activate, activateFirst, activateLast, move, optionId, scrollToActive, typeahead, isTyping }
 }
