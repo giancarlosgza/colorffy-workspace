@@ -1,0 +1,96 @@
+@use "../abstracts/mixins" as m;
+
+@mixin pagination-compact {
+  .pagination-page {
+    display: none;
+  }
+
+  .pagination-status {
+    display: flex;
+  }
+}
+
+@layer components.pagination {
+  // ==========================================================================
+  // PAGINATION COMPONENT
+  // ==========================================================================
+  .pagination-nav {
+    --_pagination-gap: var(--cffy-pagination-gap, var(--cffy-space-4));
+    --_pagination-radius: var(--cffy-pagination-radius, var(--cffy-radius-full));
+    --_pagination-current-bg-color: var(--cffy-pagination-current-bg-color, var(--cffy-primary-a10));
+    --_pagination-current-color: var(--cffy-pagination-current-color, var(--cffy-on-primary));
+    --_pagination-status-color: var(--cffy-pagination-status-color, var(--cffy-on-background));
+  }
+
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_pagination-gap);
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pagination-item {
+    display: flex;
+  }
+
+  // Page buttons
+  .pagination .btn {
+    --_btn-radius: var(--_pagination-radius);
+    --_btn-padding-inline: var(--cffy-space-6);
+
+    width: auto;
+    min-width: var(--_btn-height);
+    font-variant-numeric: tabular-nums;
+
+    &:is(:disabled, .disabled) {
+      --_btn-bg-color: transparent;
+      --_btn-border-color: transparent;
+    }
+
+    &[aria-current="page"] {
+      --_btn-bg-color: var(--_pagination-current-bg-color);
+      --_btn-color: var(--_pagination-current-color);
+
+      &:disabled {
+        --_btn-bg-color: var(--cffy-surface-disabled);
+        --_btn-color: var(--cffy-muted-a10);
+      }
+    }
+  }
+
+  .pagination-arrow:dir(rtl) i {
+    scale: -1 1;
+  }
+
+  .pagination-ellipsis {
+    padding-inline: var(--cffy-space-4);
+    color: var(--cffy-muted-a10);
+    user-select: none;
+  }
+
+  // Compact layout
+  .pagination-status {
+    display: none;
+    align-items: center;
+    padding-inline: var(--cffy-space-8);
+
+    color: var(--_pagination-status-color);
+    font-size: var(--cffy-fs-xs);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .pagination-compact {
+    @include pagination-compact;
+  }
+
+  @include m.media-query(600) {
+    .pagination-nav {
+      @include pagination-compact;
+    }
+  }
+}
