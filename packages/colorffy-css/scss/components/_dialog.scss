@@ -173,7 +173,7 @@
       inset-inline: auto var(--cffy-space-8);
       inset-block: var(--cffy-space-16);
       margin: auto;
-      width: 18rem;
+      width: var(--cffy-container-2xs);
       height: 100%;
       max-height: calc(100dvh - 2rem);
       border-radius: var(--_dialog-radius);
@@ -237,7 +237,7 @@
     // Confirm
     &.dialog-confirm {
       border-radius: var(--_dialog-radius);
-      width: clamp(18rem, 90vw, 25rem);
+      width: clamp(var(--cffy-container-2xs), 90vw, var(--cffy-container-sm));
       height: fit-content;
 
       & .dialog-content {
@@ -267,7 +267,7 @@
 
     // Sizes
     &.dialog-sm {
-      width: clamp(18rem, 90vw, 26rem);
+      width: clamp(var(--cffy-container-2xs), 90vw, var(--cffy-container-md));
       height: fit-content;
 
       & .dialog-content {
@@ -277,11 +277,11 @@
     }
 
     &.dialog-md {
-      width: clamp(26rem, 90vw, 40rem);
+      width: clamp(var(--cffy-container-md), 90vw, var(--cffy-container-2xl));
     }
 
     &.dialog-lg {
-      width: clamp(40rem, 95vw, 60rem);
+      width: clamp(var(--cffy-container-2xl), 95vw, var(--cffy-container-4xl));
     }
 
     &.dialog-fullscreen {
@@ -407,14 +407,14 @@
       &:is(.dialog-side-sheet) {
         inset-block: 0;
         margin: auto;
-        width: clamp(10rem, 85vw, 18rem);
+        width: clamp(10rem, 85vw, var(--cffy-container-2xs));
         height: 100%;
       }
 
       &:is(.dialog-confirm) {
         --_dialog-radius: var(--cffy-radius-xl);
 
-        width: clamp(18rem, 90vw, 25rem);
+        width: clamp(var(--cffy-container-2xs), 90vw, var(--cffy-container-sm));
         height: fit-content;
         inset: 0;
         margin: auto;

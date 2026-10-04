@@ -18,7 +18,7 @@
 
       // Positioning variables
       --_alert-toast-offset: var(--cffy-alert-toast-offset, var(--cffy-space-32));
-      --_alert-toast-min-width: var(--cffy-alert-toast-min-width, 300px);
+      --_alert-toast-min-width: var(--cffy-alert-toast-min-width, var(--cffy-container-2xs));
       --_alert-toast-max-width: 90vw;
       --_alert-toast-width: fit-content;
       --_alert-toast-offset-bottom: var(--_alert-toast-offset);

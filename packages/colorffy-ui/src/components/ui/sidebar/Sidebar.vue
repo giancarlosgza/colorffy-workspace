@@ -31,7 +31,7 @@ const sidebarClasses = computed(() => [
 ])
 const sidebarStyles = computed(() => {
   if (props.width) {
-    return { '--cffy-nav-drawer-width': props.width }
+    return { '--cffy-sidebar-width': props.width }
   }
   return {}
 })

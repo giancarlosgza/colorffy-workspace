@@ -11,7 +11,7 @@
     --_popover-border-color: var(--cffy-popover-border-color, var(--cffy-outline-surface));
     --_popover-shadow: var(--cffy-popover-shadow, var(--cffy-shadow-lg));
     --_popover-radius: var(--cffy-popover-radius, #{v.$dialog-border-radius});
-    --_popover-max-width: var(--cffy-popover-max-width, 20rem);
+    --_popover-max-width: var(--cffy-popover-max-width, var(--cffy-container-xs));
     --_popover-max-height: var(--cffy-popover-max-height, 30rem);
     --_popover-spacing: var(--cffy-popover-spacing, var(--cffy-space-16));
     --_popover-offset: var(--cffy-popover-offset, .625rem);

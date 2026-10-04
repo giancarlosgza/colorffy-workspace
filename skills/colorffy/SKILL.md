@@ -204,7 +204,7 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 
 Still to come before 3.0 ships:
 
-- A `--cffy-container-*` width scale may absorb one-offs like `--cffy-nav-drawer-width`. It doesn't exist yet — don't reference it. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--cffy-space-*` tokens).
+- Widths use the `--cffy-container-*` scale (`3xs` 16rem … `7xl` 80rem) and the `max-w-{size}` utilities; the sidebar width hook is `--cffy-sidebar-width`. The `m-*`/`p-*`/`gap-*` utilities keep their names and values (they already read the `--cffy-space-*` tokens).
 
 **[See the migration guide →](https://colorffy-ui-docs.pages.dev/migration)** · **[Changelog →](https://colorffy-ui-docs.pages.dev/changelog)**
 

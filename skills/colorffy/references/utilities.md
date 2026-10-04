@@ -535,12 +535,20 @@ Radius classes work without `.border`.
 
 ### Width & Height
 
-**Pattern:** `{w|h}-{25,50,75,100,auto}`, `m{w|h}-100`, `min-{w|h}-0`
+**Pattern:** `{w|h}-{50,75,100,auto,fit,fixed}`, `min-{w|h}-auto`
 
 ```html
 <div class="w-100">100% width</div>
 <div class="h-50">50% height</div>
-<div class="mw-100">Max width 100%</div>
+```
+
+### Max Width (container scale)
+
+**Pattern:** `max-w-{3xs|2xs|xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl}` — reads `--cffy-container-*` (16rem … 80rem)
+
+```html
+<form class="max-w-sm mx-auto">…</form>
+<article class="max-w-3xl">…</article>
 ```
 
 ### Viewport Sizing

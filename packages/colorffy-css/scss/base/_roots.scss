@@ -140,8 +140,10 @@
     --cffy-space-32: calc(var(--cffy-space-unit) * 8);
     --cffy-space-48: calc(var(--cffy-space-unit) * 12);
 
-    /* drawer size */
-    --cffy-nav-drawer-width: 18rem;
+    /* container widths */
+    @each $name, $value in v.$container-sizes {
+      --cffy-container-#{$name}: #{$value};
+    }
 
     /* font families */
     --cffy-font-primary: 'Plus Jakarta Sans', "Roboto", -apple-system, "Segoe UI", sans-serif;

@@ -9,6 +9,7 @@
   // SIDEBAR NAVIGATION DRAWER LAYOUT
   // ==========================================================================
   .navigation-drawer {
+    --_sidebar-width: var(--cffy-sidebar-width, var(--cffy-container-2xs));
     --_sidebar-bg-color: var(--cffy-sidebar-bg-color, var(--cffy-background));
     --_sidebar-color: var(--cffy-sidebar-color, var(--cffy-on-background));
     --_sidebar-border-color: var(--cffy-sidebar-border-color, var(--cffy-outline-surface));
@@ -33,7 +34,7 @@
     position: sticky;
     top: 0;
     display: block;
-    width: var(--cffy-nav-drawer-width);
+    width: var(--_sidebar-width);
     height: 100dvh;
     max-height: 100dvh;
     background-color: var(--_sidebar-bg-color);
@@ -49,7 +50,7 @@
 
     // Closed sidebar only with icons shown
     &.drawer-rail {
-      width: calc(var(--cffy-nav-drawer-width) / 2);
+      width: calc(var(--_sidebar-width) / 2);
       transition: width var(--_sidebar-duration) var(--_sidebar-easing-out),
         translate var(--_sidebar-duration) var(--_sidebar-easing-out);
     }
@@ -395,7 +396,7 @@
       translate: -100% 0;
       
       &.drawer-rail {
-        width: var(--cffy-nav-drawer-width);
+        width: var(--_sidebar-width);
       }
 
       &.drawer-open {

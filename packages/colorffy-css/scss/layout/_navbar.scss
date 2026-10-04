@@ -326,7 +326,7 @@
     --_popover-menu-border-color: var(--cffy-popover-menu-border-color, var(--cffy-outline-overlay));
     --_popover-menu-shadow: var(--cffy-popover-menu-shadow, var(--cffy-shadow-xl));
     --_popover-menu-padding: var(--cffy-popover-menu-padding, var(--cffy-space-6));
-    --_popover-menu-min-width: var(--cffy-popover-menu-min-width, 18rem);
+    --_popover-menu-min-width: var(--cffy-popover-menu-min-width, var(--cffy-container-2xs));
     --_popover-menu-spacing: var(--cffy-popover-menu-spacing, var(--cffy-space-16));
     --_popover-menu-easing: var(--cffy-popover-menu-easing, var(--cffy-ease-spring));
     --_popover-menu-easing-out: var(--cffy-ease-accelerate);

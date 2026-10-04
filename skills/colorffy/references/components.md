@@ -1065,7 +1065,7 @@ overlay renders while open (emits `update:open` on dismiss).
 - `rail` (boolean) - Compact icons-only mode (`.drawer-rail`); one-way, no `update:rail` emit
 - `open` (boolean) - Responsive mobile drawer (`.drawer-open` / `.drawer-closed`); use `v-model:open`
 - `bordered` (boolean) - Right border instead of shadow
-- `width` (string) - Sets `--cffy-nav-drawer-width`
+- `width` (string) - Sets `--cffy-sidebar-width` (default `--cffy-container-2xs`, 18rem)
 - `ariaLabel` (string, default `'Main navigation'`) - `<nav>` landmark name
 - `headerClass` / `bodyClass` / `footerClass` (ClassValue) - Extra classes for the region wrappers
 - **Slots:** `header`, `body`, `footer` — each renders its own `.drawer-header` / `.drawer-body` / `.drawer-footer` wrapper (skipped when empty); there is no default slot

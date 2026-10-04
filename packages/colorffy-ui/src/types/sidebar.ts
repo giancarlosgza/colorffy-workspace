@@ -32,7 +32,7 @@ export interface ISidebarProps {
 
   /**
    * Custom width of the sidebar.
-   * Sets --cffy-nav-drawer-width CSS variable.
+   * Sets the `--cffy-sidebar-width` hook (default `--cffy-container-2xs`, 18rem).
    * When null/undefined, uses the default CSS variable value.
    * @default null
    */
