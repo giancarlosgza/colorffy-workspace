@@ -367,6 +367,14 @@
         }
       }
 
+      &:is(.dialog-sm) {
+        height: fit-content;
+
+        & .dialog-content {
+          max-height: 75dvh;
+        }
+      }
+
       &:is(.dialog-modal) {
         --_dialog-easing: var(--cffy-ease-decelerate);
         --_dialog-duration: var(--cffy-duration-500);
