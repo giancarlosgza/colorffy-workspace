@@ -35,6 +35,7 @@ Complete reference for utility classes in @colorffy/css.
 - `text-{color}-emphasis` - the color's `--cffy-on-{color}-container` tone, for text and icons on a tinted surface (primary … info, muted)
 - `text-on-{color}` - `--cffy-on-{color}`, black or white picked for a solid `bg-{color}` fill (primary … info)
 - `text-on-{color}-container` - pairs with `bg-{color}-container` (see [Container Backgrounds](#container-backgrounds))
+- `text-{color}-inverse` - the color on an inverse surface such as a toast or tooltip (primary … info, muted)
 
 ### Background Colors
 

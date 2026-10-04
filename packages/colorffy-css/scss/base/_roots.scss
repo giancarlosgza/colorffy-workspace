@@ -253,6 +253,9 @@
 
     /* tinted surfaces */
     @include m.container-colors();
+
+    /* brand colors on inverse surfaces (toasts, snackbars, tooltips) */
+    @include m.inverse-colors();
   }
 
   html.dark-mode {

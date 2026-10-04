@@ -176,6 +176,10 @@
     .text-on-#{$name}-container {
       @include m.text-color(var(--cffy-on-#{$name}-container));
     }
+
+    .text-#{$name}-inverse {
+      @include m.text-color(var(--cffy-#{$name}-inverse));
+    }
   }
 
   .text-on-body {

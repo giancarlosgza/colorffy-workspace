@@ -498,6 +498,18 @@
   }
 }
 
+@mixin inverse-colors() {
+  @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+    --cffy-#{$name}-inverse: light-dark(var(--cffy-color-brand-#{$name}-50), var(--cffy-color-brand-#{$name}-500));
+  }
+
+  @supports (color: #{f.inverse-color(red, red)}) {
+    @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+      --cffy-#{$name}-inverse: #{f.inverse-color(var(--cffy-color-brand-#{$name}-50), var(--cffy-color-brand-#{$name}-500))};
+    }
+  }
+}
+
 @mixin container-colors() {
   @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
     --cffy-#{$name}-container: #{f.tonal(var(--cffy-#{$name}-a10))};

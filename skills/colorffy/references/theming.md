@@ -45,6 +45,8 @@ Theme colors are CSS tokens. Each brand color has a light-mode (`-500`) and dark
 
 Text colors follow automatically: each `--cffy-on-<name>` picks black or white from the lightness of the solid fill `--cffy-<name>-a10` (whichever contrasts more), and `--cffy-on-<name>-container` is mixed from the base. Set `--cffy-on-<name>` only to force a value. Browsers without relative color syntax (and Safari 16.4–17, which implements an older draft) keep fixed fallback values.
 
+`--cffy-<name>-inverse` is the color on an inverse surface (toasts, snackbars, tooltips: dark in light mode, light in dark mode), kept readable for any brand color; snackbars use it for their icons and point `--cffy-primary-base` / `--cffy-on-background` at the inverse tones inside.
+
 `--cffy-<name>-container` is the tinted surface for that color: `a10` mixed toward the background by `--cffy-tonal-dark-intensity` (`80%` in light mode, `58%` in dark mode). Lower it for stronger tints; the mix runs in `oklab`.
 
 Or set one value for both modes with the `--cffy-*-base` tokens:

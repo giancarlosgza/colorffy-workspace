@@ -324,6 +324,9 @@
       --_alert-border-color: var(--_alert-bg-color);
       --_alert-color: var(--cffy-alert-snackbar-color, var(--cffy-on-background-inverse));
       --_alert-icon-color: var(--_alert-color);
+      --cffy-primary-base: var(--cffy-primary-inverse);
+      --cffy-on-background: var(--cffy-on-background-inverse);
+      --cffy-state-layer-color: var(--cffy-primary-inverse);
 
       margin: auto;
       width: fit-content;
@@ -342,31 +345,31 @@
       }
 
       &.snackbar-primary {
-        --_alert-icon-color: var(--cffy-primary-base-fixed);
+        --_alert-icon-color: var(--cffy-primary-inverse);
       }
 
       &.snackbar-secondary {
-        --_alert-icon-color: var(--cffy-secondary-base-fixed);
+        --_alert-icon-color: var(--cffy-secondary-inverse);
       }
 
       &.snackbar-accent {
-        --_alert-icon-color: var(--cffy-accent-base-fixed);
+        --_alert-icon-color: var(--cffy-accent-inverse);
       }
 
       &.snackbar-success {
-        --_alert-icon-color: var(--cffy-success-base-fixed);
+        --_alert-icon-color: var(--cffy-success-inverse);
       }
 
       &.snackbar-warning {
-        --_alert-icon-color: var(--cffy-warning-base-fixed);
+        --_alert-icon-color: var(--cffy-warning-inverse);
       }
 
       &.snackbar-danger {
-        --_alert-icon-color: var(--cffy-danger-base-fixed);
+        --_alert-icon-color: var(--cffy-danger-inverse);
       }
 
       &.snackbar-info {
-        --_alert-icon-color: var(--cffy-info-base-fixed);
+        --_alert-icon-color: var(--cffy-info-inverse);
       }
     }
 

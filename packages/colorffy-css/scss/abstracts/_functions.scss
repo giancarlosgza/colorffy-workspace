@@ -19,6 +19,11 @@
   @return #{'oklch(from #{$fill} clamp(0, (0.58 - l) * 1000, 1) 0 0)'};
 }
 
+// Inverse color
+@function inverse-color($light-tone, $dark-tone) {
+  @return #{'light-dark(oklch(from #{$light-tone} max(l, 0.8) c h), oklch(from #{$dark-tone} min(l, 0.45) c h))'};
+}
+
 // Negation
 @function negate($value) {
   @if meta.type-of($value) == 'number' {
