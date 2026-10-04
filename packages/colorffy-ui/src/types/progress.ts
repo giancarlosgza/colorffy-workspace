@@ -13,7 +13,8 @@ export type ProgressSize = 'sm' | 'lg'
  */
 export interface IProgressBarProps {
   /**
-   * Current progress value (0-100 by default, or within ariaValuemin/ariaValuemax range).
+   * Fill width as a percentage of the track (0-100). Sets the `--cffy-progress-value` hook;
+   * `ariaValuemin` / `ariaValuemax` only describe the range to assistive tech.
    */
   value: number
 

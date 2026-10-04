@@ -44,12 +44,13 @@
     // Progress bar
     & .progress-bar {
       --_progress-bg-color: var(--_progress-color);
+      --_progress-value: var(--cffy-progress-value, 50%);
 
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
-      width: var(--_progress-width, 50%);
+      width: var(--_progress-value);
       max-width: 100%;
       height: var(--_progress-height);
       text-align: center;

@@ -1726,7 +1726,7 @@ Determinate or indeterminate progress bar (`role="progressbar"`).
 ```
 
 **Props:**
-- `value` (number, required) - Fill width as a percentage of the track (0–100)
+- `value` (number, required) - Fill width as a percentage of the track (0–100); sets `--cffy-progress-value`
 - `ariaLabel` (string) - Accessible name; always set it
 - `size` ('sm' | 'lg') - Thinner or thicker track
 - `animated` (boolean, default: false) - Animated stripes on the fill
