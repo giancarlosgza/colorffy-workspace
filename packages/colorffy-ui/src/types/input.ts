@@ -354,3 +354,94 @@ export interface ITagsInputEmits {
    */
   (e: 'remove', tag: string): void
 }
+
+/**
+ * Value stored by the Combobox: the option's `optionValue` field, or the
+ * option itself.
+ */
+export type ComboboxValue = string | number | Record<string, unknown>
+
+/**
+ * Interface props for the Combobox component.
+ */
+export interface IComboboxInputProps extends IBaseInputProps {
+  /**
+   * The selected value (`v-model`): the chosen option's `optionValue` field,
+   * or the option itself when `optionValue` is not set.
+   * @default null
+   */
+  modelValue?: ComboboxValue | null
+
+  /**
+   * Options to choose from: strings, numbers or objects.
+   * @default []
+   */
+  options?: unknown[]
+
+  /**
+   * Field shown as each option's label. Leave it out for string or number
+   * options.
+   * @default null
+   */
+  optionLabel?: string | null
+
+  /**
+   * Field stored in the model. Leave it out to store the whole option; object
+   * options are then matched by reference.
+   * @default null
+   */
+  optionValue?: string | null
+
+  /**
+   * Boolean field that disables an option.
+   * @default null
+   */
+  optionDisabled?: string | null
+
+  /**
+   * Field that groups the options under headings, in the order each group
+   * first appears.
+   * @default null
+   */
+  optionGroup?: string | null
+
+  /**
+   * When true, typing in the field filters the options, ignoring case and
+   * accents. When false, the field works like a select: typing jumps to the
+   * first option that starts with the typed text.
+   * @default true
+   */
+  filterable?: boolean
+
+  /**
+   * When true, shows a button that clears the selection.
+   * @default false
+   */
+  clearable?: boolean
+
+  /**
+   * Text shown in the list when no option matches.
+   * @default 'No results'
+   */
+  emptyText?: string
+
+  /**
+   * Accessible name of the clear button.
+   * @default 'Clear selection'
+   */
+  clearLabel?: string
+
+  /**
+   * Accessible name of the button that opens the list.
+   * @default 'Show options'
+   */
+  toggleLabel?: string
+}
+
+/**
+ * Interface emits for the Combobox component.
+ */
+export interface IComboboxInputEmits {
+  (e: 'update:modelValue', value: ComboboxValue | null): void
+  (e: 'update', value: ComboboxValue | null): void
+}

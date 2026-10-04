@@ -69,6 +69,7 @@ export { default as UiAvatarGroup } from './components/ui/image/AvatarGroup.vue'
 // Components - Input
 export { default as UiInputCheck } from './components/ui/input/Check.vue'
 export { default as UiInputColorPicker } from './components/ui/input/ColorPicker.vue'
+export { default as UiInputCombobox } from './components/ui/input/Combobox.vue'
 export { default as UiInputFile } from './components/ui/input/File.vue'
 export { default as UiInputOtp } from './components/ui/input/Otp.vue'
 export { default as UiInputPassword } from './components/ui/input/Password.vue'
