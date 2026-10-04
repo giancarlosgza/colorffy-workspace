@@ -217,7 +217,7 @@ function isLastVisibleColumn(key: string) {
             :id="`${toolbarId}-columns-toggle`"
             variant="outline"
             size="sm"
-            icon icon-variant="shape-sm"
+            icon
             :tooltip-text="columnsToggleTooltipText"
             v-bind="toolbarButton"
             @click="toggleShowAllColumns"
@@ -241,7 +241,7 @@ function isLastVisibleColumn(key: string) {
             :id="`${toolbarId}-column-manager`"
             variant="outline"
             size="sm"
-            icon icon-variant="shape-sm"
+            icon
             :tooltip-text="columnManagerTooltip"
             v-bind="toolbarButton"
           >
