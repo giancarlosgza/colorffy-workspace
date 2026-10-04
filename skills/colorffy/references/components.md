@@ -18,6 +18,7 @@ Complete reference for all 70+ Vue 3 components in @colorffy/ui.
 - [Images](#images)
 - [Form Inputs](#form-inputs)
 - [Links](#links)
+- [Popovers](#popovers)
 - [Tooltips](#tooltips)
 - [Lists](#lists)
 - [Navigation](#navigation)
@@ -552,6 +553,33 @@ Groups multiple buttons (including UiButtonMenu / UiButtonTooltip) into one layo
 - Under `.btn-group-connected`, `.btn-icon` buttons fall back to `v.$button-border-radius` (instead of a circle) to align with their neighbors.
 - Under `.btn-group-connected.btn-group-joined` (horizontal and vertical), the gap is `0` and every button gets `--_btn-radius: 0`; the group's outer corners keep the connected radius.
 
+### UiButtonFabGroup
+Floating action buttons pinned to a corner of the viewport (`position: fixed`), bottom-right by default. Buttons stack upward: the first child sits at the bottom.
+
+```vue
+<UiButtonFabGroup>
+  <UiButtonTooltip variant="filled" color="primary" icon tooltip-text="New project" placement="left" @click="createProject">
+    <template #icon>
+      <UiIconMaterial icon-code="&#xe145;" />
+    </template>
+  </UiButtonTooltip>
+  <UiButtonTooltip variant="tonal" color="primary" size="sm" icon tooltip-text="Help" placement="left" @click="openHelp">
+    <template #icon>
+      <UiIconMaterial icon-code="&#xe887;" />
+    </template>
+  </UiButtonTooltip>
+</UiButtonFabGroup>
+```
+
+**Props:**
+- `top` (boolean, default: false) - Pin to the top edge instead of the bottom
+- `start` (boolean, default: false) - Pin to the left edge instead of the right
+- `customClass` (string | string[] | object | null)
+
+**Slots:** `default` - the buttons. Icon-only FABs need an accessible name: `UiButtonTooltip` uses its `tooltip-text` as the label.
+
+**CSS variables:** `--cffy-fab-group-offset-block` / `--cffy-fab-group-offset-inline` (distance from the edges, default `1.75rem`), `--cffy-fab-group-gap` (default `--cffy-space-16`).
+
 ## Cards
 
 ### UiCard
@@ -1077,6 +1105,42 @@ Button-styled link with a tooltip (same styling props as `UiButton`; `variant` d
 - `title`, `customClass`
 
 **Slots:** `icon` - rendered before `text`
+
+## Popovers
+
+### UiPopover
+Anchored panel built on the native Popover API (`popover` attribute: top layer, light dismiss and Esc handled by the browser), positioned against its trigger with CSS anchor positioning. Browsers without anchor positioning, and screens below 768px, center it in the viewport instead.
+
+```vue
+<template>
+  <!-- The trigger toggles the popover by id and declares the anchor -->
+  <UiButton text="Profile" popovertarget="profile-popover" style="anchor-name: --profile" />
+
+  <UiPopover id="profile-popover" anchor-name="--profile" position-block="bottom" position-inline="right" size="sm">
+    <template #header>
+      <strong>Jane Doe</strong>
+    </template>
+    <template #body>
+      <p>Product designer</p>
+    </template>
+    <template #footer>
+      <UiButton variant="text" text="Close" popovertarget="profile-popover" popovertargetaction="hide" />
+    </template>
+  </UiPopover>
+</template>
+```
+
+**Props:**
+- `id` (string, required) - Targeted by the trigger's `popovertarget`
+- `anchorName` (string, required) - Dashed ident (e.g. `--profile`) matching the trigger's `anchor-name`
+- `positionBlock` ('top' | 'bottom', default: 'top') - Vertical side of the anchor
+- `positionInline` ('left' | 'right', default: 'left') - Horizontal side of the anchor
+- `size` ('sm' | 'lg') - `sm` matches the trigger's width, `lg` is at least 30rem; unset sizes to the content
+- `contentClass` (string | string[]) - Extra classes on the inner `.popover-content`
+
+**Slots:** `header`, `body`, `footer` - each region renders only when filled
+
+**Note:** for an account menu use `UiPopoverMenu`, and for a menu on a button use `UiButtonMenu`; both position and dismiss themselves.
 
 ## Tooltips
 
@@ -1650,6 +1714,42 @@ Chronological event feed with dot/icon/image markers and a connector line.
 **Slots:** `item-<id>` (scoped `{ item }`) - per-item custom body (highest priority); `item` (scoped `{ item }`) applied to every item; both fall back to the default time/title/text markup
 
 ## State Components
+
+### UiProgressBar
+Determinate or indeterminate progress bar (`role="progressbar"`).
+
+```vue
+<UiProgressBar :value="60" text="60%" aria-label="Upload progress" />
+<UiProgressBar :value="40" size="sm" animated aria-label="Syncing" />
+<UiProgressBar :value="0" indeterminate aria-label="Loading" />
+<UiProgressBar :value="75" gradient bar-class="gradient-success" aria-label="Storage used" />
+```
+
+**Props:**
+- `value` (number, required) - Fill width as a percentage of the track (0–100)
+- `ariaLabel` (string) - Accessible name; always set it
+- `size` ('sm' | 'lg') - Thinner or thicker track
+- `animated` (boolean, default: false) - Animated stripes on the fill
+- `gradient` (boolean, default: false) - Gradient fill; pick the colors with a `gradient-<name>` class in `barClass` (`primary` … `info`, or a named palette such as `gradient-cyan`, `gradient-violet`)
+- `indeterminate` (boolean, default: false) - Unknown progress: a sliding segment, and no `aria-valuenow`
+- `text` (string | null) - Label inside the fill
+- `ariaValuemin` / `ariaValuemax` (number, default: 0 / 100) - ARIA range only; the fill width always reads `value` as a percentage
+- `customClass` / `customStyles` - Classes and inline styles for the track
+- `barClass` / `barStyles` - Classes and inline styles for the fill
+
+**Slots:** `default` - content inside the fill, after `text`
+
+### UiProgressSpinner
+Circular loading spinner (`role="status"`, labelled "Loading").
+
+```vue
+<UiProgressSpinner />
+<UiProgressSpinner size="2rem" :custom-styles="{ '--cffy-progress-spinner-color': 'var(--cffy-primary-a10)' }" />
+```
+
+**Props:**
+- `size` (string, default: '1.25rem') - Any CSS length
+- `customClass` / `customStyles` - Classes and inline styles; set `--cffy-progress-spinner-color` to recolor it
 
 ### UiLoading, UiExpressiveLoading, UiShapeLoading
 Full-block loading states (`role="status"`, `aria-live="polite"`).

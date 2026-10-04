@@ -8,7 +8,7 @@ export type ProgressSize = 'sm' | 'lg'
  * Notes:
  * - Use `size` for scalable sizing ('sm' | 'lg').
  * - Use `animated` to enable progress bar stripes animation.
- * - Use `gradient` to enable gradient variants (add specific gradient classes via customClass like 'g-red', 'g-cyan').
+ * - Use `gradient` to enable gradient variants (pick the colors with a `gradient-<name>` class in barClass, e.g. 'gradient-red', 'gradient-cyan').
  * - Use `text` to display percentage or custom text inside the progress bar.
  */
 export interface IProgressBarProps {
@@ -34,7 +34,8 @@ export interface IProgressBarProps {
   animated?: boolean
 
   /**
-   * Enable gradient style. Use customClass to add specific gradient classes (e.g., 'g-red', 'g-cyan').
+   * Enable gradient style. Pick the colors with a `gradient-<name>` class in `barClass`
+   * (e.g. 'gradient-success', 'gradient-cyan'); without one the default gradient shows.
    */
   gradient?: boolean
 

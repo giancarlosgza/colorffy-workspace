@@ -63,7 +63,7 @@ export const Gradient: Story = {
   args: {
     value: 80,
     gradient: true,
-    customClass: 'g-cyan'
+    barClass: 'gradient-cyan'
   }
 }
 
@@ -72,7 +72,7 @@ export const GradientAnimated: Story = {
     value: 90,
     gradient: true,
     animated: true,
-    customClass: 'g-red'
+    barClass: 'gradient-red'
   }
 }
 
@@ -137,11 +137,11 @@ export const GradientVariants: Story = {
         </div>
         <div>
           <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Red Gradient</p>
-          <UiProgressBar :value="70" :gradient="true" custom-class="g-red" />
+          <UiProgressBar :value="70" :gradient="true" bar-class="gradient-red" />
         </div>
         <div>
           <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Cyan Gradient</p>
-          <UiProgressBar :value="70" :gradient="true" custom-class="g-cyan" />
+          <UiProgressBar :value="70" :gradient="true" bar-class="gradient-cyan" />
         </div>
       </div>
     `
