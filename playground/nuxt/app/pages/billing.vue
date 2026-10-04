@@ -48,6 +48,7 @@ const isCanceling = ref(false)
 
 const invoiceRows = ref<Invoice[]>(invoices.map(invoice => ({ ...invoice })))
 const invoicesLoading = ref(true)
+const selectedInvoices = ref<(string | number)[]>([])
 const isRetrying = ref(false)
 
 const currentPlan = computed(() => planById(currentPlanId.value))
@@ -151,6 +152,12 @@ function updateCard(): void {
 
 function downloadInvoice(id: string): void {
   notify('Download started', `${id}.pdf is saving to your downloads.`, 'info')
+}
+
+function downloadSelected(): void {
+  const count = selectedInvoices.value.length
+  notify('Preparing your invoices', `We'll email a ZIP with ${count} ${count === 1 ? 'invoice' : 'invoices'} to ${currentUser.email}.`, 'info')
+  selectedInvoices.value = []
 }
 
 function downloadAll(): void {
@@ -376,16 +383,18 @@ function downloadAll(): void {
             />
           </div>
 
-          <div
-            v-if="isUpdatingPlan"
-            class="position-absolute top-0 right-0 bottom-0 left-0 z-5 d-flex align-items-center justify-content-center text-center bg-frosted rounded-lg"
-          >
-            <UiLoading
-              title="Updating your plan…"
-              :subtitle="`Moving Orbit to ${selectedPlan.name}. This takes a few seconds.`"
-              spinner-size="48px"
-            />
-          </div>
+          <Transition name="fade">
+            <div
+              v-if="isUpdatingPlan"
+              class="position-absolute top-0 right-0 bottom-0 left-0 z-5 d-flex align-items-center justify-content-center text-center bg-frosted rounded-lg"
+            >
+              <UiLoading
+                title="Updating your plan…"
+                :subtitle="`Moving Orbit to ${selectedPlan.name}. This takes a few seconds.`"
+                spinner-size="48px"
+              />
+            </div>
+          </Transition>
         </template>
       </UiCard>
     </section>
@@ -393,25 +402,27 @@ function downloadAll(): void {
     <!-- Payment method -->
     <UiCard title="Payment method" custom-class="mb-4" variant="pane" class="shadow-sm">
       <template #body>
-        <UiAlert
-          v-if="failedInvoice"
-          type="tonal"
-          variant="danger"
-          title="Your June payment failed"
-          :message="`We couldn't charge the Visa ending 4242 for ${failedInvoice.id} (${formatCurrency(failedInvoice.amount)}). Retry now or update your card to keep Pro features.`"
-          custom-class="mb-4"
-        >
-          <template #actions>
-            <UiButton
-              text="Retry payment"
-              variant="filled"
-              color="danger"
-              size="sm"
-              :loading="isRetrying"
-              @click="retryPayment"
-            />
-          </template>
-        </UiAlert>
+        <Transition name="fade">
+          <UiAlert
+            v-if="failedInvoice"
+            type="tonal"
+            variant="danger"
+            title="Your June payment failed"
+            :message="`We couldn't charge the Visa ending 4242 for ${failedInvoice.id} (${formatCurrency(failedInvoice.amount)}). Retry now or update your card to keep Pro features.`"
+            custom-class="mb-4"
+          >
+            <template #actions>
+              <UiButton
+                text="Retry payment"
+                variant="filled"
+                color="danger"
+                size="sm"
+                :loading="isRetrying"
+                @click="retryPayment"
+              />
+            </template>
+          </UiAlert>
+        </Transition>
 
         <div class="d-flex flex-wrap align-items-center gap-3">
           <span class="d-inline-flex bg-info-container text-on-info-container rounded-md px-3 py-2 fw-800 fs-sm" aria-hidden="true">
@@ -446,59 +457,79 @@ function downloadAll(): void {
     <!-- Invoices -->
     <UiCard title="Invoices" variant="pane" class="shadow-sm">
       <template #body>
-        <div v-if="invoicesLoading" class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th v-for="column in invoiceColumns" :key="column.key" scope="col">
-                  {{ column.label }}
-                </th>
-              </tr>
-            </thead>
-            <UiTableSkeleton :skeleton-rows="4" :skeleton-cols="invoiceColumns.length" aria-label="Loading invoices" />
-          </table>
-        </div>
+        <Transition name="fade" mode="out-in">
+          <div v-if="invoicesLoading" class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th v-for="column in invoiceColumns" :key="column.key" scope="col">
+                    {{ column.label }}
+                  </th>
+                </tr>
+              </thead>
+              <UiTableSkeleton :skeleton-rows="4" :skeleton-cols="invoiceColumns.length" aria-label="Loading invoices" />
+            </table>
+          </div>
 
-        <UiDatatable
-          v-else
-          :columns="invoiceColumns"
-          :items="invoiceRows"
-          default-sort-key="id"
-          default-sort-order="desc"
-          :pagination="{ pageSize: 8, ariaLabel: 'Invoice pages' }"
-          caption="Amounts in USD. Taxes are included where they apply."
-        >
-          <template #cell-id="{ item }">
-            <span class="fw-600">{{ item.id }}</span>
-          </template>
+          <UiDatatable
+            v-else
+            v-model:selected="selectedInvoices"
+            :columns="invoiceColumns"
+            :items="invoiceRows"
+            row-key="id"
+            selectable
+            default-sort-key="id"
+            default-sort-order="desc"
+            :pagination="{ pageSize: 8, ariaLabel: 'Invoice pages' }"
+            caption="Amounts in USD. Taxes are included where they apply."
+          >
+            <template #controls>
+              <Transition name="fade" mode="out-in">
+                <div v-if="selectedInvoices.length" class="d-flex align-items-center gap-2">
+                  <span class="caption fw-600">{{ selectedInvoices.length }} selected</span>
+                  <UiButton text="Download" variant="tonal" color="primary" size="sm" @click="downloadSelected">
+                    <template #icon>
+                      <UiIconMaterial icon-code="&#xe2c4;" />
+                    </template>
+                  </UiButton>
+                  <UiButton text="Clear" variant="text" size="sm" @click="selectedInvoices = []" />
+                </div>
+                <span v-else class="caption text-muted">Select invoices to download several at once.</span>
+              </Transition>
+            </template>
 
-          <template #cell-amount="{ item }">
-            <span class="tabular-numbers">{{ formatCurrency(item.amount) }}</span>
-          </template>
+            <template #cell-id="{ item }">
+              <span class="fw-600">{{ item.id }}</span>
+            </template>
 
-          <template #cell-status="{ item }">
-            <UiBadge
-              :text="invoiceStatusMeta[item.status as Invoice['status']].label"
-              :variant="`tonal tonal-${invoiceStatusMeta[item.status as Invoice['status']].color}`"
-              size="sm"
-            />
-          </template>
+            <template #cell-amount="{ item }">
+              <span class="tabular-numbers">{{ formatCurrency(item.amount) }}</span>
+            </template>
 
-          <template #cell-actions="{ item }">
-            <UiButtonTooltip
-              variant="text"
-              custom-class="text-neutral"
-              size="sm"
-              icon
-              :tooltip-text="`Download ${item.id}`"
-              @click="downloadInvoice(item.id)"
-            >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe2c4;" />
-              </template>
-            </UiButtonTooltip>
-          </template>
-        </UiDatatable>
+            <template #cell-status="{ item }">
+              <UiBadge
+                :text="invoiceStatusMeta[item.status as Invoice['status']].label"
+                :variant="`tonal tonal-${invoiceStatusMeta[item.status as Invoice['status']].color}`"
+                size="sm"
+              />
+            </template>
+
+            <template #cell-actions="{ item }">
+              <UiButtonTooltip
+                variant="text"
+                custom-class="text-neutral"
+                size="sm"
+                icon
+                :tooltip-text="`Download ${item.id}`"
+                @click="downloadInvoice(item.id)"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe2c4;" />
+                </template>
+              </UiButtonTooltip>
+            </template>
+          </UiDatatable>
+        </Transition>
       </template>
     </UiCard>
 

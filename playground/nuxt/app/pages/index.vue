@@ -43,6 +43,7 @@ const overdueTasks = computed(() => openTasks.value.filter(task => task.overdue)
 const completedTasks = computed(() => myTasks.value.filter(task => task.status === 'done'))
 const dueTodayCount = computed(() => upcomingTasks.value.filter(task => task.due === 'Today').length)
 
+const fabActions = computed(() => (fabOpen.value ? quickActions : []))
 const visibleTasks = computed(() => {
   if (taskTab.value === 'overdue')
     return overdueTasks.value
@@ -316,43 +317,47 @@ function runQuickAction(id: string) {
               :aria-labelledby="`tab-${taskTab}`"
               class="mt-2"
             >
-              <UiListGroup v-if="visibleTasks.length" variant="flush">
-                <UiListItem
-                  v-for="task in visibleTasks"
-                  :key="task.id"
-                  :title="task.title"
-                  :text="projectName(task)"
-                  has-actions
-                >
-                  <template #media>
-                    <div>
-                      <UiInputCheck
-                        :id="`task-${task.id}`"
-                        :label="task.title"
-                        :model-value="task.status === 'done'"
-                        hide-label
-                        @update:model-value="toggleTask(task, $event)"
-                      />
-                    </div>
-                  </template>
-                  <template #list-action>
-                    <div class="d-flex align-items-center gap-2">
-                      <span class="caption text-nowrap" :class="dueClass(task)">
-                        {{ dueLabel(task) }}
-                      </span>
-                      <UiBadge
-                        :text="priorityMeta[task.priority].label"
-                        :variant="tonalVariant(priorityMeta[task.priority].color)"
-                        size="sm"
-                      />
-                    </div>
-                  </template>
-                </UiListItem>
-              </UiListGroup>
+              <Transition name="fade" mode="out-in">
+                <UiListGroup v-if="visibleTasks.length" variant="flush">
+                  <TransitionGroup name="list">
+                    <UiListItem
+                      v-for="task in visibleTasks"
+                      :key="task.id"
+                      :title="task.title"
+                      :text="projectName(task)"
+                      has-actions
+                    >
+                      <template #media>
+                        <div>
+                          <UiInputCheck
+                            :id="`task-${task.id}`"
+                            :label="task.title"
+                            :model-value="task.status === 'done'"
+                            hide-label
+                            @update:model-value="toggleTask(task, $event)"
+                          />
+                        </div>
+                      </template>
+                      <template #list-action>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="caption text-nowrap" :class="dueClass(task)">
+                            {{ dueLabel(task) }}
+                          </span>
+                          <UiBadge
+                            :text="priorityMeta[task.priority].label"
+                            :variant="tonalVariant(priorityMeta[task.priority].color)"
+                            size="sm"
+                          />
+                        </div>
+                      </template>
+                    </UiListItem>
+                  </TransitionGroup>
+                </UiListGroup>
 
-              <p v-else class="subtitle-2 text-muted text-center py-5 mb-0">
-                {{ emptyTaskMessage }}
-              </p>
+                <p v-else class="subtitle-2 text-muted text-center py-5 mb-0">
+                  {{ emptyTaskMessage }}
+                </p>
+              </Transition>
             </div>
           </template>
         </UiCard>
@@ -430,28 +435,30 @@ function runQuickAction(id: string) {
         </UiSubheadingContent>
       </template>
       <template #body>
-        <div v-if="activityLoading" role="status" aria-label="Loading recent activity">
-          <div v-for="row in 4" :key="row" class="d-flex align-items-center gap-3 mb-3">
-            <UiBaseSkeleton variant="thumbnail" rounded v-bind="quietSkeleton" />
-            <div class="d-flex flex-column gap-2 flex-grow-1">
-              <UiBaseSkeleton :width="row % 2 ? '55%' : '40%'" v-bind="quietSkeleton" />
-              <UiBaseSkeleton size="sm" width="5rem" v-bind="quietSkeleton" />
+        <Transition name="fade" mode="out-in">
+          <div v-if="activityLoading" role="status" aria-label="Loading recent activity">
+            <div v-for="row in 4" :key="row" class="d-flex align-items-center gap-3 mb-3">
+              <UiBaseSkeleton variant="thumbnail" rounded v-bind="quietSkeleton" />
+              <div class="d-flex flex-column gap-2 flex-grow-1">
+                <UiBaseSkeleton :width="row % 2 ? '55%' : '40%'" v-bind="quietSkeleton" />
+                <UiBaseSkeleton size="sm" width="5rem" v-bind="quietSkeleton" />
+              </div>
             </div>
           </div>
-        </div>
 
-        <UiTimeline v-else :items="activityItems">
-          <template #item="{ item }">
-            <div class="d-flex align-items-start justify-content-between gap-3">
-              <p class="mb-0">
-                <span class="fw-700">{{ describe(item.id).actor }}</span>
-                {{ describe(item.id).action }}
-                <span class="fw-600">{{ describe(item.id).target }}</span>
-              </p>
-              <span class="caption text-muted text-nowrap">{{ item.time }}</span>
-            </div>
-          </template>
-        </UiTimeline>
+          <UiTimeline v-else :items="activityItems">
+            <template #item="{ item }">
+              <div class="d-flex align-items-start justify-content-between gap-3">
+                <p class="mb-0">
+                  <span class="fw-700">{{ describe(item.id).actor }}</span>
+                  {{ describe(item.id).action }}
+                  <span class="fw-600">{{ describe(item.id).target }}</span>
+                </p>
+                <span class="caption text-muted text-nowrap">{{ item.time }}</span>
+              </div>
+            </template>
+          </UiTimeline>
+        </Transition>
       </template>
     </UiCard>
 
@@ -470,9 +477,9 @@ function runQuickAction(id: string) {
           <UiIconMaterial :icon-code="fabOpen ? '&#xe5cd;' : '&#xe145;'" />
         </template>
       </UiButton>
-      <template v-if="fabOpen">
+      <TransitionGroup name="slide-up">
         <UiButton
-          v-for="action in quickActions"
+          v-for="action in fabActions"
           :key="action.id"
           :text="action.label"
           :aria-label="action.label"
@@ -485,7 +492,7 @@ function runQuickAction(id: string) {
             <UiIconMaterial :icon-code="action.icon" />
           </template>
         </UiButton>
-      </template>
+      </TransitionGroup>
     </UiButtonFabGroup>
   </div>
 </template>

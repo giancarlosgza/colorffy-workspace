@@ -298,729 +298,737 @@ onBeforeUnmount(() => {
       @update:active-tab="selectTab"
     />
 
-    <!-- Profile -->
-    <section
-      v-if="activeTab === 'profile'"
-      id="settings-profile"
-      role="tabpanel"
-      aria-labelledby="tab-profile"
-      class="d-grid gap-6"
-    >
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Profile
-          </p>
-          <p class="caption text-muted mb-0">
-            This is how teammates see you across {{ workspace.name }}.
-          </p>
-        </template>
+    <Transition name="fade" mode="out-in">
+      <!-- Profile -->
+      <section
+        v-if="activeTab === 'profile'"
+        id="settings-profile"
+        role="tabpanel"
+        aria-labelledby="tab-profile"
+        class="d-grid gap-6"
+      >
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Profile
+            </p>
+            <p class="caption text-muted mb-0">
+              This is how teammates see you across {{ workspace.name }}.
+            </p>
+          </template>
 
-        <template #body>
-          <div class="row align-items-center">
-            <div class="col-12 col-md-4">
-              <p class="fw-700 mb-1">
-                Photo
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                JPG, PNG or WebP, at least 400 × 400 px. Up to 5 MB.
-              </p>
-            </div>
-            <div class="col-12 col-md-8 d-flex align-items-center gap-4">
-              <UiAvatar :src="avatarSrc" :alt="`${currentUser.name} profile photo`" size="md" class="flex-shrink-0" />
-              <div class="flex-grow-1">
-                <UiInputFile
-                  id="profile-photo"
-                  v-model="photo"
-                  label="Profile photo"
-                  hide-label
-                  input-label="Upload photo"
-                  :error-messages="photoErrors"
-                />
-                <UiButton
-                  v-if="photo"
-                  text="Remove photo"
-                  variant="text"
-                  size="sm"
-                  class="mt-2"
-                  @click="photo = null"
-                />
-              </div>
-            </div>
-          </div>
-
-          <UiDivider custom-class="my-4" />
-
-          <div class="row">
-            <div class="col-12 col-md-4">
-              <p class="fw-700 mb-1">
-                Personal details
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Used for @mentions, invites and email notifications.
-              </p>
-            </div>
-            <div class="col-12 col-md-8 d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-inline-4">
-              <UiInputText
-                id="profile-name"
-                v-model="profile.name"
-                label="Full name"
-                required
-                :error-messages="profileErrors.name"
-              />
-              <UiInputText
-                id="profile-email"
-                v-model="profile.email"
-                type="email"
-                label="Email"
-                required
-                :maxlength="80"
-                :error-messages="profileErrors.email"
-              />
-              <UiInputText
-                id="profile-title"
-                v-model="profile.title"
-                label="Job title"
-                placeholder="What do you do at Orbit?"
-              />
-              <UiInputPhoneNumber
-                id="profile-phone"
-                v-model="profile.phone"
-                label="Phone"
-                placeholder="415-555-0132"
-                :maxlength="14"
-                optional-label
-              />
-            </div>
-          </div>
-
-          <UiDivider custom-class="my-4" />
-
-          <div class="row">
-            <div class="col-12 col-md-4">
-              <p class="fw-700 mb-1">
-                About
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Shown on your profile card when someone hovers your name.
-              </p>
-            </div>
-            <div class="col-12 col-md-8">
-              <UiInputTextarea
-                id="profile-bio"
-                v-model="profile.bio"
-                label="Bio"
-                placeholder="A line or two about what you work on."
-                :rows="3"
-                :maxlength="BIO_LIMIT"
-                class="mb-1"
-              />
-              <p
-                class="caption text-end mb-3"
-                :class="bioLength >= BIO_LIMIT - 20 ? 'text-warning-emphasis' : 'text-muted'"
-              >
-                {{ bioLength }}/{{ BIO_LIMIT }} characters
-              </p>
-              <UiInputSelect
-                id="profile-timezone"
-                v-model="profile.timezone"
-                label="Time zone"
-                placeholder="Select a time zone"
-                :options="timezones"
-                option-label="label"
-                option-value="value"
-              />
-            </div>
-          </div>
-        </template>
-
-        <template #footer>
-          <div class="d-flex justify-content-end gap-2">
-            <UiButton
-              text="Save changes"
-              variant="filled"
-              color="primary"
-              :loading="savingProfile"
-              :disabled="profileInvalid"
-              @click="saveProfile"
-            />
-          </div>
-        </template>
-      </UiCard>
-    </section>
-
-    <!-- Appearance -->
-    <section
-      v-else-if="activeTab === 'appearance'"
-      id="settings-appearance"
-      role="tabpanel"
-      aria-labelledby="tab-appearance"
-      class="d-grid gap-6"
-    >
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Brand color
-          </p>
-          <p class="caption text-muted mb-0">
-            Orbit tints buttons, links and highlights with this color. Text on top of it switches between light and dark by itself, so it stays readable whatever you pick.
-          </p>
-        </template>
-
-        <template #body>
-          <div class="row">
-            <div class="col-12 col-lg-5">
-              <UiInputColorPicker
-                id="brand-color"
-                v-model="brandColor"
-                label="Custom color"
-                :error-messages="brandErrors"
-              />
-              <p class="caption text-muted mb-2">
-                Presets
-              </p>
-              <div class="d-flex flex-wrap gap-3 mb-4">
-                <button
-                  v-for="preset in brandPresets"
-                  :key="preset.hex"
-                  type="button"
-                  class="brand-swatch rounded-full border"
-                  :style="{ backgroundColor: preset.hex }"
-                  :title="preset.name"
-                  :aria-label="preset.name"
-                  :aria-pressed="brandColor?.toLowerCase() === preset.hex"
-                  @click="brandColor = preset.hex"
-                />
-              </div>
-              <UiButton
-                text="Reset to Orbit green"
-                variant="outline"
-                size="sm"
-                :disabled="!isCustomBrand"
-                class="mb-4 mb-lg-0"
-                @click="resetBrand"
-              >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xf053;" />
-                </template>
-              </UiButton>
-            </div>
-
-            <div class="col-12 col-lg-7">
-              <div class="border rounded-lg p-3 d-grid gap-3" aria-label="Brand color preview" role="group">
-                <p class="overline text-muted mb-0">
-                  Preview
+          <template #body>
+            <div class="row align-items-center">
+              <div class="col-12 col-md-4">
+                <p class="fw-700 mb-1">
+                  Photo
                 </p>
-                <div class="d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-3">
-                  <div class="bg-primary text-on-primary rounded-lg p-3 d-flex align-items-center gap-2">
-                    <UiIconMaterial icon-code="&#xe145;" class="fs-lg" />
-                    <span class="fw-700 fs-xs">New project</span>
-                  </div>
-                  <div class="bg-primary-container text-on-primary-container rounded-lg p-3">
-                    <p class="fw-700 mb-1">
-                      Sprint 14 starts Monday
-                    </p>
-                    <p class="caption mb-0">
-                      Planning is at 10:00 AM. Bring your estimates.
-                    </p>
-                  </div>
-                </div>
-                <p class="text-primary-emphasis fw-700 mb-0">
-                  {{ leadProject.name }} is {{ leadProject.progress }}% done, with {{ leadProject.tasksTotal - leadProject.tasksDone }} tasks left before {{ leadProject.dueDate }}.
+                <p class="caption text-muted mb-3 mb-md-0">
+                  JPG, PNG or WebP, at least 400 × 400 px. Up to 5 MB.
                 </p>
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                  <UiBadge :text="workspace.plan" variant="primary" />
-                  <UiBadge text="In review" variant="tonal tonal-primary" icon-code="&#xe8f4;" />
-                  <UiBadge text="Design system" variant="outline" />
-                  <UiBadge text="3" variant="primary" size="sm" pill />
-                </div>
-                <div class="d-flex flex-wrap gap-2">
-                  <UiButton text="Publish" variant="filled" color="primary" size="sm" />
-                  <UiButton text="Share" variant="tonal" color="primary" size="sm" />
-                  <UiButton text="Cancel" variant="text" size="sm" />
+              </div>
+              <div class="col-12 col-md-8 d-flex align-items-center gap-4">
+                <UiAvatar :src="avatarSrc" :alt="`${currentUser.name} profile photo`" size="md" class="flex-shrink-0" />
+                <div class="flex-grow-1">
+                  <UiInputFile
+                    id="profile-photo"
+                    v-model="photo"
+                    label="Profile photo"
+                    hide-label
+                    input-label="Upload photo"
+                    :error-messages="photoErrors"
+                  />
+                  <UiButton
+                    v-if="photo"
+                    text="Remove photo"
+                    variant="text"
+                    size="sm"
+                    class="mt-2"
+                    @click="photo = null"
+                  />
                 </div>
               </div>
             </div>
-          </div>
-        </template>
-      </UiCard>
 
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Interface
-          </p>
-          <p class="caption text-muted mb-0">
-            Changes apply right away on this device.
-          </p>
-        </template>
+            <UiDivider custom-class="my-4" />
 
-        <template #body>
-          <div class="row align-items-center">
-            <div class="col-12 col-md-5">
-              <p class="fw-700 mb-1">
-                Theme
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Pick a theme or follow your operating system.
-              </p>
+            <div class="row">
+              <div class="col-12 col-md-4">
+                <p class="fw-700 mb-1">
+                  Personal details
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Used for @mentions, invites and email notifications.
+                </p>
+              </div>
+              <div class="col-12 col-md-8 d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-inline-4">
+                <UiInputText
+                  id="profile-name"
+                  v-model="profile.name"
+                  label="Full name"
+                  required
+                  :error-messages="profileErrors.name"
+                />
+                <UiInputText
+                  id="profile-email"
+                  v-model="profile.email"
+                  type="email"
+                  label="Email"
+                  required
+                  :maxlength="80"
+                  :error-messages="profileErrors.email"
+                />
+                <UiInputText
+                  id="profile-title"
+                  v-model="profile.title"
+                  label="Job title"
+                  placeholder="What do you do at Orbit?"
+                />
+                <UiInputPhoneNumber
+                  id="profile-phone"
+                  v-model="profile.phone"
+                  label="Phone"
+                  placeholder="415-555-0132"
+                  :maxlength="14"
+                  optional-label
+                />
+              </div>
             </div>
-            <div class="col-12 col-md-7">
-              <ClientOnly>
-                <UiInputRadio
-                  id="theme"
-                  v-model="colorMode.preference"
-                  label="Theme"
-                  hide-label
-                  :options="themeOptions"
+
+            <UiDivider custom-class="my-4" />
+
+            <div class="row">
+              <div class="col-12 col-md-4">
+                <p class="fw-700 mb-1">
+                  About
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Shown on your profile card when someone hovers your name.
+                </p>
+              </div>
+              <div class="col-12 col-md-8">
+                <UiInputTextarea
+                  id="profile-bio"
+                  v-model="profile.bio"
+                  label="Bio"
+                  placeholder="A line or two about what you work on."
+                  :rows="3"
+                  :maxlength="BIO_LIMIT"
+                  class="mb-1"
+                />
+                <p
+                  class="caption text-end mb-3"
+                  :class="bioLength >= BIO_LIMIT - 20 ? 'text-warning-emphasis' : 'text-muted'"
+                >
+                  {{ bioLength }}/{{ BIO_LIMIT }} characters
+                </p>
+                <UiInputSelect
+                  id="profile-timezone"
+                  v-model="profile.timezone"
+                  label="Time zone"
+                  placeholder="Select a time zone"
+                  :options="timezones"
                   option-label="label"
                   option-value="value"
-                  class="mb-0"
                 />
-                <template #fallback>
+              </div>
+            </div>
+          </template>
+
+          <template #footer>
+            <div class="d-flex justify-content-end gap-2">
+              <UiButton
+                text="Save changes"
+                variant="filled"
+                color="primary"
+                :loading="savingProfile"
+                :disabled="profileInvalid"
+                @click="saveProfile"
+              />
+            </div>
+          </template>
+        </UiCard>
+      </section>
+
+      <!-- Appearance -->
+      <section
+        v-else-if="activeTab === 'appearance'"
+        id="settings-appearance"
+        role="tabpanel"
+        aria-labelledby="tab-appearance"
+        class="d-grid gap-6"
+      >
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Brand color
+            </p>
+            <p class="caption text-muted mb-0">
+              Orbit tints buttons, links and highlights with this color. Text on top of it switches between light and dark by itself, so it stays readable whatever you pick.
+            </p>
+          </template>
+
+          <template #body>
+            <div class="row">
+              <div class="col-12 col-lg-5">
+                <UiInputColorPicker
+                  id="brand-color"
+                  v-model="brandColor"
+                  label="Custom color"
+                  :error-messages="brandErrors"
+                />
+                <p class="caption text-muted mb-2">
+                  Presets
+                </p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                  <button
+                    v-for="preset in brandPresets"
+                    :key="preset.hex"
+                    type="button"
+                    class="brand-swatch rounded-full border"
+                    :style="{ backgroundColor: preset.hex }"
+                    :title="preset.name"
+                    :aria-label="preset.name"
+                    :aria-pressed="brandColor?.toLowerCase() === preset.hex"
+                    @click="brandColor = preset.hex"
+                  />
+                </div>
+                <UiButton
+                  text="Reset to Orbit green"
+                  variant="outline"
+                  size="sm"
+                  :disabled="!isCustomBrand"
+                  class="mb-4 mb-lg-0"
+                  @click="resetBrand"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xf053;" />
+                  </template>
+                </UiButton>
+              </div>
+
+              <div class="col-12 col-lg-7">
+                <div class="border rounded-lg p-3 d-grid gap-3" aria-label="Brand color preview" role="group">
+                  <p class="overline text-muted mb-0">
+                    Preview
+                  </p>
+                  <div class="d-grid grid-repeat-cols-1 grid-repeat-cols-sm-2 gap-3">
+                    <div class="bg-primary text-on-primary rounded-lg p-3 d-flex align-items-center gap-2">
+                      <UiIconMaterial icon-code="&#xe145;" class="fs-lg" />
+                      <span class="fw-700 fs-xs">New project</span>
+                    </div>
+                    <div class="bg-primary-container text-on-primary-container rounded-lg p-3">
+                      <p class="fw-700 mb-1">
+                        Sprint 14 starts Monday
+                      </p>
+                      <p class="caption mb-0">
+                        Planning is at 10:00 AM. Bring your estimates.
+                      </p>
+                    </div>
+                  </div>
+                  <p class="text-primary-emphasis fw-700 mb-0">
+                    {{ leadProject.name }} is {{ leadProject.progress }}% done, with {{ leadProject.tasksTotal - leadProject.tasksDone }} tasks left before {{ leadProject.dueDate }}.
+                  </p>
+                  <div class="d-flex flex-wrap align-items-center gap-2">
+                    <UiBadge :text="workspace.plan" variant="primary" />
+                    <UiBadge text="In review" variant="tonal tonal-primary" icon-code="&#xe8f4;" />
+                    <UiBadge text="Design system" variant="outline" />
+                    <UiBadge text="3" variant="primary" size="sm" pill />
+                  </div>
+                  <div class="d-flex flex-wrap gap-2">
+                    <UiButton text="Publish" variant="filled" color="primary" size="sm" />
+                    <UiButton text="Share" variant="tonal" color="primary" size="sm" />
+                    <UiButton text="Cancel" variant="text" size="sm" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Interface
+            </p>
+            <p class="caption text-muted mb-0">
+              Changes apply right away on this device.
+            </p>
+          </template>
+
+          <template #body>
+            <div class="row align-items-center">
+              <div class="col-12 col-md-5">
+                <p class="fw-700 mb-1">
+                  Theme
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Pick a theme or follow your operating system.
+                </p>
+              </div>
+              <div class="col-12 col-md-7">
+                <ClientOnly>
                   <UiInputRadio
-                    id="theme-fallback"
-                    model-value="system"
+                    id="theme"
+                    v-model="colorMode.preference"
                     label="Theme"
                     hide-label
                     :options="themeOptions"
                     option-label="label"
                     option-value="value"
-                    disabled
                     class="mb-0"
                   />
-                </template>
-              </ClientOnly>
-            </div>
-          </div>
-
-          <UiDivider custom-class="my-4" />
-
-          <div class="row align-items-center">
-            <div class="col-12 col-md-5">
-              <div class="d-flex align-items-center gap-2 mb-1">
-                <p class="fw-700 mb-0">
-                  Text size
-                </p>
-                <UiBadge :text="`${textScale}%`" variant="tonal tonal-primary" size="sm" />
-              </div>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Scales task lists, comments and docs.
-              </p>
-            </div>
-            <div class="col-12 col-md-7">
-              <UiInputRange
-                id="text-scale"
-                v-model="textScale"
-                label="Text size"
-                hide-label
-                size="sm"
-                :min="90"
-                :max="125"
-                :step="5"
-                class="mb-0"
-              />
-            </div>
-          </div>
-
-          <UiDivider custom-class="my-4" />
-
-          <div class="row align-items-center">
-            <div class="col-12 col-md-5">
-              <p class="fw-700 mb-1">
-                Reduce motion
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Turns off animated transitions between boards and pages.
-              </p>
-            </div>
-            <div class="col-12 col-md-7">
-              <UiInputCheck
-                id="reduce-motion"
-                v-model="reduceMotion"
-                variant="switch"
-                :label="reduceMotion ? 'On' : 'Off'"
-              />
-            </div>
-          </div>
-        </template>
-      </UiCard>
-    </section>
-
-    <!-- Notifications -->
-    <section
-      v-else-if="activeTab === 'notifications'"
-      id="settings-notifications"
-      role="tabpanel"
-      aria-labelledby="tab-notifications"
-      class="d-grid gap-6"
-    >
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Notify me about
-          </p>
-          <p class="caption text-muted mb-0">
-            Slack messages go to you as direct messages from the Orbit app.
-          </p>
-        </template>
-
-        <template #body>
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    Event
-                  </th>
-                  <th v-for="channel in channels" :key="channel.id" scope="col" class="text-center">
-                    {{ channel.label }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="event in events" :key="event.id">
-                  <td>
-                    <p class="fw-700 fs-xs mb-0">
-                      {{ event.label }}
-                    </p>
-                    <p class="caption text-muted mb-0">
-                      {{ event.description }}
-                    </p>
-                  </td>
-                  <td v-for="channel in channels" :key="channel.id" class="text-center">
-                    <UiInputCheck
-                      :id="`notify-${event.id}-${channel.id}`"
-                      v-model="notificationPrefs[event.id][channel.id]"
-                      variant="switch"
-                      :label="`${channel.label} notifications for ${event.label.toLowerCase()}`"
+                  <template #fallback>
+                    <UiInputRadio
+                      id="theme-fallback"
+                      model-value="system"
+                      label="Theme"
                       hide-label
-                      class="d-inline-flex gap-0"
+                      :options="themeOptions"
+                      option-label="label"
+                      option-value="value"
+                      disabled
+                      class="mb-0"
                     />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </template>
-      </UiCard>
-
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Quiet hours
-          </p>
-          <p class="caption text-muted mb-0">
-            Pause push and Slack notifications after work. Email still arrives.
-          </p>
-        </template>
-
-        <template #body>
-          <UiInputCheck
-            id="quiet-hours"
-            v-model="quietHoursOn"
-            variant="switch"
-            label="Pause notifications on weeknights"
-            class="mb-4"
-          />
-          <div class="row align-items-center">
-            <div class="col-12 col-md-5">
-              <p class="fw-700 mb-1">
-                Starts at {{ quietLabel }}
-              </p>
-              <p class="caption text-muted mb-3 mb-md-0">
-                Ends at 8:00 AM, Monday to Friday.
-              </p>
-            </div>
-            <div class="col-12 col-md-7">
-              <UiInputRange
-                id="quiet-start"
-                v-model="quietStart"
-                label="Quiet hours start"
-                hide-label
-                size="sm"
-                :min="18"
-                :max="23"
-                :disabled="!quietHoursOn"
-                class="mb-0"
-              />
-            </div>
-          </div>
-        </template>
-
-        <template #footer>
-          <div class="d-flex justify-content-end">
-            <UiButton
-              text="Save preferences"
-              variant="filled"
-              color="primary"
-              :loading="savingNotifications"
-              @click="saveNotifications"
-            />
-          </div>
-        </template>
-      </UiCard>
-    </section>
-
-    <!-- Security -->
-    <section
-      v-else
-      id="settings-security"
-      role="tabpanel"
-      aria-labelledby="tab-security"
-      class="d-grid gap-6"
-    >
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <div class="d-flex align-items-start justify-content-between gap-3">
-            <div>
-              <p class="card-title">
-                Two-factor authentication
-              </p>
-              <p class="caption text-muted mb-0">
-                Ask for a code from your phone, on top of your password, when you sign in.
-              </p>
-            </div>
-            <UiBadge
-              v-if="twoFactorEnabled"
-              text="On"
-              variant="tonal tonal-success"
-              icon-code="&#xe86c;"
-            />
-            <UiBadge
-              v-else
-              text="Off"
-              variant="tonal tonal-warning"
-              icon-code="&#xe002;"
-            />
-          </div>
-        </template>
-
-        <template #body>
-          <div
-            v-if="twoFactorEnabled"
-            class="bg-success-container text-on-success-container rounded-lg p-3 d-flex flex-wrap align-items-center gap-3"
-            role="status"
-          >
-            <UiIconMaterial icon-code="&#xe86c;" class="fs-2xl" />
-            <div class="flex-grow-1">
-              <p class="fw-700 mb-1">
-                Two-factor authentication is on
-              </p>
-              <p class="caption mb-0">
-                Orbit asks for a code from your authenticator app when you sign in on a new device.
-              </p>
-            </div>
-            <UiButton text="Turn off" variant="text" size="sm" @click="turnOffTwoFactor" />
-          </div>
-
-          <div v-else class="row">
-            <div class="col-12 col-md-7">
-              <div class="d-grid gap-3 mb-4">
-                <div class="d-flex align-items-start gap-3">
-                  <UiBadge text="1" variant="tonal tonal-primary" pill />
-                  <div>
-                    <p class="fw-700 mb-0">
-                      Install an authenticator app
-                    </p>
-                    <p class="caption text-muted mb-0">
-                      1Password, Authy and Google Authenticator all work.
-                    </p>
-                  </div>
-                </div>
-                <div class="d-flex align-items-start gap-3">
-                  <UiBadge text="2" variant="tonal tonal-primary" pill />
-                  <div>
-                    <p class="fw-700 mb-0">
-                      Scan the QR code
-                    </p>
-                    <p class="caption text-muted mb-0">
-                      Or type the setup key <span class="font-code">{{ setupKey }}</span> into the app.
-                    </p>
-                  </div>
-                </div>
-                <div class="d-flex align-items-start gap-3">
-                  <UiBadge text="3" variant="tonal tonal-primary" pill />
-                  <div>
-                    <p class="fw-700 mb-0">
-                      Enter the 6-digit code
-                    </p>
-                    <p class="caption text-muted mb-0">
-                      The app shows a new code every 30 seconds.
-                    </p>
-                  </div>
-                </div>
+                  </template>
+                </ClientOnly>
               </div>
+            </div>
 
-              <UiInputOtp
-                id="two-factor-code"
-                v-model="otp"
-                label="Verification code"
-                :length="6"
-                :disabled="verifyingOtp"
-                :error-messages="otpErrors"
-                @complete="verifyTwoFactor"
-              />
+            <UiDivider custom-class="my-4" />
+
+            <div class="row align-items-center">
+              <div class="col-12 col-md-5">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <p class="fw-700 mb-0">
+                    Text size
+                  </p>
+                  <UiBadge :text="`${textScale}%`" variant="tonal tonal-primary" size="sm" />
+                </div>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Scales task lists, comments and docs.
+                </p>
+              </div>
+              <div class="col-12 col-md-7">
+                <UiInputRange
+                  id="text-scale"
+                  v-model="textScale"
+                  label="Text size"
+                  hide-label
+                  size="sm"
+                  :min="90"
+                  :max="125"
+                  :step="5"
+                  class="mb-0"
+                />
+              </div>
+            </div>
+
+            <UiDivider custom-class="my-4" />
+
+            <div class="row align-items-center">
+              <div class="col-12 col-md-5">
+                <p class="fw-700 mb-1">
+                  Reduce motion
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Turns off animated transitions between boards and pages.
+                </p>
+              </div>
+              <div class="col-12 col-md-7">
+                <UiInputCheck
+                  id="reduce-motion"
+                  v-model="reduceMotion"
+                  variant="switch"
+                  :label="reduceMotion ? 'On' : 'Off'"
+                />
+              </div>
+            </div>
+          </template>
+        </UiCard>
+      </section>
+
+      <!-- Notifications -->
+      <section
+        v-else-if="activeTab === 'notifications'"
+        id="settings-notifications"
+        role="tabpanel"
+        aria-labelledby="tab-notifications"
+        class="d-grid gap-6"
+      >
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Notify me about
+            </p>
+            <p class="caption text-muted mb-0">
+              Slack messages go to you as direct messages from the Orbit app.
+            </p>
+          </template>
+
+          <template #body>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      Event
+                    </th>
+                    <th v-for="channel in channels" :key="channel.id" scope="col" class="text-center">
+                      {{ channel.label }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="event in events" :key="event.id">
+                    <td>
+                      <p class="fw-700 fs-xs mb-0">
+                        {{ event.label }}
+                      </p>
+                      <p class="caption text-muted mb-0">
+                        {{ event.description }}
+                      </p>
+                    </td>
+                    <td v-for="channel in channels" :key="channel.id" class="text-center">
+                      <UiInputCheck
+                        :id="`notify-${event.id}-${channel.id}`"
+                        v-model="notificationPrefs[event.id][channel.id]"
+                        variant="switch"
+                        :label="`${channel.label} notifications for ${event.label.toLowerCase()}`"
+                        hide-label
+                        class="d-inline-flex gap-0"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Quiet hours
+            </p>
+            <p class="caption text-muted mb-0">
+              Pause push and Slack notifications after work. Email still arrives.
+            </p>
+          </template>
+
+          <template #body>
+            <UiInputCheck
+              id="quiet-hours"
+              v-model="quietHoursOn"
+              variant="switch"
+              label="Pause notifications on weeknights"
+              class="mb-4"
+            />
+            <div class="row align-items-center">
+              <div class="col-12 col-md-5">
+                <p class="fw-700 mb-1">
+                  Starts at {{ quietLabel }}
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Ends at 8:00 AM, Monday to Friday.
+                </p>
+              </div>
+              <div class="col-12 col-md-7">
+                <UiInputRange
+                  id="quiet-start"
+                  v-model="quietStart"
+                  label="Quiet hours start"
+                  hide-label
+                  size="sm"
+                  :min="18"
+                  :max="23"
+                  :disabled="!quietHoursOn"
+                  class="mb-0"
+                />
+              </div>
+            </div>
+          </template>
+
+          <template #footer>
+            <div class="d-flex justify-content-end">
               <UiButton
-                text="Verify and turn on"
+                text="Save preferences"
                 variant="filled"
                 color="primary"
-                :loading="verifyingOtp"
-                :disabled="otp.length < 6"
-                @click="verifyTwoFactor"
+                :loading="savingNotifications"
+                @click="saveNotifications"
               />
             </div>
-            <div class="col-12 col-md-5 mt-4 mt-md-0">
-              <div class="bg-muted-container text-on-muted-container rounded-lg p-4 d-grid place-items-center gap-2 text-center h-100">
-                <UiIconMaterial icon-code="&#xe00a;" class="fs-5xl lh-1" />
-                <p class="caption mb-0">
-                  Scan with your authenticator app
+          </template>
+        </UiCard>
+      </section>
+
+      <!-- Security -->
+      <section
+        v-else
+        id="settings-security"
+        role="tabpanel"
+        aria-labelledby="tab-security"
+        class="d-grid gap-6"
+      >
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <div class="d-flex align-items-start justify-content-between gap-3">
+              <div>
+                <p class="card-title">
+                  Two-factor authentication
+                </p>
+                <p class="caption text-muted mb-0">
+                  Ask for a code from your phone, on top of your password, when you sign in.
                 </p>
               </div>
+              <UiBadge
+                v-if="twoFactorEnabled"
+                text="On"
+                variant="tonal tonal-success"
+                icon-code="&#xe86c;"
+              />
+              <UiBadge
+                v-else
+                text="Off"
+                variant="tonal tonal-warning"
+                icon-code="&#xe002;"
+              />
             </div>
-          </div>
-        </template>
-      </UiCard>
+          </template>
 
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <div class="d-flex align-items-start justify-content-between gap-3">
-            <div>
-              <p class="card-title">
-                Recovery codes
-              </p>
-              <p class="caption text-muted mb-0">
-                Use one of these if you lose your phone. Each code works once.
-              </p>
-            </div>
-            <UiButtonTooltip
-              text="Copy"
-              variant="outline"
-              size="sm"
-              tooltip-text="Copy all 8 codes"
-              :disabled="!twoFactorEnabled"
-              @click="copyRecoveryCodes"
-            >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe14d;" />
-              </template>
-            </UiButtonTooltip>
-          </div>
-        </template>
+          <template #body>
+            <Transition name="fade" mode="out-in">
+              <div
+                v-if="twoFactorEnabled"
+                class="bg-success-container text-on-success-container rounded-lg p-3 d-flex flex-wrap align-items-center gap-3"
+                role="status"
+              >
+                <UiIconMaterial icon-code="&#xe86c;" class="fs-2xl" />
+                <div class="flex-grow-1">
+                  <p class="fw-700 mb-1">
+                    Two-factor authentication is on
+                  </p>
+                  <p class="caption mb-0">
+                    Orbit asks for a code from your authenticator app when you sign in on a new device.
+                  </p>
+                </div>
+                <UiButton text="Turn off" variant="text" size="sm" @click="turnOffTwoFactor" />
+              </div>
 
-        <template #body>
-          <div
-            v-if="twoFactorEnabled"
-            class="bg-muted-container text-on-muted-container rounded-lg p-3 d-grid grid-repeat-cols-2 grid-repeat-cols-md-4 gap-3 font-code"
-          >
-            <span v-for="code in recoveryCodes" :key="code" class="fs-xs">{{ code }}</span>
-          </div>
-          <p v-else class="caption text-muted mb-0">
-            Turn on two-factor authentication to generate your recovery codes.
-          </p>
-        </template>
-      </UiCard>
+              <div v-else class="row">
+                <div class="col-12 col-md-7">
+                  <div class="d-grid gap-3 mb-4">
+                    <div class="d-flex align-items-start gap-3">
+                      <UiBadge text="1" variant="tonal tonal-primary" pill />
+                      <div>
+                        <p class="fw-700 mb-0">
+                          Install an authenticator app
+                        </p>
+                        <p class="caption text-muted mb-0">
+                          1Password, Authy and Google Authenticator all work.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3">
+                      <UiBadge text="2" variant="tonal tonal-primary" pill />
+                      <div>
+                        <p class="fw-700 mb-0">
+                          Scan the QR code
+                        </p>
+                        <p class="caption text-muted mb-0">
+                          Or type the setup key <span class="font-code">{{ setupKey }}</span> into the app.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3">
+                      <UiBadge text="3" variant="tonal tonal-primary" pill />
+                      <div>
+                        <p class="fw-700 mb-0">
+                          Enter the 6-digit code
+                        </p>
+                        <p class="caption text-muted mb-0">
+                          The app shows a new code every 30 seconds.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title">
-            Active sessions
-          </p>
-          <p class="caption text-muted mb-0">
-            Devices signed in to your Orbit account in the last 30 days.
-          </p>
-        </template>
+                  <UiInputOtp
+                    id="two-factor-code"
+                    v-model="otp"
+                    label="Verification code"
+                    :length="6"
+                    :disabled="verifyingOtp"
+                    :error-messages="otpErrors"
+                    @complete="verifyTwoFactor"
+                  />
+                  <UiButton
+                    text="Verify and turn on"
+                    variant="filled"
+                    color="primary"
+                    :loading="verifyingOtp"
+                    :disabled="otp.length < 6"
+                    @click="verifyTwoFactor"
+                  />
+                </div>
+                <div class="col-12 col-md-5 mt-4 mt-md-0">
+                  <div class="bg-muted-container text-on-muted-container rounded-lg p-4 d-grid place-items-center gap-2 text-center h-100">
+                    <UiIconMaterial icon-code="&#xe00a;" class="fs-5xl lh-1" />
+                    <p class="caption mb-0">
+                      Scan with your authenticator app
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Transition>
+          </template>
+        </UiCard>
 
-        <template #body>
-          <UiListGroup variant="flush">
-            <UiListItem
-              v-for="session in sessions"
-              :key="session.id"
-              :title="session.device"
-              :text="session.detail"
-              :icon="session.icon"
-              custom-icon-wrapper-class="bg-secondary-container"
-              custom-icon-class="text-on-secondary-container"
-              has-actions
-            >
-              <template #list-action>
-                <UiBadge
-                  v-if="session.current"
-                  text="This device"
-                  variant="tonal tonal-success"
-                  size="sm"
-                />
-                <UiButton
-                  v-else
-                  text="Sign out"
-                  variant="text"
-                  size="sm"
-                  @click="signOutSession(session.id)"
-                />
-              </template>
-            </UiListItem>
-          </UiListGroup>
-        </template>
-
-        <template #footer>
-          <UiButton
-            text="Sign out of all other sessions"
-            variant="outline"
-            size="sm"
-            :disabled="otherSessions === 0"
-            @click="signOutOthers"
-          >
-            <template #icon>
-              <UiIconMaterial icon-code="&#xe9ba;" />
-            </template>
-          </UiButton>
-        </template>
-      </UiCard>
-
-      <UiCard variant="pane" class="shadow-sm">
-        <template #header>
-          <p class="card-title text-danger">
-            Danger zone
-          </p>
-          <p class="caption text-muted mb-0">
-            Only workspace owners can see this section.
-          </p>
-        </template>
-
-        <template #body>
-          <UiAlert
-            type="tonal"
-            variant="danger"
-            title="Delete this workspace"
-            :message="`Removes ${workspace.name} for everyone, including projects, files and comments. Billing stops at the end of the current period.`"
-          >
-            <template #actions>
-              <UiButton
-                text="Delete workspace"
-                variant="filled"
-                color="danger"
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <div class="d-flex align-items-start justify-content-between gap-3">
+              <div>
+                <p class="card-title">
+                  Recovery codes
+                </p>
+                <p class="caption text-muted mb-0">
+                  Use one of these if you lose your phone. Each code works once.
+                </p>
+              </div>
+              <UiButtonTooltip
+                text="Copy"
+                variant="outline"
                 size="sm"
-                @click="deleteModal?.showDialog()"
+                tooltip-text="Copy all 8 codes"
+                :disabled="!twoFactorEnabled"
+                @click="copyRecoveryCodes"
               >
                 <template #icon>
-                  <UiIconMaterial icon-code="&#xe872;" />
+                  <UiIconMaterial icon-code="&#xe14d;" />
                 </template>
-              </UiButton>
-            </template>
-          </UiAlert>
-        </template>
-      </UiCard>
+              </UiButtonTooltip>
+            </div>
+          </template>
 
-      <UiConfirmModal
-        ref="deleteModal"
-        :title="`Delete the ${workspace.name} workspace?`"
-        :message="deleteSummary"
-        confirm-label="Delete workspace"
-        loading-label="Deleting…"
-        :is-loading="deletingWorkspace"
-        @confirm="confirmDeleteWorkspace"
-      />
-    </section>
+          <template #body>
+            <Transition name="fade" mode="out-in">
+              <div
+                v-if="twoFactorEnabled"
+                class="bg-muted-container text-on-muted-container rounded-lg p-3 d-grid grid-repeat-cols-2 grid-repeat-cols-md-4 gap-3 font-code"
+              >
+                <span v-for="code in recoveryCodes" :key="code" class="fs-xs">{{ code }}</span>
+              </div>
+              <p v-else class="caption text-muted mb-0">
+                Turn on two-factor authentication to generate your recovery codes.
+              </p>
+            </Transition>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Active sessions
+            </p>
+            <p class="caption text-muted mb-0">
+              Devices signed in to your Orbit account in the last 30 days.
+            </p>
+          </template>
+
+          <template #body>
+            <UiListGroup variant="flush">
+              <TransitionGroup name="list">
+                <UiListItem
+                  v-for="session in sessions"
+                  :key="session.id"
+                  :title="session.device"
+                  :text="session.detail"
+                  :icon="session.icon"
+                  custom-icon-wrapper-class="bg-secondary-container"
+                  custom-icon-class="text-on-secondary-container"
+                  has-actions
+                >
+                  <template #list-action>
+                    <UiBadge
+                      v-if="session.current"
+                      text="This device"
+                      variant="tonal tonal-success"
+                      size="sm"
+                    />
+                    <UiButton
+                      v-else
+                      text="Sign out"
+                      variant="text"
+                      size="sm"
+                      @click="signOutSession(session.id)"
+                    />
+                  </template>
+                </UiListItem>
+              </TransitionGroup>
+            </UiListGroup>
+          </template>
+
+          <template #footer>
+            <UiButton
+              text="Sign out of all other sessions"
+              variant="outline"
+              size="sm"
+              :disabled="otherSessions === 0"
+              @click="signOutOthers"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe9ba;" />
+              </template>
+            </UiButton>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title text-danger">
+              Danger zone
+            </p>
+            <p class="caption text-muted mb-0">
+              Only workspace owners can see this section.
+            </p>
+          </template>
+
+          <template #body>
+            <UiAlert
+              type="tonal"
+              variant="danger"
+              title="Delete this workspace"
+              :message="`Removes ${workspace.name} for everyone, including projects, files and comments. Billing stops at the end of the current period.`"
+            >
+              <template #actions>
+                <UiButton
+                  text="Delete workspace"
+                  variant="filled"
+                  color="danger"
+                  size="sm"
+                  @click="deleteModal?.showDialog()"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xe872;" />
+                  </template>
+                </UiButton>
+              </template>
+            </UiAlert>
+          </template>
+        </UiCard>
+
+        <UiConfirmModal
+          ref="deleteModal"
+          :title="`Delete the ${workspace.name} workspace?`"
+          :message="deleteSummary"
+          confirm-label="Delete workspace"
+          loading-label="Deleting…"
+          :is-loading="deletingWorkspace"
+          @confirm="confirmDeleteWorkspace"
+        />
+      </section>
+    </Transition>
   </div>
 </template>
 

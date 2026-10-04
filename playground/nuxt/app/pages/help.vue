@@ -233,63 +233,67 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
       </div>
 
       <!-- Search results -->
-      <section v-if="status !== 'idle'" class="mb-5" aria-live="polite">
-        <UiExpressiveLoading
-          v-if="status === 'searching'"
-          :title="loadingTitles"
-          :interval="600"
-          size="sm"
-          aria-label="Searching the help center"
-          custom-class="py-5"
-        />
-        <template v-else>
-          <UiSubheadingContent
-            as="h2"
-            :title="resultsLabel"
-            :subtitle="`${results.length} articles, ranked by how often teams open them.`"
-            gutter="sm"
-          >
-            <template #actions>
-              <UiChip
-                text="Clear search"
-                icon-code="&#xe5cd;"
-                variant="elevated"
-                @click="clearSearch"
-              />
-            </template>
-          </UiSubheadingContent>
-          <div class="d-grid grid-repeat-cols-1 grid-repeat-cols-md-3 gap-4">
-            <UiCard
-              v-for="article in results"
-              :key="article.id"
+      <Transition name="fade">
+        <section v-if="status !== 'idle'" class="mb-5" aria-live="polite">
+          <Transition name="fade" mode="out-in">
+            <UiExpressiveLoading
+              v-if="status === 'searching'"
+              :title="loadingTitles"
+              :interval="600"
+              size="sm"
+              aria-label="Searching the help center"
+              custom-class="py-5"
+            />
+            <div v-else>
+              <UiSubheadingContent
+                as="h2"
+                :title="resultsLabel"
+                :subtitle="`${results.length} articles, ranked by how often teams open them.`"
+                gutter="sm"
+              >
+                <template #actions>
+                  <UiChip
+                    text="Clear search"
+                    icon-code="&#xe5cd;"
+                    variant="elevated"
+                    @click="clearSearch"
+                  />
+                </template>
+              </UiSubheadingContent>
+              <div class="d-grid grid-repeat-cols-1 grid-repeat-cols-md-3 gap-4">
+                <UiCard
+                  v-for="article in results"
+                  :key="article.id"
 
-              variant="pane"
-              class="shadow-sm"
-            >
-              <template #header>
-                <UiBadge
-                  :text="categoryById(article.category).title"
-                  :variant="`tonal tonal-${categoryById(article.category).tone}`"
-                  size="sm"
-                />
-              </template>
-              <template #body>
-                <p class="fw-700 fs-sm mb-2">
-                  {{ article.title }}
-                </p>
-                <p class="caption text-muted mb-0">
-                  {{ article.excerpt }}
-                </p>
-              </template>
-              <template #footer>
-                <p class="caption text-muted mb-0">
-                  {{ article.readTime }} · {{ article.updated }}
-                </p>
-              </template>
-            </UiCard>
-          </div>
-        </template>
-      </section>
+                  variant="pane"
+                  class="shadow-sm"
+                >
+                  <template #header>
+                    <UiBadge
+                      :text="categoryById(article.category).title"
+                      :variant="`tonal tonal-${categoryById(article.category).tone}`"
+                      size="sm"
+                    />
+                  </template>
+                  <template #body>
+                    <p class="fw-700 fs-sm mb-2">
+                      {{ article.title }}
+                    </p>
+                    <p class="caption text-muted mb-0">
+                      {{ article.excerpt }}
+                    </p>
+                  </template>
+                  <template #footer>
+                    <p class="caption text-muted mb-0">
+                      {{ article.readTime }} · {{ article.updated }}
+                    </p>
+                  </template>
+                </UiCard>
+              </div>
+            </div>
+          </Transition>
+        </section>
+      </Transition>
 
       <!-- Categories -->
       <UiSubheadingContent

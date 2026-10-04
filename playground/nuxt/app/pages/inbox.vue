@@ -12,10 +12,8 @@ const { notify } = useNotify()
 /** Data */
 const items = ref<InboxItem[]>(notifications.map(item => ({ ...item })))
 const activeFilter = ref<FilterId>('all')
-const filterLoading = ref(false)
 const selectedId = ref<string | null>(null)
 const showDesktopTip = ref(true)
-let filterTimer: ReturnType<typeof setTimeout> | null = null
 
 const billingProject = projectById('billing-migration')!
 const groupOrder: InboxItem['group'][] = ['Today', 'Yesterday', 'Earlier']
@@ -72,12 +70,6 @@ const emptyDetail = computed(() => {
   }
 })
 
-/** Lifecycle */
-onBeforeUnmount(() => {
-  if (filterTimer)
-    clearTimeout(filterTimer)
-})
-
 /** Methods */
 function matches(item: InboxItem, filter: FilterId): boolean {
   if (filter === 'mentions')
@@ -117,12 +109,6 @@ function setFilter(id: string) {
     return
 
   activeFilter.value = id as FilterId
-  filterLoading.value = true
-  if (filterTimer)
-    clearTimeout(filterTimer)
-  filterTimer = setTimeout(() => {
-    filterLoading.value = false
-  }, 600)
 }
 function select(item: InboxItem) {
   selectedId.value = item.id
@@ -211,21 +197,23 @@ function enableDesktopNotifications() {
       </template>
     </UiAlert>
 
-    <UiAlert
-      v-if="showDesktopTip"
-      type="banner"
-      variant="info"
-      title="Turn on desktop notifications"
-      message="Get a ping for mentions and assignments, even when Orbit is in a background tab."
-      dismissible
-      close-label="Dismiss"
-      class="mb-3"
-      @dismiss="showDesktopTip = false"
-    >
-      <template #actions>
-        <UiButton text="Turn on" variant="filled" color="primary" size="sm" @click="enableDesktopNotifications" />
-      </template>
-    </UiAlert>
+    <Transition name="fade">
+      <UiAlert
+        v-if="showDesktopTip"
+        type="banner"
+        variant="info"
+        title="Turn on desktop notifications"
+        message="Get a ping for mentions and assignments, even when Orbit is in a background tab."
+        dismissible
+        close-label="Dismiss"
+        class="mb-3"
+        @dismiss="showDesktopTip = false"
+      >
+        <template #actions>
+          <UiButton text="Turn on" variant="filled" color="primary" size="sm" @click="enableDesktopNotifications" />
+        </template>
+      </UiAlert>
+    </Transition>
 
     <UiSegmentedControls :tabs="filterTabs" :active-tab="activeFilter" @update:active-tab="setFilter" />
 
@@ -233,245 +221,245 @@ function enableDesktopNotifications() {
       <!-- Notification list -->
       <div class="col-xl-5 col-xxl-4" :class="{ 'd-none d-xl-block': selected }">
         <UiPaneContent aria-label="Notifications" is-full-height custom-class="mb-3">
-          <UiShapeLoading
-            v-if="filterLoading"
-            :title="`Loading ${currentFilter.label.toLowerCase()}`"
-            subtitle="Syncing your inbox"
-            custom-class="isolate"
-          />
+          <Transition name="fade" mode="out-in">
+            <UiEmpty
+              v-if="!filtered.length"
+              key="empty"
+              :title="currentFilter.empty"
+              :subtitle="currentFilter.hint"
+              use-custom-icon
+              :icon-code="currentFilter.icon"
+              custom-class="py-5"
+            />
 
-          <UiEmpty
-            v-else-if="!filtered.length"
-            :title="currentFilter.empty"
-            :subtitle="currentFilter.hint"
-            use-custom-icon
-            :icon-code="currentFilter.icon"
-            custom-class="py-5"
-          />
-
-          <template v-else>
-            <section
-              v-for="group in groups"
-              :key="group.label"
-              class="mt-3"
-              :aria-labelledby="`inbox-group-${group.label}`"
-            >
-              <p :id="`inbox-group-${group.label}`" class="overline text-muted mb-2">
-                {{ group.label }}
-              </p>
-              <UiListGroup is-interactive is-undecorated>
-                <UiListItem
-                  v-for="item in group.items"
-                  :key="item.id"
-                  :title="item.title"
-                  :text="rowText(item)"
-                  :active="item.id === selectedId"
-                  :aria-current="item.id === selectedId ? 'true' : undefined"
-                  has-actions
-                  tabindex="0"
-                  @click="select(item)"
-                  @keydown.enter.prevent="select(item)"
-                  @keydown.space.prevent="select(item)"
-                >
-                  <template #media>
-                    <UiIconMaterial
-                      v-if="item.type === 'system'"
-                      :icon-code="typeMeta.system.icon"
-                      class="icon-wrap icon-wrap-xs"
-                      :class="containerClass(typeMeta.system.color)"
-                    />
-                    <UiAvatar
-                      v-else
-                      v-bind="avatarFor(memberById(item.actorId))"
-                      size="navbar"
-                      :status="listPresence(memberById(item.actorId))"
-                    />
-                  </template>
-                  <template #list-action>
-                    <div class="d-flex align-items-center gap-2">
-                      <span
-                        class="d-none d-sm-inline-flex caption fw-600 rounded-sm px-2 py-1 text-nowrap"
-                        :class="containerClass(typeMeta[item.type].color)"
-                      >
-                        {{ typeMeta[item.type].label }}
-                      </span>
-                      <UiBadge dot variant="primary" :class="{ 'visibility-hidden': !item.unread }" />
-                      <span v-if="item.unread" class="visually-hidden">Unread</span>
-                    </div>
-                  </template>
-                </UiListItem>
-              </UiListGroup>
-            </section>
-          </template>
+            <TransitionGroup v-else key="list" name="list" tag="div">
+              <section
+                v-for="group in groups"
+                :key="group.label"
+                class="mt-3"
+                :aria-labelledby="`inbox-group-${group.label}`"
+              >
+                <p :id="`inbox-group-${group.label}`" class="overline text-muted mb-2">
+                  {{ group.label }}
+                </p>
+                <UiListGroup is-interactive is-undecorated>
+                  <TransitionGroup name="list">
+                    <UiListItem
+                      v-for="item in group.items"
+                      :key="item.id"
+                      :title="item.title"
+                      :text="rowText(item)"
+                      :active="item.id === selectedId"
+                      :aria-current="item.id === selectedId ? 'true' : undefined"
+                      has-actions
+                      tabindex="0"
+                      @click="select(item)"
+                      @keydown.enter.prevent="select(item)"
+                      @keydown.space.prevent="select(item)"
+                    >
+                      <template #media>
+                        <UiIconMaterial
+                          v-if="item.type === 'system'"
+                          :icon-code="typeMeta.system.icon"
+                          class="icon-wrap icon-wrap-xs"
+                          :class="containerClass(typeMeta.system.color)"
+                        />
+                        <UiAvatar
+                          v-else
+                          v-bind="avatarFor(memberById(item.actorId))"
+                          size="navbar"
+                          :status="listPresence(memberById(item.actorId))"
+                        />
+                      </template>
+                      <template #list-action>
+                        <div class="d-flex align-items-center gap-2">
+                          <span
+                            class="d-none d-sm-inline-flex caption fw-600 rounded-sm px-2 py-1 text-nowrap"
+                            :class="containerClass(typeMeta[item.type].color)"
+                          >
+                            {{ typeMeta[item.type].label }}
+                          </span>
+                          <UiBadge dot variant="primary" :class="{ 'visibility-hidden': !item.unread }" />
+                          <span v-if="item.unread" class="visually-hidden">Unread</span>
+                        </div>
+                      </template>
+                    </UiListItem>
+                  </TransitionGroup>
+                </UiListGroup>
+              </section>
+            </TransitionGroup>
+          </Transition>
         </UiPaneContent>
       </div>
 
       <!-- Detail -->
       <div class="col-xl-7 col-xxl-8" :class="{ 'd-none d-xl-block': !selected }">
         <UiPaneContent aria-label="Notification details" is-full-height custom-class="mb-3">
-          <article v-if="selected && selectedActor">
-            <div class="d-flex align-items-center gap-2 mb-4">
-              <UiButtonTooltip
-                class="d-xl-none"
-                variant="text"
-                icon
-                size="sm"
-                custom-class="text-neutral"
-                tooltip-text="Back to inbox"
-                @click="selectedId = null"
+          <Transition name="fade" mode="out-in">
+            <article v-if="selected && selectedActor" :key="selected.id">
+              <div class="d-flex align-items-center gap-2 mb-4">
+                <UiButtonTooltip
+                  class="d-xl-none"
+                  variant="text"
+                  icon
+                  size="sm"
+                  custom-class="text-neutral"
+                  tooltip-text="Back to inbox"
+                  @click="selectedId = null"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xe5c4;" />
+                  </template>
+                </UiButtonTooltip>
+                <span class="d-inline-flex align-items-center gap-1 caption fw-600 rounded-sm px-2 py-1" :class="containerClass(typeMeta[selected.type].color)">
+                  <UiIconMaterial :icon-code="typeMeta[selected.type].icon" class="fs-sm lh-1" />
+                  {{ typeMeta[selected.type].label }}
+                </span>
+                <span class="caption text-muted">{{ selected.time }}</span>
+
+                <div class="d-flex align-items-center gap-1 ms-auto">
+                  <UiButtonTooltip
+                    variant="text"
+                    icon
+                    size="sm"
+                    custom-class="text-neutral"
+                    :tooltip-text="selected.unread ? 'Mark as read' : 'Mark as unread'"
+                    @click="toggleRead"
+                  >
+                    <template #icon>
+                      <UiIconMaterial :icon-code="selected.unread ? '&#xe151;' : '&#xf18a;'" />
+                    </template>
+                  </UiButtonTooltip>
+                  <UiButtonTooltip
+                    variant="text"
+                    icon
+                    size="sm"
+                    custom-class="text-neutral"
+                    tooltip-text="Archive"
+                    @click="archive"
+                  >
+                    <template #icon>
+                      <UiIconMaterial icon-code="&#xe149;" />
+                    </template>
+                  </UiButtonTooltip>
+                  <UiButtonTooltip
+                    variant="text"
+                    icon
+                    size="sm"
+                    custom-class="text-neutral"
+                    tooltip-text="Open project"
+                    :disabled="!selectedProject"
+                    @click="openProject"
+                  >
+                    <template #icon>
+                      <UiIconMaterial icon-code="&#xe89e;" />
+                    </template>
+                  </UiButtonTooltip>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <UiAvatar v-bind="avatarFor(selectedActor)" size="menu" :status="presence(selectedActor)" />
+                <div>
+                  <p class="fw-700 mb-0">
+                    {{ selectedActor.name }}
+                  </p>
+                  <p class="caption text-muted mb-0">
+                    {{ selectedActor.title }} · {{ selectedActor.lastActive }}
+                  </p>
+                </div>
+              </div>
+
+              <h2 class="fs-lg fw-700 mb-3">
+                {{ selected.title }}
+              </h2>
+              <blockquote class="border border-md border-left border-primary ps-3 mb-4">
+                <p class="fs-base mb-0">
+                  {{ selected.body }}
+                </p>
+              </blockquote>
+
+              <UiCard
+                v-if="selectedProject"
+                :as="NuxtLink"
+                :to="`/projects/${selectedProject.id}`"
+
+                variant="pane"
+                class="shadow-sm"
               >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xe5c4;" />
-                </template>
-              </UiButtonTooltip>
-              <span class="d-inline-flex align-items-center gap-1 caption fw-600 rounded-sm px-2 py-1" :class="containerClass(typeMeta[selected.type].color)">
-                <UiIconMaterial :icon-code="typeMeta[selected.type].icon" class="fs-sm lh-1" />
-                {{ typeMeta[selected.type].label }}
-              </span>
-              <span class="caption text-muted">{{ selected.time }}</span>
-
-              <div class="d-flex align-items-center gap-1 ms-auto">
-                <UiButtonTooltip
-                  variant="text"
-                  icon
-                  size="sm"
-                  custom-class="text-neutral"
-                  :tooltip-text="selected.unread ? 'Mark as read' : 'Mark as unread'"
-                  @click="toggleRead"
-                >
-                  <template #icon>
-                    <UiIconMaterial :icon-code="selected.unread ? '&#xe151;' : '&#xf18a;'" />
-                  </template>
-                </UiButtonTooltip>
-                <UiButtonTooltip
-                  variant="text"
-                  icon
-                  size="sm"
-                  custom-class="text-neutral"
-                  tooltip-text="Archive"
-                  @click="archive"
-                >
-                  <template #icon>
-                    <UiIconMaterial icon-code="&#xe149;" />
-                  </template>
-                </UiButtonTooltip>
-                <UiButtonTooltip
-                  variant="text"
-                  icon
-                  size="sm"
-                  custom-class="text-neutral"
-                  tooltip-text="Open project"
-                  :disabled="!selectedProject"
-                  @click="openProject"
-                >
-                  <template #icon>
-                    <UiIconMaterial icon-code="&#xe89e;" />
-                  </template>
-                </UiButtonTooltip>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <UiAvatar v-bind="avatarFor(selectedActor)" size="menu" :status="presence(selectedActor)" />
-              <div>
-                <p class="fw-700 mb-0">
-                  {{ selectedActor.name }}
-                </p>
-                <p class="caption text-muted mb-0">
-                  {{ selectedActor.title }} · {{ selectedActor.lastActive }}
-                </p>
-              </div>
-            </div>
-
-            <h2 class="fs-lg fw-700 mb-3">
-              {{ selected.title }}
-            </h2>
-            <blockquote class="border border-md border-left border-primary ps-3 mb-4">
-              <p class="fs-base mb-0">
-                {{ selected.body }}
-              </p>
-            </blockquote>
-
-            <UiCard
-              v-if="selectedProject"
-              :as="NuxtLink"
-              :to="`/projects/${selectedProject.id}`"
-
-              variant="pane"
-              class="shadow-sm"
-            >
-              <template #body>
-                <div class="d-flex align-items-center gap-3 mb-3">
-                  <UiIconMaterial
-                    :icon-code="selectedProject.icon"
-                    class="icon-wrap icon-wrap-xs"
-                    :class="containerClass(selectedProject.color)"
-                  />
-                  <div class="flex-grow-1 overflow-hidden">
-                    <p class="fw-700 mb-0 text-truncate">
-                      {{ selectedProject.name }}
-                    </p>
-                    <p class="caption text-muted mb-0">
-                      {{ selectedProject.key }} · Due {{ selectedProject.dueDate }} · {{ selectedProject.tasksDone }}/{{ selectedProject.tasksTotal }} tasks
-                    </p>
+                <template #body>
+                  <div class="d-flex align-items-center gap-3 mb-3">
+                    <UiIconMaterial
+                      :icon-code="selectedProject.icon"
+                      class="icon-wrap icon-wrap-xs"
+                      :class="containerClass(selectedProject.color)"
+                    />
+                    <div class="flex-grow-1 overflow-hidden">
+                      <p class="fw-700 mb-0 text-truncate">
+                        {{ selectedProject.name }}
+                      </p>
+                      <p class="caption text-muted mb-0">
+                        {{ selectedProject.key }} · Due {{ selectedProject.dueDate }} · {{ selectedProject.tasksDone }}/{{ selectedProject.tasksTotal }} tasks
+                      </p>
+                    </div>
+                    <UiBadge
+                      :text="statusMeta[selectedProject.status].label"
+                      :variant="`tonal tonal-${statusMeta[selectedProject.status].color}`"
+                      size="sm"
+                    />
                   </div>
-                  <UiBadge
-                    :text="statusMeta[selectedProject.status].label"
-                    :variant="`tonal tonal-${statusMeta[selectedProject.status].color}`"
+                  <UiProgressBar
+                    :value="selectedProject.progress"
+                    :aria-label="`${selectedProject.name} progress`"
                     size="sm"
                   />
-                </div>
-                <UiProgressBar
-                  :value="selectedProject.progress"
-                  :aria-label="`${selectedProject.name} progress`"
-                  size="sm"
-                />
-              </template>
-            </UiCard>
+                </template>
+              </UiCard>
 
-            <UiButton
-              v-else
-              :as="NuxtLink"
-              to="/billing"
-              text="Add payment method"
-              variant="filled"
-              color="primary"
-              size="sm"
-            >
-              <template #icon>
-                <UiIconMaterial icon-code="&#xe870;" />
-              </template>
-            </UiButton>
-          </article>
+              <UiButton
+                v-else
+                :as="NuxtLink"
+                to="/billing"
+                text="Add payment method"
+                variant="filled"
+                color="primary"
+                size="sm"
+              >
+                <template #icon>
+                  <UiIconMaterial icon-code="&#xe870;" />
+                </template>
+              </UiButton>
+            </article>
 
-          <div v-else class="d-flex justify-content-center py-5">
-            <UiEmpty
-              :title="emptyDetail.title"
-              :subtitle="emptyDetail.subtitle"
-              use-custom-icon
-              icon-code="&#xe877;"
-            >
-              <template #action>
-                <UiButton
-                  v-if="unreadCount && activeFilter !== 'unread'"
-                  text="Show unread"
-                  variant="tonal"
-                  color="primary"
-                  size="sm"
-                  @click="setFilter('unread')"
-                />
-                <UiButton
-                  v-else-if="!unreadCount"
-                  :as="NuxtLink"
-                  to="/"
-                  text="Back to Home"
-                  variant="tonal"
-                  color="primary"
-                  size="sm"
-                />
-              </template>
-            </UiEmpty>
-          </div>
+            <div v-else key="empty" class="d-flex justify-content-center py-5">
+              <UiEmpty
+                :title="emptyDetail.title"
+                :subtitle="emptyDetail.subtitle"
+                use-custom-icon
+                icon-code="&#xe877;"
+              >
+                <template #action>
+                  <UiButton
+                    v-if="unreadCount && activeFilter !== 'unread'"
+                    text="Show unread"
+                    variant="tonal"
+                    color="primary"
+                    size="sm"
+                    @click="setFilter('unread')"
+                  />
+                  <UiButton
+                    v-else-if="!unreadCount"
+                    :as="NuxtLink"
+                    to="/"
+                    text="Back to Home"
+                    variant="tonal"
+                    color="primary"
+                    size="sm"
+                  />
+                </template>
+              </UiEmpty>
+            </div>
+          </Transition>
         </UiPaneContent>
       </div>
     </div>

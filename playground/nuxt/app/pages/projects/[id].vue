@@ -504,33 +504,35 @@ watch(() => route.params.id, () => {
             <span class="caption text-muted tabular-numbers">{{ group.items.length }}</span>
           </div>
           <UiListGroup>
-            <UiListItem
-              v-for="task in group.items" :key="task.id" :title="task.title"
-              :text="`${memberById(task.assigneeId).name} · Due ${task.due}`"
-              :custom-class="{ 'opacity-70': task.status === 'done' }" has-actions
-            >
-              <template #media>
-                <UiInputCheck
-                  :id="`task-${task.id}`" :model-value="task.status === 'done'"
-                  :label="`Mark ${task.title} as done`" hide-label @update:model-value="toggleTask(task, $event)"
-                />
-              </template>
-              <template #list-action>
-                <div class="d-flex align-items-center gap-2">
-                  <UiBadge
-                    v-if="task.overdue && task.status !== 'done'" text="Overdue" variant="danger"
-                    icon-code="&#xe8b5;" size="sm"
+            <TransitionGroup name="list">
+              <UiListItem
+                v-for="task in group.items" :key="task.id" :title="task.title"
+                :text="`${memberById(task.assigneeId).name} · Due ${task.due}`"
+                :custom-class="{ 'opacity-70': task.status === 'done' }" has-actions
+              >
+                <template #media>
+                  <UiInputCheck
+                    :id="`task-${task.id}`" :model-value="task.status === 'done'"
+                    :label="`Mark ${task.title} as done`" hide-label @update:model-value="toggleTask(task, $event)"
                   />
-                  <UiBadge
-                    :text="priorityMeta[task.priority].label" :variant="tonal(priorityMeta[task.priority].color)"
-                    size="sm"
-                  />
-                  <UiTooltip :text="`Assigned to ${memberById(task.assigneeId).name}`">
-                    <UiAvatar v-bind="avatarOf(memberById(task.assigneeId))" size="sm" />
-                  </UiTooltip>
-                </div>
-              </template>
-            </UiListItem>
+                </template>
+                <template #list-action>
+                  <div class="d-flex align-items-center gap-2">
+                    <UiBadge
+                      v-if="task.overdue && task.status !== 'done'" text="Overdue" variant="danger"
+                      icon-code="&#xe8b5;" size="sm"
+                    />
+                    <UiBadge
+                      :text="priorityMeta[task.priority].label" :variant="tonal(priorityMeta[task.priority].color)"
+                      size="sm"
+                    />
+                    <UiTooltip :text="`Assigned to ${memberById(task.assigneeId).name}`">
+                      <UiAvatar v-bind="avatarOf(memberById(task.assigneeId))" size="sm" />
+                    </UiTooltip>
+                  </div>
+                </template>
+              </UiListItem>
+            </TransitionGroup>
           </UiListGroup>
         </div>
       </section>
@@ -550,34 +552,36 @@ watch(() => route.params.id, () => {
           <span class="caption text-muted">{{ fileList.length }} files</span>
         </div>
         <UiListGroup>
-          <UiListItem
-            v-for="upload in uploading" :key="upload.id" :title="upload.name"
-            :text="`Uploading · ${upload.size}`" has-actions
-          >
-            <template #media>
-              <span class="d-inline-flex p-2 rounded-md bg-muted-container text-on-muted-container">
-                <UiProgressSpinner size="1.25rem" />
-              </span>
-            </template>
-          </UiListItem>
-          <UiListItem
-            v-for="file in fileList" :key="file.id" :title="file.name"
-            :text="`${file.size} · ${memberById(file.ownerId).name} · ${file.updated}`"
-            :icon="fileTypeMeta[file.type].icon"
-            :custom-icon-wrapper-class="`bg-${fileTypeMeta[file.type].color}-container`"
-            :custom-icon-class="`text-on-${fileTypeMeta[file.type].color}-container`" has-actions
-          >
-            <template #list-action>
-              <UiButtonTooltip
-                variant="text" icon icon-variant="compact" size="sm"
-                :tooltip-text="`Download ${file.name}`" @click="downloadFile(file)"
-              >
-                <template #icon>
-                  <UiIconMaterial icon-code="&#xf090;" />
-                </template>
-              </UiButtonTooltip>
-            </template>
-          </UiListItem>
+          <TransitionGroup name="list">
+            <UiListItem
+              v-for="upload in uploading" :key="upload.id" :title="upload.name"
+              :text="`Uploading · ${upload.size}`" has-actions
+            >
+              <template #media>
+                <span class="d-inline-flex p-2 rounded-md bg-muted-container text-on-muted-container">
+                  <UiProgressSpinner size="1.25rem" />
+                </span>
+              </template>
+            </UiListItem>
+            <UiListItem
+              v-for="file in fileList" :key="file.id" :title="file.name"
+              :text="`${file.size} · ${memberById(file.ownerId).name} · ${file.updated}`"
+              :icon="fileTypeMeta[file.type].icon"
+              :custom-icon-wrapper-class="`bg-${fileTypeMeta[file.type].color}-container`"
+              :custom-icon-class="`text-on-${fileTypeMeta[file.type].color}-container`" has-actions
+            >
+              <template #list-action>
+                <UiButtonTooltip
+                  variant="text" icon icon-variant="compact" size="sm"
+                  :tooltip-text="`Download ${file.name}`" @click="downloadFile(file)"
+                >
+                  <template #icon>
+                    <UiIconMaterial icon-code="&#xf090;" />
+                  </template>
+                </UiButtonTooltip>
+              </template>
+            </UiListItem>
+          </TransitionGroup>
         </UiListGroup>
       </section>
 
