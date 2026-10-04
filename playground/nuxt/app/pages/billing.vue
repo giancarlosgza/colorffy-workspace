@@ -22,7 +22,7 @@ const invoiceColumns: IDatatableColumn[] = [
   { key: 'plan', label: 'Plan', sortable: false },
   { key: 'amount', label: 'Amount', align: 'end' },
   { key: 'status', label: 'Status' },
-  { key: 'actions', label: '', sortable: false, align: 'end' }
+  { key: 'actions', label: 'Download', hideLabel: true, fit: true, sortable: false, align: 'end' }
 ]
 
 const usage = [

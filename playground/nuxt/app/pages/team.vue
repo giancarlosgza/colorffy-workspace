@@ -21,7 +21,7 @@ const columns: IDatatableColumn[] = [
   { key: 'role', label: 'Role' },
   { key: 'skills', label: 'Skills', sortable: false },
   { key: 'lastActive', label: 'Last active', sortable: false },
-  { key: 'actions', label: '', sortable: false, align: 'end' }
+  { key: 'actions', label: 'Actions', hideLabel: true, hideable: false, fit: true, sortable: false, align: 'end' }
 ]
 
 const proPlan = plans.find(plan => plan.id === 'pro')!
@@ -29,6 +29,7 @@ const proPlan = plans.find(plan => plan.id === 'pro')!
 const teamMembers = ref<Member[]>(members.map(member => ({ ...member, skills: [...member.skills] })))
 const activeTab = ref<TeamTab>('members')
 const resendingId = ref<string | null>(null)
+const isRefreshing = ref(false)
 
 const removeModal = ref<InstanceType<typeof UiConfirmModal> | null>(null)
 const memberToRemove = ref<Member | null>(null)
@@ -173,6 +174,27 @@ function revokeInvite(id: string): void {
   notify('Invite revoked', `${member.email} can no longer join with the old link.`, 'warning')
 }
 
+async function copyEmails(): Promise<void> {
+  const emails = visibleRows.value.map(member => member.email).join(', ')
+  try {
+    await navigator.clipboard.writeText(emails)
+    notify('Emails copied', `${visibleRows.value.length} addresses are ready to paste.`, 'info')
+  } catch {
+    notify('Couldn\'t copy the emails', emails, 'warning')
+  }
+}
+
+function exportMembers(): void {
+  notify('Export started', `We'll email you a CSV of ${visibleRows.value.length} people when it's ready.`, 'info')
+}
+
+async function refreshMembers(): Promise<void> {
+  isRefreshing.value = true
+  await wait(700)
+  isRefreshing.value = false
+  notify('Team up to date', 'Roles and activity are current.', 'info')
+}
+
 function askRemove(id: string): void {
   memberToRemove.value = findMember(id) ?? null
   removeModal.value?.showDialog()
@@ -264,6 +286,7 @@ async function removeMember(): Promise<void> {
         <UiDatatable
           :columns="columns"
           :items="visibleRows"
+          column-manager
           :empty-state-title="emptyState.title"
           :empty-state-subtitle="emptyState.subtitle"
           empty-state-use-custom-icon
@@ -278,6 +301,43 @@ async function removeMember(): Promise<void> {
               size="sm"
               @update:active-tab="selectTab"
             />
+          </template>
+
+          <template #actions-start>
+            <UiButtonTooltip
+              variant="outline"
+              size="sm"
+              icon
+              tooltip-text="Refresh"
+              :loading="isRefreshing"
+              @click="refreshMembers"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe5d5;" />
+              </template>
+            </UiButtonTooltip>
+            <UiButtonTooltip variant="outline" size="sm" icon tooltip-text="Copy emails" @click="copyEmails">
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe14d;" />
+              </template>
+            </UiButtonTooltip>
+            <UiButtonTooltip variant="outline" size="sm" icon tooltip-text="Export CSV" @click="exportMembers">
+              <template #icon>
+                <UiIconMaterial icon-code="&#xf090;" />
+              </template>
+            </UiButtonTooltip>
+          </template>
+
+          <template #actions-end>
+            <UiButtonMenu variant="outline" size="sm" icon placement="bottom-end" tooltip-text="More">
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe5d4;" />
+              </template>
+              <template #menu>
+                <UiButtonMenuItem item-text="Print list" icon="&#xe8ad;" @click="notify('Print preview', 'Opening the member list for printing.', 'info')" />
+                <UiButtonMenuItem item-text="Audit log" icon="&#xe889;" @click="notify('Audit log', 'Every role change and invite from the last 90 days.', 'info')" />
+              </template>
+            </UiButtonMenu>
           </template>
 
           <template #cell-name="{ item }">
