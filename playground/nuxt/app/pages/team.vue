@@ -14,6 +14,11 @@ const ASSIGNABLE_ROLES: Role[] = ['Admin', 'Member', 'Guest']
 const SKILL_TONES = ['primary', 'secondary', 'accent', 'info', 'success'] as const
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
 const INVITE_LINK = 'https://orbit.app/join/product-team-7f3k'
+const MESSAGE_TEMPLATES = [
+  { id: 'welcome', label: 'Welcome to the team', text: 'Welcome aboard! We plan sprints and track releases in Orbit. Join to see what we\'re working on this week.' },
+  { id: 'project', label: 'Join a project', text: 'We\'re kicking off a new project in Orbit and would love your input. Join to see the plan and your first tasks.' },
+  { id: 'review', label: 'Review as a client', text: 'We share designs and progress in Orbit. Join as a guest to review the work and leave comments.' }
+]
 const PROJECT_OPTIONS = projects
   .filter(project => project.status !== 'completed')
   .map(project => ({ id: project.id, name: project.name, status: statusMeta[project.status].label }))
@@ -549,6 +554,42 @@ async function removeMember(): Promise<void> {
             :maxlength="280"
             optional-label
           />
+          <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+            <UiButtonMenu
+              id="invite-templates"
+              text="Use a template"
+              variant="text"
+              custom-class="text-neutral"
+              size="sm"
+              placement="bottom-start"
+              tooltip-text="Fill in the message from a template"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe873;" />
+              </template>
+              <template #menu>
+                <UiButtonMenuItem
+                  v-for="template in MESSAGE_TEMPLATES"
+                  :id="`invite-template-${template.id}`"
+                  :key="template.id"
+                  :item-text="template.label"
+                  @click="inviteForm.message = template.text"
+                />
+              </template>
+            </UiButtonMenu>
+            <UiButtonTooltip
+              variant="text"
+              custom-class="text-neutral"
+              size="sm"
+              icon
+              tooltip-text="Copy invite link"
+              @click="copyInviteLink"
+            >
+              <template #icon>
+                <UiIconMaterial icon-code="&#xe157;" />
+              </template>
+            </UiButtonTooltip>
+          </div>
 
           <UiInputCheck id="invite-copy" v-model="inviteForm.sendCopy" label="Send me a copy" />
 
