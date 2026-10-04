@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Manual Component Registration
-import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiAvatar, UiBadge, UiBadgeGroup, UiButton, UiButtonFabGroup, UiButtonGroup, UiButtonMenu, UiButtonMenuDivider, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputText, UiListGroup, UiListItem, UiModal, UiNavbar, UiNavbarAvatar, UiNavbarBrand, UiNavbarCollapse, UiNavbarItem, UiNavbarMobileMenu, UiNavbarTitle, UiNavbarToggle, UiPaneContent, UiSidebar, UiSidebarBody, UiSidebarDropdown, UiSidebarFooter, UiSidebarGroup, UiSidebarHeader, UiSidebarLink, UiSidebarText } from '@colorffy/ui'
+import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiAvatar, UiBadge, UiBadgeGroup, UiButton, UiButtonFabGroup, UiButtonGroup, UiButtonMenu, UiButtonMenuDivider, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputText, UiListGroup, UiListItem, UiModal, UiNavbar, UiNavbarAvatar, UiNavbarBrand, UiNavbarCollapse, UiNavbarItem, UiNavbarMobileMenu, UiNavbarTitle, UiNavbarToggle, UiPaneContent, UiSidebar, UiSidebarDropdown, UiSidebarGroup, UiSidebarLink, UiSidebarText } from '@colorffy/ui'
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 /** Data */
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
@@ -39,7 +40,7 @@ function closeDialog() {
   <div class="grid-main-content">
     <!-- Sidebar -->
     <UiSidebar bordered :rail="sidebarCollapse">
-      <UiSidebarHeader>
+      <template #header>
         <!-- <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" /> -->
         <img
           src="https://images.pexels.com/photos/34692331/pexels-photo-34692331.jpeg" class="img-fluid"
@@ -56,117 +57,40 @@ function closeDialog() {
             icon-class="bg-accent-fixed rounded-sm p-1"
           />
         </UiSidebarDropdown>
-      </UiSidebarHeader>
+      </template>
 
-      <UiSidebarBody>
+      <template #body>
         <UiSidebarText text="Platform" />
-        <UiSidebarLink to="/" icon="&#xe88a;" active tooltip-text="Go to home page" tooltip-placement="top">
-          <template #link="{ linkTarget, linkClasses }">
-            <router-link :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe88a;" />
-              <span>Home</span>
-            </router-link>
-          </template>
-        </UiSidebarLink>
-        <UiSidebarLink to="/components" icon="&#xe5c3;" tooltip-text="View components">
-          <template #link="{ linkTarget, linkClasses }">
-            <router-link :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe5c3;" />
-              <span>Components</span>
-            </router-link>
-          </template>
-        </UiSidebarLink>
-        <UiSidebarLink to="/templates" icon="&#xe866;" tooltip-text="View templates">
-          <template #link="{ linkTarget, linkClasses }">
-            <router-link :to="linkTarget" :class="linkClasses">
-              <UiIconMaterial icon-code="&#xe866;" />
-              <span>Templates</span>
-            </router-link>
-          </template>
-        </UiSidebarLink>
+        <UiSidebarLink :as="RouterLink" to="/" icon="&#xe88a;" active tooltip-text="Go to home page" tooltip-placement="top" text="Home" />
+        <UiSidebarLink :as="RouterLink" to="/components" icon="&#xe5c3;" tooltip-text="View components" text="Components" />
+        <UiSidebarLink :as="RouterLink" to="/templates" icon="&#xe866;" tooltip-text="View templates" text="Templates" />
 
         <!-- Group -->
         <UiSidebarGroup text="Documentation">
-          <UiSidebarLink to="/docs" icon="&#xe873;" child tooltip-text="View docs">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe873;" />
-                <span>Documentation</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/api" icon="&#xe8ef;" text="API Reference" child tooltip-text="API docs">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe8ef;" />
-                <span>API Reference</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/guides" icon="&#xe866;" text="Guides" child tooltip-text="View guides">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe866;" />
-                <span>Guides</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
+          <UiSidebarLink :as="RouterLink" to="/docs" icon="&#xe873;" child tooltip-text="View docs" text="Documentation" />
+          <UiSidebarLink :as="RouterLink" to="/api" icon="&#xe8ef;" child tooltip-text="API docs" text="API Reference" />
+          <UiSidebarLink :as="RouterLink" to="/guides" icon="&#xe866;" child tooltip-text="View guides" text="Guides" />
         </UiSidebarGroup>
 
         <!-- Collapsible Group -->
         <UiSidebarText text="Resources" />
         <UiSidebarGroup text="Settings" collapsible :default-open="true" icon="&#xe8b8;">
-          <UiSidebarLink to="/settings/profile" icon="&#xe853;" child tooltip-text="User profile">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe853;" />
-                <span>Profile</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/account" icon="&#xe8b8;" child tooltip-text="Account">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe8b8;" />
-                <span>Account</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/security" icon="&#xe32a;" child tooltip-text="Security">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe32a;" />
-                <span>Security</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/notifications" icon="&#xe7f4;" child tooltip-text="Notifications">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xe7f4;" />
-                <span>Notifications</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
-          <UiSidebarLink to="/settings/billing" icon="&#xf041;" child tooltip-text="Billing">
-            <template #link="{ linkTarget, linkClasses }">
-              <router-link :to="linkTarget" :class="linkClasses">
-                <UiIconMaterial icon-code="&#xf041;" />
-                <span>Billing</span>
-              </router-link>
-            </template>
-          </UiSidebarLink>
+          <UiSidebarLink :as="RouterLink" to="/settings/profile" icon="&#xe853;" child tooltip-text="User profile" text="Profile" />
+          <UiSidebarLink :as="RouterLink" to="/settings/account" icon="&#xe8b8;" child tooltip-text="Account" text="Account" />
+          <UiSidebarLink :as="RouterLink" to="/settings/security" icon="&#xe32a;" child tooltip-text="Security" text="Security" />
+          <UiSidebarLink :as="RouterLink" to="/settings/notifications" icon="&#xe7f4;" child tooltip-text="Notifications" text="Notifications" />
+          <UiSidebarLink :as="RouterLink" to="/settings/billing" icon="&#xf041;" child tooltip-text="Billing" text="Billing" />
         </UiSidebarGroup>
-      </UiSidebarBody>
+      </template>
 
-      <UiSidebarFooter>
+      <template #footer>
         <div class="d-flex flex-wrap gap-2 align-items-center">
           <UiSidebarDropdown title="Gian" subtitle="giancarlosgza@gmail.com" :interactive="false" />
         </div>
         <div class="mt-2">
           <UiBadge text="v1.0.0" variant="outline" size="sm" icon-code="&#xf5f4;" icon-class="text-accent-fixed" />
         </div>
-      </UiSidebarFooter>
+      </template>
     </UiSidebar>
 
     <!-- Content -->
@@ -176,13 +100,7 @@ function closeDialog() {
         <UiNavbarToggle :collapsed="sidebarCollapse" @toggle="sidebarCollapse = !sidebarCollapse" />
         <UiNavbarTitle title="Dashboard">
           <template #brand>
-            <UiNavbarBrand text="Admin" initials="A">
-              <template #link="{ linkTarget, brandText }">
-                <router-link :to="linkTarget" class="navbar-logo">
-                  {{ brandText }}
-                </router-link>
-              </template>
-            </UiNavbarBrand>
+            <UiNavbarBrand :as="RouterLink" to="/" text="Admin" initials="A" />
           </template>
         </UiNavbarTitle>
 
@@ -225,10 +143,10 @@ function closeDialog() {
 
             <UiCard variant="pane">
               <template #header>
-                <UiButton variant="filled" text="Toggle Sidebar" @on-click="sidebarCollapse = !sidebarCollapse" />
+                <UiButton variant="filled" text="Toggle Sidebar" @click="sidebarCollapse = !sidebarCollapse" />
               </template>
               <template #body>
-                <h2 class="fs-400 fw-800">
+                <h2 class="fs-xl fw-800">
                   Testing <span class="text-gradient gradient-primary">Components</span>
                 </h2>
                 <p class="subtitle-1 text-muted mb-0">
@@ -237,14 +155,14 @@ function closeDialog() {
                 <div
                   class="bg-success-fixed bg-opacity-20 border border-xxl border-inline border-success rounded-md p-2 mt-3"
                 >
-                  <p class="text-success-high-contrast fw-800 mb-0">
+                  <p class="text-success-emphasis fw-800 mb-0">
                     Text Green
                   </p>
                 </div>
                 <div
                   class="bg-danger-fixed border border-lg border-left border-danger bg-opacity-20 rounded-md p-2 mt-2"
                 >
-                  <p class="text-danger-high-contrast fw-800 mb-0">
+                  <p class="text-danger-emphasis fw-800 mb-0">
                     Text Red
                   </p>
                 </div>
@@ -298,7 +216,7 @@ function closeDialog() {
         <hr>
 
         <UiButtonGroup class="mt-section">
-          <UiButton variant="filled" text="Primary Button" rounded @on-click="showToast" />
+          <UiButton variant="filled" text="Primary Button" rounded @click="showToast" />
           <UiButton variant="filled" color="secondary" text="Secondary Button" />
           <UiButton variant="filled" color="accent" text="Accent Button" />
 
@@ -318,7 +236,7 @@ function closeDialog() {
         </UiButtonGroup>
 
         <UiButtonGroup connected class="mt-section">
-          <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @on-click="showDialog" />
+          <UiButton variant="tonal" color="primary" text="Tonal Primary Button" @click="showDialog" />
           <UiButton variant="tonal" color="secondary" text="Tonal Secondary Button" />
           <UiButton variant="tonal" color="accent" text="Tonal Accent Button" />
 
@@ -436,7 +354,7 @@ function closeDialog() {
             </UiPaneContent>
           </div>
           <div class="col-md-6">
-            <UiCard variant="outline" class="bg-gradient gradient-primary" style="--gradient-angle: 45deg;">
+            <UiCard variant="outline" class="bg-gradient gradient-primary" style="--cffy-gradient-angle: 45deg;">
               <template #body>
                 <p class="subtitle-1 font-primary fw-800 text-dark mb-0">
                   This is a sample card component to demonstrate the usage of UiCard in Colorffy UI.
@@ -445,7 +363,7 @@ function closeDialog() {
             </UiCard>
             <UiCard
               variant="outline" class="border border-xl border-gradient gradient-secondary mt-3"
-              style="--gradient-angle: 45deg;"
+              style="--cffy-gradient-angle: 45deg;"
             >
               <template #body>
                 <p class="subtitle-1 mb-0">
@@ -457,7 +375,7 @@ function closeDialog() {
         </div>
 
         <UiButtonFabGroup>
-          <UiButton variant="tonal" color="primary" class="btn-fab" text="Add" @on-click="showDialog">
+          <UiButton variant="tonal" color="primary" class="btn-fab" text="Add" @click="showDialog">
             <template #icon>
               <UiIconMaterial icon-code="&#xe145;" />
             </template>
@@ -496,7 +414,7 @@ function closeDialog() {
             </p>
           </template>
           <template #footer>
-            <UiButton variant="text" text="Close" @on-click="closeDialog" />
+            <UiButton variant="text" text="Close" @click="closeDialog" />
           </template>
         </UiModal>
       </div>
