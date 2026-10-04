@@ -51,20 +51,8 @@ const progressBarClasses = computed(() => {
 
   return classes
 })
-const progressBarStyles = computed(() => {
-  const styles: Record<string, any> = {
-    '--_progress-width': `${props.value}%`
-  }
-
-  if (props.barStyles) {
-    if (typeof props.barStyles === 'string') {
-      return [styles, props.barStyles].join('; ')
-    }
-    return { ...styles, ...props.barStyles }
-  }
-
-  return styles
-})
+// Vue merges a style array, so string and object `barStyles` both apply on top
+const progressBarStyles = computed(() => [{ '--_progress-width': `${props.value}%` }, props.barStyles])
 </script>
 
 <template>

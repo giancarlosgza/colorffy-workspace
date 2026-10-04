@@ -1748,7 +1748,7 @@ Circular loading spinner (`role="status"`, labelled "Loading").
 ```
 
 **Props:**
-- `size` (string, default: '1.25rem') - Any CSS length
+- `size` (string, default: '1.25rem') - Any CSS length; sets `--cffy-progress-spinner-size`
 - `customClass` / `customStyles` - Classes and inline styles; set `--cffy-progress-spinner-color` to recolor it
 
 ### UiLoading, UiExpressiveLoading, UiShapeLoading

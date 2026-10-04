@@ -89,8 +89,9 @@ export interface IProgressBarProps {
  */
 export interface IProgressSpinnerProps {
   /**
-   * Size of the spinner. Accepts any valid CSS size value (e.g., '1.25rem', '24px', '2em').
-   * Defaults to '1.25rem'.
+   * Size of the spinner, any CSS length (e.g. '1.25rem', '2em'). Sets the
+   * `--cffy-progress-spinner-size` hook.
+   * @default '1.25rem'
    */
   size?: string
 

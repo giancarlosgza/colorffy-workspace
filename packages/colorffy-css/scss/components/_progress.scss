@@ -93,7 +93,7 @@
   // ==========================================================================
   .progress-spinner {
     --_progress-spinner-color: var(--cffy-progress-spinner-color, var(--cffy-muted-a10));
-    --_progress-spinner-size: 1.25rem;
+    --_progress-spinner-size: var(--cffy-progress-spinner-size, 1.25rem);
 
     position: relative;
     display: flex;
