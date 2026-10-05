@@ -256,7 +256,11 @@ All component spacing uses the `--cffy-space-*` tokens on `:root` — the number
 
 `--cffy-space-4` · `--cffy-space-6` · `--cffy-space-8` · `--cffy-space-12` · `--cffy-space-14` · `--cffy-space-16` · `--cffy-space-20` · `--cffy-space-24` · `--cffy-space-32` · `--cffy-space-48`
 
-Runtime density: override `--cffy-space-unit` on `:root` to scale all component spacing proportionally (e.g. `--cffy-space-unit: .2rem` = 80% density). The steps are computed on `:root`, so setting the unit on a wrapper does nothing; for one region, redeclare the steps it uses on the wrapper (`--cffy-space-8: calc(.2rem * 2)`). When writing custom CSS alongside Colorffy, use `var(--cffy-space-*)` instead of hardcoded rem/px spacing.
+Overriding `--cffy-space-unit` on `:root` rescales every step (e.g. `.2rem` = 80%). The steps are computed on `:root`, so setting the unit on a wrapper does nothing; for one region use a density mode.
+
+### Density
+
+`data-density="compact | comfortable | spacious"` on `<html>` or any element re-derives the spacing steps there (×0.8 / ×1 / ×1.2 of `--cffy-space-unit`) and sets the heights: `--cffy-field-height-sm|md|lg` (inputs, selects, tags, combobox, multi-select, date, OTP: compact 1.75/2/2.5rem, comfortable 2/2.5/3rem, spacious 2.25/2.75/3.5rem) and `--cffy-control-height-sm|md|lg` (buttons, chips, pagination, calendar days: 1.75/2/2.5, 2/2.25/3, 2.25/2.5/3.5rem). The nearest scope wins; `comfortable` resets a region. Under `pointer: coarse`, compact keeps comfortable heights. Component hooks (`--cffy-input-height`, `--cffy-btn-height`, `--cffy-calendar-day-size`) still win. Teleported popups (menus, tooltips, date popup) follow the page's density, not a region's. Enhancement: where container style queries are supported, `--cffy-density: compact` set from CSS selects the mode for the element's content (the element itself keeps the outer density); unsupported browsers ignore it, so use the attribute when it must hold everywhere. Text size and shape don't change. When writing custom CSS alongside Colorffy, use `var(--cffy-space-*)` instead of hardcoded rem/px spacing.
 
 ### Utility Class Scale
 

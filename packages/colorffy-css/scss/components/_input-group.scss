@@ -10,7 +10,7 @@
     --_input-group-bg-color: var(--cffy-input-group-bg-color, var(--cffy-input-bg-color, transparent));
     --_input-group-border-width: var(--cffy-input-border-width, #{v.$form-border});
     --_input-group-border-color: var(--cffy-input-border-color, var(--cffy-outline-text-field));
-    --_input-group-padding-inline: var(--cffy-input-group-padding-inline, .5rem);
+    --_input-group-padding-inline: var(--cffy-input-group-padding-inline, var(--cffy-space-8));
     --_input-group-color: var(--cffy-input-group-color, var(--cffy-muted-a10));
 
     display: flex;

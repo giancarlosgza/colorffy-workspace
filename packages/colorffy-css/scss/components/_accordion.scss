@@ -20,7 +20,7 @@
       --_accordion-radius: var(--cffy-accordion-radius, var(--cffy-shape-container));
       --_accordion-border-color: var(--cffy-accordion-border-color, transparent);
       --_accordion-padding: var(--cffy-accordion-padding, var(--cffy-space-14));
-      --_accordion-icon-gap: 0.625rem;
+      --_accordion-icon-gap: calc(var(--cffy-space-20) / 2);
       --_accordion-arrow-size: 24px;
       --_accordion-title-font-size: var(--cffy-accordion-title-font-size, var(--cffy-fs-xs));
       --_accordion-body-font-size: var(--cffy-accordion-body-font-size, var(--cffy-fs-2xs));

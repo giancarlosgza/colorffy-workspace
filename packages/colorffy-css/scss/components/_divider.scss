@@ -41,7 +41,7 @@
     &.divider-text {
       display: flex;
       align-items: center;
-      gap: var(--cffy-divider-text-gap, .75rem);
+      gap: var(--cffy-divider-text-gap, var(--cffy-space-12));
 
       block-size: auto;
       inline-size: 100%;

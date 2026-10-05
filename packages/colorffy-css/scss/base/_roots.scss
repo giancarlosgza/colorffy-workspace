@@ -126,16 +126,10 @@
 
     /* spacing scale */
     --cffy-space-unit: .25rem;
-    --cffy-space-4: var(--cffy-space-unit);
-    --cffy-space-6: calc(var(--cffy-space-unit) * 1.5);
-    --cffy-space-8: calc(var(--cffy-space-unit) * 2);
-    --cffy-space-12: calc(var(--cffy-space-unit) * 3);
-    --cffy-space-14: calc(var(--cffy-space-unit) * 3.5);
-    --cffy-space-16: calc(var(--cffy-space-unit) * 4);
-    --cffy-space-20: calc(var(--cffy-space-unit) * 5);
-    --cffy-space-24: calc(var(--cffy-space-unit) * 6);
-    --cffy-space-32: calc(var(--cffy-space-unit) * 8);
-    --cffy-space-48: calc(var(--cffy-space-unit) * 12);
+    @include m.space-steps;
+
+    /* field and control heights */
+    @include m.control-heights(comfortable);
 
     /* container widths */
     @each $name, $value in v.$container-sizes {

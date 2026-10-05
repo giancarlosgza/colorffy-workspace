@@ -4,6 +4,48 @@
 @use 'functions' as f;
 
 // ==========================================================================
+// DENSITY MIXINS
+// ==========================================================================
+@mixin space-steps() {
+  @each $step, $factor in v.$space-steps {
+    @if $factor == 1 {
+      --cffy-space-#{$step}: calc(var(--cffy-space-unit) * var(--_density-scale, 1));
+    } @else {
+      --cffy-space-#{$step}: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * #{$factor});
+    }
+  }
+}
+
+@mixin control-heights($mode) {
+  $values: map.get(v.$density-modes, $mode);
+
+  @each $size, $height in map.get($values, field) {
+    --cffy-field-height-#{$size}: #{$height};
+  }
+
+  @each $size, $height in map.get($values, control) {
+    --cffy-control-height-#{$size}: #{$height};
+  }
+}
+
+@mixin density($mode) {
+  --cffy-density: #{$mode};
+  --_density-mode: #{$mode};
+  --_density-scale: #{map.get(v.$density-modes, $mode, scale)};
+
+  @if $mode == compact {
+    @include control-heights(comfortable);
+
+    // Touch keeps comfortable heights
+    @media (pointer: fine) {
+      @include control-heights(compact);
+    }
+  } @else {
+    @include control-heights($mode);
+  }
+}
+
+// ==========================================================================
 // TEXT & TYPOGRAPHY MIXINS
 // ==========================================================================
 @mixin text-color($color) {
@@ -180,24 +222,24 @@
 @mixin btn-size($size) {
   @if ($size == 'sm') {
     --_btn-padding-inline: var(--cffy-space-8);
-    --_btn-height: 32px;
+    --_btn-height: var(--cffy-control-height-sm);
     --_btn-icon-size: 1rem;
   } @else if ($size == 'md') {
     --_btn-padding-inline: var(--cffy-space-12);
-    --_btn-height: 36px;
+    --_btn-height: var(--cffy-control-height-md);
     --_btn-icon-size: 1.15rem;
 
     font-size: map.get(v.$type-button, font-size);
   } @else if ($size == 'lg') {
     --_btn-padding-inline: var(--cffy-space-14);
-    --_btn-height: 48px;
+    --_btn-height: var(--cffy-control-height-lg);
     --_btn-icon-size: 1.45rem;
 
     font-size: .875rem;
   } @else if ($size == 'fab') {
     --_btn-padding-inline: var(--cffy-space-16);
     --_btn-padding-block: var(--cffy-space-16);
-    --_btn-height: 48px;
+    --_btn-height: 3rem;
     --_btn-icon-size: 1.5rem;
 
     font-size: .875rem;

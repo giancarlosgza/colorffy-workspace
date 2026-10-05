@@ -34,7 +34,7 @@
     --_calendar-gap: var(--cffy-calendar-gap, var(--cffy-space-24));
     --_calendar-title-font-size: var(--cffy-calendar-title-font-size, var(--cffy-fs-xs));
     --_calendar-title-font-weight: var(--cffy-calendar-title-font-weight, var(--cffy-fw-700));
-    --_calendar-day-size: var(--cffy-calendar-day-size, 2.25rem);
+    --_calendar-day-size: var(--cffy-calendar-day-size, var(--cffy-control-height-md));
     --_calendar-day-radius: var(--cffy-calendar-day-radius, var(--cffy-shape-control));
     --_calendar-selected-bg-color: var(--cffy-calendar-selected-bg-color, var(--cffy-primary-a10));
     --_calendar-selected-color: var(--cffy-calendar-selected-color, var(--cffy-on-primary));

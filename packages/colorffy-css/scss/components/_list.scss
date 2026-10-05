@@ -86,7 +86,7 @@
       & .list-item {
         --_list-item-gap: var(--cffy-list-item-gap, var(--cffy-space-14));
         --_list-item-padding: var(--cffy-list-item-padding, var(--cffy-space-8));
-        --_list-icon-padding: var(--cffy-list-icon-padding, .625rem);
+        --_list-icon-padding: var(--cffy-list-icon-padding, calc(var(--cffy-space-20) / 2));
         --_list-icon-size: var(--cffy-list-icon-size, var(--cffy-fs-lg));
         --_list-image-size: var(--cffy-list-image-size, 2.75rem);
 
@@ -219,7 +219,7 @@
     &.list-group-md {
       .list-group-item {
         & .list-item {
-          --_list-item-gap: .625rem;
+          --_list-item-gap: calc(var(--cffy-space-20) / 2);
           --_list-item-padding: var(--cffy-space-6);
           --_list-icon-padding: var(--cffy-space-8);
           --_list-icon-size: var(--cffy-fs-base);

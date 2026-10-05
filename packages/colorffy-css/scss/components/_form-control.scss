@@ -35,7 +35,7 @@
     & .form-select,
     & .form-tags {
       --_input-width: 100%;
-      --_input-height: var(--cffy-input-height, 2.5rem);
+      --_input-height: var(--cffy-input-height, var(--cffy-field-height-md));
       --_input-padding-inline: var(--cffy-input-padding-inline, var(--cffy-space-8));
       --_input-padding-block: var(--cffy-input-padding-block, var(--cffy-space-4));
       --_input-radius: var(--cffy-input-radius, #{f.shape(field, v.$form-border-radius)});
@@ -93,7 +93,7 @@
 
       // Sizing variants
       &:is(.form-sm) {
-        --_input-height: 2rem;
+        --_input-height: var(--cffy-field-height-sm);
         --_input-padding-inline: var(--cffy-space-6);
         --_input-padding-block: .15rem;
         --_input-font-size: var(--cffy-fs-3xs);
@@ -106,7 +106,7 @@
       }
 
       &:is(.form-lg) {
-        --_input-height: 3rem;
+        --_input-height: var(--cffy-field-height-lg);
         --_input-padding-inline: var(--cffy-space-12);
         --_input-padding-block: var(--cffy-space-6);
         --_input-font-size: var(--cffy-fs-base);
@@ -445,7 +445,7 @@
           --_input-swatch-padding: var(--cffy-space-4);
         }
         .form-control {
-          --_input-height: 2rem;
+          --_input-height: var(--cffy-field-height-sm);
           --_input-padding-inline: var(--cffy-space-6);
           --_input-padding-block: .15rem;
           --_input-font-size: var(--cffy-fs-3xs);
@@ -459,7 +459,7 @@
           --_input-swatch-padding: var(--cffy-space-8);
         }
         .form-control {
-          --_input-height: 3rem;
+          --_input-height: var(--cffy-field-height-lg);
           --_input-padding-inline: var(--cffy-space-12);
           --_input-padding-block: var(--cffy-space-6);
           --_input-font-size: var(--cffy-fs-base);

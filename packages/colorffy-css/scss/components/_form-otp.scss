@@ -5,7 +5,7 @@
   // FORM OTP COMPONENT
   // ==========================================================================
   .form-otp {
-    --_input-otp-gap: var(--cffy-input-otp-gap, .5rem);
+    --_input-otp-gap: var(--cffy-input-otp-gap, var(--cffy-space-8));
 
     display: flex;
     align-items: center;

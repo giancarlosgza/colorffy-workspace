@@ -18,7 +18,7 @@
       --_btn-radius: var(--cffy-btn-radius, #{f.shape(control, v.$button-border-radius)});
       --_btn-padding-inline: var(--cffy-btn-padding-inline, var(--cffy-space-12));
       --_btn-padding-block: var(--cffy-btn-padding-block, var(--cffy-space-6));
-      --_btn-height: var(--cffy-btn-height, 36px);
+      --_btn-height: var(--cffy-btn-height, var(--cffy-control-height-md));
       --_btn-icon-size: var(--cffy-btn-icon-size, 1.15rem);
       --_btn-font-size: var(--cffy-btn-font-size, #{map.get(v.$type-button, font-size)});
       --_btn-font-weight: var(--cffy-btn-font-weight, #{map.get(v.$type-button, font-weight)});

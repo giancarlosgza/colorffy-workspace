@@ -145,7 +145,7 @@
 
     &.skeleton-lg {
       --_skeleton-thumbnail-size: 150px;
-      min-height: 2.5rem;
+      min-height: var(--cffy-field-height-md);
     }
 
     &.skeleton-thumbnail {

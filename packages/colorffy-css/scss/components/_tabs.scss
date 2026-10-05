@@ -145,7 +145,7 @@ $indicator-max-items: 16;
         --_btn-color: var(--_tabs-link-color);
         --_btn-gap: var(--cffy-space-4);
         --_btn-radius: min(var(--cffy-shape-control), var(--cffy-shape-container)) min(var(--cffy-shape-control), var(--cffy-shape-container)) 0 0;
-        --_btn-padding-block: 0.625rem;
+        --_btn-padding-block: calc(var(--cffy-space-20) / 2);
         --_btn-shadow: none;
         --_tabs-link-state: 0%;
 
@@ -290,7 +290,7 @@ $indicator-max-items: 16;
 
           .segmented-control-link {
             padding-block: var(--cffy-space-8);
-            padding-inline: .625rem;
+            padding-inline: calc(var(--cffy-space-20) / 2);
             min-width: 5rem;
             width: inherit;
           }

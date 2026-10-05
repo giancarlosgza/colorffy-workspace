@@ -16,7 +16,7 @@
     --_timeline-time-color: var(--cffy-timeline-time-color, var(--cffy-muted-a10));
     --_timeline-image-size: var(--cffy-timeline-image-size, 2.75rem);
     --_timeline-icon-size: var(--cffy-timeline-icon-size, var(--cffy-fs-lg));
-    --_timeline-icon-padding: var(--cffy-timeline-icon-padding, .625rem);
+    --_timeline-icon-padding: var(--cffy-timeline-icon-padding, calc(var(--cffy-space-20) / 2));
     --_timeline-title-font-size: var(--cffy-timeline-title-font-size, var(--cffy-fs-2xs));
     --_timeline-text-font-size: var(--cffy-timeline-text-font-size, var(--cffy-fs-3xs));
 

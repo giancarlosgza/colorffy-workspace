@@ -1,0 +1,27 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+@layer base.tokens {
+  // ==========================================================================
+  // DENSITY MODES
+  // ==========================================================================
+  [data-density] {
+    @include m.space-steps;
+  }
+
+  @each $mode, $values in v.$density-modes {
+    [data-density="#{$mode}"] {
+      @include m.density($mode);
+    }
+  }
+
+  // Style query enhancement
+  @each $mode, $values in v.$density-modes {
+    @container style(--cffy-density: #{$mode}) and (not style(--_density-mode: #{$mode})) {
+      * {
+        @include m.density($mode);
+        @include m.space-steps;
+      }
+    }
+  }
+}
