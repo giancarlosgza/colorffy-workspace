@@ -26,35 +26,34 @@ const props = withDefaults(defineProps<IPhoneNumberInputProps>(), {
 /** Emits */
 const emit = defineEmits<IPhoneNumberInputEmits>()
 
+/** Model */
+const model = defineModel<string | null>('modelValue', { default: '' })
+
 /** Labels */
 const l10nCommon = useLabels('common')
 
-/** Model */
-const model = defineModel<string | null>('modelValue', { default: '' })
+/** Data */
+const baseId = computed(() => props.id ?? undefined)
 
 /** Composables */
 const { formatPhoneNumber } = useTextUtils()
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const baseId = computed(() => props.id ?? undefined)
 const inputId = computed(() => baseId.value)
 const describedById = computed(() => (hasErrors.value && baseId.value ? `${baseId.value}-error-0` : undefined))
 const value = computed({
   get: () => {
     const currentValue = model.value ?? ''
-    // formatPhoneNumber strips non-digits, so any stored value formats safely.
     return currentValue ? formatPhoneNumber(currentValue) : ''
   },
   set: (value: string | null) => {
-    // Store raw digits so modelValue stays clean, not dash-formatted.
     const digits = (value ?? '').replace(/\D/g, '')
     model.value = digits
     emit('update', digits)
   }
 })
 const placeholderText = computed(() => props.placeholder ?? undefined)
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }

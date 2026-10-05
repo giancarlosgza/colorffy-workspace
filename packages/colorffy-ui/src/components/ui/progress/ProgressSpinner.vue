@@ -23,7 +23,6 @@ const spinnerClasses = computed(() => {
 
   return classes
 })
-// Vue merges a style array, so string and object `customStyles` both apply on top
 const spinnerStyles = computed(() => [{ '--cffy-progress-spinner-size': props.size }, props.customStyles])
 </script>
 

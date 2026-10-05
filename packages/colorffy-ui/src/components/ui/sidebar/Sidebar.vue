@@ -17,11 +17,12 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
 
 /** Emits */
 const emit = defineEmits<ISidebarEmits>()
+
 /** Labels */
 const l10n = useLabels('sidebar')
-const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 
 /** Computed */
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 const sidebarClasses = computed(() => [
   'navigation-drawer',
   {

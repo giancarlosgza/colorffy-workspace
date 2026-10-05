@@ -36,11 +36,6 @@ const tabsClasses = computed(() => ({
   'tabs-icon-only': props.iconOnly
 }))
 
-/** Watchers */
-watch(() => props.activeTab, (newVal) => {
-  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
-})
-
 /** Methods */
 function isActiveTab(tab: ITabItem): boolean {
   return activeTabName.value === tab.id
@@ -97,6 +92,11 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
       break
   }
 }
+
+/** Watchers */
+watch(() => props.activeTab, (newVal) => {
+  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
+})
 </script>
 
 <template>

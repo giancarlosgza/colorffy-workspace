@@ -26,11 +26,6 @@ const currentIndex = computed(() => {
   return index === -1 ? 0 : index
 })
 
-/** Watchers */
-watch(() => props.activeStep, (newVal) => {
-  activeStepId.value = newVal ?? (steps.value?.[0]?.id ?? '')
-})
-
 /** Methods */
 function setStepButton(el: Element | ComponentPublicInstance | null, index: number) {
   stepButtons.value[index] = (el as HTMLButtonElement) ?? null
@@ -99,6 +94,11 @@ function onStepKeydown(event: KeyboardEvent, index: number) {
       break
   }
 }
+
+/** Watchers */
+watch(() => props.activeStep, (newVal) => {
+  activeStepId.value = newVal ?? (steps.value?.[0]?.id ?? '')
+})
 </script>
 
 <template>

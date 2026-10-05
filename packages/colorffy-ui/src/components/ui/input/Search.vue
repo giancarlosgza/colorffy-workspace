@@ -14,17 +14,18 @@ const props = withDefaults(defineProps<ISearchInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<ISearchInputEmits>()
-/** Labels */
-const l10n = useLabels('search')
-const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
+
+/** Labels */
+const l10n = useLabels('search')
 
 /** Data */
 const field = ref<InstanceType<typeof UiInputText> | null>(null)
 
 /** Computed */
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
 const textProps = computed(() => {
   const { modelValue: _modelValue, clearLabel: _clearLabel, ...rest } = props
   return rest

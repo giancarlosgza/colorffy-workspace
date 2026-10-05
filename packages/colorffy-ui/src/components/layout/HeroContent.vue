@@ -14,17 +14,17 @@ const props = withDefaults(defineProps<IHeroContentProps>(), {
   customClass: null
 })
 
-/** Constants */
+/** Data */
 const TITLE_DISPLAY_CLASSES: Record<string, string> = {
   sm: 'display-4',
   md: 'display-3',
   lg: 'display-2',
   xl: 'display-1'
 }
-
-/** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
+
+/** Computed */
 const heroClasses = computed(() => [props.align === 'start' ? null : `hero-${props.align}`, props.customClass])
 const viewTransitionClass = computed(() => (props.viewTransitionName ? 'hero-vt' : null))
 const titleClasses = computed(() => ['hero-title', TITLE_DISPLAY_CLASSES[props.size ?? ''] ?? 'display-1', viewTransitionClass.value])

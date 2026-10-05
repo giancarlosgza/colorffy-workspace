@@ -25,18 +25,17 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
 /** Emits */
 const emit = defineEmits<IColorPickerEmits>()
 
-/** Labels */
-const l10nCommon = useLabels('common')
-
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const inputIdColor = computed(() => props.id ?? undefined)
 const inputIdText = computed(() => props.id ? `${props.id}-text` : undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -74,7 +73,7 @@ const textClasses = computed(() => {
     >
       {{ label }}{{ required ? ' *' : '' }}
     </label>
-    <!-- Accessible name for the hex text input (hidden visually, not from AT) -->
+    <!-- Hex input name -->
     <label
       :for="inputIdText"
       class="visually-hidden"

@@ -15,15 +15,16 @@ const props = withDefaults(defineProps<IPasswordInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IPasswordInputEmits>()
-/** Labels */
-const l10n = useLabels('password')
-const revealText = computed(() => props.revealLabel ?? l10n.value.reveal)
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
 const revealed = defineModel<boolean>('revealed', { default: false })
 
+/** Labels */
+const l10n = useLabels('password')
+
 /** Computed */
+const revealText = computed(() => props.revealLabel ?? l10n.value.reveal)
 const textProps = computed(() => {
   const { modelValue: _modelValue, revealLabel: _revealLabel, ...rest } = props
   return rest

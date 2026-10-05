@@ -12,8 +12,11 @@ const props = withDefaults(defineProps<INavbarAvatarProps>(), {
 
 /** Emits */
 defineEmits<INavbarAvatarEmits>()
+
 /** Labels */
 const l10n = useLabels('navbar')
+
+/** Computed */
 const altText = computed(() => props.alt ?? l10n.value.avatarAlt)
 </script>
 

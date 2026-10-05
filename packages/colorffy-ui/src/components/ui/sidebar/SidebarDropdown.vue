@@ -15,8 +15,10 @@ const props = withDefaults(defineProps<ISidebarDropdownProps>(), {
 })
 
 /** Data */
-const floatingProps = useFloatingContainer()
 const isShown = ref(false)
+
+/** Composables */
+const floatingProps = useFloatingContainer()
 
 /** Computed */
 const contentClasses = computed(() => [
@@ -34,7 +36,7 @@ function toggleDropdown() {
 </script>
 
 <template>
-  <!-- Interactive version with VDropdown -->
+  <!-- With dropdown -->
   <VDropdown v-if="interactive" v-model:shown="isShown" class="d-flex flex-grow-1" v-bind="floatingProps" :placement="placement">
     <!-- Trigger content -->
     <div
@@ -65,7 +67,7 @@ function toggleDropdown() {
     </template>
   </VDropdown>
 
-  <!-- Static version (no dropdown) -->
+  <!-- Without dropdown -->
   <div v-else :class="contentClasses">
     <div class="drawer-dropdown-text">
       <p class="drawer-dropdown-title">

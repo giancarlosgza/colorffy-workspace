@@ -12,9 +12,9 @@ const props = withDefaults(defineProps<INavbarProps>(), {
 
 /** Labels */
 const l10n = useLabels('navbar')
-const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 
 /** Computed */
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 const containerClass = computed(() => props.fluid ? 'container-fluid' : 'container')
 </script>
 

@@ -25,17 +25,18 @@ const props = withDefaults(defineProps<IRangeInputProps>(), {
 /** Emits */
 const emit = defineEmits<IRangeInputEmits>()
 
-/** Labels */
-const l10nCommon = useLabels('common')
-
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -60,9 +61,8 @@ const rangeClasses = computed(() => {
   }
   return classes
 })
-
 const valueAsPercent = computed(() => {
-  // Guard empty/NaN explicitly so a legitimate 0 isn't discarded.
+  // A legitimate 0 must not be discarded
   const numeric = Number(model.value)
   const currentValue = model.value === null || model.value === '' || Number.isNaN(numeric)
     ? props.min
@@ -76,7 +76,8 @@ watch(model, (value) => {
   emit('update', value)
 })
 
-// Seed an empty model with min so the native thumb matches the stored value
+/** Lifecycle */
+// An empty model takes `min`, so the native thumb matches the stored value
 onMounted(() => {
   model.value ??= props.min
 })

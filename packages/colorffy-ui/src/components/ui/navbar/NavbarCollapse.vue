@@ -16,10 +16,9 @@ const slots = defineSlots<{
 
 <template>
   <div class="navbar-collapse" :class="customClass">
-    <!-- Default slot for custom content -->
     <slot v-if="slots.default" />
 
-    <!-- Start section slot -->
+    <!-- Start section -->
     <ul
       v-if="!slots.default && slots.start"
       class="navbar-nav nav-start"
@@ -27,7 +26,7 @@ const slots = defineSlots<{
       <slot name="start" />
     </ul>
 
-    <!-- End section slot -->
+    <!-- End section -->
     <ul
       v-if="!slots.default && slots.end
       " class="navbar-nav nav-end"

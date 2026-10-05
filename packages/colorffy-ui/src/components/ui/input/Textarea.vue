@@ -29,21 +29,22 @@ const props = withDefaults(defineProps<ITextareaInputProps>(), {
 /** Emits */
 const emit = defineEmits<ITextareaInputEmits>()
 
-/** Labels */
-const l10nCommon = useLabels('common')
-
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
 const textareaStyle = computed(() => ({
   resize: props.resize
 }))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }

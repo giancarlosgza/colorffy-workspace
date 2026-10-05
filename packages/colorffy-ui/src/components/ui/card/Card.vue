@@ -18,8 +18,6 @@ const props = withDefaults(defineProps<ICardProps>(), {
 })
 
 /** Computed */
-// Link mode activates only when `to` or `href` is passed; otherwise the
-// card renders exactly as before (plain `div.card`, no extra attrs).
 const linkTarget = computed(() => props.to || props.href || null)
 const isLink = computed(() => linkTarget.value !== null)
 const resolvedTag = computed(() => (isLink.value ? (props.as || 'a') : 'div'))
@@ -33,7 +31,6 @@ const linkAttrs = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (resolvedTag.value === 'a' || isExternalLink.value)) {
     return {
       href: target,
@@ -44,7 +41,6 @@ const linkAttrs = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     to: target
   }
@@ -55,7 +51,6 @@ const cardClasses = computed(() => {
   if (props.variant)
     classes.push(`card-${props.variant}`)
 
-  // Scalable size prop
   if (props.size === 'xs')
     classes.push('card-xs')
   else if (props.size === 'sm')
@@ -63,11 +58,9 @@ const cardClasses = computed(() => {
   else if (props.size === 'md')
     classes.push('card-md')
 
-  // Selectable state
   if (props.selectable)
     classes.push('card-selectable')
 
-  // Link mode implies clickable-card styling (hover/active affordances)
   if (isLink.value)
     classes.push('card-link')
 
@@ -85,7 +78,7 @@ const cardClasses = computed(() => {
     class="card"
     :class="cardClasses"
   >
-    <!-- Media slot (cover image, full-bleed at the top of the card) -->
+    <!-- Media -->
     <slot name="media">
       <img
         v-if="imageUrl"

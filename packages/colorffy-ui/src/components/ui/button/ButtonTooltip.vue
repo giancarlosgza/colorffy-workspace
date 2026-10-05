@@ -28,7 +28,7 @@ withDefaults(defineProps<IButtonTooltipProps>(), {
 /** Emits */
 defineEmits<IButtonTooltipEmits>()
 
-/** Data */
+/** Composables */
 const floatingProps = useFloatingContainer()
 </script>
 
@@ -39,7 +39,7 @@ const floatingProps = useFloatingContainer()
     :placement="placement"
     :class="{ 'w-100': fluid }"
   >
-    <!-- Button component -->
+    <!-- Button -->
     <UiButton
       :id
       :title
@@ -64,13 +64,13 @@ const floatingProps = useFloatingContainer()
       :as="as"
       @click="$emit('click', $event)"
     >
-      <!-- Icon slot -->
+      <!-- Icon -->
       <template #icon>
         <slot name="icon" />
       </template>
     </UiButton>
 
-    <!-- Tooltip text slot -->
+    <!-- Tooltip text -->
     <template #popper>
       {{ tooltipText }}
     </template>

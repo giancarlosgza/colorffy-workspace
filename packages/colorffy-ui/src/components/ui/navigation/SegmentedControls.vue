@@ -18,11 +18,6 @@ const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
-/** Watchers */
-watch(() => props.activeTab, (newVal) => {
-  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
-})
-
 /** Methods */
 function isActiveTab(tab: ISegmentedTab): boolean {
   return activeTabName.value === tab.id
@@ -76,6 +71,11 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
       break
   }
 }
+
+/** Watchers */
+watch(() => props.activeTab, (newVal) => {
+  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
+})
 </script>
 
 <template>

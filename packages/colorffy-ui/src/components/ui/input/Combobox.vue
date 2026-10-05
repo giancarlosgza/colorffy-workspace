@@ -39,15 +39,13 @@ const props = withDefaults(defineProps<IComboboxInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IComboboxInputEmits>()
-/** Labels */
-const l10n = useLabels('combobox')
-const l10nCommon = useLabels('common')
-const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
-const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
-const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
 
 /** Model */
 const model = defineModel<ComboboxValue | null>('modelValue', { default: null })
+
+/** Labels */
+const l10n = useLabels('combobox')
+const l10nCommon = useLabels('common')
 
 /** Data */
 const uid = useId()
@@ -57,7 +55,6 @@ const fieldRef = ref<HTMLElement | null>(null)
 const query = ref('')
 const inputText = ref('')
 const announcement = ref('')
-// Labels of picked options, kept while a remote search replaces `options`
 const remembered = shallowReactive(new Map<unknown, string>())
 const searchPending = ref(false)
 let searchTimer: ReturnType<typeof setTimeout> | undefined
@@ -66,6 +63,7 @@ const fieldId = computed(() => props.id ?? `${uid}-combobox`)
 const labelId = computed(() => `${fieldId.value}-label`)
 const listboxId = computed(() => `${fieldId.value}-listbox`)
 
+/** Composables */
 const { isOpen, isAnchored, anchorName, open, close } = useAnchoredPopup(anchorRef, popupRef)
 const listbox = useListbox({
   id: () => listboxId.value,
@@ -79,6 +77,9 @@ const listbox = useListbox({
 const { groups, visible, activeItem, optionId, scrollToActive } = listbox
 
 /** Computed */
+const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
+const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const describedById = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : undefined))
 const isLocked = computed(() => props.disabled || props.readonly)
@@ -105,7 +106,6 @@ const statusText = computed(() => {
   return null
 })
 const showClear = computed(() => props.clearable && !isLocked.value && (model.value != null || inputText.value !== ''))
-
 const groupClasses = computed(() => ['form-group', { 'form-invalid': hasErrors.value }])
 const labelClasses = computed(() => ['mb-2', { 'visually-hidden': props.hideLabel }])
 const fieldClasses = computed(() => [
@@ -125,12 +125,10 @@ const fieldAria = computed(() => ({
 }))
 
 /** Methods */
-// Cleared first, so the same message twice is still read out
 function announce(text: string): void {
   announcement.value = ''
   nextTick(() => (announcement.value = text))
 }
-// With `remote`, the typed text goes to `search` once typing pauses
 function requestSearch(text: string): void {
   if (!props.remote)
     return
@@ -146,7 +144,6 @@ function requestSearch(text: string): void {
     emit('search', trimmed)
   }, props.searchDelay)
 }
-// A closed list drops its search, so it reopens on the default options
 function resetSearch(): void {
   clearTimeout(searchTimer)
   searchPending.value = false
@@ -167,7 +164,6 @@ function openList(start: 'selected' | 'last' | 'none' = 'selected'): void {
     listbox.activateLast()
   scrollToActive()
 }
-// Closes the list and shows `text` in the field; the model updates after the parent re-renders
 function finish(text: string): void {
   close()
   query.value = ''
@@ -183,7 +179,6 @@ function select(item: ListboxItem): void {
   model.value = item.value as ComboboxValue
   finish(item.label)
 }
-// An emptied field clears the value; text that matches an option exactly selects it, and with `freeText` other text becomes the value
 function commitText(): void {
   const text = inputText.value.trim()
   if (props.filterable && !text) {
@@ -260,7 +255,7 @@ function onKeydown(event: KeyboardEvent): void {
     else
       commitText()
   } else if (key === 'Escape') {
-    // First Esc closes the list, the next clears; a dialog around it only closes after that
+    // First Esc closes the list, the next clears; a dialog around it closes after that
     if (isOpen.value) {
       event.preventDefault()
       event.stopPropagation()
@@ -288,7 +283,6 @@ function onFieldClick(): void {
   else if (!isOpen.value)
     openList()
 }
-// A label can't focus a div, so the select-only field focuses itself
 function onLabelClick(): void {
   if (!props.filterable)
     fieldRef.value?.focus()
@@ -315,7 +309,6 @@ watch([() => listbox.items.value, model], ([items, value]) => {
   if (item)
     remembered.set(item.value, item.label)
 }, { immediate: true })
-// Fresh results: the first one is highlighted and the count announced
 watch([() => props.options, () => props.loading], () => {
   if (!props.remote || !isOpen.value || props.loading || !query.value.trim())
     return
@@ -324,6 +317,7 @@ watch([() => props.options, () => props.loading], () => {
   announce(formatLabel(l10n.value.results, { count: visible.value.length }))
 })
 
+/** Lifecycle */
 onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
 
@@ -441,7 +435,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
 
     <span class="visually-hidden" aria-live="polite">{{ announcement }}</span>
 
-    <!-- Options: after the feedback, so the error keeps following the field -->
+    <!-- Options, after the feedback so the error stays under the field -->
     <div
       v-if="isOpen"
       ref="popupRef"

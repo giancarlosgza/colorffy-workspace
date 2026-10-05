@@ -13,12 +13,12 @@ const props = withDefaults(defineProps<ITooltipProps>(), {
   customClass: null
 })
 
-// SSR-stable fallback id: floating-vue's auto-generated ids differ between
-// server and client and trigger hydration attribute mismatches
+/** Data */
+// FloatingVue's own ids differ between server and client
 const fallbackAriaId = useId()
 const resolvedAriaId = props.ariaId ?? fallbackAriaId
 
-/** Data */
+/** Composables */
 const floatingProps = useFloatingContainer()
 </script>
 
@@ -36,7 +36,6 @@ const floatingProps = useFloatingContainer()
 
     <!-- Tooltip content -->
     <template #popper>
-      <!-- Rich content slot takes priority over the text prop -->
       <slot name="content">
         {{ text }}
       </slot>

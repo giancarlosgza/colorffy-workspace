@@ -109,20 +109,20 @@ function stopTitleRotation() {
   }
 }
 
-/** Lifecycle hooks */
+/** Watchers */
+watch(() => props.title, () => {
+  stopTitleRotation()
+  currentIndex = 0
+  startTitleRotation()
+}, { deep: true })
+
+/** Lifecycle */
 onMounted(() => {
   startTitleRotation()
 })
 onUnmounted(() => {
   stopTitleRotation()
 })
-
-// Watcher
-watch(() => props.title, () => {
-  stopTitleRotation()
-  currentIndex = 0
-  startTitleRotation()
-}, { deep: true })
 </script>
 
 <template>
@@ -151,7 +151,7 @@ watch(() => props.title, () => {
       />
     </svg>
 
-    <!-- Dynamic title text -->
+    <!-- Title -->
     <Transition mode="out-in" name="slide-block">
       <p
         v-if="titleDynamic"

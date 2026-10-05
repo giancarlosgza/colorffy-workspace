@@ -38,7 +38,6 @@ const indicatorClasses = computed(() => ({
 }))
 
 /** Methods */
-// Matches the active item by its id or its string `to` (so consumers can pass either)
 function isActiveItem(item: INavItem): boolean {
   if (props.activeItem == null)
     return false
@@ -58,7 +57,6 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     'class': 'navigation-bar-link'
   }
 
-  // For anchor tags or external links
   if (props.as === 'a' || isExternal) {
     const href = typeof to === 'string' ? to : ''
     return {
@@ -71,7 +69,6 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to

@@ -23,8 +23,6 @@ const props = withDefaults(defineProps<IListItemProps>(), {
 })
 
 /** Computed */
-// Link mode activates only when `to` or `href` is passed; otherwise the
-// item renders exactly as before (plain `div.list-item`, no extra attrs).
 const linkTarget = computed(() => props.to || props.href || null)
 const routerComponent = computed(() => (props.as && props.as !== 'a' ? props.as : null))
 const isExternalLink = computed(() => {
@@ -61,7 +59,6 @@ const linkAttrs = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseAttrs,
     to: props.disabled ? undefined : target
@@ -86,8 +83,6 @@ const itemClasses = computed(() => {
   if (props.hasActions)
     classes.push('list-item-undecorated')
 
-  // Link mode implies the interactive (hover/active + arrow) styling that
-  // `UiListGroup`'s `isInteractive` prop provides at the group level.
   if (isLink.value)
     classes.push('list-group-item-link')
 
@@ -142,9 +137,9 @@ const imageClasses = computed(() => {
       class="list-item"
       v-bind="linkAttrs"
     >
-      <!-- Media slot (replaces the image/icon area) -->
+      <!-- Media -->
       <slot name="media">
-        <!-- Image (takes precedence over icon) -->
+        <!-- Image -->
         <img
           v-if="imageUrl"
           :class="imageClasses"
@@ -179,7 +174,7 @@ const imageClasses = computed(() => {
       </div>
     </component>
 
-    <!-- Actions slot -->
+    <!-- Actions -->
     <div
       v-if="hasActions"
       class="list-item-actions"

@@ -27,6 +27,9 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   as: 'a'
 })
 
+/** Composables */
+const floatingProps = useFloatingContainer()
+
 /** Computed */
 const linkTarget = computed(() => {
   return props.to || props.href
@@ -38,7 +41,6 @@ const isExternalLink = computed(() => {
 const buttonClasses = computed(() => {
   const classes = []
 
-  // Variants
   if (props.variant) {
     classes.push(`btn-${props.variant}`)
     if (props.variant === 'filled' && props.color)
@@ -47,7 +49,6 @@ const buttonClasses = computed(() => {
       classes.push(`tonal-${props.color}`)
   }
 
-  // Sizes
   if (props.size) {
     let sizeClass = ''
 
@@ -96,7 +97,6 @@ const linkProps = computed(() => {
     disabled: props.disabled
   }
 
-  // For anchor tags or external links
   if (props.as === 'a' || isExternalLink.value) {
     const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
     return {
@@ -109,15 +109,11 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: linkTarget.value
   }
 })
-
-/** Data */
-const floatingProps = useFloatingContainer()
 </script>
 
 <template>

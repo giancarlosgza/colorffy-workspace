@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue'
 import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
+/** Interfaces */
 type PaginationItem = number | 'start-gap' | 'end-gap'
 
 /** Props */
@@ -23,11 +24,13 @@ const props = withDefaults(defineProps<IPaginationProps>(), {
 /** Model */
 const page = defineModel<number>('page', { default: 1 })
 
+/** Labels */
+const text = useLabels('pagination', () => props.labels)
+
 /** Data */
 const announcement = ref('')
 
 /** Computed */
-const text = useLabels('pagination', () => props.labels)
 const pageCount = computed(() => {
   const count = props.totalPages ?? Math.ceil(props.total / Math.max(1, props.pageSize))
   return Math.max(1, Math.floor(count) || 1)
@@ -36,10 +39,9 @@ const current = computed(() => Math.min(Math.max(1, Math.trunc(page.value) || 1)
 const isFirst = computed(() => current.value === 1)
 const isLast = computed(() => current.value === pageCount.value)
 const status = computed(() => formatStatus(current.value))
-// Only the user's own moves are announced; a count changed by filtering drops the old text
+// Only the user's own moves are announced
 const liveText = computed(() => (announcement.value === status.value ? announcement.value : ''))
-
-// Always the same number of slots once the pages collapse, so the buttons don't shift
+// A fixed slot count keeps the buttons from shifting between pages
 const items = computed<PaginationItem[]>(() => {
   const count = pageCount.value
   const siblings = Math.max(0, Math.floor(props.siblingCount))
@@ -53,7 +55,6 @@ const items = computed<PaginationItem[]>(() => {
     return [1, 'start-gap', ...range(count - slots + 3, count)]
   return [1, 'start-gap', ...range(current.value - siblings, current.value + siblings), 'end-gap', count]
 })
-
 const navClasses = computed(() => ['pagination-nav', { 'pagination-compact': props.compact }, props.customClass])
 const buttonClasses = computed(() => [
   'btn btn-text text-neutral btn-icon',
@@ -76,7 +77,6 @@ function go(target: number): void {
 }
 
 /** Watchers */
-// A page past the end moves to the last page
 watch([pageCount, page], () => {
   if (page.value !== current.value)
     page.value = current.value
@@ -170,7 +170,7 @@ watch([pageCount, page], () => {
       </li>
     </ul>
 
-    <!-- Announces the page the user moved to -->
+    <!-- Announcements -->
     <span class="visually-hidden" aria-live="polite">{{ liveText }}</span>
   </nav>
 </template>

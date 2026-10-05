@@ -31,13 +31,16 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
 /** Emits */
 const emit = defineEmits<ITextInputEmits>()
 
-/** Labels */
-const l10nCommon = useLabels('common')
-
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
-// For type="number", coerce the string input to a real number (or null).
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
+/** Computed */
 const inputModel = computed<string | number | null>({
   get: () => model.value,
   set: (val) => {
@@ -53,16 +56,11 @@ const inputModel = computed<string | number | null>({
     model.value = Number.isNaN(num) ? null : num
   }
 })
-
-/** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
-
 const minValue = computed(() => (props.type === 'number' ? props.min ?? undefined : undefined))
 const maxValue = computed(() => (props.type === 'number' ? props.max ?? undefined : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -87,8 +85,6 @@ const inputClasses = computed(() => {
   }
   return classes
 })
-
-// Shared input bindings so both branches (with/without group) stay in sync
 const inputAttrs = computed(() => ({
   'id': inputId.value,
   'class': inputClasses.value,

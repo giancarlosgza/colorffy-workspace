@@ -51,7 +51,6 @@ const progressBarClasses = computed(() => {
 
   return classes
 })
-// Vue merges a style array, so string and object `barStyles` both apply on top
 const progressBarStyles = computed(() => [{ '--cffy-progress-value': `${props.value}%` }, props.barStyles])
 </script>
 

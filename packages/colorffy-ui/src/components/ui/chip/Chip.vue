@@ -20,15 +20,16 @@ const props = withDefaults(defineProps<IChipProps>(), {
 
 /** Emits */
 const emit = defineEmits<IChipEmits>()
+
 /** Labels */
 const l10n = useLabels('chip')
-const closeText = computed(() => props.closeLabel ?? l10n.value.remove)
 
 /** Computed */
+const closeText = computed(() => props.closeLabel ?? l10n.value.remove)
 const chipClasses = computed(() => {
   const classes: (string | string[] | Record<string, boolean>)[] = ['btn', 'btn-chip']
 
-  // Outline is the base `.btn-chip` look, so it needs no extra class
+  // Outline is the base `.btn-chip` look
   if (props.variant && props.variant !== 'outline')
     classes.push(`chip-${props.variant}`)
 

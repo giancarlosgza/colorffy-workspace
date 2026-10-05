@@ -70,7 +70,6 @@ const skeletonStyles = computed(() => {
     styles.height = typeof props.height === 'number' ? `${props.height}px` : props.height
   }
 
-  // Merge with user-provided styles
   if (props.skeletonStyles) {
     if (typeof props.skeletonStyles === 'string') {
       return [styles, props.skeletonStyles]

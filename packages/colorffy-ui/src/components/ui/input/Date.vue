@@ -22,6 +22,7 @@ import UiButton from '../button/Button.vue'
 import UiCalendar from '../calendar/Calendar.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
+/** Interfaces */
 type DateValue = Date | IDateRange | null
 type DateSlot = 'single' | 'start' | 'end'
 type RangeFormat = Intl.DateTimeFormat & { formatRange: (start: Date, end: Date) => string }
@@ -84,6 +85,7 @@ const fieldId = computed(() => props.id ?? `${uid}-date`)
 const labelId = computed(() => `${fieldId.value}-label`)
 const popupId = computed(() => `${fieldId.value}-popup`)
 
+/** Composables */
 const { isOpen, isAnchored, anchorName, open, close } = useAnchoredPopup(anchorRef, popupRef, { shouldPlace: () => !isSheet() })
 const resolvedLocale = useCalendarLocale(() => props.locale)
 
@@ -106,8 +108,6 @@ const isLocked = computed(() => props.disabled || props.readonly)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const describedById = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : undefined))
 const dialogName = computed(() => props.label || text.value.toggle)
-
-// The field shows numeric dates so they can be retyped; the button and the summary read better with month names
 const timeParts = computed<Intl.DateTimeFormatOptions>(() => {
   if (!hasTime.value)
     return {}
@@ -130,7 +130,6 @@ const fieldPattern = computed(() => {
   return `${pattern.value} ${withSeconds.value ? 'hh:mm:ss' : 'hh:mm'}`
 })
 const fieldPlaceholder = computed(() => props.placeholder ?? (isRange.value ? `${fieldPattern.value} – ${fieldPattern.value}` : fieldPattern.value))
-
 const activePreset = computed(() => findPreset(model.value))
 const draftPreset = computed(() => findPreset(draft.value))
 const buttonText = computed(() => (activePreset.value && presetLabel(activePreset.value)) || valueText.value || props.placeholder || text.value.toggle)
@@ -146,7 +145,6 @@ const rangeSlots = computed(() => [
   { slot: 'start' as const, label: text.value.from, dateLabel: text.value.startDate, timeLabel: text.value.startTime },
   { slot: 'end' as const, label: text.value.to, dateLabel: text.value.endDate, timeLabel: text.value.endTime }
 ])
-
 const groupClasses = computed(() => ['form-group', 'date-input', { 'form-invalid': hasErrors.value }])
 const labelClasses = computed(() => ['d-block mb-2', { 'visually-hidden': props.hideLabel }])
 const fieldClasses = computed(() => [
@@ -161,7 +159,6 @@ const popupAria = computed(() => (isField.value && props.label
   : { 'aria-label': dialogName.value }))
 
 /** Methods */
-// Your own presets have a label; the `datePresets` helpers fall back to the configured texts
 function presetLabel(preset: IDatePreset): string {
   if (preset.label)
     return preset.label
@@ -188,8 +185,6 @@ function findPreset(value: DateValue): IDatePreset | null {
     return null
   return props.presets.find(preset => valuesEqual(normalizePreset(preset), value)) ?? null
 }
-// A range preset in single mode picks its start; a single date in range mode is a one-day range.
-// With times on, a date without a time keeps the current time, and a range ends at the end of its last day.
 function normalizePreset(preset: IDatePreset): DateValue {
   const value = preset.value()
   if (!isRange.value) {
@@ -227,7 +222,6 @@ function isAllowed(date: Date): boolean {
     && (!props.max || day <= startOfDay(props.max))
     && !props.disabledDates?.(new Date(day))
 }
-// Copies `source`'s time onto `day`; with times on, a range's end without one ends with its day
 function keepTime(day: Date, source: Date | null, isEnd: boolean): Date {
   const time = source ?? (isEnd && hasTime.value ? endOfDay(day, withSeconds.value) : null)
   const next = new Date(day)
@@ -235,7 +229,6 @@ function keepTime(day: Date, source: Date | null, isEnd: boolean): Date {
     next.setHours(time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds())
   return next
 }
-// A typed date without a time keeps `fallback`'s time
 function readDate(part: string, fallback: Date | null, isEnd = false): Date | null {
   const dayOnly = parseNumericDate(part, resolvedLocale.value)
   const date = dayOnly ?? (hasTime.value ? parseNumericDateTime(part, resolvedLocale.value) : null)
@@ -276,7 +269,6 @@ function setDraftDate(slot: DateSlot, date: Date | null): void {
   const range = asRange(draft.value) ?? { start: null, end: null }
   draft.value = { ...range, [slot]: date }
 }
-// Turns the calendar to `date` when it isn't showing; an end lands in the last month shown
 function revealDay(date: Date, last: boolean): void {
   const viewStart = draftMonth.value ?? startOfMonth(firstDay(draft.value) ?? new Date())
   if (date >= viewStart && date < addMonths(viewStart, monthCount.value)) {
@@ -285,7 +277,6 @@ function revealDay(date: Date, last: boolean): void {
   }
   draftMonth.value = last ? addMonths(startOfMonth(date), 1 - monthCount.value) : startOfMonth(date)
 }
-
 function commit(value: DateValue): void {
   const next = copyValue(value)
   model.value = next
@@ -303,7 +294,6 @@ function commitText(): void {
   editing.value = false
   inputText.value = valueText.value
 }
-
 async function openPopup(focusCalendar: boolean): Promise<void> {
   if (isLocked.value)
     return
@@ -353,8 +343,6 @@ function togglePopup(): void {
   else
     openPopup(true)
 }
-
-// The calendar picks whole days; a range keeps each end's time
 function onCalendarChange(value: CalendarValue): void {
   if (!isRange.value) {
     draft.value = value instanceof Date ? value : null
@@ -443,12 +431,11 @@ function onPopupKeydown(event: KeyboardEvent): void {
   event.stopPropagation()
   cancel()
 }
-// Clicks keep focus where it is, except in the popup's own fields
 function onPopupMousedown(event: MouseEvent): void {
   if (!(event.target as Element).closest('input'))
     event.preventDefault()
 }
-// Leaving the component commits typed text and closes the popup; focus lost to the window keeps it open
+// Focus lost to the window keeps the popup open
 function onFocusOut(event: FocusEvent): void {
   const next = event.relatedTarget as Node | null
   if ((next && rootRef.value?.contains(next)) || (!next && isOpen.value))
@@ -470,7 +457,7 @@ function onBackdrop(event: PointerEvent): boolean {
   const box = popup.getBoundingClientRect()
   return event.clientY < box.top || event.clientY > box.bottom || event.clientX < box.left || event.clientX > box.right
 }
-// Below 600px the popup is a bottom sheet placed by the stylesheet
+// The bottom sheet is placed by the stylesheet
 function isSheet(): boolean {
   return typeof matchMedia === 'function' && matchMedia('(width < 600px)').matches
 }
@@ -625,7 +612,7 @@ onBeforeUnmount(() => {
       {{ l10nCommon.optional }}
     </p>
 
-    <!-- Popup: after the feedback, so the error keeps following the field -->
+    <!-- Popup, after the feedback so the error stays under the field -->
     <div
       v-if="isOpen"
       :id="popupId"
@@ -728,7 +715,7 @@ onBeforeUnmount(() => {
             @select="onCalendarSelect"
           />
 
-          <!-- Time of a single date -->
+          <!-- Time -->
           <div
             v-if="hasTime && !isRange"
             class="date-field"

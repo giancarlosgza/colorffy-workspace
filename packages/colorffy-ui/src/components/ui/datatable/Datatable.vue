@@ -29,9 +29,6 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   emptyStateIconCode: '&#xeb83;'
 })
 
-/** Labels */
-const l10n = useLabels('datatable')
-
 /** Slots */
 const slots = useSlots()
 
@@ -39,19 +36,19 @@ const slots = useSlots()
 const selectedModel = defineModel<(string | number)[]>('selected', { default: () => [] })
 const pageModel = defineModel<number>('page', { default: 1 })
 
+/** Labels */
+const l10n = useLabels('datatable')
+
 /** Data */
 const sortKey = ref(props.defaultSortKey)
 const sortOrder = ref(props.defaultSortOrder)
-// An unlabeled column can't be named in the column manager, so it isn't hideable by default
-const hideableColumns = computed(() => props.columns.filter(col => col.hideable ?? !!col.label?.trim()))
-const defaultHiddenKeys = computed(() => hideableColumns.value.filter(col => col.hidden).map(col => col.key))
-const managedHiddenColumns = ref<string[]>([...defaultHiddenKeys.value])
-
-watch(defaultHiddenKeys, (val) => {
-  managedHiddenColumns.value = [...val]
-})
+const managedHiddenColumns = ref<string[]>([])
+const selectAllId = useId()
+const toolbarId = useId()
 
 /** Computed */
+const hideableColumns = computed(() => props.columns.filter(col => col.hideable ?? !!col.label?.trim()))
+const defaultHiddenKeys = computed(() => hideableColumns.value.filter(col => col.hidden).map(col => col.key))
 const areAllColumnsVisible = computed(() => managedHiddenColumns.value.length === 0)
 const columnsToggleTooltipText = computed(() => {
   const tooltip = props.columnsToggleTooltip
@@ -71,10 +68,7 @@ const stickyStyle = computed(() => {
   return { '--cffy-table-sticky-max-height': height }
 })
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
-const selectAllId = useId()
 const selectAllLabel = computed(() => (props.pagination ? l10n.value.selectAllOnPage : l10n.value.selectAll))
-const toolbarId = useId()
-
 const hasToolbarActions = computed(() => defaultHiddenKeys.value.length > 0 || props.columnManager || !!slots['actions-start'] || !!slots['actions-end'])
 const hasToolbar = computed(() => hasToolbarActions.value || !!slots.controls)
 const columnSlotProps = computed<IDatatableColumnSlotProps>(() => ({
@@ -85,7 +79,6 @@ const columnSlotProps = computed<IDatatableColumnSlotProps>(() => ({
   toggle: toggleColumnVisibility,
   toggleAll: toggleShowAllColumns
 }))
-
 const sortedItems = computed(() => {
   if (!sortKey.value) {
     return props.items
@@ -95,7 +88,6 @@ const sortedItems = computed(() => {
     const aValue = a[sortKey.value]
     const bValue = b[sortKey.value]
 
-    // Nullish values always sort last, regardless of sort direction.
     const aNil = aValue === null || aValue === undefined
     const bNil = bValue === null || bValue === undefined
     if (aNil || bNil) {
@@ -108,7 +100,6 @@ const sortedItems = computed(() => {
     return sortOrder.value === 'asc' ? result : -result
   })
 })
-
 const pageSize = computed(() => Math.max(1, Math.floor(props.pagination?.pageSize ?? 0)))
 const pageCount = computed(() => Math.max(1, Math.ceil(sortedItems.value.length / pageSize.value)))
 const currentPage = computed(() => Math.min(Math.max(1, Math.trunc(pageModel.value) || 1), pageCount.value))
@@ -119,7 +110,6 @@ const pageItems = computed(() => {
   return sortedItems.value.slice(pageOffset.value, pageOffset.value + pageSize.value)
 })
 const paginationAttrs = computed(() => ({ ...props.pagination, pageSize: pageSize.value }))
-
 const rowKeys = computed(() => pageItems.value.map((item, index) => getRowKey(item, pageOffset.value + index)))
 const selectedKeySet = computed(() => new Set(selectedModel.value))
 const isAllSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every(key => selectedKeySet.value.has(key)))
@@ -131,7 +121,6 @@ function compareValues(a: unknown, b: unknown): number {
     return a - b
   }
 
-  // Compare numeric-looking values as numbers, not lexicographically.
   const aNum = Number(a)
   const bNum = Number(b)
   if (a !== '' && b !== '' && !Number.isNaN(aNum) && !Number.isNaN(bNum)) {
@@ -200,7 +189,6 @@ function toggleColumnVisibility(key: string) {
 function isColumnVisible(key: string) {
   return !managedHiddenColumns.value.includes(key)
 }
-// Always-visible columns don't count, so at least one data column stays on screen
 function visibleHideableCount() {
   return hideableColumns.value.filter(col => isColumnVisible(col.key)).length
 }
@@ -213,6 +201,9 @@ function resetPage() {
 }
 
 /** Watchers */
+watch(defaultHiddenKeys, (val) => {
+  managedHiddenColumns.value = [...val]
+}, { immediate: true })
 watch([sortKey, sortOrder, () => props.pagination?.pageSize], resetPage)
 // The first rows to arrive keep the page, so a page restored from the URL survives loading
 watch(() => props.items.length, (_length, previous) => {
@@ -223,7 +214,7 @@ watch(() => props.items.length, (_length, previous) => {
 
 <template>
   <div>
-    <!-- Table Controls -->
+    <!-- Table controls -->
     <div
       v-if="hasToolbar"
       class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3"
@@ -359,14 +350,14 @@ watch(() => props.items.length, (_length, previous) => {
             </th>
           </tr>
         </thead>
-        <!-- Loading State -->
+        <!-- Loading -->
         <StateTableSkeleton
           v-if="isLoading"
           :skeleton-cols="columnCount"
           :skeleton-rows="skeletonRows"
         />
 
-        <!-- Table Content -->
+        <!-- Table content -->
         <tbody v-else-if="pageItems.length > 0">
           <tr
             v-for="(item, index) in pageItems"
@@ -378,7 +369,6 @@ watch(() => props.items.length, (_length, previous) => {
               class="table-select-col"
             >
               <div class="form-check">
-                <!-- aria-label supplies the accessible name; see the header checkbox for the id/for pattern -->
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -400,7 +390,7 @@ watch(() => props.items.length, (_length, previous) => {
           </tr>
         </tbody>
 
-        <!-- Empty State -->
+        <!-- Empty state -->
         <tbody v-else>
           <tr>
             <td :colspan="columnCount">
@@ -416,7 +406,7 @@ watch(() => props.items.length, (_length, previous) => {
       </table>
     </div>
 
-    <!-- Shown outside the scroll area so a wide table can't cut it off -->
+    <!-- Caption, outside the scroll area so a wide table can't cut it off -->
     <p
       v-if="caption"
       class="table-caption"

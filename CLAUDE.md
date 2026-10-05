@@ -12,6 +12,12 @@
 - Font sizes in `rem` or `--cffy-fs-*`, never `px`. `dvh` over `vh`. `color-mix()` in `oklab`/`oklch`, not `srgb`. Never register color tokens with `@property`.
 - `_prime.scss` sets PrimeVue's own `--p-*` tokens and is outside the component variable convention.
 
+## Vue components (`@colorffy/ui`)
+
+- `<script setup>` groups its statements under `/** Section */` labels, in this order, using only the ones it needs: `Interfaces`, `Props`, `Emits`, `Slots`, `Model`, `Labels`, `Data`, `Composables`, `Computed`, `Methods`, `Watchers`, `Lifecycle`, `Expose`. Local interfaces and types sit at the top, never between other statements. `Data` holds refs, template refs, ids (`useId()` and ids built from `props.id`), constants and plain variables; `Composables` holds `use*()` calls and the values derived from their results, after the data they read.
+- No comments between functions or inside interface bodies. A comment stays only when it records something the code can't show (a browser quirk, an SSR or hydration constraint, a magic value, a non-obvious contract), on one line; anything that restates the code goes.
+- Template comments are short sentence-case region labels (`<!-- Feedback -->`), with the same exception for a real constraint.
+
 ## Documenting a change
 
 | Situation | Component page | Changelog | Migration | Skill ref | Playground |

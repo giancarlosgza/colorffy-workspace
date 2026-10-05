@@ -33,7 +33,6 @@ const linkProps = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
@@ -45,7 +44,6 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: target
@@ -70,7 +68,7 @@ const linkProps = computed(() => {
       :alt="l10n.brandAlt"
     >
 
-    <!-- Brand link with slot support -->
+    <!-- Brand link -->
     <slot
       name="link"
       :link-target="linkTarget"

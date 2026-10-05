@@ -32,14 +32,16 @@ withDefaults(defineProps<IButtonMenuProps>(), {
 defineEmits<IButtonMenuEmits>()
 
 /** Data */
-const floatingProps = useFloatingContainer()
 const isOpen = ref(false)
 const returnFocus = ref(false)
 const triggerRef = ref<InstanceType<typeof UiButton> | null>(null)
 const menuRef = ref<HTMLElement | null>(null)
 const menuId = useId()
-const { focusItem, onKeydown: onMenuKeydown } = useMenuNavigation(menuRef)
 let focusOnShow: 'first' | 'last' = 'first'
+
+/** Composables */
+const floatingProps = useFloatingContainer()
+const { focusItem, onKeydown: onMenuKeydown } = useMenuNavigation(menuRef)
 
 /** Methods */
 function triggerElement(): HTMLElement | undefined {
@@ -48,10 +50,7 @@ function triggerElement(): HTMLElement | undefined {
 function isInMenu(element: Element | null): boolean {
   return !!element?.closest('.v-popper__popper')
 }
-// Esc closes the menu, not a dialog around it, and gives focus back to the button.
-// FloatingVue keeps a dropdown open while its button's tooltip shows, so both close,
-// and focus only returns once the menu is gone (focusing shows the tooltip again).
-// Tab closes the menu from the button, so focus moves on to the next element.
+// FloatingVue keeps the dropdown open while the button's tooltip shows, so Esc hides every popper
 function onDocumentKeydown(event: KeyboardEvent): void {
   if (event.key === 'Tab' && isInMenu(document.activeElement)) {
     isOpen.value = false
@@ -77,7 +76,7 @@ function onTriggerKeydown(event: KeyboardEvent): void {
   else
     isOpen.value = true
 }
-// The items become focusable once the popper renders as shown
+// The items can only take focus once the popper renders as shown
 function onMenuShown(): void {
   const position = focusOnShow
   focusOnShow = 'first'
@@ -91,7 +90,7 @@ function onMenuHidden(): void {
 }
 
 /** Watchers */
-// An item picked from the keyboard gives focus back to the button; a click doesn't.
+// Only a keyboard pick gives focus back to the button
 watch(isOpen, (open) => {
   if (open) {
     document.addEventListener('keydown', onDocumentKeydown, true)
@@ -103,6 +102,7 @@ watch(isOpen, (open) => {
     returnFocus.value = true
 })
 
+/** Lifecycle */
 onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown, true))
 </script>
 
@@ -125,7 +125,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown,
       :class="{ 'w-100': fluid }"
       class="d-inline-block"
     >
-      <!-- Button component -->
+      <!-- Button -->
       <UiButton
         :id
         ref="triggerRef"
@@ -149,19 +149,19 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown,
         @click="$emit('click', $event)"
         @keydown="onTriggerKeydown"
       >
-        <!-- Icon slot -->
+        <!-- Icon -->
         <template #icon>
           <slot name="icon" />
         </template>
       </UiButton>
 
-      <!-- Tooltip text slot -->
+      <!-- Tooltip text -->
       <template #popper>
         {{ tooltipText }}
       </template>
     </VTooltip>
 
-    <!-- Dropdown menu slot -->
+    <!-- Dropdown menu -->
     <template #popper>
       <ul
         :id="menuId"

@@ -27,16 +27,20 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
 /** Emits */
 const emit = defineEmits<IPopoverMenuEmits>()
 
+/** Slots */
+const slots = useSlots()
+
 /** Labels */
 const l10n = useLabels('popoverMenu')
 
 /** Data */
-const slots = useSlots()
 const panelRef = ref<HTMLElement | null>(null)
 const supportsNativePopover = ref<boolean>(false)
 const anchorName = `--cffy-popover-menu-${useId()}`
-const { onKeydown: onMenuKeydown } = useMenuNavigation(panelRef)
 let lastNativeDismiss = 0
+
+/** Composables */
+const { onKeydown: onMenuKeydown } = useMenuNavigation(panelRef)
 
 /** Computed */
 const isNative = computed(() => props.nativePopover && supportsNativePopover.value)
@@ -45,7 +49,6 @@ const menuClasses = computed(() => [
   'popover-menu',
   { 'popover-menu-visible': !isNative.value && props.isOpened }
 ])
-
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.closable))
 const hasBody = computed(() => Boolean(slots.body || listItems.value.length))
 
@@ -88,12 +91,10 @@ function isActiveMenuItem(to: string | object | null | undefined): boolean {
   if (!props.currentRoute || !to)
     return false
 
-  // String path comparison
   if (typeof to === 'string') {
     return props.currentRoute.path === to
   }
 
-  // Object route comparison
   if (typeof to === 'object' && 'name' in to) {
     return props.currentRoute.name === to.name
   }
@@ -101,17 +102,17 @@ function isActiveMenuItem(to: string | object | null | undefined): boolean {
   return false
 }
 
+/** Watchers */
+watch(() => props.isOpened, (open) => {
+  if (isNative.value)
+    syncNativePopover(open)
+})
+
 /** Lifecycle */
 onMounted(() => {
   supportsNativePopover.value = 'popover' in HTMLElement.prototype && CSS.supports('anchor-name: --a')
   if (isNative.value && props.isOpened)
     nextTick(() => syncNativePopover(true))
-})
-
-/** Watchers */
-watch(() => props.isOpened, (open) => {
-  if (isNative.value)
-    syncNativePopover(open)
 })
 </script>
 

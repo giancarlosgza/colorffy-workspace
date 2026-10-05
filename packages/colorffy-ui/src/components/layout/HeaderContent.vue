@@ -20,24 +20,25 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
 
 /** Emits */
 const emit = defineEmits<IHeaderContentEmits>()
-/** Labels */
-const l10n = useLabels('header')
-const backText = computed(() => props.backButtonLabel ?? l10n.value.back)
 
 /** Slots */
 const slots = useSlots()
 
-/** Constants */
+/** Labels */
+const l10n = useLabels('header')
+
+/** Data */
 const TITLE_SIZE_CLASSES: Record<string, string> = {
   'md': 'header-2xl',
   'lg': 'header-3xl',
   'xl': 'header-4xl',
   '2xl': 'header-5xl'
 }
-
-/** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
+
+/** Computed */
+const backText = computed(() => props.backButtonLabel ?? l10n.value.back)
 const containerClasses = computed(() => [TITLE_SIZE_CLASSES[props.size ?? ''] ?? null, props.containerClass])
 const viewTransitionClass = computed(() => (props.viewTransitionName ? 'header-vt' : null))
 const titleStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: props.viewTransitionName } : undefined))

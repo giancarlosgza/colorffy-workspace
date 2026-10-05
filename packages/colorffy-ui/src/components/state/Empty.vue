@@ -64,14 +64,14 @@ const ariaAttributes = computed(() => {
     :style="emptyStyles"
     v-bind="ariaAttributes"
   >
-    <!-- Icon State -->
+    <!-- Icon -->
     <div v-if="!useCustomIcon" class="icon-state-wrapper">
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
     </div>
 
-    <!-- Custom Icon -->
+    <!-- Custom icon -->
     <UiIconMaterial
       v-else
       :icon-code="iconCode"
@@ -94,7 +94,7 @@ const ariaAttributes = computed(() => {
       {{ subtitle }}
     </p>
 
-    <!-- Action slot -->
+    <!-- Action -->
     <UiButtonGroup
       v-if="$slots.action"
       custom-class="justify-content-center"

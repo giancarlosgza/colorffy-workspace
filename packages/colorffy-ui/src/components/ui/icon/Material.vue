@@ -20,7 +20,6 @@ const sizeMap: Record<IconSize, string> = {
 }
 
 /** Computed */
-// Unset size and color keep inheriting the surrounding text
 const iconStyle = computed(() => ({
   fontSize: typeof props.size === 'number' ? `${props.size / 16}rem` : props.size ? sizeMap[props.size] : undefined,
   color: props.color ?? undefined
@@ -28,7 +27,7 @@ const iconStyle = computed(() => ({
 const ariaHidden = computed(() => (props.decorative ? 'true' : undefined))
 const ariaRole = computed(() => (props.decorative ? undefined : 'img'))
 const ariaLabel = computed(() => (props.decorative ? undefined : props.ariaLabel ?? undefined))
-// Block raw angle brackets (tag injection); icon entities/glyphs/ligatures pass through
+// Blocks raw angle brackets (tag injection); entities, glyphs and ligatures pass
 const safeIconCode = computed(() => (/[<>]/.test(props.iconCode) ? '' : props.iconCode))
 </script>
 

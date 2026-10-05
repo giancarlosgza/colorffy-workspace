@@ -35,17 +35,15 @@ const props = withDefaults(defineProps<ITableSkeletonProps>(), {
 const l10n = useLabels('loading')
 
 /** Data */
+// False until mounted, so SSR and the first client render match
+const isClient = ref(false)
+
+/** Composables */
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
 const smAndDown = breakpoints.smallerOrEqual('sm')
-// Stays false during SSR + first client render to avoid a hydration mismatch.
-const isClient = ref(false)
-const isMobile = computed(() => isClient.value && smAndDown.value)
-
-onMounted(() => {
-  isClient.value = true
-})
 
 /** Computed */
+const isMobile = computed(() => isClient.value && smAndDown.value)
 const expandedSkeletonCols = computed(() => {
   return props.isExpanded ? props.skeletonColExpanded : props.skeletonCols
 })
@@ -70,6 +68,11 @@ const ariaAttributes = computed(() => {
     attributes['aria-live'] = props.ariaLive
 
   return attributes
+})
+
+/** Lifecycle */
+onMounted(() => {
+  isClient.value = true
 })
 </script>
 

@@ -17,27 +17,26 @@ const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {
 /** Emits */
 const emit = defineEmits<IButtonToggleGroupEmits>()
 
+/** Model */
+// Takes precedence over the legacy per-option `active` flag
+const model = defineModel<string>()
+
 /** Labels */
 const l10n = useLabels('buttonToggleGroup')
-
-/** Model */
-// Selected option id; takes precedence over the legacy per-option `active` flag.
-const model = defineModel<string>()
 
 /** Data */
 const optionRefs = ref<(HTMLElement | null)[]>([])
 
-function isSelected(option: IButtonToggleOption): boolean {
-  return model.value !== undefined ? model.value === option.id : !!option.active
-}
-
-// Roving tabindex: the selected option (or first enabled) is the only tab stop.
+/** Computed */
 const rovingIndex = computed(() => {
   const activeIndex = props.options.findIndex(o => isSelected(o) && !o.disabled)
   return activeIndex !== -1 ? activeIndex : props.options.findIndex(o => !o.disabled)
 })
 
 /** Methods */
+function isSelected(option: IButtonToggleOption): boolean {
+  return model.value !== undefined ? model.value === option.id : !!option.active
+}
 function setOptionRef(el: Element | ComponentPublicInstance | null, index: number): void {
   optionRefs.value[index] = (el as HTMLElement) ?? null
 }
@@ -91,7 +90,6 @@ function onOptionKeydown(event: KeyboardEvent, index: number): void {
       break
   }
 }
-
 function getOptionKey(index: number): string {
   return `toggle-btn-${index}`
 }

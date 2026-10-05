@@ -19,24 +19,16 @@ const props = withDefaults(defineProps<IAlertProps>(), {
 
 /** Emits */
 const emit = defineEmits<IAlertEmits>()
+
 /** Labels */
 const l10n = useLabels('alert')
-const closeText = computed(() => props.closeLabel ?? l10n.value.close)
 
 /** Data */
 const isVisible = ref<boolean>(true)
 let hideTimer: ReturnType<typeof setTimeout> | null = null
 
-/** Lifecycle */
-onMounted(() => {
-  if (props.duration && props.type !== 'snackbar')
-    hideTimer = setTimeout(dismiss, props.duration)
-})
-onBeforeUnmount(() => {
-  clearHideTimer()
-})
-
 /** Computed */
+const closeText = computed(() => props.closeLabel ?? l10n.value.close)
 const alertContainerClasses = computed(() => {
   const classes = []
   if (props.type === 'snackbar' && props.placement) {
@@ -81,6 +73,15 @@ function dismiss() {
   isVisible.value = false
   emit('dismiss')
 }
+
+/** Lifecycle */
+onMounted(() => {
+  if (props.duration && props.type !== 'snackbar')
+    hideTimer = setTimeout(dismiss, props.duration)
+})
+onBeforeUnmount(() => {
+  clearHideTimer()
+})
 </script>
 
 <template>

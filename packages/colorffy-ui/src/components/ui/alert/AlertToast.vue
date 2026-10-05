@@ -11,15 +11,15 @@ const props = withDefaults(defineProps<IAlertToastProps>(), {
   placement: 'bottom'
 })
 
+/** Data */
 const title = ref<string>(props.snackbarTitle ?? '')
 const message = ref<string>(props.snackbarMessage ?? '')
 const variant = ref<AlertVariant>(props.snackbarVariant as AlertVariant ?? 'success')
 const placement = ref<AlertPlacement>(props.placement ?? 'bottom')
 const isVisible = ref<boolean>(false)
-
-/** Methods */
 let hideTimer: ReturnType<typeof setTimeout> | null = null
 
+/** Methods */
 function showToast(options?: IToastOptions) {
   if (options) {
     if (options.message)
@@ -31,7 +31,6 @@ function showToast(options?: IToastOptions) {
   }
   isVisible.value = true
 
-  // Reset any in-flight timer so re-showing restarts the full duration.
   if (hideTimer)
     clearTimeout(hideTimer)
   hideTimer = setTimeout(() => {
@@ -40,11 +39,13 @@ function showToast(options?: IToastOptions) {
   }, options?.duration ?? 3000)
 }
 
+/** Lifecycle */
 onBeforeUnmount(() => {
   if (hideTimer)
     clearTimeout(hideTimer)
 })
 
+/** Expose */
 defineExpose({
   title,
   message,

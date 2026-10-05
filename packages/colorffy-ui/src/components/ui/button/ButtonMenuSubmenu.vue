@@ -25,6 +25,16 @@ const props = withDefaults(defineProps<IButtonMenuSubmenuProps>(), {
   iconTrailingClass: null
 })
 
+/** Data */
+const isOpen = ref(false)
+const triggerRef = ref<HTMLButtonElement | null>(null)
+const menuRef = ref<HTMLElement | null>(null)
+const menuId = useId()
+
+/** Composables */
+const floatingProps = useFloatingContainer()
+const { focusItem, onKeydown: onNavigationKeydown } = useMenuNavigation(menuRef)
+
 /** Computed */
 const itemClasses = computed(() => {
   const classes = []
@@ -41,16 +51,7 @@ const itemClasses = computed(() => {
   return classes
 })
 
-/** Data */
-const floatingProps = useFloatingContainer()
-const isOpen = ref(false)
-const triggerRef = ref<HTMLButtonElement | null>(null)
-const menuRef = ref<HTMLElement | null>(null)
-const menuId = useId()
-const { focusItem, onKeydown: onNavigationKeydown } = useMenuNavigation(menuRef)
-
 /** Methods */
-// → opens the submenu on its first item, ← closes it back to this item
 function onTriggerKeydown(event: KeyboardEvent): void {
   if (event.key !== 'ArrowRight')
     return
@@ -99,7 +100,7 @@ function onMenuKeydown(event: KeyboardEvent): void {
         @keydown="onTriggerKeydown"
       >
         <span class="v-dropdown-item-primary">
-          <!-- Leading Icon & Text -->
+          <!-- Leading icon and text -->
           <UiIconMaterial
             v-if="icon"
             :icon-code="icon"
@@ -126,7 +127,7 @@ function onMenuKeydown(event: KeyboardEvent): void {
             :custom-class="badge.customClass"
           />
 
-          <!-- Icon Trailing -->
+          <!-- Trailing icon -->
           <UiIconMaterial
             v-if="iconTrailing"
             :icon-code="iconTrailing"

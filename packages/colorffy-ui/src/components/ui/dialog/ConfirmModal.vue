@@ -27,10 +27,11 @@ const l10n = useLabels('confirmModal')
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
+
+/** Computed */
 const dialogClasses = computed(() => {
   const classes: (string | Record<string, boolean>)[] = ['dialog-confirm']
 
-  // Modes
   if (props.mode) {
     if (props.mode === 'modal') {
       classes.push('dialog-modal')
@@ -45,7 +46,6 @@ const dialogClasses = computed(() => {
     classes.push('dialog-modal')
   }
 
-  // Sizes
   if (props.size) {
     if (props.size === 'sm') {
       classes.push('dialog-sm')
@@ -65,8 +65,6 @@ const dialogClasses = computed(() => {
 
   return classes
 })
-
-/** Computed */
 const variantClass = computed(() => {
   let cssClass
   let icon
@@ -112,7 +110,7 @@ function showDialog() {
       dialogRef.value.showModal()
     else
       dialogRef.value.show()
-    // A reopened dialog starts at the top; a hidden dialog can't be scrolled, so this runs once it shows
+    // A hidden dialog can't scroll, so the reset runs once it shows
     dialogRef.value.querySelector('.dialog-body')?.scrollTo(0, 0)
   }
 }
@@ -125,6 +123,7 @@ function closeFromOutside() {
     closeDialog()
 }
 
+/** Expose */
 defineExpose({
   showDialog,
   closeDialog

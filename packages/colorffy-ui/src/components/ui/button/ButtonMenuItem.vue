@@ -52,7 +52,7 @@ const itemClasses = computed(() => {
       :disabled="disabled"
     >
       <span class="v-dropdown-item-primary">
-        <!-- Leading Icon & Text -->
+        <!-- Leading icon and text -->
         <UiIconMaterial
           v-if="icon"
           :icon-code="icon"
@@ -84,7 +84,7 @@ const itemClasses = computed(() => {
           {{ shortcut }}
         </span>
 
-        <!-- Icon Trailing -->
+        <!-- Trailing icon -->
         <UiIconMaterial
           v-if="iconTrailing"
           :icon-code="iconTrailing"

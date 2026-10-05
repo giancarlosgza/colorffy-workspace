@@ -24,19 +24,21 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<ISelectInputEmits>()
-/** Labels */
-const l10n = useLabels('select')
-const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | number | Record<string, unknown> | null>('modelValue', { default: null })
 
+/** Labels */
+const l10n = useLabels('select')
+const l10nCommon = useLabels('common')
+
+/** Data */
+const selectId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const selectId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? l10n.value.placeholder)
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -63,7 +65,6 @@ const selectClasses = computed(() => {
 })
 
 /** Methods */
-// Reads a label/value field off an option, containing the unsafe cast here.
 function getField(option: unknown, key: string): unknown {
   return (option as Record<string, unknown>)[key]
 }

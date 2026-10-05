@@ -17,12 +17,12 @@ const props = withDefaults(defineProps<IAvatarProps>(), {
 
 /** Labels */
 const l10n = useLabels('avatar')
-const altText = computed(() => props.alt ?? l10n.value.alt)
 
 /** Data */
 const imageError = ref(false)
 
 /** Computed */
+const altText = computed(() => props.alt ?? l10n.value.alt)
 const avatarClasses = computed(() => {
   const classes = ['img-avatar']
   if (props.size) {
@@ -92,12 +92,12 @@ function handleImageError() {
 </script>
 
 <template>
-  <!-- Status avatar: wrapped so the dot escapes mask-shape clipping -->
+  <!-- Status avatar, wrapped so the dot escapes the mask clipping -->
   <span
     v-if="status"
     :class="statusWrapperClasses"
   >
-    <!-- Image Avatar -->
+    <!-- Image avatar -->
     <img
       v-if="src && !imageError"
       :src="src"
@@ -106,14 +106,14 @@ function handleImageError() {
       @error="handleImageError"
     >
 
-    <!-- Initial Avatar -->
+    <!-- Initials avatar -->
     <span
       v-else-if="initials"
       :class="initialsAvatarClasses"
     >
       {{ initials }}
     </span>
-    <!-- Placeholder Avatar -->
+    <!-- Placeholder avatar -->
     <div
       v-else
       :class="placeholderClasses"
@@ -127,10 +127,8 @@ function handleImageError() {
     />
   </span>
 
-  <!-- Default markup, unchanged when no status is set. Kept as a direct -->
-  <!-- v-else-if chain (no <template> wrapper) so Vue still treats the -->
-  <!-- component as single-root and inherits fallthrough attrs like class -->
-  <!-- Image Avatar -->
+  <!-- A v-else-if chain without a wrapper keeps the component single-root -->
+  <!-- Image avatar -->
   <img
     v-else-if="src && !imageError"
     :src="src"
@@ -139,7 +137,7 @@ function handleImageError() {
     @error="handleImageError"
   >
 
-  <!-- Initial Avatar -->
+  <!-- Initials avatar -->
   <span
     v-else-if="initials"
     :class="initialsAvatarClasses"
@@ -147,7 +145,7 @@ function handleImageError() {
     {{ initials }}
   </span>
 
-  <!-- Placeholder Avatar -->
+  <!-- Placeholder avatar -->
   <div
     v-else
     :class="placeholderClasses"

@@ -18,10 +18,11 @@ const emit = defineEmits<IDialogEmits>()
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
+
+/** Computed */
 const dialogClasses = computed(() => {
   const classes: (string | Record<string, boolean>)[] = []
 
-  // Modes
   if (props.mode) {
     if (props.mode === 'side-sheet') {
       classes.push('dialog-side-sheet')
@@ -34,7 +35,6 @@ const dialogClasses = computed(() => {
     classes.push('dialog-modal')
   }
 
-  // Sizes
   if (props.size) {
     if (props.size === 'sm')
       classes.push('dialog-sm')
@@ -63,18 +63,18 @@ function showDialog() {
       dialogRef.value.showModal()
     else
       dialogRef.value.show()
-    // A reopened dialog starts at the top; a hidden dialog can't be scrolled, so this runs once it shows
+    // A hidden dialog can't scroll, so the reset runs once it shows
     dialogRef.value.querySelector('.dialog-body')?.scrollTo(0, 0)
     focusMarkedField(dialogRef.value)
   }
 }
-// Browsers only autofocus a focusable element, so `autofocus` on a field component focuses its control
+// Browsers only autofocus a focusable element, so this focuses the control inside a marked field
 function focusMarkedField(dialog: HTMLDialogElement) {
   const marked = dialog.querySelector<HTMLElement>('[autofocus]')
   if (marked && !marked.contains(document.activeElement))
     marked.querySelector<HTMLElement>('input:not([type="hidden"]), select, textarea, button, [tabindex]:not([tabindex="-1"])')?.focus()
 }
-// The native close event emits `close`, so Esc and form[method=dialog] report it too
+// The native close event emits `close`, so Esc reports it too
 function closeDialog() {
   dialogRef.value?.close()
 }
@@ -83,6 +83,7 @@ function closeFromOutside() {
     closeDialog()
 }
 
+/** Expose */
 defineExpose({
   showDialog,
   closeDialog

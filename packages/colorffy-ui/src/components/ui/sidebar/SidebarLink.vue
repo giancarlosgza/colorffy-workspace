@@ -22,8 +22,13 @@ const props = withDefaults(defineProps<ISidebarLinkProps>(), {
   as: 'a'
 })
 
-/** Computed */
+/** Data */
 const tooltipId = computed(() => `${props.id}-tooltip`)
+
+/** Composables */
+const floatingProps = useFloatingContainer()
+
+/** Computed */
 const linkTarget = computed(() => {
   return props.to || props.href
 })
@@ -53,7 +58,6 @@ const linkProps = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
@@ -65,15 +69,11 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: target
   }
 })
-
-/** Data */
-const floatingProps = useFloatingContainer()
 </script>
 
 <template>

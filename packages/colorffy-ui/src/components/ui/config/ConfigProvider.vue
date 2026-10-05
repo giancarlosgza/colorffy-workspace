@@ -14,9 +14,9 @@ defineSlots<{
   default?: () => any
 }>()
 
-/** Data */
+/** Composables */
 const parent = useColorffyConfig()
-// Reads through to the surrounding configuration, so its changes still reach this subtree
+// Getters read through, so changes to the surrounding config still reach this subtree
 const config = reactive({
   get locale() {
     return props.locale ?? parent.locale
@@ -25,7 +25,6 @@ const config = reactive({
     return mergeLabels(parent.labels, props.labels)
   }
 }) as IColorffyConfig
-
 provide(colorffyConfigKey, config)
 </script>
 

@@ -8,6 +8,12 @@ import { normalizeText, useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
+/** Interfaces */
+interface SelectedEntry {
+  value: ComboboxValue
+  label: string
+}
+
 /** Props */
 const props = withDefaults(defineProps<IMultiSelectInputProps>(), {
   id: null,
@@ -41,21 +47,13 @@ const props = withDefaults(defineProps<IMultiSelectInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IMultiSelectInputEmits>()
-/** Labels */
-const l10n = useLabels('multiSelect')
-const l10nCommon = useLabels('common')
-const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
-const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
-const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
-const removeText = computed(() => props.removeLabel ?? l10n.value.remove)
 
 /** Model */
 const model = defineModel<ComboboxValue[]>('modelValue', { default: () => [] })
 
-interface SelectedEntry {
-  value: ComboboxValue
-  label: string
-}
+/** Labels */
+const l10n = useLabels('multiSelect')
+const l10nCommon = useLabels('common')
 
 /** Data */
 const uid = useId()
@@ -64,16 +62,16 @@ const popupRef = ref<HTMLElement | null>(null)
 const fieldRef = ref<HTMLElement | null>(null)
 const query = ref('')
 const announcement = ref('')
-// Labels of picked values, kept while a remote search replaces `options` and for typed values
 const remembered = shallowReactive(new Map<unknown, string>())
 const searchPending = ref(false)
 let searchTimer: ReturnType<typeof setTimeout> | undefined
 let lastSearch = ''
 const fieldId = computed(() => props.id ?? `${uid}-multiselect`)
 const labelId = computed(() => `${fieldId.value}-label`)
-const listboxId = computed(() => `${fieldId.value}-listbox`)
 const summaryId = computed(() => `${fieldId.value}-summary`)
+const listboxId = computed(() => `${fieldId.value}-listbox`)
 
+/** Composables */
 const { isOpen, isAnchored, anchorName, open, close } = useAnchoredPopup(anchorRef, popupRef)
 const listbox = useListbox({
   id: () => listboxId.value,
@@ -88,11 +86,14 @@ const listbox = useListbox({
 const { groups, visible, activeItem, optionId, scrollToActive } = listbox
 
 /** Computed */
+const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
+const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
+const removeText = computed(() => props.removeLabel ?? l10n.value.remove)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const errorId = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : undefined))
 const isLocked = computed(() => props.disabled || props.readonly)
 const selectedValues = computed(() => new Set(model.value))
-// Chips follow the order the values were picked in
 const selectedItems = computed<SelectedEntry[]>(() => {
   const byValue = new Map(listbox.items.value.map(item => [item.value, item.label]))
   return model.value.flatMap((value) => {
@@ -114,12 +115,10 @@ const statusText = computed(() => {
     return l10n.value.typeToSearch
   return null
 })
-
 const isFull = computed(() => props.max != null && model.value.length >= props.max)
 const showChips = computed(() => props.maxChips == null || model.value.length <= props.maxChips)
 const summaryLabel = computed(() => formatLabel(props.maxChipsLabel ?? l10n.value.summary, { count: model.value.length }))
 const showClear = computed(() => props.clearable && !isLocked.value && model.value.length > 0)
-
 const groupClasses = computed(() => ['form-group', { 'form-invalid': hasErrors.value }])
 const labelClasses = computed(() => ['mb-2', { 'visually-hidden': props.hideLabel }])
 const fieldClasses = computed(() => [
@@ -141,12 +140,10 @@ const fieldAria = computed(() => ({
 }))
 
 /** Methods */
-// Cleared first, so the same message twice is still read out
 function announce(text: string): void {
   announcement.value = ''
   nextTick(() => (announcement.value = text))
 }
-// With `freeText`, typed text is offered as a new value unless it's already picked
 function newValueText(): string {
   const text = query.value.trim()
   if (!props.freeText || !text || !showOptions.value)
@@ -154,7 +151,6 @@ function newValueText(): string {
   const search = normalizeText(text)
   return selectedItems.value.some(entry => normalizeText(entry.label) === search) ? '' : text
 }
-// With `remote`, the typed text goes to `search` once typing pauses
 function requestSearch(text: string): void {
   if (!props.remote)
     return
@@ -170,7 +166,6 @@ function requestSearch(text: string): void {
     emit('search', trimmed)
   }, props.searchDelay)
 }
-// A cleared search goes back to the default options
 function resetSearch(): void {
   clearTimeout(searchTimer)
   searchPending.value = false
@@ -209,7 +204,6 @@ function remove(entry: SelectedEntry): void {
   emit('remove', entry.value)
   announce(formatLabel(l10n.value.removed, { label: entry.label }))
 }
-// The list stays open; a search is cleared so the next one starts fresh
 function toggle(item: ListboxItem): void {
   if (isLocked.value)
     return
@@ -316,7 +310,6 @@ function onKeydown(event: KeyboardEvent): void {
       openList('none')
   }
 }
-// A label can't focus a span, so the select-only field focuses itself
 function onLabelClick(): void {
   if (!props.filterable)
     fieldRef.value?.focus()
@@ -338,7 +331,6 @@ watch([() => listbox.items.value, model], ([items, values]) => {
       remembered.set(item.value, item.label)
   }
 }, { immediate: true })
-// Fresh results: the first one is highlighted and the count announced
 watch([() => props.options, () => props.loading], () => {
   if (!props.remote || !isOpen.value || props.loading || !query.value.trim())
     return
@@ -346,6 +338,7 @@ watch([() => props.options, () => props.loading], () => {
   announce(formatLabel(l10n.value.results, { count: visible.value.filter(item => !item.created).length }))
 })
 
+/** Lifecycle */
 onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
 
@@ -490,7 +483,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
       {{ l10nCommon.optional }}
     </p>
 
-    <!-- Screen reader text: what's selected, and each change -->
+    <!-- Screen reader text -->
     <span
       :id="summaryId"
       class="visually-hidden"
@@ -499,7 +492,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
     </span>
     <span class="visually-hidden" aria-live="polite">{{ announcement }}</span>
 
-    <!-- Options: after the feedback, so the error keeps following the field -->
+    <!-- Options, after the feedback so the error stays under the field -->
     <div
       v-if="isOpen"
       ref="popupRef"

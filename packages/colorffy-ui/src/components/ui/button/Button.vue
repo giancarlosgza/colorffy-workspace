@@ -32,7 +32,6 @@ const emit = defineEmits<IButtonEmits>()
 const buttonClasses = computed(() => {
   const classes = []
 
-  // Variants
   if (props.variant) {
     classes.push(`btn-${props.variant}`)
     if (props.variant === 'filled' && props.color)
@@ -41,7 +40,6 @@ const buttonClasses = computed(() => {
       classes.push(`tonal-${props.color}`)
   }
 
-  // Sizes
   if (props.size) {
     let sizeClass
 
@@ -82,7 +80,6 @@ const buttonClasses = computed(() => {
 
   return classes
 })
-
 const linkTarget = computed(() => props.to || props.href)
 const routerComponent = computed(() => (props.as && props.as !== 'a' ? props.as : null))
 const isExternalLink = computed(() => {
@@ -90,8 +87,6 @@ const isExternalLink = computed(() => {
   return typeof target === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(target)
 })
 const usesAnchor = computed(() => isExternalLink.value || routerComponent.value === null)
-// Link mode activates only when a navigation target is provided; `as` alone
-// (with no `to`/`href`) never switches the native `<button>` markup.
 const isLink = computed(() => Boolean(linkTarget.value) && (typeof linkTarget.value === 'string' || !usesAnchor.value))
 const linkTag = computed(() => (usesAnchor.value ? 'a' : routerComponent.value))
 const linkClasses = computed(() => {
@@ -115,7 +110,6 @@ const linkAttrs = computed(() => {
     }
   }
 
-  // Router-style component (RouterLink, NuxtLink, etc.) — supports string or object
   return {
     ...common,
     to: linkTarget.value
@@ -123,10 +117,7 @@ const linkAttrs = computed(() => {
 })
 
 /** Methods */
-// Disabled links have no native `disabled` attribute, so the click has to be
-// intercepted manually (blocking navigation and any parent `@click` listener
-// via `v-bind="$attrs"`) to match a real disabled `<button>`, which never
-// dispatches a click at all. Loading blocks activation the same way.
+// Links have no `disabled`, so a disabled or loading link blocks its own click
 function onLinkClick(event: MouseEvent) {
   if (props.disabled || props.loading) {
     event.preventDefault()
@@ -164,7 +155,7 @@ function onLinkClick(event: MouseEvent) {
     </span>
   </button>
 
-  <!-- Link mode: same visual markup, rendered as `as` (default 'a') -->
+  <!-- Link mode -->
   <component
     :is="linkTag"
     v-else

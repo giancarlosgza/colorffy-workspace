@@ -17,11 +17,12 @@ const props = withDefaults(defineProps<IBreadcrumbProps>(), {
 
 /** Emits */
 const emit = defineEmits<IBreadcrumbEmits>()
+
 /** Labels */
 const l10n = useLabels('breadcrumb')
-const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 
 /** Computed */
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 const isCollapsed = computed(() => props.maxItems > 0 && props.items.length > props.maxItems)
 const visibleEntries = computed(() => {
   if (!isCollapsed.value)
@@ -36,9 +37,7 @@ const visibleEntries = computed(() => {
     ...tail
   ]
 })
-
-// schema.org BreadcrumbList — always built from the full item list, not the
-// collapsed view. `<` is escaped so a label can't break out of the script tag.
+// `<` is escaped so a label can't break out of the script tag
 const jsonLd = computed(() => {
   const itemListElement = props.items.map((item, i) => {
     const url = toAbsoluteUrl(item.to ?? item.href)
@@ -97,9 +96,7 @@ function toAbsoluteUrl(target: string | object | undefined): string {
   return `${props.baseUrl.replace(/\/+$/, '')}/${target.replace(/^\/+/, '')}`
 }
 
-// Render the JSON-LD <script> via a render function. Templates can't hold a
-// <script>, and v-html on a dynamic component is disallowed; this is the clean,
-// SSR-safe way to emit structured data.
+// Templates can't hold a <script>, so the JSON-LD comes from a render function
 function StructuredData() {
   if (!props.structuredData)
     return null
@@ -190,7 +187,7 @@ function StructuredData() {
       </li>
     </ol>
 
-    <!-- SEO: schema.org BreadcrumbList as inline JSON-LD -->
+    <!-- schema.org BreadcrumbList -->
     <StructuredData />
   </nav>
 </template>

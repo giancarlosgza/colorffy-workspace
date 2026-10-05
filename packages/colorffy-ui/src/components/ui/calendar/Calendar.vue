@@ -5,6 +5,7 @@ import { addDays, addMonths, dayKey, isSameDay, localeWeekStart, startOfDay, sta
 import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
+/** Interfaces */
 interface CalendarCell extends ICalendarDaySlot {
   key: string
   number: string
@@ -14,7 +15,6 @@ interface CalendarCell extends ICalendarDaySlot {
   rangeEnd: boolean
   preview: boolean
 }
-
 interface CalendarMonth {
   key: string
   titleId: string
@@ -45,9 +45,13 @@ const emit = defineEmits<ICalendarEmits>()
 defineSlots<{
   day?: (props: ICalendarDaySlot) => any
 }>()
+
 /** Model */
 const model = defineModel<CalendarValue>('modelValue', { default: null })
 const month = defineModel<Date | null>('month', { default: null })
+
+/** Labels */
+const text = useLabels('calendar', () => props.labels)
 
 /** Data */
 const uid = useId()
@@ -57,9 +61,10 @@ const focusedDate = ref<Date | null>(null)
 const hoverDate = ref<Date | null>(null)
 const announcement = ref('')
 
-/** Computed */
-const text = useLabels('calendar', () => props.labels)
+/** Composables */
 const resolvedLocale = useCalendarLocale(() => props.locale)
+
+/** Computed */
 const firstDay = computed(() => {
   const start = props.weekStart ?? localeWeekStart(resolvedLocale.value)
   return ((Math.trunc(start) % 7) + 7) % 7
@@ -67,7 +72,6 @@ const firstDay = computed(() => {
 const monthCount = computed(() => Math.max(1, Math.trunc(props.months) || 1))
 const minDay = computed(() => (props.min ? startOfDay(props.min) : null))
 const maxDay = computed(() => (props.max ? startOfDay(props.max) : null))
-
 const formatters = computed(() => ({
   title: new Intl.DateTimeFormat(resolvedLocale.value, { month: 'long', year: 'numeric' }),
   full: new Intl.DateTimeFormat(resolvedLocale.value, { dateStyle: 'full' }),
@@ -76,8 +80,7 @@ const formatters = computed(() => ({
   narrow: new Intl.DateTimeFormat(resolvedLocale.value, { weekday: 'narrow' }),
   long: new Intl.DateTimeFormat(resolvedLocale.value, { weekday: 'long' })
 }))
-
-// 4 January 2026 is a Sunday; locales whose short names don't fit a day column get the narrow ones
+// 4 January 2026 is a Sunday
 const weekdays = computed(() => {
   const days = Array.from({ length: 7 }, (_, index) => new Date(2026, 0, 4 + ((firstDay.value + index) % 7)))
   const short = days.map(date => formatters.value.short.format(date).replace(/\.$/, ''))
@@ -87,7 +90,6 @@ const weekdays = computed(() => {
     long: formatters.value.long.format(date)
   }))
 })
-
 const range = computed<IDateRange>(() => {
   const value = model.value
   if (props.mode !== 'range' || !value || value instanceof Date || Array.isArray(value))
@@ -103,8 +105,6 @@ const selectedDays = computed<Date[]>(() => {
   return value instanceof Date ? [startOfDay(value)] : []
 })
 const selectedKeys = computed(() => new Set(selectedDays.value.map(dayKey)))
-
-// The pending range follows the pointer or the focused day until the end is picked
 const rangeBounds = computed(() => {
   const { start, end } = range.value
   const last = end ?? (start ? hoverDate.value : null)
@@ -112,23 +112,18 @@ const rangeBounds = computed(() => {
     return null
   return start <= last ? { low: start, high: last, preview: !end } : { low: last, high: start, preview: !end }
 })
-
 const viewMonth = computed(() => startOfMonth(month.value ?? selectedDays.value[0] ?? today.value))
 const viewEnd = computed(() => addMonths(viewMonth.value, monthCount.value))
 const showOutside = computed(() => props.showOutsideDays && monthCount.value === 1)
 const visibleMonths = computed<CalendarMonth[]>(() => Array.from({ length: monthCount.value }, (_, index) => buildMonth(addMonths(viewMonth.value, index), index)))
 const visibleTitle = computed(() => visibleMonths.value.map(item => item.title).join(' – '))
-
 const canGoPrevious = computed(() => !props.disabled && (!minDay.value || addMonths(viewMonth.value, -1) >= startOfMonth(minDay.value)))
 const canGoNext = computed(() => !props.disabled && (!maxDay.value || viewEnd.value <= maxDay.value))
-
-// The one day in the tab order: the focused day, else the selection, else today, else the 1st
 const focusKey = computed(() => {
   const candidates = [focusedDate.value, ...selectedDays.value, today.value]
   const target = candidates.find(date => date && isVisible(date)) ?? viewMonth.value
   return dayKey(target)
 })
-
 const calendarClasses = computed(() => [
   'calendar',
   {
@@ -197,7 +192,6 @@ function withTime(day: Date, previous: Date | null): Date {
     day.setHours(previous.getHours(), previous.getMinutes(), previous.getSeconds(), previous.getMilliseconds())
   return day
 }
-
 function showMonth(first: Date): void {
   month.value = startOfMonth(first)
   announcement.value = visibleTitle.value
@@ -210,12 +204,11 @@ function goToNextMonth(): void {
   if (canGoNext.value)
     showMonth(addMonths(viewMonth.value, 1))
 }
-
 function pick(date: Date): void {
   if (props.disabled || isDisabled(date))
     return
   focusedDate.value = date
-  // Picking doesn't move the view, even when the view was following the selection
+  // Picking pins the view, so it doesn't jump to the selection
   if (!month.value)
     month.value = viewMonth.value
 
@@ -238,7 +231,6 @@ function pick(date: Date): void {
   }
   emit('select', new Date(date))
 }
-
 function moveFocus(target: Date): void {
   let next = target
   if (minDay.value && next < minDay.value)

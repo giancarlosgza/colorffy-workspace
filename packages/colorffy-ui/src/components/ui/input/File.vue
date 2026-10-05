@@ -26,20 +26,19 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
 /** Emits */
 const emit = defineEmits<IFileInputEmits>()
 
-/** Labels */
-const l10nCommon = useLabels('common')
-
 /** Model */
 const model = defineModel<File | null>('modelValue', { default: null })
 
-/** Refs */
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
 const { label, inputLabel } = toRefs(props)
+const inputId = computed(() => props.id ?? undefined)
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'input-file-group',
   { 'form-invalid': hasErrors.value }
@@ -95,7 +94,7 @@ function handleInput(event: Event) {
           @input="handleInput"
         >
 
-        <!-- File Info -->
+        <!-- File info -->
         <div
           v-if="model"
           class="input-file-text"

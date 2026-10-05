@@ -24,18 +24,18 @@ const props = withDefaults(defineProps<ICheckProps>(), {
 /** Emits */
 const emit = defineEmits<ICheckEmits>()
 
+/** Model */
+const model = defineModel<string | boolean | null>('modelValue', { default: false })
+
 /** Labels */
 const l10nCommon = useLabels('common')
 
-/** Model */
-// Default to false so a checkbox starts as a real boolean, not null.
-const model = defineModel<string | boolean | null>('modelValue', { default: false })
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
 
 /** Computed */
 const hasError = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasError.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-check',
   { 'form-invalid': hasError.value },
