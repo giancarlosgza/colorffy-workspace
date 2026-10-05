@@ -69,9 +69,11 @@ export const es: IColorffyLabels = {
     yesterday: 'Ayer',
     tomorrow: 'Mañana',
     lastDays: 'Últimos {count} días',
+    lastMonths: 'Últimos {count} meses',
     thisMonth: 'Este mes',
     lastMonth: 'Mes pasado',
-    thisYear: 'Este año'
+    thisYear: 'Este año',
+    lastYear: 'Año pasado'
   },
   empty: {
     ariaLabel: 'Sin contenido'

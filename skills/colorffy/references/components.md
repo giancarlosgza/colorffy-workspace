@@ -1110,7 +1110,7 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 **Additional props:**
 - `mode` ('single' | 'range', default: 'single') - range writes `{ start, end }` only once both ends are picked
 - `trigger` ('field' | 'button', default: 'field') - button shows the matching preset label or the dates; `label` goes into its aria-label
-- `presets` (`IDatePreset[]`: `{ label, value: () => Date | IDateRange }`) - built with `datePresets.today()`, `.yesterday()`, `.tomorrow()`, `.lastDays(n)`, `.thisMonth()`, `.lastMonth()`, `.thisYear()` (optional label arg each)
+- `presets` (`IDatePreset[]`: `{ label, value: () => Date | IDateRange }`) - built with `datePresets.today()`, `.yesterday()`, `.tomorrow()`, `.lastDays(n)`, `.lastMonths(n)`, `.thisMonth()`, `.lastMonth()`, `.thisYear()`, `.lastYear()` (optional label arg each)
 - `time` (boolean | 'minutes' | 'seconds', default: false) - native `<input type="time">` fields with a Now button: under the calendar (single) or in From/To rows (range); field shows/accepts `mm/dd/yyyy hh:mm [AM|PM]`; picked/typed days keep their time, a range end without one becomes 23:59 (presets cover all of today) · `minuteStep` (default 1)
 - `confirm` (boolean | null) - Apply/Cancel footer; default on with `time` or for range + presets, else off (picking closes)
 - `months` (number | null) - default 1 single / 2 range
@@ -2074,7 +2074,7 @@ const presets = [
 ]
 ```
 
-Helpers return `{ key, params?, label?, value }`; `UiInputDate` resolves the label at render, so it follows a runtime language switch. `today`, `yesterday`, `tomorrow` return a `Date`; `lastDays(n)` (ending today), `thisMonth` (1st to today), `lastMonth` (whole month) and `thisYear` (Jan 1 to today) return `{ start, end }`. Auto-imported in Nuxt.
+Helpers return `{ key, params?, label?, value }`; `UiInputDate` resolves the label at render, so it follows a runtime language switch. `today`, `yesterday`, `tomorrow` return a `Date`; `lastDays(n)` and `lastMonths(n)` (ending today), `thisMonth` (1st to today), `lastMonth` (whole month), `thisYear` (Jan 1 to today) and `lastYear` (whole year) return `{ start, end }`. Auto-imported in Nuxt.
 
 ### useDateUtils
 Date display helper.

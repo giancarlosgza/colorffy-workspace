@@ -86,15 +86,17 @@ export interface IColorffyLabels {
     monthLetters: string
     yearLetters: string
   }
-  /** Labels of the `datePresets` helpers. `{count}` is the number of days. */
+  /** Labels of the `datePresets` helpers. `{count}` is the number of days or months. */
   datePresets: {
     today: string
     yesterday: string
     tomorrow: string
     lastDays: string
+    lastMonths: string
     thisMonth: string
     lastMonth: string
     thisYear: string
+    lastYear: string
   }
   empty: {
     /** Name of the empty state. */

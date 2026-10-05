@@ -205,6 +205,13 @@ export const datePresets = {
     label,
     value: (): IDateRange => ({ start: addDays(today(), 1 - days), end: today() })
   }),
+  /** The last `months` months, ending today. */
+  lastMonths: (months: number, label?: string): IDatePreset => ({
+    key: 'lastMonths',
+    params: { count: months },
+    label,
+    value: (): IDateRange => ({ start: addDays(addMonths(today(), -months), 1), end: today() })
+  }),
   /** From the 1st of this month to today. */
   thisMonth: (label?: string): IDatePreset => ({
     key: 'thisMonth',
@@ -222,5 +229,11 @@ export const datePresets = {
     key: 'thisYear',
     label,
     value: (): IDateRange => ({ start: new Date(today().getFullYear(), 0, 1), end: today() })
+  }),
+  /** The whole previous year. */
+  lastYear: (label?: string): IDatePreset => ({
+    key: 'lastYear',
+    label,
+    value: (): IDateRange => ({ start: new Date(today().getFullYear() - 1, 0, 1), end: new Date(today().getFullYear() - 1, 11, 31) })
   })
 }

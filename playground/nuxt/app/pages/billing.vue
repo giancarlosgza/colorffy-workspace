@@ -53,9 +53,9 @@ const selectedInvoices = ref<(string | number)[]>([])
 const invoicePeriod = ref<IDateRange | null>(null)
 const periodPresets: IDatePreset[] = [
   datePresets.thisYear(),
-  { label: 'Last 6 months', value: () => ({ start: monthsAgo(6), end: new Date() }) },
-  { label: 'Last 12 months', value: () => ({ start: monthsAgo(12), end: new Date() }) },
-  { label: 'Last year', value: () => ({ start: new Date(new Date().getFullYear() - 1, 0, 1), end: new Date(new Date().getFullYear() - 1, 11, 31) }) }
+  datePresets.lastMonths(6),
+  datePresets.lastMonths(12),
+  datePresets.lastYear()
 ]
 const filteredInvoices = computed(() => {
   const { start, end } = invoicePeriod.value ?? {}
@@ -111,10 +111,6 @@ function wait(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function monthsAgo(count: number): Date {
-  const today = new Date()
-  return new Date(today.getFullYear(), today.getMonth() - count, today.getDate())
-}
 function planById(id: string): Plan {
   return plans.find(plan => plan.id === id) ?? plans[0]!
 }
