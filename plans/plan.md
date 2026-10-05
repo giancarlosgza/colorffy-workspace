@@ -8,11 +8,11 @@ selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
 items below is breaking, so they can ship in any 3.x release.
 
 **Status (2026-10-05, branch `v3`).** Items 1 (UiPagination) and 2 (small input
-family) shipped with 3.0, stories included. Item 3 phases 1 (`UiInputCombobox`)
-and 2 (`UiInputMultiSelect`) shipped with 3.0 too; phase 3 (remote search, free
-text) moved after the release. With the date picker ([datepicker.md](datepicker.md))
-and localization also in 3.0, PrimeVue's Select, MultiSelect and DatePicker all
-have native replacements (migration guide step 8). What is still open is
+family) shipped with 3.0, stories included. Item 3 shipped whole with 3.0:
+`UiInputCombobox`, `UiInputMultiSelect`, and phase 3 (remote search, free
+text), pulled into 3.0 on 2026-10-05. With the date picker ([datepicker.md](datepicker.md))
+and localization also in 3.0, PrimeVue's Select, MultiSelect, DatePicker and
+AutoComplete all have native replacements (migration guide step 8). What is still open is
 listed in section 4.
 
 ## Conventions (apply to every item)
@@ -107,7 +107,7 @@ Original spec:
    Backspace on empty input removes last tag. Emits `update:modelValue`,
    `add(tag)`, `remove(tag)`.
 
-## 3. UiInputCombobox / UiInputMultiSelect (L) — phases 1–2 shipped in 3.0
+## 3. UiInputCombobox / UiInputMultiSelect (L) — shipped in 3.0
 
 Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
 `UiInputCombobox` (one value; `freeText` later makes it an autocomplete) and
@@ -134,8 +134,16 @@ Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
   and a selected-labels description. `useListbox` now owns option ids,
   scrolling and type-to-jump (repeating a letter cycles). Playground: the team
   invite dialog's "Add to projects".
-- **Phase 3 (after 3.0, any 3.x):** `@search` + `loading` for remote options,
-  `freeText` autocomplete.
+- **Phase 3 (done, in 3.0):** `remote` (the app filters: typing emits
+  `search` after `searchDelay` once `minSearchLength` is reached, an emptied
+  field or a closed list emits `search('')`), `loading` (searching row, also
+  shown while a search is pending), result counts announced, picked options
+  keep their labels across searches (a remembered value-to-label map, only
+  used with `remote` or typed values), and `freeText`: the combobox stores
+  typed text without auto-highlighting, the multi-select ends its list with an
+  "Add “…”" row (`useListbox`'s `create` source, `.listbox-option-create`).
+  Playground: the new-project wizard's Client (remote + free text), Labels
+  (free text) and Stakeholders (remote multi-select over a fake directory).
 - **Done in 3.0:** `_prime.scss` left `main.scss` and is an opt-in import;
   4.0 can delete it.
 
@@ -146,15 +154,14 @@ Original notes:
 
 ## 4. After 3.0 (open, none breaking)
 
-1. **Combobox phase 3**: remote options (`@search`, `loading`) and `freeText`.
-2. **Date picker extras**: a `timeOptions` list mode, several dates in
+1. **Date picker extras**: a `timeOptions` list mode, several dates in
    `UiInputDate`, Temporal once it's Baseline (see [datepicker.md](datepicker.md)).
-3. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
+2. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
    a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
    Nuxt module's pack list.
-4. **Density modes**: waits on container style queries becoming Baseline
+3. **Density modes**: waits on container style queries becoming Baseline
    Widely available (see [density-modes.md](density-modes.md)).
-5. **4.0**: delete the opt-in `_prime.scss` (out of `main.scss` since 3.0)
+4. **4.0**: delete the opt-in `_prime.scss` (out of `main.scss` since 3.0)
    once apps have moved to the native fields.
 
 Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
