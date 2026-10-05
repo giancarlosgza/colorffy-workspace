@@ -15,7 +15,7 @@ seo:
   target: _blank
   trailing-icon: i-lucide-arrow-right
   ---
-  v2.5.1 — Redesigned chips & connected button groups
+  v3.0.0 — Date picker, localization & shape roles
   :::
 
 #title
