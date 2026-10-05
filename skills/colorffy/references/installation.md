@@ -45,6 +45,8 @@ app.use(ColorffyUI)
 app.mount('#app')
 ```
 
+Another language for the components' own text: `app.use(ColorffyUI, { locale: 'es-SV', labels: es })` with `import { es } from '@colorffy/ui/locales/es'` (see components.md → Localization).
+
 ### Option 2: With Custom SCSS
 
 ```scss

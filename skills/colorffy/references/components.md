@@ -5,6 +5,7 @@ Complete reference for all 70+ Vue 3 components in @colorffy/ui.
 ## Table of Contents
 
 - [Component Import Pattern](#component-import-pattern)
+- [Localization](#localization)
 - [Layout Components](#layout-components)
 - [Accordion](#accordion)
 - [Alerts & Notifications](#alerts--notifications)
@@ -38,6 +39,26 @@ All components follow the `Ui` prefix naming convention:
 import { UiButton, UiCard, UiAlert } from '@colorffy/ui'
 </script>
 ```
+
+## Localization
+
+Every text the components write on their own (button names, "Optional", empty states, announcements, date names) comes from a labels catalog, so set the language once:
+
+```ts
+import ColorffyUI from '@colorffy/ui'
+import { es } from '@colorffy/ui/locales/es'   // also '@colorffy/ui/locales/en'
+
+app.use(ColorffyUI, { locale: 'es-SV', labels: es })
+// Nuxt: modules: ['@colorffy/ui/nuxt'], colorffyUI: { locale: 'es-SV', labels: 'es' }
+```
+
+- Precedence: component prop (`clearLabel`, `emptyText`, `:labels`, …) > nearest `<UiConfigProvider :locale :labels>` > plugin/module options > English
+- Partial overrides merge per group: `labels: { ...es, dateInput: { ...es.dateInput, apply: 'Listo' } }`
+- Runtime switch: `const config = useColorffyConfig(); config.locale = 'en-US'; config.labels = en` (auto-imported in Nuxt). Inside a provider, change its props instead
+- Placeholders in braces: `'{count} seleccionados'`, `'Página {page} de {total}'`; `formatLabel(text, values)` fills them
+- Groups (`IColorffyLabels`): `common` (optional), `alert`, `avatar`, `breadcrumb`, `buttonToggleGroup`, `calendar`, `chip`, `combobox`, `confirmModal`, `datatable`, `dateInput` (incl. `dayLetters`/`monthLetters`/`yearLetters` for the `dd/mm/aaaa` hint), `datePresets`, `empty`, `header`, `loading`, `multiSelect`, `navbar`, `navigationBar`, `otp`, `pagination`, `password`, `popoverMenu`, `search`, `select`, `sidebar`, `tags`
+- Own pack: `export const fr = { … } satisfies IColorffyLabels`
+- `locale` drives date order, month/weekday names and week start (prop > config > `<html lang>` > browser). Native time inputs follow the browser
 
 ## Layout Components
 
@@ -2046,14 +2067,14 @@ Preset factories for `UiInputDate`'s `presets` prop; dates are computed when pic
 import { datePresets } from '@colorffy/ui'
 
 const presets = [
-  datePresets.today('Hoy'),
-  datePresets.lastDays(7, 'Últimos 7 días'),
-  datePresets.thisMonth('Este mes'),
+  datePresets.today(),                // label from the configured `datePresets` texts ("Hoy" with the es pack)
+  datePresets.lastDays(7),            // "Last 7 days" / "Últimos 7 días"
+  datePresets.thisMonth('Mes en curso'), // an explicit label wins
   { label: 'Next quarter', value: () => ({ start: quarterStart, end: quarterEnd }) },
 ]
 ```
 
-`today`, `yesterday`, `tomorrow` return a `Date`; `lastDays(n)` (ending today), `thisMonth` (1st to today), `lastMonth` (whole month) and `thisYear` (Jan 1 to today) return `{ start, end }`. Auto-imported in Nuxt.
+Helpers return `{ key, params?, label?, value }`; `UiInputDate` resolves the label at render, so it follows a runtime language switch. `today`, `yesterday`, `tomorrow` return a `Date`; `lastDays(n)` (ending today), `thisMonth` (1st to today), `lastMonth` (whole month) and `thisYear` (Jan 1 to today) return `{ start, end }`. Auto-imported in Nuxt.
 
 ### useDateUtils
 Date display helper.
