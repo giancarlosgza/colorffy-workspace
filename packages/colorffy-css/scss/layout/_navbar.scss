@@ -214,7 +214,6 @@
 
             transition: color var(--cffy-duration-100) ease-in-out,
             border-color var(--cffy-duration-100) ease-in-out,
-            padding var(--cffy-duration-100) ease-in-out,
             background-color var(--cffy-duration-100) ease-in-out;
 
             &:is(:hover) {
@@ -236,11 +235,9 @@
 
             // Nuxt and Vue Router active link
             &:is(.nuxt-link-exact-active, .router-link-exact-active) {
-              --_navbar-link-padding-inline: var(--cffy-space-16);
               --_navbar-link-color: var(--cffy-navbar-link-active-color, var(--cffy-primary-a10));
               --_navbar-link-bg-color: var(--cffy-navbar-link-active-bg-color, var(--cffy-surface-container));
               --_navbar-link-border-color: var(--_navbar-link-bg-color);
-              --_navbar-link-font-weight: var(--cffy-fw-800);
             }
 
             &:has(img, svg) {
