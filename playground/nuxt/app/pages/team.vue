@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IDatatableColumn, ITabItem, UiConfirmModal, UiModal } from '@colorffy/ui'
+import type { IDatatableColumn, ITabItem, LabelTemplate, UiConfirmModal, UiModal } from '@colorffy/ui'
 import type { Intent, Member, Role } from '~/utils/workspace'
 import { NuxtLink } from '#components'
 
@@ -47,6 +47,7 @@ const isRemoving = ref(false)
 const inviteModal = ref<InstanceType<typeof UiModal> | null>(null)
 const inviteForm = reactive({ emails: [] as string[], projectIds: [] as string[], phone: '', role: 'Member', message: '', sendCopy: true })
 const inviteErrors = ref<string[]>([])
+const skillsSummary: LabelTemplate = ({ count }) => count === 1 ? '1 skill' : `${count} skills`
 const isSending = ref(false)
 
 const activeMembers = computed(() => teamMembers.value.filter(m => m.status === 'active' && m.role !== 'Guest'))
@@ -131,6 +132,23 @@ async function copyInviteLink(): Promise<void> {
   }
 }
 
+function inviteEmailErrors(): string[] {
+  const invalid = inviteForm.emails.filter(email => !EMAIL_PATTERN.test(email))
+  if (invalid.length)
+    return [`Check ${invalid.join(', ')}: that isn't a valid email address.`]
+  return inviteForm.emails.length ? [] : ['Add at least one email address.']
+}
+
+function onEmailRejected(email: string, reason: 'duplicate' | 'max'): void {
+  inviteErrors.value = [reason === 'duplicate' ? `${email} is already on the list.` : 'You can invite up to 10 people at once.']
+}
+
+// A shown error follows the list, so fixing or removing the address clears it
+watch(() => [...inviteForm.emails], () => {
+  if (inviteErrors.value.length)
+    inviteErrors.value = inviteEmailErrors()
+})
+
 function openInvite(): void {
   Object.assign(inviteForm, { emails: [], projectIds: [], phone: '', role: 'Member', message: '', sendCopy: true })
   inviteErrors.value = []
@@ -139,11 +157,9 @@ function openInvite(): void {
 
 async function sendInvites(): Promise<void> {
   const emails = inviteForm.emails
-  const invalid = emails.filter(email => !EMAIL_PATTERN.test(email))
-  if (!emails.length || invalid.length) {
-    inviteErrors.value = [invalid.length ? `Check ${invalid.join(', ')}: that isn't a valid email address.` : 'Add at least one email address.']
+  inviteErrors.value = inviteEmailErrors()
+  if (inviteErrors.value.length)
     return
-  }
 
   inviteErrors.value = []
   isSending.value = true
@@ -332,7 +348,7 @@ async function removeMember(): Promise<void> {
                 placeholder="All skills"
                 :options="skillOptions"
                 :max-chips="0"
-                max-chips-label="{count} skills"
+                :max-chips-label="skillsSummary"
                 size="sm"
                 clearable
                 class="mb-0"
@@ -506,6 +522,8 @@ async function removeMember(): Promise<void> {
             remove-label="Remove"
             :error-messages="inviteErrors"
             required
+            autofocus
+            @reject="onEmailRejected"
           />
 
           <div class="row">

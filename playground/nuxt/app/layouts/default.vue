@@ -24,6 +24,8 @@ const themes = [
   { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
 ]
 
+// A project page keeps Projects active; pages outside the bar leave no item active
+const mobileSection = computed(() => `/${route.path.split('/')[1] ?? ''}`)
 const mobileItems = [
   { id: 'home', to: '/', icon: '&#xe88a;', text: 'Home', ariaLabel: 'Go to home' },
   { id: 'inbox', to: '/inbox', icon: '&#xe156;', text: 'Inbox', ariaLabel: 'Go to inbox' },
@@ -48,6 +50,10 @@ function avatarColor(color: Intent): Exclude<Intent, 'muted'> | 'neutral' {
 
 function closeMenu(): void {
   isMenuActive.value = false
+}
+function searchOrbit(text: string): void {
+  if (text.trim())
+    navigateTo({ path: '/help', query: { q: text.trim() } })
 }
 </script>
 
@@ -147,6 +153,7 @@ function closeMenu(): void {
                 placeholder="Search Orbit"
                 variant="transparent"
                 rounded
+                @search="searchOrbit"
               />
             </UiNavbarItem>
           </UiNavbarNav>
@@ -308,7 +315,7 @@ function closeMenu(): void {
 
       <slot />
 
-      <UiNavigationBar :as="NuxtLink" :items="mobileItems" :active-item="route.path" indicator-tab />
+      <UiNavigationBar :as="NuxtLink" :items="mobileItems" :active-item="mobileSection" indicator-tab />
     </main>
 
     <UiAlertToast ref="toastRef" />

@@ -532,6 +532,7 @@ onMounted(() => {
               placeholder="Customer portal"
               maxlength="60"
               required
+              autofocus
               :error-messages="nameErrors"
             />
             <UiInputTextarea

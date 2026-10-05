@@ -134,7 +134,7 @@ function startSearch(label: string, found: Article[]): void {
 }
 
 function clearTopicQuery(): void {
-  if (route.query.topic)
+  if (route.query.topic || route.query.q)
     router.replace({ query: {} })
 }
 
@@ -178,9 +178,21 @@ function clearSearch(): void {
   clearTopicQuery()
 }
 
-watch(() => route.query.topic, openCategory)
+// The layout's global search sends its text here as `?q=`
+function searchFromQuery(text: unknown): void {
+  if (typeof text !== 'string' || !text.trim())
+    return
+  query.value = text.trim()
+  submitSearch()
+}
 
-onMounted(() => openCategory(route.query.topic))
+watch(() => route.query.topic, openCategory)
+watch(() => route.query.q, searchFromQuery)
+
+onMounted(() => {
+  openCategory(route.query.topic)
+  searchFromQuery(route.query.q)
+})
 
 onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
@@ -209,6 +221,7 @@ onBeforeUnmount(() => clearTimeout(searchTimer))
             :maxlength="80"
             placeholder="Search for “guest access” or “export data”"
             class="flex-grow-1 mb-0"
+            @clear="clearSearch"
           />
           <UiButton
             type="submit"

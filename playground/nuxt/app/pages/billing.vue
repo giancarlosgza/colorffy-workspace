@@ -2,6 +2,7 @@
 import type { IButtonToggleOption, IDatatableColumn, IDatePreset, IDateRange, UiConfirmModal } from '@colorffy/ui'
 import type { Invoice, Plan } from '~/utils/workspace'
 import { datePresets } from '@colorffy/ui'
+import { useMediaQuery, useMounted } from '@vueuse/core'
 
 definePageMeta({ pageTitle: 'Billing' })
 
@@ -25,6 +26,11 @@ const invoiceColumns: IDatatableColumn[] = [
   { key: 'status', label: 'Status' },
   { key: 'actions', label: 'Download', hideLabel: true, fit: true, sortable: false, align: 'end' }
 ]
+// Phones keep the invoice, amount, status and download; the server renders every column, so this waits for mount
+const isMounted = useMounted()
+const phoneQuery = useMediaQuery('(width < 600px)')
+const isPhone = computed(() => isMounted.value && phoneQuery.value)
+const visibleInvoiceColumns = computed(() => isPhone.value ? invoiceColumns.filter(column => !['date', 'period', 'plan'].includes(column.key)) : invoiceColumns)
 
 const usage = [
   { id: 'seats', label: 'Seats', icon: '&#xe7ef;', used: workspace.seatsUsed, limit: workspace.seatsTotal, unit: 'seats', hint: 'Add seats before your next invite.' },
@@ -480,19 +486,19 @@ function downloadAll(): void {
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th v-for="column in invoiceColumns" :key="column.key" scope="col">
+                  <th v-for="column in visibleInvoiceColumns" :key="column.key" scope="col">
                     {{ column.label }}
                   </th>
                 </tr>
               </thead>
-              <UiTableSkeleton :skeleton-rows="4" :skeleton-cols="invoiceColumns.length" aria-label="Loading invoices" />
+              <UiTableSkeleton :skeleton-rows="4" :skeleton-cols="visibleInvoiceColumns.length" aria-label="Loading invoices" />
             </table>
           </div>
 
           <UiDatatable
             v-else
             v-model:selected="selectedInvoices"
-            :columns="invoiceColumns"
+            :columns="visibleInvoiceColumns"
             :items="filteredInvoices"
             row-key="id"
             selectable
@@ -546,7 +552,7 @@ function downloadAll(): void {
             </template>
 
             <template #cell-id="{ item }">
-              <span class="fw-600">{{ item.id }}</span>
+              <span class="fw-600 text-nowrap">{{ item.id }}</span>
             </template>
 
             <template #cell-amount="{ item }">
