@@ -7,10 +7,13 @@ UiTooltip, UiStepper, UiTimeline, UiInputOtp, and all of Phase 4 (badge
 selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
 items below is breaking, so they can ship in any 3.x release.
 
-**Status (2026-10-04, branch `v3`).** Items 1 (UiPagination) and 2 (small input
-family) shipped with 3.0, stories included. Item 3 is decided (drop PrimeVue's
-Select and MultiSelect) and goes into 3.0 too: phases 1 (`UiInputCombobox`) and
-2 (`UiInputMultiSelect`) are built; phase 3 (remote search, free text) is next.
+**Status (2026-10-05, branch `v3`).** Items 1 (UiPagination) and 2 (small input
+family) shipped with 3.0, stories included. Item 3 phases 1 (`UiInputCombobox`)
+and 2 (`UiInputMultiSelect`) shipped with 3.0 too; phase 3 (remote search, free
+text) moved after the release. With the date picker ([datepicker.md](datepicker.md))
+and localization also in 3.0, PrimeVue's Select, MultiSelect and DatePicker all
+have native replacements (migration guide step 8). What is still open is
+listed in section 4.
 
 ## Conventions (apply to every item)
 
@@ -104,7 +107,7 @@ Original spec:
    Backspace on empty input removes last tag. Emits `update:modelValue`,
    `add(tag)`, `remove(tag)`.
 
-## 3. UiInputCombobox / UiInputMultiSelect (L) — in progress for 3.0
+## 3. UiInputCombobox / UiInputMultiSelect (L) — phases 1–2 shipped in 3.0
 
 Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
 `UiInputCombobox` (one value; `freeText` later makes it an autocomplete) and
@@ -131,10 +134,28 @@ Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
   and a selected-labels description. `useListbox` now owns option ids,
   scrolling and type-to-jump (repeating a letter cycles). Playground: the team
   invite dialog's "Add to projects".
-- **Phase 3:** `@search` + `loading` for remote options, `freeText` autocomplete.
+- **Phase 3 (after 3.0, any 3.x):** `@search` + `loading` for remote options,
+  `freeText` autocomplete.
 - **Later (4.0):** `_prime.scss` becomes an opt-in import.
 
 Original notes:
 - Scope if built: filterable listbox (combobox ARIA pattern), keyboard nav,
   `options`/`optionLabel`/`optionValue` API matching `UiInputSelect`, chips for
   multiselect values (reuse UiChip), no virtual scrolling in v1.
+
+## 4. After 3.0 (open, none breaking)
+
+1. **Combobox phase 3**: remote options (`@search`, `loading`) and `freeText`.
+2. **Date picker extras**: a `timeOptions` list mode, several dates in
+   `UiInputDate`, Temporal once it's Baseline (see [datepicker.md](datepicker.md)).
+3. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
+   a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
+   Nuxt module's pack list.
+4. **Density modes**: waits on container style queries becoming Baseline
+   Widely available (see [density-modes.md](density-modes.md)).
+5. **4.0**: `_prime.scss` becomes an opt-in import.
+
+Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
+focus return in `UiButtonMenu` (plus `checked` items and `UiPopoverMenu` arrow
+keys), the modal close button wrapping on phones, the faint dark-mode danger
+red, and select text running under the arrow.
