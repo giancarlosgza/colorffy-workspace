@@ -16,11 +16,23 @@
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
 
   .table-responsive::-webkit-scrollbar {
     display: none;
+  }
+
+  .table .form-select {
+    min-inline-size: max-content;
+  }
+
+  .table-caption {
+    margin-block: var(--cffy-space-16) 0;
+    color: var(--cffy-muted-a10);
+    font-size: var(--cffy-table-font-size, .75rem);
+    text-align: center;
   }
 
   .table-responsive.table-responsive-sticky {

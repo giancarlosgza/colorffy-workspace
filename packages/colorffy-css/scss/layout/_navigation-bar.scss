@@ -81,8 +81,8 @@ $indicator-max-items: 8;
           color: var(--_navigation-bar-item-color);
         }
 
-        // Nuxt link active class
-        &.router-link-exact-active {
+        // Active link
+        &:is(.router-link-exact-active, [aria-current="page"]) {
           p, i {
             color: var(--_navigation-bar-item-active-color);
           }
@@ -109,9 +109,14 @@ $indicator-max-items: 8;
         anchor-name: --cffy-navigation-bar-item-#{$i};
       }
 
-      &:has(.navigation-bar-item:nth-child(#{$i}) .navigation-bar-link.router-link-exact-active) {
+      &:has(.navigation-bar-item:nth-child(#{$i}) .navigation-bar-link:is(.router-link-exact-active, [aria-current="page"])) {
         --_navigation-bar-indicator-anchor: --cffy-navigation-bar-item-#{$i};
       }
+    }
+
+    // No active item
+    &:not(:has(.navigation-bar-link:is(.router-link-exact-active, [aria-current="page"]))) .indicator {
+      opacity: 0;
     }
 
     & .indicator {
@@ -137,7 +142,8 @@ $indicator-max-items: 8;
         // Animation
         @media (prefers-reduced-motion: no-preference) {
           transition: background-color var(--_navigation-bar-duration) var(--_navigation-bar-easing),
-          inset var(--_navigation-bar-duration) var(--_navigation-bar-easing);
+          inset var(--_navigation-bar-duration) var(--_navigation-bar-easing),
+          opacity var(--_navigation-bar-duration) var(--_navigation-bar-easing-out);
         }
       }
 
