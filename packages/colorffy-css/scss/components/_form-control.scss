@@ -182,7 +182,8 @@
       }
 
       &[type="datetime-local"],
-      &[type="date"] {
+      &[type="date"],
+      &[type="time"] {
         &::-webkit-calendar-picker-indicator {
           filter: var(--cffy-img-filter-invert);
         }
