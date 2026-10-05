@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { INavbarToggleEmits, INavbarToggleProps } from '@/types/navbar'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButtonTooltip from '../button/ButtonTooltip.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -8,8 +9,6 @@ import UiIconMaterial from '../icon/Material.vue'
 const props = withDefaults(defineProps<INavbarToggleProps>(), {
   id: 'sidebar-collapse',
   collapsed: false,
-  collapseText: 'Collapse sidebar',
-  expandText: 'Expand sidebar',
   customClass: null,
   showToggleButton: false
 })
@@ -17,8 +16,11 @@ const props = withDefaults(defineProps<INavbarToggleProps>(), {
 /** Emits */
 defineEmits<INavbarToggleEmits>()
 
+/** Labels */
+const l10n = useLabels('navbar')
+
 /** Computed */
-const tooltipText = computed(() => props.collapsed ? props.expandText : props.collapseText)
+const tooltipText = computed(() => (props.collapsed ? props.expandText ?? l10n.value.expand : props.collapseText ?? l10n.value.collapse))
 const iconCode = computed(() => props.collapsed ? '&#xf7e4;' : '&#xe9e2;')
 const toggleClasses = computed(() => [
   'sidebar-collapse-button',

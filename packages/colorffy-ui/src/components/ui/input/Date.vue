@@ -17,6 +17,7 @@ import {
   useCalendarLocale,
   withTimeInputValue
 } from '@/composables/useCalendarDates'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiCalendar from '../calendar/Calendar.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -63,25 +64,13 @@ const emit = defineEmits<IDateInputEmits>()
 /** Model */
 const model = defineModel<DateValue>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+const l10nCalendar = useLabels('calendar', () => props.labels)
+const l10nDate = useLabels('dateInput', () => props.labels)
+const l10nPresets = useLabels('datePresets')
+
 /** Data */
-const defaultLabels: IDateInputLabels = {
-  previousMonth: 'Previous month',
-  nextMonth: 'Next month',
-  rangeStart: 'Start date {date} selected. Pick an end date.',
-  toggle: 'Choose date',
-  clear: 'Clear date',
-  apply: 'Apply',
-  cancel: 'Cancel',
-  presets: 'Presets',
-  now: 'Now',
-  time: 'Time',
-  from: 'From',
-  to: 'To',
-  startDate: 'Start date',
-  endDate: 'End date',
-  startTime: 'Start time',
-  endTime: 'End time'
-}
 const uid = useId()
 const rootRef = ref<HTMLElement | null>(null)
 const anchorRef = ref<HTMLElement | null>(null)
@@ -99,7 +88,7 @@ const { isOpen, isAnchored, anchorName, open, close } = useAnchoredPopup(anchorR
 const resolvedLocale = useCalendarLocale(() => props.locale)
 
 /** Computed */
-const text = computed<IDateInputLabels>(() => ({ ...defaultLabels, ...props.labels }))
+const text = computed<IDateInputLabels>(() => ({ ...l10nCalendar.value, ...l10nDate.value }))
 const calendarLabels = computed(() => ({
   previousMonth: text.value.previousMonth,
   nextMonth: text.value.nextMonth,
@@ -134,7 +123,7 @@ const displayFormat = computed(() => {
   return new Intl.DateTimeFormat(resolvedLocale.value, { day: '2-digit', month: '2-digit', year: 'numeric', ...timeParts.value })
 })
 const valueText = computed(() => formatValue(model.value, displayFormat.value, isField.value))
-const pattern = computed(() => numericDatePattern(resolvedLocale.value))
+const pattern = computed(() => numericDatePattern(resolvedLocale.value, { day: text.value.dayLetters, month: text.value.monthLetters, year: text.value.yearLetters }))
 const fieldPattern = computed(() => {
   if (!hasTime.value)
     return pattern.value
@@ -144,7 +133,7 @@ const fieldPlaceholder = computed(() => props.placeholder ?? (isRange.value ? `$
 
 const activePreset = computed(() => findPreset(model.value))
 const draftPreset = computed(() => findPreset(draft.value))
-const buttonText = computed(() => activePreset.value?.label || valueText.value || props.placeholder || text.value.toggle)
+const buttonText = computed(() => (activePreset.value && presetLabel(activePreset.value)) || valueText.value || props.placeholder || text.value.toggle)
 const draftComplete = computed(() => {
   if (!isRange.value)
     return draft.value instanceof Date
@@ -172,6 +161,12 @@ const popupAria = computed(() => (isField.value && props.label
   : { 'aria-label': dialogName.value }))
 
 /** Methods */
+// Your own presets have a label; the `datePresets` helpers fall back to the configured texts
+function presetLabel(preset: IDatePreset): string {
+  if (preset.label)
+    return preset.label
+  return preset.key ? formatLabel(l10nPresets.value[preset.key], preset.params ?? {}) : ''
+}
 function asRange(value: DateValue): IDateRange | null {
   return value && !(value instanceof Date) ? value : null
 }
@@ -627,7 +622,7 @@ onBeforeUnmount(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
 
     <!-- Popup: after the feedback, so the error keeps following the field -->
@@ -651,8 +646,8 @@ onBeforeUnmount(() => {
           :aria-label="text.presets"
         >
           <li
-            v-for="preset in presets"
-            :key="preset.label"
+            v-for="(preset, index) in presets"
+            :key="index"
           >
             <button
               type="button"
@@ -660,7 +655,7 @@ onBeforeUnmount(() => {
               :aria-pressed="preset === draftPreset"
               @click="onPreset(preset)"
             >
-              {{ preset.label }}
+              {{ presetLabel(preset) }}
             </button>
           </li>
         </ul>

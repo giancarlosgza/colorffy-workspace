@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IPasswordInputEmits, IPasswordInputProps } from '@/types/input'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiInputText from './Text.vue'
@@ -9,12 +10,14 @@ import UiInputText from './Text.vue'
 const props = withDefaults(defineProps<IPasswordInputProps>(), {
   modelValue: null,
   maxlength: 128,
-  autocomplete: 'current-password',
-  revealLabel: 'Show password'
+  autocomplete: 'current-password'
 })
 
 /** Emits */
 const emit = defineEmits<IPasswordInputEmits>()
+/** Labels */
+const l10n = useLabels('password')
+const revealText = computed(() => props.revealLabel ?? l10n.value.reveal)
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
@@ -41,7 +44,7 @@ const textProps = computed(() => {
         custom-class="text-neutral"
         size="sm"
         icon
-        :aria-label="revealLabel"
+        :aria-label="revealText"
         :aria-pressed="revealed"
         :aria-controls="id ?? undefined"
         :disabled="disabled"

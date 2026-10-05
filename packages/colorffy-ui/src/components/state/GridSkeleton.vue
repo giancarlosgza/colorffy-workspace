@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../ui/button/Button.vue'
 import UiCard from '../ui/card/Card.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
@@ -23,9 +24,11 @@ const props = withDefaults(defineProps<IGridSkeletonProps>(), {
   cardVariant: 'pane',
   showFooter: true,
   role: 'status',
-  ariaLabel: 'Loading content grid',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Computed */
 const gridClasses = computed<(string | string[])[]>(() => {
@@ -46,8 +49,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.grid
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 
@@ -64,7 +68,7 @@ const ariaAttributes = computed(() => {
       v-for="skeletonGridIndex in skeletonGridItems"
       :key="`skeleton-grid-item-${skeletonGridIndex}`"
       :variant="cardVariant"
-      :aria-label="`Loading item ${skeletonGridIndex} of ${skeletonGridItems}`"
+      :aria-label="formatLabel(l10n.gridItem, { index: skeletonGridIndex, total: skeletonGridItems })"
     >
       <template #body>
         <!-- Skeleton -->
@@ -73,7 +77,7 @@ const ariaAttributes = computed(() => {
             size="lg"
             class="col-12 h-fixed rounded-lg"
             style="--cffy-h-fixed: 6.25rem;"
-            :aria-label="`Loading preview for item ${skeletonGridIndex}`"
+            :aria-label="formatLabel(l10n.gridPreview, { index: skeletonGridIndex })"
           />
         </div>
       </template>
@@ -83,7 +87,7 @@ const ariaAttributes = computed(() => {
           icon
           icon-variant="compact"
           disabled
-          aria-label="Action button (loading)"
+          :aria-label="l10n.gridAction"
         >
           <template #icon>
             <UiIconMaterial class="iw-bold" icon-code="&#xe3c6;" />

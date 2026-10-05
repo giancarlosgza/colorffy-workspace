@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ISelectInputEmits, ISelectInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ISelectInputProps>(), {
@@ -11,7 +12,6 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   options: () => [],
   optionLabel: null,
   optionValue: null,
-  placeholder: 'Select an option',
   disabled: false,
   required: false,
   optionalLabel: false,
@@ -24,6 +24,9 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<ISelectInputEmits>()
+/** Labels */
+const l10n = useLabels('select')
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | number | Record<string, unknown> | null>('modelValue', { default: null })
@@ -32,7 +35,7 @@ const model = defineModel<string | number | Record<string, unknown> | null>('mod
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const selectId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-const placeholderText = computed(() => props.placeholder ?? undefined)
+const placeholderText = computed(() => props.placeholder ?? l10n.value.placeholder)
 
 const groupClasses = computed(() => [
   'form-group',
@@ -94,7 +97,7 @@ watch(model, (value) => {
         :value="null"
         disabled
       >
-        {{ placeholder }}
+        {{ placeholderText }}
       </option>
       <option
         v-for="(option, indexOption) in options"
@@ -117,7 +120,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

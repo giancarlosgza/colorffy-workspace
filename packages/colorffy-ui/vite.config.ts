@@ -20,8 +20,10 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: resolve(__dirname, 'src/index.ts'),
-        nuxt: resolve(__dirname, 'src/nuxt.ts')
+        'index': resolve(__dirname, 'src/index.ts'),
+        'nuxt': resolve(__dirname, 'src/nuxt.ts'),
+        'locales/en': resolve(__dirname, 'src/locales/en.ts'),
+        'locales/es': resolve(__dirname, 'src/locales/es.ts')
       },
       name: 'ColorffyUI',
       formats: ['es', 'cjs']

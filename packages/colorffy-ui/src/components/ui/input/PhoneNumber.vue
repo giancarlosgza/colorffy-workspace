@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IPhoneNumberInputEmits, IPhoneNumberInputProps } from '@/types/input'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import { useTextUtils } from '@/composables/useTextUtils'
 
 /** Props */
@@ -24,6 +25,9 @@ const props = withDefaults(defineProps<IPhoneNumberInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IPhoneNumberInputEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: '' })
@@ -111,7 +115,7 @@ const inputClasses = computed(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

@@ -2,6 +2,7 @@
 import type { ComponentPublicInstance } from 'vue'
 import type { IInputOtpEmits, IInputOtpProps } from '@/types/input'
 import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IInputOtpProps>(), {
@@ -26,6 +27,9 @@ const props = withDefaults(defineProps<IInputOtpProps>(), {
 
 /** Emits */
 const emit = defineEmits<IInputOtpEmits>()
+/** Labels */
+const l10n = useLabels('otp')
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string>('modelValue', { default: '' })
@@ -82,8 +86,7 @@ function boxId(index: number) {
 }
 
 function boxLabel(index: number) {
-  const base = props.label || 'One-time code'
-  return `${base}, digit ${index + 1} of ${props.length}`
+  return formatLabel(l10n.value.digit, { label: props.label || l10n.value.ariaLabel, index: index + 1, length: props.length })
 }
 
 function sanitizeValue(value: string) {
@@ -264,7 +267,7 @@ watch(() => props.length, () => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

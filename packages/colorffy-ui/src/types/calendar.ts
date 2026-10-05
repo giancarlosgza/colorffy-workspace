@@ -1,3 +1,4 @@
+import type { IColorffyLabels } from '@/types/config'
 import type { ClassValue } from '@/types/shared'
 
 /**
@@ -18,7 +19,12 @@ export interface IDateRange {
  * picked and returns a `Date` (single mode) or an `IDateRange` (range mode).
  */
 export interface IDatePreset {
-  label: string
+  /** Text in the list. Required on your own presets. */
+  label?: string
+  /** Set by the `datePresets` helpers: the configured text shown without a `label`. */
+  key?: keyof IColorffyLabels['datePresets']
+  /** Values for the text's placeholders, such as `{ count: 7 }`. */
+  params?: Record<string, string | number>
   value: () => Date | IDateRange
 }
 
@@ -50,20 +56,20 @@ export interface ICalendarDaySlot {
 export interface ICalendarLabels {
   /**
    * Accessible name of the previous-month button.
-   * @default 'Previous month'
+   * @default 'Previous month', from the configured labels
    */
   previousMonth: string
 
   /**
    * Accessible name of the next-month button.
-   * @default 'Next month'
+   * @default 'Next month', from the configured labels
    */
   nextMonth: string
 
   /**
    * Announced after the first pick in `range` mode. `{date}` is replaced with
    * the full date.
-   * @default 'Start date {date} selected. Pick an end date.'
+   * @default 'Start date {date} selected. Pick an end date.', from the configured labels
    */
   rangeStart: string
 }
@@ -159,7 +165,7 @@ export interface ICalendarProps {
 
   /**
    * Accessible name of the calendar.
-   * @default 'Calendar'
+   * @default 'Calendar', from the configured labels
    */
   ariaLabel?: string
 

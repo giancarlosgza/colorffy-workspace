@@ -2,6 +2,7 @@
 import type { StyleValue } from 'vue'
 import { breakpointsBootstrapV5, useBreakpoints } from '@vueuse/core'
 import { computed, onMounted, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../ui/icon/Material.vue'
 import StateBaseSkeleton from './BaseSkeleton.vue'
 
@@ -26,10 +27,12 @@ const props = withDefaults(defineProps<ITableSkeletonProps>(), {
   customClass: null,
   skeletonStyles: null,
   role: 'status',
-  ariaLabel: 'Loading table data',
   ariaLive: 'polite',
   isExpanded: false
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Data */
 const breakpoints = useBreakpoints(breakpointsBootstrapV5)
@@ -60,8 +63,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.table
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 

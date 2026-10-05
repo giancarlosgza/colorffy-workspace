@@ -25,7 +25,7 @@ export interface IAvatarProps {
   src?: string
   /**
    * Alternative text / accessible name for the avatar image.
-   * @default 'Avatar'
+   * @default 'Avatar', from the configured labels
    */
   alt?: string
   size?: AvatarSize

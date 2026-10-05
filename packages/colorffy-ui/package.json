@@ -19,6 +19,11 @@
       "types": "./dist/nuxt.d.ts",
       "import": "./dist/nuxt.js",
       "require": "./dist/nuxt.cjs"
+    },
+    "./locales/*": {
+      "types": "./dist/locales/*.d.ts",
+      "import": "./dist/locales/*.js",
+      "require": "./dist/locales/*.cjs"
     }
   },
   "files": [

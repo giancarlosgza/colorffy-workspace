@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ICheckEmits, ICheckProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ICheckProps>(), {
@@ -22,6 +23,9 @@ const props = withDefaults(defineProps<ICheckProps>(), {
 
 /** Emits */
 const emit = defineEmits<ICheckEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 // Default to false so a checkbox starts as a real boolean, not null.
@@ -89,7 +93,7 @@ watch(model, (value) => {
         v-else-if="optionalLabel"
         class="caption text-muted mt-1"
       >
-        Optional
+        {{ l10nCommon.optional }}
       </p>
     </div>
   </div>

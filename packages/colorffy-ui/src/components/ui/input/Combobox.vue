@@ -3,6 +3,7 @@ import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IComboboxInputEmits, IComboboxInputProps } from '@/types/input'
 import { computed, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
+import { useLabels } from '@/composables/useColorffyConfig'
 import { normalizeText, useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -28,14 +29,17 @@ const props = withDefaults(defineProps<IComboboxInputProps>(), {
   optionDisabled: null,
   optionGroup: null,
   filterable: true,
-  clearable: false,
-  emptyText: 'No results',
-  clearLabel: 'Clear selection',
-  toggleLabel: 'Show options'
+  clearable: false
 })
 
 /** Emits */
 const emit = defineEmits<IComboboxInputEmits>()
+/** Labels */
+const l10n = useLabels('combobox')
+const l10nCommon = useLabels('common')
+const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
+const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
 
 /** Model */
 const model = defineModel<ComboboxValue | null>('modelValue', { default: null })
@@ -305,7 +309,7 @@ watch(model, (value) => {
           custom-class="text-neutral"
           size="sm"
           icon
-          :aria-label="clearLabel"
+          :aria-label="clearText"
           :aria-controls="fieldId"
           @mousedown.prevent
           @click="clear"
@@ -322,7 +326,7 @@ watch(model, (value) => {
           size="sm"
           icon
           tabindex="-1"
-          :aria-label="toggleLabel"
+          :aria-label="toggleText"
           :aria-expanded="isOpen"
           :aria-controls="isOpen ? listboxId : undefined"
           :disabled="isLocked"
@@ -348,7 +352,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
 
     <!-- Options: after the feedback, so the error keeps following the field -->
@@ -419,7 +423,7 @@ watch(model, (value) => {
         role="status"
       >
         <slot name="empty" :query="query">
-          {{ emptyText }}
+          {{ emptyLabel }}
         </slot>
       </p>
     </div>

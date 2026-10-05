@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ISearchInputEmits, ISearchInputProps } from '@/types/input'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiInputText from './Text.vue'
@@ -8,12 +9,14 @@ import UiInputText from './Text.vue'
 /** Props */
 const props = withDefaults(defineProps<ISearchInputProps>(), {
   modelValue: null,
-  autocomplete: 'off',
-  clearLabel: 'Clear search'
+  autocomplete: 'off'
 })
 
 /** Emits */
 const emit = defineEmits<ISearchInputEmits>()
+/** Labels */
+const l10n = useLabels('search')
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
@@ -66,7 +69,7 @@ function onKeydown(event: KeyboardEvent): void {
         custom-class="text-neutral"
         size="sm"
         icon
-        :aria-label="clearLabel"
+        :aria-label="clearText"
         :aria-controls="id ?? undefined"
         :disabled="disabled || readonly"
         @click="clear"

@@ -20,7 +20,7 @@ export interface INavbarProps {
 
   /**
    * Accessible label for the navigation landmark.
-   * @default 'Main navigation'
+   * @default 'Main navigation', from the configured labels
    */
   ariaLabel?: string
 
@@ -84,13 +84,13 @@ export interface INavbarToggleProps {
 
   /**
    * Tooltip text when sidebar is expanded.
-   * @default 'Collapse sidebar'
+   * @default 'Collapse sidebar', from the configured labels
    */
   collapseText?: string
 
   /**
    * Tooltip text when sidebar is collapsed.
-   * @default 'Expand sidebar'
+   * @default 'Expand sidebar', from the configured labels
    */
   expandText?: string
 

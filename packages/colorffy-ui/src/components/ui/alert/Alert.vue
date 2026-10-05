@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IAlertEmits, IAlertProps } from '@/types/alert'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -13,12 +14,14 @@ const props = withDefaults(defineProps<IAlertProps>(), {
   size: undefined,
   customClass: undefined,
   dismissible: false,
-  duration: undefined,
-  closeLabel: 'Close'
+  duration: undefined
 })
 
 /** Emits */
 const emit = defineEmits<IAlertEmits>()
+/** Labels */
+const l10n = useLabels('alert')
+const closeText = computed(() => props.closeLabel ?? l10n.value.close)
 
 /** Data */
 const isVisible = ref<boolean>(true)
@@ -125,7 +128,7 @@ function dismiss() {
           v-if="dismissible"
           type="button"
           class="alert-close"
-          :aria-label="closeLabel"
+          :aria-label="closeText"
           @click="dismiss"
         >
           <UiIconMaterial icon-code="&#xe5cd;" />

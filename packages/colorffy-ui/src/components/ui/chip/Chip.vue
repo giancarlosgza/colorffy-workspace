@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IChipEmits, IChipProps } from '@/types/chip'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -14,12 +15,14 @@ const props = withDefaults(defineProps<IChipProps>(), {
   textOnly: false,
   variant: 'outline',
   color: 'primary',
-  closeLabel: 'Remove',
   customClass: null
 })
 
 /** Emits */
 const emit = defineEmits<IChipEmits>()
+/** Labels */
+const l10n = useLabels('chip')
+const closeText = computed(() => props.closeLabel ?? l10n.value.remove)
 
 /** Computed */
 const chipClasses = computed(() => {
@@ -78,7 +81,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
       type="button"
       class="chip-remove"
       :disabled="disabled"
-      :aria-label="closeLabel"
+      :aria-label="closeText"
       @click="emit('remove')"
     >
       <UiIconMaterial icon-code="&#xe5cd;" />

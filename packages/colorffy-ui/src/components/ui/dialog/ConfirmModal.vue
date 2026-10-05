@@ -2,6 +2,7 @@
 import type { IConfirmModalEmits, IConfirmModalProps } from '@/types/dialog'
 import { vOnClickOutside } from '@vueuse/components'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -13,16 +14,16 @@ const props = withDefaults(defineProps<IConfirmModalProps>(), {
   size: undefined,
   title: null,
   message: null,
-  confirmLabel: 'Delete',
-  cancelLabel: 'Cancel',
   isLoading: false,
-  loadingLabel: 'Deleting...',
   variant: 'danger',
   customClass: null
 })
 
 /** Emits */
 const emit = defineEmits<IConfirmModalEmits>()
+
+/** Labels */
+const l10n = useLabels('confirmModal')
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
@@ -167,13 +168,13 @@ defineExpose({
       <div class="dialog-footer">
         <UiButton
           variant="text"
-          :text="cancelLabel"
+          :text="cancelLabel ?? l10n.cancel"
           @click="closeDialog"
         />
         <UiButton
           variant="filled"
           :class="buttonClass"
-          :text="isLoading ? loadingLabel : confirmLabel"
+          :text="isLoading ? loadingLabel ?? l10n.loading : confirmLabel ?? l10n.confirm"
           :loading="isLoading"
           :disabled="isLoading"
           @click="emit('confirm')"

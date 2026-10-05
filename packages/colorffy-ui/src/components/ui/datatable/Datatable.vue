@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IDatatableColumn, IDatatableColumnSlotProps, IDatatableProps } from '@/types/datatable'
 import { computed, ref, useId, useSlots, watch } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import StateEmpty from '../../state/Empty.vue'
 import StateTableSkeleton from '../../state/TableSkeleton.vue'
 import UiButtonGroup from '../button/ButtonGroup.vue'
@@ -23,14 +24,13 @@ const props = withDefaults(defineProps<IDatatableProps>(), {
   stickyHeight: null,
   pagination: null,
   columnManager: false,
-  columnsToggleTooltip: () => ({ showAll: 'Show all columns', hideDefault: 'Hide default columns' }),
-  columnManagerTooltip: 'Manage columns',
   toolbarButton: null,
-  emptyStateTitle: 'No data available',
-  emptyStateSubtitle: 'You may want to try using different filters or check back later.',
   emptyStateUseCustomIcon: false,
   emptyStateIconCode: '&#xeb83;'
 })
+
+/** Labels */
+const l10n = useLabels('datatable')
 
 /** Slots */
 const slots = useSlots()
@@ -54,12 +54,12 @@ watch(defaultHiddenKeys, (val) => {
 /** Computed */
 const areAllColumnsVisible = computed(() => managedHiddenColumns.value.length === 0)
 const columnsToggleTooltipText = computed(() => {
-  if (typeof props.columnsToggleTooltip === 'string') {
-    return props.columnsToggleTooltip
-  }
+  const tooltip = props.columnsToggleTooltip
+  if (typeof tooltip === 'string')
+    return tooltip
   return areAllColumnsVisible.value
-    ? props.columnsToggleTooltip.hideDefault
-    : props.columnsToggleTooltip.showAll
+    ? tooltip?.hideDefault ?? l10n.value.hideDefaultColumns
+    : tooltip?.showAll ?? l10n.value.showAllColumns
 })
 const visibleColumns = computed(() => {
   return props.columns.filter(col => !managedHiddenColumns.value.includes(col.key))
@@ -72,7 +72,7 @@ const stickyStyle = computed(() => {
 })
 const columnCount = computed(() => visibleColumns.value.length + (props.selectable ? 1 : 0))
 const selectAllId = useId()
-const selectAllLabel = computed(() => (props.pagination ? 'Select all rows on this page' : 'Select all rows'))
+const selectAllLabel = computed(() => (props.pagination ? l10n.value.selectAllOnPage : l10n.value.selectAll))
 const toolbarId = useId()
 
 const hasToolbarActions = computed(() => defaultHiddenKeys.value.length > 0 || props.columnManager || !!slots['actions-start'] || !!slots['actions-end'])
@@ -269,7 +269,7 @@ watch(() => props.items.length, (_length, previous) => {
             variant="outline"
             size="sm"
             icon
-            :tooltip-text="columnManagerTooltip"
+            :tooltip-text="columnManagerTooltip ?? l10n.manageColumns"
             v-bind="toolbarButton"
           >
             <template #icon>
@@ -382,7 +382,7 @@ watch(() => props.items.length, (_length, previous) => {
                   type="checkbox"
                   class="form-check-input"
                   :checked="isRowSelected(item, pageOffset + index)"
-                  :aria-label="`Select row ${pageOffset + index + 1}`"
+                  :aria-label="formatLabel(l10n.selectRow, { row: pageOffset + index + 1 })"
                   @change="toggleRowSelection(item, pageOffset + index)"
                 >
               </div>
@@ -404,8 +404,8 @@ watch(() => props.items.length, (_length, previous) => {
           <tr>
             <td :colspan="columnCount">
               <StateEmpty
-                :title="emptyStateTitle"
-                :subtitle="emptyStateSubtitle"
+                :title="emptyStateTitle ?? l10n.emptyTitle"
+                :subtitle="emptyStateSubtitle ?? l10n.emptySubtitle"
                 :use-custom-icon="emptyStateUseCustomIcon"
                 :icon-code="emptyStateIconCode"
               />

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { IAvatarProps } from '@/types/avatar'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IAvatarProps>(), {
   src: '',
-  alt: 'Avatar',
   size: 'sm',
   initials: null,
   maskShape: null,
@@ -14,6 +14,10 @@ const props = withDefaults(defineProps<IAvatarProps>(), {
   color: null,
   variant: null
 })
+
+/** Labels */
+const l10n = useLabels('avatar')
+const altText = computed(() => props.alt ?? l10n.value.alt)
 
 /** Data */
 const imageError = ref(false)
@@ -98,7 +102,7 @@ function handleImageError() {
       v-if="src && !imageError"
       :src="src"
       :class="avatarClasses"
-      :alt="alt"
+      :alt="altText"
       @error="handleImageError"
     >
 
@@ -131,7 +135,7 @@ function handleImageError() {
     v-else-if="src && !imageError"
     :src="src"
     :class="avatarClasses"
-    :alt="alt"
+    :alt="altText"
     @error="handleImageError"
   >
 

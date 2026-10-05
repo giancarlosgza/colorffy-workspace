@@ -6,32 +6,32 @@ import type { ClassValue, SizeLevel } from '@/types/shared'
 export interface IPaginationLabels {
   /**
    * Accessible name of the first-page button.
-   * @default 'First page'
+   * @default 'First page', from the configured labels
    */
   first: string
 
   /**
    * Accessible name of the previous-page button.
-   * @default 'Previous page'
+   * @default 'Previous page', from the configured labels
    */
   previous: string
 
   /**
    * Accessible name of the next-page button.
-   * @default 'Next page'
+   * @default 'Next page', from the configured labels
    */
   next: string
 
   /**
    * Accessible name of the last-page button.
-   * @default 'Last page'
+   * @default 'Last page', from the configured labels
    */
   last: string
 
   /**
    * Position text, shown in the compact layout and announced to screen readers
    * when the page changes. `{page}` and `{total}` are replaced with numbers.
-   * @default 'Page {page} of {total}'
+   * @default 'Page {page} of {total}', from the configured labels
    */
   status: string
 }
@@ -102,7 +102,7 @@ export interface IPaginationProps {
   /**
    * Accessible name for the `<nav>` landmark. Give each pagination on a page
    * its own name.
-   * @default 'Pagination'
+   * @default 'Pagination', from the configured labels
    */
   ariaLabel?: string
 

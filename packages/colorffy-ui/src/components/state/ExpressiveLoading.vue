@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Interfaces */
 interface IExpressiveLoadingProps {
@@ -22,9 +23,11 @@ const props = withDefaults(defineProps<IExpressiveLoadingProps>(), {
   customClass: null,
   loadingStyles: null,
   role: 'status',
-  ariaLabel: 'Loading content',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Data */
 const titleDynamic = ref<string | null>(null)
@@ -77,8 +80,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.content
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 

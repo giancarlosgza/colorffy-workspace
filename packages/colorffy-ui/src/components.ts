@@ -48,7 +48,10 @@ export { default as UiCard } from './components/ui/card/Card.vue'
 
 // Components - Chip
 export { default as UiChip } from './components/ui/chip/Chip.vue'
+
 export { default as UiChipGroup } from './components/ui/chip/ChipGroup.vue'
+// Components - Config
+export { default as UiConfigProvider } from './components/ui/config/ConfigProvider.vue'
 
 // Components - Table
 export { default as UiDatatable } from './components/ui/datatable/Datatable.vue'

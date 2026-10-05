@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IColorPickerEmits, IColorPickerProps } from '@/types/input'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IColorPickerProps>(), {
@@ -23,6 +24,9 @@ const props = withDefaults(defineProps<IColorPickerProps>(), {
 
 /** Emits */
 const emit = defineEmits<IColorPickerEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
@@ -118,7 +122,7 @@ const textClasses = computed(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

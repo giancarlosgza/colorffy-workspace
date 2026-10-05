@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IBreadcrumbEmits, IBreadcrumbItem, IBreadcrumbProps } from '@/types/breadcrumb'
 import { computed, h } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -8,7 +9,6 @@ const props = withDefaults(defineProps<IBreadcrumbProps>(), {
   as: 'a',
   separator: '/',
   separatorIcon: null,
-  ariaLabel: 'Breadcrumb',
   structuredData: true,
   baseUrl: '',
   maxItems: 0,
@@ -17,6 +17,9 @@ const props = withDefaults(defineProps<IBreadcrumbProps>(), {
 
 /** Emits */
 const emit = defineEmits<IBreadcrumbEmits>()
+/** Labels */
+const l10n = useLabels('breadcrumb')
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 
 /** Computed */
 const isCollapsed = computed(() => props.maxItems > 0 && props.items.length > props.maxItems)
@@ -106,7 +109,7 @@ function StructuredData() {
 
 <template>
   <nav
-    :aria-label="ariaLabel"
+    :aria-label="navText"
     class="breadcrumb-nav"
     :class="customClass"
   >

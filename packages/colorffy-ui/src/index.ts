@@ -1,8 +1,9 @@
 // Export all components
 export * from './components'
 
-// Composables
 export { datePresets } from './composables/useCalendarDates'
+// Composables
+export { formatLabel, installColorffyConfig, useColorffyConfig, useLabels } from './composables/useColorffyConfig'
 export { useDateUtils } from './composables/useDateUtils'
 export { useTextUtils } from './composables/useTextUtils'
 export { useToast } from './composables/useToast'
@@ -21,6 +22,7 @@ export type * from './types/button'
 export type * from './types/calendar'
 export type * from './types/card'
 export type * from './types/chip'
+export type * from './types/config'
 export type * from './types/datatable'
 export type * from './types/dialog'
 export type * from './types/divider'

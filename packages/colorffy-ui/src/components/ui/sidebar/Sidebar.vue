@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ISidebarEmits, ISidebarProps } from '@/types/sidebar'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ISidebarProps>(), {
@@ -8,7 +9,6 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
   rail: false,
   open: false,
   width: null,
-  ariaLabel: 'Main navigation',
   customClass: '',
   headerClass: null,
   bodyClass: null,
@@ -17,6 +17,9 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
 
 /** Emits */
 const emit = defineEmits<ISidebarEmits>()
+/** Labels */
+const l10n = useLabels('sidebar')
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 
 /** Computed */
 const sidebarClasses = computed(() => [
@@ -47,7 +50,7 @@ const sidebarStyles = computed(() => {
   <nav
     :class="sidebarClasses"
     :style="sidebarStyles"
-    :aria-label="ariaLabel"
+    :aria-label="navText"
   >
     <div class="drawer-content">
       <div

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButtonGroup from '../ui/button/ButtonGroup.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
@@ -24,11 +25,13 @@ const props = withDefaults(defineProps<IEmptyProps>(), {
   customClass: null,
   emptyStyles: null,
   role: 'status',
-  ariaLabel: 'Empty state',
   ariaLive: 'polite',
   useCustomIcon: false,
   iconCode: '&#xeb83;'
 })
+
+/** Labels */
+const l10n = useLabels('empty')
 
 /** Computed */
 const emptyClasses = computed<(string | string[])[]>(() => {
@@ -45,8 +48,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.ariaLabel
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 

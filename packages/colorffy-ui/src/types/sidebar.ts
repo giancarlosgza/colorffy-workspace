@@ -13,7 +13,7 @@ export interface ISidebarProps {
 
   /**
    * Accessible label for the navigation landmark.
-   * @default 'Main navigation'
+   * @default 'Main navigation', from the configured labels
    */
   ariaLabel?: string
 

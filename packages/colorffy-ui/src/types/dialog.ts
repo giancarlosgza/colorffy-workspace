@@ -49,7 +49,7 @@ export interface IDialogProps {
 
   /**
    * Optional label for the primary confirm action (used by confirm-style dialogs).
-   * @default 'Delete'
+   * @default 'Delete', from the configured labels
    */
   confirmLabel?: string | null
 
@@ -110,13 +110,13 @@ export interface IConfirmModalProps extends IDialogProps {
 
   /**
    * Text to display when loading.
-   * @default 'Deleting...'
+   * @default 'Deleting...', from the configured labels
    */
   loadingLabel?: string
 
   /**
    * Text for the cancel button.
-   * @default 'Cancel'
+   * @default 'Cancel', from the configured labels
    */
   cancelLabel?: string
 }

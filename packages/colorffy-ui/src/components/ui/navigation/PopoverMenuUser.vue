@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IPopoverMenuUserProps } from '@/types/navigation'
 import { computed } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IPopoverMenuUserProps>(), {
@@ -13,11 +14,14 @@ const props = withDefaults(defineProps<IPopoverMenuUserProps>(), {
   customClass: null
 })
 
+/** Labels */
+const l10n = useLabels('popoverMenu')
+
 /** Computed */
 const name = computed(() => props.displayName ?? props.user?.displayName ?? null)
 const mail = computed(() => props.email ?? props.user?.email ?? null)
 const photo = computed(() => props.photoUrl ?? props.user?.photoURL ?? null)
-const photoAlt = computed(() => props.alt ?? `${name.value || 'Account'} profile photo`)
+const photoAlt = computed(() => props.alt ?? formatLabel(l10n.value.photoAlt, { name: name.value || l10n.value.account }))
 </script>
 
 <template>

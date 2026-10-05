@@ -283,7 +283,7 @@ export interface IButtonToggleGroupProps {
 
   /**
    * Accessible name of the radiogroup.
-   * @default 'Toggle button group'
+   * @default 'Toggle button group', from the configured labels
    */
   ariaLabel?: string
 }

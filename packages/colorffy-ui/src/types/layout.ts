@@ -65,7 +65,7 @@ export interface IHeaderContentProps {
 
   /**
    * Tooltip text for the back button.
-   * @default 'Go back'
+   * @default 'Go back', from the configured labels
    */
   backButtonLabel?: string
 

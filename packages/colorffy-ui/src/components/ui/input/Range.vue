@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IRangeInputEmits, IRangeInputProps } from '@/types/input'
 import { computed, onMounted, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IRangeInputProps>(), {
@@ -23,6 +24,9 @@ const props = withDefaults(defineProps<IRangeInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IRangeInputEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
@@ -113,7 +117,7 @@ onMounted(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

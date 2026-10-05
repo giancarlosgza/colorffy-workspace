@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ITextInputEmits, ITextInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ITextInputProps>(), {
@@ -29,6 +30,9 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<ITextInputEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
@@ -157,7 +161,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

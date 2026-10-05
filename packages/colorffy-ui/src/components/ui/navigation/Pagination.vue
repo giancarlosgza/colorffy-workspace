@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { IPaginationLabels, IPaginationProps } from '@/types/pagination'
+import type { IPaginationProps } from '@/types/pagination'
 import { computed, ref, watch } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 type PaginationItem = number | 'start-gap' | 'end-gap'
@@ -15,7 +16,6 @@ const props = withDefaults(defineProps<IPaginationProps>(), {
   compact: false,
   size: 'sm',
   disabled: false,
-  ariaLabel: 'Pagination',
   labels: null,
   customClass: null
 })
@@ -24,17 +24,10 @@ const props = withDefaults(defineProps<IPaginationProps>(), {
 const page = defineModel<number>('page', { default: 1 })
 
 /** Data */
-const defaultLabels: IPaginationLabels = {
-  first: 'First page',
-  previous: 'Previous page',
-  next: 'Next page',
-  last: 'Last page',
-  status: 'Page {page} of {total}'
-}
 const announcement = ref('')
 
 /** Computed */
-const text = computed<IPaginationLabels>(() => ({ ...defaultLabels, ...props.labels }))
+const text = useLabels('pagination', () => props.labels)
 const pageCount = computed(() => {
   const count = props.totalPages ?? Math.ceil(props.total / Math.max(1, props.pageSize))
   return Math.max(1, Math.floor(count) || 1)
@@ -72,7 +65,7 @@ function range(start: number, end: number): number[] {
   return Array.from({ length: end - start + 1 }, (_, i) => start + i)
 }
 function formatStatus(value: number): string {
-  return text.value.status.replace(/\{page\}/g, String(value)).replace(/\{total\}/g, String(pageCount.value))
+  return formatLabel(text.value.status, { page: value, total: pageCount.value })
 }
 function go(target: number): void {
   const next = Math.min(Math.max(1, target), pageCount.value)
@@ -92,7 +85,7 @@ watch([pageCount, page], () => {
 
 <template>
   <nav
-    :aria-label="ariaLabel"
+    :aria-label="ariaLabel ?? text.ariaLabel"
     :class="navClasses"
   >
     <ul class="pagination">

@@ -2,6 +2,7 @@
 import type { IProgressSpinnerProps } from '@/types/progress'
 import type { ClassValue } from '@/types/shared'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IProgressSpinnerProps>(), {
@@ -9,6 +10,9 @@ const props = withDefaults(defineProps<IProgressSpinnerProps>(), {
   customClass: null,
   customStyles: null
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Computed */
 const spinnerClasses = computed(() => {
@@ -28,6 +32,6 @@ const spinnerStyles = computed(() => [{ '--cffy-progress-spinner-size': props.si
     :class="spinnerClasses"
     :style="spinnerStyles"
     role="status"
-    aria-label="Loading"
+    :aria-label="l10n.spinner"
   />
 </template>

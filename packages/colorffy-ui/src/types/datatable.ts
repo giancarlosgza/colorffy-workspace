@@ -243,12 +243,12 @@ export interface IDatatableProps {
   columnManager?: boolean
   /**
    * Tooltip text or object for the column toggle button.
-   * @default { showAll: 'Show all columns', hideDefault: 'Hide default columns' }
+   * @default { showAll: 'Show all columns', hideDefault: 'Hide default columns' }, from the configured labels
    */
   columnsToggleTooltip?: string | IColumnsToggleTooltip
   /**
    * Tooltip text for the icon-only column manager button; also its accessible name.
-   * @default 'Manage columns'
+   * @default 'Manage columns', from the configured labels
    */
   columnManagerTooltip?: string
   /**
@@ -259,12 +259,12 @@ export interface IDatatableProps {
   toolbarButton?: DatatableToolbarButton | null
   /**
    * Title text for the empty state.
-   * @default 'No data available'
+   * @default 'No data available', from the configured labels
    */
   emptyStateTitle?: string
   /**
    * Subtitle text for the empty state.
-   * @default 'You may want to try using different filters or check back later.'
+   * @default 'You may want to try using different filters or check back later.', from the configured labels
    */
   emptyStateSubtitle?: string
   /**

@@ -1,5 +1,6 @@
 import type { IDatePreset, IDateRange } from '@/types/calendar'
 import { computed, onMounted, ref } from 'vue'
+import { useColorffyConfig } from '@/composables/useColorffyConfig'
 
 type DatePart = 'day' | 'month' | 'year'
 
@@ -80,15 +81,17 @@ export function supportedLocale(locale: string | null | undefined): string | nul
 }
 
 /**
- * The calendar locale: `locale` when the runtime supports it, else the page's
- * `lang` or the browser's language once mounted, else `en-US`.
+ * The calendar locale: `locale` when the runtime supports it, else the
+ * configured one, else the page's `lang` or the browser's language once
+ * mounted, else `en-US`.
  */
 export function useCalendarLocale(locale: () => string | null | undefined) {
+  const config = useColorffyConfig()
   const clientLocale = ref<string | null>(null)
   onMounted(() => {
     clientLocale.value = supportedLocale(document.documentElement.lang) ?? supportedLocale(navigator.language)
   })
-  return computed(() => supportedLocale(locale()) ?? clientLocale.value ?? 'en-US')
+  return computed(() => supportedLocale(locale()) ?? supportedLocale(config.locale) ?? clientLocale.value ?? 'en-US')
 }
 
 /** The locale's numeric date format: two-digit day and month, full year. */
@@ -102,9 +105,8 @@ export function numericDateOrder(locale: string): DatePart[] {
 }
 
 /** A typing hint for the locale's numeric dates, such as `mm/dd/yyyy`. */
-export function numericDatePattern(locale: string): string {
-  const letters: Record<string, string> = { day: 'dd', month: 'mm', year: 'yyyy' }
-  return numericDateFormat(locale).formatToParts(SAMPLE_DATE).map(part => letters[part.type] ?? part.value.replace(/[\u200E\u200F]/g, '')).join('')
+export function numericDatePattern(locale: string, letters: Record<DatePart, string> = { day: 'dd', month: 'mm', year: 'yyyy' }): string {
+  return numericDateFormat(locale).formatToParts(SAMPLE_DATE).map(part => letters[part.type as DatePart] ?? part.value.replace(/[\u200E\u200F]/g, '')).join('')
 }
 
 /**
@@ -188,30 +190,36 @@ function today(): Date {
 }
 
 /**
- * Ready-made presets for `UiInputDate`. Each takes an optional label so it can
- * be translated; the dates are computed when the preset is picked.
+ * Ready-made presets for `UiInputDate`. Without a `label`, each shows the
+ * configured `datePresets` text in the current language; the dates are
+ * computed when the preset is picked.
  */
 export const datePresets = {
-  today: (label = 'Today'): IDatePreset => ({ label, value: () => today() }),
-  yesterday: (label = 'Yesterday'): IDatePreset => ({ label, value: () => addDays(today(), -1) }),
-  tomorrow: (label = 'Tomorrow'): IDatePreset => ({ label, value: () => addDays(today(), 1) }),
+  today: (label?: string): IDatePreset => ({ key: 'today', label, value: () => today() }),
+  yesterday: (label?: string): IDatePreset => ({ key: 'yesterday', label, value: () => addDays(today(), -1) }),
+  tomorrow: (label?: string): IDatePreset => ({ key: 'tomorrow', label, value: () => addDays(today(), 1) }),
   /** The last `days` days, ending today. */
-  lastDays: (days: number, label = `Last ${days} days`): IDatePreset => ({
+  lastDays: (days: number, label?: string): IDatePreset => ({
+    key: 'lastDays',
+    params: { count: days },
     label,
     value: (): IDateRange => ({ start: addDays(today(), 1 - days), end: today() })
   }),
   /** From the 1st of this month to today. */
-  thisMonth: (label = 'This month'): IDatePreset => ({
+  thisMonth: (label?: string): IDatePreset => ({
+    key: 'thisMonth',
     label,
     value: (): IDateRange => ({ start: startOfMonth(today()), end: today() })
   }),
   /** The whole previous month. */
-  lastMonth: (label = 'Last month'): IDatePreset => ({
+  lastMonth: (label?: string): IDatePreset => ({
+    key: 'lastMonth',
     label,
     value: (): IDateRange => ({ start: addMonths(startOfMonth(today()), -1), end: addDays(startOfMonth(today()), -1) })
   }),
   /** From 1 January to today. */
-  thisYear: (label = 'This year'): IDatePreset => ({
+  thisYear: (label?: string): IDatePreset => ({
+    key: 'thisYear',
     label,
     value: (): IDateRange => ({ start: new Date(today().getFullYear(), 0, 1), end: today() })
   })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ITagsInputEmits, ITagsInputProps } from '@/types/input'
 import { computed, ref, watch } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -21,12 +22,15 @@ const props = withDefaults(defineProps<ITagsInputProps>(), {
   max: null,
   allowDuplicates: false,
   separator: ',',
-  maxlength: 50,
-  removeLabel: 'Remove'
+  maxlength: 50
 })
 
 /** Emits */
 const emit = defineEmits<ITagsInputEmits>()
+/** Labels */
+const l10n = useLabels('tags')
+const l10nCommon = useLabels('common')
+const removeText = computed(() => props.removeLabel ?? l10n.value.remove)
 
 /** Model */
 const model = defineModel<string[]>('modelValue', { default: () => [] })
@@ -75,7 +79,7 @@ function addTags(candidates: string[]): void {
     return
   setTags(next)
   added.forEach(tag => emit('add', tag))
-  announcement.value = `Added ${added.join(', ')}`
+  announcement.value = formatLabel(l10n.value.added, { tags: added.join(', ') })
 }
 function removeAt(index: number): void {
   const tag = model.value[index]
@@ -83,7 +87,7 @@ function removeAt(index: number): void {
     return
   setTags(model.value.filter((_, i) => i !== index))
   emit('remove', tag)
-  announcement.value = `Removed ${tag}`
+  announcement.value = formatLabel(l10n.value.removed, { tag })
   inputRef.value?.focus()
 }
 function commit(): void {
@@ -149,7 +153,7 @@ watch(draft, (value) => {
           v-if="!isLocked"
           type="button"
           class="chip-remove"
-          :aria-label="`${removeLabel} ${tag}`"
+          :aria-label="`${removeText} ${tag}`"
           @click="removeAt(index)"
         >
           <UiIconMaterial icon-code="&#xe5cd;" />
@@ -188,7 +192,7 @@ watch(draft, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
 
     <span class="visually-hidden" aria-live="polite">{{ announcement }}</span>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { CalendarValue, ICalendarDaySlot, ICalendarEmits, ICalendarLabels, ICalendarProps, IDateRange } from '@/types/calendar'
+import type { CalendarValue, ICalendarDaySlot, ICalendarEmits, ICalendarProps, IDateRange } from '@/types/calendar'
 import { computed, nextTick, onMounted, ref, useId } from 'vue'
 import { addDays, addMonths, dayKey, isSameDay, localeWeekStart, startOfDay, startOfMonth, useCalendarLocale } from '@/composables/useCalendarDates'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 interface CalendarCell extends ICalendarDaySlot {
@@ -33,7 +34,6 @@ const props = withDefaults(defineProps<ICalendarProps>(), {
   showOutsideDays: true,
   fluid: false,
   disabled: false,
-  ariaLabel: 'Calendar',
   labels: null,
   customClass: null
 })
@@ -50,11 +50,6 @@ const model = defineModel<CalendarValue>('modelValue', { default: null })
 const month = defineModel<Date | null>('month', { default: null })
 
 /** Data */
-const defaultLabels: ICalendarLabels = {
-  previousMonth: 'Previous month',
-  nextMonth: 'Next month',
-  rangeStart: 'Start date {date} selected. Pick an end date.'
-}
 const uid = useId()
 const rootRef = ref<HTMLElement | null>(null)
 const today = ref(startOfDay(new Date()))
@@ -63,7 +58,7 @@ const hoverDate = ref<Date | null>(null)
 const announcement = ref('')
 
 /** Computed */
-const text = computed<ICalendarLabels>(() => ({ ...defaultLabels, ...props.labels }))
+const text = useLabels('calendar', () => props.labels)
 const resolvedLocale = useCalendarLocale(() => props.locale)
 const firstDay = computed(() => {
   const start = props.weekStart ?? localeWeekStart(resolvedLocale.value)
@@ -233,7 +228,7 @@ function pick(date: Date): void {
     const { start, end } = range.value
     if (!start || end || date < start) {
       model.value = { start: new Date(date), end: null }
-      announcement.value = text.value.rangeStart.replace(/\{date\}/g, formatters.value.full.format(date))
+      announcement.value = formatLabel(text.value.rangeStart, { date: formatters.value.full.format(date) })
     } else {
       model.value = { start, end: new Date(date) }
       hoverDate.value = null
@@ -300,7 +295,7 @@ onMounted(() => {
     ref="rootRef"
     :class="calendarClasses"
     role="group"
-    :aria-label="ariaLabel"
+    :aria-label="ariaLabel ?? text.ariaLabel"
   >
     <div class="calendar-months">
       <div

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IFileInputEmits, IFileInputProps } from '@/types/input'
 import { computed, toRefs } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -24,6 +25,9 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
 
 /** Emits */
 const emit = defineEmits<IFileInputEmits>()
+
+/** Labels */
+const l10nCommon = useLabels('common')
 
 /** Model */
 const model = defineModel<File | null>('modelValue', { default: null })
@@ -120,7 +124,7 @@ function handleInput(event: Event) {
         v-else-if="optionalLabel"
         class="caption text-muted mt-1"
       >
-        Optional
+        {{ l10nCommon.optional }}
       </p>
     </div>
   </div>

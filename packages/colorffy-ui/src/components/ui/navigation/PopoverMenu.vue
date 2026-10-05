@@ -5,6 +5,7 @@ import type {
   IPopoverMenuProps
 } from '@/types/navigation'
 import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiPopoverMenuGroup from './PopoverMenuGroup.vue'
@@ -24,6 +25,9 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
 
 /** Emits */
 const emit = defineEmits<IPopoverMenuEmits>()
+
+/** Labels */
+const l10n = useLabels('popoverMenu')
 
 /** Data */
 const slots = useSlots()
@@ -118,7 +122,7 @@ watch(() => props.isOpened, (open) => {
       :popover="isNative ? 'auto' : undefined"
       :style="isNative ? { positionAnchor: anchorName } : undefined"
       role="menu"
-      :aria-label="ariaLabel || 'Menu'"
+      :aria-label="ariaLabel || l10n.ariaLabel"
       tabindex="0"
       @toggle="handleNativeToggle"
     >
@@ -145,7 +149,7 @@ watch(() => props.isOpened, (open) => {
           variant="outline"
           icon
           custom-class="popover-menu-close"
-          aria-label="Close menu"
+          :aria-label="l10n.close"
           @click="handleHideDropdown"
         >
           <template #icon>

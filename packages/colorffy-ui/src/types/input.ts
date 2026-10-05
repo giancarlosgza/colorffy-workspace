@@ -43,7 +43,7 @@ export interface IPasswordInputProps extends Omit<ITextInputProps, 'modelValue' 
   /**
    * Accessible name of the show/hide toggle. The label stays the same; the
    * button's `aria-pressed` tells whether the password is visible.
-   * @default 'Show password'
+   * @default 'Show password', from the configured labels
    */
   revealLabel?: string
 }
@@ -66,7 +66,7 @@ export interface ISearchInputProps extends Omit<ITextInputProps, 'modelValue' | 
 
   /**
    * Accessible name of the clear button.
-   * @default 'Clear search'
+   * @default 'Clear search', from the configured labels
    */
   clearLabel?: string
 }
@@ -335,7 +335,7 @@ export interface ITagsInputProps extends IBaseInputProps {
   /**
    * Start of each remove button's accessible name, followed by the tag
    * (`'Remove design'`).
-   * @default 'Remove'
+   * @default 'Remove', from the configured labels
    */
   removeLabel?: string
 }
@@ -422,19 +422,19 @@ export interface IComboboxInputProps extends IBaseInputProps {
 
   /**
    * Text shown in the list when no option matches.
-   * @default 'No results'
+   * @default 'No results', from the configured labels
    */
   emptyText?: string
 
   /**
    * Accessible name of the clear button.
-   * @default 'Clear selection'
+   * @default 'Clear selection', from the configured labels
    */
   clearLabel?: string
 
   /**
    * Accessible name of the button that opens the list.
-   * @default 'Show options'
+   * @default 'Show options', from the configured labels
    */
   toggleLabel?: string
 }
@@ -525,32 +525,32 @@ export interface IMultiSelectInputProps extends IBaseInputProps {
   /**
    * Summary shown instead of the chips once there are more values than
    * `maxChips`; `{count}` is replaced with the number of values.
-   * @default '{count} selected'
+   * @default '{count} selected', from the configured labels
    */
   maxChipsLabel?: string
 
   /**
    * Text shown in the list when no option matches.
-   * @default 'No results'
+   * @default 'No results', from the configured labels
    */
   emptyText?: string
 
   /**
    * Accessible name of the clear button.
-   * @default 'Clear selection'
+   * @default 'Clear selection', from the configured labels
    */
   clearLabel?: string
 
   /**
    * Accessible name of the button that opens the list.
-   * @default 'Show options'
+   * @default 'Show options', from the configured labels
    */
   toggleLabel?: string
 
   /**
    * Start of each chip's remove button name, followed by the option's label
    * (`'Remove Maya Chen'`).
-   * @default 'Remove'
+   * @default 'Remove', from the configured labels
    */
   removeLabel?: string
 }
@@ -580,71 +580,79 @@ export interface IDateInputLabels extends ICalendarLabels {
   /**
    * Accessible name of the calendar button, and of the popup when there's no
    * `label`.
-   * @default 'Choose date'
+   * @default 'Choose date', from the configured labels
    */
   toggle: string
 
   /**
    * Accessible name of the clear button.
-   * @default 'Clear date'
+   * @default 'Clear date', from the configured labels
    */
   clear: string
 
   /**
    * Text of the button that confirms the picked dates.
-   * @default 'Apply'
+   * @default 'Apply', from the configured labels
    */
   apply: string
 
   /**
    * Text of the button that discards the picked dates.
-   * @default 'Cancel'
+   * @default 'Cancel', from the configured labels
    */
   cancel: string
 
   /**
    * Accessible name of the presets list.
-   * @default 'Presets'
+   * @default 'Presets', from the configured labels
    */
   presets: string
 
   /**
    * Text of the buttons that set the current date and time.
-   * @default 'Now'
+   * @default 'Now', from the configured labels
    */
   now: string
 
   /**
    * Label of the time field under a single date.
-   * @default 'Time'
+   * @default 'Time', from the configured labels
    */
   time: string
 
   /**
    * Label of the range's start fields.
-   * @default 'From'
+   * @default 'From', from the configured labels
    */
   from: string
 
   /**
    * Label of the range's end fields.
-   * @default 'To'
+   * @default 'To', from the configured labels
    */
   to: string
 
   /**
    * Accessible names of the range's date fields.
-   * @default 'Start date' / 'End date'
+   * @default 'Start date' / 'End date', from the configured labels
    */
   startDate: string
   endDate: string
 
   /**
    * Accessible names of the range's time fields.
-   * @default 'Start time' / 'End time'
+   * @default 'Start time' / 'End time', from the configured labels
    */
   startTime: string
   endTime: string
+
+  /**
+   * Letters for the day, month and year in the field's typing hint.
+   * @default 'dd' / 'mm' / 'yyyy', from the configured labels
+   */
+  dayLetters: string
+  monthLetters: string
+  yearLetters: string
 }
 
 /**

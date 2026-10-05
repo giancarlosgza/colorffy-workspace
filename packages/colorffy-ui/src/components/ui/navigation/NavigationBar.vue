@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { INavigationBarProps, INavItem } from '@/types/navigation'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -21,6 +22,9 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
   indicatorTab: false,
   indicatorFrosted: false
 })
+
+/** Labels */
+const l10n = useLabels('navigationBar')
 
 /** Computed */
 const navigationItems = computed(() => props.items)
@@ -80,7 +84,7 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     class="navigation-bar"
     :class="navigationBarClasses"
     role="navigation"
-    aria-label="Main navigation"
+    :aria-label="l10n.ariaLabel"
   >
     <div
       v-for="item in navigationItems"

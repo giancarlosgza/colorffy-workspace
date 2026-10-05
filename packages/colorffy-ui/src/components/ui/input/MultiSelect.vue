@@ -3,6 +3,7 @@ import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IMultiSelectInputEmits, IMultiSelectInputProps } from '@/types/input'
 import { computed, nextTick, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import { useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -30,16 +31,18 @@ const props = withDefaults(defineProps<IMultiSelectInputProps>(), {
   filterable: true,
   clearable: false,
   max: null,
-  maxChips: null,
-  maxChipsLabel: '{count} selected',
-  emptyText: 'No results',
-  clearLabel: 'Clear selection',
-  toggleLabel: 'Show options',
-  removeLabel: 'Remove'
+  maxChips: null
 })
 
 /** Emits */
 const emit = defineEmits<IMultiSelectInputEmits>()
+/** Labels */
+const l10n = useLabels('multiSelect')
+const l10nCommon = useLabels('common')
+const emptyLabel = computed(() => props.emptyText ?? l10n.value.empty)
+const clearText = computed(() => props.clearLabel ?? l10n.value.clear)
+const toggleText = computed(() => props.toggleLabel ?? l10n.value.toggle)
+const removeText = computed(() => props.removeLabel ?? l10n.value.remove)
 
 /** Model */
 const model = defineModel<ComboboxValue[]>('modelValue', { default: () => [] })
@@ -80,7 +83,7 @@ const selectedItems = computed(() => {
 })
 const isFull = computed(() => props.max != null && model.value.length >= props.max)
 const showChips = computed(() => props.maxChips == null || model.value.length <= props.maxChips)
-const summaryLabel = computed(() => props.maxChipsLabel.replace(/\{count\}/g, String(model.value.length)))
+const summaryLabel = computed(() => formatLabel(props.maxChipsLabel ?? l10n.value.summary, { count: model.value.length }))
 const showClear = computed(() => props.clearable && !isLocked.value && model.value.length > 0)
 
 const groupClasses = computed(() => ['form-group', { 'form-invalid': hasErrors.value }])
@@ -136,7 +139,7 @@ function closeList(): void {
 function remove(item: ListboxItem): void {
   model.value = model.value.filter(value => !Object.is(value, item.value))
   emit('remove', item.value as ComboboxValue)
-  announce(`Removed ${item.label}`)
+  announce(formatLabel(l10n.value.removed, { label: item.label }))
 }
 // The list stays open; a search is cleared so the next one starts fresh
 function toggle(item: ListboxItem): void {
@@ -147,7 +150,7 @@ function toggle(item: ListboxItem): void {
   } else if (!isUnavailable(item)) {
     model.value = [...model.value, item.value as ComboboxValue]
     emit('add', item.value as ComboboxValue)
-    announce(`Added ${item.label}`)
+    announce(formatLabel(l10n.value.added, { label: item.label }))
   }
   if (query.value) {
     query.value = ''
@@ -163,7 +166,7 @@ function clear(): void {
   const removed = selectedItems.value
   model.value = []
   removed.forEach(item => emit('remove', item.value as ComboboxValue))
-  announce('Selection cleared')
+  announce(l10n.value.cleared)
   fieldRef.value?.focus()
 }
 function onToggleClick(): void {
@@ -288,7 +291,7 @@ watch(model, (value) => {
             v-if="!isLocked"
             type="button"
             class="chip-remove"
-            :aria-label="`${removeLabel} ${item.label}`"
+            :aria-label="`${removeText} ${item.label}`"
             @mousedown.prevent
             @click="removeChip(item)"
           >
@@ -351,7 +354,7 @@ watch(model, (value) => {
             custom-class="text-neutral"
             size="sm"
             icon
-            :aria-label="clearLabel"
+            :aria-label="clearText"
             :aria-controls="fieldId"
             @mousedown.prevent
             @click="clear"
@@ -368,7 +371,7 @@ watch(model, (value) => {
             size="sm"
             icon
             tabindex="-1"
-            :aria-label="toggleLabel"
+            :aria-label="toggleText"
             :aria-expanded="isOpen"
             :aria-controls="isOpen ? listboxId : undefined"
             :disabled="isLocked"
@@ -395,7 +398,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
 
     <!-- Screen reader text: what's selected, and each change -->
@@ -476,7 +479,7 @@ watch(model, (value) => {
         role="status"
       >
         <slot name="empty" :query="query">
-          {{ emptyText }}
+          {{ emptyLabel }}
         </slot>
       </p>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Interfaces */
 interface IShapeLoadingProps {
@@ -20,9 +21,11 @@ const props = withDefaults(defineProps<IShapeLoadingProps>(), {
   customClass: null,
   loadingStyles: null,
   role: 'status',
-  ariaLabel: 'Loading content',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Computed */
 const containerClasses = computed<(string | string[])[]>(() => {
@@ -42,8 +45,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.content
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 
