@@ -20,6 +20,7 @@
     --_listbox-selected-bg-color: var(--cffy-listbox-selected-bg-color, var(--cffy-surface-container-highest));
     --_listbox-selected-color: var(--cffy-listbox-selected-color, var(--cffy-on-background));
     --_listbox-group-color: var(--cffy-listbox-group-color, var(--cffy-muted-a10));
+    --_listbox-create-color: var(--cffy-listbox-create-color, var(--cffy-primary-a10));
     --_listbox-easing: var(--cffy-listbox-easing, var(--cffy-ease-decelerate));
     --_listbox-duration: var(--cffy-listbox-duration, var(--cffy-duration-150));
 
@@ -115,6 +116,12 @@
     &.selected {
       --_listbox-option-bg-color: var(--_listbox-selected-bg-color);
       --_listbox-option-color: var(--_listbox-selected-color);
+
+      font-weight: var(--cffy-fw-600);
+    }
+
+    &.listbox-option-create {
+      --_listbox-option-color: var(--_listbox-create-color);
 
       font-weight: var(--cffy-fw-600);
     }

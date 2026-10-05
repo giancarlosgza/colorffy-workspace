@@ -428,6 +428,43 @@ export interface IComboboxInputProps extends IBaseInputProps {
   clearable?: boolean
 
   /**
+   * When true, you filter the options: typing emits `search` with the text
+   * (after `searchDelay`), and the list shows `options` as you pass them. An
+   * emptied field emits `search('')`. Picked options keep their label when a
+   * new search replaces `options`; include the current value's option in the
+   * first `options` so its label shows before any search.
+   * @default false
+   */
+  remote?: boolean
+
+  /**
+   * When true, the list shows a searching row instead of the options.
+   * @default false
+   */
+  loading?: boolean
+
+  /**
+   * Milliseconds of typing pause before `search` is emitted, with `remote`.
+   * @default 300
+   */
+  searchDelay?: number
+
+  /**
+   * Shortest text that emits `search`, with `remote`. A shorter one shows the
+   * "Type to search" hint instead of the options.
+   * @default 1
+   */
+  minSearchLength?: number
+
+  /**
+   * When true, the field also accepts text that isn't an option: Enter or
+   * leaving the field stores the typed text as the value. Typing doesn't
+   * highlight a suggestion, so the arrow keys pick one. Needs `filterable`.
+   * @default false
+   */
+  freeText?: boolean
+
+  /**
    * Text shown in the list when no option matches.
    * @default 'No results', from the configured labels
    */
@@ -452,6 +489,11 @@ export interface IComboboxInputProps extends IBaseInputProps {
 export interface IComboboxInputEmits {
   (e: 'update:modelValue', value: ComboboxValue | null): void
   (e: 'update', value: ComboboxValue | null): void
+  /**
+   * With `remote`: the text to search for, trimmed, after `searchDelay`.
+   * Fetch the matching options and pass them in `options`.
+   */
+  (e: 'search', query: string): void
 }
 
 /**
@@ -521,6 +563,42 @@ export interface IMultiSelectInputProps extends IBaseInputProps {
   max?: number | null
 
   /**
+   * When true, you filter the options: typing emits `search` with the text
+   * (after `searchDelay`), and the list shows `options` as you pass them. An
+   * emptied field emits `search('')`. Picked options keep their label when a
+   * new search replaces `options`; include the current value's option in the
+   * first `options` so its label shows before any search.
+   * @default false
+   */
+  remote?: boolean
+
+  /**
+   * When true, the list shows a searching row instead of the options.
+   * @default false
+   */
+  loading?: boolean
+
+  /**
+   * Milliseconds of typing pause before `search` is emitted, with `remote`.
+   * @default 300
+   */
+  searchDelay?: number
+
+  /**
+   * Shortest text that emits `search`, with `remote`. A shorter one shows the
+   * "Type to search" hint instead of the options.
+   * @default 1
+   */
+  minSearchLength?: number
+
+  /**
+   * When true, typed text that isn't an option can be added as a value: the
+   * list ends with an "Add “…”" row. Needs `filterable`.
+   * @default false
+   */
+  freeText?: boolean
+
+  /**
    * Most chips the field shows. With more values than this, the chips give
    * way to the `maxChipsLabel` summary. Setting it also keeps the field to one
    * row: long chip labels are cut with an ellipsis and the summary steps aside
@@ -578,6 +656,11 @@ export interface IMultiSelectInputEmits {
    * field.
    */
   (e: 'remove', value: ComboboxValue): void
+  /**
+   * With `remote`: the text to search for, trimmed, after `searchDelay`.
+   * Fetch the matching options and pass them in `options`.
+   */
+  (e: 'search', query: string): void
 }
 
 /**

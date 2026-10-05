@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IAvatarProps, IChipOption, IDatatableColumn, IDialogDisplay, ISegmentedTab, IStepItem } from '@colorffy/ui'
+import type { DirectoryPerson } from '~/utils/directory'
 import type { Intent, Member, Project, ProjectStatus } from '~/utils/workspace'
 import { NuxtLink } from '#components'
 
@@ -63,7 +64,10 @@ const wizardStep = ref('details')
 const stepTransition = ref('slide-start')
 const showErrors = ref(false)
 const creating = ref(false)
-const draft = reactive({ name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: null as Date | null, due: null as Date | null, leadId: currentUser.id })
+const draft = reactive({ name: '', description: '', client: null as string | null, labels: [] as string[], visibility: 'workspace', color: '#5b5bd6', start: null as Date | null, due: null as Date | null, leadId: currentUser.id, stakeholderIds: [] as string[] })
+const labelOptions = ['Customer', 'Design', 'Engineering', 'Internal', 'Launch', 'Marketing', 'Q4', 'Research']
+const { results: clientResults, loading: clientsLoading, search: searchClients } = useRemoteSearch(clients, name => name)
+const { results: peopleResults, loading: peopleLoading, search: searchPeople } = useRemoteSearch(companyPeople, person => `${person.name} ${person.title}`)
 const team = reactive<Record<string, boolean>>(Object.fromEntries(members.map(member => [member.id, member.id === currentUser.id])))
 
 // Rename and archive
@@ -152,7 +156,7 @@ function exportProjects() {
 }
 
 function resetWizard() {
-  Object.assign(draft, { name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: null, due: null, leadId: currentUser.id })
+  Object.assign(draft, { name: '', description: '', client: null, labels: [], visibility: 'workspace', color: '#5b5bd6', start: null, due: null, leadId: currentUser.id, stakeholderIds: [] })
   members.forEach((member) => {
     team[member.id] = member.id === currentUser.id
   })
@@ -544,6 +548,29 @@ onMounted(() => {
               maxlength="280"
               optional-label
             />
+            <UiInputCombobox
+              id="new-project-client"
+              v-model="draft.client"
+              label="Client"
+              placeholder="Search the CRM or type a new client"
+              :options="clientResults"
+              remote
+              :loading="clientsLoading"
+              free-text
+              clearable
+              optional-label
+              @search="searchClients"
+            />
+            <UiInputMultiSelect
+              id="new-project-labels"
+              v-model="draft.labels"
+              label="Labels"
+              placeholder="Pick or create labels"
+              :options="labelOptions"
+              free-text
+              :max="5"
+              optional-label
+            />
             <UiInputRadio
               id="new-project-visibility"
               v-model="draft.visibility"
@@ -612,6 +639,27 @@ onMounted(() => {
                 </span>
               </template>
             </UiInputCombobox>
+            <UiInputMultiSelect
+              id="new-project-stakeholders"
+              v-model="draft.stakeholderIds"
+              label="Stakeholders"
+              placeholder="Search the company directory"
+              :options="peopleResults"
+              option-label="name"
+              option-value="id"
+              remote
+              :min-search-length="2"
+              :loading="peopleLoading"
+              optional-label
+              @search="searchPeople"
+            >
+              <template #option="{ option }">
+                <span class="d-flex flex-column">
+                  <span>{{ (option as DirectoryPerson).name }}</span>
+                  <span class="caption text-muted">{{ (option as DirectoryPerson).title }}</span>
+                </span>
+              </template>
+            </UiInputMultiSelect>
           </div>
 
           <!-- Review -->
@@ -658,6 +706,30 @@ onMounted(() => {
                   Team · {{ teamMembers.length }}
                 </p>
                 <UiAvatarGroup :avatars="teamMembers.map(avatarOf)" :max="5" size="sm" />
+              </div>
+              <div v-if="draft.client">
+                <p class="overline text-muted mb-1">
+                  Client
+                </p>
+                <p class="mb-0">
+                  {{ draft.client }}
+                </p>
+              </div>
+              <div v-if="draft.labels.length">
+                <p class="overline text-muted mb-1">
+                  Labels
+                </p>
+                <UiBadgeGroup>
+                  <UiBadge v-for="tag in draft.labels" :key="tag" :text="tag" variant="tonal tonal-primary" size="sm" />
+                </UiBadgeGroup>
+              </div>
+              <div v-if="draft.stakeholderIds.length">
+                <p class="overline text-muted mb-1">
+                  Stakeholders · {{ draft.stakeholderIds.length }}
+                </p>
+                <p class="mb-0">
+                  {{ draft.stakeholderIds.map(id => personById(id)?.name).join(', ') }}
+                </p>
               </div>
             </div>
           </div>

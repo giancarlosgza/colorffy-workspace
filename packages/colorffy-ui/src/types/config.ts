@@ -52,6 +52,12 @@ export interface IColorffyLabels {
     clear: string
     /** Button that opens the list. */
     toggle: string
+    /** Shown while `loading`. */
+    loading: string
+    /** Shown with `remote` before the text is long enough to search. */
+    typeToSearch: string
+    /** Announced when search results arrive. `{count}` is the number of options. */
+    results: LabelTemplate
   }
   confirmModal: {
     confirm: string
@@ -134,6 +140,14 @@ export interface IColorffyLabels {
     toggle: string
     /** Start of each chip's remove button name, followed by the value. */
     remove: string
+    /** Shown while `loading`. */
+    loading: string
+    /** Shown with `remote` before the text is long enough to search. */
+    typeToSearch: string
+    /** Announced when search results arrive. `{count}` is the number of options. */
+    results: LabelTemplate
+    /** The `freeText` row that adds the typed text. `{query}` is the text. */
+    create: LabelTemplate
     /** Shown past `maxChips`. `{count}` is the number of values. */
     summary: LabelTemplate
     /** Announcements. `{label}` is the value. */

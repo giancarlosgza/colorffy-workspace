@@ -11,6 +11,8 @@ export interface ListboxItem {
   search: string
   disabled: boolean
   group: string | null
+  /** The "Add …" row for typed text that isn't an option yet. */
+  created?: boolean
 }
 
 /**
@@ -29,6 +31,8 @@ interface ListboxSource {
   optionDisabled: () => string | null
   optionGroup: () => string | null
   query: () => string
+  /** Typed text offered as a new option when no option has that label. */
+  create?: () => string
 }
 
 function readField(option: unknown, key: string): unknown {
@@ -74,9 +78,19 @@ export function useListbox(source: ListboxSource) {
     return query ? items.value.filter(item => item.search.includes(query)) : items.value
   })
 
+  const createItem = computed<ListboxItem | null>(() => {
+    const text = source.create?.().trim() ?? ''
+    const search = normalizeText(text)
+    if (!text || items.value.some(item => item.search === search))
+      return null
+    return { key: items.value.length, option: text, value: text, label: text, search, disabled: false, group: null, created: true }
+  })
+
+  // The "Add …" row comes last, in a group of its own
   const groups = computed<ListboxGroup[]>(() => {
+    const created = createItem.value ? [{ label: null, items: [createItem.value] }] : []
     if (!source.optionGroup())
-      return [{ label: null, items: matches.value }]
+      return [{ label: null, items: matches.value }, ...created]
     const byLabel = new Map<string | null, ListboxItem[]>()
     for (const item of matches.value) {
       const run = byLabel.get(item.group)
@@ -85,7 +99,7 @@ export function useListbox(source: ListboxSource) {
       else
         byLabel.set(item.group, [item])
     }
-    return [...byLabel].map(([label, run]) => ({ label, items: run }))
+    return [...[...byLabel].map(([label, run]) => ({ label, items: run })), ...created]
   })
 
   // Keyboard order follows the grouped order on screen

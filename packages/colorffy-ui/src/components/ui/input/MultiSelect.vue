@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IMultiSelectInputEmits, IMultiSelectInputProps } from '@/types/input'
-import { computed, nextTick, ref, useId, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, shallowReactive, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
 import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
-import { useListbox } from '@/composables/useListbox'
+import { normalizeText, useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -31,7 +31,12 @@ const props = withDefaults(defineProps<IMultiSelectInputProps>(), {
   filterable: true,
   clearable: false,
   max: null,
-  maxChips: null
+  maxChips: null,
+  remote: false,
+  loading: false,
+  searchDelay: 300,
+  minSearchLength: 1,
+  freeText: false
 })
 
 /** Emits */
@@ -47,6 +52,11 @@ const removeText = computed(() => props.removeLabel ?? l10n.value.remove)
 /** Model */
 const model = defineModel<ComboboxValue[]>('modelValue', { default: () => [] })
 
+interface SelectedEntry {
+  value: ComboboxValue
+  label: string
+}
+
 /** Data */
 const uid = useId()
 const anchorRef = ref<HTMLElement | null>(null)
@@ -54,6 +64,11 @@ const popupRef = ref<HTMLElement | null>(null)
 const fieldRef = ref<HTMLElement | null>(null)
 const query = ref('')
 const announcement = ref('')
+// Labels of picked values, kept while a remote search replaces `options` and for typed values
+const remembered = shallowReactive(new Map<unknown, string>())
+const searchPending = ref(false)
+let searchTimer: ReturnType<typeof setTimeout> | undefined
+let lastSearch = ''
 const fieldId = computed(() => props.id ?? `${uid}-multiselect`)
 const labelId = computed(() => `${fieldId.value}-label`)
 const listboxId = computed(() => `${fieldId.value}-listbox`)
@@ -67,7 +82,8 @@ const listbox = useListbox({
   optionValue: () => props.optionValue,
   optionDisabled: () => props.optionDisabled,
   optionGroup: () => props.optionGroup,
-  query: () => query.value
+  query: () => (props.remote ? '' : query.value),
+  create: () => newValueText()
 })
 const { groups, visible, activeItem, optionId, scrollToActive } = listbox
 
@@ -77,10 +93,28 @@ const errorId = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : u
 const isLocked = computed(() => props.disabled || props.readonly)
 const selectedValues = computed(() => new Set(model.value))
 // Chips follow the order the values were picked in
-const selectedItems = computed(() => {
-  const byValue = new Map(listbox.items.value.map(item => [item.value, item]))
-  return model.value.flatMap(value => byValue.get(value) ?? [])
+const selectedItems = computed<SelectedEntry[]>(() => {
+  const byValue = new Map(listbox.items.value.map(item => [item.value, item.label]))
+  return model.value.flatMap((value) => {
+    const label = byValue.get(value) ?? remembered.get(value)
+    return label === undefined ? [] : [{ value, label }]
+  })
 })
+const isShortQuery = computed(() => {
+  const length = query.value.trim().length
+  return props.remote && length > 0 && length < props.minSearchLength
+})
+const isSearching = computed(() => props.loading || searchPending.value)
+const showOptions = computed(() => !isSearching.value && !isShortQuery.value)
+const currentItem = computed(() => (showOptions.value ? activeItem.value : null))
+const statusText = computed(() => {
+  if (isSearching.value)
+    return l10n.value.loading
+  if (isShortQuery.value || (props.remote && !visible.value.length && !query.value.trim()))
+    return l10n.value.typeToSearch
+  return null
+})
+
 const isFull = computed(() => props.max != null && model.value.length >= props.max)
 const showChips = computed(() => props.maxChips == null || model.value.length <= props.maxChips)
 const summaryLabel = computed(() => formatLabel(props.maxChipsLabel ?? l10n.value.summary, { count: model.value.length }))
@@ -101,7 +135,7 @@ const fieldAria = computed(() => ({
   'role': 'combobox',
   'aria-expanded': isOpen.value,
   'aria-controls': isOpen.value ? listboxId.value : undefined,
-  'aria-activedescendant': isOpen.value && activeItem.value ? optionId(activeItem.value) : undefined,
+  'aria-activedescendant': isOpen.value && currentItem.value ? optionId(currentItem.value) : undefined,
   'aria-invalid': hasErrors.value || undefined,
   'aria-describedby': [model.value.length ? summaryId.value : null, errorId.value].filter(Boolean).join(' ') || undefined
 }))
@@ -111,6 +145,39 @@ const fieldAria = computed(() => ({
 function announce(text: string): void {
   announcement.value = ''
   nextTick(() => (announcement.value = text))
+}
+// With `freeText`, typed text is offered as a new value unless it's already picked
+function newValueText(): string {
+  const text = query.value.trim()
+  if (!props.freeText || !text || !showOptions.value)
+    return ''
+  const search = normalizeText(text)
+  return selectedItems.value.some(entry => normalizeText(entry.label) === search) ? '' : text
+}
+// With `remote`, the typed text goes to `search` once typing pauses
+function requestSearch(text: string): void {
+  if (!props.remote)
+    return
+  clearTimeout(searchTimer)
+  const trimmed = text.trim()
+  searchPending.value = false
+  if (trimmed === lastSearch || (trimmed && trimmed.length < props.minSearchLength))
+    return
+  searchPending.value = true
+  searchTimer = setTimeout(() => {
+    searchPending.value = false
+    lastSearch = trimmed
+    emit('search', trimmed)
+  }, props.searchDelay)
+}
+// A cleared search goes back to the default options
+function resetSearch(): void {
+  clearTimeout(searchTimer)
+  searchPending.value = false
+  if (props.remote && lastSearch) {
+    lastSearch = ''
+    emit('search', '')
+  }
 }
 function isSelected(item: ListboxItem): boolean {
   return selectedValues.value.has(item.value as ComboboxValue)
@@ -135,19 +202,22 @@ function closeList(): void {
   close()
   query.value = ''
   listbox.activeIndex.value = -1
+  resetSearch()
 }
-function remove(item: ListboxItem): void {
-  model.value = model.value.filter(value => !Object.is(value, item.value))
-  emit('remove', item.value as ComboboxValue)
-  announce(formatLabel(l10n.value.removed, { label: item.label }))
+function remove(entry: SelectedEntry): void {
+  model.value = model.value.filter(value => !Object.is(value, entry.value))
+  emit('remove', entry.value)
+  announce(formatLabel(l10n.value.removed, { label: entry.label }))
 }
 // The list stays open; a search is cleared so the next one starts fresh
 function toggle(item: ListboxItem): void {
   if (isLocked.value)
     return
   if (isSelected(item)) {
-    remove(item)
+    remove({ value: item.value as ComboboxValue, label: item.label })
   } else if (!isUnavailable(item)) {
+    if (props.remote || item.created)
+      remembered.set(item.value, item.label)
     model.value = [...model.value, item.value as ComboboxValue]
     emit('add', item.value as ComboboxValue)
     announce(formatLabel(l10n.value.added, { label: item.label }))
@@ -156,10 +226,11 @@ function toggle(item: ListboxItem): void {
     query.value = ''
     listbox.activate(item)
     scrollToActive()
+    resetSearch()
   }
 }
-function removeChip(item: ListboxItem): void {
-  remove(item)
+function removeChip(entry: SelectedEntry): void {
+  remove(entry)
   fieldRef.value?.focus()
 }
 function clear(): void {
@@ -195,6 +266,7 @@ function onInput(event: Event): void {
   else
     listbox.activeIndex.value = -1
   scrollToActive()
+  requestSearch(query.value)
 }
 function onKeydown(event: KeyboardEvent): void {
   if (isLocked.value)
@@ -223,8 +295,8 @@ function onKeydown(event: KeyboardEvent): void {
     scrollToActive()
   } else if (key === 'Enter' && isOpen.value) {
     event.preventDefault()
-    if (activeItem.value)
-      toggle(activeItem.value)
+    if (currentItem.value)
+      toggle(currentItem.value)
   } else if (key === 'Escape' && isOpen.value) {
     // A dialog around the field only closes on the next Esc
     event.preventDefault()
@@ -234,8 +306,8 @@ function onKeydown(event: KeyboardEvent): void {
     remove(selectedItems.value[selectedItems.value.length - 1]!)
   } else if (!props.filterable && key === ' ' && !listbox.isTyping()) {
     event.preventDefault()
-    if (isOpen.value && activeItem.value)
-      toggle(activeItem.value)
+    if (isOpen.value && currentItem.value)
+      toggle(currentItem.value)
     else if (!isOpen.value)
       openList()
   } else if (!props.filterable && key.length === 1 && !event.ctrlKey && !event.metaKey) {
@@ -258,6 +330,23 @@ function onOptionMove(item: ListboxItem): void {
 watch(model, (value) => {
   emit('update', value)
 })
+watch([() => listbox.items.value, model], ([items, values]) => {
+  if (!props.remote)
+    return
+  for (const item of items) {
+    if (values.includes(item.value as ComboboxValue))
+      remembered.set(item.value, item.label)
+  }
+}, { immediate: true })
+// Fresh results: the first one is highlighted and the count announced
+watch([() => props.options, () => props.loading], () => {
+  if (!props.remote || !isOpen.value || props.loading || !query.value.trim())
+    return
+  listbox.activateFirst()
+  announce(formatLabel(l10n.value.results, { count: visible.value.filter(item => !item.created).length }))
+})
+
+onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
 
 <template>
@@ -281,8 +370,8 @@ watch(model, (value) => {
     >
       <template v-if="showChips">
         <span
-          v-for="item in selectedItems"
-          :key="item.key"
+          v-for="(item, index) in selectedItems"
+          :key="index"
           class="btn btn-chip chip-closable"
           :class="{ disabled: isLocked }"
         >
@@ -426,10 +515,11 @@ watch(model, (value) => {
         class="listbox"
         aria-multiselectable="true"
         :aria-labelledby="labelId"
+        :aria-busy="loading || undefined"
       >
         <li
-          v-for="group in groups"
-          :key="group.label ?? ''"
+          v-for="(group, groupIndex) in showOptions ? groups : []"
+          :key="groupIndex"
           role="presentation"
           class="listbox-group"
         >
@@ -450,13 +540,20 @@ watch(model, (value) => {
               :key="item.key"
               role="option"
               class="listbox-option"
-              :class="{ active: item === activeItem, selected: isSelected(item) }"
+              :class="{ 'active': item === activeItem, 'selected': isSelected(item), 'listbox-option-create': item.created }"
               :aria-selected="isSelected(item)"
               :aria-disabled="isUnavailable(item) || undefined"
               @mousemove="onOptionMove(item)"
               @click="toggle(item)"
             >
+              <span
+                v-if="item.created"
+                class="listbox-option-label"
+              >
+                {{ formatLabel(l10n.create, { query: item.label }) }}
+              </span>
               <slot
+                v-else
                 name="option"
                 :option="item.option"
                 :selected="isSelected(item)"
@@ -474,7 +571,14 @@ watch(model, (value) => {
         </li>
       </ul>
       <p
-        v-if="!visible.length"
+        v-if="statusText"
+        class="listbox-empty"
+        role="status"
+      >
+        {{ statusText }}
+      </p>
+      <p
+        v-else-if="!visible.length"
         class="listbox-empty"
         role="status"
       >

@@ -25,6 +25,28 @@ const meta: Meta<typeof UiInputCombobox> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// Answers after a short delay, like an API; only the latest query counts
+function useFakeSearch<T>(source: T[], text: (item: T) => string) {
+  const results = ref<T[]>([])
+  const loading = ref(false)
+  let latest = 0
+  async function search(query: string): Promise<void> {
+    const request = ++latest
+    if (!query) {
+      results.value = []
+      loading.value = false
+      return
+    }
+    loading.value = true
+    await new Promise(resolve => setTimeout(resolve, 600))
+    if (request !== latest)
+      return
+    results.value = source.filter(item => text(item).toLowerCase().includes(query.toLowerCase()))
+    loading.value = false
+  }
+  return { results, loading, search }
+}
+
 const countries = ['Argentina', 'Brazil', 'Canada', 'Chile', 'Colombia', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Perú', 'Spain', 'United States', 'Uruguay']
 
 const members = [
@@ -239,6 +261,56 @@ export const PositionFallback: Story = {
       <div style="height: 80vh; display: flex; flex-direction: column; justify-content: space-between; max-width: 320px;">
         <UiInputCombobox id="story-combobox-fallback-top" v-model="value" label="Opens below" :options="countries" />
         <UiInputCombobox id="story-combobox-fallback-bottom" v-model="value" label="Opens above" :options="countries" />
+      </div>
+    `
+  })
+}
+
+export const RemoteSearch: Story = {
+  render: () => ({
+    components: { UiInputCombobox },
+    setup() {
+      const country = ref<string | null>(null)
+      return { country, ...useFakeSearch(countries, name => name) }
+    },
+    template: `
+      <div style="max-width: 360px;">
+        <UiInputCombobox
+          id="story-combobox-remote"
+          v-model="country"
+          label="Country"
+          placeholder="Search the server"
+          :options="results"
+          remote
+          :loading="loading"
+          clearable
+          @search="search"
+        />
+        <p class="caption text-muted mt-2">Value: {{ country ?? 'none' }}</p>
+      </div>
+    `
+  })
+}
+
+export const FreeText: Story = {
+  render: () => ({
+    components: { UiInputCombobox },
+    setup() {
+      const city = ref<string | null>(null)
+      return { city, cities: ['Buenos Aires', 'Lima', 'Madrid', 'Mexico City', 'San Salvador', 'Santiago'] }
+    },
+    template: `
+      <div style="max-width: 360px;">
+        <UiInputCombobox
+          id="story-combobox-free"
+          v-model="city"
+          label="City"
+          placeholder="Pick a city or type another"
+          :options="cities"
+          free-text
+          clearable
+        />
+        <p class="caption text-muted mt-2">Value: {{ city ?? 'none' }}</p>
       </div>
     `
   })

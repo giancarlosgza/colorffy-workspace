@@ -1061,10 +1061,18 @@ Picks one value from a list you can search. The list is a `popover` anchored to 
 - `filterable` (boolean, default: true) - Typing filters by label (case- and accent-insensitive) and highlights the first match; `false` = select-only field where typing jumps to the first option starting with the letters
 - `clearable` (boolean, default: false) - Clear button inside the field
 - `emptyText` (string, default: 'No results') · `clearLabel` (default: 'Clear selection') · `toggleLabel` (default: 'Show options')
+- `remote` (boolean, default: false) - Server-side filtering: typing emits `search(text)` after `searchDelay` (ms, default 300) once `minSearchLength` (default 1) chars are typed (shorter → "Type to search"); an emptied field or closing after a search emits `search('')`. Options render as passed; picked options keep their label across searches (include the initial value's option in the first `options`)
+- `loading` (boolean, default: false) - "Searching…" row instead of the options; result counts are announced when it ends
+- `freeText` (boolean, default: false) - Enter/blur stores typed text that isn't an option as the value; typing doesn't highlight a suggestion (↓ picks one)
+
+```vue
+<UiInputCombobox id="client" v-model="client" label="Client" :options="results" remote :loading="loading" free-text @search="search" />
+<!-- search(q): fetch, set results; ignore responses older than the latest request -->
+```
 
 **Slots:** `#option="{ option, selected, active }"`, `#empty="{ query }"`
 
-**Behavior:** ↓/↑ open and move (Alt+↓ opens without moving), Page Up/Down jump 10, Home/End in select-only, Enter picks, Esc closes then (with `clearable`) clears; inside a dialog only the following Esc closes it. Leaving the field with text that exactly matches an option selects it; an emptied field sets `null`; other text reverts to the selected label. Errors use `errorMessages` like the other inputs (native `required` validation doesn't apply).
+**Behavior:** ↓/↑ open and move (Alt+↓ opens without moving), Page Up/Down jump 10, Home/End in select-only, Enter picks, Esc closes then (with `clearable`) clears; inside a dialog only the following Esc closes it. Leaving the field with text that exactly matches an option selects it; an emptied field sets `null`; other text reverts to the selected label (or becomes the value with `freeText`). Errors use `errorMessages` like the other inputs (native `required` validation doesn't apply).
 
 `modelValue`: string | number | object | null
 
@@ -1091,8 +1099,10 @@ Several values from the same searchable list as `UiInputCombobox` (same popover,
 - `maxChips` (number | null, default: null) - Most chips shown; with more values the field shows the `maxChipsLabel` summary instead. Setting it keeps the field to one row (`.multiselect-single-row`: chip labels ellipsize, the summary hides while searching); `0` = always the summary (toolbar filters)
 - `maxChipsLabel` (`LabelTemplate`: string or `({ count }) => string`, default: '{count} selected') - Summary past `maxChips`; `{count}` is replaced, or the function picks singular/plural
 - `removeLabel` (string, default: 'Remove') - Chip remove button name prefix (`'Remove Maya Chen'`)
+- `remote`, `loading`, `searchDelay`, `minSearchLength` - Same as the combobox; chips keep their labels across searches
+- `freeText` (boolean, default: false) - List ends with an "Add “…”" row (`.listbox-option-create`) for typed text that isn't an option or already picked; matches stay first, so Enter picks the first match and ↓ reaches the row
 
-**Emits:** `update:modelValue`, `update`, `add(value)`, `remove(value)`
+**Emits:** `update:modelValue`, `update`, `add(value)`, `remove(value)`, `search(text)` (with `remote`)
 
 **Behavior:** Enter or click toggles the highlighted option and the list stays open; a search clears after each pick; Backspace on an empty field removes the last chip (chips mode); Esc closes. The listbox is `aria-multiselectable`, changes are announced, and the field's `aria-describedby` lists the selected labels.
 

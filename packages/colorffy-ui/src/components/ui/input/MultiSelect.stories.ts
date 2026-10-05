@@ -27,6 +27,28 @@ const meta: Meta<typeof UiInputMultiSelect> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// Answers after a short delay, like an API; only the latest query counts
+function useFakeSearch<T>(source: T[], text: (item: T) => string) {
+  const results = ref<T[]>([])
+  const loading = ref(false)
+  let latest = 0
+  async function search(query: string): Promise<void> {
+    const request = ++latest
+    if (!query) {
+      results.value = []
+      loading.value = false
+      return
+    }
+    loading.value = true
+    await new Promise(resolve => setTimeout(resolve, 600))
+    if (request !== latest)
+      return
+    results.value = source.filter(item => text(item).toLowerCase().includes(query.toLowerCase()))
+    loading.value = false
+  }
+  return { results, loading, search }
+}
+
 const labels = ['Bug', 'Design', 'Docs', 'Frontend', 'Backend', 'Infra', 'Research', 'Security', 'Performance', 'Accessibility', 'Marketing', 'Q4']
 
 const members = [
@@ -250,6 +272,59 @@ export const InsideModal: Story = {
             />
           </template>
         </UiModal>
+      </div>
+    `
+  })
+}
+
+export const RemoteSearch: Story = {
+  render: () => ({
+    components: { UiInputMultiSelect },
+    setup() {
+      const people = ref<string[]>([])
+      return { people, ...useFakeSearch(members, member => member.name) }
+    },
+    template: `
+      <div style="max-width: 420px;">
+        <UiInputMultiSelect
+          id="story-multiselect-remote"
+          v-model="people"
+          label="People"
+          placeholder="Search the directory"
+          :options="results"
+          option-label="name"
+          option-value="id"
+          remote
+          :min-search-length="2"
+          :loading="loading"
+          clearable
+          @search="search"
+        />
+        <p class="caption text-muted mt-2">Value: {{ people.join(', ') || 'none' }}</p>
+      </div>
+    `
+  })
+}
+
+export const FreeText: Story = {
+  render: () => ({
+    components: { UiInputMultiSelect },
+    setup() {
+      const value = ref<string[]>(['Design'])
+      return { value, labels }
+    },
+    template: `
+      <div style="max-width: 420px;">
+        <UiInputMultiSelect
+          id="story-multiselect-free"
+          v-model="value"
+          label="Labels"
+          placeholder="Pick or create labels"
+          :options="labels"
+          free-text
+          clearable
+        />
+        <p class="caption text-muted mt-2">Value: {{ value.join(', ') || 'none' }}</p>
       </div>
     `
   })

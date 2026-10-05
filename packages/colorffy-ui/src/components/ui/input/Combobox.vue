@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ListboxItem } from '@/composables/useListbox'
 import type { ComboboxValue, IComboboxInputEmits, IComboboxInputProps } from '@/types/input'
-import { computed, ref, useId, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, shallowReactive, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
-import { useLabels } from '@/composables/useColorffyConfig'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 import { normalizeText, useListbox } from '@/composables/useListbox'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -29,7 +29,12 @@ const props = withDefaults(defineProps<IComboboxInputProps>(), {
   optionDisabled: null,
   optionGroup: null,
   filterable: true,
-  clearable: false
+  clearable: false,
+  remote: false,
+  loading: false,
+  searchDelay: 300,
+  minSearchLength: 1,
+  freeText: false
 })
 
 /** Emits */
@@ -51,6 +56,12 @@ const popupRef = ref<HTMLElement | null>(null)
 const fieldRef = ref<HTMLElement | null>(null)
 const query = ref('')
 const inputText = ref('')
+const announcement = ref('')
+// Labels of picked options, kept while a remote search replaces `options`
+const remembered = shallowReactive(new Map<unknown, string>())
+const searchPending = ref(false)
+let searchTimer: ReturnType<typeof setTimeout> | undefined
+let lastSearch = ''
 const fieldId = computed(() => props.id ?? `${uid}-combobox`)
 const labelId = computed(() => `${fieldId.value}-label`)
 const listboxId = computed(() => `${fieldId.value}-listbox`)
@@ -63,7 +74,7 @@ const listbox = useListbox({
   optionValue: () => props.optionValue,
   optionDisabled: () => props.optionDisabled,
   optionGroup: () => props.optionGroup,
-  query: () => query.value
+  query: () => (props.remote ? '' : query.value)
 })
 const { groups, visible, activeItem, optionId, scrollToActive } = listbox
 
@@ -72,7 +83,27 @@ const hasErrors = computed(() => props.errorMessages?.length > 0)
 const describedById = computed(() => (hasErrors.value ? `${fieldId.value}-error-0` : undefined))
 const isLocked = computed(() => props.disabled || props.readonly)
 const selectedItem = computed(() => listbox.items.value.find(item => Object.is(item.value, model.value)) ?? null)
-const selectedLabel = computed(() => selectedItem.value?.label ?? '')
+const selectedLabel = computed(() => {
+  if (selectedItem.value)
+    return selectedItem.value.label
+  if (model.value == null)
+    return ''
+  return remembered.get(model.value) ?? (props.freeText && typeof model.value === 'string' ? model.value : '')
+})
+const isShortQuery = computed(() => {
+  const length = query.value.trim().length
+  return props.remote && length > 0 && length < props.minSearchLength
+})
+const isSearching = computed(() => props.loading || searchPending.value)
+const showOptions = computed(() => !isSearching.value && !isShortQuery.value)
+const currentItem = computed(() => (showOptions.value ? activeItem.value : null))
+const statusText = computed(() => {
+  if (isSearching.value)
+    return l10n.value.loading
+  if (isShortQuery.value || (props.remote && !visible.value.length && !query.value.trim()))
+    return l10n.value.typeToSearch
+  return null
+})
 const showClear = computed(() => props.clearable && !isLocked.value && (model.value != null || inputText.value !== ''))
 
 const groupClasses = computed(() => ['form-group', { 'form-invalid': hasErrors.value }])
@@ -88,12 +119,42 @@ const fieldAria = computed(() => ({
   'role': 'combobox',
   'aria-expanded': isOpen.value,
   'aria-controls': isOpen.value ? listboxId.value : undefined,
-  'aria-activedescendant': isOpen.value && activeItem.value ? optionId(activeItem.value) : undefined,
+  'aria-activedescendant': isOpen.value && currentItem.value ? optionId(currentItem.value) : undefined,
   'aria-invalid': hasErrors.value || undefined,
   'aria-describedby': describedById.value
 }))
 
 /** Methods */
+// Cleared first, so the same message twice is still read out
+function announce(text: string): void {
+  announcement.value = ''
+  nextTick(() => (announcement.value = text))
+}
+// With `remote`, the typed text goes to `search` once typing pauses
+function requestSearch(text: string): void {
+  if (!props.remote)
+    return
+  clearTimeout(searchTimer)
+  const trimmed = text.trim()
+  searchPending.value = false
+  if (trimmed === lastSearch || (trimmed && trimmed.length < props.minSearchLength))
+    return
+  searchPending.value = true
+  searchTimer = setTimeout(() => {
+    searchPending.value = false
+    lastSearch = trimmed
+    emit('search', trimmed)
+  }, props.searchDelay)
+}
+// A closed list drops its search, so it reopens on the default options
+function resetSearch(): void {
+  clearTimeout(searchTimer)
+  searchPending.value = false
+  if (props.remote && lastSearch) {
+    lastSearch = ''
+    emit('search', '')
+  }
+}
 function openList(start: 'selected' | 'last' | 'none' = 'selected'): void {
   if (isLocked.value)
     return
@@ -112,14 +173,17 @@ function finish(text: string): void {
   query.value = ''
   listbox.activeIndex.value = -1
   inputText.value = text
+  resetSearch()
 }
 function select(item: ListboxItem): void {
   if (item.disabled)
     return
+  if (props.remote)
+    remembered.set(item.value, item.label)
   model.value = item.value as ComboboxValue
   finish(item.label)
 }
-// An emptied field clears the value; text that matches an option exactly selects it
+// An emptied field clears the value; text that matches an option exactly selects it, and with `freeText` other text becomes the value
 function commitText(): void {
   const text = inputText.value.trim()
   if (props.filterable && !text) {
@@ -130,10 +194,14 @@ function commitText(): void {
   const match = props.filterable
     ? listbox.items.value.find(item => !item.disabled && item.search === normalizeText(text))
     : null
-  if (match)
+  if (match) {
     select(match)
-  else
+  } else if (props.freeText) {
+    model.value = text
+    finish(text)
+  } else {
     finish(selectedLabel.value)
+  }
 }
 function clear(): void {
   model.value = null
@@ -153,11 +221,12 @@ function onInput(event: Event): void {
   query.value = inputText.value
   if (!isOpen.value)
     openList('none')
-  if (query.value.trim())
+  if (query.value.trim() && !props.freeText)
     listbox.activateFirst()
   else
     listbox.activeIndex.value = -1
   scrollToActive()
+  requestSearch(query.value)
 }
 function onKeydown(event: KeyboardEvent): void {
   if (isLocked.value)
@@ -168,8 +237,8 @@ function onKeydown(event: KeyboardEvent): void {
     event.preventDefault()
     if (!isOpen.value)
       openList(altKey ? 'none' : key === 'ArrowUp' && !selectedItem.value ? 'last' : 'selected')
-    else if (altKey && key === 'ArrowUp' && activeItem.value)
-      select(activeItem.value)
+    else if (altKey && key === 'ArrowUp' && currentItem.value)
+      select(currentItem.value)
     else if (!altKey)
       listbox.move(key === 'ArrowDown' ? 1 : -1)
     scrollToActive()
@@ -186,8 +255,8 @@ function onKeydown(event: KeyboardEvent): void {
     scrollToActive()
   } else if (key === 'Enter' && isOpen.value) {
     event.preventDefault()
-    if (activeItem.value)
-      select(activeItem.value)
+    if (currentItem.value)
+      select(currentItem.value)
     else
       commitText()
   } else if (key === 'Escape') {
@@ -203,8 +272,8 @@ function onKeydown(event: KeyboardEvent): void {
     }
   } else if (!props.filterable && key === ' ' && !listbox.isTyping()) {
     event.preventDefault()
-    if (isOpen.value && activeItem.value)
-      select(activeItem.value)
+    if (isOpen.value && currentItem.value)
+      select(currentItem.value)
     else if (!isOpen.value)
       openList()
   } else if (!props.filterable && key.length === 1 && !event.ctrlKey && !event.metaKey) {
@@ -241,6 +310,21 @@ watch(selectedLabel, (label) => {
 watch(model, (value) => {
   emit('update', value)
 })
+watch([() => listbox.items.value, model], ([items, value]) => {
+  const item = props.remote ? items.find(entry => Object.is(entry.value, value)) : null
+  if (item)
+    remembered.set(item.value, item.label)
+}, { immediate: true })
+// Fresh results: the first one is highlighted and the count announced
+watch([() => props.options, () => props.loading], () => {
+  if (!props.remote || !isOpen.value || props.loading || !query.value.trim())
+    return
+  if (!props.freeText)
+    listbox.activateFirst()
+  announce(formatLabel(l10n.value.results, { count: visible.value.length }))
+})
+
+onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
 
 <template>
@@ -355,6 +439,8 @@ watch(model, (value) => {
       {{ l10nCommon.optional }}
     </p>
 
+    <span class="visually-hidden" aria-live="polite">{{ announcement }}</span>
+
     <!-- Options: after the feedback, so the error keeps following the field -->
     <div
       v-if="isOpen"
@@ -370,9 +456,10 @@ watch(model, (value) => {
         role="listbox"
         class="listbox"
         :aria-labelledby="labelId"
+        :aria-busy="loading || undefined"
       >
         <li
-          v-for="group in groups"
+          v-for="group in showOptions ? groups : []"
           :key="group.label ?? ''"
           role="presentation"
           class="listbox-group"
@@ -418,7 +505,14 @@ watch(model, (value) => {
         </li>
       </ul>
       <p
-        v-if="!visible.length"
+        v-if="statusText"
+        class="listbox-empty"
+        role="status"
+      >
+        {{ statusText }}
+      </p>
+      <p
+        v-else-if="!visible.length"
         class="listbox-empty"
         role="status"
       >

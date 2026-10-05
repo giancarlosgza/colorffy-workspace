@@ -29,7 +29,10 @@ export const en: IColorffyLabels = {
   combobox: {
     empty: 'No results',
     clear: 'Clear selection',
-    toggle: 'Show options'
+    toggle: 'Show options',
+    loading: 'Searching…',
+    typeToSearch: 'Type to search',
+    results: ({ count }) => count === 1 ? '1 result' : `${count} results`
   },
   confirmModal: {
     confirm: 'Delete',
@@ -96,6 +99,10 @@ export const en: IColorffyLabels = {
     clear: 'Clear selection',
     toggle: 'Show options',
     remove: 'Remove',
+    loading: 'Searching…',
+    typeToSearch: 'Type to search',
+    results: ({ count }) => count === 1 ? '1 result' : `${count} results`,
+    create: 'Add “{query}”',
     summary: '{count} selected',
     added: 'Added {label}',
     removed: 'Removed {label}',
