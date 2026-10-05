@@ -139,18 +139,12 @@ npm install @vueuse/components floating-vue
 ```
 
 ```typescript
-// nuxt.config.ts
+// nuxt.config.ts: the module registers every Ui* component and auto-imports
+// useToast, useTextUtils, useDateUtils, useColorffyConfig and datePresets (no plugin needed)
 export default defineNuxtConfig({
-  css: ['@colorffy/css']
-})
-```
-
-```typescript
-// plugins/colorffy-ui.ts
-import ColorffyUI from '@colorffy/ui'
-
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(ColorffyUI)
+  css: ['@colorffy/css'],
+  modules: ['@colorffy/ui/nuxt'],
+  colorffyUI: { locale: 'es-SV', labels: 'es' } // optional: language of the components' own text
 })
 ```
 
@@ -183,24 +177,9 @@ export default defineNuxtConfig({
 }
 ```
 
-### Option 3: Auto-Import Components (Nuxt)
+### Components without imports
 
-Configure auto-imports for better DX:
-
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  components: [
-    {
-      path: '~/node_modules/@colorffy/ui',
-      prefix: 'Ui',
-      extensions: ['.vue']
-    }
-  ]
-})
-```
-
-Use components without imports:
+With the `@colorffy/ui/nuxt` module every component is available without imports:
 
 ```vue
 <template>
@@ -309,6 +288,6 @@ Verify Vite/Nuxt config has SCSS preprocessor options.
 
 ### Auto-Import Not Working (Nuxt)
 
-1. Verify components directory configuration
+1. Check `'@colorffy/ui/nuxt'` is in `modules` (no `components` path entry is needed)
 2. Restart Nuxt dev server
 3. Check `.nuxt/components.d.ts` is generated
