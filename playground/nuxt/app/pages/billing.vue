@@ -6,17 +6,15 @@ import { useMediaQuery, useMounted } from '@vueuse/core'
 
 definePageMeta({ pageTitle: 'Billing' })
 
+/** Interfaces */
 type BillingCycle = 'monthly' | 'yearly'
 
-const { notify } = useNotify()
-
+/** Data */
 const NEXT_INVOICE_DATE = 'Oct 15, 2026'
-
 const cycleOptions: IButtonToggleOption[] = [
   { id: 'monthly', title: 'Monthly', text: 'Pay month to month' },
   { id: 'yearly', title: 'Yearly', text: 'Billed once a year', badge: { variant: 'tonal tonal-success', text: 'Save 20%' } }
 ]
-
 const invoiceColumns: IDatatableColumn[] = [
   { key: 'id', label: 'Invoice' },
   { key: 'date', label: 'Date', sortable: false },
@@ -26,12 +24,6 @@ const invoiceColumns: IDatatableColumn[] = [
   { key: 'status', label: 'Status' },
   { key: 'actions', label: 'Download', hideLabel: true, fit: true, sortable: false, align: 'end' }
 ]
-// Phones keep the invoice, amount, status and download; the server renders every column, so this waits for mount
-const isMounted = useMounted()
-const phoneQuery = useMediaQuery('(width < 600px)')
-const isPhone = computed(() => isMounted.value && phoneQuery.value)
-const visibleInvoiceColumns = computed(() => isPhone.value ? invoiceColumns.filter(column => !['date', 'period', 'plan'].includes(column.key)) : invoiceColumns)
-
 const usage = [
   { id: 'seats', label: 'Seats', icon: '&#xe7ef;', used: workspace.seatsUsed, limit: workspace.seatsTotal, unit: 'seats', hint: 'Add seats before your next invite.' },
   { id: 'storage', label: 'Storage', icon: '&#xe2bd;', used: workspace.storageUsedGb, limit: workspace.storageTotalGb, unit: 'GB', hint: 'Archive old files or upgrade for more space.' },
@@ -42,17 +34,14 @@ const usage = [
   usedLabel: meter.used.toLocaleString('en-US'),
   limitLabel: `${meter.limit.toLocaleString('en-US')} ${meter.unit}`
 }))
-
 const currentPlanId = ref<Plan['id']>('pro')
 const currentCycle = ref<BillingCycle>('monthly')
 const isCanceled = ref(false)
 const billingCycle = ref<string>('monthly')
 const selectedPlanId = ref<string>('business')
 const isUpdatingPlan = ref(false)
-
 const cancelModal = ref<InstanceType<typeof UiConfirmModal> | null>(null)
 const isCanceling = ref(false)
-
 const invoiceRows = ref<Invoice[]>(invoices.map(invoice => ({ ...invoice })))
 const invoicesLoading = ref(true)
 const selectedInvoices = ref<(string | number)[]>([])
@@ -63,6 +52,17 @@ const periodPresets: IDatePreset[] = [
   datePresets.lastMonths(12),
   datePresets.lastYear()
 ]
+const isRetrying = ref(false)
+
+/** Composables */
+const { notify } = useNotify()
+// The server renders every column, so the phone layout waits for mount
+const isMounted = useMounted()
+const phoneQuery = useMediaQuery('(width < 600px)')
+
+/** Computed */
+const isPhone = computed(() => isMounted.value && phoneQuery.value)
+const visibleInvoiceColumns = computed(() => isPhone.value ? invoiceColumns.filter(column => !['date', 'period', 'plan'].includes(column.key)) : invoiceColumns)
 const filteredInvoices = computed(() => {
   const { start, end } = invoicePeriod.value ?? {}
   if (!start || !end)
@@ -73,8 +73,6 @@ const filteredInvoices = computed(() => {
     return issued >= start && issued < last
   })
 })
-const isRetrying = ref(false)
-
 const currentPlan = computed(() => planById(currentPlanId.value))
 const selectedPlan = computed(() => planById(selectedPlanId.value))
 const onTrial = computed(() => currentPlanId.value === 'pro' && !isCanceled.value)
@@ -85,7 +83,6 @@ const nextInvoiceAmount = computed(() => {
   return workspace.seatsUsed * currentSeatPrice.value * months
 })
 const failedInvoice = computed(() => invoiceRows.value.find(invoice => invoice.status === 'failed'))
-
 const planAction = computed(() => {
   const plan = selectedPlan.value
   if (plan.id === currentPlanId.value && billingCycle.value === currentCycle.value)
@@ -96,7 +93,6 @@ const planAction = computed(() => {
     return { label: `Downgrade to ${plan.name}`, disabled: false }
   return { label: `Upgrade to ${plan.name}`, disabled: false }
 })
-
 const planSummary = computed(() => {
   const plan = selectedPlan.value
   if (!plan.monthly)
@@ -107,24 +103,16 @@ const planSummary = computed(() => {
   return `${workspace.seatsUsed} seats × ${formatCurrency(price)} = ${total} per month, ${billed}.`
 })
 
-onMounted(() => {
-  setTimeout(() => {
-    invoicesLoading.value = false
-  }, 900)
-})
-
+/** Methods */
 function wait(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
-
 function planById(id: string): Plan {
   return plans.find(plan => plan.id === id) ?? plans[0]!
 }
-
 function priceFor(plan: Plan, cycle: BillingCycle): number {
   return cycle === 'yearly' ? plan.yearly : plan.monthly
 }
-
 function planCardClass(plan: Plan): string[] {
   const classes = ['h-100']
   if (plan.id === selectedPlanId.value)
@@ -133,7 +121,6 @@ function planCardClass(plan: Plan): string[] {
     classes.push('border', 'border-md', 'border-accent')
   return classes
 }
-
 async function applyPlan(): Promise<void> {
   const plan = selectedPlan.value
   const isDowngrade = plan.monthly < currentPlan.value.monthly
@@ -149,7 +136,6 @@ async function applyPlan(): Promise<void> {
   else
     notify(`You're on ${plan.name}`, `We'll prorate the difference on your ${NEXT_INVOICE_DATE} invoice.`)
 }
-
 async function cancelPlan(): Promise<void> {
   isCanceling.value = true
   await wait(800)
@@ -158,7 +144,6 @@ async function cancelPlan(): Promise<void> {
   cancelModal.value?.closeDialog()
   notify('Plan canceled', `${currentPlan.value.name} stays active until ${NEXT_INVOICE_DATE}, then Orbit moves to Free.`, 'warning')
 }
-
 async function retryPayment(): Promise<void> {
   const invoice = failedInvoice.value
   if (!invoice)
@@ -169,24 +154,27 @@ async function retryPayment(): Promise<void> {
   isRetrying.value = false
   notify('Payment received', `${invoice.id} for ${formatCurrency(invoice.amount)} is paid. Thanks!`)
 }
-
 function updateCard(): void {
   notify('Check your inbox', `We sent a secure Stripe link to ${currentUser.email} to update your card.`, 'info')
 }
-
 function downloadInvoice(id: string): void {
   notify('Download started', `${id}.pdf is saving to your downloads.`, 'info')
 }
-
 function downloadSelected(): void {
   const count = selectedInvoices.value.length
   notify('Preparing your invoices', `We'll email a ZIP with ${count} ${count === 1 ? 'invoice' : 'invoices'} to ${currentUser.email}.`, 'info')
   selectedInvoices.value = []
 }
-
 function downloadAll(): void {
   notify('Preparing your invoices', `We'll email a ZIP with every invoice to ${currentUser.email}.`, 'info')
 }
+
+/** Lifecycle */
+onMounted(() => {
+  setTimeout(() => {
+    invoicesLoading.value = false
+  }, 900)
+})
 </script>
 
 <template>

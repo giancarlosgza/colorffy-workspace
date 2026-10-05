@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Manual Component Registration
 import { UiAccordion, UiAccordionGroup, UiAlert, UiAlertToast, UiAvatar, UiBadge, UiBadgeGroup, UiButton, UiButtonFabGroup, UiButtonGroup, UiButtonMenu, UiButtonMenuDivider, UiButtonMenuItem, UiButtonMenuText, UiButtonTooltip, UiCard, UiHeaderContent, UiIconMaterial, UiInputText, UiListGroup, UiListItem, UiModal, UiNavbar, UiNavbarAvatar, UiNavbarBrand, UiNavbarCollapse, UiNavbarItem, UiNavbarMobileMenu, UiNavbarTitle, UiNavbarToggle, UiPaneContent, UiSidebar, UiSidebarDropdown, UiSidebarGroup, UiSidebarLink, UiSidebarText } from '@colorffy/ui'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'

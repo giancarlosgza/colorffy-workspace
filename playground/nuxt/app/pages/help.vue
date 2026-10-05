@@ -4,10 +4,10 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Help center' })
 
+/** Interfaces */
 type CategoryId = 'getting-started' | 'projects' | 'billing' | 'integrations' | 'security'
 type Tone = 'primary' | 'accent' | 'success' | 'info' | 'warning'
 type SearchStatus = 'idle' | 'searching' | 'results'
-
 interface Category {
   id: CategoryId
   title: string
@@ -16,7 +16,6 @@ interface Category {
   tone: Tone
   shape: IconShape
 }
-
 interface Article {
   id: string
   title: string
@@ -27,9 +26,7 @@ interface Article {
   keywords: string[]
 }
 
-const route = useRoute()
-const router = useRouter()
-
+/** Data */
 const categories: Category[] = [
   { id: 'getting-started', title: 'Getting started', description: 'Set up your workspace, invite your team and plan your first project in under ten minutes.', articles: 14, tone: 'primary', shape: 'star-1' },
   { id: 'projects', title: 'Projects & tasks', description: 'Boards, lists, timelines, dependencies and recurring tasks.', articles: 32, tone: 'accent', shape: 'blob-3' },
@@ -37,7 +34,6 @@ const categories: Category[] = [
   { id: 'integrations', title: 'Integrations', description: 'Connect Slack, GitHub, Figma and 40 other tools.', articles: 26, tone: 'info', shape: 'shape-2' },
   { id: 'security', title: 'Security & admin', description: 'Single sign-on, two-factor, permissions and data export.', articles: 17, tone: 'warning', shape: 'lighting-1' }
 ]
-
 const articles: Article[] = [
   { id: 'a1', title: 'Invite teammates and choose their role', excerpt: 'Send invites from the Team page, pick Admin or Member, and see how seats are counted on your plan.', category: 'getting-started', readTime: '3 min read', updated: 'Updated Sep 24', keywords: ['invite', 'teammates', 'members', 'role', 'seats'] },
   { id: 'a2', title: 'Give guests access to a single project', excerpt: 'Guests see only the projects you add them to. They can comment and finish tasks, and they don\'t use a seat.', category: 'security', readTime: '4 min read', updated: 'Updated Sep 18', keywords: ['guest', 'guests', 'access', 'client', 'external'] },
@@ -52,7 +48,6 @@ const articles: Article[] = [
   { id: 'a11', title: 'Plan your first project', excerpt: 'Start from a template, set a due date and break the work into milestones your team can follow.', category: 'getting-started', readTime: '4 min read', updated: 'Updated Sep 20', keywords: ['project', 'first', 'template', 'create', 'milestones'] },
   { id: 'a12', title: 'Link GitHub pull requests to tasks', excerpt: 'Mention a task key like MOB-42 in a pull request and Orbit moves the task when it merges.', category: 'integrations', readTime: '4 min read', updated: 'Updated Sep 5', keywords: ['github', 'pull', 'request', 'code', 'integration'] }
 ]
-
 const topics: IChipOption[] = [
   { id: 'invite', text: 'Invite teammates', iconCode: '&#xe7fe;' },
   { id: 'guests', text: 'Guest access', iconCode: '&#xe7ef;' },
@@ -60,10 +55,8 @@ const topics: IChipOption[] = [
   { id: 'export', text: 'Export data', iconCode: '&#xe2c4;' },
   { id: 'sso', text: 'SAML SSO', iconCode: '&#xe0da;' }
 ]
-
 const proPlan = plans.find(plan => plan.id === 'pro')!
 const businessPlan = plans.find(plan => plan.id === 'business')!
-
 const faqs = [
   {
     id: 'faq-invites',
@@ -96,9 +89,7 @@ const faqs = [
     text: `SAML single sign-on is included in ${businessPlan.name} at ${formatCurrency(businessPlan.monthly)} per member. It works with Okta, Microsoft Entra ID and Google Workspace, and you can require it for every member except the owner.`
   }
 ]
-
 const loadingTitles = ['Searching articles…', 'Checking the changelog…', 'Ranking the best answers…']
-
 const query = ref<string | null>('')
 const selectedTopic = ref<string | null>(null)
 const status = ref<SearchStatus>('idle')
@@ -106,10 +97,14 @@ const resultsLabel = ref('')
 const results = ref<Article[]>([])
 let searchTimer: ReturnType<typeof setTimeout> | undefined
 
+/** Composables */
+const route = useRoute()
+const router = useRouter()
+
+/** Methods */
 function categoryById(id: CategoryId): Category {
   return categories.find(category => category.id === id) ?? categories[0]!
 }
-
 function rankArticles(text: string): Article[] {
   const words = text.toLowerCase().split(/[^a-z0-9-]+/).filter(word => word.length > 1)
   return articles
@@ -122,7 +117,6 @@ function rankArticles(text: string): Article[] {
     .slice(0, 3)
     .map(item => item.article)
 }
-
 function startSearch(label: string, found: Article[]): void {
   clearTimeout(searchTimer)
   status.value = 'searching'
@@ -132,12 +126,10 @@ function startSearch(label: string, found: Article[]): void {
     status.value = 'results'
   }, 1500)
 }
-
 function clearTopicQuery(): void {
   if (route.query.topic || route.query.q)
     router.replace({ query: {} })
 }
-
 function submitSearch(): void {
   const text = String(query.value ?? '').trim()
   if (!text)
@@ -146,7 +138,6 @@ function submitSearch(): void {
   selectedTopic.value = topics.find(topic => topic.text === text)?.id ?? null
   startSearch(`Top results for “${text}”`, rankArticles(text))
 }
-
 function pickTopic(value: string | string[] | null): void {
   const topic = topics.find(item => item.id === value)
   selectedTopic.value = topic?.id ?? null
@@ -158,7 +149,6 @@ function pickTopic(value: string | string[] | null): void {
   query.value = topic.text
   startSearch(`Top results for “${topic.text}”`, rankArticles(topic.text))
 }
-
 function openCategory(id: unknown): void {
   const category = categories.find(item => item.id === id)
   if (!category)
@@ -168,7 +158,6 @@ function openCategory(id: unknown): void {
   startSearch(`Top articles in ${category.title}`, articles.filter(article => article.category === category.id).slice(0, 3))
   document.getElementById('help-search')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
-
 function clearSearch(): void {
   clearTimeout(searchTimer)
   status.value = 'idle'
@@ -177,7 +166,6 @@ function clearSearch(): void {
   query.value = ''
   clearTopicQuery()
 }
-
 // The layout's global search sends its text here as `?q=`
 function searchFromQuery(text: unknown): void {
   if (typeof text !== 'string' || !text.trim())
@@ -186,14 +174,15 @@ function searchFromQuery(text: unknown): void {
   submitSearch()
 }
 
+/** Watchers */
 watch(() => route.query.topic, openCategory)
 watch(() => route.query.q, searchFromQuery)
 
+/** Lifecycle */
 onMounted(() => {
   openCategory(route.query.topic)
   searchFromQuery(route.query.q)
 })
-
 onBeforeUnmount(() => clearTimeout(searchTimer))
 </script>
 

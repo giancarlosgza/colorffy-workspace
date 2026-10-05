@@ -5,10 +5,10 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Team' })
 
+/** Interfaces */
 type TeamTab = 'members' | 'pending' | 'guests'
 
-const { notify } = useNotify()
-
+/** Data */
 const ROLE_OPTIONS: Role[] = ['Owner', 'Admin', 'Member', 'Guest']
 const ASSIGNABLE_ROLES: Role[] = ['Admin', 'Member', 'Guest']
 const SKILL_TONES = ['primary', 'secondary', 'accent', 'info', 'success'] as const
@@ -22,7 +22,6 @@ const MESSAGE_TEMPLATES = [
 const PROJECT_OPTIONS = projects
   .filter(project => project.status !== 'completed')
   .map(project => ({ id: project.id, name: project.name, status: statusMeta[project.status].label }))
-
 const columns: IDatatableColumn[] = [
   { key: 'name', label: 'Member' },
   { key: 'title', label: 'Title' },
@@ -31,37 +30,34 @@ const columns: IDatatableColumn[] = [
   { key: 'lastActive', label: 'Last active', sortable: false },
   { key: 'actions', label: 'Actions', hideLabel: true, hideable: false, fit: true, sortable: false, align: 'end' }
 ]
-
 const proPlan = plans.find(plan => plan.id === 'pro')!
-
 const teamMembers = ref<Member[]>(members.map(member => ({ ...member, skills: [...member.skills] })))
 const activeTab = ref<TeamTab>('members')
 const skillFilter = ref<string[]>([])
 const resendingId = ref<string | null>(null)
 const isRefreshing = ref(false)
-
 const removeModal = ref<InstanceType<typeof UiConfirmModal> | null>(null)
 const memberToRemove = ref<Member | null>(null)
 const isRemoving = ref(false)
-
 const inviteModal = ref<InstanceType<typeof UiModal> | null>(null)
 const inviteForm = reactive({ emails: [] as string[], projectIds: [] as string[], phone: '', role: 'Member', message: '', sendCopy: true })
 const inviteErrors = ref<string[]>([])
 const skillsSummary: LabelTemplate = ({ count }) => count === 1 ? '1 skill' : `${count} skills`
 const isSending = ref(false)
 
+/** Composables */
+const { notify } = useNotify()
+
+/** Computed */
 const activeMembers = computed(() => teamMembers.value.filter(m => m.status === 'active' && m.role !== 'Guest'))
 const pendingInvites = computed(() => teamMembers.value.filter(m => m.status === 'pending'))
 const guests = computed(() => teamMembers.value.filter(m => m.status === 'active' && m.role === 'Guest'))
-
 const tabs = computed<ITabItem[]>(() => [
   { id: 'members', label: 'Members', badge: { text: String(activeMembers.value.length), variant: 'tonal tonal-primary', pill: true } },
   { id: 'pending', label: 'Pending', badge: { text: String(pendingInvites.value.length), variant: 'tonal tonal-warning', pill: true } },
   { id: 'guests', label: 'Guests', badge: { text: String(guests.value.length), variant: 'tonal tonal-info', pill: true } }
 ])
-
 const skillOptions = computed(() => [...new Set(teamMembers.value.flatMap(member => member.skills))].sort((a, b) => a.localeCompare(b)))
-
 const tabRows = computed(() => {
   if (activeTab.value === 'pending')
     return pendingInvites.value
@@ -69,12 +65,10 @@ const tabRows = computed(() => {
     return guests.value
   return activeMembers.value
 })
-
 const visibleRows = computed(() => {
   const skills = skillFilter.value
   return skills.length ? tabRows.value.filter(member => member.skills.some(skill => skills.includes(skill))) : tabRows.value
 })
-
 const emptyState = computed(() => {
   if (skillFilter.value.length && tabRows.value.length)
     return { title: 'No one with these skills', subtitle: 'Pick fewer skills, or look in another tab.' }
@@ -84,7 +78,6 @@ const emptyState = computed(() => {
     return { title: 'No guests yet', subtitle: 'Invite clients or contractors as guests to share single projects.' }
   return { title: 'No members', subtitle: 'Invite your team to start planning together.' }
 })
-
 const seatsUsed = computed(() => teamMembers.value.length)
 const seatsLeft = computed(() => workspace.seatsTotal - seatsUsed.value)
 const seatPercent = computed(() => Math.min(100, Math.round((seatsUsed.value / workspace.seatsTotal) * 100)))
@@ -94,27 +87,23 @@ const seatsLeftLabel = computed(() => {
   return 'No seats left'
 })
 
+/** Methods */
 function wait(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
-
 function selectTab(id: string): void {
   activeTab.value = id as TeamTab
 }
-
 function avatarColor(color: Intent): Exclude<Intent, 'muted'> | 'neutral' {
   return color === 'muted' ? 'neutral' : color
 }
-
 function skillTone(skill: string): string {
   const sum = [...skill].reduce((total, char) => total + char.charCodeAt(0), 0)
   return SKILL_TONES[sum % SKILL_TONES.length]!
 }
-
 function findMember(id: string): Member | undefined {
   return teamMembers.value.find(member => member.id === id)
 }
-
 function changeRole(id: string, value: unknown): void {
   const member = findMember(id)
   if (!member || typeof value !== 'string' || value === member.role)
@@ -122,7 +111,6 @@ function changeRole(id: string, value: unknown): void {
   member.role = value as Role
   notify('Role updated', `${member.name} is now ${value === 'Admin' ? 'an' : 'a'} ${value}.`)
 }
-
 async function copyInviteLink(): Promise<void> {
   try {
     await navigator.clipboard.writeText(INVITE_LINK)
@@ -131,30 +119,20 @@ async function copyInviteLink(): Promise<void> {
     notify('Couldn\'t copy the link', INVITE_LINK, 'warning')
   }
 }
-
 function inviteEmailErrors(): string[] {
   const invalid = inviteForm.emails.filter(email => !EMAIL_PATTERN.test(email))
   if (invalid.length)
     return [`Check ${invalid.join(', ')}: that isn't a valid email address.`]
   return inviteForm.emails.length ? [] : ['Add at least one email address.']
 }
-
 function onEmailRejected(email: string, reason: 'duplicate' | 'max'): void {
   inviteErrors.value = [reason === 'duplicate' ? `${email} is already on the list.` : 'You can invite up to 10 people at once.']
 }
-
-// A shown error follows the list, so fixing or removing the address clears it
-watch(() => [...inviteForm.emails], () => {
-  if (inviteErrors.value.length)
-    inviteErrors.value = inviteEmailErrors()
-})
-
 function openInvite(): void {
   Object.assign(inviteForm, { emails: [], projectIds: [], phone: '', role: 'Member', message: '', sendCopy: true })
   inviteErrors.value = []
   inviteModal.value?.showDialog()
 }
-
 async function sendInvites(): Promise<void> {
   const emails = inviteForm.emails
   inviteErrors.value = inviteEmailErrors()
@@ -191,7 +169,6 @@ async function sendInvites(): Promise<void> {
   const copy = inviteForm.sendCopy ? ' A copy is on its way to your inbox.' : ''
   notify('Invites sent', `${people} can now join Orbit as ${role}.${joins}${copy}`)
 }
-
 async function resendInvite(id: string): Promise<void> {
   const member = findMember(id)
   if (!member)
@@ -202,7 +179,6 @@ async function resendInvite(id: string): Promise<void> {
   resendingId.value = null
   notify('Invite resent', `We sent a fresh link to ${member.email}.`, 'info')
 }
-
 function revokeInvite(id: string): void {
   const member = findMember(id)
   if (!member)
@@ -210,7 +186,6 @@ function revokeInvite(id: string): void {
   teamMembers.value = teamMembers.value.filter(m => m.id !== id)
   notify('Invite revoked', `${member.email} can no longer join with the old link.`, 'warning')
 }
-
 async function copyEmails(): Promise<void> {
   const emails = visibleRows.value.map(member => member.email).join(', ')
   try {
@@ -220,23 +195,19 @@ async function copyEmails(): Promise<void> {
     notify('Couldn\'t copy the emails', emails, 'warning')
   }
 }
-
 function exportMembers(): void {
   notify('Export started', `We'll email you a CSV of ${visibleRows.value.length} people when it's ready.`, 'info')
 }
-
 async function refreshMembers(): Promise<void> {
   isRefreshing.value = true
   await wait(700)
   isRefreshing.value = false
   notify('Team up to date', 'Roles and activity are current.', 'info')
 }
-
 function askRemove(id: string): void {
   memberToRemove.value = findMember(id) ?? null
   removeModal.value?.showDialog()
 }
-
 async function removeMember(): Promise<void> {
   const member = memberToRemove.value
   if (!member)
@@ -248,6 +219,12 @@ async function removeMember(): Promise<void> {
   removeModal.value?.closeDialog()
   notify('Member removed', `${member.name} no longer has access to Orbit. Their tasks are still assigned to them.`)
 }
+
+/** Watchers */
+watch(() => [...inviteForm.emails], () => {
+  if (inviteErrors.value.length)
+    inviteErrors.value = inviteEmailErrors()
+})
 </script>
 
 <template>

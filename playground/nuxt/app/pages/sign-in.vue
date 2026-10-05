@@ -1,8 +1,10 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'auth', pageTitle: 'Sign in' })
 
+/** Interfaces */
 type Step = 'credentials' | 'loading' | 'verify'
 
+/** Data */
 const step = ref<Step>('credentials')
 const email = ref<string | number | null>('')
 const password = ref<string | null>('')
@@ -14,29 +16,20 @@ const googleLoading = ref(false)
 const code = ref('')
 const opening = ref(false)
 let timer: ReturnType<typeof setTimeout> | undefined
-
 const highlights = [
   'Boards, timelines and docs in one place',
   'Automations that keep status up to date',
   'Guests and clients see only what you share'
 ]
 
+/** Computed */
 const emailText = computed(() => String(email.value ?? '').trim())
 
+/** Methods */
 function isValidEmail(value: string): boolean {
   const [local, domain, ...rest] = value.split('@')
   return !rest.length && !!local && !!domain && domain.includes('.') && !domain.startsWith('.') && !domain.endsWith('.') && !/\s/.test(value)
 }
-
-watch(email, () => {
-  emailErrors.value = []
-  resetSentTo.value = null
-})
-
-watch(password, () => {
-  passwordErrors.value = []
-})
-
 function signIn(): void {
   emailErrors.value = isValidEmail(emailText.value) ? [] : ['Enter a valid work email, like name@company.com.']
   passwordErrors.value = String(password.value ?? '') ? [] : ['Enter your password.']
@@ -47,12 +40,10 @@ function signIn(): void {
     step.value = 'verify'
   }, 1000)
 }
-
 function continueWithGoogle(): void {
   googleLoading.value = true
   timer = setTimeout(navigateTo, 1000, '/')
 }
-
 function sendReset(): void {
   if (!isValidEmail(emailText.value)) {
     emailErrors.value = ['Enter your work email first, and we\'ll send the reset link there.']
@@ -60,17 +51,25 @@ function sendReset(): void {
   }
   resetSentTo.value = emailText.value
 }
-
 function verify(): void {
   opening.value = true
   navigateTo('/')
 }
-
 function backToCredentials(): void {
   code.value = ''
   step.value = 'credentials'
 }
 
+/** Watchers */
+watch(email, () => {
+  emailErrors.value = []
+  resetSentTo.value = null
+})
+watch(password, () => {
+  passwordErrors.value = []
+})
+
+/** Lifecycle */
 onBeforeUnmount(() => clearTimeout(timer))
 </script>
 

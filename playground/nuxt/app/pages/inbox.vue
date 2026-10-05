@@ -4,17 +4,15 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Inbox' })
 
+/** Interfaces */
 type InboxItem = (typeof notifications)[number]
 type FilterId = 'all' | 'mentions' | 'assigned' | 'unread'
-
-const { notify } = useNotify()
 
 /** Data */
 const items = ref<InboxItem[]>(notifications.map(item => ({ ...item })))
 const activeFilter = ref<FilterId>('all')
 const selectedId = ref<string | null>(null)
 const showDesktopTip = ref(true)
-
 const billingProject = projectById('billing-migration')!
 const snoozePresets: IDatePreset[] = [
   { label: 'Later today', value: () => atHour(0, Math.min(new Date().getHours() + 3, 23)) },
@@ -22,7 +20,6 @@ const snoozePresets: IDatePreset[] = [
   { label: 'Next week', value: () => atHour((8 - new Date().getDay()) % 7 || 7, 9) }
 ]
 const groupOrder: InboxItem['group'][] = ['Today', 'Yesterday', 'Earlier']
-
 const typeMeta: Record<NotificationType, { label: string, color: Intent, icon: string }> = {
   mention: { label: 'Mention', color: 'accent', icon: '&#xe0e6;' },
   assigned: { label: 'Assigned', color: 'primary', icon: '&#xe7fe;' },
@@ -30,7 +27,6 @@ const typeMeta: Record<NotificationType, { label: string, color: Intent, icon: s
   status: { label: 'Status', color: 'warning', icon: '&#xe153;' },
   system: { label: 'Workspace', color: 'muted', icon: '&#xe88e;' }
 }
-
 const filters: { id: FilterId, label: string, empty: string, hint: string, icon: string }[] = [
   { id: 'all', label: 'All', empty: 'Inbox zero', hint: 'Archived notifications stay out of your way.', icon: '&#xe156;' },
   { id: 'mentions', label: 'Mentions', empty: 'No mentions', hint: 'When a teammate @mentions you, it lands here.', icon: '&#xe0e6;' },
@@ -38,15 +34,17 @@ const filters: { id: FilterId, label: string, empty: string, hint: string, icon:
   { id: 'unread', label: 'Unread', empty: 'No unread notifications', hint: 'You have read everything in your inbox.', icon: '&#xe877;' }
 ]
 
+/** Composables */
+const { notify } = useNotify()
+
 /** Computed */
 const unreadCount = computed(() => items.value.filter(item => item.unread).length)
 const currentFilter = computed(() => filters.find(filter => filter.id === activeFilter.value) ?? filters[0]!)
-// Open item stays listed under Unread
+// The open item stays listed under Unread
 const filtered = computed(() => items.value.filter(item => matches(item, activeFilter.value) || (activeFilter.value === 'unread' && item.id === selectedId.value)))
 const groups = computed(() => groupOrder
   .map(label => ({ label, items: filtered.value.filter(item => item.group === label) }))
   .filter(group => group.items.length))
-
 const filterTabs = computed<ISegmentedTab[]>(() => filters.map((filter) => {
   const count = items.value.filter(item => matches(item, filter.id)).length
   return {
@@ -55,15 +53,12 @@ const filterTabs = computed<ISegmentedTab[]>(() => filters.map((filter) => {
     badge: count ? { text: String(count), variant: 'tonal tonal-primary', pill: true } : null
   }
 }))
-
 const selected = computed(() => items.value.find(item => item.id === selectedId.value) ?? null)
 const selectedActor = computed(() => (selected.value ? memberById(selected.value.actorId) : null))
 const selectedProject = computed(() => (selected.value?.projectId ? projectById(selected.value.projectId) : undefined))
-
 const headerSubtitle = computed(() => (unreadCount.value
   ? `${unreadCount.value} unread · ${items.value.length} in your inbox`
   : `You're all caught up · ${items.value.length} in your inbox`))
-
 const emptyDetail = computed(() => {
   if (!filtered.value.length)
     return { title: 'You\'re all caught up', subtitle: currentFilter.value.hint }

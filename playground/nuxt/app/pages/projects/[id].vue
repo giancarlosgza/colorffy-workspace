@@ -5,6 +5,7 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Project' })
 
+/** Interfaces */
 interface ProjectNotes {
   brief: string
   scope: string[]
@@ -12,21 +13,16 @@ interface ProjectNotes {
   risks: string[]
   milestones: [string, string]
 }
-
 interface Upload {
   id: string
   name: string
   size: string
 }
 
-const route = useRoute()
-const { notify } = useNotify()
-
-/** Constants */
+/** Data */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const STATUS_ORDER: ProjectStatus[] = ['planning', 'on-track', 'at-risk', 'off-track', 'completed']
 const TASK_ORDER: TaskStatus[] = ['todo', 'in-progress', 'in-review', 'done']
-
 const fileTypeMeta: Record<FileItem['type'], { icon: string, color: Intent }> = {
   pdf: { icon: '&#xe415;', color: 'danger' },
   image: { icon: '&#xe3f4;', color: 'accent' },
@@ -91,8 +87,6 @@ const projectNotes: Record<string, ProjectNotes> = {
     milestones: ['Partner kickoff', 'Public beta of webhooks']
   }
 }
-
-/** State */
 const activeTab = ref('overview')
 const briefOpen = ref(true)
 const statusOverrides = ref<Record<string, ProjectStatus>>({})
@@ -104,6 +98,10 @@ const uploaded = ref<FileItem[]>([])
 const reviewAt = ref<Date | null>(null)
 const today = new Date()
 const reviewSlots = { step: 30, start: '09:00', end: '17:00' }
+
+/** Composables */
+const route = useRoute()
+const { notify } = useNotify()
 
 /** Computed */
 const project = computed(() => projectById(String(route.params.id)))
@@ -119,11 +117,9 @@ const notes = computed<ProjectNotes>(() => projectNotes[project.value?.id ?? '']
   risks: [],
   milestones: ['Scope signed off', 'First release']
 })
-
 const team = computed(() => (project.value?.memberIds ?? []).map(id => memberById(id)))
 const teamAvatars = computed(() => team.value.map(avatarOf))
 const teamNames = computed(() => team.value.map(member => (member.id === project.value?.ownerId ? `${member.name} (lead)` : member.name)).join(', '))
-
 const projectTasks = computed<Task[]>(() => tasks
   .filter(task => task.projectId === project.value?.id)
   .map(task => ({ ...task, status: taskOverrides.value[task.id] ?? task.status })))
@@ -140,21 +136,17 @@ const tasksDone = computed(() => {
   return current.tasksDone + doneNow - doneBefore
 })
 const progress = computed(() => (project.value ? Math.round((tasksDone.value / project.value.tasksTotal) * 100) : 0))
-
 const spentRatio = computed(() => (project.value ? project.value.spent / project.value.budget : 0))
 const spentPercent = computed(() => Math.round(spentRatio.value * 100))
 const budgetLeft = computed(() => (project.value ? project.value.budget - project.value.spent : 0))
 const budgetAtRisk = computed(() => spentRatio.value > 0.8 && status.value !== 'completed')
-
 const fileList = computed(() => [...uploaded.value, ...files])
-
 const tabs = computed<ITabItem[]>(() => [
   { id: 'overview', label: 'Overview', icon: '&#xe9b0;', panelId: 'project-panel-overview' },
   { id: 'tasks', label: 'Tasks', icon: '&#xe2e6;', panelId: 'project-panel-tasks', badge: openTasks.value ? { text: String(openTasks.value), variant: 'tonal tonal-primary', pill: true } : null },
   { id: 'files', label: 'Files', icon: '&#xe2c7;', panelId: 'project-panel-files', badge: { text: String(fileList.value.length), variant: 'tonal tonal-default', pill: true } },
   { id: 'activity', label: 'Activity', icon: '&#xe889;', panelId: 'project-panel-activity' }
 ])
-
 const milestones = computed<ITimelineItem[]>(() => {
   const current = project.value
   if (!current)
@@ -179,7 +171,6 @@ const milestones = computed<ITimelineItem[]>(() => {
     return { id: phase.id, time: phase.time, title: phase.title, text: 'Planned' }
   })
 })
-
 const activityItems = computed<ITimelineItem[]>(() => {
   const current = project.value
   if (!current)
@@ -237,7 +228,6 @@ function fileTypeOf(name: string): FileItem['type'] {
 function addEvent(event: Omit<ITimelineItem, 'id' | 'time'>) {
   localEvents.value.unshift({ id: `local-${Date.now()}`, time: 'Just now', ...event })
 }
-
 function isWeekend(date: Date): boolean {
   return date.getDay() === 0 || date.getDay() === 6
 }

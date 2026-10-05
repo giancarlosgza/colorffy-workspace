@@ -6,58 +6,18 @@ import { es } from '@colorffy/ui/locales/es'
 
 definePageMeta({ pageTitle: 'Settings' })
 
+/** Interfaces */
 type TabId = 'profile' | 'appearance' | 'notifications' | 'security'
 type EventId = 'mentions' | 'assignments' | 'status' | 'digest'
 type ChannelId = 'email' | 'push' | 'slack'
+interface ThemePreset { id: string, name: string, description: string, brand: string, dark: string, shape: string }
 
-const route = useRoute()
-const colorMode = useColorMode()
-const { notify } = useNotify()
-
+/** Data */
 const DEFAULT_BRAND = '#004617'
 const HEX_PATTERN = /^#[0-9a-f]{6}$/i
-
-// Timers
 const timers = new Set<ReturnType<typeof setTimeout>>()
-function later(callback: () => void, delay: number): void {
-  const id = setTimeout(() => {
-    timers.delete(id)
-    callback()
-  }, delay)
-  timers.add(id)
-}
-
-function isValidEmail(value: string): boolean {
-  const [local, domain, ...rest] = value.trim().split('@')
-  return !rest.length && !!local && !!domain && domain.includes('.') && !domain.startsWith('.') && !domain.endsWith('.') && !/\s/.test(value.trim())
-}
-
-// Tabs
 const tabIds: TabId[] = ['profile', 'appearance', 'notifications', 'security']
-const activeTab = ref<TabId>(tabIds.find(id => id === route.query.tab) ?? 'profile')
-
 const twoFactorEnabled = ref(false)
-
-const tabs = computed<ITabItem[]>(() => [
-  { id: 'profile', label: 'Profile', icon: '&#xe7fd;', panelId: 'settings-profile' },
-  { id: 'appearance', label: 'Appearance', icon: '&#xe40a;', panelId: 'settings-appearance' },
-  { id: 'notifications', label: 'Notifications', icon: '&#xe7f4;', panelId: 'settings-notifications' },
-  {
-    id: 'security',
-    label: 'Security',
-    icon: '&#xe897;',
-    panelId: 'settings-security',
-    badge: twoFactorEnabled.value ? null : { text: '1', variant: 'warning', pill: true }
-  }
-])
-
-function selectTab(id: string): void {
-  const match = tabIds.find(tabId => tabId === id)
-  if (match)
-    activeTab.value = match
-}
-
-// Profile
 const profile = reactive<{
   name: string | number | null
   email: string | number | null
@@ -75,20 +35,13 @@ const profile = reactive<{
   timezone: 'America/New_York',
   timeOff: []
 })
-
 const today = new Date()
 const nextMonday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + ((8 - today.getDay()) % 7 || 7))
 const timeOffPresets = [
   { label: 'Next week', value: () => ({ start: nextMonday, end: new Date(nextMonday.getFullYear(), nextMonday.getMonth(), nextMonday.getDate() + 4) }) },
   { label: 'Rest of this month', value: () => ({ start: today, end: new Date(today.getFullYear(), today.getMonth() + 1, 0) }) }
 ]
-function isWeekend(date: Date): boolean {
-  return date.getDay() === 0 || date.getDay() === 6
-}
-
 const BIO_LIMIT = 160
-const bioLength = computed(() => (profile.bio ?? '').length)
-
 const timezones = [
   { label: '(GMT-08:00) Pacific Time — Los Angeles', value: 'America/Los_Angeles' },
   { label: '(GMT-06:00) Central Time — Mexico City', value: 'America/Mexico_City' },
@@ -97,48 +50,10 @@ const timezones = [
   { label: '(GMT+01:00) Central European Time — Berlin', value: 'Europe/Berlin' },
   { label: '(GMT+05:30) India — Kolkata', value: 'Asia/Kolkata' }
 ]
-
-const profileErrors = computed(() => ({
-  name: String(profile.name ?? '').trim() ? [] : ['Add your name so teammates can find you.'],
-  email: isValidEmail(String(profile.email ?? '')) ? [] : ['Enter a valid email, like gian@orbit.app.']
-}))
-const profileInvalid = computed(() => profileErrors.value.name.length > 0 || profileErrors.value.email.length > 0)
-
 const photo = ref<File | null>(null)
 const photoPreview = ref<string | null>(null)
 const photoErrors = ref<string[]>([])
-const avatarSrc = computed(() => photoPreview.value ?? currentUser.avatar)
-
-watch(photo, (file) => {
-  if (photoPreview.value)
-    URL.revokeObjectURL(photoPreview.value)
-  photoPreview.value = null
-  photoErrors.value = []
-  if (!file)
-    return
-  if (!file.type.startsWith('image/')) {
-    photoErrors.value = ['Choose a JPG, PNG or WebP image.']
-    return
-  }
-  if (file.size > 5 * 1024 * 1024) {
-    photoErrors.value = ['Photos can be up to 5 MB.']
-    return
-  }
-  photoPreview.value = URL.createObjectURL(file)
-})
-
 const savingProfile = ref(false)
-function saveProfile(): void {
-  if (profileInvalid.value)
-    return
-  savingProfile.value = true
-  later(() => {
-    savingProfile.value = false
-    notify('Profile updated', 'Teammates will see your changes right away.')
-  }, 700)
-}
-
-// Appearance
 const themeOptions = [
   { label: 'System', value: 'system' },
   { label: 'Light', value: 'light' },
@@ -148,14 +63,7 @@ const languageOptions = [
   { label: 'English', value: 'en' },
   { label: 'Español', value: 'es' }
 ]
-const colorffy = useColorffyConfig()
 const language = useState<string>('orbit-language', () => 'en')
-
-watch(language, (code) => {
-  colorffy.locale = code === 'es' ? 'es-SV' : 'en-US'
-  colorffy.labels = code === 'es' ? es : en
-})
-
 const brandColor = useState<string | null>('orbit-brand-color', () => DEFAULT_BRAND)
 const brandPresets = [
   { name: 'Orbit green', hex: '#004617', dark: '#d4f5de' },
@@ -164,8 +72,6 @@ const brandPresets = [
   { name: 'Coral', hex: '#ff7a59', dark: '#ffbfad' },
   { name: 'Lime', hex: '#a3e635', dark: '#d6f5a0' }
 ]
-
-interface ThemePreset { id: string, name: string, description: string, brand: string, dark: string, shape: string }
 const themePresets: ThemePreset[] = [
   { id: 'orbit', name: 'Orbit', description: 'Forest green with balanced corners', brand: DEFAULT_BRAND, dark: '#d4f5de', shape: 'default' },
   { id: 'luxury', name: 'Luxury', description: 'Black ink and square edges, champagne at night', brand: '#111111', dark: '#e8d5a8', shape: 'sharp' },
@@ -174,33 +80,7 @@ const themePresets: ThemePreset[] = [
   { id: 'wellness', name: 'Wellness', description: 'Sage green and soft, rounded panels', brand: '#4f7a5c', dark: '#c6e3cd', shape: 'soft' },
   { id: 'studio', name: 'Studio', description: 'Violet with tight, subtle corners', brand: '#6d28d9', dark: '#dac8ff', shape: 'subtle' }
 ]
-const brandErrors = computed(() => !brandColor.value || HEX_PATTERN.test(brandColor.value) ? [] : ['Use a 6-digit hex value, like #004617.'])
-const isCustomBrand = computed(() => (brandColor.value ?? DEFAULT_BRAND).toLowerCase() !== DEFAULT_BRAND)
 const leadProject = projects[0]!
-
-watch(brandColor, (hex) => {
-  if (!import.meta.client || !hex || !HEX_PATTERN.test(hex))
-    return
-  const style = document.documentElement.style
-  if (hex.toLowerCase() === DEFAULT_BRAND) {
-    style.removeProperty('--cffy-color-brand-primary-500')
-    style.removeProperty('--cffy-color-brand-primary-50')
-    return
-  }
-  style.setProperty('--cffy-color-brand-primary-500', hex)
-  style.setProperty('--cffy-color-brand-primary-50', darkTint(hex))
-})
-
-function resetBrand(): void {
-  brandColor.value = DEFAULT_BRAND
-}
-function darkTint(hex: string): string {
-  const color = hex.toLowerCase()
-  return themePresets.find(preset => preset.brand === color)?.dark
-    ?? brandPresets.find(preset => preset.hex === color)?.dark
-    ?? `color-mix(in oklab, ${hex} 25%, white)`
-}
-
 const SHAPE_ROLES = ['container', 'field', 'control'] as const
 const shapePresets: Record<string, Record<typeof SHAPE_ROLES[number], string>> = {
   sharp: { container: 'var(--cffy-radius-none)', field: 'var(--cffy-radius-none)', control: 'var(--cffy-radius-none)' },
@@ -224,43 +104,8 @@ const shape = useState<string>('orbit-shape', () => 'default')
 const previewEmail = ref('')
 const previewRole = ref('editor')
 const previewWelcome = ref<string | boolean | null>(true)
-
-watch(shape, (preset) => {
-  if (!import.meta.client)
-    return
-  const style = document.documentElement.style
-  const radii = shapePresets[preset]
-  SHAPE_ROLES.forEach((role) => {
-    if (radii && preset !== 'default')
-      style.setProperty(`--cffy-shape-${role}`, radii[role])
-    else
-      style.removeProperty(`--cffy-shape-${role}`)
-  })
-})
-
-const activePreset = computed(() => {
-  const brand = (brandColor.value ?? DEFAULT_BRAND).toLowerCase()
-  return themePresets.find(preset => preset.brand === brand && preset.shape === shape.value)?.id ?? null
-})
-
-function applyPreset(preset: ThemePreset): void {
-  brandColor.value = preset.brand
-  shape.value = preset.shape
-}
-function presetPreviewStyle(preset: ThemePreset): Record<string, string> {
-  const radii = shapePresets[preset.shape]!
-  return {
-    '--preset-color': `light-dark(${preset.brand}, ${preset.dark})`,
-    '--preset-container': radii.container,
-    '--preset-field': radii.field,
-    '--preset-control': radii.control
-  }
-}
-
 const textScale = ref<string | number | null>(100)
 const reduceMotion = ref<string | boolean | null>(false)
-
-// Notifications
 const channels: { id: ChannelId, label: string }[] = [
   { id: 'email', label: 'Email' },
   { id: 'push', label: 'Push' },
@@ -278,15 +123,113 @@ const notificationPrefs = reactive<Record<EventId, Record<ChannelId, string | bo
   status: { email: false, push: true, slack: true },
   digest: { email: true, push: false, slack: false }
 })
-
 const quietHoursOn = ref<string | boolean | null>(true)
 const quietStart = ref<string | number | null>(20)
+const savingNotifications = ref(false)
+const setupKey = 'ORBT 7K2Q 9XMD 41PL'
+const otp = ref('')
+const otpErrors = ref<string[]>([])
+const verifyingOtp = ref(false)
+const recoveryCodes = ['4F7K-29QD', 'X8M2-LP4C', 'T6NV-93RA', 'H2JW-58EK', 'Q9BZ-17YU', 'D3RS-60MF', 'W5GA-82TN', 'K7CX-44PV']
+const sessions = ref([
+  { id: 's1', device: 'MacBook Pro · Chrome', detail: 'New York, US · Active now', icon: '&#xe320;', current: true },
+  { id: 's2', device: 'iPhone 15 · Orbit for iOS', detail: 'New York, US · 2 hours ago', icon: '&#xe32c;', current: false },
+  { id: 's3', device: 'Windows · Edge', detail: 'Austin, US · Sep 28', icon: '&#xe30c;', current: false }
+])
+const deleteModal = ref<IDialogDisplay | null>(null)
+const deletingWorkspace = ref(false)
+const deleteSummary = `All ${projects.length} projects, ${tasks.length} tasks and ${files.length} shared files will be removed for ${members.length} members after a 14-day grace period.`
+
+/** Composables */
+const route = useRoute()
+const colorMode = useColorMode()
+const { notify } = useNotify()
+const activeTab = ref<TabId>(tabIds.find(id => id === route.query.tab) ?? 'profile')
+const colorffy = useColorffyConfig()
+
+/** Computed */
+const tabs = computed<ITabItem[]>(() => [
+  { id: 'profile', label: 'Profile', icon: '&#xe7fd;', panelId: 'settings-profile' },
+  { id: 'appearance', label: 'Appearance', icon: '&#xe40a;', panelId: 'settings-appearance' },
+  { id: 'notifications', label: 'Notifications', icon: '&#xe7f4;', panelId: 'settings-notifications' },
+  {
+    id: 'security',
+    label: 'Security',
+    icon: '&#xe897;',
+    panelId: 'settings-security',
+    badge: twoFactorEnabled.value ? null : { text: '1', variant: 'warning', pill: true }
+  }
+])
+const bioLength = computed(() => (profile.bio ?? '').length)
+const profileErrors = computed(() => ({
+  name: String(profile.name ?? '').trim() ? [] : ['Add your name so teammates can find you.'],
+  email: isValidEmail(String(profile.email ?? '')) ? [] : ['Enter a valid email, like gian@orbit.app.']
+}))
+const profileInvalid = computed(() => profileErrors.value.name.length > 0 || profileErrors.value.email.length > 0)
+const avatarSrc = computed(() => photoPreview.value ?? currentUser.avatar)
+const brandErrors = computed(() => !brandColor.value || HEX_PATTERN.test(brandColor.value) ? [] : ['Use a 6-digit hex value, like #004617.'])
+const isCustomBrand = computed(() => (brandColor.value ?? DEFAULT_BRAND).toLowerCase() !== DEFAULT_BRAND)
+const activePreset = computed(() => {
+  const brand = (brandColor.value ?? DEFAULT_BRAND).toLowerCase()
+  return themePresets.find(preset => preset.brand === brand && preset.shape === shape.value)?.id ?? null
+})
 const quietLabel = computed(() => {
   const hour = Number(quietStart.value ?? 20)
   return `${hour > 12 ? hour - 12 : hour}:00 ${hour >= 12 ? 'PM' : 'AM'}`
 })
+const otherSessions = computed(() => sessions.value.filter(session => !session.current).length)
 
-const savingNotifications = ref(false)
+/** Methods */
+function later(callback: () => void, delay: number): void {
+  const id = setTimeout(() => {
+    timers.delete(id)
+    callback()
+  }, delay)
+  timers.add(id)
+}
+function isValidEmail(value: string): boolean {
+  const [local, domain, ...rest] = value.trim().split('@')
+  return !rest.length && !!local && !!domain && domain.includes('.') && !domain.startsWith('.') && !domain.endsWith('.') && !/\s/.test(value.trim())
+}
+function selectTab(id: string): void {
+  const match = tabIds.find(tabId => tabId === id)
+  if (match)
+    activeTab.value = match
+}
+function isWeekend(date: Date): boolean {
+  return date.getDay() === 0 || date.getDay() === 6
+}
+function saveProfile(): void {
+  if (profileInvalid.value)
+    return
+  savingProfile.value = true
+  later(() => {
+    savingProfile.value = false
+    notify('Profile updated', 'Teammates will see your changes right away.')
+  }, 700)
+}
+function resetBrand(): void {
+  brandColor.value = DEFAULT_BRAND
+}
+function darkTint(hex: string): string {
+  const color = hex.toLowerCase()
+  return themePresets.find(preset => preset.brand === color)?.dark
+    ?? brandPresets.find(preset => preset.hex === color)?.dark
+    ?? `color-mix(in oklab, ${hex} 25%, white)`
+}
+function applyPreset(preset: ThemePreset): void {
+  brandColor.value = preset.brand
+  shape.value = preset.shape
+}
+function presetPreviewStyle(preset: ThemePreset): Record<string, string> {
+  const radii = shapePresets[preset.shape]!
+  return {
+    '--preset-color': `light-dark(${preset.brand}, ${preset.dark})`,
+    '--preset-container': radii.container,
+    '--preset-field': radii.field,
+    '--preset-control': radii.control
+  }
+}
 function saveNotifications(): void {
   savingNotifications.value = true
   later(() => {
@@ -294,17 +237,6 @@ function saveNotifications(): void {
     notify('Notification preferences saved', 'Changes apply to new activity from now on.')
   }, 600)
 }
-
-// Security
-const setupKey = 'ORBT 7K2Q 9XMD 41PL'
-const otp = ref('')
-const otpErrors = ref<string[]>([])
-const verifyingOtp = ref(false)
-
-watch(otp, () => {
-  otpErrors.value = []
-})
-
 function verifyTwoFactor(): void {
   if (verifyingOtp.value)
     return
@@ -324,14 +256,10 @@ function verifyTwoFactor(): void {
     notify('Two-factor authentication is on', 'You\'ll enter a code from your authenticator when you sign in on a new device.')
   }, 800)
 }
-
 function turnOffTwoFactor(): void {
   twoFactorEnabled.value = false
   notify('Two-factor authentication is off', 'Your account is now protected by your password only.', 'warning')
 }
-
-const recoveryCodes = ['4F7K-29QD', 'X8M2-LP4C', 'T6NV-93RA', 'H2JW-58EK', 'Q9BZ-17YU', 'D3RS-60MF', 'W5GA-82TN', 'K7CX-44PV']
-
 async function copyRecoveryCodes(): Promise<void> {
   try {
     await navigator.clipboard.writeText(recoveryCodes.join('\n'))
@@ -340,31 +268,17 @@ async function copyRecoveryCodes(): Promise<void> {
     notify('Couldn\'t copy the codes', 'Select the codes and copy them manually.', 'danger')
   }
 }
-
-const sessions = ref([
-  { id: 's1', device: 'MacBook Pro · Chrome', detail: 'New York, US · Active now', icon: '&#xe320;', current: true },
-  { id: 's2', device: 'iPhone 15 · Orbit for iOS', detail: 'New York, US · 2 hours ago', icon: '&#xe32c;', current: false },
-  { id: 's3', device: 'Windows · Edge', detail: 'Austin, US · Sep 28', icon: '&#xe30c;', current: false }
-])
-const otherSessions = computed(() => sessions.value.filter(session => !session.current).length)
-
 function signOutSession(id: string): void {
   const session = sessions.value.find(item => item.id === id)
   sessions.value = sessions.value.filter(item => item.id !== id)
   if (session)
     notify('Session signed out', `${session.device} no longer has access to Orbit.`)
 }
-
 function signOutOthers(): void {
   const count = otherSessions.value
   sessions.value = sessions.value.filter(session => session.current)
   notify('Other sessions signed out', `Signed out of ${count} other ${count === 1 ? 'device' : 'devices'}.`)
 }
-
-const deleteModal = ref<IDialogDisplay | null>(null)
-const deletingWorkspace = ref(false)
-const deleteSummary = `All ${projects.length} projects, ${tasks.length} tasks and ${files.length} shared files will be removed for ${members.length} members after a 14-day grace period.`
-
 function confirmDeleteWorkspace(): void {
   deletingWorkspace.value = true
   later(() => {
@@ -374,6 +288,57 @@ function confirmDeleteWorkspace(): void {
   }, 1000)
 }
 
+/** Watchers */
+watch(photo, (file) => {
+  if (photoPreview.value)
+    URL.revokeObjectURL(photoPreview.value)
+  photoPreview.value = null
+  photoErrors.value = []
+  if (!file)
+    return
+  if (!file.type.startsWith('image/')) {
+    photoErrors.value = ['Choose a JPG, PNG or WebP image.']
+    return
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    photoErrors.value = ['Photos can be up to 5 MB.']
+    return
+  }
+  photoPreview.value = URL.createObjectURL(file)
+})
+watch(language, (code) => {
+  colorffy.locale = code === 'es' ? 'es-SV' : 'en-US'
+  colorffy.labels = code === 'es' ? es : en
+})
+watch(brandColor, (hex) => {
+  if (!import.meta.client || !hex || !HEX_PATTERN.test(hex))
+    return
+  const style = document.documentElement.style
+  if (hex.toLowerCase() === DEFAULT_BRAND) {
+    style.removeProperty('--cffy-color-brand-primary-500')
+    style.removeProperty('--cffy-color-brand-primary-50')
+    return
+  }
+  style.setProperty('--cffy-color-brand-primary-500', hex)
+  style.setProperty('--cffy-color-brand-primary-50', darkTint(hex))
+})
+watch(shape, (preset) => {
+  if (!import.meta.client)
+    return
+  const style = document.documentElement.style
+  const radii = shapePresets[preset]
+  SHAPE_ROLES.forEach((role) => {
+    if (radii && preset !== 'default')
+      style.setProperty(`--cffy-shape-${role}`, radii[role])
+    else
+      style.removeProperty(`--cffy-shape-${role}`)
+  })
+})
+watch(otp, () => {
+  otpErrors.value = []
+})
+
+/** Lifecycle */
 onBeforeUnmount(() => {
   timers.forEach(id => clearTimeout(id))
   timers.clear()

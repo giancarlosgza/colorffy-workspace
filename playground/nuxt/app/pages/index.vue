@@ -4,8 +4,6 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Home' })
 
-const { notify } = useNotify()
-
 /** Data */
 const myTasks = ref<Task[]>(tasks.filter(task => task.assigneeId === currentUser.id).map(task => ({ ...task })))
 const taskTab = ref('upcoming')
@@ -13,22 +11,17 @@ const activityLoading = ref(true)
 const fabOpen = ref(false)
 let draftCount = 0
 let activityTimer: ReturnType<typeof setTimeout> | null = null
-
 // Team tasks closed earlier this month
 const completedEarlier = 23
-
 const activeProjects = projects.filter(project => project.status !== 'completed')
 const atRiskProjects = projects.filter(project => project.status === 'at-risk' || project.status === 'off-track')
 const homeProjects = activeProjects.slice(0, 4)
-
 const quickActions = [
   { id: 'task', label: 'New task', icon: '&#xe2e6;' },
   { id: 'project', label: 'New project', icon: '&#xe2cc;' },
   { id: 'invite', label: 'Invite teammate', icon: '&#xe7fe;' }
 ]
-
 const quietSkeleton = { role: '', ariaLabel: '', ariaLive: 'off' } as const
-
 const activityItems: ITimelineItem[] = activity.map(entry => ({
   id: entry.id,
   icon: entry.icon,
@@ -36,13 +29,15 @@ const activityItems: ITimelineItem[] = activity.map(entry => ({
   variant: themeColor(entry.color)
 }))
 
+/** Composables */
+const { notify } = useNotify()
+
 /** Computed */
 const openTasks = computed(() => myTasks.value.filter(task => task.status !== 'done'))
 const upcomingTasks = computed(() => openTasks.value.filter(task => !task.overdue))
 const overdueTasks = computed(() => openTasks.value.filter(task => task.overdue))
 const completedTasks = computed(() => myTasks.value.filter(task => task.status === 'done'))
 const dueTodayCount = computed(() => upcomingTasks.value.filter(task => task.due === 'Today').length)
-
 const fabActions = computed(() => (fabOpen.value ? quickActions : []))
 const visibleTasks = computed(() => {
   if (taskTab.value === 'overdue')
@@ -51,7 +46,6 @@ const visibleTasks = computed(() => {
     return completedTasks.value
   return upcomingTasks.value
 })
-
 const summary = computed(() => {
   const today = dueTodayCount.value
   const late = overdueTasks.value.length
@@ -65,13 +59,11 @@ const summary = computed(() => {
     return `Nothing due today, but ${late} ${late === 1 ? 'task is' : 'tasks are'} overdue.`
   return 'Your day is clear. Nice work.'
 })
-
 const taskTabs = computed<ITabItem[]>(() => [
   { id: 'upcoming', label: 'Upcoming', panelId: 'my-tasks-panel', badge: countBadge(upcomingTasks.value.length, 'tonal tonal-primary') },
   { id: 'overdue', label: 'Overdue', panelId: 'my-tasks-panel', badge: countBadge(overdueTasks.value.length, 'danger') },
   { id: 'completed', label: 'Completed', panelId: 'my-tasks-panel', badge: countBadge(completedTasks.value.length, 'tonal tonal-success') }
 ])
-
 const emptyTaskMessage = computed(() => {
   if (taskTab.value === 'overdue')
     return 'Nothing overdue. You are ahead of schedule.'
@@ -79,7 +71,6 @@ const emptyTaskMessage = computed(() => {
     return 'Tasks you check off show up here.'
   return 'No upcoming tasks. Enjoy the focus time.'
 })
-
 const stats = computed(() => [
   {
     id: 'active',
@@ -108,17 +99,6 @@ const stats = computed(() => [
     tooltip: 'Projects their owners marked at risk or off track'
   }
 ])
-
-/** Lifecycle */
-onMounted(() => {
-  activityTimer = setTimeout(() => {
-    activityLoading.value = false
-  }, 800)
-})
-onBeforeUnmount(() => {
-  if (activityTimer)
-    clearTimeout(activityTimer)
-})
 
 /** Methods */
 function themeColor(color: Intent): ThemeColor {
@@ -201,6 +181,17 @@ function runQuickAction(id: string) {
   else
     navigateTo('/team')
 }
+
+/** Lifecycle */
+onMounted(() => {
+  activityTimer = setTimeout(() => {
+    activityLoading.value = false
+  }, 800)
+})
+onBeforeUnmount(() => {
+  if (activityTimer)
+    clearTimeout(activityTimer)
+})
 </script>
 
 <template>

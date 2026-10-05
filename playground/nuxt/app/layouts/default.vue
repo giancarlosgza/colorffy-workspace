@@ -3,51 +3,44 @@ import type { UiAlertToast } from '@colorffy/ui'
 import { vOnClickOutside } from '@vueuse/components'
 import { NuxtLink } from '#components'
 
-const colorMode = useColorMode()
-const route = useRoute()
-const { register } = useNotify()
-
+/** Data */
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
 const isMenuActive = ref<boolean>(false)
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
-
 // The saved preference only exists on the client, so the picker follows it after mount
 const isMounted = ref<boolean>(false)
-const themePreference = computed(() => isMounted.value ? colorMode.preference : 'system')
-
-const unreadCount = computed(() => notifications.filter(n => n.unread).length)
 const latestNotifications = notifications.slice(0, 3)
-
 const themes = [
   { id: 'system', label: 'System', icon: '&#xe31e;' },
   { id: 'light', label: 'Light', icon: '&#xe518;' },
   { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
 ]
-
-// A project page keeps Projects active; pages outside the bar leave no item active
-const mobileSection = computed(() => `/${route.path.split('/')[1] ?? ''}`)
 const mobileItems = [
   { id: 'home', to: '/', icon: '&#xe88a;', text: 'Home', ariaLabel: 'Go to home' },
   { id: 'inbox', to: '/inbox', icon: '&#xe156;', text: 'Inbox', ariaLabel: 'Go to inbox' },
   { id: 'projects', to: '/projects', icon: '&#xe2c7;', text: 'Projects', ariaLabel: 'Go to projects' },
   { id: 'settings', to: '/settings', icon: '&#xe8b8;', text: 'Settings', ariaLabel: 'Go to settings' }
 ]
-
 const accountLinks = [
   { id: 'profile', to: '/settings', icon: '&#xe7fd;', text: 'Profile' },
   { id: 'team', to: '/team', icon: '&#xe7ef;', text: 'Team' },
   { id: 'billing', to: '/billing', icon: '&#xe870;', text: 'Billing' }
 ]
 
-onMounted(() => {
-  register(toastRef.value)
-  isMounted.value = true
-})
+/** Composables */
+const colorMode = useColorMode()
+const route = useRoute()
+const { register } = useNotify()
 
+/** Computed */
+const themePreference = computed(() => isMounted.value ? colorMode.preference : 'system')
+const unreadCount = computed(() => notifications.filter(n => n.unread).length)
+const mobileSection = computed(() => `/${route.path.split('/')[1] ?? ''}`)
+
+/** Methods */
 function avatarColor(color: Intent): Exclude<Intent, 'muted'> | 'neutral' {
   return color === 'muted' ? 'neutral' : color
 }
-
 function closeMenu(): void {
   isMenuActive.value = false
 }
@@ -55,6 +48,12 @@ function searchOrbit(text: string): void {
   if (text.trim())
     navigateTo({ path: '/help', query: { q: text.trim() } })
 }
+
+/** Lifecycle */
+onMounted(() => {
+  register(toastRef.value)
+  isMounted.value = true
+})
 </script>
 
 <template>

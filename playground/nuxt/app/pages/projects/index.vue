@@ -6,16 +6,11 @@ import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Projects' })
 
-const route = useRoute()
-const router = useRouter()
-const { notify } = useNotify()
-
-/** Constants */
+/** Data */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const STATUS_ORDER: ProjectStatus[] = ['planning', 'on-track', 'at-risk', 'off-track', 'completed']
 const PRIORITY_ORDER = ['low', 'medium', 'high', 'urgent']
 const portfolios = ['Product launches', 'Growth', 'Platform']
-
 const viewTabs: ISegmentedTab[] = [
   { id: 'grid', label: 'Grid' },
   { id: 'list', label: 'List' }
@@ -48,8 +43,6 @@ const visibilityOptions = [
   { label: 'Workspace · everyone in Orbit can find and join it', value: 'workspace' },
   { label: 'Private · only the people you add can see it', value: 'private' }
 ]
-
-/** State */
 const items = ref<Project[]>(projects.map(project => ({ ...project })))
 const isLoading = ref(true)
 const view = ref('grid')
@@ -57,8 +50,6 @@ const search = ref('')
 const statusFilter = ref('all')
 const onlyMine = ref(false)
 const sortKey = ref<string>('due')
-
-// New project wizard
 const wizardRef = ref<IDialogDisplay | null>(null)
 const wizardStep = ref('details')
 const stepTransition = ref('slide-start')
@@ -66,11 +57,7 @@ const showErrors = ref(false)
 const creating = ref(false)
 const draft = reactive({ name: '', description: '', client: null as string | null, labels: [] as string[], visibility: 'workspace', color: '#5b5bd6', start: null as Date | null, due: null as Date | null, leadId: currentUser.id, stakeholderIds: [] as string[] })
 const labelOptions = ['Customer', 'Design', 'Engineering', 'Internal', 'Launch', 'Marketing', 'Q4', 'Research']
-const { results: clientResults, loading: clientsLoading, search: searchClients } = useRemoteSearch(clients, name => name)
-const { results: peopleResults, loading: peopleLoading, search: searchPeople } = useRemoteSearch(companyPeople, person => `${person.name} ${person.title}`)
 const team = reactive<Record<string, boolean>>(Object.fromEntries(members.map(member => [member.id, member.id === currentUser.id])))
-
-// Rename and archive
 const renameRef = ref<IDialogDisplay | null>(null)
 const renameTarget = ref<Project | null>(null)
 const renameValue = ref('')
@@ -78,12 +65,18 @@ const archiveRef = ref<IDialogDisplay | null>(null)
 const archiveTarget = ref<Project | null>(null)
 const archiving = ref(false)
 
+/** Composables */
+const route = useRoute()
+const router = useRouter()
+const { notify } = useNotify()
+const { results: clientResults, loading: clientsLoading, search: searchClients } = useRemoteSearch(clients, name => name)
+const { results: peopleResults, loading: peopleLoading, search: searchPeople } = useRemoteSearch(companyPeople, person => `${person.name} ${person.title}`)
+
 /** Computed */
 const needsAttention = computed(() => items.value.filter(p => p.status === 'at-risk' || p.status === 'off-track').length)
 const completedCount = computed(() => items.value.filter(p => p.status === 'completed').length)
 const headerSubtitle = computed(() => `${items.value.length} projects · ${needsAttention.value} need attention · ${completedCount.value} completed`)
 const hasFilters = computed(() => search.value.trim() !== '' || statusFilter.value !== 'all' || onlyMine.value)
-
 const filteredProjects = computed(() => {
   const query = search.value.trim().toLowerCase()
   const list = items.value.filter((project) => {
@@ -101,7 +94,6 @@ const filteredProjects = computed(() => {
     return dayValue(a.dueDate) - dayValue(b.dueDate)
   })
 })
-
 const tableRows = computed(() => filteredProjects.value.map(project => ({
   id: project.id,
   name: project.name,
@@ -113,7 +105,6 @@ const tableRows = computed(() => filteredProjects.value.map(project => ({
   due: dayValue(project.dueDate),
   project
 })))
-
 const wizardIndex = computed(() => wizardSteps.findIndex(step => step.id === wizardStep.value))
 const isLastStep = computed(() => wizardIndex.value === wizardSteps.length - 1)
 const teamMembers = computed(() => members.filter(member => team[member.id]))
@@ -142,7 +133,6 @@ function teamAvatars(project: Project): IAvatarProps[] {
 function formatDate(value: Date): string {
   return value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
-
 function onStatusChange(value: string | string[] | null) {
   statusFilter.value = typeof value === 'string' ? value : 'all'
 }
@@ -154,7 +144,6 @@ function clearFilters() {
 function exportProjects() {
   notify('Export started', `We'll email projects.csv to ${currentUser.email} in a minute.`, 'info')
 }
-
 function resetWizard() {
   Object.assign(draft, { name: '', description: '', client: null, labels: [], visibility: 'workspace', color: '#5b5bd6', start: null, due: null, leadId: currentUser.id, stakeholderIds: [] })
   members.forEach((member) => {
@@ -199,7 +188,6 @@ function openFromQuery() {
   const { new: _new, ...query } = route.query
   router.replace({ query })
 }
-
 function openRename(project: Project) {
   renameTarget.value = project
   renameValue.value = project.name
