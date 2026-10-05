@@ -159,8 +159,18 @@ Original notes:
 2. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
    a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
    Nuxt module's pack list.
-3. **Density modes**: waits on container style queries becoming Baseline
-   Widely available (see [density-modes.md](density-modes.md)).
+3. **Density modes (3.1)**: `data-density="compact | comfortable | spacious"`
+   on `<html>` or any element. The spacing steps are re-declared on
+   `[data-density]` so they recompute from the scope's `--cffy-space-unit`
+   (a wrapper override alone does nothing, since the steps are computed on
+   `:root`), plus a `--cffy-control-height-sm|md|lg` scale for fields,
+   buttons, chips and calendar days. Type and shape don't change; compact
+   keeps comfortable control heights on coarse pointers. No style queries
+   needed. Medium–heavy, mostly the visual check of every component in three
+   modes. See [density-modes.md](density-modes.md).
+4. **Theme scopes**: re-declaring the color derivations on
+   `:root, [data-theme]` would let a preset recolor one region (today brand
+   tokens only work on `<html>`). After density.
 
 Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
 focus return in `UiButtonMenu` (plus `checked` items and `UiPopoverMenu` arrow
@@ -173,3 +183,14 @@ cursor when full), the help search clear and the global search (`/help?q=`),
 "1 skills" (label functions, `LabelTemplate`), role selects collapsing in
 tables (`.table .form-select` min width) and modal initial focus (`autofocus`
 on a field component).
+
+Also on 2026-10-05, pulled into 3.0: combobox and multi-select remote search and
+free text (section 3), several dates and time slots in `UiInputDate` (see
+[datepicker.md](datepicker.md)), the PrimeVue skin deleted, the navbar's active
+link keeping its size, the navigation bar indicator following `aria-current`
+and hiding without an active item, the table scrollbar hidden in every browser,
+and the `<script setup>` section and comment standard applied to all 93
+components and the playground (recorded in `CLAUDE.md`). The docs gained a
+theme presets guide (customization page and the skill's theming reference),
+and the "per subtree" claims for `--cffy-space-unit` and
+`--cffy-duration-unit` were corrected: derived tokens only change on `:root`.
