@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { IButtonToggleOption, IDatatableColumn, UiConfirmModal } from '@colorffy/ui'
+import type { IButtonToggleOption, IDatatableColumn, IDatePreset, IDateRange, UiConfirmModal } from '@colorffy/ui'
 import type { Invoice, Plan } from '~/utils/workspace'
+import { datePresets } from '@colorffy/ui'
 
 definePageMeta({ pageTitle: 'Billing' })
 
@@ -49,6 +50,23 @@ const isCanceling = ref(false)
 const invoiceRows = ref<Invoice[]>(invoices.map(invoice => ({ ...invoice })))
 const invoicesLoading = ref(true)
 const selectedInvoices = ref<(string | number)[]>([])
+const invoicePeriod = ref<IDateRange | null>(null)
+const periodPresets: IDatePreset[] = [
+  datePresets.thisYear(),
+  { label: 'Last 6 months', value: () => ({ start: monthsAgo(6), end: new Date() }) },
+  { label: 'Last 12 months', value: () => ({ start: monthsAgo(12), end: new Date() }) },
+  { label: 'Last year', value: () => ({ start: new Date(new Date().getFullYear() - 1, 0, 1), end: new Date(new Date().getFullYear() - 1, 11, 31) }) }
+]
+const filteredInvoices = computed(() => {
+  const { start, end } = invoicePeriod.value ?? {}
+  if (!start || !end)
+    return invoiceRows.value
+  const last = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 1)
+  return invoiceRows.value.filter((invoice) => {
+    const issued = new Date(invoice.date)
+    return issued >= start && issued < last
+  })
+})
 const isRetrying = ref(false)
 
 const currentPlan = computed(() => planById(currentPlanId.value))
@@ -93,6 +111,10 @@ function wait(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function monthsAgo(count: number): Date {
+  const today = new Date()
+  return new Date(today.getFullYear(), today.getMonth() - count, today.getDate())
+}
 function planById(id: string): Plan {
   return plans.find(plan => plan.id === id) ?? plans[0]!
 }
@@ -475,7 +497,7 @@ function downloadAll(): void {
             v-else
             v-model:selected="selectedInvoices"
             :columns="invoiceColumns"
-            :items="invoiceRows"
+            :items="filteredInvoices"
             row-key="id"
             selectable
             default-sort-key="id"
@@ -484,18 +506,47 @@ function downloadAll(): void {
             caption="Amounts in USD. Taxes are included where they apply."
           >
             <template #controls>
-              <Transition name="fade" mode="out-in">
-                <div v-if="selectedInvoices.length" class="d-flex align-items-center gap-2">
-                  <span class="caption fw-600">{{ selectedInvoices.length }} selected</span>
-                  <UiButton text="Download" variant="tonal" color="primary" size="sm" @click="downloadSelected">
+              <div class="d-flex flex-wrap align-items-center gap-3">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                  <UiInputDate
+                    id="invoice-period"
+                    v-model="invoicePeriod"
+                    mode="range"
+                    trigger="button"
+                    label="Invoice date"
+                    hide-label
+                    placeholder="All dates"
+                    size="sm"
+                    :presets="periodPresets"
+                    :max="new Date()"
+                    class="mb-0"
+                  />
+                  <UiButton
+                    v-if="invoicePeriod"
+                    variant="text"
+                    size="sm"
+                    icon
+                    aria-label="Show invoices from every date"
+                    @click="invoicePeriod = null"
+                  >
                     <template #icon>
-                      <UiIconMaterial icon-code="&#xe2c4;" />
+                      <UiIconMaterial icon-code="&#xe5cd;" />
                     </template>
                   </UiButton>
-                  <UiButton text="Clear" variant="text" size="sm" @click="selectedInvoices = []" />
                 </div>
-                <span v-else class="caption text-muted">Select invoices to download several at once.</span>
-              </Transition>
+                <Transition name="fade" mode="out-in">
+                  <div v-if="selectedInvoices.length" class="d-flex align-items-center gap-2">
+                    <span class="caption fw-600">{{ selectedInvoices.length }} selected</span>
+                    <UiButton text="Download" variant="tonal" color="primary" size="sm" @click="downloadSelected">
+                      <template #icon>
+                        <UiIconMaterial icon-code="&#xe2c4;" />
+                      </template>
+                    </UiButton>
+                    <UiButton text="Clear" variant="text" size="sm" @click="selectedInvoices = []" />
+                  </div>
+                  <span v-else class="caption text-muted">Select invoices to download several at once.</span>
+                </Transition>
+              </div>
             </template>
 
             <template #cell-id="{ item }">

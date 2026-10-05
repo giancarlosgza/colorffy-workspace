@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AvatarStatus, IAvatarProps, ISegmentedTab, ThemeColor } from '@colorffy/ui'
+import type { AvatarStatus, IAvatarProps, IDatePreset, IDateRange, ISegmentedTab, ThemeColor } from '@colorffy/ui'
 import { NuxtLink } from '#components'
 
 definePageMeta({ pageTitle: 'Inbox' })
@@ -16,6 +16,11 @@ const selectedId = ref<string | null>(null)
 const showDesktopTip = ref(true)
 
 const billingProject = projectById('billing-migration')!
+const snoozePresets: IDatePreset[] = [
+  { label: 'Later today', value: () => atHour(0, Math.min(new Date().getHours() + 3, 23)) },
+  { label: 'Tomorrow morning', value: () => atHour(1, 9) },
+  { label: 'Next week', value: () => atHour((8 - new Date().getDay()) % 7 || 7, 9) }
+]
 const groupOrder: InboxItem['group'][] = ['Today', 'Yesterday', 'Earlier']
 
 const typeMeta: Record<NotificationType, { label: string, color: Intent, icon: string }> = {
@@ -118,6 +123,16 @@ function toggleRead() {
   if (selected.value)
     selected.value.unread = !selected.value.unread
 }
+function snooze(until: Date | IDateRange | null) {
+  if (!selected.value || !(until instanceof Date))
+    return
+
+  const { id, title } = selected.value
+  items.value = items.value.filter(item => item.id !== id)
+  selectedId.value = null
+  const when = until.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+  notify('Notification snoozed', `"${title}" comes back ${when}.`, 'info')
+}
 function archive() {
   if (!selected.value)
     return
@@ -126,6 +141,10 @@ function archive() {
   items.value = items.value.filter(item => item.id !== id)
   selectedId.value = null
   notify('Notification archived', `"${title}" moved to Archive.`, 'success')
+}
+function atHour(daysAhead: number, hour: number): Date {
+  const today = new Date()
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysAhead, hour)
 }
 function openProject() {
   if (selectedProject.value)
@@ -318,6 +337,22 @@ function enableDesktopNotifications() {
                 <span class="caption text-muted">{{ selected.time }}</span>
 
                 <div class="d-flex align-items-center gap-1 ms-auto">
+                  <UiInputDate
+                    id="inbox-snooze"
+                    :model-value="null"
+                    trigger="button"
+                    label="Snooze until"
+                    hide-label
+                    placeholder="Snooze"
+                    size="sm"
+                    time
+                    :minute-step="15"
+                    :min="new Date()"
+                    :presets="snoozePresets"
+                    :labels="{ apply: 'Snooze' }"
+                    class="mb-0"
+                    @update:model-value="snooze"
+                  />
                   <UiButtonTooltip
                     variant="text"
                     icon

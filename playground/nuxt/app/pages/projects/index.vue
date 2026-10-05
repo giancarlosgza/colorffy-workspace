@@ -63,7 +63,7 @@ const wizardStep = ref('details')
 const stepTransition = ref('slide-start')
 const showErrors = ref(false)
 const creating = ref(false)
-const draft = reactive({ name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: '', due: '', leadId: currentUser.id })
+const draft = reactive({ name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: null as Date | null, due: null as Date | null, leadId: currentUser.id })
 const team = reactive<Record<string, boolean>>(Object.fromEntries(members.map(member => [member.id, member.id === currentUser.id])))
 
 // Rename and archive
@@ -135,8 +135,8 @@ function avatarOf(member: Member): IAvatarProps {
 function teamAvatars(project: Project): IAvatarProps[] {
   return project.memberIds.map(id => avatarOf(memberById(id)))
 }
-function formatDate(value: string): string {
-  return new Date(`${value}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+function formatDate(value: Date): string {
+  return value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 function onStatusChange(value: string | string[] | null) {
@@ -152,7 +152,7 @@ function exportProjects() {
 }
 
 function resetWizard() {
-  Object.assign(draft, { name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: '', due: '', leadId: currentUser.id })
+  Object.assign(draft, { name: '', description: '', visibility: 'workspace', color: '#5b5bd6', start: null, due: null, leadId: currentUser.id })
   members.forEach((member) => {
     team[member.id] = member.id === currentUser.id
   })
@@ -557,10 +557,10 @@ onMounted(() => {
                 <UiInputColorPicker id="new-project-color" v-model="draft.color" label="Color" />
               </div>
               <div class="col-6 col-sm-4">
-                <UiInputText id="new-project-start" v-model="draft.start" type="date" label="Start date" />
+                <UiInputDate id="new-project-start" v-model="draft.start" label="Start date" clearable />
               </div>
               <div class="col-6 col-sm-4">
-                <UiInputText id="new-project-due" v-model="draft.due" type="date" label="Due date" :error-messages="dueErrors" />
+                <UiInputDate id="new-project-due" v-model="draft.due" label="Due date" :min="draft.start" :error-messages="dueErrors" clearable />
               </div>
             </div>
           </div>
