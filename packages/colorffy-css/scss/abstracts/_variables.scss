@@ -247,11 +247,11 @@ $spacing-sizes: (
         3: var(--cffy-space-16),
         4: var(--cffy-space-24),
         5: var(--cffy-space-48),
-        6: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 18),
-        7: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 24),
-        8: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 30),
-        9: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 36),
-        10: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 48)
+        6: var(--cffy-space-72),
+        7: var(--cffy-space-96),
+        8: var(--cffy-space-120),
+        9: var(--cffy-space-144),
+        10: var(--cffy-space-192)
 );
 
 // Gaps
@@ -263,10 +263,10 @@ $gaps: (
         4: var(--cffy-space-16),
         5: var(--cffy-space-20),
         6: var(--cffy-space-24),
-        7: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 7),
+        7: var(--cffy-space-28),
         8: var(--cffy-space-32),
-        9: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 9),
-        10: calc(var(--cffy-space-unit) * var(--_density-scale, 1) * 10)
+        9: var(--cffy-space-36),
+        10: var(--cffy-space-40)
 );
 
 // Space steps
@@ -279,8 +279,16 @@ $space-steps: (
         16: 4,
         20: 5,
         24: 6,
+        28: 7,
         32: 8,
-        48: 12
+        36: 9,
+        40: 10,
+        48: 12,
+        72: 18,
+        96: 24,
+        120: 30,
+        144: 36,
+        192: 48
 );
 
 // ==========================================================================

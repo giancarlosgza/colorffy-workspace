@@ -254,7 +254,7 @@ Each size has a unitless line-height companion: `--cffy-fs-{step}--line-height` 
 
 All component spacing uses the `--cffy-space-*` tokens on `:root` — the number is the pixel value at a 16px root, and every step derives from `--cffy-space-unit: .25rem`:
 
-`--cffy-space-4` · `--cffy-space-6` · `--cffy-space-8` · `--cffy-space-12` · `--cffy-space-14` · `--cffy-space-16` · `--cffy-space-20` · `--cffy-space-24` · `--cffy-space-32` · `--cffy-space-48`
+`--cffy-space-4` · `--cffy-space-6` · `--cffy-space-8` · `--cffy-space-12` · `--cffy-space-14` · `--cffy-space-16` · `--cffy-space-20` · `--cffy-space-24` · `--cffy-space-28` · `--cffy-space-32` · `--cffy-space-36` · `--cffy-space-40` · `--cffy-space-48` · `--cffy-space-72` · `--cffy-space-96` · `--cffy-space-120` · `--cffy-space-144` · `--cffy-space-192`
 
 Overriding `--cffy-space-unit` on `:root` rescales every step (e.g. `.2rem` = 80%). The steps are computed on `:root`, so setting the unit on a wrapper does nothing; for one region use a density mode.
 
@@ -268,13 +268,13 @@ The `m-*`/`p-*`/`flow-*`/`top-*`/`translate-*` utilities keep their numbered ste
 
 | Step | Value | Step | Value |
 |------|-------|------|-------|
-| `1` | `--cffy-space-4` (0.25rem) | `6` | `--cffy-space-unit` × 18 (4.5rem) |
-| `2` | `--cffy-space-8` (0.5rem) | `7` | × 24 (6rem) |
-| `3` | `--cffy-space-16` (1rem) | `8` | × 30 (7.5rem) |
-| `4` | `--cffy-space-24` (1.5rem) | `9` | × 36 (9rem) |
-| `5` | `--cffy-space-48` (3rem) | `10` | × 48 (12rem) |
+| `1` | `--cffy-space-4` (0.25rem) | `6` | `--cffy-space-72` (4.5rem) |
+| `2` | `--cffy-space-8` (0.5rem) | `7` | `--cffy-space-96` (6rem) |
+| `3` | `--cffy-space-16` (1rem) | `8` | `--cffy-space-120` (7.5rem) |
+| `4` | `--cffy-space-24` (1.5rem) | `9` | `--cffy-space-144` (9rem) |
+| `5` | `--cffy-space-48` (3rem) | `10` | `--cffy-space-192` (12rem) |
 
-`gap-*` uses a finer scale: step `n` = `n` × `--cffy-space-unit` (`gap-3` = `--cffy-space-12` = 0.75rem, `gap-10` = 2.5rem).
+`gap-*` uses a finer scale: step `n` = `n` × `--cffy-space-unit`, `--cffy-space-4` … `--cffy-space-40` (`gap-3` = `--cffy-space-12` = 0.75rem, `gap-10` = `--cffy-space-40` = 2.5rem).
 
 ## Border Radius
 
