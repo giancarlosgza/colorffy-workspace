@@ -10,6 +10,7 @@ Complete reference for all 70+ Vue 3 components in @colorffy/ui.
 - [Alerts & Notifications](#alerts--notifications)
 - [Badges](#badges)
 - [Buttons](#buttons)
+- [Calendar](#calendar)
 - [Cards](#cards)
 - [Chips](#chips)
 - [Dialogs](#dialogs)
@@ -581,6 +582,38 @@ Floating action buttons pinned to a corner of the viewport (`position: fixed`), 
 
 **CSS variables:** `--cffy-fab-group-offset-block` / `--cffy-fab-group-offset-inline` (distance from the edges, default `1.75rem`), `--cffy-fab-group-gap` (default `--cffy-space-16`).
 
+## Calendar
+
+### UiCalendar
+Inline month grid (not a field; `UiInputDate` with a popover comes later). The model is `Date` objects at midnight local time, no date library.
+
+```vue
+<UiCalendar v-model="dueDate" aria-label="Due date" />
+<UiCalendar v-model="period" mode="range" :months="2" :min="today" aria-label="Report period" />
+<UiCalendar v-model="officeDays" mode="multiple" :disabled-dates="isWeekend" />
+```
+
+**Props:**
+- `modelValue` - `Date | null` (single), `Date[]` (multiple, kept sorted), `IDateRange` `{ start, end }` (range; the first pick emits `end: null`). Single mode keeps the previous value's time
+- `mode` ('single' | 'multiple' | 'range', default: 'single')
+- `month` (Date | null) - First visible month, `v-model:month`; defaults to the selection's month, else today's
+- `months` (number, default: 1) - Months side by side; with more than one, neighboring days aren't shown
+- `min` / `max` (Date | null) - Disable days outside; month buttons and keyboard stop there
+- `disabledDates` ((date) => boolean | null) - Extra unpickable days (still focusable)
+- `locale` (string | null) - Defaults to `<html lang>`, then `navigator.language`, after mount (pass it for SSR)
+- `weekStart` (0-6 | null) - Defaults to the locale (`Intl.Locale` week info, CLDR region fallback)
+- `showOutsideDays` (boolean, default: true) · `disabled` · `ariaLabel` (default: 'Calendar')
+- `fluid` (boolean) - fill the container width: days = 1/7 of it (container query units, max 3.5rem), months stack; `UiInputDate` applies it in its phone bottom sheet
+- `labels` (`ICalendarLabels`): `previousMonth`, `nextMonth`, `rangeStart` (`{date}` placeholder)
+
+**Slots:** `#day="{ date, selected, disabled, today, inRange }"` - renders inside the day `<button>` (inline content only; the button is a centered grid, so extra elements stack under the number)
+
+**Emits:** `update:modelValue`, `update:month`, `select(date)`
+
+**Behavior:** each month is a `role="grid"` table; one roving tab stop; arrows move a day/week (RTL-aware), Home/End the week, Page Up/Down a month, Shift+Page a year, past the visible months turns the page; Enter/Space picks. Month changes and range starts are announced. Always six rows per month.
+
+**CSS hooks:** `--cffy-calendar-color`, `-muted-color`, `-font-size`, `-title-font-size`, `-title-font-weight`, `-gap`, `-day-size` (2.25rem), `-day-radius` (`--cffy-shape-control`), `-selected-bg-color` / `-selected-color` (primary-a10 / on-primary), `-range-bg-color` / `-range-color` (primary-container / on-primary-container), `-today-color`, `-easing`, `-duration`. Day hover/pressed use the state layer.
+
 ## Cards
 
 ### UiCard
@@ -1037,6 +1070,38 @@ Several values from the same searchable list as `UiInputCombobox` (same popover,
 **Behavior:** Enter or click toggles the highlighted option and the list stays open; a search clears after each pick; Backspace on an empty field removes the last chip (chips mode); Esc closes. The listbox is `aria-multiselectable`, changes are announced, and the field's `aria-describedby` lists the selected labels.
 
 `modelValue`: (string | number | object)[] — in pick order
+
+### UiInputDate
+Date field (or button) that opens `UiCalendar` in an anchored popover (`role="dialog"`, top layer, works inside `UiModal`). Replaces PrimeVue's DatePicker.
+
+```vue
+<script setup lang="ts">
+import { datePresets, type IDateRange } from '@colorffy/ui'
+
+const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastDays(30), datePresets.thisMonth(), datePresets.lastMonth()]
+</script>
+
+<UiInputDate id="due" v-model="dueDate" label="Due date" :min="today" clearable />
+<UiInputDate id="period" v-model="period" mode="range" label="Report period" :presets="presets" />
+<UiInputDate id="period-btn" v-model="period" mode="range" trigger="button" label="Period" size="sm" :presets="presets" />
+```
+
+**Additional props:**
+- `mode` ('single' | 'range', default: 'single') - range writes `{ start, end }` only once both ends are picked
+- `trigger` ('field' | 'button', default: 'field') - button shows the matching preset label or the dates; `label` goes into its aria-label
+- `presets` (`IDatePreset[]`: `{ label, value: () => Date | IDateRange }`) - built with `datePresets.today()`, `.yesterday()`, `.tomorrow()`, `.lastDays(n)`, `.thisMonth()`, `.lastMonth()`, `.thisYear()` (optional label arg each)
+- `time` (boolean | 'minutes' | 'seconds', default: false) - native `<input type="time">` fields with a Now button: under the calendar (single) or in From/To rows (range); field shows/accepts `mm/dd/yyyy hh:mm [AM|PM]`; picked/typed days keep their time, a range end without one becomes 23:59 (presets cover all of today) · `minuteStep` (default 1)
+- `confirm` (boolean | null) - Apply/Cancel footer; default on with `time` or for range + presets, else off (picking closes)
+- `months` (number | null) - default 1 single / 2 range
+- `min` / `max` / `disabledDates` / `locale` / `weekStart` - passed to the calendar; typed dates outside are rejected
+- `format` (Intl.DateTimeFormatOptions | null) - displayed value; default numeric (field) or short month (button)
+- `clearable` (boolean) · `labels` (`IDateInputLabels`: `toggle`, `clear`, `apply`, `cancel`, `presets`, `now`, `time`, `from`, `to`, `startDate`, `endDate`, `startTime`, `endTime` + calendar labels)
+- From/To date fields appear side by side above the calendar in range mode with `trigger="button"` or `time` (Now sits next to each label)
+- Below 600px the popup is a bottom sheet (backdrop, preset chips, stacked months, sticky Apply footer); backdrop tap = cancel
+
+**Behavior:** typing accepts the locale's numeric order (`mm/dd/yyyy` en-US, `dd/mm/yyyy` es) or ISO; ranges `a – b`; commits on Enter or blur, invalid text reverts. Click opens without moving focus; ↓ or the calendar button focuses the calendar. Esc/outside click discards the draft; Esc never closes a surrounding dialog. Emits `update:modelValue` and `update`.
+
+`modelValue`: Date | IDateRange | null
 
 ### UiInputCheck
 
@@ -1973,6 +2038,22 @@ function onFail() {
 ```
 
 `duration` defaults to 3000 ms. Placement and title come from the `UiAlertToast` props (`placement`, `snackbarTitle`); the composable only sets variant, message and duration.
+
+### datePresets
+Preset factories for `UiInputDate`'s `presets` prop; dates are computed when picked.
+
+```typescript
+import { datePresets } from '@colorffy/ui'
+
+const presets = [
+  datePresets.today('Hoy'),
+  datePresets.lastDays(7, 'Últimos 7 días'),
+  datePresets.thisMonth('Este mes'),
+  { label: 'Next quarter', value: () => ({ start: quarterStart, end: quarterEnd }) },
+]
+```
+
+`today`, `yesterday`, `tomorrow` return a `Date`; `lastDays(n)` (ending today), `thisMonth` (1st to today), `lastMonth` (whole month) and `thisYear` (Jan 1 to today) return `{ start, end }`. Auto-imported in Nuxt.
 
 ### useDateUtils
 Date display helper.
