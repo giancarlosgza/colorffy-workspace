@@ -1,3 +1,4 @@
+import type { LabelTemplate } from '@/types/config'
 import type { ClassValue, SizeLevel } from '@/types/shared'
 
 /**
@@ -33,7 +34,7 @@ export interface IPaginationLabels {
    * when the page changes. `{page}` and `{total}` are replaced with numbers.
    * @default 'Page {page} of {total}', from the configured labels
    */
-  status: string
+  status: LabelTemplate
 }
 
 /**

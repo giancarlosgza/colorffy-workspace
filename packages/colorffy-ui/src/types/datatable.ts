@@ -138,8 +138,9 @@ export interface IDatatableColumnSlotProps {
  */
 export interface IDatatableProps {
   /**
-   * Optional caption text, rendered as a <caption> to give the table an
-   * accessible name. Omitted when not provided.
+   * Caption text. Screen readers read it as the table's `<caption>`, and it
+   * shows below the table, outside the horizontal scroll, so a wide table on
+   * a phone can't cut it off. Omitted when not provided.
    */
   caption?: string
   /**

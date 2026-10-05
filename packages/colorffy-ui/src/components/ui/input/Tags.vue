@@ -66,20 +66,34 @@ function setTags(tags: string[]): void {
 function addTags(candidates: string[]): void {
   const next = [...model.value]
   const added: string[] = []
+  const messages: string[] = []
+  let overMax = false
   for (const raw of candidates) {
     const tag = raw.trim().slice(0, props.maxlength)
-    if (!tag || (props.max != null && next.length >= props.max))
+    if (!tag)
       continue
-    if (!props.allowDuplicates && next.some(existing => existing.toLowerCase() === tag.toLowerCase()))
+    if (props.max != null && next.length >= props.max) {
+      emit('reject', tag, 'max')
+      overMax = true
       continue
+    }
+    if (!props.allowDuplicates && next.some(existing => existing.toLowerCase() === tag.toLowerCase())) {
+      emit('reject', tag, 'duplicate')
+      messages.push(formatLabel(l10n.value.duplicate, { tag }))
+      continue
+    }
     next.push(tag)
     added.push(tag)
   }
-  if (!added.length)
-    return
-  setTags(next)
-  added.forEach(tag => emit('add', tag))
-  announcement.value = formatLabel(l10n.value.added, { tags: added.join(', ') })
+  if (overMax)
+    messages.push(formatLabel(l10n.value.full, { max: props.max! }))
+  if (added.length) {
+    setTags(next)
+    added.forEach(tag => emit('add', tag))
+    messages.unshift(formatLabel(l10n.value.added, { tags: added.join(', ') }))
+  }
+  if (messages.length)
+    announcement.value = messages.join('. ')
 }
 function removeAt(index: number): void {
   const tag = model.value[index]
@@ -165,6 +179,7 @@ watch(draft, (value) => {
         ref="inputRef"
         v-model="draft"
         class="form-tags-input"
+        :class="{ 'visually-hidden': model.length && (isFull || isLocked) }"
         type="text"
         enterkeyhint="enter"
         :maxlength="maxlength"

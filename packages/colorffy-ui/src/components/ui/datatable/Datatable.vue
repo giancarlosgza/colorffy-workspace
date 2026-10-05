@@ -305,7 +305,7 @@ watch(() => props.items.length, (_length, previous) => {
         class="table table-hover"
         :class="[tableClass, { 'table-sticky-header': stickyHeader }]"
       >
-        <caption v-if="caption" class="mt-3">
+        <caption v-if="caption" class="visually-hidden">
           {{ caption }}
         </caption>
         <thead>
@@ -415,6 +415,15 @@ watch(() => props.items.length, (_length, previous) => {
         </tbody>
       </table>
     </div>
+
+    <!-- Shown outside the scroll area so a wide table can't cut it off -->
+    <p
+      v-if="caption"
+      class="table-caption"
+      aria-hidden="true"
+    >
+      {{ caption }}
+    </p>
 
     <!-- Pagination -->
     <UiPagination

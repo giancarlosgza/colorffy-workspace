@@ -68,8 +68,8 @@ export const es: IColorffyLabels = {
     today: 'Hoy',
     yesterday: 'Ayer',
     tomorrow: 'Mañana',
-    lastDays: 'Últimos {count} días',
-    lastMonths: 'Últimos {count} meses',
+    lastDays: ({ count }) => count === 1 ? 'Último día' : `Últimos ${count} días`,
+    lastMonths: ({ count }) => count === 1 ? 'Último mes' : `Últimos ${count} meses`,
     thisMonth: 'Este mes',
     lastMonth: 'Mes pasado',
     thisYear: 'Este año',
@@ -96,7 +96,7 @@ export const es: IColorffyLabels = {
     clear: 'Borrar selección',
     toggle: 'Mostrar opciones',
     remove: 'Quitar',
-    summary: '{count} seleccionados',
+    summary: ({ count }) => count === 1 ? '1 seleccionado' : `${count} seleccionados`,
     added: 'Se agregó {label}',
     removed: 'Se quitó {label}',
     cleared: 'Se borró la selección'
@@ -144,6 +144,8 @@ export const es: IColorffyLabels = {
   tags: {
     remove: 'Quitar',
     added: 'Se agregó {tags}',
-    removed: 'Se quitó {tag}'
+    removed: 'Se quitó {tag}',
+    duplicate: '{tag} ya está en la lista',
+    full: 'Puedes agregar hasta {max}'
   }
 }

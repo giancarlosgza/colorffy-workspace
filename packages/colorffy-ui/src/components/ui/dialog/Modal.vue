@@ -65,7 +65,14 @@ function showDialog() {
       dialogRef.value.show()
     // A reopened dialog starts at the top; a hidden dialog can't be scrolled, so this runs once it shows
     dialogRef.value.querySelector('.dialog-body')?.scrollTo(0, 0)
+    focusMarkedField(dialogRef.value)
   }
+}
+// Browsers only autofocus a focusable element, so `autofocus` on a field component focuses its control
+function focusMarkedField(dialog: HTMLDialogElement) {
+  const marked = dialog.querySelector<HTMLElement>('[autofocus]')
+  if (marked && !marked.contains(document.activeElement))
+    marked.querySelector<HTMLElement>('input:not([type="hidden"]), select, textarea, button, [tabindex]:not([tabindex="-1"])')?.focus()
 }
 // The native close event emits `close`, so Esc and form[method=dialog] report it too
 function closeDialog() {

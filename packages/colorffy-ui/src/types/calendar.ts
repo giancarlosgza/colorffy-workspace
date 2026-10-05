@@ -1,4 +1,4 @@
-import type { IColorffyLabels } from '@/types/config'
+import type { IColorffyLabels, LabelTemplate } from '@/types/config'
 import type { ClassValue } from '@/types/shared'
 
 /**
@@ -71,7 +71,7 @@ export interface ICalendarLabels {
    * the full date.
    * @default 'Start date {date} selected. Pick an end date.', from the configured labels
    */
-  rangeStart: string
+  rangeStart: LabelTemplate
 }
 
 /**

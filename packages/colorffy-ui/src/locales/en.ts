@@ -68,8 +68,8 @@ export const en: IColorffyLabels = {
     today: 'Today',
     yesterday: 'Yesterday',
     tomorrow: 'Tomorrow',
-    lastDays: 'Last {count} days',
-    lastMonths: 'Last {count} months',
+    lastDays: ({ count }) => `Last ${count} day${count === 1 ? '' : 's'}`,
+    lastMonths: ({ count }) => `Last ${count} month${count === 1 ? '' : 's'}`,
     thisMonth: 'This month',
     lastMonth: 'Last month',
     thisYear: 'This year',
@@ -144,6 +144,8 @@ export const en: IColorffyLabels = {
   tags: {
     remove: 'Remove',
     added: 'Added {tags}',
-    removed: 'Removed {tag}'
+    removed: 'Removed {tag}',
+    duplicate: '{tag} is already in the list',
+    full: 'You can add up to {max}'
   }
 }

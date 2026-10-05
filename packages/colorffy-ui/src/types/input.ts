@@ -1,4 +1,5 @@
 import type { ICalendarLabels, IDatePreset, IDateRange } from '@/types/calendar'
+import type { LabelTemplate } from '@/types/config'
 import type { IBaseInputProps } from '@/types/shared'
 
 /**
@@ -354,6 +355,12 @@ export interface ITagsInputEmits {
    * A tag was removed, by its button or by Backspace on an empty field.
    */
   (e: 'remove', tag: string): void
+  /**
+   * A typed or pasted tag was left out: it was already in the list
+   * (`'duplicate'`) or the list had reached `max` (`'max'`). Screen readers
+   * hear it either way; use it to show a message.
+   */
+  (e: 'reject', tag: string, reason: 'duplicate' | 'max'): void
 }
 
 /**
@@ -524,10 +531,11 @@ export interface IMultiSelectInputProps extends IBaseInputProps {
 
   /**
    * Summary shown instead of the chips once there are more values than
-   * `maxChips`; `{count}` is replaced with the number of values.
+   * `maxChips`; `{count}` is replaced with the number of values. A function
+   * gets `{ count }` and returns the text, for singular and plural wording.
    * @default '{count} selected', from the configured labels
    */
-  maxChipsLabel?: string
+  maxChipsLabel?: LabelTemplate
 
   /**
    * Text shown in the list when no option matches.

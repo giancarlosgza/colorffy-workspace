@@ -1,5 +1,5 @@
 import type { App, ComputedRef, InjectionKey } from 'vue'
-import type { ColorffyLabelsInput, IColorffyConfig, IColorffyLabels, IColorffyOptions } from '@/types/config'
+import type { ColorffyLabelsInput, IColorffyConfig, IColorffyLabels, IColorffyOptions, LabelTemplate } from '@/types/config'
 import { computed, inject, reactive } from 'vue'
 import { en } from '@/locales/en'
 
@@ -56,8 +56,10 @@ export function useLabels<Group extends LabelGroup>(
   }) as IColorffyLabels[Group])
 }
 
-/** Fills `{name}` placeholders; unknown ones stay as written. */
-export function formatLabel(text: string, values: Record<string, string | number>): string {
+/** Fills `{name}` placeholders (unknown ones stay as written), or calls a function label with the values. */
+export function formatLabel(text: LabelTemplate, values: Record<string, string | number>): string {
+  if (typeof text === 'function')
+    return text(values)
   return text.replace(/\{(\w+)\}/g, (match, name: string) => (name in values ? String(values[name]) : match))
 }
 

@@ -1,8 +1,16 @@
 /**
+ * A text with `{name}` placeholders, or a function that builds the text from
+ * the same values, for wording that changes with a number:
+ * `({ count }) => count === 1 ? '1 skill' : `${count} skills``.
+ */
+export type LabelTemplate = string | ((values: Record<string, string | number>) => string)
+
+/**
  * Every text Colorffy UI writes on its own, grouped by component. `{name}`
- * placeholders are replaced when the text is used. Ship it as a language
- * pack (`@colorffy/ui/locales/en`, `@colorffy/ui/locales/es`) or write your
- * own with `satisfies IColorffyLabels`.
+ * placeholders are replaced when the text is used, and those texts can also
+ * be functions (`LabelTemplate`). Ship it as a language pack
+ * (`@colorffy/ui/locales/en`, `@colorffy/ui/locales/es`) or write your own
+ * with `satisfies IColorffyLabels`.
  */
 export interface IColorffyLabels {
   /** Shared by every input. */
@@ -32,7 +40,7 @@ export interface IColorffyLabels {
     previousMonth: string
     nextMonth: string
     /** Announced after a range's first pick. `{date}` is the full date. */
-    rangeStart: string
+    rangeStart: LabelTemplate
   }
   chip: {
     /** Remove button of a closable chip. */
@@ -62,7 +70,7 @@ export interface IColorffyLabels {
     /** Header checkbox with `pagination`. */
     selectAllOnPage: string
     /** Row checkbox. `{row}` is the row number. */
-    selectRow: string
+    selectRow: LabelTemplate
   }
   dateInput: {
     /** Calendar button, and the popup's name when there's no `label`. */
@@ -88,15 +96,15 @@ export interface IColorffyLabels {
   }
   /** Labels of the `datePresets` helpers. `{count}` is the number of days or months. */
   datePresets: {
-    today: string
-    yesterday: string
-    tomorrow: string
-    lastDays: string
-    lastMonths: string
-    thisMonth: string
-    lastMonth: string
-    thisYear: string
-    lastYear: string
+    today: LabelTemplate
+    yesterday: LabelTemplate
+    tomorrow: LabelTemplate
+    lastDays: LabelTemplate
+    lastMonths: LabelTemplate
+    thisMonth: LabelTemplate
+    lastMonth: LabelTemplate
+    thisYear: LabelTemplate
+    lastYear: LabelTemplate
   }
   empty: {
     /** Name of the empty state. */
@@ -115,8 +123,8 @@ export interface IColorffyLabels {
     content: string
     grid: string
     /** `{index}` and `{total}` are numbers. */
-    gridItem: string
-    gridPreview: string
+    gridItem: LabelTemplate
+    gridPreview: LabelTemplate
     gridAction: string
     table: string
   }
@@ -127,10 +135,10 @@ export interface IColorffyLabels {
     /** Start of each chip's remove button name, followed by the value. */
     remove: string
     /** Shown past `maxChips`. `{count}` is the number of values. */
-    summary: string
+    summary: LabelTemplate
     /** Announcements. `{label}` is the value. */
-    added: string
-    removed: string
+    added: LabelTemplate
+    removed: LabelTemplate
     cleared: string
   }
   navbar: {
@@ -147,7 +155,7 @@ export interface IColorffyLabels {
     /** Name of the code when there's no `label`. */
     ariaLabel: string
     /** Each box. `{label}`, `{index}` and `{length}` are filled in. */
-    digit: string
+    digit: LabelTemplate
   }
   pagination: {
     ariaLabel: string
@@ -156,7 +164,7 @@ export interface IColorffyLabels {
     next: string
     last: string
     /** `{page}` and `{total}` are numbers. */
-    status: string
+    status: LabelTemplate
   }
   password: {
     /** Button that shows and hides the password. */
@@ -166,7 +174,7 @@ export interface IColorffyLabels {
     ariaLabel: string
     close: string
     /** Profile photo description. `{name}` is the name, or `account`. */
-    photoAlt: string
+    photoAlt: LabelTemplate
     account: string
   }
   search: {
@@ -182,8 +190,12 @@ export interface IColorffyLabels {
     /** Start of each tag's remove button name, followed by the tag. */
     remove: string
     /** Announcements. `{tags}` is a list, `{tag}` one tag. */
-    added: string
-    removed: string
+    added: LabelTemplate
+    removed: LabelTemplate
+    /** Announced when a typed or pasted tag is already in the list. */
+    duplicate: LabelTemplate
+    /** Announced when tags past `max` are left out. `{max}` is the limit. */
+    full: LabelTemplate
   }
 }
 
