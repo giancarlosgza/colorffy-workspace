@@ -748,7 +748,7 @@ export interface IDateInputLabels extends ICalendarLabels {
   /**
    * Several picked dates on the button and in the footer, with
    * `mode="multiple"`. `{count}` is the number of dates.
-   * @default '{count} dates', from the configured labels
+   * @default '1 date' / '{count} dates', from the configured labels
    */
   dates: LabelTemplate
 

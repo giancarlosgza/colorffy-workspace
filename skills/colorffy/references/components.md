@@ -610,7 +610,7 @@ Floating action buttons pinned to a corner of the viewport (`position: fixed`), 
 ## Calendar
 
 ### UiCalendar
-Inline month grid (not a field; `UiInputDate` with a popover comes later). The model is `Date` objects at midnight local time, no date library.
+Inline month grid, also used inside `UiInputDate`'s popup (use `UiInputDate` for a field). The model is `Date` objects at midnight local time, no date library.
 
 ```vue
 <UiCalendar v-model="dueDate" aria-label="Due date" />
@@ -969,7 +969,7 @@ All inputs share the base props (`IBaseInputProps`) and bind with `v-model`.
 - `hideLabel` (boolean, default: false) - Hides the label visually; it stays accessible
 - `customClass` (string | null) - Extra classes on the field element
 
-Not every input uses every base prop (`readonly` only applies to `UiInputText`, `UiInputTextarea` and `UiInputOtp`; `UiInputCheck` replaces `variant` with `'switch'`); each section lists what applies.
+Not every input uses every base prop (`readonly` applies to `UiInputText`, `UiInputTextarea`, `UiInputOtp`, `UiInputPassword`, `UiInputSearch`, `UiInputTags`, `UiInputCombobox`, `UiInputMultiSelect` and `UiInputDate`; `UiInputCheck` replaces `variant` with `'switch'`); each section lists what applies.
 
 **Events (all inputs):** `update:modelValue` (for `v-model`) and `update` with the same value
 
@@ -1129,11 +1129,11 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 - `presets` (`IDatePreset[]`: `{ label, value: () => Date | IDateRange }`) - built with `datePresets.today()`, `.yesterday()`, `.tomorrow()`, `.lastDays(n)`, `.lastMonths(n)`, `.thisMonth()`, `.lastMonth()`, `.thisYear()`, `.lastYear()` (optional label arg each)
 - `timeOptions` (`{ step?: 30, start?: '00:00', end?: '23:59' }` | `string[]` of `HH:mm` | null) - single dates: a slot list beside the calendar (chip row on phones) instead of the time field; appears once a day is picked, keeps the slot across days, ↑/↓/Home/End/Enter; Apply waits for an open slot; typed times must be open slots; turns `time` on · `disabledTimes` ((date) => boolean) - booked slots (gets the day with the slot time)
 - `time` (boolean | 'minutes' | 'seconds', default: false) - native `<input type="time">` fields with a Now button: under the calendar (single) or in From/To rows (range); field shows/accepts `mm/dd/yyyy hh:mm [AM|PM]`; picked/typed days keep their time, a range end without one becomes 23:59 (presets cover all of today) · `minuteStep` (default 1)
-- `confirm` (boolean | null) - Apply/Cancel footer; default on with `time` or for range + presets, else off (picking closes)
+- `confirm` (boolean | null) - Apply/Cancel footer; default on with `time`, with `mode="multiple"`, or for range + presets, else off (picking closes)
 - `months` (number | null) - default 1 single / 2 range
 - `min` / `max` / `disabledDates` / `locale` / `weekStart` - passed to the calendar; typed dates outside are rejected
 - `format` (Intl.DateTimeFormatOptions | null) - displayed value; default numeric (field) or short month (button)
-- `clearable` (boolean) · `labels` (`IDateInputLabels`: `toggle`, `clear`, `apply`, `cancel`, `presets`, `now`, `time`, `from`, `to`, `startDate`, `endDate`, `startTime`, `endTime` + calendar labels)
+- `clearable` (boolean) · `labels` (`IDateInputLabels`: `toggle`, `clear`, `apply`, `cancel`, `presets`, `now`, `time`, `from`, `to`, `startDate`, `endDate`, `startTime`, `endTime`, `dayLetters` / `monthLetters` / `yearLetters` (typing hint), `dates` (`LabelTemplate`, "3 dates"), `times` ('Available times'), `pickDay` ('Pick a day to see the times') + calendar labels)
 - From/To date fields appear side by side above the calendar in range mode with `trigger="button"` or `time` (Now sits next to each label)
 - Below 600px the popup is a bottom sheet (backdrop, preset chips, stacked months, sticky Apply footer); backdrop tap = cancel
 
@@ -1765,6 +1765,8 @@ Dropdown panel (account menus, overflow menus) with `header` / `body` / `footer`
 
 **Slots:** `header`, `body`, `footer` (no default slot). A filled `body` replaces the `menuItems` rows.
 
+**Keyboard:** inside the menu ↑/↓ move between items and wrap, Home/End jump to the ends, a letter moves to the next item starting with it (`role="menu"` with `menuitem` rows).
+
 **Emits:** `hideDropdown`, `menuItemClick(to)`.
 
 The default header is a `title` plus the close button; put identity (avatar, name, email) in the `header` slot with `UiPopoverMenuUser`. To add rows to a `menuItems` menu, render the body yourself in `#body`.
@@ -1899,6 +1901,7 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `stickyHeight` (string | number, default: `32rem`) - Max height of the sticky scroll area (numbers are px); sets `--cffy-table-sticky-max-height`
 - `isLoading` (boolean, default: false) + `skeletonRows` (number, default: 10) - Built-in loading skeleton (one cell per visible column)
 - `caption` (string) - Visually hidden `<caption>` for screen readers, with the text shown below the scroll area (`.table-caption`, muted) so phones don't cut it off
+- Layout: wide tables scroll sideways inside `.table-responsive` with the scrollbar hidden; a select in a cell keeps at least its longest option's width
 - `emptyStateTitle` (default: 'No data available') / `emptyStateSubtitle` / `emptyStateUseCustomIcon` (boolean) / `emptyStateIconCode` (string, default: '&#xeb83;') - Built-in `UiEmpty` state
 
 **Slots:**

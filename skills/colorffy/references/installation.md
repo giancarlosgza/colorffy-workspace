@@ -1,6 +1,6 @@
 # Installation & Setup
 
-Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 projects.
+Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 / 4 projects.
 
 ## Package Overview
 
@@ -17,6 +17,7 @@ Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 p
 - Dark mode support built-in
 
 **Peer Dependencies:**
+- `@vueuse/core` - Breakpoints for the responsive skeletons
 - `@vueuse/components` - Composition utilities
 - `floating-vue` - Tooltip/popover positioning
 - `vue` (3.5+) - Vue framework
@@ -28,7 +29,7 @@ Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 p
 ```bash
 # Install packages
 npm install @colorffy/ui @colorffy/css
-npm install @vueuse/components floating-vue
+npm install @vueuse/core @vueuse/components floating-vue
 ```
 
 `@colorffy/css` is an optional peer dependency of `@colorffy/ui`: keep both on the same major version (3.x), since the components set `--cffy-*` variables that only CSS 3.x reads.
@@ -128,14 +129,14 @@ import '@colorffy/css'
 createApp(App).mount('#app')
 ```
 
-## Nuxt 3 Setup
+## Nuxt 3 / 4 Setup
 
 ### Option 1: Global Registration with Colorffy CSS
 
 ```bash
 # Install packages
 npm install @colorffy/ui @colorffy/css
-npm install @vueuse/components floating-vue
+npm install @vueuse/core @vueuse/components floating-vue
 ```
 
 ```typescript
@@ -257,12 +258,12 @@ import type { ButtonVariant, AlertType } from '@colorffy/ui'
 
 ```bash
 # Install all peer dependencies
-npm install @vueuse/components floating-vue vue
+npm install @vueuse/core @vueuse/components floating-vue vue
 ```
 
 Check version compatibility:
 - Vue 3.5+
-- Nuxt 4.2+ (if using Nuxt)
+- Nuxt 3 or 4 (if using Nuxt)
 
 ### SCSS Not Compiling
 

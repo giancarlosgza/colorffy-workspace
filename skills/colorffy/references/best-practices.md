@@ -410,8 +410,10 @@ errors.value.email = ['Please enter a valid email address']
 **Use v-show for frequently toggled content:**
 
 ```vue
-<!-- ✅ For frequent toggling -->
-<UiCard v-show="isVisible">Content</UiCard>
+<!-- ✅ For frequent toggling (UiCard has no default slot: fill #body) -->
+<UiCard v-show="isVisible">
+  <template #body>Content</template>
+</UiCard>
 
 <!-- ✅ For conditional rendering -->
 <UiAlert v-if="hasError" variant="danger" message="Could not save" />
@@ -422,10 +424,11 @@ errors.value.email = ['Please enter a valid email address']
 **Leverage type definitions:**
 
 ```typescript
-import type { ButtonVariant, AlertType } from '@colorffy/ui'
+import type { AlertType, AlertVariant, ButtonVariant } from '@colorffy/ui'
 
 const variant = ref<ButtonVariant>('filled')
-const alertType = ref<AlertType>('success')
+const alertType = ref<AlertType>('tonal')        // 'banner' | 'tonal' | 'snackbar'
+const alertVariant = ref<AlertVariant>('success') // the color
 ```
 
 ### 9. Composables
@@ -434,12 +437,15 @@ const alertType = ref<AlertType>('success')
 
 ```typescript
 // composables/useConfirmDelete.ts
+import type { IToastDisplay } from '@colorffy/ui'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { useToast } from '@colorffy/ui'
 
-export function useConfirmDelete() {
+// Pass the ref of a mounted <UiAlertToast>
+export function useConfirmDelete(toastRef: Ref<IToastDisplay | null>) {
   const showConfirm = ref(false)
-  const toast = useToast()
+  const toast = useToast(toastRef)
   
   const confirmDelete = async (item: any) => {
     showConfirm.value = true

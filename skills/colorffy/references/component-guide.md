@@ -11,7 +11,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 **Content sections**
 - Use `UiPaneContent` for basic content wrappers
 - Use `UiCard` when you need header/body/footer structure
-- Cards support variants: `pane` (default), `outlined`, `elevated`
+- Cards support variants: `outline`, `elevated`, `pane` (no default: a plain `.card` without one)
 
 **Visual separation**
 - Use `UiDivider` to separate items in a list, sections of a form, or inline toolbar actions (`vertical`)
@@ -20,7 +20,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 **Modals & Dialogs**
 - Use `UiModal` for custom modal content with full control
 - Use `UiConfirmModal` for quick confirmation dialogs
-- Modal sizes: `sm`, `md`, `lg`, `xl`, `full`
+- Modal sizes: `sm`, `md`, `lg`, `fullscreen`; `mode` picks `modal`, `side-sheet` or `headless`
 
 ## Navigation
 
@@ -82,7 +82,14 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 **Dropdowns**
 - Use `UiInputSelect` for single-choice from list
 - Use `UiInputCombobox` when users need to search the list, or options need groups, disabled entries or custom rows
-- Use `UiInputMultiSelect` for several values from a fixed list (chips; `max-chips` swaps them for "3 selected" past a count, `0` in toolbars); for free-typed values use `UiInputTags`
+- Use `UiInputMultiSelect` for several values from a list (chips; `max-chips` swaps them for "3 selected" past a count, `0` in toolbars); `free-text` lets users add values that aren't options (labels with suggestions); for free-typed values with no list use `UiInputTags`
+- Options that live on a server (directories, CRMs, large catalogs) → `remote` on either field: handle `@search`, pass the results in `options`, set `loading`
+
+**Dates and times**
+- One date, a range or several dates in a field → `UiInputDate` (`mode="single" | "range" | "multiple"`); `trigger="button"` for toolbars and report headers
+- Shortcuts → `presets` with `datePresets` (`today()`, `lastDays(7)`, `lastMonths(6)`, `thisMonth()`, `lastYear()`, …)
+- A time with the date → `time` (native time field); bookable slots → `timeOptions` (`{ step, start, end }`) plus `disabledTimes` for booked ones
+- A month grid on the page (dashboards, booking pages) → `UiCalendar`
 - Provide `options`; for objects set `option-label` and `option-value`
 - Supports placeholder and required state
 
@@ -102,9 +109,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Good for volume, opacity, filters
 
 **File uploads**
-- Use `UiInputFile` for file selection
-- Supports `multiple` for multi-file upload
-- Use `accept` to limit file types
+- Use `UiInputFile` for one file: a drop zone with a button; the model is a `File | null`
+- Validate type and size yourself on `update`
 
 **Color picker**
 - Use `UiInputColorPicker` for color selection
@@ -112,9 +118,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Works with v-model
 
 **Phone numbers**
-- Use `UiInputPhoneNumber` for formatted phone input
-- Includes country code selector
-- Set `defaultCountry` for region
+- Use `UiInputPhoneNumber` for a phone field that formats as you type and stores the digits only
+- It has no country selector; put a `UiInputSelect` beside it when you need one
 
 **PIN/verification codes**
 - Use `UiInputOtp` for segmented OTP/PIN entry; `length` sets box count (default 6)
@@ -146,8 +151,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Button groups**
 - Use `UiButtonToggleGroup` for mutually exclusive options
-- Similar to radio buttons but button-styled
-- Supports single or multiple selection
+- Similar to radio buttons but button-styled (a `radiogroup`; single selection only)
+- For several selected values use `UiChipGroup multiple`
 
 **Action menus**
 - Use `UiButtonMenu` when multiple actions available
@@ -157,7 +162,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 **Buttons with tooltips**
 - Use `UiButtonTooltip` for actions needing explanation
 - Combines button functionality with helper text
-- Set `tooltipPlacement` for positioning
+- Set `placement` for the tooltip's position
 - Use `UiTooltip` to add a tooltip to any non-button/link trigger (avatar, icon, custom control); use `UiButtonTooltip`/`UiLinkTooltip` when the trigger is a plain button or link
 
 ## Feedback & Status
@@ -231,7 +236,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Collapsible sections**
 - Use `UiAccordion` for single collapsible section
-- Use `UiAccordionGroup` when only one should be open
+- Use `UiAccordionGroup` to stack accordions; give them the same `name` so only one is open at a time
 - Set `icon` for a leading Material Symbols icon before the title
 - Set `size="sm"` for compact lists; `variant="border-block"` + `shape="square"` for flush FAQ-style lists; `variant="borderless"` for a flat look
 - Good for FAQs, settings sections
@@ -259,6 +264,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - 2-5 options, visible → `UiInputRadio`
 - 6+ options → `UiInputSelect` (native, best on phones)
 - Long list to search, grouped options or rich rows (avatars, descriptions) → `UiInputCombobox`
+- Options fetched from a server as the user types → `UiInputCombobox remote` (add `free-text` to also accept new values)
+- A date or a time slot → `UiInputDate`
 - Button-style toggle → `UiButtonToggleGroup`
 - Visual options (tabs) → `UiTabs` or `UiSegmentedControls`
 - Filter-style pills (single or multi-select) → `UiChipGroup`
@@ -288,7 +295,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Form with validation:**
 - Multiple `UiInputText`, `UiInputSelect`, etc.
-- Each with `:error` prop for validation messages
+- Each with `:error-messages` for validation messages
 - Submit with `UiButton` variant="filled"
 
 **Modal with form:**
@@ -332,4 +339,6 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - `v-select` → `UiInputSelect`
 - `v-autocomplete` / PrimeVue `Select` with `filter` → `UiInputCombobox`
 - `v-select multiple` / PrimeVue `MultiSelect` → `UiInputMultiSelect`
+- PrimeVue `AutoComplete` → `UiInputCombobox remote` (`multiple` → `UiInputMultiSelect remote`)
+- `v-date-picker` / PrimeVue `DatePicker` → `UiInputDate` (`inline` → `UiCalendar`)
 - `v-dialog` → `UiModal`

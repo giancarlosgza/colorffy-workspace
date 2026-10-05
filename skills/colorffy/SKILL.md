@@ -44,7 +44,7 @@ Complete framework for building Vue 3 and Nuxt 3 applications with Colorffy UI (
 
 ```bash
 npm install @colorffy/ui @colorffy/css
-npm install @vueuse/components floating-vue
+npm install @vueuse/core @vueuse/components floating-vue
 ```
 
 ```typescript
@@ -58,17 +58,14 @@ app.use(ColorffyUI)
 app.mount('#app')
 ```
 
-### Nuxt 3
+### Nuxt 3 / 4
 
 ```typescript
-// nuxt.config.ts
+// nuxt.config.ts: the module registers every Ui* component and auto-imports the composables, no plugin needed
 export default defineNuxtConfig({
-  css: ['@colorffy/css']
-})
-
-// plugins/colorffy-ui.ts
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(ColorffyUI)
+  css: ['@colorffy/css'],
+  modules: ['@colorffy/ui/nuxt'],
+  colorffyUI: { locale: 'es-SV', labels: 'es' } // optional
 })
 ```
 
@@ -167,10 +164,11 @@ const name = ref('')
 **Navigation:** UiNavbar (with UiNavbarBrand, UiNavbarTitle, UiNavbarToggle, UiNavbarCollapse, UiNavbarNav, UiNavbarLink, UiNavbarItem, UiNavbarAvatar, UiNavbarMobileMenu), UiTabs, UiNavigationBar, UiSegmentedControls, UiBreadcrumb, UiPagination, UiPopoverMenu
 **Sidebar:** UiSidebar (`#header` / `#body` / `#footer` slots), UiSidebarGroup, UiSidebarLink, UiSidebarText, UiSidebarDropdown
 **Buttons:** UiButton, UiButtonMenu, UiButtonMenuSubmenu, UiButtonToggleGroup, UiButtonTooltip
-**Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCombobox, UiInputMultiSelect, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile, UiInputPassword, UiInputSearch, UiInputTags, UiInputOtp, UiInputColorPicker, UiInputPhoneNumber
+**Forms:** UiInputText, UiInputTextarea, UiInputSelect, UiInputCombobox, UiInputMultiSelect, UiInputDate, UiInputCheck, UiInputRadio, UiInputRange, UiInputFile, UiInputPassword, UiInputSearch, UiInputTags, UiInputOtp, UiInputColorPicker, UiInputPhoneNumber
 **Dialogs:** UiModal, UiConfirmModal
 **Feedback:** UiAlert, UiAlertToast, UiLoading, UiEmpty
-**Data:** UiDatatable, UiListGroup, UiAccordion
+**Data:** UiDatatable, UiListGroup, UiAccordion, UiCalendar, UiStepper, UiTimeline
+**Config:** UiConfigProvider (locale and labels for a subtree)
 **Media:** UiAvatar, UiIconMaterial
 
 **[See complete component list →](references/components.md)**
@@ -190,7 +188,7 @@ const name = ref('')
 
 Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values. Every public token is `--cffy-*`; never write an unprefixed Colorffy name, and never set a private `--_*` variable (set the component's `--cffy-<component>-<property>` hook instead).
 
-- **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--cffy-space-unit` (override it for runtime density)
+- **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--cffy-space-unit` (override it on `:root` for runtime density; on a wrapper it does nothing)
 - **Font sizes:** `var(--cffy-fs-4xs…5xl)` + `var(--cffy-fs-{step}--line-height)` companions
 - **Widths:** `var(--cffy-container-3xs…7xl)` (16rem … 80rem), also as `max-w-{size}` utilities
 - **Colors:** `--cffy-<color>-a10` for a solid fill with `--cffy-on-<color>` text; `--cffy-<color>-container` for a tinted surface with `--cffy-on-<color>-container` text
@@ -204,7 +202,7 @@ Custom CSS written alongside Colorffy should consume the design tokens instead o
 1. **Deprecations removed:** ordinal font sizes (`--fs-100`, `.fs-500`, …) → the t-shirt scale (`--cffy-fs-4xl`, `.fs-lg`; the classes also set the paired line-height). `$space-1/2/3` → `var(--cffy-space-16/32/48)`. The `$primary` … `$muted`, `$primary-colors` and `$font-*` SCSS variables are gone → set the `--cffy-color-brand-*` / `--cffy-font-*` tokens.
 2. **Namespace:** `--theme-*` swapped `theme-` for `--cffy-` (`--theme-primary-a10` → `--cffy-primary-a10`); every other public name gained the prefix (`--space-16` → `--cffy-space-16`, `--card-bg-color` → `--cffy-card-bg-color`). `--theme-nav-drawer-width` → `--cffy-sidebar-width`. Private `--_*` variables were renamed after their hooks, so overrides of old privates silently stop applying: set the public hook. The PrimeVue skin (`_prime.scss`, `--p-*`) is gone: move to `UiInputCombobox` / `UiInputMultiSelect` / `UiInputDate`, or copy the partial from `@colorffy/css@2.8`.
 3. **Tonal colors:** text on a tinted surface reads `--cffy-on-<color>-container`, not `a90` (now the darkest ramp step in both modes). `--cffy-on-<color>-inverse` → `--cffy-on-background`. SCSS `btn-tonal()` / `container-tonal()` take the container token instead of an `$isDark` flag.
-4. **Removed component API:** `UiPopoverMenu` `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` (→ `UiPopoverMenuUser` in `#header`), `#body-extra` and the default slot (→ `#body`); `UiSidebarHeader` / `Body` / `Footer` and `UiSidebar`'s default slot (→ `#header` / `#body` / `#footer`, with `header-class` / `body-class` / `footer-class`); `UiEmpty` `#button` (→ `#action`); `UiInputFile` `large` (→ `size="lg"`); `BaseSkeleton` `isThumbnail` (→ `variant="thumbnail"`); `ISegmentedTab.position`; `UiButtonToggleGroup` `groupLabel` (→ `ariaLabel`); `UiDatatable` `skeletonCols` / `skeletonColExpanded` / `isExpanded` (the skeleton matches the visible columns).
+4. **Removed component API:** `UiPopoverMenu` `user` / `avatarUrl` / `avatarCustomClass` / `subtitle` (→ `UiPopoverMenuUser` in `#header`), `#body-extra` and the default slot (→ `#body`); `UiSidebarHeader` / `Body` / `Footer` and `UiSidebar`'s default slot (→ `#header` / `#body` / `#footer`, with `header-class` / `body-class` / `footer-class`); `UiEmpty` `#button` (→ `#action`); `UiInputFile` `large` (→ `size="lg"`); `BaseSkeleton` `isThumbnail` (→ `variant="thumbnail"`); `ISegmentedTab.position`; `UiButtonToggleGroup` `groupLabel` (→ `ariaLabel`); `UiModal` `isHeadless` (→ `mode="headless"`); `UiDatatable` `skeletonCols` / `skeletonColExpanded` / `isExpanded` (the skeleton matches the visible columns).
 5. **Events:** no `on` prefix — `@click`, `@update`, `@close` (dialogs), `@option-click`. Tabs and segmented controls use `v-model:active-tab`, the stepper `v-model:active-step`.
 6. **ids:** the `id` prop renders unchanged on the main element or field (2.x wrote `button-<id>`, `<id>-input-text`, …); the color picker's text field is `<id>-text`.
 

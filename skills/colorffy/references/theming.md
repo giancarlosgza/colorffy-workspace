@@ -44,6 +44,8 @@ Theme colors are CSS tokens. Each brand color has a light-mode (`-500`) and dark
 
 Text colors follow automatically: each `--cffy-on-<name>` picks black or white from the lightness of the solid fill `--cffy-<name>-a10` (whichever contrasts more), and `--cffy-on-<name>-container` is mixed from the base. Set `--cffy-on-<name>` only to force a value. Browsers without relative color syntax (and Safari 16.4–17, which implements an older draft) keep fixed fallback values.
 
+Default dark tones are light tints of each brand color; `--cffy-color-brand-danger-50` is `oklch(80% 0.11 20)` (since 3.0, was a near-white pink) so error text and borders read red on dark surfaces.
+
 `--cffy-<name>-inverse` is the color on an inverse surface (toasts, snackbars, tooltips: dark in light mode, light in dark mode), kept readable for any brand color; snackbars use it for their icons and point `--cffy-primary-base` / `--cffy-on-background` at the inverse tones inside.
 
 `--cffy-<name>-container` is the tinted surface for that color: `a10` mixed toward the background by `--cffy-tonal-dark-intensity` (`80%` in light mode, `58%` in dark mode). Lower it for stronger tints; the mix runs in `oklab`.
@@ -181,7 +183,7 @@ $fw-800: 800; // Extrabold
 ```
 
 ### Shape, Weight & Motion Tokens (CSS Custom Properties)
-Components read these `:root` tokens, so they can be overridden at runtime (globally or per subtree) without recompiling. The SCSS variables above set their defaults.
+Components read these `:root` tokens, so they can be overridden at runtime without recompiling. Weight, border width, easing and focus ring also work on a wrapper; the radius steps, `--cffy-duration-unit` and the brand tokens feed values computed on `:root`, so set those on `:root` (reshape a region through the shape roles instead). The SCSS variables above set their defaults.
 
 - Radius: `--cffy-radius-none` (0) · `--cffy-radius-sm` (6px) · `--cffy-radius-md` (8px) · `--cffy-radius-lg` (12px) · `--cffy-radius-xl` (25px) · `--cffy-radius-full` (9999px)
 - Shape roles (what components read; set these to reshape the whole UI): `--cffy-shape-container` (`--cffy-radius-lg`: cards, pane content, dialogs, popovers, popover menus, dropdowns, listboxes, alerts, accordions, list groups) · `--cffy-shape-field` (`--cffy-radius-md`: text fields, selects, tags, input groups, color field, file drop zone; checkboxes half, max `--cffy-radius-sm`) · `--cffy-shape-control` (`--cffy-radius-md`: buttons, chips, toggle buttons, sidebar items; tab pills 1.5×, FAB 2×). Nested shapes derive from them (menu items half the panel, grouped list/accordion inner corners ≤ container); textarea, file drop zone and toggle tiles are capped at the container radius; mobile sheets use 2× container on top corners. Badges, avatars, pagination and segmented controls stay `--cffy-radius-full`. Presets: Sharp = all three `0`; Pill = container `--cffy-radius-xl`, field and control `--cffy-radius-full`. A component hook (`--cffy-card-radius`) still overrides its role. SCSS: `$shape-container` / `$shape-field` / `$shape-control` set the defaults; `$card-border-radius`, `$dialog-border-radius`, `$form-border-radius`, `$button-border-radius` follow their role unless set, and a component set to a different value is compiled in and no longer follows the role at runtime
@@ -221,12 +223,14 @@ Components expose public CSS variables named `--cffy-<component>-<property>`. Se
 - **Pagination** (`.pagination-nav`, `UiPagination`): `--cffy-pagination-gap`, `-radius`, `-current-bg-color`, `-current-color`, `-status-color` (the page buttons are `.btn`, so size and hover come from the button)
 - **Stepper** (`.stepper`, `UiStepper`): `--cffy-stepper-indicator-size`, `-indicator-radius`, `-indicator-bg-color`, `-indicator-color`, `-indicator-font-size`, `-indicator-icon-size`, `-current-indicator-bg-color`, `-current-indicator-color`, `-completed-indicator-bg-color`, `-completed-indicator-color`, `-connector-thickness`, `-connector-color`, `-completed-connector-color`, `-label-color`, `-current-label-color`, `-completed-label-color`, `-label-font-size`, `-label-font-weight`, `-label-max-width`, `-description-color`, `-description-font-size`, `-gap`, `-easing`, `-duration`
 - **Timeline** (`.timeline`, `UiTimeline`): `--cffy-timeline-gap`, `-item-spacing`, `-connector-thickness`, `-connector-color`, `-dot-size`, `-dot-color`, `-icon-bg-color`, `-icon-color`, `-icon-size`, `-icon-padding`, `-icon-radius`, `-image-size`, `-image-radius`, `-title-font-size`, `-title-font-weight`, `-text-font-size`, `-text-color`, `-time-color`
-- **Table** (`.table`, `UiDatatable`): `--cffy-table-bg-color`, `-color`, `-border-color`, `-border-width`, `-cell-padding-inline`, `-cell-padding-block`, `-font-size`, `-radius`, `-header-bg-color`, `-header-color`, `-header-font-size`, `-header-font-weight`, `-icon-color`, `-icon-size`, `-selected-bg-color`, `-striped-bg-color`, `-easing`, `-duration`, `-sticky-max-height`, `-sticky-column-bg-color`
+- **Table** (`.table`, `UiDatatable`): `--cffy-table-bg-color`, `-color`, `-border-color`, `-border-width`, `-cell-padding-inline`, `-cell-padding-block`, `-font-size`, `-radius`, `-header-bg-color`, `-header-color`, `-header-font-size`, `-header-font-weight`, `-icon-color`, `-icon-size`, `-selected-bg-color`, `-striped-bg-color`, `-easing`, `-duration`, `-sticky-max-height`, `-sticky-column-bg-color`. `.table-responsive` hides its scrollbar (it still scrolls), a `.form-select` inside `.table` is at least as wide as its longest option, and `.table-caption` is the muted caption `UiDatatable` shows below the scroll area
 - **Inputs** (`.form-control`, `.form-select`, `.form-color-group`, `UiInputText`, …): `--cffy-input-height`, `-padding-inline`, `-padding-block`, `-radius`, `-bg-color`, `-color`, `-border-width`, `-border-color`, `-font-size`, `-shadow`, `-placeholder-color`, `-filled-bg-color`, `-hover-border-color`, `-focus-bg-color`, `-focus-border-color`, `-focus-ring-color`, `-invalid-color`, `-invalid-ring-color`, `-easing`, `-duration`, `-label-font-size`, `-label-font-weight`, `-label-gap`; `--cffy-form-group-spacing`; range `--cffy-input-range-track-color`, `-fill-color`, `-track-size`, `-radius`, `-thumb-height`, `-thumb-width`, `-thumb-ring-color`, `-easing`, `-duration`; file dropbox `--cffy-input-file-bg-color`, `-color`, `-border-width`, `-border-color`, `-radius`, `-height`, `-font-size`, `-easing`, `-duration`
 - **Checkbox, switch, radio** (`.form-check`, `UiInputCheck`, `UiInputRadio`): `--cffy-input-check-size`, `-gap`, `-spacing`, `-bg-color`, `-border-color`, `-border-width`, `-checked-color`, `-radius`, `-easing`, `-duration`; `--cffy-input-switch-bg-color`, `-border-color`, `-thumb-color`, `-checked-thumb-color`, `-checked-color`
 - **Input prefix/suffix** (`.input-group`): follows `--cffy-input-radius`, `--cffy-input-border-width`, `--cffy-input-border-color`, `--cffy-input-bg-color`; own `--cffy-input-group-bg-color`, `-color`, `-padding-inline`, `-font-size`, `-icon-size`; `.input-group-inline` puts the adornments inside the field
 - **Tags** (`.form-tags`, `UiInputTags`): reads the `--cffy-input-*` variables; own `--cffy-input-tags-gap`
-- **Listbox** (`.listbox-popup`, `.listbox-option`, the list of `UiInputCombobox` and `UiInputMultiSelect`): `--cffy-listbox-bg-color`, `-color`, `-border-color`, `-padding`, `-shadow`, `-radius`, `-max-height`, `-offset`, `-option-padding-block`, `-option-padding-inline`, `-option-radius`, `-option-font-size`, `-selected-bg-color`, `-selected-color`, `-group-color`, `-easing`, `-duration` (the highlighted row uses the shared state layer)
+- **Listbox** (`.listbox-popup`, `.listbox-option`, the list of `UiInputCombobox` and `UiInputMultiSelect`): `--cffy-listbox-bg-color`, `-color`, `-border-color`, `-padding`, `-shadow`, `-radius`, `-max-height`, `-offset`, `-option-padding-block`, `-option-padding-inline`, `-option-radius`, `-option-font-size`, `-selected-bg-color`, `-selected-color`, `-group-color`, `-create-color` (the multi-select's "Add “…”" row, default `--cffy-primary-a10`), `-easing`, `-duration` (the highlighted row uses the shared state layer)
+- **Calendar** (`.calendar`, `UiCalendar` and the date popup's grid): `--cffy-calendar-color`, `-muted-color`, `-font-size`, `-title-font-size`, `-title-font-weight`, `-gap`, `-day-size` (`2.25rem`), `-day-radius` (`--cffy-shape-control`), `-selected-bg-color`, `-selected-color` (also the picked time slot), `-range-bg-color`, `-range-color`, `-today-color`, `-easing`, `-duration`
+- **Date popup** (`.calendar-popup`, `UiInputDate`): `--cffy-calendar-popup-bg-color`, `-color`, `-border-color`, `-radius` (`--cffy-shape-container`), `-shadow`, `-padding`, `-offset`, `-easing`, `-duration`; `--cffy-calendar-preset-selected-bg-color`; time slots are `.calendar-times` / `.calendar-time` (chip row below 600px)
 - **OTP** (`.form-otp`, `UiInputOtp`): `--cffy-input-otp-gap`, `-font-size`, `-font-weight`; boxes follow `--cffy-input-height` and the other `--cffy-input-*` variables
 - **Divider** (`.divider`, `UiDivider`): `--cffy-divider-thickness`, `-color`, `-spacing`, `-inset`, `-text-gap`, `-text-color`, `-text-font-size`
 - **Carousel** (`.carousel` scroll buttons, `.carousel-btn`): `--cffy-carousel-btn-size`, `-bg-color`, `-color`, `-shadow`, `-radius`
@@ -252,7 +256,7 @@ All component spacing uses the `--cffy-space-*` tokens on `:root` — the number
 
 `--cffy-space-4` · `--cffy-space-6` · `--cffy-space-8` · `--cffy-space-12` · `--cffy-space-14` · `--cffy-space-16` · `--cffy-space-20` · `--cffy-space-24` · `--cffy-space-32` · `--cffy-space-48`
 
-Runtime density: override `--cffy-space-unit` on `:root` or any subtree to scale all component spacing proportionally (e.g. `--cffy-space-unit: .2rem` = 80% density). When writing custom CSS alongside Colorffy, use `var(--cffy-space-*)` instead of hardcoded rem/px spacing.
+Runtime density: override `--cffy-space-unit` on `:root` to scale all component spacing proportionally (e.g. `--cffy-space-unit: .2rem` = 80% density). The steps are computed on `:root`, so setting the unit on a wrapper does nothing; for one region, redeclare the steps it uses on the wrapper (`--cffy-space-8: calc(.2rem * 2)`). When writing custom CSS alongside Colorffy, use `var(--cffy-space-*)` instead of hardcoded rem/px spacing.
 
 ### Utility Class Scale
 
@@ -406,6 +410,41 @@ Set a component's public hooks (listed under [Component CSS Hooks](#component-cs
 ```
 
 Button colors come from the theme tokens (`--cffy-<color>-a10`, `--cffy-on-<color>`, `--cffy-<color>-container`), so recolor a variant by setting those on a wrapper rather than a per-variant variable.
+
+## Theme Presets
+
+A preset is a named set of token overrides (brand + shape, optionally type, space, motion, depth) scoped by an attribute. No rebuild, no props:
+
+```css
+:root[data-theme="luxury"] {
+  --cffy-color-brand-primary-500: #111111;  /* light mode */
+  --cffy-color-brand-primary-50: #e8d5a8;   /* dark mode */
+  --cffy-shape-container: var(--cffy-radius-none);
+  --cffy-shape-field: var(--cffy-radius-none);
+  --cffy-shape-control: var(--cffy-radius-none);
+  --cffy-font-primary: 'Playfair Display', Georgia, serif;
+}
+```
+
+Apply with `<html data-theme="luxury">`; switch at runtime with `document.documentElement.dataset.theme = 'playful'`. Brand, space (`--cffy-space-unit`), motion (`--cffy-duration-unit`) and depth (`--cffy-shadow-intensity`) tokens feed values computed on the root element, so they only work there. On a wrapper only directly-read tokens apply (shape roles, fonts, state layer, component hooks).
+
+**Tokens a preset sets:**
+- Brand: `--cffy-color-brand-<color>-500` / `-50` for primary, secondary, accent, success, warning, danger, info, muted. Ramps `a10`–`a90`, containers, `--cffy-on-<color>` (auto black/white) and components derive from them; primary also tints surfaces and the state layer
+- Shape: `--cffy-shape-container` / `-field` / `-control` (values from `--cffy-radius-none|sm|md|lg|xl|full`)
+- Type: `--cffy-font-primary` (headings), `--cffy-font-secondary` (text), `--cffy-fs-base` (+ `--cffy-fs-base--line-height`), `--cffy-fw-*`
+- Space: `--cffy-space-unit` · Motion: `--cffy-duration-unit`, `--cffy-ease-*` · Depth: `--cffy-shadow-intensity`, `--cffy-shadow-xs`…`-xl`, `--cffy-border-width-sm` · States: `--cffy-state-layer-color`, `--cffy-state-hover-opacity`, `--cffy-state-pressed-opacity` · Tint: `--cffy-tonal-light-intensity`, `--cffy-tonal-dark-intensity`
+
+**Rules:**
+1. Set raw/role tokens, never derived ones (`--cffy-primary-a10`, `--cffy-on-*`) or privates (`--_*`)
+2. Design both tones: `-500` for light, `-50` a light desaturated version for dark surfaces (~80–90% oklch lightness)
+3. Check text contrast on containers and warning/danger in both modes (4.5:1)
+4. Container role ≥ field/control roles; tall fields/controls are capped at the container radius automatically
+5. Exceptions via one component hook (`--cffy-card-radius`), not a pile of hooks
+6. Load web fonts before setting font tokens; keep fallbacks
+7. Keep presets to ~4–10 tokens; avoid a theme flash by setting the attribute server-side or in an inline script
+8. Test light/dark, focus, disabled, and phone width (sheets)
+
+**Playground presets** (brand light / dark / shape): Orbit `#004617`/`#d4f5de` default · Luxury `#111111`/`#e8d5a8` sharp · Playful `#2f6bff`/`#a9c1ff` pill · Enterprise `#1e3a8a`/`#c3d3f7` default · Wellness `#4f7a5c`/`#c6e3cd` soft · Studio `#6d28d9`/`#dac8ff` subtle. Shapes as container/field/control radius: sharp none/none/none, subtle sm/md/sm, default lg/md/md, soft xl/lg/lg, pill xl/full/full.
 
 ## Best Practices
 
