@@ -253,7 +253,7 @@ Versatile alert component with multiple types and variants.
 - `size` ('sm', optional) - Compact padding and icon
 - `critical` (boolean, default: false) - High-priority styling
 - `rounded` (boolean, default: false) - Fully rounded shape
-- `placement` ('top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right', default: 'bottom') - Snackbar position; only used when `type="snackbar"`
+- `placement` ('top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right', default: 'bottom') - Snackbar position; only used when `type="snackbar"`. Corner snackbars grow with their text up to `--cffy-container-lg`; at 576px and narrower every placement spans the screen, centered
 - `dismissible` (boolean, default: false) - Show close button; clicking it hides the alert and emits `dismiss`
 - `duration` (number, optional) - Auto-hide delay in ms for non-snackbar types; emits `dismiss` when the timer fires (ignored when `type="snackbar"` — use `UiAlertToast`/`useToast` instead)
 - `closeLabel` (string, default: 'Close') - Accessible label for the close button
