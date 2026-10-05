@@ -1221,7 +1221,9 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 <UiInputColorPicker id="brand" v-model="color" label="Brand color" />
 ```
 
-**Props:** `modelValue` (string | null, hex color), `maxlength` (number, default: 7) - length cap of the hex text field, `size` ('sm' | 'lg'), plus the base props `id` (on the swatch; the hex text field gets `<id>-text`), `label`, `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`, `customClass` (on both fields)
+**Props:** `modelValue` (string | null, hex color), `maxlength` (number, default: 7) - length cap of the hex text field, `size` ('sm' | 'lg'), `variant` ('filled' | 'outline' | 'transparent') and `rounded` (style the whole `.form-color-group`), plus the base props `id` (on the swatch; the hex text field gets `<id>-text`), `label`, `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`, `customClass` (on both fields)
+
+The group carries the border, shadow, focus ring and invalid state; the swatch rounds to half the field radius (`--cffy-shape-field`, or `--cffy-input-radius`).
 
 **Events:** `update:modelValue`, `update` (on commit: swatch change, or text field change)
 

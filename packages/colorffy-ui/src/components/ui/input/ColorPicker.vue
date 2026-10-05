@@ -46,7 +46,9 @@ const labelClasses = computed(() => [
 ])
 const colorGroupClasses = computed(() => [
   'form-color-group',
-  props.size ? `form-${props.size}` : ''
+  props.size ? `form-${props.size}` : '',
+  props.variant ? `form-${props.variant}` : '',
+  { 'form-rounded': props.rounded }
 ])
 const colorClasses = computed(() => {
   const classes = ['form-color']

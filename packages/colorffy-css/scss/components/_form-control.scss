@@ -368,14 +368,18 @@
       border-radius: var(--_input-color-group-radius);
       background-color: var(--_input-color-group-bg-color);
       border: var(--_input-color-group-border-width) solid var(--_input-color-group-border-color);
+      box-shadow: var(--cffy-input-shadow, var(--cffy-shadow-xs));
 
       .form-control {
         --_input-bg-color: transparent;
         --_input-border-color: transparent;
+
+        min-width: 0;
+        box-shadow: none;
       }
 
       .form-color {
-        --_input-radius: var(--cffy-radius-md);
+        --_input-radius: var(--_input-color-group-radius);
         --_input-bg-color: transparent;
         --_input-color: var(--cffy-on-background);
         --_input-border-color: transparent;
@@ -385,6 +389,7 @@
         --_input-swatch-padding: var(--cffy-space-6);
 
         display: inline-block;
+        flex-shrink: 0;
         border: var(--_input-border-width) solid var(--_input-border-color);
         border-radius: var(--_input-radius);
         background-color: var(--_input-bg-color);
@@ -404,10 +409,32 @@
         }
       }
 
-      // Add focus styles to the form group when the form control is focused
+      // Variants
+      &:is(.form-filled) {
+        --_input-color-group-bg-color: var(--cffy-input-filled-bg-color, var(--cffy-surface-container-high));
+      }
+
+      &:is(.form-outline) {
+        --_input-color-group-border-width: #{v.$form-border * 2};
+      }
+
+      &:is(.form-rounded) {
+        --_input-color-group-radius: var(--cffy-radius-full);
+      }
+
+      &:is(.form-transparent) {
+        --_input-color-group-bg-color: transparent;
+        --_input-color-group-border-color: transparent;
+
+        box-shadow: none;
+      }
+
+      // Focus
       &:is(:focus-within) {
         --_input-color-group-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
         --_input-color-group-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
+
+        box-shadow: 0 0 0 .15rem var(--cffy-input-focus-ring-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 25%, transparent));
       }
 
       // Sizing variants
@@ -464,8 +491,22 @@
         box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
       }
 
-      // Inputs with a prefix or suffix: the message follows the group
-      .input-group + .invalid-feedback {
+      .form-color-group {
+        --_input-color-group-border-color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
+
+        &:is(:focus-within) {
+          box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
+        }
+
+        .form-control {
+          --_input-border-color: transparent;
+
+          box-shadow: none;
+        }
+      }
+
+      // Grouped inputs: the message follows the group
+      :is(.input-group, .form-color-group) + .invalid-feedback {
         display: block;
         margin-top: var(--cffy-space-6);
         font-size: var(--cffy-fs-3xs);
