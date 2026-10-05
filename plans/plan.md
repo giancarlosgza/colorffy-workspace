@@ -194,3 +194,11 @@ components and the playground (recorded in `CLAUDE.md`). The docs gained a
 theme presets guide (customization page and the skill's theming reference),
 and the "per subtree" claims for `--cffy-space-unit` and
 `--cffy-duration-unit` were corrected: derived tokens only change on `:root`.
+A shape sweep under the Sharp and Pill presets then fixed connected button
+groups (inner corners capped at a quarter of the height, square ends at a `0`
+control role), the color picker (one field: the group carries the shadow, focus
+ring and invalid state, the swatch rounds to half the field radius), the menu
+button's default "menu" tooltip (now opt-in, with a `buttonMenu.ariaLabel`
+name for icon-only menus), and every part that still used a fixed radius step
+(navbar and tab links, tables, skeletons, list and timeline icons, icon tiles,
+progress bars, sheets and the drawer now follow the shape roles).
