@@ -167,26 +167,6 @@ $indicator-max-items: 8;
   // ==========================================================================
   // MEDIA QUERIES & RESPONSIVE BEHAVIOR
   // ==========================================================================
-  @media (prefers-reduced-motion) {
-    .navigation-bar {
-      .navigation-bar-item {
-        .navigation-bar-link {
-          .indicator {
-            scale: 1;
-            transition: opacity var(--cffy-duration-300) var(--_navigation-bar-easing-out);
-          }
-
-          &.nuxt-link-exact-active {
-            .indicator {
-              scale: 1;
-              transition: opacity var(--cffy-duration-600) var(--_navigation-bar-easing);
-            }
-          }
-        }
-      }
-    }
-  }
-
   // Breakpoints
   @include m.media-query(1024) {
     .navigation-bar {
