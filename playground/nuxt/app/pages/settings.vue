@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { IButtonToggleOption, IChipOption, IDialogDisplay, ITabItem } from '@colorffy/ui'
+import { useColorffyConfig } from '@colorffy/ui'
+import { en } from '@colorffy/ui/locales/en'
+import { es } from '@colorffy/ui/locales/es'
 
 definePageMeta({ pageTitle: 'Settings' })
 
@@ -129,6 +132,17 @@ const themeOptions = [
   { label: 'Light', value: 'light' },
   { label: 'Dark', value: 'dark' }
 ]
+const languageOptions = [
+  { label: 'English', value: 'en' },
+  { label: 'Español', value: 'es' }
+]
+const colorffy = useColorffyConfig()
+const language = useState<string>('orbit-language', () => 'en')
+
+watch(language, (code) => {
+  colorffy.locale = code === 'es' ? 'es-SV' : 'en-US'
+  colorffy.labels = code === 'es' ? es : en
+})
 
 const brandColor = useState<string | null>('orbit-brand-color', () => DEFAULT_BRAND)
 const brandPresets = [
@@ -757,6 +771,31 @@ onBeforeUnmount(() => {
                     />
                   </template>
                 </ClientOnly>
+              </div>
+            </div>
+
+            <UiDivider custom-class="my-4" />
+
+            <div class="row align-items-center">
+              <div class="col-12 col-md-5">
+                <p class="fw-700 mb-1">
+                  Component language
+                </p>
+                <p class="caption text-muted mb-3 mb-md-0">
+                  Dates, field hints and button names in Colorffy components. Orbit's own text stays in English.
+                </p>
+              </div>
+              <div class="col-12 col-md-7">
+                <UiInputRadio
+                  id="language"
+                  v-model="language"
+                  label="Component language"
+                  hide-label
+                  :options="languageOptions"
+                  option-label="label"
+                  option-value="value"
+                  class="mb-0"
+                />
               </div>
             </div>
 
