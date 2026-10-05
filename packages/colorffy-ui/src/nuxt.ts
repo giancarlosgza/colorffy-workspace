@@ -23,7 +23,8 @@ export default defineNuxtModule({
     addImports([
       { name: 'useToast', from: '@colorffy/ui' },
       { name: 'useTextUtils', from: '@colorffy/ui' },
-      { name: 'useDateUtils', from: '@colorffy/ui' }
+      { name: 'useDateUtils', from: '@colorffy/ui' },
+      { name: 'datePresets', from: '@colorffy/ui' }
     ])
   }
 }) satisfies NuxtModule

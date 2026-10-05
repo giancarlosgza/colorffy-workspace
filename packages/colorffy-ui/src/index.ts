@@ -2,6 +2,7 @@
 export * from './components'
 
 // Composables
+export { datePresets } from './composables/useCalendarDates'
 export { useDateUtils } from './composables/useDateUtils'
 export { useTextUtils } from './composables/useTextUtils'
 export { useToast } from './composables/useToast'
@@ -17,6 +18,7 @@ export type * from './types/avatar'
 export type * from './types/badge'
 export type * from './types/breadcrumb'
 export type * from './types/button'
+export type * from './types/calendar'
 export type * from './types/card'
 export type * from './types/chip'
 export type * from './types/datatable'

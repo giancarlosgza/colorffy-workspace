@@ -16,7 +16,11 @@ function supportsAnchoring(): boolean {
  * positioning place it from the stylesheet (`isAnchored`); the rest get fixed
  * coordinates from `place()`, kept in sync on scroll and resize.
  */
-export function useAnchoredPopup(anchor: Ref<HTMLElement | null>, popup: Ref<HTMLElement | null>) {
+export function useAnchoredPopup(
+  anchor: Ref<HTMLElement | null>,
+  popup: Ref<HTMLElement | null>,
+  options: { shouldPlace?: () => boolean } = {}
+) {
   const isOpen = ref(false)
   const isAnchored = ref(true)
   const anchorName = `--cffy-anchor-${useId()}`
@@ -30,8 +34,15 @@ export function useAnchoredPopup(anchor: Ref<HTMLElement | null>, popup: Ref<HTM
     if (!field || !list)
       return
 
-    const rect = field.getBoundingClientRect()
     const style = list.style
+    // A popup the stylesheet places itself, such as a bottom sheet, drops the script's coordinates
+    if (options.shouldPlace && !options.shouldPlace()) {
+      for (const property of ['top', 'bottom', 'left', 'right', 'minWidth', 'maxHeight'] as const)
+        style[property] = ''
+      return
+    }
+
+    const rect = field.getBoundingClientRect()
     style.minWidth = `${rect.width}px`
     style.maxHeight = ''
 

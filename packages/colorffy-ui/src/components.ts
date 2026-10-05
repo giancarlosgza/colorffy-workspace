@@ -40,6 +40,9 @@ export { default as UiButtonMenuText } from './components/ui/button/ButtonMenuTe
 export { default as UiButtonToggleGroup } from './components/ui/button/ButtonToggleGroup.vue'
 export { default as UiButtonTooltip } from './components/ui/button/ButtonTooltip.vue'
 
+// Components - Calendar
+export { default as UiCalendar } from './components/ui/calendar/Calendar.vue'
+
 // Components - Card
 export { default as UiCard } from './components/ui/card/Card.vue'
 
@@ -70,6 +73,7 @@ export { default as UiAvatarGroup } from './components/ui/image/AvatarGroup.vue'
 export { default as UiInputCheck } from './components/ui/input/Check.vue'
 export { default as UiInputColorPicker } from './components/ui/input/ColorPicker.vue'
 export { default as UiInputCombobox } from './components/ui/input/Combobox.vue'
+export { default as UiInputDate } from './components/ui/input/Date.vue'
 export { default as UiInputFile } from './components/ui/input/File.vue'
 export { default as UiInputMultiSelect } from './components/ui/input/MultiSelect.vue'
 export { default as UiInputOtp } from './components/ui/input/Otp.vue'

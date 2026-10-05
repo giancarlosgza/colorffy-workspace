@@ -1,3 +1,4 @@
+import type { ICalendarLabels, IDatePreset, IDateRange } from '@/types/calendar'
 import type { IBaseInputProps } from '@/types/shared'
 
 /**
@@ -569,4 +570,200 @@ export interface IMultiSelectInputEmits {
    * field.
    */
   (e: 'remove', value: ComboboxValue): void
+}
+
+/**
+ * Text for the DateInput controls and its calendar. Pass only the entries you
+ * need to change.
+ */
+export interface IDateInputLabels extends ICalendarLabels {
+  /**
+   * Accessible name of the calendar button, and of the popup when there's no
+   * `label`.
+   * @default 'Choose date'
+   */
+  toggle: string
+
+  /**
+   * Accessible name of the clear button.
+   * @default 'Clear date'
+   */
+  clear: string
+
+  /**
+   * Text of the button that confirms the picked dates.
+   * @default 'Apply'
+   */
+  apply: string
+
+  /**
+   * Text of the button that discards the picked dates.
+   * @default 'Cancel'
+   */
+  cancel: string
+
+  /**
+   * Accessible name of the presets list.
+   * @default 'Presets'
+   */
+  presets: string
+
+  /**
+   * Text of the buttons that set the current date and time.
+   * @default 'Now'
+   */
+  now: string
+
+  /**
+   * Label of the time field under a single date.
+   * @default 'Time'
+   */
+  time: string
+
+  /**
+   * Label of the range's start fields.
+   * @default 'From'
+   */
+  from: string
+
+  /**
+   * Label of the range's end fields.
+   * @default 'To'
+   */
+  to: string
+
+  /**
+   * Accessible names of the range's date fields.
+   * @default 'Start date' / 'End date'
+   */
+  startDate: string
+  endDate: string
+
+  /**
+   * Accessible names of the range's time fields.
+   * @default 'Start time' / 'End time'
+   */
+  startTime: string
+  endTime: string
+}
+
+/**
+ * Interface props for the DateInput component.
+ */
+export interface IDateInputProps extends IBaseInputProps {
+  /**
+   * The date (`v-model`): a `Date` in `single` mode, `{ start, end }` in
+   * `range` mode. A range is only written once both ends are picked.
+   * @default null
+   */
+  modelValue?: Date | IDateRange | null
+
+  /**
+   * One date, or a range.
+   * @default 'single'
+   */
+  mode?: 'single' | 'range'
+
+  /**
+   * What opens the calendar: a text field that also accepts typed dates, or
+   * a button showing the value (or the matching preset's label).
+   * @default 'field'
+   */
+  trigger?: 'field' | 'button'
+
+  /**
+   * Months shown side by side in the popup. Defaults to 1 for a single date
+   * and 2 for a range.
+   * @default null
+   */
+  months?: number | null
+
+  /**
+   * Earliest selectable day. Earlier typed dates are rejected.
+   * @default null
+   */
+  min?: Date | null
+
+  /**
+   * Latest selectable day. Later typed dates are rejected.
+   * @default null
+   */
+  max?: Date | null
+
+  /**
+   * Returns `true` for days that can't be picked or typed.
+   * @default null
+   */
+  disabledDates?: ((date: Date) => boolean) | null
+
+  /**
+   * BCP 47 locale for the calendar, the displayed value and the order of
+   * typed dates. Defaults to the page's `lang`, then the browser's language.
+   * @default null
+   */
+  locale?: string | null
+
+  /**
+   * First day of the week, `0` (Sunday) to `6` (Saturday). Defaults to the
+   * locale's convention.
+   * @default null
+   */
+  weekStart?: number | null
+
+  /**
+   * `Intl.DateTimeFormat` options for the displayed value. Defaults to the
+   * locale's numeric date in the field (so it can be retyped) and a short
+   * month name on the button.
+   * @default null
+   */
+  format?: Intl.DateTimeFormatOptions | null
+
+  /**
+   * Shortcuts listed next to the calendar, such as "Last 7 days". Build them
+   * with the `datePresets` helpers or by hand.
+   * @default []
+   */
+  presets?: IDatePreset[]
+
+  /**
+   * Adds time fields: `true` or `'minutes'` for hours and minutes,
+   * `'seconds'` to include seconds. The field then shows and accepts a time
+   * after the date.
+   * @default false
+   */
+  time?: boolean | 'minutes' | 'seconds'
+
+  /**
+   * Minutes between the values the time fields' arrows step through.
+   * @default 1
+   */
+  minuteStep?: number
+
+  /**
+   * Holds the picked dates until Apply is pressed. Defaults to on with
+   * `time`, or for a range with presets, and off otherwise, where picking a
+   * date (or a range's end) closes the popup.
+   * @default null
+   */
+  confirm?: boolean | null
+
+  /**
+   * Shows a clear button in the field.
+   * @default false
+   */
+  clearable?: boolean
+
+  /**
+   * Overrides for the control text, the popup and the calendar.
+   * @default null
+   */
+  labels?: Partial<IDateInputLabels> | null
+}
+
+/**
+ * Interface emits for the DateInput component.
+ */
+export interface IDateInputEmits {
+  (e: 'update:modelValue', value: Date | IDateRange | null): void
+  (e: 'update', value: Date | IDateRange | null): void
 }
