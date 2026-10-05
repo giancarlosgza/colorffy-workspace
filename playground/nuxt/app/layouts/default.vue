@@ -252,7 +252,7 @@ onMounted(() => {
                       @click="colorMode.preference = theme.id"
                     >
                       <template #icon>
-                        <UiIconMaterial :icon-code="theme.icon" class="fs-sm" />
+                        <UiIconMaterial :icon-code="theme.icon" />
                       </template>
                     </UiButton>
                   </UiButtonGroup>

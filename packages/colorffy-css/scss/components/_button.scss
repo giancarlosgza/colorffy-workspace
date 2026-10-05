@@ -415,7 +415,7 @@
       &.btn-icon {
         --_btn-columns: 1fr;
         --_btn-gap: 0;
-        --_btn-radius: 100%;
+        --_btn-radius: min(50%, calc(#{f.shape(control, v.$button-border-radius)} * 1000));
 
         width: var(--_btn-height);
 

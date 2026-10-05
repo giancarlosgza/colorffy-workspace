@@ -46,7 +46,10 @@
 
       // Pill ends
       .btn {
-        --_btn-connected-radius: calc(var(--_btn-height) / 2);
+        --_btn-connected-radius: min(calc(var(--_btn-height) / 2), calc(#{f.shape(control, v.$button-border-radius)} * 1000));
+        --_btn-inner-radius: min(var(--_btn-radius), calc(var(--_btn-height) / 4));
+
+        border-radius: var(--_btn-inner-radius);
       }
 
       // Prevent circular icon buttons when grouped; they should match standard button shape
@@ -91,27 +94,27 @@
       &:is(.btn-group-vertical) {
         > :is(div:has(.v-popper), .v-popper) {
           & .btn {
-            border-radius: var(--_btn-radius);
+            border-radius: var(--_btn-inner-radius);
           }
 
           &:first-child .btn {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-inner-radius) var(--_btn-inner-radius);
           }
 
           &:last-child .btn {
-            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
+            border-radius: var(--_btn-inner-radius) var(--_btn-inner-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
 
         > .btn {
-          border-radius: var(--_btn-radius);
+          border-radius: var(--_btn-inner-radius);
 
           &:first-child {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-inner-radius) var(--_btn-inner-radius);
           }
 
           &:last-child {
-            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
+            border-radius: var(--_btn-inner-radius) var(--_btn-inner-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
       }

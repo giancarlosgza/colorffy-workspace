@@ -365,7 +365,7 @@ Primary button component with extensive customization.
 - `text` (string | null) - Button label
 - `id` (string | null) - Rendered unchanged on the element
 - `title` (string | null) - Native `title` attribute
-- `icon` (boolean, default: false) - Icon-only button (no label required)
+- `icon` (boolean, default: false) - Icon-only button (no label required); a circle, or a square when `--cffy-shape-control` is `0`
 - `iconVariant` ('shape-sm' | 'shape-md' | 'compact-sm' | 'compact') - Icon-button shape; used with `icon`
 - `iconTrailing` (boolean, default: false) - Places the `icon` slot after the label
 - `loading` (boolean, default: false) - Shows a spinner, sets `aria-busy` and blocks clicks
@@ -570,7 +570,7 @@ Groups multiple buttons (including UiButtonMenu / UiButtonTooltip) into one layo
 ```
 
 **Props:**
-- `connected` (boolean, default: false) - Small `0.25rem` gap; first/last buttons get pill-shaped outer corners
+- `connected` (boolean, default: false) - Small `0.25rem` gap; first/last buttons get pill-shaped outer corners (square when `--cffy-shape-control` is `0`); inner corners follow `--cffy-shape-control`, capped at a quarter of the button height so a pill shape keeps the group connected
 - `joined` (boolean, default: false) - Only with `connected`: removes the gap and squares the inner corners (`--_btn-radius: 0`); no effect on its own
 - `vertical` (boolean, default: false) - Stacks buttons vertically
 - `customClass` (string | null) - Custom CSS classes
