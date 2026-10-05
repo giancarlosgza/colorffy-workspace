@@ -159,7 +159,9 @@ Original notes:
 2. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
    a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
    Nuxt module's pack list.
-3. **Density modes (3.1)**: `data-density="compact | comfortable | spacious"`
+3. **Density modes — shipped in 3.0 (2026-10-05)**, with a `--cffy-density`
+   style-query enhancement; see [density-modes.md](density-modes.md).
+   Original summary: `data-density="compact | comfortable | spacious"`
    on `<html>` or any element. The spacing steps are re-declared on
    `[data-density]` so they recompute from the scope's `--cffy-space-unit`
    (a wrapper override alone does nothing, since the steps are computed on
