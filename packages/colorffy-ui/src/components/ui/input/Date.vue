@@ -4,7 +4,9 @@ import type { IDateInputEmits, IDateInputLabels, IDateInputProps } from '@/types
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
 import {
+  addDays,
   addMonths,
+  dayKey,
   endOfDay,
   isSameDay,
   numericDateFormat,
@@ -23,7 +25,7 @@ import UiCalendar from '../calendar/Calendar.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Interfaces */
-type DateValue = Date | IDateRange | null
+type DateValue = Date | IDateRange | Date[] | null
 type DateSlot = 'single' | 'start' | 'end'
 type RangeFormat = Intl.DateTimeFormat & { formatRange: (start: Date, end: Date) => string }
 
@@ -97,12 +99,13 @@ const calendarLabels = computed(() => ({
   rangeStart: text.value.rangeStart
 }))
 const isRange = computed(() => props.mode === 'range')
+const isMultiple = computed(() => props.mode === 'multiple')
 const isField = computed(() => props.trigger !== 'button')
-const hasTime = computed(() => !!props.time)
+const hasTime = computed(() => !!props.time && !isMultiple.value)
 const withSeconds = computed(() => props.time === 'seconds')
 const timeStep = computed(() => (withSeconds.value ? 1 : Math.max(1, Math.trunc(props.minuteStep) || 1) * 60))
 const monthCount = computed(() => props.months ?? (isRange.value ? 2 : 1))
-const useConfirm = computed(() => props.confirm ?? (hasTime.value || (isRange.value && props.presets.length > 0)))
+const useConfirm = computed(() => props.confirm ?? (hasTime.value || isMultiple.value || (isRange.value && props.presets.length > 0)))
 const showRangeFields = computed(() => isRange.value && (hasTime.value || !isField.value))
 const isLocked = computed(() => props.disabled || props.readonly)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
@@ -129,18 +132,26 @@ const fieldPattern = computed(() => {
     return pattern.value
   return `${pattern.value} ${withSeconds.value ? 'hh:mm:ss' : 'hh:mm'}`
 })
-const fieldPlaceholder = computed(() => props.placeholder ?? (isRange.value ? `${fieldPattern.value} – ${fieldPattern.value}` : fieldPattern.value))
+const fieldPlaceholder = computed(() => {
+  if (props.placeholder)
+    return props.placeholder
+  if (isMultiple.value)
+    return `${fieldPattern.value}, ${fieldPattern.value}`
+  return isRange.value ? `${fieldPattern.value} – ${fieldPattern.value}` : fieldPattern.value
+})
 const activePreset = computed(() => findPreset(model.value))
 const draftPreset = computed(() => findPreset(draft.value))
 const buttonText = computed(() => (activePreset.value && presetLabel(activePreset.value)) || valueText.value || props.placeholder || text.value.toggle)
 const draftComplete = computed(() => {
+  if (isMultiple.value)
+    return true
   if (!isRange.value)
     return draft.value instanceof Date
   const range = asRange(draft.value)
   return !!range?.start && !!range.end && range.start <= range.end
 })
 const draftSummary = computed(() => formatValue(draft.value, shortFormat.value, false))
-const showClear = computed(() => props.clearable && isField.value && !isLocked.value && (model.value !== null || inputText.value !== ''))
+const showClear = computed(() => props.clearable && isField.value && !isLocked.value && (hasValue(model.value) || inputText.value !== ''))
 const rangeSlots = computed(() => [
   { slot: 'start' as const, label: text.value.from, dateLabel: text.value.startDate, timeLabel: text.value.startTime },
   { slot: 'end' as const, label: text.value.to, dateLabel: text.value.endDate, timeLabel: text.value.endTime }
@@ -165,15 +176,26 @@ function presetLabel(preset: IDatePreset): string {
   return preset.key ? formatLabel(l10nPresets.value[preset.key], preset.params ?? {}) : ''
 }
 function asRange(value: DateValue): IDateRange | null {
-  return value && !(value instanceof Date) ? value : null
+  return value && !(value instanceof Date) && !Array.isArray(value) ? value : null
+}
+function hasValue(value: DateValue): boolean {
+  return Array.isArray(value) ? value.length > 0 : value !== null
+}
+function sortedDays(dates: Date[]): Date[] {
+  const byDay = new Map(dates.map(date => [dayKey(date), startOfDay(date)]))
+  return [...byDay.values()].sort((a, b) => a.getTime() - b.getTime())
 }
 function copyValue(value: DateValue): DateValue {
   if (value instanceof Date)
     return new Date(value)
+  if (Array.isArray(value))
+    return value.map(date => new Date(date))
   const range = asRange(value)
   return range ? { start: range.start ? new Date(range.start) : null, end: range.end ? new Date(range.end) : null } : null
 }
 function valuesEqual(a: DateValue, b: DateValue): boolean {
+  if (Array.isArray(a) || Array.isArray(b))
+    return Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((date, index) => isSameDay(date, b[index]!))
   if (a instanceof Date || b instanceof Date)
     return a instanceof Date && b instanceof Date && isSameDay(a, b)
   const first = asRange(a)
@@ -181,12 +203,22 @@ function valuesEqual(a: DateValue, b: DateValue): boolean {
   return !!first && !!second && isSameDay(first.start, second.start) && isSameDay(first.end, second.end)
 }
 function findPreset(value: DateValue): IDatePreset | null {
-  if (!value)
+  if (!hasValue(value))
     return null
   return props.presets.find(preset => valuesEqual(normalizePreset(preset), value)) ?? null
 }
 function normalizePreset(preset: IDatePreset): DateValue {
   const value = preset.value()
+  if (isMultiple.value) {
+    if (value instanceof Date)
+      return [startOfDay(value)]
+    const days: Date[] = []
+    for (let day = value.start && startOfDay(value.start); day && value.end && day <= value.end; day = addDays(day, 1)) {
+      if (isAllowed(day))
+        days.push(day)
+    }
+    return days
+  }
   if (!isRange.value) {
     const date = value instanceof Date ? value : value.start
     return date && isMidnight(date) ? keepTime(date, draftDate('single') ?? asDate(model.value), false) : date
@@ -198,6 +230,11 @@ function normalizePreset(preset: IDatePreset): DateValue {
 function formatValue(value: DateValue, formatter: Intl.DateTimeFormat, joined: boolean): string {
   if (value instanceof Date)
     return formatter.format(value)
+  if (Array.isArray(value)) {
+    if (joined || value.length === 1)
+      return value.map(date => formatter.format(date)).join(', ')
+    return value.length ? formatLabel(text.value.dates, { count: value.length }) : ''
+  }
   const range = asRange(value)
   if (!range?.start)
     return ''
@@ -240,7 +277,11 @@ function readDate(part: string, fallback: Date | null, isEnd = false): Date | nu
 function parseText(value: string): DateValue | undefined {
   const typed = value.trim()
   if (!typed)
-    return null
+    return isMultiple.value ? [] : null
+  if (isMultiple.value) {
+    const dates = typed.split(/\s*[,;]\s*/).filter(Boolean).map(part => readDate(part, null))
+    return dates.every(Boolean) ? sortedDays(dates as Date[]) : undefined
+  }
   if (!isRange.value)
     return readDate(typed, asDate(model.value)) ?? undefined
   const sides = typed.split(/\s*[–—]\s*|\s+-\s+/)
@@ -254,6 +295,8 @@ function parseText(value: string): DateValue | undefined {
   return start <= end ? { start, end } : { start: end, end: start }
 }
 function firstDay(value: DateValue): Date | null {
+  if (Array.isArray(value))
+    return value[0] ?? null
   return value instanceof Date ? value : asRange(value)?.start ?? null
 }
 function draftDate(slot: DateSlot): Date | null {
@@ -278,7 +321,7 @@ function revealDay(date: Date, last: boolean): void {
   draftMonth.value = last ? addMonths(startOfMonth(date), 1 - monthCount.value) : startOfMonth(date)
 }
 function commit(value: DateValue): void {
-  const next = copyValue(value)
+  const next = copyValue(isMultiple.value && value === null ? [] : value)
   model.value = next
   editing.value = false
   inputText.value = formatValue(next, displayFormat.value, true)
@@ -344,6 +387,12 @@ function togglePopup(): void {
     openPopup(true)
 }
 function onCalendarChange(value: CalendarValue): void {
+  if (isMultiple.value) {
+    draft.value = sortedDays(Array.isArray(value) ? value : [])
+    if (!useConfirm.value)
+      commit(draft.value)
+    return
+  }
   if (!isRange.value) {
     draft.value = value instanceof Date ? value : null
     return
@@ -356,7 +405,7 @@ function onCalendarChange(value: CalendarValue): void {
   }
 }
 function onCalendarSelect(): void {
-  if (useConfirm.value || (isRange.value && !asRange(draft.value)?.end))
+  if (useConfirm.value || isMultiple.value || (isRange.value && !asRange(draft.value)?.end))
     return
   commit(draft.value)
   closePopup(true)
@@ -367,7 +416,8 @@ function onPreset(preset: IDatePreset): void {
   draftMonth.value = firstDay(value) ? startOfMonth(firstDay(value)!) : null
   if (!useConfirm.value) {
     commit(value)
-    closePopup(true)
+    if (!isMultiple.value)
+      closePopup(true)
   }
 }
 function onRangeDate(slot: 'start' | 'end', event: Event): void {
@@ -402,7 +452,7 @@ function onInput(event: Event): void {
   inputText.value = (event.target as HTMLInputElement).value
   editing.value = true
   const parsed = parseText(inputText.value)
-  if (isOpen.value && parsed) {
+  if (isOpen.value && parsed && firstDay(parsed)) {
     draft.value = parsed
     draftMonth.value = startOfMonth(firstDay(parsed)!)
   }

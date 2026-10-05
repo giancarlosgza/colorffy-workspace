@@ -96,6 +96,23 @@ export const ButtonTrigger: Story = {
   })
 }
 
+export const Multiple: Story = {
+  render: () => ({
+    components: { UiInputDate },
+    setup() {
+      const days = ref<Date[]>([])
+      const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6
+      return { days, isWeekend }
+    },
+    template: `
+      <div style="max-width: 360px;">
+        <UiInputDate id="story-date-multiple" v-model="days" mode="multiple" label="Out of office" :disabled-dates="isWeekend" clearable />
+        <p class="caption text-muted mt-2">v-model: {{ days.map(day => day.toDateString()).join(', ') || '[]' }}</p>
+      </div>
+    `
+  })
+}
+
 export const SingleWithPresets: Story = {
   render: () => ({
     components: { UiInputDate },

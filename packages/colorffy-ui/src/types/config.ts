@@ -99,6 +99,8 @@ export interface IColorffyLabels {
     dayLetters: string
     monthLetters: string
     yearLetters: string
+    /** Several picked dates, with `mode="multiple"`. `{count}` is the number of dates. */
+    dates: LabelTemplate
   }
   /** Labels of the `datePresets` helpers. `{count}` is the number of days or months. */
   datePresets: {

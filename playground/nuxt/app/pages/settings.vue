@@ -65,14 +65,26 @@ const profile = reactive<{
   phone: string | null
   bio: string | null
   timezone: string | number | Record<string, unknown> | null
+  timeOff: Date[]
 }>({
   name: currentUser.name,
   email: currentUser.email,
   title: currentUser.title,
   phone: '4155550132',
   bio: 'Product lead at Orbit. I keep the roadmap honest and the standups short.',
-  timezone: 'America/New_York'
+  timezone: 'America/New_York',
+  timeOff: []
 })
+
+const today = new Date()
+const nextMonday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + ((8 - today.getDay()) % 7 || 7))
+const timeOffPresets = [
+  { label: 'Next week', value: () => ({ start: nextMonday, end: new Date(nextMonday.getFullYear(), nextMonday.getMonth(), nextMonday.getDate() + 4) }) },
+  { label: 'Rest of this month', value: () => ({ start: today, end: new Date(today.getFullYear(), today.getMonth() + 1, 0) }) }
+]
+function isWeekend(date: Date): boolean {
+  return date.getDay() === 0 || date.getDay() === 6
+}
 
 const BIO_LIMIT = 160
 const bioLength = computed(() => (profile.bio ?? '').length)
@@ -516,6 +528,17 @@ onBeforeUnmount(() => {
                   :options="timezones"
                   option-label="label"
                   option-value="value"
+                />
+                <UiInputDate
+                  id="profile-time-off"
+                  v-model="profile.timeOff"
+                  mode="multiple"
+                  label="Out of office"
+                  :min="today"
+                  :disabled-dates="isWeekend"
+                  :presets="timeOffPresets"
+                  clearable
+                  optional-label
                 />
               </div>
             </div>

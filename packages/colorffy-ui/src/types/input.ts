@@ -744,6 +744,13 @@ export interface IDateInputLabels extends ICalendarLabels {
   dayLetters: string
   monthLetters: string
   yearLetters: string
+
+  /**
+   * Several picked dates on the button and in the footer, with
+   * `mode="multiple"`. `{count}` is the number of dates.
+   * @default '{count} dates', from the configured labels
+   */
+  dates: LabelTemplate
 }
 
 /**
@@ -752,16 +759,19 @@ export interface IDateInputLabels extends ICalendarLabels {
 export interface IDateInputProps extends IBaseInputProps {
   /**
    * The date (`v-model`): a `Date` in `single` mode, `{ start, end }` in
-   * `range` mode. A range is only written once both ends are picked.
+   * `range` mode, and the picked days in order in `multiple` mode. A range is
+   * only written once both ends are picked.
    * @default null
    */
-  modelValue?: Date | IDateRange | null
+  modelValue?: Date | IDateRange | Date[] | null
 
   /**
-   * One date, or a range.
+   * One date, a range, or several dates. With `multiple`, the field takes
+   * dates separated by commas, `time` doesn't apply, and `confirm` defaults
+   * to on.
    * @default 'single'
    */
-  mode?: 'single' | 'range'
+  mode?: 'single' | 'range' | 'multiple'
 
   /**
    * What opens the calendar: a text field that also accepts typed dates, or
@@ -840,8 +850,10 @@ export interface IDateInputProps extends IBaseInputProps {
 
   /**
    * Holds the picked dates until Apply is pressed. Defaults to on with
-   * `time`, or for a range with presets, and off otherwise, where picking a
-   * date (or a range's end) closes the popup.
+   * `time`, with `mode="multiple"`, or for a range with presets, and off
+   * otherwise, where picking a date (or a range's end) closes the popup.
+   * Several dates without it are written as you pick, and the popup stays
+   * open.
    * @default null
    */
   confirm?: boolean | null
@@ -863,6 +875,6 @@ export interface IDateInputProps extends IBaseInputProps {
  * Interface emits for the DateInput component.
  */
 export interface IDateInputEmits {
-  (e: 'update:modelValue', value: Date | IDateRange | null): void
-  (e: 'update', value: Date | IDateRange | null): void
+  (e: 'update:modelValue', value: Date | IDateRange | Date[] | null): void
+  (e: 'update', value: Date | IDateRange | Date[] | null): void
 }

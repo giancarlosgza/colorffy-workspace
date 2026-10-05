@@ -1124,7 +1124,7 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 ```
 
 **Additional props:**
-- `mode` ('single' | 'range', default: 'single') - range writes `{ start, end }` only once both ends are picked
+- `mode` ('single' | 'range' | 'multiple', default: 'single') - range writes `{ start, end }` only once both ends are picked; multiple holds a sorted `Date[]` (clicks toggle days, field takes comma-separated dates, button/footer show one date or "3 dates", range presets expand to every allowed day, `time` ignored, `confirm` on by default)
 - `trigger` ('field' | 'button', default: 'field') - button shows the matching preset label or the dates; `label` goes into its aria-label
 - `presets` (`IDatePreset[]`: `{ label, value: () => Date | IDateRange }`) - built with `datePresets.today()`, `.yesterday()`, `.tomorrow()`, `.lastDays(n)`, `.lastMonths(n)`, `.thisMonth()`, `.lastMonth()`, `.thisYear()`, `.lastYear()` (optional label arg each)
 - `time` (boolean | 'minutes' | 'seconds', default: false) - native `<input type="time">` fields with a Now button: under the calendar (single) or in From/To rows (range); field shows/accepts `mm/dd/yyyy hh:mm [AM|PM]`; picked/typed days keep their time, a range end without one becomes 23:59 (presets cover all of today) · `minuteStep` (default 1)
@@ -1138,7 +1138,7 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 
 **Behavior:** typing accepts the locale's numeric order (`mm/dd/yyyy` en-US, `dd/mm/yyyy` es) or ISO; ranges `a – b`; commits on Enter or blur, invalid text reverts. Click opens without moving focus; ↓ or the calendar button focuses the calendar. Esc/outside click discards the draft; Esc never closes a surrounding dialog. Emits `update:modelValue` and `update`.
 
-`modelValue`: Date | IDateRange | null
+`modelValue`: Date | IDateRange | Date[] | null
 
 ### UiInputCheck
 

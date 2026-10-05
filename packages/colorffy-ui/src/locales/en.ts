@@ -65,7 +65,8 @@ export const en: IColorffyLabels = {
     endTime: 'End time',
     dayLetters: 'dd',
     monthLetters: 'mm',
-    yearLetters: 'yyyy'
+    yearLetters: 'yyyy',
+    dates: ({ count }) => count === 1 ? '1 date' : `${count} dates`
   },
   datePresets: {
     today: 'Today',

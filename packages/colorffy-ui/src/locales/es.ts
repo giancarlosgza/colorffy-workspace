@@ -65,7 +65,8 @@ export const es: IColorffyLabels = {
     endTime: 'Hora de fin',
     dayLetters: 'dd',
     monthLetters: 'mm',
-    yearLetters: 'aaaa'
+    yearLetters: 'aaaa',
+    dates: ({ count }) => count === 1 ? '1 fecha' : `${count} fechas`
   },
   datePresets: {
     today: 'Hoy',
