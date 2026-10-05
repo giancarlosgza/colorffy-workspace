@@ -154,8 +154,8 @@ Original notes:
 
 ## 4. After 3.0 (open, none breaking)
 
-1. **Date picker extras**: a `timeOptions` list mode, Temporal once it's
-   Baseline (see [datepicker.md](datepicker.md)). Several dates shipped in 3.0.
+1. **Date picker extras**: Temporal once it's Baseline (see
+   [datepicker.md](datepicker.md)). Several dates and time slots shipped in 3.0.
 2. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
    a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
    Nuxt module's pack list.
