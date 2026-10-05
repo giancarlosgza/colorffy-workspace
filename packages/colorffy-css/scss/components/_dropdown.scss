@@ -244,7 +244,7 @@
           pointer-events: auto;
 
           & .v-popper__inner {
-            border-radius: var(--cffy-radius-xl);
+            border-radius: calc(var(--cffy-shape-container) * 2);
             margin: var(--cffy-space-8);
             //padding-block: 12px 24px;
 

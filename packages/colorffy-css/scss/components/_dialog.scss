@@ -308,7 +308,7 @@
 
             padding: var(--cffy-space-14);
             font-size: var(--cffy-fs-xl);
-            border-radius: var(--cffy-radius-lg);
+            border-radius: min(var(--cffy-radius-lg), var(--cffy-shape-container));
             color: var(--_dialog-icon-color);
             background-color: var(--_dialog-icon-bg-color);
 

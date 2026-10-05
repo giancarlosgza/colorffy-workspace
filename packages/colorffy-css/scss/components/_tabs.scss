@@ -86,7 +86,7 @@ $indicator-max-items: 16;
     // Tabs pill
     &.tabs-pills {
       --_tabs-pills-radius: var(--cffy-tabs-pills-radius, calc(var(--cffy-shape-control) * 1.5));
-      --_tabs-radius: calc(var(--_tabs-pills-radius) + calc(var(--_tabs-gap) - .15rem));
+      --_tabs-radius: min(calc(var(--_tabs-pills-radius) + var(--_tabs-gap) - .15rem), calc(var(--_tabs-pills-radius) * 1000));
       --_tabs-bg-color: var(--cffy-tabs-pills-bg-color, var(--cffy-surface-container-low));
       --_tabs-pills-indicator-bg-color: var(--cffy-tabs-pills-indicator-bg-color, var(--cffy-surface-body-pane));
       --_tabs-pills-indicator-shadow: var(--cffy-tabs-pills-indicator-shadow, var(--cffy-shadow-md));
@@ -144,7 +144,7 @@ $indicator-max-items: 16;
         --_btn-bg-color: transparent;
         --_btn-color: var(--_tabs-link-color);
         --_btn-gap: var(--cffy-space-4);
-        --_btn-radius: var(--cffy-radius-md) var(--cffy-radius-md) var(--cffy-radius-none) var(--cffy-radius-none);
+        --_btn-radius: min(var(--cffy-shape-control), var(--cffy-shape-container)) min(var(--cffy-shape-control), var(--cffy-shape-container)) 0 0;
         --_btn-padding-block: 0.625rem;
         --_btn-shadow: none;
         --_tabs-link-state: 0%;

@@ -19,7 +19,7 @@
     --_progress-color: var(--cffy-progress-color, var(--cffy-primary-a10));
     --_progress-label-color: var(--cffy-progress-label-color, var(--cffy-on-primary));
     --_progress-height: var(--cffy-progress-height, 0.85rem);
-    --_progress-radius: var(--cffy-progress-radius, var(--cffy-radius-md));
+    --_progress-radius: var(--cffy-progress-radius, calc(var(--cffy-shape-control) * 1000));
     --_progress-font-size: var(--cffy-progress-font-size, var(--cffy-fs-4xs));
     --_progress-easing: var(--cffy-progress-easing, var(--cffy-ease-emphasized));
     --_progress-duration: var(--cffy-progress-duration, var(--cffy-duration-800));
@@ -38,7 +38,6 @@
 
     &.progress-lg {
       --_progress-height: 2rem;
-      --_progress-radius: var(--cffy-radius-xl);
     }
 
     // Progress bar
@@ -123,7 +122,7 @@
   // ==========================================================================
   .skeleton {
     --_skeleton-color: var(--cffy-skeleton-color, var(--cffy-muted-a10));
-    --_skeleton-radius: var(--cffy-skeleton-radius, var(--cffy-radius-md));
+    --_skeleton-radius: var(--cffy-skeleton-radius, min(var(--cffy-shape-field), var(--cffy-shape-container)));
 
     display: inline-block;
     border-radius: var(--_skeleton-radius);

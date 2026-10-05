@@ -209,7 +209,7 @@
       padding: .15rem;
       background: transparent;
       border: none;
-      border-radius: var(--cffy-radius-full);
+      border-radius: min(var(--cffy-radius-full), calc(var(--cffy-shape-control) * 1000));
       color: inherit;
       cursor: pointer;
 

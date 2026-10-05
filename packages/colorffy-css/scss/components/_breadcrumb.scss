@@ -48,7 +48,7 @@
       gap: var(--cffy-space-4);
       color: var(--_breadcrumb-color);
       text-decoration: none;
-      border-radius: var(--cffy-radius-sm);
+      border-radius: min(var(--cffy-radius-sm), var(--cffy-shape-control));
       transition: color var(--_breadcrumb-duration) var(--_breadcrumb-easing);
 
       &:hover,

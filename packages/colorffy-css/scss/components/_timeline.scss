@@ -68,14 +68,14 @@
       inline-size: var(--_timeline-image-size);
       block-size: var(--_timeline-image-size);
       flex-shrink: 0;
-      border-radius: var(--cffy-timeline-image-radius, var(--cffy-radius-md));
+      border-radius: var(--cffy-timeline-image-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       object-fit: cover;
     }
 
     // Icon marker
     & .list-item-icon-wrapper {
       flex-shrink: 0;
-      border-radius: var(--cffy-timeline-icon-radius, var(--cffy-radius-md));
+      border-radius: var(--cffy-timeline-icon-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       padding: var(--_timeline-icon-padding);
       aspect-ratio: 1;
       background-color: var(--_timeline-icon-bg-color);

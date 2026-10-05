@@ -176,7 +176,7 @@
 
     // Table bordered
     &.table-bordered {
-      --_table-radius: var(--cffy-radius-md);
+      --_table-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
       --_table-header-bg-color: var(--cffy-surface-container-lowest);
 
       & thead {
@@ -216,7 +216,7 @@
 
     // Table borderless
     &.table-borderless {
-      --_table-radius: var(--cffy-radius-md);
+      --_table-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
 
       & thead {
         & tr th {

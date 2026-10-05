@@ -170,7 +170,7 @@
         --_navbar-link-color: var(--cffy-navbar-link-color, var(--cffy-muted-a10));
         --_navbar-link-bg-color: transparent;
         --_navbar-link-border-color: transparent;
-        --_navbar-link-radius: var(--cffy-navbar-link-radius, calc(var(--_navbar-radius) + 0.5rem));
+        --_navbar-link-radius: var(--cffy-navbar-link-radius, calc(var(--_navbar-radius) + var(--cffy-shape-control)));
         --_navbar-link-font-size: var(--cffy-navbar-link-font-size, var(--cffy-fs-xs));
         --_navbar-link-font-weight: var(--cffy-navbar-link-font-weight, var(--cffy-fw-600));
 

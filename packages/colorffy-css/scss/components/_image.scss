@@ -6,7 +6,7 @@
   // IMAGE COMPONENT
   // ==========================================================================
   .img-fluid {
-    border-radius: var(--cffy-radius-sm);
+    border-radius: min(var(--cffy-radius-sm), var(--cffy-shape-container));
     max-width: 100%;
     height: auto;
   }
@@ -86,7 +86,7 @@
 
       padding: var(--cffy-space-4);
       margin-inline: 0;
-      border-radius: var(--cffy-radius-sm);
+      border-radius: min(var(--cffy-radius-sm), var(--cffy-shape-control));
       font-size: var(--cffy-fs-4xs) !important;
     }
   }

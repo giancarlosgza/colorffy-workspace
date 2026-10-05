@@ -126,7 +126,7 @@ $indicator-max-items: 8;
         display: block;
         position: absolute;
         margin: auto;
-        border-radius: var(--cffy-navigation-bar-indicator-radius, var(--cffy-radius-xl));
+        border-radius: var(--cffy-navigation-bar-indicator-radius, min(var(--cffy-radius-xl), calc(var(--cffy-shape-control) * 1000)));
         width: auto;
         max-width: 100%;
         height: calc(100% - 1rem);

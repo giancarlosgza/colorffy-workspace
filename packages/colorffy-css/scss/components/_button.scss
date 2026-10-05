@@ -357,7 +357,7 @@
           }
 
           & .chip-remove {
-            border-radius: var(--cffy-radius-full);
+            border-radius: min(var(--cffy-radius-full), calc(var(--cffy-shape-control) * 1000));
             padding: .1rem;
 
             & i {

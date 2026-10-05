@@ -230,7 +230,7 @@
     background-color: var(--cffy-kbd-bg-color, var(--cffy-surface-kbd));
     border: var(--cffy-border-width-sm) solid var(--cffy-kbd-bg-color, var(--cffy-surface-kbd));
     box-shadow: var(--cffy-kbd-shadow, var(--cffy-shadow-xs));
-    border-radius: var(--cffy-kbd-radius, var(--cffy-radius-md));
+    border-radius: var(--cffy-kbd-radius, min(var(--cffy-radius-md), var(--cffy-shape-control)));
     padding: .25rem;
 
     &:is(.kbd-dark) {

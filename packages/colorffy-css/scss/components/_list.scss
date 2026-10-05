@@ -124,7 +124,7 @@
 
         // Icon
         & .list-item-icon-wrapper {
-          border-radius: var(--cffy-list-icon-radius, var(--cffy-radius-md));
+          border-radius: var(--cffy-list-icon-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
           padding: var(--_list-icon-padding);
           aspect-ratio: 1;
           background-color: var(--_list-icon-bg-color);
@@ -140,7 +140,7 @@
           width: var(--_list-image-size);
           height: var(--_list-image-size);
           flex-shrink: 0;
-          border-radius: var(--cffy-list-image-radius, var(--cffy-radius-md));
+          border-radius: var(--cffy-list-image-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
           object-fit: cover;
         }
       }

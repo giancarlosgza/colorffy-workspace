@@ -14,7 +14,7 @@
     --_sidebar-color: var(--cffy-sidebar-color, var(--cffy-on-background));
     --_sidebar-border-color: var(--cffy-sidebar-border-color, var(--cffy-outline-surface));
     --_sidebar-shadow: var(--cffy-sidebar-shadow, var(--cffy-shadow-lg));
-    --_sidebar-radius: var(--cffy-radius-none) var(--cffy-sidebar-radius, var(--cffy-radius-xl)) var(--cffy-sidebar-radius, var(--cffy-radius-xl)) var(--cffy-radius-none);
+    --_sidebar-radius: 0 var(--cffy-sidebar-radius, calc(var(--cffy-shape-container) * 2)) var(--cffy-sidebar-radius, calc(var(--cffy-shape-container) * 2)) 0;
     --_sidebar-padding: var(--cffy-sidebar-padding, var(--cffy-space-16));
     --_sidebar-spacing: var(--cffy-sidebar-spacing, var(--cffy-space-8));
     --_sidebar-brand-size: var(--cffy-sidebar-brand-size, 2.5rem);
@@ -98,7 +98,7 @@
           font-size: calc(var(--_sidebar-brand-size) / 1.5);
           width: var(--_sidebar-brand-size);
           height: var(--_sidebar-brand-size);
-          border-radius: var(--cffy-radius-md);
+          border-radius: min(var(--cffy-radius-md), var(--cffy-shape-control));
           padding: .25rem;
           background-color: color-mix(in oklab, var(--cffy-primary-a10) 35%, transparent);
         }
@@ -245,7 +245,7 @@
 
           &:is(:hover) {
             background-color: f.state-layer(var(--cffy-state-hover-opacity));
-            border-radius: var(--cffy-radius-sm);
+            border-radius: min(var(--cffy-radius-sm), var(--cffy-shape-control));
             cursor: pointer;
           }
 

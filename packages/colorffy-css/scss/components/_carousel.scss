@@ -18,7 +18,7 @@
     background: var(--cffy-carousel-btn-bg-color, var(--cffy-surface-body-pane));
     color: var(--cffy-carousel-btn-color, var(--cffy-on-background));
     box-shadow: var(--cffy-carousel-btn-shadow, var(--cffy-shadow-sm));
-    border-radius: var(--cffy-carousel-btn-radius, var(--cffy-radius-full));
+    border-radius: var(--cffy-carousel-btn-radius, min(var(--cffy-radius-full), calc(var(--cffy-shape-control) * 1000)));
     cursor: pointer;
   }
 

@@ -135,7 +135,7 @@
     // Sizes
     &.icon-wrap-xs {
       --_icon-wrap-padding: 8px;
-      --_icon-wrap-radius: var(--cffy-radius-md);
+      --_icon-wrap-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
 
       display: grid;
       place-content: center;
@@ -149,12 +149,12 @@
 
     &.icon-wrap-sm {
       --_icon-wrap-padding: 10px;
-      --_icon-wrap-radius: var(--cffy-radius-lg);
+      --_icon-wrap-radius: min(var(--cffy-radius-lg), var(--cffy-shape-container));
     }
 
     &.icon-wrap-lg {
       --_icon-wrap-padding: 30px;
-      --_icon-wrap-radius: var(--cffy-radius-xl);
+      --_icon-wrap-radius: min(var(--cffy-radius-xl), calc(var(--cffy-shape-container) * 2));
 
       &:is(i) {
         font-size: calc(var(--cffy-fs-4xl));
