@@ -66,7 +66,9 @@ export const es: IColorffyLabels = {
     dayLetters: 'dd',
     monthLetters: 'mm',
     yearLetters: 'aaaa',
-    dates: ({ count }) => count === 1 ? '1 fecha' : `${count} fechas`
+    dates: ({ count }) => count === 1 ? '1 fecha' : `${count} fechas`,
+    times: 'Horarios disponibles',
+    pickDay: 'Elige un día para ver los horarios'
   },
   datePresets: {
     today: 'Hoy',

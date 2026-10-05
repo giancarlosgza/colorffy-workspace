@@ -101,6 +101,10 @@ export interface IColorffyLabels {
     yearLetters: string
     /** Several picked dates, with `mode="multiple"`. `{count}` is the number of dates. */
     dates: LabelTemplate
+    /** Name of the `timeOptions` slot list. */
+    times: string
+    /** Shown instead of the slots until a day is picked. */
+    pickDay: string
   }
   /** Labels of the `datePresets` helpers. `{count}` is the number of days or months. */
   datePresets: {

@@ -101,6 +101,9 @@ const localEvents = ref<ITimelineItem[]>([])
 const pendingFile = ref<File | null>(null)
 const uploading = ref<Upload[]>([])
 const uploaded = ref<FileItem[]>([])
+const reviewAt = ref<Date | null>(null)
+const today = new Date()
+const reviewSlots = { step: 30, start: '09:00', end: '17:00' }
 
 /** Computed */
 const project = computed(() => projectById(String(route.params.id)))
@@ -235,6 +238,18 @@ function addEvent(event: Omit<ITimelineItem, 'id' | 'time'>) {
   localEvents.value.unshift({ id: `local-${Date.now()}`, time: 'Just now', ...event })
 }
 
+function isWeekend(date: Date): boolean {
+  return date.getDay() === 0 || date.getDay() === 6
+}
+function isBooked(date: Date): boolean {
+  const minutes = date.getHours() * 60 + date.getMinutes()
+  const busy = date.getDate() % 2 === 0 ? [600, 780, 810, 900] : [570, 660, 840]
+  return date < new Date() || busy.includes(minutes)
+}
+function onReviewScheduled(value: unknown): void {
+  if (value instanceof Date)
+    notify('Review scheduled', `${project.value?.name} review on ${new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(value)}. The team gets an invite.`)
+}
 async function copyLink() {
   try {
     await navigator.clipboard.writeText(window.location.href)
@@ -311,6 +326,20 @@ watch(() => route.params.id, () => {
         >
           <template #actions>
             <UiButtonGroup>
+              <UiInputDate
+                id="project-review"
+                v-model="reviewAt"
+                trigger="button"
+                label="Schedule Review"
+                hide-label
+                placeholder="Schedule"
+                :time-options="reviewSlots"
+                :min="today"
+                :disabled-dates="isWeekend"
+                :disabled-times="isBooked"
+                class="mb-0"
+                @update="onReviewScheduled"
+              />
               <UiButtonTooltip
                 text="Share" variant="outline" tooltip-text="Copy a link to this project"
                 @click="copyLink"

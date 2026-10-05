@@ -751,6 +751,42 @@ export interface IDateInputLabels extends ICalendarLabels {
    * @default '{count} dates', from the configured labels
    */
   dates: LabelTemplate
+
+  /**
+   * Name of the `timeOptions` slot list.
+   * @default 'Available times', from the configured labels
+   */
+  times: string
+
+  /**
+   * Shown instead of the slots until a day is picked.
+   * @default 'Pick a day to see the times', from the configured labels
+   */
+  pickDay: string
+}
+
+/**
+ * Time slots built from a step, for `timeOptions`. Times are `HH:mm` in
+ * 24-hour time.
+ */
+export interface IDateTimeSlots {
+  /**
+   * Minutes between slots.
+   * @default 30
+   */
+  step?: number
+
+  /**
+   * First slot.
+   * @default '00:00'
+   */
+  start?: string
+
+  /**
+   * Latest slot; later ones are left out.
+   * @default '23:59'
+   */
+  end?: string
 }
 
 /**
@@ -847,6 +883,22 @@ export interface IDateInputProps extends IBaseInputProps {
    * @default 1
    */
   minuteStep?: number
+
+  /**
+   * Picks the time from a list of slots beside the calendar instead of a
+   * time field, for bookings and meetings: `{ step, start, end }` or a list
+   * of `HH:mm` times. Turns `time` on. Single dates only; a range keeps its
+   * time fields. A typed time has to be an open slot.
+   * @default null
+   */
+  timeOptions?: IDateTimeSlots | string[] | null
+
+  /**
+   * Returns `true` for a slot that can't be picked, such as a booked one. It
+   * gets the day with the slot's time.
+   * @default null
+   */
+  disabledTimes?: ((date: Date) => boolean) | null
 
   /**
    * Holds the picked dates until Apply is pressed. Defaults to on with

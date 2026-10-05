@@ -155,6 +155,26 @@ export const WithTime: Story = {
   })
 }
 
+export const TimeSlots: Story = {
+  render: () => ({
+    components: { UiInputDate },
+    setup() {
+      const meeting = ref<Date | IDateRange | null>(null)
+      const slots = { step: 30, start: '09:00', end: '17:00' }
+      const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6
+      const isBooked = (date: Date) => [600, 780, 810].includes(date.getHours() * 60 + date.getMinutes())
+      const summary = computed(() => (meeting.value instanceof Date ? meeting.value.toLocaleString('en-US') : 'null'))
+      return { meeting, slots, isWeekend, isBooked, summary }
+    },
+    template: `
+      <div style="max-width: 320px;">
+        <UiInputDate id="story-date-slots" v-model="meeting" label="Meeting" :time-options="slots" :disabled-dates="isWeekend" :disabled-times="isBooked" />
+        <p class="caption text-muted mt-2">v-model: {{ summary }}</p>
+      </div>
+    `
+  })
+}
+
 export const RangeWithTime: Story = {
   render: () => ({
     components: { UiInputDate },

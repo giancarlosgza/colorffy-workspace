@@ -231,6 +231,8 @@
     --_calendar-popup-easing: var(--cffy-calendar-popup-easing, var(--cffy-ease-decelerate));
     --_calendar-popup-duration: var(--cffy-calendar-popup-duration, var(--cffy-duration-150));
     --_calendar-preset-selected-bg-color: var(--cffy-calendar-preset-selected-bg-color, var(--cffy-surface-container-highest));
+    --_calendar-selected-bg-color: var(--cffy-calendar-selected-bg-color, var(--cffy-primary-a10));
+    --_calendar-selected-color: var(--cffy-calendar-selected-color, var(--cffy-on-primary));
 
     // Fallback position
     position: fixed;
@@ -374,6 +376,84 @@
     }
   }
 
+  // Time slots
+  .calendar-with-times {
+    display: grid;
+    grid-template-columns: auto minmax(7rem, auto);
+    gap: var(--cffy-space-12);
+  }
+
+  .calendar-times {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cffy-space-8);
+    min-inline-size: 7rem;
+    padding-inline-start: var(--cffy-space-12);
+    border-inline-start: var(--cffy-border-width-sm) solid var(--_calendar-popup-border-color);
+    contain: size;
+  }
+
+  .calendar-times-list {
+    position: relative;
+    display: grid;
+    flex: 1 1 0;
+    align-content: start;
+    gap: calc(var(--cffy-space-4) / 2);
+    min-block-size: 0;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+    scrollbar-width: thin;
+  }
+
+  .calendar-time {
+    --_calendar-time-state: 0%;
+    --_calendar-time-bg-color: transparent;
+    --_calendar-time-color: inherit;
+
+    padding: var(--cffy-space-6) var(--cffy-space-12);
+    border-radius: calc(var(--_calendar-popup-radius) / 2);
+    background-color: f.state-layer(var(--_calendar-time-state), var(--_calendar-time-bg-color));
+    color: var(--_calendar-time-color);
+    font-size: var(--cffy-fs-2xs);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    outline-offset: -2px;
+
+    &:hover {
+      --_calendar-time-state: var(--cffy-state-hover-opacity);
+    }
+
+    &:is(:active, :focus-visible) {
+      --_calendar-time-state: var(--cffy-state-pressed-opacity);
+    }
+
+    &[aria-selected="true"] {
+      --_calendar-time-bg-color: var(--_calendar-selected-bg-color);
+      --_calendar-time-color: var(--_calendar-selected-color);
+
+      font-weight: var(--cffy-fw-600);
+    }
+
+    &[aria-disabled="true"] {
+      --_calendar-time-state: 0%;
+      --_calendar-time-color: var(--cffy-muted-a10);
+
+      cursor: not-allowed;
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+  }
+
+  .calendar-times-hint {
+    margin: 0;
+    color: var(--cffy-muted-a10);
+    font-size: var(--cffy-fs-2xs);
+  }
+
   // Footer
   .calendar-popup-footer {
     display: flex;
@@ -449,6 +529,33 @@
 
     .calendar-popup .calendar-week-empty {
       display: none;
+    }
+
+    .calendar-with-times {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .calendar-times {
+      padding-block-start: var(--cffy-space-12);
+      padding-inline-start: 0;
+      border-inline-start: 0;
+      border-block-start: var(--cffy-border-width-sm) solid var(--_calendar-popup-border-color);
+      contain: none;
+    }
+
+    .calendar-times-list {
+      display: flex;
+      flex: none;
+      gap: var(--cffy-space-8);
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+    }
+
+    .calendar-time {
+      flex: 0 0 auto;
+      border: var(--cffy-border-width-sm) solid var(--_calendar-popup-border-color);
+      border-radius: var(--cffy-shape-control);
     }
 
     // Apply stays in reach while the months scroll

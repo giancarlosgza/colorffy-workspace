@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CalendarValue, IDatePreset, IDateRange } from '@/types/calendar'
-import type { IDateInputEmits, IDateInputLabels, IDateInputProps } from '@/types/input'
+import type { IDateInputEmits, IDateInputLabels, IDateInputProps, IDateTimeSlots } from '@/types/input'
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useAnchoredPopup } from '@/composables/useAnchoredPopup'
 import {
@@ -28,6 +28,12 @@ import UiIconMaterial from '../icon/Material.vue'
 type DateValue = Date | IDateRange | Date[] | null
 type DateSlot = 'single' | 'start' | 'end'
 type RangeFormat = Intl.DateTimeFormat & { formatRange: (start: Date, end: Date) => string }
+interface TimeSlot {
+  minutes: number
+  label: string
+  disabled: boolean
+  selected: boolean
+}
 
 /** Props */
 const props = withDefaults(defineProps<IDateInputProps>(), {
@@ -56,6 +62,8 @@ const props = withDefaults(defineProps<IDateInputProps>(), {
   presets: () => [],
   time: false,
   minuteStep: 1,
+  timeOptions: null,
+  disabledTimes: null,
   confirm: null,
   clearable: false,
   labels: null
@@ -79,6 +87,7 @@ const rootRef = ref<HTMLElement | null>(null)
 const anchorRef = ref<HTMLElement | null>(null)
 const popupRef = ref<HTMLElement | null>(null)
 const fieldRef = ref<HTMLInputElement | null>(null)
+const slotListRef = ref<HTMLElement | null>(null)
 const draft = ref<DateValue>(null)
 const draftMonth = ref<Date | null>(null)
 const inputText = ref('')
@@ -101,7 +110,9 @@ const calendarLabels = computed(() => ({
 const isRange = computed(() => props.mode === 'range')
 const isMultiple = computed(() => props.mode === 'multiple')
 const isField = computed(() => props.trigger !== 'button')
-const hasTime = computed(() => !!props.time && !isMultiple.value)
+const slotMinutes = computed(() => toSlotMinutes(props.timeOptions))
+const useTimeSlots = computed(() => slotMinutes.value.length > 0 && props.mode === 'single')
+const hasTime = computed(() => (!!props.time || slotMinutes.value.length > 0) && !isMultiple.value)
 const withSeconds = computed(() => props.time === 'seconds')
 const timeStep = computed(() => (withSeconds.value ? 1 : Math.max(1, Math.trunc(props.minuteStep) || 1) * 60))
 const monthCount = computed(() => props.months ?? (isRange.value ? 2 : 1))
@@ -142,15 +153,38 @@ const fieldPlaceholder = computed(() => {
 const activePreset = computed(() => findPreset(model.value))
 const draftPreset = computed(() => findPreset(draft.value))
 const buttonText = computed(() => (activePreset.value && presetLabel(activePreset.value)) || valueText.value || props.placeholder || text.value.toggle)
+const slotFormat = computed(() => new Intl.DateTimeFormat(resolvedLocale.value, { hour: 'numeric', minute: '2-digit' }))
+const timeSlots = computed<TimeSlot[]>(() => {
+  const day = draftDate('single')
+  return slotMinutes.value.map((minutes) => {
+    const at = atMinutes(day ?? new Date(2026, 0, 1), minutes)
+    return {
+      minutes,
+      label: slotFormat.value.format(at),
+      disabled: !day || !!props.disabledTimes?.(at),
+      selected: !!day && minutesOf(day) === minutes
+    }
+  })
+})
+const slotTabIndex = computed(() => {
+  const selected = timeSlots.value.findIndex(slot => slot.selected && !slot.disabled)
+  return selected >= 0 ? selected : timeSlots.value.findIndex(slot => !slot.disabled)
+})
 const draftComplete = computed(() => {
   if (isMultiple.value)
     return true
+  if (useTimeSlots.value)
+    return draft.value instanceof Date && timeSlots.value.some(slot => slot.selected && !slot.disabled)
   if (!isRange.value)
     return draft.value instanceof Date
   const range = asRange(draft.value)
   return !!range?.start && !!range.end && range.start <= range.end
 })
-const draftSummary = computed(() => formatValue(draft.value, shortFormat.value, false))
+const draftSummary = computed(() => {
+  if (useTimeSlots.value && draft.value instanceof Date && !draftComplete.value)
+    return new Intl.DateTimeFormat(resolvedLocale.value, { month: 'short', day: 'numeric', year: 'numeric' }).format(draft.value)
+  return formatValue(draft.value, shortFormat.value, false)
+})
 const showClear = computed(() => props.clearable && isField.value && !isLocked.value && (hasValue(model.value) || inputText.value !== ''))
 const rangeSlots = computed(() => [
   { slot: 'start' as const, label: text.value.from, dateLabel: text.value.startDate, timeLabel: text.value.startTime },
@@ -271,7 +305,72 @@ function readDate(part: string, fallback: Date | null, isEnd = false): Date | nu
   const date = dayOnly ?? (hasTime.value ? parseNumericDateTime(part, resolvedLocale.value) : null)
   if (!date || !isAllowed(date))
     return null
-  return dayOnly ? keepTime(dayOnly, fallback, isEnd) : date
+  const result = dayOnly ? keepTime(dayOnly, fallback, isEnd) : date
+  return useTimeSlots.value && !isOpenSlot(result) ? null : result
+}
+function parseClock(value: string): number | null {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim())
+  if (!match)
+    return null
+  const hours = Number(match[1])
+  const minutes = Number(match[2])
+  return hours < 24 && minutes < 60 ? hours * 60 + minutes : null
+}
+function toSlotMinutes(options: IDateTimeSlots | string[] | null): number[] {
+  if (!options)
+    return []
+  if (Array.isArray(options))
+    return [...new Set(options.map(parseClock).filter((minutes): minutes is number => minutes !== null))].sort((a, b) => a - b)
+  const step = Math.max(1, Math.trunc(options.step ?? 30))
+  const start = parseClock(options.start ?? '00:00') ?? 0
+  const end = parseClock(options.end ?? '23:59') ?? 1439
+  const slots: number[] = []
+  for (let minutes = start; minutes <= end; minutes += step)
+    slots.push(minutes)
+  return slots
+}
+function atMinutes(day: Date, minutes: number): Date {
+  const date = startOfDay(day)
+  date.setHours(Math.trunc(minutes / 60), minutes % 60, 0, 0)
+  return date
+}
+function minutesOf(date: Date): number {
+  return date.getHours() * 60 + date.getMinutes()
+}
+function isOpenSlot(date: Date): boolean {
+  return slotMinutes.value.includes(minutesOf(date)) && !props.disabledTimes?.(date)
+}
+function pickSlot(slot: TimeSlot): void {
+  const day = draftDate('single')
+  if (!day || slot.disabled)
+    return
+  draft.value = atMinutes(day, slot.minutes)
+  if (!useConfirm.value) {
+    commit(draft.value)
+    closePopup(true)
+  }
+}
+function onSlotKeydown(event: KeyboardEvent): void {
+  const options = [...(slotListRef.value?.querySelectorAll<HTMLElement>('[role="option"]:not([aria-disabled="true"])') ?? [])]
+  const index = options.indexOf(document.activeElement as HTMLElement)
+  const moves: Record<string, number> = { ArrowDown: index + 1, ArrowUp: index - 1, Home: 0, End: options.length - 1 }
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    options[index]?.click()
+  } else if (event.key in moves) {
+    event.preventDefault()
+    options[Math.min(Math.max(moves[event.key]!, 0), options.length - 1)]?.focus()
+  }
+}
+function revealSlot(): void {
+  nextTick(() => {
+    const list = slotListRef.value
+    const slot = list?.querySelector<HTMLElement>('[aria-selected="true"]') ?? list?.querySelector<HTMLElement>('[role="option"]:not([aria-disabled="true"])')
+    if (!list || !slot)
+      return
+    list.scrollTop = slot.offsetTop - (list.clientHeight - slot.offsetHeight) / 2
+    list.scrollLeft = slot.offsetLeft - (list.clientWidth - slot.offsetWidth) / 2
+  })
 }
 // `null` for an empty field, `undefined` for text that isn't an allowed date or range
 function parseText(value: string): DateValue | undefined {
@@ -405,7 +504,7 @@ function onCalendarChange(value: CalendarValue): void {
   }
 }
 function onCalendarSelect(): void {
-  if (useConfirm.value || isMultiple.value || (isRange.value && !asRange(draft.value)?.end))
+  if (useConfirm.value || isMultiple.value || useTimeSlots.value || (isRange.value && !asRange(draft.value)?.end))
     return
   commit(draft.value)
   closePopup(true)
@@ -519,6 +618,10 @@ watch(valueText, (value) => {
 }, { immediate: true })
 watch(model, (value) => {
   emit('update', value)
+})
+watch([isOpen, () => draftDate('single')?.toDateString()], ([open]) => {
+  if (open && useTimeSlots.value)
+    revealSlot()
 })
 
 /** Lifecycle */
@@ -749,25 +852,65 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <UiCalendar
-            v-model:month="draftMonth"
-            :model-value="draft"
-            :mode="mode"
-            :months="monthCount"
-            :min="min"
-            :max="max"
-            :disabled-dates="disabledDates"
-            :locale="resolvedLocale"
-            :week-start="weekStart"
-            :aria-label="dialogName"
-            :labels="calendarLabels"
-            @update:model-value="onCalendarChange"
-            @select="onCalendarSelect"
-          />
+          <div :class="{ 'calendar-with-times': useTimeSlots }">
+            <UiCalendar
+              v-model:month="draftMonth"
+              :model-value="draft"
+              :mode="mode"
+              :months="monthCount"
+              :min="min"
+              :max="max"
+              :disabled-dates="disabledDates"
+              :locale="resolvedLocale"
+              :week-start="weekStart"
+              :aria-label="dialogName"
+              :labels="calendarLabels"
+              @update:model-value="onCalendarChange"
+              @select="onCalendarSelect"
+            />
+
+            <!-- Time slots -->
+            <div
+              v-if="useTimeSlots"
+              class="calendar-times"
+            >
+              <span
+                :id="`${fieldId}-times`"
+                class="date-field-label"
+              >{{ text.times }}</span>
+              <ul
+                v-if="draftDate('single')"
+                ref="slotListRef"
+                role="listbox"
+                class="calendar-times-list"
+                :aria-labelledby="`${fieldId}-times`"
+                @keydown="onSlotKeydown"
+              >
+                <li
+                  v-for="(slot, index) in timeSlots"
+                  :key="slot.minutes"
+                  role="option"
+                  class="calendar-time"
+                  :aria-selected="slot.selected"
+                  :aria-disabled="slot.disabled || undefined"
+                  :tabindex="index === slotTabIndex ? 0 : -1"
+                  @click="pickSlot(slot)"
+                >
+                  {{ slot.label }}
+                </li>
+              </ul>
+              <p
+                v-else
+                class="calendar-times-hint"
+              >
+                {{ text.pickDay }}
+              </p>
+            </div>
+          </div>
 
           <!-- Time -->
           <div
-            v-if="hasTime && !isRange"
+            v-if="hasTime && !isRange && !useTimeSlots"
             class="date-field"
           >
             <label
