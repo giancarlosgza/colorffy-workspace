@@ -298,6 +298,7 @@ watch(() => [...inviteForm.emails], () => {
     <UiCard variant="pane" class="shadow-sm">
       <template #body>
         <UiDatatable
+          data-density="compact"
           :columns="columns"
           :items="visibleRows"
           column-manager

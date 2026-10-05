@@ -486,6 +486,7 @@ onMounted(() => {
           <UiDatatable
             v-else
             v-model:selected="selectedInvoices"
+            data-density="compact"
             :columns="visibleInvoiceColumns"
             :items="filteredInvoices"
             row-key="id"

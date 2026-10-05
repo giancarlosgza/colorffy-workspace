@@ -101,6 +101,12 @@ const previewRoles: IChipOption[] = [
   { id: 'viewer', text: 'Viewer' }
 ]
 const shape = useState<string>('orbit-shape', () => 'default')
+const densityOptions: IButtonToggleOption[] = [
+  { id: 'compact', icon: '&#xeba8;', title: 'Compact', text: 'Tighter spacing, shorter fields and buttons' },
+  { id: 'comfortable', icon: '&#xeb9e;', title: 'Comfortable', text: 'The default spacing' },
+  { id: 'spacious', icon: '&#xeba9;', title: 'Spacious', text: 'More room around everything' }
+]
+const density = useState<string>('orbit-density', () => 'comfortable')
 const previewEmail = ref('')
 const previewRole = ref('editor')
 const previewWelcome = ref<string | boolean | null>(true)
@@ -333,6 +339,14 @@ watch(shape, (preset) => {
     else
       style.removeProperty(`--cffy-shape-${role}`)
   })
+})
+watch(density, (mode) => {
+  if (!import.meta.client)
+    return
+  if (mode === 'comfortable')
+    document.documentElement.removeAttribute('data-density')
+  else
+    document.documentElement.setAttribute('data-density', mode)
 })
 watch(otp, () => {
   otpErrors.value = []
@@ -710,6 +724,21 @@ onBeforeUnmount(() => {
                 </UiCard>
               </div>
             </div>
+          </template>
+        </UiCard>
+
+        <UiCard variant="pane" class="shadow-sm">
+          <template #header>
+            <p class="card-title">
+              Density
+            </p>
+            <p class="caption text-muted mb-0">
+              Sets the spacing and the height of fields and buttons across Orbit. Text keeps its size, and touch screens keep full-size controls.
+            </p>
+          </template>
+
+          <template #body>
+            <UiButtonToggleGroup v-model="density" :options="densityOptions" aria-label="Density" />
           </template>
         </UiCard>
 
