@@ -99,6 +99,7 @@
         --_input-font-size: var(--cffy-fs-3xs);
 
         &.form-select {
+          padding-inline-end: 1.75rem;
           background-position: right .5rem center;
           background-size: 1rem;
         }
@@ -111,6 +112,7 @@
         --_input-font-size: var(--cffy-fs-base);
 
         &.form-select {
+          padding-inline-end: 2.75rem;
           background-position: right 1rem center;
           background-size: 1.5rem;
         }
@@ -252,6 +254,7 @@
 
     // Select arrow icon image
     & .form-select {
+      padding-inline-end: 2.25rem;
       background-image: var(--cffy-form-select-icon);
       background-repeat: no-repeat;
       background-position: right .75rem center;

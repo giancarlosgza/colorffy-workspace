@@ -58,7 +58,7 @@
       & .dialog-header {
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap;
+        gap: var(--cffy-space-12);
         word-break: break-word;
         align-items: center;
 
@@ -222,10 +222,6 @@
       }
 
       & .dialog-content {
-        & .dialog-header {
-          flex-wrap: nowrap;
-        }
-
         & .dialog-footer {
           :nth-child(1 of .btn) {
             padding-inline: var(--cffy-space-16);
@@ -301,8 +297,6 @@
     &.dialog-headless {
       .dialog-content {
         .dialog-header {
-          flex-wrap: nowrap;
-          gap: var(--cffy-space-12);
           text-align: start;
           justify-content: flex-start;
           width: 100%;
