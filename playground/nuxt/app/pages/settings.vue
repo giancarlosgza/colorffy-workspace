@@ -132,11 +132,21 @@ const themeOptions = [
 
 const brandColor = useState<string | null>('orbit-brand-color', () => DEFAULT_BRAND)
 const brandPresets = [
-  { name: 'Orbit green', hex: '#004617' },
-  { name: 'Violet', hex: '#6d28d9' },
-  { name: 'Teal', hex: '#0e7c86' },
-  { name: 'Coral', hex: '#ff7a59' },
-  { name: 'Lime', hex: '#a3e635' }
+  { name: 'Orbit green', hex: '#004617', dark: '#d4f5de' },
+  { name: 'Violet', hex: '#6d28d9', dark: '#dac8ff' },
+  { name: 'Teal', hex: '#0e7c86', dark: '#aee6e8' },
+  { name: 'Coral', hex: '#ff7a59', dark: '#ffbfad' },
+  { name: 'Lime', hex: '#a3e635', dark: '#d6f5a0' }
+]
+
+interface ThemePreset { id: string, name: string, description: string, brand: string, dark: string, shape: string }
+const themePresets: ThemePreset[] = [
+  { id: 'orbit', name: 'Orbit', description: 'Forest green with balanced corners', brand: DEFAULT_BRAND, dark: '#d4f5de', shape: 'default' },
+  { id: 'luxury', name: 'Luxury', description: 'Black ink and square edges, champagne at night', brand: '#111111', dark: '#e8d5a8', shape: 'sharp' },
+  { id: 'playful', name: 'Playful', description: 'Bright blue on pill-shaped controls', brand: '#2f6bff', dark: '#a9c1ff', shape: 'pill' },
+  { id: 'enterprise', name: 'Enterprise', description: 'Navy with balanced corners', brand: '#1e3a8a', dark: '#c3d3f7', shape: 'default' },
+  { id: 'wellness', name: 'Wellness', description: 'Sage green and soft, rounded panels', brand: '#4f7a5c', dark: '#c6e3cd', shape: 'soft' },
+  { id: 'studio', name: 'Studio', description: 'Violet with tight, subtle corners', brand: '#6d28d9', dark: '#dac8ff', shape: 'subtle' }
 ]
 const brandErrors = computed(() => !brandColor.value || HEX_PATTERN.test(brandColor.value) ? [] : ['Use a 6-digit hex value, like #004617.'])
 const isCustomBrand = computed(() => (brandColor.value ?? DEFAULT_BRAND).toLowerCase() !== DEFAULT_BRAND)
@@ -152,11 +162,17 @@ watch(brandColor, (hex) => {
     return
   }
   style.setProperty('--cffy-color-brand-primary-500', hex)
-  style.setProperty('--cffy-color-brand-primary-50', `color-mix(in oklab, ${hex} 25%, white)`)
+  style.setProperty('--cffy-color-brand-primary-50', darkTint(hex))
 })
 
 function resetBrand(): void {
   brandColor.value = DEFAULT_BRAND
+}
+function darkTint(hex: string): string {
+  const color = hex.toLowerCase()
+  return themePresets.find(preset => preset.brand === color)?.dark
+    ?? brandPresets.find(preset => preset.hex === color)?.dark
+    ?? `color-mix(in oklab, ${hex} 25%, white)`
 }
 
 const SHAPE_ROLES = ['container', 'field', 'control'] as const
@@ -196,15 +212,6 @@ watch(shape, (preset) => {
   })
 })
 
-interface ThemePreset { id: string, name: string, description: string, brand: string, shape: string }
-const themePresets: ThemePreset[] = [
-  { id: 'orbit', name: 'Orbit', description: 'Forest green with balanced corners', brand: DEFAULT_BRAND, shape: 'default' },
-  { id: 'luxury', name: 'Luxury', description: 'Black ink and square edges', brand: '#111111', shape: 'sharp' },
-  { id: 'playful', name: 'Playful', description: 'Bright blue on pill-shaped controls', brand: '#2f6bff', shape: 'pill' },
-  { id: 'enterprise', name: 'Enterprise', description: 'Navy with balanced corners', brand: '#1e3a8a', shape: 'default' },
-  { id: 'wellness', name: 'Wellness', description: 'Sage green and soft, rounded panels', brand: '#4f7a5c', shape: 'soft' },
-  { id: 'studio', name: 'Studio', description: 'Violet with tight, subtle corners', brand: '#6d28d9', shape: 'subtle' }
-]
 const activePreset = computed(() => {
   const brand = (brandColor.value ?? DEFAULT_BRAND).toLowerCase()
   return themePresets.find(preset => preset.brand === brand && preset.shape === shape.value)?.id ?? null
@@ -217,7 +224,7 @@ function applyPreset(preset: ThemePreset): void {
 function presetPreviewStyle(preset: ThemePreset): Record<string, string> {
   const radii = shapePresets[preset.shape]!
   return {
-    '--preset-color': `light-dark(${preset.brand}, color-mix(in oklab, ${preset.brand} 25%, white))`,
+    '--preset-color': `light-dark(${preset.brand}, ${preset.dark})`,
     '--preset-container': radii.container,
     '--preset-field': radii.field,
     '--preset-control': radii.control
