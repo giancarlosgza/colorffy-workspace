@@ -136,7 +136,8 @@ Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
   invite dialog's "Add to projects".
 - **Phase 3 (after 3.0, any 3.x):** `@search` + `loading` for remote options,
   `freeText` autocomplete.
-- **Later (4.0):** `_prime.scss` becomes an opt-in import.
+- **Done in 3.0:** `_prime.scss` left `main.scss` and is an opt-in import;
+  4.0 can delete it.
 
 Original notes:
 - Scope if built: filterable listbox (combobox ARIA pattern), keyboard nav,
@@ -153,9 +154,17 @@ Original notes:
    Nuxt module's pack list.
 4. **Density modes**: waits on container style queries becoming Baseline
    Widely available (see [density-modes.md](density-modes.md)).
-5. **4.0**: `_prime.scss` becomes an opt-in import.
+5. **4.0**: delete the opt-in `_prime.scss` (out of `main.scss` since 3.0)
+   once apps have moved to the native fields.
 
 Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
 focus return in `UiButtonMenu` (plus `checked` items and `UiPopoverMenu` arrow
 keys), the modal close button wrapping on phones, the faint dark-mode danger
-red, and select text running under the arrow.
+red, and select text running under the arrow. Then the playground findings:
+billing on phones (fewer columns, datatable caption moved out of the scroll
+area as `.table-caption`), invite errors that outlived the bad address and
+silent tag drops (`UiInputTags` `reject` event and announcements, hidden
+cursor when full), the help search clear and the global search (`/help?q=`),
+"1 skills" (label functions, `LabelTemplate`), role selects collapsing in
+tables (`.table .form-select` min width) and modal initial focus (`autofocus`
+on a field component).
