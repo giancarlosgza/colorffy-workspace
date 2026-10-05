@@ -56,6 +56,7 @@ app.use(ColorffyUI, { locale: 'es-SV', labels: es })
 - Partial overrides merge per group: `labels: { ...es, dateInput: { ...es.dateInput, apply: 'Listo' } }`
 - Runtime switch: `const config = useColorffyConfig(); config.locale = 'en-US'; config.labels = en` (auto-imported in Nuxt). Inside a provider, change its props instead
 - Placeholders in braces: `'{count} seleccionados'`, `'Página {page} de {total}'`; `formatLabel(text, values)` fills them
+- Plurals: any text with placeholders may be a function of the values (`LabelTemplate`): `` summary: ({ count }) => count === 1 ? '1 seleccionado' : `${count} seleccionados` `` (the `es` pack does this). Not serializable, so not in `nuxt.config` object labels; use a pack name or set at runtime
 - Groups (`IColorffyLabels`): `common` (optional), `alert`, `avatar`, `breadcrumb`, `buttonToggleGroup`, `calendar`, `chip`, `combobox`, `confirmModal`, `datatable`, `dateInput` (incl. `dayLetters`/`monthLetters`/`yearLetters` for the `dd/mm/aaaa` hint), `datePresets`, `empty`, `header`, `loading`, `multiSelect`, `navbar`, `navigationBar`, `otp`, `pagination`, `password`, `popoverMenu`, `search`, `select`, `sidebar`, `tags`
 - Own pack: `export const fr = { … } satisfies IColorffyLabels`
 - `locale` drives date order, month/weekday names and week start (prop > config > `<html lang>` > browser). Native time inputs follow the browser
@@ -774,6 +775,8 @@ const modal = ref<IDialogDisplay | null>(null)
 
 **Exposed:** `showDialog()`, `closeDialog()`
 
+**Focus on open:** the browser focuses the first focusable element; put `autofocus` on a field component (`<UiInputText autofocus>`) and `showDialog()` focuses its control
+
 **Events:** `close` - emitted whenever the dialog closes: `closeDialog()`, an outside click, or Esc
 
 **Slots:**
@@ -1086,7 +1089,7 @@ Several values from the same searchable list as `UiInputCombobox` (same popover,
 **Additional props (beyond the combobox's `options`, `optionLabel`, `optionValue`, `optionGroup`, `optionDisabled`, `filterable`, `clearable`, `emptyText`, `clearLabel`, `toggleLabel`):**
 - `max` (number | null) - Cap; once reached, unselected options are disabled
 - `maxChips` (number | null, default: null) - Most chips shown; with more values the field shows the `maxChipsLabel` summary instead. Setting it keeps the field to one row (`.multiselect-single-row`: chip labels ellipsize, the summary hides while searching); `0` = always the summary (toolbar filters)
-- `maxChipsLabel` (string, default: '{count} selected') - Summary past `maxChips`; `{count}` is replaced
+- `maxChipsLabel` (`LabelTemplate`: string or `({ count }) => string`, default: '{count} selected') - Summary past `maxChips`; `{count}` is replaced, or the function picks singular/plural
 - `removeLabel` (string, default: 'Remove') - Chip remove button name prefix (`'Remove Maya Chen'`)
 
 **Emits:** `update:modelValue`, `update`, `add(value)`, `remove(value)`
@@ -1265,9 +1268,9 @@ Tags field: chips and a text cursor wrap inside one field-styled box (`.form-tag
 
 **Props:** the shared input props, plus `modelValue` (string[], default: []), `max` (number | null), `allowDuplicates` (boolean, default: false; duplicates compare without case), `separator` (string, default: ','), `maxlength` (number, default: 50, per tag), `removeLabel` (string, default: 'Remove'; each remove button reads "Remove <tag>")
 
-**Keys:** Enter or the separator adds the typed tag (an empty Enter still submits the form), Backspace on an empty field removes the last tag, pasted lines become one tag each. Adds and removals are announced to screen readers.
+**Keys:** Enter or the separator adds the typed tag (an empty Enter still submits the form), Backspace on an empty field removes the last tag, pasted lines become one tag each. Adds and removals are announced to screen readers. A duplicate or a tag past `max` is left out and announced; when full the text cursor is visually hidden (Backspace still works)
 
-**Events:** `update:modelValue`, `update`, `add(tag)`, `remove(tag)`
+**Events:** `update:modelValue`, `update`, `add(tag)`, `remove(tag)`, `reject(tag, reason: 'duplicate' | 'max')` - show your own message from it
 
 ## Links
 
@@ -1464,7 +1467,7 @@ Mobile bottom navigation bar: shown below 1024px, hidden on wider screens.
 - `frosted`, `island` (boolean, default: false) - Frosted-glass background / floating island surface
 - `indicatorTab`, `indicatorFrosted` (boolean, default: false) - Short bar above the active item / frosted indicator, instead of the default tinted pill
 
-The active color and the indicator follow the router's `.router-link-exact-active` class (pure CSS anchor positioning), so they need a router `as`. With plain `a` links only `aria-current` marks the active item and the indicator stays on the first one. The `<nav>` is always labelled "Main navigation".
+The active color and the indicator follow `.router-link-exact-active` or `[aria-current="page"]` (set by `activeItem`), with pure CSS anchor positioning, so plain `a` links work with `activeItem`. With no active item (a page outside the bar) the indicator fades out. For sub-pages pass the first path segment: `` :active-item="`/${route.path.split('/')[1]}`" ``. The `<nav>` is always labelled "Main navigation".
 
 ### UiTabs
 Horizontal tab navigation.
@@ -1884,7 +1887,7 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `stickyHeader` (boolean, default: false) - Sticks the header while the body scrolls; wraps the table in `.table-responsive-sticky`
 - `stickyHeight` (string | number, default: `32rem`) - Max height of the sticky scroll area (numbers are px); sets `--cffy-table-sticky-max-height`
 - `isLoading` (boolean, default: false) + `skeletonRows` (number, default: 10) - Built-in loading skeleton (one cell per visible column)
-- `caption` (string) - Accessible `<caption>` for the table
+- `caption` (string) - Visually hidden `<caption>` for screen readers, with the text shown below the scroll area (`.table-caption`, muted) so phones don't cut it off
 - `emptyStateTitle` (default: 'No data available') / `emptyStateSubtitle` / `emptyStateUseCustomIcon` (boolean) / `emptyStateIconCode` (string, default: '&#xeb83;') - Built-in `UiEmpty` state
 
 **Slots:**
