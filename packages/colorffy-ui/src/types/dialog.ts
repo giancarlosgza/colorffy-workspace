@@ -20,14 +20,8 @@ export interface IDialogProps {
   showAsModal?: boolean | null
 
   /**
-   * Optional isHeadless property of the Dialog component.
-   * Can be a boolean indicating if the dialog is customizable or not, or null.
-   */
-  isHeadless?: boolean | null
-
-  /**
-   * Preferred way to describe the dialog shape.
-   * When provided, it takes precedence over the `showAsModal` and `isHeadless` flags.
+   * Dialog shape: a centered modal, a side sheet, or `headless`, whose
+   * header lays out a tinted icon beside the title.
    */
   mode?: DialogMode
 
