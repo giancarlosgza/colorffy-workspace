@@ -144,8 +144,8 @@ Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
   "Add “…”" row (`useListbox`'s `create` source, `.listbox-option-create`).
   Playground: the new-project wizard's Client (remote + free text), Labels
   (free text) and Stakeholders (remote multi-select over a fake directory).
-- **Done in 3.0:** `_prime.scss` left `main.scss` and is an opt-in import;
-  4.0 can delete it.
+- **Done in 3.0:** `_prime.scss` is deleted (2026-10-05); apps that keep
+  PrimeVue copy it from `@colorffy/css@2.8`.
 
 Original notes:
 - Scope if built: filterable listbox (combobox ARIA pattern), keyboard nav,
@@ -161,8 +161,6 @@ Original notes:
    Nuxt module's pack list.
 3. **Density modes**: waits on container style queries becoming Baseline
    Widely available (see [density-modes.md](density-modes.md)).
-4. **4.0**: delete the opt-in `_prime.scss` (out of `main.scss` since 3.0)
-   once apps have moved to the native fields.
 
 Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
 focus return in `UiButtonMenu` (plus `checked` items and `UiPopoverMenu` arrow
