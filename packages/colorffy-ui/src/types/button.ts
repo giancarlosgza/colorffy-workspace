@@ -318,6 +318,12 @@ export interface IButtonMenuProps extends IBaseButtonProps {
   isMobile?: boolean
 
   /**
+   * Tooltip on the button; none by default. Also the button's name when it has
+   * no `text` or `title`, which otherwise comes from the `buttonMenu.ariaLabel` label.
+   */
+  tooltipText?: string | null
+
+  /**
    * Optional placement for the tooltip.
    */
   tooltipPlacement?: FloatingPlacement

@@ -30,6 +30,10 @@ export interface IColorffyLabels {
     /** Name of the breadcrumb landmark. */
     ariaLabel: string
   }
+  buttonMenu: {
+    /** Name of an icon-only menu button without `title` or `tooltipText`. */
+    ariaLabel: string
+  }
   buttonToggleGroup: {
     /** Name of the radio group. */
     ariaLabel: string

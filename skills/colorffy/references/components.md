@@ -57,7 +57,7 @@ app.use(ColorffyUI, { locale: 'es-SV', labels: es })
 - Runtime switch: `const config = useColorffyConfig(); config.locale = 'en-US'; config.labels = en` (auto-imported in Nuxt). Inside a provider, change its props instead
 - Placeholders in braces: `'{count} seleccionados'`, `'Página {page} de {total}'`; `formatLabel(text, values)` fills them
 - Plurals: any text with placeholders may be a function of the values (`LabelTemplate`): `` summary: ({ count }) => count === 1 ? '1 seleccionado' : `${count} seleccionados` `` (the `es` pack does this). Not serializable, so not in `nuxt.config` object labels; use a pack name or set at runtime
-- Groups (`IColorffyLabels`): `common` (optional), `alert`, `avatar`, `breadcrumb`, `buttonToggleGroup`, `calendar`, `chip`, `combobox`, `confirmModal`, `datatable`, `dateInput` (incl. `dayLetters`/`monthLetters`/`yearLetters` for the `dd/mm/aaaa` hint), `datePresets`, `empty`, `header`, `loading`, `multiSelect`, `navbar`, `navigationBar`, `otp`, `pagination`, `password`, `popoverMenu`, `search`, `select`, `sidebar`, `tags`
+- Groups (`IColorffyLabels`): `common` (optional), `alert`, `avatar`, `breadcrumb`, `buttonMenu`, `buttonToggleGroup`, `calendar`, `chip`, `combobox`, `confirmModal`, `datatable`, `dateInput` (incl. `dayLetters`/`monthLetters`/`yearLetters` for the `dd/mm/aaaa` hint), `datePresets`, `empty`, `header`, `loading`, `multiSelect`, `navbar`, `navigationBar`, `otp`, `pagination`, `password`, `popoverMenu`, `search`, `select`, `sidebar`, `tags`
 - Own pack: `export const fr = { … } satisfies IColorffyLabels`
 - `locale` drives date order, month/weekday names and week start (prop > config > `<html lang>` > browser). Native time inputs follow the browser
 
@@ -408,7 +408,7 @@ Button with a dropdown menu.
 
 **Props:** UiButton's look and state props (`id`, `text`, `title`, `variant`, `color`, `size`, `icon`, `iconVariant`, `iconTrailing`, `disabled`, `loading`, `rounded`, `fluid`, `customClass`) — no link mode (`to`/`href`/`as`/`type` are not supported) — plus:
 - `placement` ('top' | 'bottom' | 'left' | 'right' and `-start`/`-end` variants, default: 'bottom') - Dropdown placement
-- `tooltipText` (string | null, default: 'menu') - Tooltip on the trigger; also its aria-label when there is no `text`/`title`
+- `tooltipText` (string | null, default: null) - Tooltip on the trigger, none by default; also its aria-label when there is no `text`/`title`. An icon-only trigger without either is named by the `buttonMenu.ariaLabel` label ("Menu"), so pass one that says what the menu does
 - `tooltipPlacement` (same values, default: 'top')
 - `isMobile` (boolean, default: false) - Disables dropdown positioning
 

@@ -14,6 +14,9 @@ export const en: IColorffyLabels = {
   breadcrumb: {
     ariaLabel: 'Breadcrumb'
   },
+  buttonMenu: {
+    ariaLabel: 'Menu'
+  },
   buttonToggleGroup: {
     ariaLabel: 'Toggle button group'
   },

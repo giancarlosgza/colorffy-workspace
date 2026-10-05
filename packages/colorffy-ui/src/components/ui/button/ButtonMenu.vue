@@ -2,6 +2,7 @@
 import type { IButtonMenuEmits, IButtonMenuProps } from '@/types/button'
 import { hideAllPoppers, Dropdown as VDropdown, Tooltip as VTooltip } from 'floating-vue'
 import { onBeforeUnmount, ref, useId, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import { useMenuNavigation } from '@/composables/useMenuNavigation'
 import UiButton from './Button.vue'
@@ -9,7 +10,7 @@ import UiButton from './Button.vue'
 /** Props */
 withDefaults(defineProps<IButtonMenuProps>(), {
   isMobile: false,
-  tooltipText: 'menu',
+  tooltipText: null,
   id: '',
   title: '',
   text: '',
@@ -30,6 +31,9 @@ withDefaults(defineProps<IButtonMenuProps>(), {
 
 /** Emits */
 defineEmits<IButtonMenuEmits>()
+
+/** Labels */
+const l10n = useLabels('buttonMenu')
 
 /** Data */
 const isOpen = ref(false)
@@ -122,6 +126,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown,
       v-bind="floatingProps"
       :aria-id="id ? `${id}-tooltip` : undefined"
       :placement="tooltipPlacement"
+      :disabled="!tooltipText"
       :class="{ 'w-100': fluid }"
       class="d-inline-block"
     >
@@ -142,7 +147,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown,
         :icon-trailing="iconTrailing"
         :loading="loading"
         :disabled="disabled"
-        :aria-label="text ? undefined : (title || tooltipText)"
+        :aria-label="text ? undefined : (title || tooltipText || l10n.ariaLabel)"
         aria-haspopup="menu"
         :aria-expanded="isOpen"
         :aria-controls="isOpen ? menuId : undefined"
@@ -167,7 +172,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown,
         :id="menuId"
         ref="menuRef"
         role="menu"
-        :aria-label="text || title || tooltipText || undefined"
+        :aria-label="text || title || tooltipText || l10n.ariaLabel"
         @keydown="onMenuKeydown"
       >
         <slot name="menu" />

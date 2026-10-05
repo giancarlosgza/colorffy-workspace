@@ -14,6 +14,9 @@ export const es: IColorffyLabels = {
   breadcrumb: {
     ariaLabel: 'Ruta de navegación'
   },
+  buttonMenu: {
+    ariaLabel: 'Menú'
+  },
   buttonToggleGroup: {
     ariaLabel: 'Grupo de opciones'
   },
