@@ -402,6 +402,13 @@ export interface IButtonMenuItemProps {
    * @default false
    */
   keepOpen?: boolean
+
+  /**
+   * Makes the item a checkbox (`role="menuitemcheckbox"`) and sets its checked state.
+   * Pair it with `keepOpen` for toggles. `null` keeps a plain menu item.
+   * @default null
+   */
+  checked?: boolean | null
 }
 
 /**

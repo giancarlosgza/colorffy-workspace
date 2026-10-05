@@ -19,7 +19,8 @@ const props = withDefaults(defineProps<IButtonMenuItemProps>(), {
   iconTrailing: null,
   iconTrailingStyle: null,
   iconTrailingClass: null,
-  keepOpen: false
+  keepOpen: false,
+  checked: null
 })
 
 /** Computed */
@@ -40,12 +41,14 @@ const itemClasses = computed(() => {
 </script>
 
 <template>
-  <li>
+  <li role="none">
     <button
       v-close-popper.all="!keepOpen"
       type="button"
       class="v-dropdown-item"
       :class="itemClasses"
+      :role="checked === null ? 'menuitem' : 'menuitemcheckbox'"
+      :aria-checked="checked ?? undefined"
       :disabled="disabled"
     >
       <span class="v-dropdown-item-primary">

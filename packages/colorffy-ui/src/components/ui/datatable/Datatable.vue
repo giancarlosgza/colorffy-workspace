@@ -281,6 +281,7 @@ watch(() => props.items.length, (_length, previous) => {
                 :id="`${toolbarId}-column-${column.key}`"
                 :key="column.key"
                 keep-open
+                :checked="isColumnVisible(column.key)"
                 :item-text="column.label"
                 :icon="isColumnVisible(column.key) ? '&#xe834;' : '&#xe835;'"
                 :disabled="isLastVisibleColumn(column.key)"

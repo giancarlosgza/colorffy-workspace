@@ -6,6 +6,7 @@ import type {
 } from '@/types/navigation'
 import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
 import { useLabels } from '@/composables/useColorffyConfig'
+import { useMenuNavigation } from '@/composables/useMenuNavigation'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiPopoverMenuGroup from './PopoverMenuGroup.vue'
@@ -34,6 +35,7 @@ const slots = useSlots()
 const panelRef = ref<HTMLElement | null>(null)
 const supportsNativePopover = ref<boolean>(false)
 const anchorName = `--cffy-popover-menu-${useId()}`
+const { onKeydown: onMenuKeydown } = useMenuNavigation(panelRef)
 let lastNativeDismiss = 0
 
 /** Computed */
@@ -125,6 +127,7 @@ watch(() => props.isOpened, (open) => {
       :aria-label="ariaLabel || l10n.ariaLabel"
       tabindex="0"
       @toggle="handleNativeToggle"
+      @keydown="onMenuKeydown"
     >
       <!-- Header -->
       <div

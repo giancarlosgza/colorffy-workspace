@@ -413,6 +413,8 @@ Button with a dropdown menu.
 
 **Events:** `click` (MouseEvent) - trigger clicked; not emitted while disabled or loading
 
+**Keyboard (WAI-ARIA menu button):** Enter/Space/↓ on the button open on the first item (↑ on the last); ↑/↓ move and wrap, Home/End, a letter jumps to the next matching item; →/← open/close a submenu; Esc closes and refocuses the button; Tab closes and moves on. A keyboard pick returns focus to the button. Panel is `role="menu"`, items `menuitem`, dividers `separator`
+
 **Slots:**
 - `menu` - Menu content (items, submenus, dividers, text)
 - `icon` - Trigger icon
@@ -441,6 +443,7 @@ Menu item for UiButtonMenu. Clicking it closes the menu (and any parent submenu)
 - `shortcut` (string | null) - Keyboard shortcut text
 - `badge` (`Partial<IBadgeProps>` | null) - Small badge (`text`, `variant`, `iconCode`, `iconClass`, `iconStyle`, `pill`, `customClass`)
 - `keepOpen` (boolean, default: false) - Keep the menu open after a click; by default a click closes the menu and any parent submenu
+- `checked` (boolean | null, default: null) - Makes it a `menuitemcheckbox` with that `aria-checked`; pair with `keepOpen` for toggles
 - `isDestructive` (boolean, default: false) - Destructive (danger) styling
 - `disabled` (boolean, default: false)
 - `customClass` (string | string[] | null)

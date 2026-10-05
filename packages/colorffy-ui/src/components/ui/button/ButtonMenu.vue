@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { IButtonMenuEmits, IButtonMenuProps } from '@/types/button'
 import { hideAllPoppers, Dropdown as VDropdown, Tooltip as VTooltip } from 'floating-vue'
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useFloatingContainer } from '@/composables/useFloatingContainer'
+import { useMenuNavigation } from '@/composables/useMenuNavigation'
 import UiButton from './Button.vue'
 
 /** Props */
-const props = withDefaults(defineProps<IButtonMenuProps>(), {
+withDefaults(defineProps<IButtonMenuProps>(), {
   isMobile: false,
   tooltipText: 'menu',
   id: '',
@@ -35,12 +36,29 @@ const floatingProps = useFloatingContainer()
 const isOpen = ref(false)
 const returnFocus = ref(false)
 const triggerRef = ref<InstanceType<typeof UiButton> | null>(null)
+const menuRef = ref<HTMLElement | null>(null)
+const menuId = useId()
+const { focusItem, onKeydown: onMenuKeydown } = useMenuNavigation(menuRef)
+let focusOnShow: 'first' | 'last' = 'first'
 
 /** Methods */
+function triggerElement(): HTMLElement | undefined {
+  return triggerRef.value?.$el as HTMLElement | undefined
+}
+function isInMenu(element: Element | null): boolean {
+  return !!element?.closest('.v-popper__popper')
+}
 // Esc closes the menu, not a dialog around it, and gives focus back to the button.
 // FloatingVue keeps a dropdown open while its button's tooltip shows, so both close,
 // and focus only returns once the menu is gone (focusing shows the tooltip again).
-function onEscape(event: KeyboardEvent): void {
+// Tab closes the menu from the button, so focus moves on to the next element.
+function onDocumentKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Tab' && isInMenu(document.activeElement)) {
+    isOpen.value = false
+    hideAllPoppers()
+    triggerElement()?.focus()
+    return
+  }
   if (event.key !== 'Escape')
     return
   event.preventDefault()
@@ -49,22 +67,43 @@ function onEscape(event: KeyboardEvent): void {
   isOpen.value = false
   hideAllPoppers()
 }
-function onMenuHidden(): void {
-  if (!returnFocus.value)
+function onTriggerKeydown(event: KeyboardEvent): void {
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp')
     return
+  event.preventDefault()
+  focusOnShow = event.key === 'ArrowUp' ? 'last' : 'first'
+  if (isOpen.value)
+    focusItem(focusOnShow)
+  else
+    isOpen.value = true
+}
+// The items become focusable once the popper renders as shown
+function onMenuShown(): void {
+  const position = focusOnShow
+  focusOnShow = 'first'
+  requestAnimationFrame(() => focusItem(position))
+}
+function onMenuHidden(): void {
+  const focusLost = !document.activeElement || document.activeElement === document.body || isInMenu(document.activeElement)
+  if (returnFocus.value && focusLost)
+    triggerElement()?.focus()
   returnFocus.value = false
-  ;(triggerRef.value?.$el as HTMLElement | undefined)?.focus()
 }
 
 /** Watchers */
+// An item picked from the keyboard gives focus back to the button; a click doesn't.
 watch(isOpen, (open) => {
-  if (open)
-    document.addEventListener('keydown', onEscape, true)
-  else
-    document.removeEventListener('keydown', onEscape, true)
+  if (open) {
+    document.addEventListener('keydown', onDocumentKeydown, true)
+    return
+  }
+  document.removeEventListener('keydown', onDocumentKeydown, true)
+  const active = document.activeElement
+  if (isInMenu(active) && active?.matches(':focus-visible'))
+    returnFocus.value = true
 })
 
-onBeforeUnmount(() => document.removeEventListener('keydown', onEscape, true))
+onBeforeUnmount(() => document.removeEventListener('keydown', onDocumentKeydown, true))
 </script>
 
 <template>
@@ -75,6 +114,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onEscape, true))
     :positioning-disabled="isMobile"
     :placement="placement"
     :class="{ 'w-100': fluid }"
+    no-auto-focus
+    @apply-show="onMenuShown"
     @apply-hide="onMenuHidden"
   >
     <VTooltip
@@ -102,9 +143,11 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onEscape, true))
         :loading="loading"
         :disabled="disabled"
         :aria-label="text ? undefined : (title || tooltipText)"
+        aria-haspopup="menu"
         :aria-expanded="isOpen"
-        :aria-controls="isOpen && props.id ? `${props.id}-dropdown` : undefined"
+        :aria-controls="isOpen ? menuId : undefined"
         @click="$emit('click', $event)"
+        @keydown="onTriggerKeydown"
       >
         <!-- Icon slot -->
         <template #icon>
@@ -120,7 +163,13 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onEscape, true))
 
     <!-- Dropdown menu slot -->
     <template #popper>
-      <ul>
+      <ul
+        :id="menuId"
+        ref="menuRef"
+        role="menu"
+        :aria-label="text || title || tooltipText || undefined"
+        @keydown="onMenuKeydown"
+      >
         <slot name="menu" />
       </ul>
     </template>
