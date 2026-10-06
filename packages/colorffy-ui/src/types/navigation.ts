@@ -414,12 +414,6 @@ export interface IPopoverMenuProps {
    * Title shown in the default header, beside the close button.
    */
   title?: string | null
-
-  /**
-   * Auth state or configuration. Opaque to the component; passed through for
-   * consumer use.
-   */
-  auth?: unknown
 }
 
 /**

@@ -82,16 +82,6 @@ export interface IBaseButtonProps {
    * Optional fluid width style. When true, applies btn-block class for 100% width.
    */
   fluid?: boolean
-
-  /**
-   * Optional tooltip text of the button. Can be a string or null.
-   */
-  tooltipText?: string | null
-
-  /**
-   * Optional placement for tooltip or dropdown.
-   */
-  placement?: FloatingPlacement
 }
 
 /**
@@ -202,6 +192,12 @@ export interface IButtonTooltipProps extends IButtonProps {
    * Text to display in the tooltip.
    */
   tooltipText?: string
+
+  /**
+   * Where the tooltip opens.
+   * @default 'top'
+   */
+  placement?: FloatingPlacement
 
   /**
    * Forwarded to the underlying button's `aria-expanded` (for toggle buttons).
@@ -324,7 +320,14 @@ export interface IButtonMenuProps extends IBaseButtonProps {
   tooltipText?: string | null
 
   /**
-   * Optional placement for the tooltip.
+   * Where the menu opens.
+   * @default 'bottom'
+   */
+  placement?: FloatingPlacement
+
+  /**
+   * Where the tooltip opens.
+   * @default 'top'
    */
   tooltipPlacement?: FloatingPlacement
 }
@@ -421,6 +424,17 @@ export interface IButtonMenuItemProps {
  * Interface props for the LinkTooltip component.
  */
 export interface ILinkTooltipProps extends IBaseButtonProps {
+  /**
+   * Text to display in the tooltip.
+   */
+  tooltipText?: string | null
+
+  /**
+   * Where the tooltip opens.
+   * @default 'top'
+   */
+  placement?: FloatingPlacement
+
   /**
    * Router link target location.
    */

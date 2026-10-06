@@ -11,6 +11,11 @@ export interface IToastDisplay {
   showToast: (options?: IToastOptions) => void
 
   /**
+   * Title of this toast instance; set it before `showToast()` to change it.
+   */
+  title?: string
+
+  /**
    * Default message for this toast instance.
    */
   message?: string

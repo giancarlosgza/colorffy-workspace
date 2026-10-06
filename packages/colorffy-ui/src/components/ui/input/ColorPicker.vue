@@ -64,6 +64,13 @@ const textClasses = computed(() => {
   }
   return classes
 })
+
+/** Methods */
+// A color input ignores `readonly`, so the picker is kept closed instead
+function onPickerClick(event: MouseEvent): void {
+  if (props.readonly)
+    event.preventDefault()
+}
 </script>
 
 <template>
@@ -93,8 +100,10 @@ const textClasses = computed(() => {
         :class="colorClasses"
         :disabled="disabled"
         :required="required"
+        :aria-readonly="readonly || undefined"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
+        @click="onPickerClick"
         @change="emit('update', model)"
       >
       <!-- Text -->
@@ -104,7 +113,9 @@ const textClasses = computed(() => {
         type="text"
         :class="textClasses"
         :maxlength="maxlength"
+        :placeholder="placeholder ?? undefined"
         :disabled="disabled"
+        :readonly="readonly"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
         @change="emit('update', model)"
