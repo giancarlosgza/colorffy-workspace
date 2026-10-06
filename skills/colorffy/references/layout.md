@@ -462,7 +462,7 @@ Powerful utilities for flex layouts.
 
 ## Gap Utilities
 
-**Pattern:** `gap-{0-5}`, `gap-inline-{0-5}`, `gap-block-{0-5}` with responsive variants. Sizes: 0 (0), 1 (0.25rem), 2 (0.5rem), 3 (1rem), 4 (1.5rem), 5 (3rem)
+**Pattern:** `gap-{0-10}`, `gap-inline-{0-10}`, `gap-block-{0-10}` with responsive variants. Step `n` is `n` × `--cffy-space-unit` (`--cffy-space-4` … `--cffy-space-40`): 1 = 0.25rem, 2 = 0.5rem, 3 = 0.75rem, 4 = 1rem, 5 = 1.25rem … 10 = 2.5rem; they follow the density mode
 
 ```html
 <div class="d-flex gap-3">Gap between all items</div>

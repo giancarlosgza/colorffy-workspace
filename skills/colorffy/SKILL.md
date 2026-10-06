@@ -175,12 +175,12 @@ const name = ref('')
 
 ## Utility Class Categories Quick Reference
 
-**Spacing:** `m-*`, `p-*`, `gap-*` (`px`, `0`–`10`, responsive)
+**Spacing:** `m-*`, `p-*` (`px`, `0`–`10`, responsive), `gap-*` (`0`–`10`, responsive)
 **Colors:** `text-*`, `bg-*`, `border-*` (primary, success, danger, etc.)
 **Typography:** `display-1`–`display-4` (prominent headings), `fs-*` (t-shirt: `4xs`–`5xl`, anchored at `base`), `fw-*` (400-800), `text-{align}`
 **Layout:** `d-flex`, `d-grid`, `justify-content-*`, `align-items-*`
 **Borders:** `border`, `rounded-{size}`
-**Effects:** `shadow-*`, `opacity-*`, `filter-*`
+**Effects:** `shadow-*`, `opacity-*`, `filter-*`, `mask-shape shape-*`
 
 **[See complete utilities reference →](references/utilities.md)**
 
@@ -188,7 +188,8 @@ const name = ref('')
 
 Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values. Every public token is `--cffy-*`; never write an unprefixed Colorffy name, and never set a private `--_*` variable (set the component's `--cffy-<component>-<property>` hook instead).
 
-- **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/32/48)` — number = px; all derived from `--cffy-space-unit` (override it on `:root` for runtime density; on a wrapper it does nothing)
+- **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/28/32/36/40/48/72/96/120/144/192)` — number = px at a 16px root; all derived from `--cffy-space-unit` (set it on `:root`; on a wrapper it does nothing)
+- **Density:** `data-density="compact | comfortable | spacious"` on `<html>` or any element re-derives the spacing and sets `--cffy-field-height-sm|md|lg` (inputs) and `--cffy-control-height-sm|md|lg` (buttons, chips, calendar days); `--cffy-density` set from CSS does the same where container style queries are supported (see references/theming.md)
 - **Font sizes:** `var(--cffy-fs-4xs…5xl)` + `var(--cffy-fs-{step}--line-height)` companions
 - **Widths:** `var(--cffy-container-3xs…7xl)` (16rem … 80rem), also as `max-w-{size}` utilities
 - **Colors:** `--cffy-<color>-a10` for a solid fill with `--cffy-on-<color>` text; `--cffy-<color>-container` for a tinted surface with `--cffy-on-<color>-container` text

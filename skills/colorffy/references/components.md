@@ -256,7 +256,7 @@ Versatile alert component with multiple types and variants.
 - `placement` ('top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right', default: 'bottom') - Snackbar position; only used when `type="snackbar"`. Corner snackbars grow with their text up to `--cffy-container-lg`; at 576px and narrower every placement spans the screen, centered
 - `dismissible` (boolean, default: false) - Show close button; clicking it hides the alert and emits `dismiss`
 - `duration` (number, optional) - Auto-hide delay in ms for non-snackbar types; emits `dismiss` when the timer fires (ignored when `type="snackbar"` — use `UiAlertToast`/`useToast` instead)
-- `closeLabel` (string, default: 'Close') - Accessible label for the close button
+- `closeLabel` (string | null) - Accessible label for the close button; falls back to the `alert.close` label ('Close')
 - `customClass` (string | string[] | object)
 
 **Events:** `dismiss` - Emitted when the alert is closed via the close button or the `duration` auto-hide timer
@@ -630,6 +630,7 @@ Inline month grid, also used inside `UiInputDate`'s popup (use `UiInputDate` for
 - `showOutsideDays` (boolean, default: true) · `disabled` · `ariaLabel` (default: 'Calendar')
 - `fluid` (boolean) - fill the container width: days = 1/7 of it (container query units, max 3.5rem), months stack; `UiInputDate` applies it in its phone bottom sheet
 - `labels` (`ICalendarLabels`): `previousMonth`, `nextMonth`, `rangeStart` (`{date}` placeholder)
+- `customClass` (string | string[] | null) - Extra classes on the calendar
 
 **Slots:** `#day="{ date, selected, disabled, today, inRange }"` - renders inside the day `<button>` (inline content only; the button is a centered grid, so extra elements stack under the number)
 
@@ -637,7 +638,7 @@ Inline month grid, also used inside `UiInputDate`'s popup (use `UiInputDate` for
 
 **Behavior:** each month is a `role="grid"` table; one roving tab stop; arrows move a day/week (RTL-aware), Home/End the week, Page Up/Down a month, Shift+Page a year, past the visible months turns the page; Enter/Space picks. Month changes and range starts are announced. Always six rows per month.
 
-**CSS hooks:** `--cffy-calendar-color`, `-muted-color`, `-font-size`, `-title-font-size`, `-title-font-weight`, `-gap`, `-day-size` (2.25rem), `-day-radius` (`--cffy-shape-control`), `-selected-bg-color` / `-selected-color` (primary-a10 / on-primary), `-range-bg-color` / `-range-color` (primary-container / on-primary-container), `-today-color`, `-easing`, `-duration`. Day hover/pressed use the state layer.
+**CSS hooks:** `--cffy-calendar-color`, `-muted-color`, `-font-size`, `-title-font-size`, `-title-font-weight`, `-gap`, `-day-size` (`--cffy-control-height-md`, 2.25rem; follows density), `-day-radius` (`--cffy-shape-control`), `-selected-bg-color` / `-selected-color` (primary-a10 / on-primary), `-range-bg-color` / `-range-color` (primary-container / on-primary-container), `-today-color`, `-easing`, `-duration`. Day hover/pressed use the state layer.
 
 ## Cards
 
@@ -705,7 +706,7 @@ Single interactive chip (filter, input, or plain). Renders a `<button>`; a closa
 - `disabled` (boolean, default: false)
 - `closable` (boolean, default: false) - Renders a trailing remove button
 - `textOnly` (boolean, default: false) - Borderless text-only variant
-- `closeLabel` (string, default: 'Remove') - Accessible label for the remove button
+- `closeLabel` (string | null) - Accessible label for the remove button; falls back to the `chip.remove` label ('Remove')
 - `customClass` (string | string[] | object | null)
 
 **Events:** `click` (MouseEvent) - chip body clicked; `remove` - remove button clicked (no payload)
@@ -1221,7 +1222,7 @@ const presets = [datePresets.today(), datePresets.lastDays(7), datePresets.lastD
 <UiInputColorPicker id="brand" v-model="color" label="Brand color" />
 ```
 
-**Props:** `modelValue` (string | null, hex color), `maxlength` (number, default: 7) - length cap of the hex text field, `size` ('sm' | 'lg'), `variant` ('filled' | 'outline' | 'transparent') and `rounded` (style the whole `.form-color-group`), plus the base props `id` (on the swatch; the hex text field gets `<id>-text`), `label`, `errorMessages`, `disabled`, `required`, `optionalLabel`, `hideLabel`, `customClass` (on both fields)
+**Props:** `modelValue` (string | null, hex color), `maxlength` (number, default: 7) - length cap of the hex text field, `size` ('sm' | 'lg'), `variant` ('filled' | 'outline' | 'transparent') and `rounded` (style the whole `.form-color-group`), plus the base props `id` (on the swatch; the hex text field gets `<id>-text`), `label`, `placeholder` (hex field), `errorMessages`, `disabled`, `required`, `readonly` (hex field read-only, picker kept closed), `optionalLabel`, `hideLabel`, `customClass` (on both fields)
 
 The group carries the border, shadow, focus ring and invalid state; the swatch rounds to half the field radius (`--cffy-shape-field`, or `--cffy-input-radius`).
 
@@ -1474,7 +1475,7 @@ Mobile bottom navigation bar: shown below 1024px, hidden on wider screens.
 ```
 
 **Props:**
-- `items` (`INavItem[]`) - `{ id, to, icon, ariaLabel, text? }` (`id`, `to`, `icon`, `ariaLabel` required); each item takes 25% of the width, and the indicator animates across up to 8 items
+- `items` (`INavItem[]`, default: a single Home item linking to `/`) - `{ id, to, icon, ariaLabel, text? }` (`id`, `to`, `icon`, `ariaLabel` required); each item takes 25% of the width, and the indicator animates across up to 8 items
 - `activeItem` (string | null, default: null) - Matches an item's `id` or its string `to`; that item gets `aria-current="page"` and a bold icon
 - `as` (string | object, default: 'a') - Link component (`'a'`, `NuxtLink`, `RouterLink`); external `to` (`http(s):`, `mailto:`, `tel:`, `//`) always renders `<a target="_blank">`
 - `frosted`, `island` (boolean, default: false) - Frosted-glass background / floating island surface
@@ -1900,7 +1901,7 @@ Data table with type-aware sorting, a column manager, row selection, a sticky he
 - `pagination` (`{ pageSize, siblingCount?, showEdges?, compact?, size?, ariaLabel?, labels? }`, default: null) - Shows one page of the sorted rows with a `UiPagination` under the table (hidden when everything fits on one page); the page resets to 1 when the sort, page size or row count changes
 - `page` (number, default: 1) - Current page with `pagination`, bound via `v-model:page`
 - `stickyHeader` (boolean, default: false) - Sticks the header while the body scrolls; wraps the table in `.table-responsive-sticky`
-- `stickyHeight` (string | number, default: `32rem`) - Max height of the sticky scroll area (numbers are px); sets `--cffy-table-sticky-max-height`
+- `stickyHeight` (string | number | null, default: null) - Max height of the sticky scroll area (numbers are px); sets `--cffy-table-sticky-max-height`, which otherwise is `32rem`
 - `isLoading` (boolean, default: false) + `skeletonRows` (number, default: 10) - Built-in loading skeleton (one cell per visible column)
 - `caption` (string) - Visually hidden `<caption>` for screen readers, with the text shown below the scroll area (`.table-caption`, muted) so phones don't cut it off
 - Layout: wide tables scroll sideways inside `.table-responsive` with the scrollbar hidden; a select in a cell keeps at least its longest option's width
@@ -2026,6 +2027,7 @@ All three also take `role` (default: 'status'), `ariaLabel` and `ariaLive` ('off
 - `iconCode` (string, default: '&#xeb83;') - Material icon code used when `useCustomIcon` is true
 - `role` (string, default: 'status') / `ariaLabel` (string, default: 'Empty state') / `ariaLive` ('off' | 'polite' | 'assertive', default: 'polite') - Live-region semantics
 - `customClass` (string | string[] | null, optional) - Extra classes
+- `emptyStyles` (StyleValue, optional) - Inline styles on the root
 
 **Slots:** `action` - call-to-action content (usually a `UiButton`), centered in a button group below the title/subtitle
 
@@ -2049,7 +2051,7 @@ All three also take `role` (default: 'status'), `ariaLabel` and `ariaLive` ('off
 
 **`UiBaseSkeleton` props:** `width` / `height` (string | number; numbers are px), `size` ('sm' | 'md' | 'lg', default: 'md'), `variant` ('default' | 'thumbnail' | 'ai-generation' | 'shimmer', default: 'default'), `rounded` (boolean — pill shape), `customClass`, `skeletonStyles`
 **`UiGridSkeleton` props:** `skeletonGridItems` (number, default: 12), `gridLayoutClasses` (string | string[] — the grid wrapper classes), `cardVariant` (string, default: 'pane'), `showFooter` (boolean, default: true)
-**`UiTableSkeleton` props:** `skeletonRows` (number, default: 12), `skeletonCols` (number, default: 5), `customClass`, `skeletonStyles`
+**`UiTableSkeleton` props:** `skeletonRows` (number, default: 12), `skeletonCols` (number, default: 5), `isExpanded` (boolean, default: false) with `skeletonColExpanded` (number, default: 7, the column count while expanded), `customClass`, `skeletonStyles`
 
 All three also take `role` (default: 'status'), `ariaLabel` and `ariaLive` (default: 'polite'). `UiDatatable` renders `UiTableSkeleton` itself through `is-loading`.
 

@@ -34,6 +34,8 @@ npm install @vueuse/core @vueuse/components floating-vue
 
 `@colorffy/css` is an optional peer dependency of `@colorffy/ui`: keep both on the same major version (3.x), since the components set `--cffy-*` variables that only CSS 3.x reads.
 
+**Icon font:** `UiIconMaterial` and the components' built-in icons draw with Material Symbols Rounded. Install `@material-symbols/font-700` and load `import '@material-symbols/font-700/rounded.css'` once; without it the icons render as blank boxes or raw text. `@nuxt/kit` is an optional peer used only by the `@colorffy/ui/nuxt` module, and `floating-vue` is optional for `@colorffy/css` alone.
+
 ```typescript
 // main.ts
 import { createApp } from 'vue'

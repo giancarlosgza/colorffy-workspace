@@ -462,7 +462,7 @@ Radius classes work without `.border`.
 
 **Pattern:** `rounded-{none|sm|md|lg|xl|full}`, per side `rounded-{t|r|b|l}-{none|sm|md|lg|xl|full}`, raw `border-radius-{0|4|6|8|12|25|50}` (px)
 
-**Scale:** `none` 0, `sm` 6px, `md` 8px, `lg` 12px, `xl` 25px, `full` 50px. `rounded-full` is a fixed 50px, not 50%, so it only gives a circle on squares up to 100px.
+**Scale:** `none` 0, `sm` 6px, `md` 8px, `lg` 12px, `xl` 25px, `full` `--cffy-radius-full` (9999px, a pill or circle at any size). The raw `border-radius-50` class is a fixed 50px.
 
 ```html
 <!-- All corners -->
@@ -511,6 +511,17 @@ Radius classes work without `.border`.
 
 <!-- Sepia, Saturate, Brightness, Contrast use same pattern -->
 <img class="filter-brightness-200" src="...">200% brightness</img>
+```
+
+## Masks
+
+**Shapes:** `mask-shape` plus one of `shape-bum`, `shape-arch`, `shape-pill`, `shape-sunny`, `shape-gem`, `shape-cookie-6`, `shape-cookie-9`, `shape-cookie-12`, `shape-clover-4`, `shape-clover-8` clips an element (usually an image) to an SVG shape; add `shape-stretch` to scale the shape to 115% so less of the edge is cut. `UiAvatar`'s `maskShape` and `UiIconShapes` use the same shapes. Uses the unprefixed `mask-image` (Safari 15.4+).
+
+**Fades:** `mask-inline` fades the inline end and `mask-block` the bottom (the last 5%), for scrolling rows and clipped text.
+
+```html
+<img class="mask-shape shape-gem" src="/team/ana.jpg" alt="Ana Morales">
+<div class="d-flex overflow-auto mask-inline">…</div>
 ```
 
 ## Position

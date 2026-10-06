@@ -169,7 +169,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning â
 
 **Notifications**
 - Use `UiAlert` with `type="banner"` for important page-level messages
-- Use `type="snackbar"` for temporary notifications (bottom-right)
+- Use `type="snackbar"` for temporary notifications (bottom center by default; `placement` moves it, and on phones it spans the screen)
 - Use `type="tonal"` for inline alerts within content
 - Use `UiAlertToast` for simple toast notifications
 - Set `dismissible` for a close button (emits `dismiss`); set `duration` (ms) to auto-hide banner/tonal alerts (ignored for `type="snackbar"` â€” use `UiAlertToast`/`useToast` there instead)
@@ -256,7 +256,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning â
 - Use `UiIconMaterial` for Material Symbols (icon font glyph via `iconCode`)
 - Use `UiIconShapes` for decorative geometric shapes
 - Use `UiIconSvg` for any inline SVG (logos, brand marks) â€” paste into the slot, or pass `content` for data-driven icons from a local registry
-- All support `size` and `color` props (`color` recolors monochrome SVGs)
+- All support `size`; `UiIconMaterial` and `UiIconSvg` also take `color` (it recolors monochrome SVGs), while `UiIconShapes` keeps its fixed gradients
 
 ## Decision Trees
 
