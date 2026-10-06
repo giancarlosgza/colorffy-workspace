@@ -42,6 +42,7 @@
   },
   "peerDependencies": {
     "@colorffy/css": "^3.0.0",
+    "@nuxt/kit": "^3.0.0 || ^4.0.0",
     "@vueuse/components": "^14.0.0 || ^15.0.0",
     "@vueuse/core": "^14.0.0 || ^15.0.0",
     "floating-vue": "^5.4.0",
@@ -50,6 +51,9 @@
   },
   "peerDependenciesMeta": {
     "@colorffy/css": {
+      "optional": true
+    },
+    "@nuxt/kit": {
       "optional": true
     },
     "nuxt": {

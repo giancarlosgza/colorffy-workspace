@@ -65,6 +65,11 @@
     "floating-vue": "^5.4.0",
     "@material-symbols/font-700": ">=0.40.0 <1.0.0"
   },
+  "peerDependenciesMeta": {
+    "floating-vue": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "sass": "^1.104.1"
   }
