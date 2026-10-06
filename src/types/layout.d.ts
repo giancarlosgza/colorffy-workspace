@@ -1,11 +1,32 @@
+import { ClassValue } from './shared';
+export type HeaderContentSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type HeroContentSize = 'sm' | 'md' | 'lg' | 'xl';
+export type HeroContentAlign = 'start' | 'center' | 'end';
+export type SubheadingContentGutter = 'none' | 'sm' | 'md';
+export type FooterGroupDirection = 'col' | 'row';
 /**
  * Interface props for the HeaderContent component.
  * Notes:
  * - Use `title` and `subtitle` to display header text.
  * - Use `backButton` to enable back navigation.
- * - Use `actions` with the #actions slot to add action buttons.
+ * - Fill the #actions slot to add action buttons; the layout reacts on its own.
  */
 export interface IHeaderContentProps {
+    /**
+     * Heading element to render for the title. Section headers inside a page
+     * should step down from the page's own `h1`.
+     * @default 'h1'
+     */
+    as?: string;
+    /**
+     * Optional ID for the header title element, for external `aria-labelledby`
+     * references. Falls back to a generated id.
+     */
+    headingId?: string;
+    /**
+     * Small eyebrow label rendered above the title.
+     */
+    headline?: string | null;
     /**
      * Main title text to display in the header.
      */
@@ -15,27 +36,39 @@ export interface IHeaderContentProps {
      */
     subtitle?: string | null;
     /**
-     * When true, shows the actions slot for toolbar buttons.
+     * Title size. `sm` is the default page-header title; every step above it
+     * also takes the line height the type scale pairs with that step.
+     * @default 'sm'
      */
-    actions?: boolean;
+    size?: HeaderContentSize | (string & {}) | null;
     /**
-     * When true, hides action buttons on mobile devices.
-     * @default true
+     * When true, drops the actions out of the layout once the header's own
+     * container is 700px or narrower, rather than wrapping them below the title.
+     * Named for the container width, not the viewport: a narrow header in a wide
+     * window collapses too.
+     * @default false
      */
-    hideActionsOnMobile?: boolean;
+    hideActionsWhenNarrow?: boolean;
     /**
      * When true, displays a back navigation button.
      */
     backButton?: boolean;
     /**
      * Tooltip text for the back button.
-     * @default 'Go back'
+     * @default 'Go back', from the configured labels
      */
     backButtonLabel?: string;
     /**
+     * Pairs this header with the matching one on another page for a view
+     * transition. The value is the shared name both pages use, so it must be
+     * unique within each document; the description derives `<name>-description`.
+     * Nothing is emitted when it is omitted.
+     */
+    viewTransitionName?: string | null;
+    /**
      * Optional custom CSS classes for the header container.
      */
-    containerClass?: string | string[];
+    containerClass?: ClassValue | null;
 }
 /**
  * Interface for HeaderContent component events.
@@ -44,7 +77,7 @@ export interface IHeaderContentEmits {
     /**
      * Emitted when the back button is clicked.
      */
-    (e: 'click'): void;
+    (e: 'back'): void;
 }
 /**
  * Interface props for the PaneContent component.
@@ -57,11 +90,11 @@ export interface IPaneContentProps {
     /**
      * Optional custom CSS classes for the pane.
      */
-    customClass?: string | string[] | null;
+    customClass?: ClassValue | null;
     /**
      * Optional custom CSS classes for the container wrapper.
      */
-    containerClass?: string | string[] | null;
+    containerClass?: ClassValue | null;
     /**
      * When true, expands the pane to full height with `pane-content-expanded`.
      */
@@ -82,5 +115,168 @@ export interface IPaneContentProps {
      * Optional ID for the pane section element.
      */
     id?: string;
+}
+/**
+ * Interface props for the HeroContent component.
+ * Notes:
+ * - `size` picks the display step the title uses (`display-1` … `display-4`).
+ * - `align` moves the whole block, text and actions together.
+ * - Fill the #actions slot with the call-to-action buttons.
+ */
+export interface IHeroContentProps {
+    /**
+     * Optional ID for the hero title element. The section references it with
+     * `aria-labelledby`. Falls back to a generated id.
+     */
+    headingId?: string;
+    /**
+     * Small eyebrow label rendered above the title.
+     */
+    headline?: string | null;
+    /**
+     * Main title text.
+     */
+    title?: string | null;
+    /**
+     * Supporting description below the title.
+     */
+    subtitle?: string | null;
+    /**
+     * Title size, mapped onto the display scale; `xl` is the largest.
+     * @default 'xl'
+     */
+    size?: HeroContentSize | (string & {}) | null;
+    /**
+     * Horizontal alignment of the whole hero.
+     */
+    align?: HeroContentAlign | (string & {}) | null;
+    /**
+     * Pairs this hero with the matching one on another page for a view
+     * transition. The value is the shared name both pages use, so it must be
+     * unique within each document; the description derives `<name>-description`.
+     * Nothing is emitted when it is omitted.
+     */
+    viewTransitionName?: string | null;
+    /**
+     * Optional custom CSS classes for the hero section.
+     */
+    customClass?: ClassValue | null;
+}
+/**
+ * Interface props for the SubheadingContent component.
+ * Notes:
+ * - Renders `.text-subheading`; the description picks up its muted styling by
+ *   being the heading's sibling.
+ * - Use `as` to keep the document's heading order correct.
+ */
+export interface ISubheadingContentProps {
+    /**
+     * Heading element to render.
+     * @default 'h3'
+     */
+    as?: string;
+    /**
+     * Subheading text.
+     */
+    title?: string | null;
+    /**
+     * Supporting description below the subheading.
+     */
+    subtitle?: string | null;
+    /**
+     * Space below the subheading block: `md` is the default, `sm` tightens it
+     * and `none` removes it. The gap between the title and its description is
+     * fixed and does not follow it.
+     * @default 'md'
+     */
+    gutter?: SubheadingContentGutter | (string & {}) | null;
+    /**
+     * Optional custom CSS classes for the wrapper.
+     */
+    customClass?: ClassValue | null;
+}
+/**
+ * Interface props for the Footer component.
+ * Notes:
+ * - `title` and `subtitle` render the brand block; replace it with the #brand
+ *   slot when it needs more than two lines of text.
+ * - The default slot takes the link groups, inside the footer's own container.
+ * - `fluid` swaps that container for `.container-fluid`, as on the navbar.
+ * - The #bottom slot renders a divided bar under the groups.
+ */
+export interface IFooterProps {
+    /**
+     * Brand title.
+     */
+    title?: string | null;
+    /**
+     * Supporting line below the title.
+     */
+    subtitle?: string | null;
+    /**
+     * Use fluid container (.container-fluid vs .container).
+     * @default false
+     */
+    fluid?: boolean;
+    /**
+     * Optional custom CSS classes for the footer.
+     */
+    customClass?: ClassValue | null;
+}
+/**
+ * Interface props for the FooterGroup component.
+ */
+export interface IFooterGroupProps {
+    /**
+     * Heading for the group.
+     */
+    title?: string | null;
+    /**
+     * Stacks the links in a column or lays them out in a row. A row group with
+     * a title keeps the heading on its own line above the links.
+     * @default 'col'
+     */
+    direction?: FooterGroupDirection | (string & {});
+    /**
+     * Renders the title as a small uppercase overline.
+     * @default false
+     */
+    overline?: boolean;
+    /**
+     * Optional custom CSS classes for the group.
+     */
+    customClass?: ClassValue | null;
+}
+/**
+ * Interface props for the FooterItem component.
+ * Notes:
+ * - Renders an anchor when `to` or `href` is set, and a plain `.anchor-link`
+ *   entry otherwise, so both share the footer's link styling.
+ */
+export interface IFooterItemProps {
+    /**
+     * Label text. The default slot overrides it.
+     */
+    text?: string | null;
+    /**
+     * Optional leading Material Symbols icon code.
+     */
+    icon?: string | null;
+    /**
+     * Router target. Renders through `as` when it is a component.
+     */
+    to?: string | Record<string, unknown> | null;
+    /**
+     * Plain href target.
+     */
+    href?: string | null;
+    /**
+     * Component to render links with (e.g. NuxtLink). Defaults to an anchor.
+     */
+    as?: string | object | null;
+    /**
+     * Optional custom CSS classes.
+     */
+    customClass?: ClassValue | null;
 }
 //# sourceMappingURL=layout.d.ts.map

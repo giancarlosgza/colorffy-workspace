@@ -1,15 +1,13 @@
-import { IPopoverMenuProps, IUserData } from '../../../types/navigation';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        'body-extra'?(_: {}): any;
-        footer?(_: {}): any;
-    };
-    refs: {};
-    rootEl: HTMLDivElement;
+import { IPopoverMenuItem, IPopoverMenuProps } from '../../../types/navigation';
+declare var __VLS_1: {}, __VLS_17: {}, __VLS_32: {};
+type __VLS_Slots = {} & {
+    header?: (props: typeof __VLS_1) => any;
+} & {
+    body?: (props: typeof __VLS_17) => any;
+} & {
+    footer?: (props: typeof __VLS_32) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<IPopoverMenuProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {} & {
+declare const __VLS_base: import('vue').DefineComponent<IPopoverMenuProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {} & {
     hideDropdown: () => any;
     menuItemClick: (to: string | object) => any;
 }, string, import('vue').PublicProps, Readonly<IPopoverMenuProps> & Readonly<{
@@ -17,16 +15,18 @@ declare const __VLS_component: import('vue').DefineComponent<IPopoverMenuProps, 
     onMenuItemClick?: ((to: string | object) => any) | undefined;
 }>, {
     title: string | null;
-    subtitle: string | null;
+    ariaLabel: string | null;
+    id: string | null;
+    closable: boolean;
     isOpened: boolean;
-    menuItems: import('../../../types/navigation').INavItem[];
+    nativePopover: boolean;
+    menuItems: IPopoverMenuItem[];
     currentRoute: import('../../../types/navigation').IRouteLike | null;
-    avatarUrl: string | null;
-    user: IUserData | null;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

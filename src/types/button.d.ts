@@ -1,8 +1,9 @@
 import { IBadgeProps } from './badge';
-export type ButtonClassName = string | string[] | Record<string, boolean>;
+import { ClassValue, FloatingPlacement, SizeLevel, ThemeColor } from './shared';
+export type ButtonClassName = ClassValue;
 export type ButtonVariant = 'filled' | 'tonal' | 'outline' | 'text' | 'link' | 'chip' | 'cta' | 'gradient' | 'frosted';
-export type ButtonColor = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'white' | 'black' | 'transparent';
-export type ButtonSizeLevel = 'sm' | 'md' | 'lg';
+export type ButtonColor = ThemeColor | 'white' | 'black' | 'transparent';
+export type ButtonSizeLevel = SizeLevel;
 /**
  * Base props shared by all button families.
  * Contains core identifiers, content, visual styles, and common states.
@@ -66,23 +67,43 @@ export interface IBaseButtonProps {
      * Optional fluid width style. When true, applies btn-block class for 100% width.
      */
     fluid?: boolean;
-    /**
-     * Optional tooltip text of the button. Can be a string or null.
-     */
-    tooltipText?: string | null;
-    /**
-     * Optional placement for tooltip or dropdown.
-     */
-    placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
 }
 /**
  * Interface props for the Button component.
  * Notes:
  * - Use `variant` (filled | tonal | outline | text | link | chip | cta | gradient | frosted) for style and `color` (primary | warning | etc.) for intent.
  * - Preferred size prop: `size` ('sm' | 'md' | 'lg').
- * - Legacy composite `variant` strings remain accepted as a fallback; `sizeLevel` is kept for backward compatibility.
+ * - Legacy composite `variant` strings remain accepted as a fallback.
+ * - Polymorphic: passing `to` or `href` renders the button as a link (`<a>` by default,
+ *   or the component/tag given via `as`) while keeping identical button styling. Passing
+ *   `as` alone (without `to`/`href`) has no effect — the native `<button>` markup is
+ *   emitted unchanged.
  */
-export type IButtonProps = IBaseButtonProps;
+export interface IButtonProps extends IBaseButtonProps {
+    /**
+     * Native `type` attribute for the rendered `<button>`. Ignored in link mode
+     * (when `to` or `href` is set).
+     * @default 'button'
+     */
+    type?: 'button' | 'submit' | 'reset';
+    /**
+     * Navigation destination. Setting `to` (or `href`) switches Button into link mode,
+     * rendering an `<a>` (or the tag/component passed via `as`) instead of a `<button>`.
+     * Accepts a string path or a router location object.
+     */
+    to?: string | object;
+    /**
+     * Standard `href` for plain/external links. Setting `href` (or `to`) switches Button
+     * into link mode, rendering an `<a>` (or the tag/component passed via `as`).
+     */
+    href?: string;
+    /**
+     * Tag or component to render in link mode (e.g. `'a'`, `RouterLink`, `NuxtLink`).
+     * Only takes effect when `to` or `href` is also set.
+     * @default 'a'
+     */
+    as?: string | object;
+}
 /**
  * Interface emits for the Button component.
  */
@@ -90,7 +111,7 @@ export interface IButtonEmits {
     /**
      * Emitted when the button is clicked.
      */
-    (e: 'onClick'): void;
+    (e: 'click', event: MouseEvent): void;
 }
 /**
  * Interface props for the ButtonGroup component.
@@ -144,6 +165,11 @@ export interface IButtonTooltipProps extends IButtonProps {
      */
     tooltipText?: string;
     /**
+     * Where the tooltip opens.
+     * @default 'top'
+     */
+    placement?: FloatingPlacement;
+    /**
      * Forwarded to the underlying button's `aria-expanded` (for toggle buttons).
      */
     ariaExpanded?: boolean;
@@ -159,7 +185,7 @@ export interface IButtonTooltipEmits {
     /**
      * Emitted when the button is clicked.
      */
-    (e: 'onClick'): void;
+    (e: 'click', event: MouseEvent): void;
 }
 /**
  * Interface for options used in ButtonToggleGroup component.
@@ -210,13 +236,10 @@ export interface IButtonToggleGroupProps {
      */
     options: IButtonToggleOption[];
     /**
-     * ARIA label for accessibility.
+     * Accessible name of the radiogroup.
+     * @default 'Toggle button group', from the configured labels
      */
     ariaLabel?: string;
-    /**
-     * Group label for accessibility.
-     */
-    groupLabel?: string;
 }
 /**
  * Interface emits for the ButtonToggleGroup component.
@@ -225,7 +248,7 @@ export interface IButtonToggleGroupEmits {
     /**
      * Emitted when an option is activated by pointer or keyboard.
      */
-    (e: 'onOptionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void;
+    (e: 'optionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void;
 }
 /**
  * Interface props for the ButtonMenuText component.
@@ -245,9 +268,20 @@ export interface IButtonMenuProps extends IBaseButtonProps {
      */
     isMobile?: boolean;
     /**
-     * Optional placement for the tooltip.
+     * Tooltip on the button; none by default. Also the button's name when it has
+     * no `text` or `title`, which otherwise comes from the `buttonMenu.ariaLabel` label.
      */
-    tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
+    tooltipText?: string | null;
+    /**
+     * Where the menu opens.
+     * @default 'bottom'
+     */
+    placement?: FloatingPlacement;
+    /**
+     * Where the tooltip opens.
+     * @default 'top'
+     */
+    tooltipPlacement?: FloatingPlacement;
 }
 /**
  * Interface emits for the ButtonMenu component.
@@ -256,7 +290,7 @@ export interface IButtonMenuEmits {
     /**
      * Emitted when the menu button is clicked.
      */
-    (e: 'onClick'): void;
+    (e: 'click', event: MouseEvent): void;
 }
 /**
  * Interface props for the ButtonMenuItem component.
@@ -310,11 +344,31 @@ export interface IButtonMenuItemProps {
      * CSS classes for the trailing icon.
      */
     iconTrailingClass?: string | string[] | null;
+    /**
+     * Keep the menu open after this item is clicked (for toggles and multi-step choices).
+     * @default false
+     */
+    keepOpen?: boolean;
+    /**
+     * Makes the item a checkbox (`role="menuitemcheckbox"`) and sets its checked state.
+     * Pair it with `keepOpen` for toggles. `null` keeps a plain menu item.
+     * @default null
+     */
+    checked?: boolean | null;
 }
 /**
  * Interface props for the LinkTooltip component.
  */
 export interface ILinkTooltipProps extends IBaseButtonProps {
+    /**
+     * Text to display in the tooltip.
+     */
+    tooltipText?: string | null;
+    /**
+     * Where the tooltip opens.
+     * @default 'top'
+     */
+    placement?: FloatingPlacement;
     /**
      * Router link target location.
      */
@@ -341,7 +395,7 @@ export interface IButtonMenuSubmenuProps {
      * Placement of the submenu dropdown.
      * Defaults to 'right' for a submenu.
      */
-    placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
+    placement?: FloatingPlacement;
     /**
      * When true, disables certain positioning features on mobile devices.
      */

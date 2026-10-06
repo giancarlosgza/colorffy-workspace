@@ -53,7 +53,7 @@ export interface IBreadcrumbProps {
     separatorIcon?: string | null;
     /**
      * Accessible name for the `<nav>` landmark.
-     * @default 'Breadcrumb'
+     * @default 'Breadcrumb', from the configured labels
      */
     ariaLabel?: string;
     /**

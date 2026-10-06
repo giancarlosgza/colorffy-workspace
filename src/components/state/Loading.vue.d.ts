@@ -11,16 +11,16 @@ interface ILoadingProps {
     ariaLabel?: string;
     ariaLive?: 'off' | 'polite' | 'assertive';
 }
-declare const _default: import('vue').DefineComponent<ILoadingProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ILoadingProps> & Readonly<{}>, {
+declare const __VLS_export: import('vue').DefineComponent<ILoadingProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ILoadingProps> & Readonly<{}>, {
     title: string | null;
-    ariaLabel: string;
-    role: string;
-    customClass: string | string[] | null;
     subtitle: string | null;
+    customClass: string | string[] | null;
+    role: string;
     ariaLive: "off" | "polite" | "assertive";
     loadingStyles: string | false | import('vue').CSSProperties | StyleValue[] | null;
     spinnerSize: string | number;
     hideSpinner: boolean;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const _default: typeof __VLS_export;
 export default _default;
 //# sourceMappingURL=Loading.vue.d.ts.map

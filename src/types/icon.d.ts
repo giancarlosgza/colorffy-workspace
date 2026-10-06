@@ -2,7 +2,7 @@
  * Supported visual sets for the icon wrapper component.
  * Used by the icon wrapper to select the icon family.
  */
-export type IconSet = 'material' | 'shapes' | 'tool' | 'brand';
+export type IconSet = 'material' | 'shapes' | 'svg';
 /**
  * Semantic size tokens that map to CSS utility classes.
  * Used for scalable icon sizing.
@@ -44,16 +44,6 @@ export interface IIconBaseProps {
  */
 export type IconShape = 'lighting-1' | 'shape-1' | 'shape-2' | 'shape-3' | 'shape-4' | 'circle-1' | 'circle-2' | 'circle-3' | 'circle-4' | 'blob-1' | 'blob-2' | 'blob-3' | 'blob-4' | 'blob-5' | 'blob-6' | 'blob-7' | 'star-1' | 'star-2' | 'star-3' | 'star-4' | 'star-5' | 'star-6' | 'star-7' | 'star-8';
 /**
- * Literal tool names rendered in UiIconTool.
- * Used for tool glyphs.
- */
-export type IconToolName = 'Stripe' | 'Buy Sell Ads' | 'Firebase Console' | 'Search Console' | 'Hotjar Insights' | 'Plausible Analytics' | 'Google Ads' | 'Google Analytics';
-/**
- * Literal brand icons rendered in UiIconBrand.
- * Used for brand glyphs.
- */
-export type IconBrandName = 'youtube' | 'github' | 'codepen' | 'twitter' | 'instagram' | 'discord' | 'coffee' | 'stripe' | 'buy-coffee' | 'apple' | 'google' | 'facebook' | 'nuxt';
-/**
  * Interface props for the Material Symbol implementation.
  * Notes:
  * - `iconCode` expects a Material Symbols HTML entity (e.g., `&#xe87c;`).
@@ -61,9 +51,38 @@ export type IconBrandName = 'youtube' | 'github' | 'codepen' | 'twitter' | 'inst
  */
 export interface IMaterialIconProps extends IIconBaseProps {
     /**
+     * Glyph size: `xs` / `sm` / `md` / `lg` / `xl` = 20 / 24 / 32 / 40 / 48px, or a
+     * number of px. Unset, the icon follows the surrounding text size.
+     */
+    size?: IconSize | number | null;
+    /**
+     * Glyph color, any CSS color. Unset, the icon follows the surrounding text color.
+     */
+    color?: string | null;
+    /**
      * The symbol entity code (e.g. `'&#xe87c;'`).
      */
     iconCode: string;
+}
+/**
+ * Interface props for the UiIconSvg wrapper.
+ * Notes:
+ * - Renders inline SVG passed through the default slot, or via `content`.
+ * - `content` accepts raw SVG markup for data-driven icons (e.g. from a local
+ *   registry); when omitted, the default slot is used.
+ * - `color` recolors monochrome icons; multi-color/gradient SVGs keep their own fills.
+ * - Inherits base icon props (size token/number, decorative, ariaLabel).
+ */
+export interface IIconSvgProps extends IIconBaseProps {
+    /**
+     * Optional namespace seed for IDs inside inlined SVG markup.
+     */
+    uid?: string | null;
+    /**
+     * Optional raw inline SVG markup to render (for data-driven icons).
+     * When omitted, the default slot is used instead.
+     */
+    content?: string | null;
 }
 /**
  * Interface props for shape-based SVGs.
@@ -85,90 +104,15 @@ export interface IShapeIconProps extends IIconBaseProps {
     title?: string | null;
 }
 /**
- * Interface props for tool glyphs.
- * Notes:
- * - `tool` is required and must match a literal in IconToolName.
- * - Inherits base icon props.
- */
-export interface IToolIconProps extends IIconBaseProps {
-    /**
-     * The tool literal to render.
-     * Must match a value in IconToolName.
-     */
-    tool: IconToolName;
-}
-/**
- * Internal definition for tool icons.
- */
-export interface IToolIconDefinition {
-    /**
-     * SVG viewBox attribute.
-     */
-    viewBox: string;
-    /**
-     * Default fill color.
-     */
-    defaultColor?: string;
-    /**
-     * SVG path data.
-     */
-    paths?: Array<{
-        d: string;
-    }>;
-}
-/**
- * Interface props for brand glyphs.
- * Notes:
- * - `brand` is required and must match a literal in IconBrandName.
- * - Inherits base icon props.
- */
-export interface IBrandIconProps extends IIconBaseProps {
-    /**
-     * The brand literal to render.
-     * Must match a value in IconBrandName.
-     */
-    brand: IconBrandName;
-}
-/**
- * Interface props for the IconApp component.
- */
-export interface IIconAppProps extends IIconBaseProps {
-    /**
-     * Icon brand name.
-     */
-    icon?: IconBrandName | null;
-    /**
-     * Explicit brand name (overrides icon).
-     */
-    brand?: IconBrandName | null;
-}
-/**
- * Internal metadata for app/brand icons.
- */
-export interface IIconMeta {
-    /**
-     * CSS class to apply to the SVG.
-     */
-    class?: string | null;
-    /**
-     * Default fill color.
-     */
-    defaultColor?: string | null;
-    /**
-     * Whether the icon supports manual color override.
-     */
-    supportsColorOverride?: boolean;
-}
-/**
  * Discriminated union used by the icon wrapper.
  * Notes:
  * - `set` selects the icon family.
- * - Only one of `iconCode`, `shape`, `tool`, or `brand` should be provided.
+ * - Only one of `iconCode`, `shape`, or `content` should be provided.
  * - Inherits base icon props.
  */
 export interface IUiIconProps extends IIconBaseProps {
     /**
-     * Icon set to use (material, shapes, tool, brand).
+     * Icon set to use (material, shapes, svg).
      */
     set?: IconSet;
     /**
@@ -180,12 +124,8 @@ export interface IUiIconProps extends IIconBaseProps {
      */
     shape?: IconShape | null;
     /**
-     * Tool literal (if set = 'tool').
+     * Raw inline SVG markup (if set = 'svg').
      */
-    tool?: IconToolName | null;
-    /**
-     * Brand literal (if set = 'brand').
-     */
-    brand?: IconBrandName | null;
+    content?: string | null;
 }
 //# sourceMappingURL=icon.d.ts.map

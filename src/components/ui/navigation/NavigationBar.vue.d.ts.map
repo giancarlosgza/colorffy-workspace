@@ -1,1 +1,1 @@
-{"version":3,"file":"NavigationBar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/NavigationBar.vue"],"names":[],"mappings":"AA+GA,OAAO,KAAK,EAAE,mBAAmB,EAAE,QAAQ,EAAE,MAAM,oBAAoB,CAAA;;;;;;;;;;AA+KvE,wBAQG"}
+{"version":3,"file":"NavigationBar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/NavigationBar.vue"],"names":[],"mappings":"AAiHA,OAAO,KAAK,EAAE,mBAAmB,EAAE,QAAQ,EAAE,MAAM,oBAAoB,CAAA;AAyKvE,QAAA,MAAM,YAAY;;;;;;;;6EAGhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

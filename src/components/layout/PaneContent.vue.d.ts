@@ -1,31 +1,23 @@
 import { IPaneContentProps } from '../../types/layout';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        default?(_: {}): any;
-    };
-    refs: {
-        paneContentRef: HTMLElement;
-    };
-    rootEl: HTMLDivElement;
+declare var __VLS_1: {};
+type __VLS_Slots = {} & {
+    default?: (props: typeof __VLS_1) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<IPaneContentProps, {
+declare const __VLS_base: import('vue').DefineComponent<IPaneContentProps, {
     paneContentRef: import('vue').Ref<HTMLElement | null, HTMLElement | null>;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IPaneContentProps> & Readonly<{}>, {
+    customClass: import('../..').ClassValue | null;
+    containerClass: import('../..').ClassValue | null;
     ariaLabel: string;
     id: string;
-    customClass: string | string[] | null;
-    containerClass: string | string[] | null;
     isFullHeight: boolean;
     ariaLabelledby: string;
     ariaDescribedby: string;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {
-    paneContentRef: HTMLElement;
-}, HTMLDivElement>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

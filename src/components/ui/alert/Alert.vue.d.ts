@@ -1,26 +1,29 @@
 import { IAlertProps } from '../../../types/alert';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        content?(_: {}): any;
-        actions?(_: {}): any;
-    };
-    refs: {};
-    rootEl: HTMLDivElement;
+declare var __VLS_26: {}, __VLS_28: {};
+type __VLS_Slots = {} & {
+    content?: (props: typeof __VLS_26) => any;
+} & {
+    actions?: (props: typeof __VLS_28) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<IAlertProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IAlertProps> & Readonly<{}>, {
-    variant: import('../../../types/alert').AlertVariant;
-    size: import('../../../types/alert').AlertSize;
-    type: import('../../../types/alert').AlertType;
+declare const __VLS_base: import('vue').DefineComponent<IAlertProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {} & {
+    dismiss: () => any;
+}, string, import('vue').PublicProps, Readonly<IAlertProps> & Readonly<{
+    onDismiss?: (() => any) | undefined;
+}>, {
     customClass: import('../../../types/alert').AlertClassName;
-    rounded: boolean;
+    type: import('../../../types/alert').AlertType;
+    size: import('../../../types/alert').AlertSize;
     placement: import('../../../types/alert').AlertPlacement;
+    variant: import('../../../types/alert').AlertVariant;
+    rounded: boolean;
+    duration: number;
     critical: boolean;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+    dismissible: boolean;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

@@ -1,1 +1,1 @@
-{"version":3,"file":"Tabs.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/Tabs.vue"],"names":[],"mappings":"AA+GA,OAAO,KAAK,EAAwB,UAAU,EAAE,MAAM,oBAAoB,CAAA;;;;;;;;;;AAyJ1E,wBASG"}
+{"version":3,"file":"Tabs.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/Tabs.vue"],"names":[],"mappings":"AAyKA,OAAO,KAAK,EAAwB,UAAU,EAAE,MAAM,oBAAoB,CAAA;AAuO1E,QAAA,MAAM,YAAY;;;;;;;;;;;;;6EAIhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

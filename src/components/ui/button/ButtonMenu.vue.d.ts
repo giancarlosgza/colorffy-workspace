@@ -1,41 +1,38 @@
 import { IButtonMenuProps } from '../../../types/button';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        icon?(_: {}): any;
-        menu?(_: {}): any;
-    };
-    refs: {};
-    rootEl: any;
+declare var __VLS_29: {}, __VLS_33: {};
+type __VLS_Slots = {} & {
+    icon?: (props: typeof __VLS_29) => any;
+} & {
+    menu?: (props: typeof __VLS_33) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<IButtonMenuProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {} & {
-    onClick: () => any;
+declare const __VLS_base: import('vue').DefineComponent<IButtonMenuProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {} & {
+    click: (event: MouseEvent) => any;
 }, string, import('vue').PublicProps, Readonly<IButtonMenuProps> & Readonly<{
-    onOnClick?: (() => any) | undefined;
+    onClick?: ((event: MouseEvent) => any) | undefined;
 }>, {
-    text: string | null;
-    variant: import('../../../types/button').ButtonVariant | (string & {});
-    isMobile: boolean;
-    tooltipPlacement: "top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end";
     title: string | null;
-    icon: boolean;
+    fluid: boolean;
+    customClass: import('../../../types/button').ButtonClassName | null;
+    text: string | null;
     size: import('../../../types/button').ButtonSizeLevel | (string & {});
     color: import('../../../types/button').ButtonColor | (string & {});
+    icon: boolean;
+    loading: boolean;
+    tooltipText: string | null;
+    placement: import('../../..').FloatingPlacement;
+    variant: import('../../../types/button').ButtonVariant | (string & {});
+    isMobile: boolean;
+    tooltipPlacement: import('../../..').FloatingPlacement;
     id: string | null;
     iconVariant: "shape-sm" | "shape-md" | "compact-sm" | "compact";
     iconTrailing: boolean;
     disabled: boolean;
-    loading: boolean;
-    customClass: import('../../../types/button').ButtonClassName | null;
     rounded: boolean;
-    fluid: boolean;
-    tooltipText: string | null;
-    placement: "top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end";
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

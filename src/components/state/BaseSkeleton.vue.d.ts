@@ -3,7 +3,6 @@ import { StyleValue } from 'vue';
 interface IBaseSkeletonProps {
     size?: 'sm' | 'md' | 'lg';
     variant?: 'default' | 'thumbnail' | 'ai-generation' | 'shimmer';
-    isThumbnail?: boolean;
     customClass?: string | string[] | null;
     skeletonStyles?: StyleValue;
     width?: string | number;
@@ -13,18 +12,17 @@ interface IBaseSkeletonProps {
     ariaLabel?: string;
     ariaLive?: 'off' | 'polite' | 'assertive';
 }
-declare const _default: import('vue').DefineComponent<IBaseSkeletonProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IBaseSkeletonProps> & Readonly<{}>, {
-    variant: "default" | "thumbnail" | "ai-generation" | "shimmer";
-    size: "sm" | "md" | "lg";
-    ariaLabel: string;
-    role: string;
+declare const __VLS_export: import('vue').DefineComponent<IBaseSkeletonProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IBaseSkeletonProps> & Readonly<{}>, {
     customClass: string | string[] | null;
+    size: "sm" | "md" | "lg";
+    role: string;
+    variant: "default" | "thumbnail" | "ai-generation" | "shimmer";
     rounded: boolean;
-    isThumbnail: boolean;
     skeletonStyles: string | false | import('vue').CSSProperties | StyleValue[] | null;
     width: string | number;
     height: string | number;
     ariaLive: "off" | "polite" | "assertive";
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const _default: typeof __VLS_export;
 export default _default;
 //# sourceMappingURL=BaseSkeleton.vue.d.ts.map

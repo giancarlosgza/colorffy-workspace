@@ -1,4 +1,8 @@
-export type AccordionClassName = string | string[] | Record<string, boolean>;
+import { ClassValue, SizeLevel } from './shared';
+export type AccordionClassName = ClassValue;
+export type AccordionSize = Extract<SizeLevel, 'sm' | 'md'>;
+export type AccordionVariant = 'borderless' | 'border-block';
+export type AccordionShape = 'rounded' | 'square';
 /**
  * Interface props for the Accordion item component.
  * Notes:
@@ -21,13 +25,28 @@ export interface IAccordionItemProps {
      */
     title?: string | null;
     /**
+     * Optional leading Material Symbols icon (HTML entity, e.g. `'&#xe87c;'`) shown before the title.
+     * Rendered via UiIconMaterial. Ignored when the `header` slot is used.
+     */
+    icon?: string | null;
+    /**
+     * Optional custom class for the icon within the accordion item. Accepts string, array, or object map.
+     */
+    iconClass?: AccordionClassName | null;
+    /**
      * Body text displayed inside the accordion panel. Prefer using the default slot.
      */
     text?: string | null;
     /**
-     * Disables user interaction when true.
+     * When true, the header can't be clicked or focused, so the item keeps its
+     * current open state; `v-model:open` can still change it.
      */
     disabled?: boolean;
+    /**
+     * Scalable size for this accordion item ('sm' | 'md').
+     * Overrides the size set on the parent AccordionGroup. Defaults to 'md'.
+     */
+    size?: AccordionSize | (string & {}) | null;
     /**
      * Optional custom classes for the root element.
      */
@@ -44,6 +63,22 @@ export interface IAccordionGroupProps {
      * Renders the group with a transparent background.
      */
     isTransparent?: boolean;
+    /**
+     * Surface variant for the group.
+     * 'borderless' removes background and borders; 'border-block' renders a
+     * flush list separated by horizontal rules. Accepts a custom string.
+     */
+    variant?: AccordionVariant | (string & {}) | null;
+    /**
+     * Scalable size applied to all accordion items ('sm' | 'md').
+     * Defaults to 'md'. Accepts a custom string.
+     */
+    size?: AccordionSize | (string & {}) | null;
+    /**
+     * Corner shape for the accordion items. 'rounded' (default) keeps the
+     * tonal per-position radius; 'square' removes all rounding.
+     */
+    shape?: AccordionShape | null;
     /**
      * Optional custom classes for the wrapper element.
      */

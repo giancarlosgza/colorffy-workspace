@@ -10,6 +10,8 @@ export declare function useToast(toast: Ref<IToastDisplay | null>): {
     success: (message: string, opts?: ToastOptions) => void;
     warning: (message: string, opts?: ToastOptions) => void;
     danger: (message: string, opts?: ToastOptions) => void;
+    info: (message: string, opts?: ToastOptions) => void;
+    primary: (message: string, opts?: ToastOptions) => void;
 };
 export {};
 //# sourceMappingURL=useToast.d.ts.map

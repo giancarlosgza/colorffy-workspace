@@ -1,0 +1,1 @@
+{"version":3,"file":"useMenuNavigation.d.ts","sourceRoot":"","sources":["../../../src/composables/useMenuNavigation.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,GAAG,EAAE,MAAM,KAAK,CAAA;AAK9B;;;;;GAKG;AACH,wBAAgB,iBAAiB,CAAC,IAAI,EAAE,GAAG,CAAC,WAAW,GAAG,IAAI,CAAC;0BAShC,OAAO,GAAG,MAAM,KAAG,IAAI;uBAK1B,aAAa,KAAG,IAAI;EA2B/C"}

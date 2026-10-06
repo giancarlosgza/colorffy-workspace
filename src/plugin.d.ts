@@ -1,4 +1,5 @@
 import { Plugin } from 'vue';
-declare const ColorffyUI: Plugin;
+import { IColorffyOptions } from './types/config';
+declare const ColorffyUI: Plugin<[IColorffyOptions?]>;
 export default ColorffyUI;
 //# sourceMappingURL=plugin.d.ts.map

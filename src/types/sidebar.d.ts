@@ -1,5 +1,5 @@
-import { IBaseLinkProps } from './shared';
-export type SidebarClassName = string | string[] | Record<string, boolean>;
+import { ClassValue, FloatingPlacement, IBaseLinkProps } from './shared';
+export type SidebarClassName = ClassValue;
 /**
  * Interface props for the Sidebar (NavigationDrawer) component.
  */
@@ -10,7 +10,7 @@ export interface ISidebarProps {
     bordered?: boolean;
     /**
      * Accessible label for the navigation landmark.
-     * @default 'Main navigation'
+     * @default 'Main navigation', from the configured labels
      */
     ariaLabel?: string;
     /**
@@ -26,7 +26,7 @@ export interface ISidebarProps {
     open?: boolean;
     /**
      * Custom width of the sidebar.
-     * Sets --theme-nav-drawer-width CSS variable.
+     * Sets the `--cffy-sidebar-width` hook (default `--cffy-container-2xs`, 18rem).
      * When null/undefined, uses the default CSS variable value.
      * @default null
      */
@@ -35,6 +35,18 @@ export interface ISidebarProps {
      * Optional custom CSS classes to apply to the sidebar container.
      */
     customClass?: SidebarClassName | null;
+    /**
+     * Extra classes for the `.drawer-header` wrapper the `header` slot renders in.
+     */
+    headerClass?: SidebarClassName | null;
+    /**
+     * Extra classes for the `.drawer-body` wrapper the `body` slot renders in.
+     */
+    bodyClass?: SidebarClassName | null;
+    /**
+     * Extra classes for the `.drawer-footer` wrapper the `footer` slot renders in.
+     */
+    footerClass?: SidebarClassName | null;
 }
 /**
  * Interface for the Sidebar (NavigationDrawer) component emits.
@@ -63,7 +75,7 @@ export interface ISidebarLinkProps extends IBaseLinkProps {
      * Tooltip placement position.
      * @default 'right'
      */
-    tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
+    tooltipPlacement?: FloatingPlacement;
     /**
      * Marks as child/nested link (applies .drawer-item-child class with indentation).
      */
@@ -97,36 +109,9 @@ export interface ISidebarDropdownProps {
      * Only applies when interactive is true.
      * @default 'bottom'
      */
-    placement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
+    placement?: FloatingPlacement;
     /**
      * Optional custom CSS classes to apply to the dropdown content.
-     */
-    customClass?: string | null;
-}
-/**
- * Interface props for the SidebarHeader component.
- */
-export interface ISidebarHeaderProps {
-    /**
-     * Optional custom CSS class for the header container.
-     */
-    customClass?: string | null;
-}
-/**
- * Interface props for the SidebarBody component.
- */
-export interface ISidebarBodyProps {
-    /**
-     * Optional custom CSS class for the body container.
-     */
-    customClass?: string | null;
-}
-/**
- * Interface props for the SidebarFooter component.
- */
-export interface ISidebarFooterProps {
-    /**
-     * Optional custom CSS class for the footer container.
      */
     customClass?: string | null;
 }

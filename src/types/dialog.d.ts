@@ -1,4 +1,5 @@
-export type DialogClassName = string | string[] | Record<string, boolean>;
+import { ClassValue } from './shared';
+export type DialogClassName = ClassValue;
 export type DialogMode = 'modal' | 'side-sheet' | 'headless';
 export type DialogSize = 'sm' | 'md' | 'lg' | 'fullscreen';
 export type DialogVariant = 'danger' | 'warning' | 'success' | 'primary';
@@ -16,31 +17,26 @@ export interface IDialogProps {
      */
     showAsModal?: boolean | null;
     /**
-     * Optional isHeadless property of the Dialog component.
-     * Can be a boolean indicating if the dialog is customizable or not, or null.
-     */
-    isHeadless?: boolean | null;
-    /**
-     * Preferred way to describe the dialog shape.
-     * When provided, it takes precedence over `isModal`, `isSideSheet`, and `isHeadless`.
+     * Dialog shape: a centered modal, a side sheet, or `headless`, whose
+     * header lays out a tinted icon beside the title.
      */
     mode?: DialogMode;
     /**
      * Preferred size for the Dialog component.
-     * When provided, it takes precedence over legacy `isSmall` and `isLarge` flags.
+     * Controls the dialog dimensions ('sm' | 'md' | 'lg' | 'fullscreen').
      */
     size?: DialogSize | null;
     /**
-     * Optional title text shown in the dialog header (if used by the template).
+     * Title shown in the dialog header when the `header` slot is empty.
      */
     title?: string | null;
     /**
-     * Optional message text shown in the dialog body.
+     * Message shown in the dialog body when the `body` slot is empty.
      */
     message?: string | null;
     /**
      * Optional label for the primary confirm action (used by confirm-style dialogs).
-     * @default 'Delete'
+     * @default 'Delete', from the configured labels
      */
     confirmLabel?: string | null;
     /**
@@ -77,9 +73,9 @@ export interface IDialogDisplay {
  */
 export interface IDialogEmits {
     /**
-     * Emitted when the dialog is closed.
+     * Emitted whenever the dialog closes: `closeDialog()`, a click outside, or Esc.
      */
-    (e: 'onCloseDialog'): void;
+    (e: 'close'): void;
 }
 /**
  * Interface props for the ConfirmModal component.
@@ -92,12 +88,12 @@ export interface IConfirmModalProps extends IDialogProps {
     isLoading?: boolean;
     /**
      * Text to display when loading.
-     * @default 'Deleting...'
+     * @default 'Deleting...', from the configured labels
      */
     loadingLabel?: string;
     /**
      * Text for the cancel button.
-     * @default 'Cancel'
+     * @default 'Cancel', from the configured labels
      */
     cancelLabel?: string;
 }
@@ -109,5 +105,9 @@ export interface IConfirmModalEmits {
      * Emitted when the confirm button is clicked.
      */
     (e: 'confirm'): void;
+    /**
+     * Emitted whenever the dialog closes: cancel button, click outside, Esc or `closeDialog()`.
+     */
+    (e: 'close'): void;
 }
 //# sourceMappingURL=dialog.d.ts.map

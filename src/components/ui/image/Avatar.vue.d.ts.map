@@ -1,1 +1,1 @@
-{"version":3,"file":"Avatar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/image/Avatar.vue"],"names":[],"mappings":"AAyFA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAA;;;;;;;;;AAiIlD,wBAOG"}
+{"version":3,"file":"Avatar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/image/Avatar.vue"],"names":[],"mappings":"AA4JA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAA;AAoLlD,QAAA,MAAM,YAAY;;;;;;;;;6EAGhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

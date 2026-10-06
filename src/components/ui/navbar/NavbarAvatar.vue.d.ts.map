@@ -1,1 +1,1 @@
-{"version":3,"file":"NavbarAvatar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navbar/NavbarAvatar.vue"],"names":[],"mappings":"AAmDA,OAAO,KAAK,EAAsB,kBAAkB,EAAE,MAAM,gBAAgB,CAAA;;;;;;;;;;;AAgG5E,wBASG"}
+{"version":3,"file":"NavbarAvatar.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navbar/NavbarAvatar.vue"],"names":[],"mappings":"AA2DA,OAAO,KAAK,EAAsB,kBAAkB,EAAE,MAAM,gBAAgB,CAAA;AA0G5E,QAAA,MAAM,YAAY;;;;;;;;6EAIhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

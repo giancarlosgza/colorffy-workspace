@@ -1,1 +1,1 @@
-{"version":3,"file":"Material.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/icon/Material.vue"],"names":[],"mappings":"AA6BA,OAAO,KAAK,EAAE,kBAAkB,EAAE,MAAM,cAAc,CAAA;;;;;AAmEtD,wBAQG"}
+{"version":3,"file":"Material.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/icon/Material.vue"],"names":[],"mappings":"AA8CA,OAAO,KAAK,EAAE,QAAQ,EAAE,kBAAkB,EAAE,MAAM,cAAc,CAAA;AAwEhE,QAAA,MAAM,YAAY;;;;;6EAGhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

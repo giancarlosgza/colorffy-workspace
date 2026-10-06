@@ -1,8 +1,9 @@
+import { ClassValue, ThemeColor } from './shared';
 export type AlertType = 'banner' | 'tonal' | 'snackbar';
-export type AlertVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'danger' | 'info' | 'transparent' | 'default';
+export type AlertVariant = ThemeColor | 'transparent' | 'default';
 export type AlertSize = 'sm';
 export type AlertPlacement = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right';
-export type AlertClassName = string | string[] | Record<string, boolean>;
+export type AlertClassName = ClassValue;
 export interface IToastOptions {
     message?: string;
     variant?: AlertVariant;
@@ -54,6 +55,29 @@ export interface IAlertProps {
      * Custom classes to apply to the root element.
      */
     customClass?: AlertClassName;
+    /**
+     * When true, renders a close button. Clicking it hides the alert and emits `dismiss`.
+     */
+    dismissible?: boolean;
+    /**
+     * Auto-hide delay in milliseconds for non-snackbar alert types. When set, the alert
+     * hides itself after this delay and emits `dismiss`. Snackbars manage their own
+     * duration via `UiAlertToast`/`useToast`, so this is ignored when `type` is `snackbar`.
+     */
+    duration?: number;
+    /**
+     * Accessible label for the close button (only rendered when `dismissible` is true).
+     */
+    closeLabel?: string;
+}
+/**
+ * Interface emits for the Alert component.
+ */
+export interface IAlertEmits {
+    /**
+     * Emitted when the alert is dismissed, either via the close button or the `duration` auto-hide timer.
+     */
+    (e: 'dismiss'): void;
 }
 /**
  * Interface props for the AlertToast component.

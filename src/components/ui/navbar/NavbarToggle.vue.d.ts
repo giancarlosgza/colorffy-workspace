@@ -1,15 +1,14 @@
 import { INavbarToggleProps } from '../../../types/navbar';
-declare const _default: import('vue').DefineComponent<INavbarToggleProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
+declare const __VLS_export: import('vue').DefineComponent<INavbarToggleProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     toggle: () => any;
 }, string, import('vue').PublicProps, Readonly<INavbarToggleProps> & Readonly<{
     onToggle?: (() => any) | undefined;
 }>, {
-    id: string;
     customClass: import('../../../types/navbar').NavbarClassName | null;
+    id: string;
     collapsed: boolean;
-    collapseText: string;
-    expandText: string;
     showToggleButton: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const _default: typeof __VLS_export;
 export default _default;
 //# sourceMappingURL=NavbarToggle.vue.d.ts.map

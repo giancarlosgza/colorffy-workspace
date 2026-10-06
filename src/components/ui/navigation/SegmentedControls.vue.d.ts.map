@@ -1,1 +1,1 @@
-{"version":3,"file":"SegmentedControls.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/SegmentedControls.vue"],"names":[],"mappings":"AA8HA,OAAO,KAAK,EAA2B,uBAAuB,EAAiB,MAAM,oBAAoB,CAAA;;;;;;;;AAqKzG,wBASG"}
+{"version":3,"file":"SegmentedControls.vue.d.ts","sourceRoot":"","sources":["../../../../../src/components/ui/navigation/SegmentedControls.vue"],"names":[],"mappings":"AAiJA,OAAO,KAAK,EAA2B,uBAAuB,EAAiB,MAAM,oBAAoB,CAAA;AAqMzG,QAAA,MAAM,YAAY;;;;;;6EAIhB,CAAC;wBACkB,OAAO,YAAY;AAAxC,wBAAyC"}

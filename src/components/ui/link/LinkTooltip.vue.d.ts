@@ -1,35 +1,33 @@
 import { ILinkTooltipProps } from '../../../types/button';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        icon?(_: {}): any;
-    };
-    refs: {};
-    rootEl: any;
+declare var __VLS_14: {};
+type __VLS_Slots = {} & {
+    icon?: (props: typeof __VLS_14) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<ILinkTooltipProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ILinkTooltipProps> & Readonly<{}>, {
+declare const __VLS_base: import('vue').DefineComponent<ILinkTooltipProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ILinkTooltipProps> & Readonly<{}>, {
+    title: string | null;
+    fluid: boolean;
+    customClass: import('../../../types/button').ButtonClassName | null;
     text: string | null;
-    variant: import('../../../types/button').ButtonVariant | (string & {});
+    size: import('../../../types/button').ButtonSizeLevel | (string & {});
+    color: import('../../../types/button').ButtonColor | (string & {});
+    icon: boolean;
     to: string | object;
     href: string;
     as: string | object;
-    title: string | null;
-    icon: boolean;
-    size: import('../../../types/button').ButtonSizeLevel | (string & {});
-    color: import('../../../types/button').ButtonColor | (string & {});
+    loading: boolean;
+    tooltipText: string | null;
+    placement: import('../../..').FloatingPlacement;
+    variant: import('../../../types/button').ButtonVariant | (string & {});
     id: string | null;
     iconVariant: "shape-sm" | "shape-md" | "compact-sm" | "compact";
     iconTrailing: boolean;
     disabled: boolean;
-    loading: boolean;
-    customClass: import('../../../types/button').ButtonClassName | null;
     rounded: boolean;
-    tooltipText: string | null;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

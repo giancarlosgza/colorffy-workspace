@@ -1,5 +1,5 @@
-import { IBaseLinkProps } from './shared';
-export type NavbarClassName = string | string[] | Record<string, boolean>;
+import { ClassValue, IBaseLinkProps } from './shared';
+export type NavbarClassName = ClassValue;
 /**
  * Interface props for the Navbar component.
  */
@@ -16,7 +16,7 @@ export interface INavbarProps {
     fluid?: boolean;
     /**
      * Accessible label for the navigation landmark.
-     * @default 'Main navigation'
+     * @default 'Main navigation', from the configured labels
      */
     ariaLabel?: string;
     /**
@@ -71,12 +71,12 @@ export interface INavbarToggleProps {
     collapsed?: boolean;
     /**
      * Tooltip text when sidebar is expanded.
-     * @default 'Collapse sidebar'
+     * @default 'Collapse sidebar', from the configured labels
      */
     collapseText?: string;
     /**
      * Tooltip text when sidebar is collapsed.
-     * @default 'Expand sidebar'
+     * @default 'Expand sidebar', from the configured labels
      */
     expandText?: string;
     /**

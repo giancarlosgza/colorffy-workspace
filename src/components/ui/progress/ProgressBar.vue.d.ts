@@ -1,30 +1,26 @@
 import { IProgressBarProps } from '../../../types/progress';
-declare function __VLS_template(): {
-    attrs: Partial<{}>;
-    slots: {
-        default?(_: {}): any;
-    };
-    refs: {};
-    rootEl: HTMLDivElement;
+declare var __VLS_1: {};
+type __VLS_Slots = {} & {
+    default?: (props: typeof __VLS_1) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import('vue').DefineComponent<IProgressBarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IProgressBarProps> & Readonly<{}>, {
-    gradient: boolean;
+declare const __VLS_base: import('vue').DefineComponent<IProgressBarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IProgressBarProps> & Readonly<{}>, {
+    customClass: import('../../../types/progress').ProgressClassName | null;
     text: string | null;
     size: import('../../../types/progress').ProgressSize;
-    customClass: import('../../../types/progress').ProgressClassName | null;
     value: number;
-    animated: boolean;
+    gradient: boolean;
     indeterminate: boolean;
+    animated: boolean;
     ariaValuemin: number;
     ariaValuemax: number;
     customStyles: string | Record<string, string | number> | null;
     barClass: import('../../../types/progress').ProgressClassName | null;
     barStyles: string | Record<string, string | number> | null;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
-declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
+type __VLS_WithSlots<T, S> = T & {
     new (): {
         $slots: S;
     };

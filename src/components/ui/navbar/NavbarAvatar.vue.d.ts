@@ -1,13 +1,13 @@
 import { INavbarAvatarProps } from '../../../types/navbar';
-declare const _default: import('vue').DefineComponent<INavbarAvatarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
+declare const __VLS_export: import('vue').DefineComponent<INavbarAvatarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     click: () => any;
 }, string, import('vue').PublicProps, Readonly<INavbarAvatarProps> & Readonly<{
     onClick?: (() => any) | undefined;
 }>, {
-    size: "sm" | "navbar";
     customClass: import('../../../types/navbar').NavbarClassName | null;
+    size: "sm" | "navbar";
     src: string | null;
-    alt: string;
-}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLSpanElement>;
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const _default: typeof __VLS_export;
 export default _default;
 //# sourceMappingURL=NavbarAvatar.vue.d.ts.map
