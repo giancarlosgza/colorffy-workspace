@@ -10,7 +10,7 @@ withDefaults(defineProps<INavbarTitleProps>(), {
 
 <template>
   <div class="nav-title" :class="customClass">
-    <!-- Brand slot -->
+    <!-- Brand -->
     <slot name="brand" />
 
     <!-- Page title -->
@@ -18,7 +18,7 @@ withDefaults(defineProps<INavbarTitleProps>(), {
       {{ title }}
     </span>
 
-    <!-- Custom title slot -->
+    <!-- Title -->
     <slot name="title" />
   </div>
 </template>

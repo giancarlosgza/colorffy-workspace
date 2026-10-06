@@ -16,18 +16,6 @@
     }
   }
 
-  @keyframes fade-in-left {
-    0% {
-      translate: 2rem 0;
-      opacity: 0;
-    }
-
-    100% {
-      translate: 0;
-      opacity: 1;
-    }
-  }
-
   // ==========================================================================
   // OPACITY ANIMATIONS
   // ==========================================================================
@@ -57,19 +45,6 @@
   }
 
   // ==========================================================================
-  // SLIDE ANIMATIONS
-  // ==========================================================================
-  @keyframes slide-in-down {
-    0% {
-      translate: 0 2rem;
-    }
-
-    100% {
-      translate: 0;
-    }
-  }
-
-  // ==========================================================================
   // SPIN ANIMATIONS
   // ==========================================================================
   @keyframes spin {
@@ -90,84 +65,6 @@
   // ==========================================================================
   // MISCELLANEOUS KEYFRAMES & UTILITIES
   // ==========================================================================
-  @keyframes spin-wheel {
-    to {
-      --color-wheel-radius: 50%;
-      rotate: 360deg;
-    }
-  }
-
-  @keyframes pulse {
-    0% {
-      scale: 0.90;
-    }
-
-    50% {
-      scale: 1;
-    }
-
-    100% {
-      scale: 0.90;
-    }
-  }
-
-  @keyframes glitch {
-    0% {
-      translate: 0;
-    }
-    20% {
-      translate: -5px 5px;
-    }
-    40% {
-      translate: -5px -5px;
-    }
-    60% {
-      translate: 5px 5px;
-    }
-    80% {
-      translate: 5px -5px;
-    }
-    to {
-      translate: 0;
-    }
-  }
-
-  @keyframes shake-x {
-    0%, 100% {
-      translate: 0;
-    }
-    20% {
-      translate: -5%;
-    }
-    40% {
-      translate: 5%;
-    }
-    60% {
-      translate: -5%;
-    }
-    80% {
-      translate: 5%;
-    }
-  }
-
-  @keyframes shake-y {
-    0%, 100% {
-      translate: 0 0;
-    }
-    20% {
-      translate: 0 -5%
-    }
-    40% {
-      translate: 0 5%
-    }
-    60% {
-      translate: 0 -5%
-    }
-    80% {
-      translate: 0 5%
-    }
-  }
-
   @keyframes zoom-in-out {
     from {
       scale: inherit;
@@ -192,83 +89,19 @@
     }
   }
 
-  @keyframes animate-wheel {
-    from {
-      --_scheme-offset: 1.5rem;
-      --_scheme-col-size: 0.938rem;
-
-      rotate: 0deg;
-    }
-
-    to {
-      --_scheme-offset: 2.25rem;
-      --_scheme-col-size: 0.938rem;
-
-      rotate: 360deg;
-    }
-  }
-
   @keyframes angle-spin {
     0% {
-      --gradient-angle: 0deg;
+      --cffy-gradient-angle: 0deg;
     }
 
     100% {
-      --gradient-angle: 360deg;
+      --cffy-gradient-angle: 360deg;
     }
   }
 
   @keyframes angle-glow {
     100% {
-      --gradient-angle: 405deg;
-    }
-  }
-
-  @keyframes shine-light {
-    to {
-      --_shine-left: 115%;
-    }
-  }
-
-  @keyframes dots-scroll {
-    from {
-      --dots-scroll-position: 250px;
-    }
-
-    to {
-      --dots-scroll-position: 0;
-    }
-  }
-
-  @keyframes animate-gradient-shape-1 {
-    from {
-      --gradient-shape-primary: initial;
-      --gradient-shape-angle: 0deg;
-    }
-
-    50% {
-      --gradient-shape-primary: rgba(42, 32, 180, 1);
-    }
-
-    to {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 360deg;
-    }
-  }
-
-  @keyframes animate-gradient-shape-2 {
-    from {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 0deg;
-    }
-
-    50% {
-      --gradient-shape-accent: rgba(102, 0, 255, 1)
-    }
-
-    to {
-      --gradient-shape-accent: initial;
-      --gradient-shape-angle: 360deg;
+      --cffy-gradient-angle: 405deg;
     }
   }
 
@@ -277,18 +110,6 @@
   // ==========================================================================
   @media (prefers-reduced-motion) {
     @keyframes fade-in-down {
-      0% {
-        translate: 0;
-        opacity: 0;
-      }
-
-      100% {
-        translate: 0;
-        opacity: 1;
-      }
-    }
-
-    @keyframes fade-in-left {
       0% {
         translate: 0;
         opacity: 0;
@@ -314,123 +135,16 @@
   }
 
   // ==========================================================================
-  // NUXT PAGES & LAYOUT TRANSITIONS
+  // SLIDE BLOCK TRANSITION
   // ==========================================================================
-  .page-enter-active,
-  .page-leave-active,
-  .layout-enter-active,
-  .layout-leave-active {
-    transition: opacity ease var(--duration-200);
-  }
-
-  .page-enter,
-  .page-leave-to,
-  .layout-enter,
-  .layout-leave-to {
-    opacity: 0;
-  }
-
-  .slide-enter-active {
-    --_slide-easing-in: var(--ease-emphasized);
-
-    overflow-x: clip;
-    transition: opacity var(--duration-600) var(--_slide-easing-in),
-    translate var(--duration-800) var(--_slide-easing-in);
-  }
-
-  .slide-leave-active {
-    --_slide-easing-out: var(--ease-accelerate);
-
-    transition: opacity var(--duration-200) var(--_slide-easing-out),
-    translate var(--duration-300) var(--_slide-easing-out);
-    overflow-x: clip;
-  }
-
-  .slide-enter-from,
-  .slide-leave-to {
-    opacity: 0;
-    translate: 1.5rem 0;
-  }
-
-  // ==========================================================================
-  // VUE TRANSITION UTILITIES (TABLES, SLIDES, FADES)
-  // ==========================================================================
-  .table-move,
-  .table-enter-active,
-  .table-leave-active {
-    transition: all var(--duration-500) ease;
-  }
-
-  .table-enter-from,
-  .table-leave-to {
-    opacity: 0;
-    translate: 0 30px;
-  }
-
-  /* Ensure leaving items are taken out of layout flow so that moving
-     animations can be calculated correctly. */
-  .table-leave-active {
-    position: absolute;
-  }
-
-  /*
-    Table td enter and leave
-    fade transition when isExpanding toggle
-  */
-  .table-td-fade-enter-active {
-    transition: all var(--duration-500) ease-out;
-  }
-
-  .table-td-fade-leave-active {
-    transition: all var(--duration-200) cubic-bezier(1, 0.5, 0.8, 1);
-  }
-
-  .table-td-fade-enter-from,
-  .table-td-fade-leave-to {
-    translate: -20px;
-    opacity: 0;
-  }
-
-  /*
-    Slide enter and leave
-    transition for tab menu changes
-  */
-  .slide-inline-enter-active {
-    --_slide-inline-easing-in: var(--ease-emphasized);
-
-    transition: translate var(--duration-600) var(--_slide-inline-easing-in),
-    opacity var(--duration-600) var(--_slide-inline-easing-in);
-  }
-
-  .slide-inline-leave-active {
-    --_slide-inline-easing-out: var(--ease-emphasized);
-
-    transition: translate var(--duration-300) var(--_slide-inline-easing-out),
-    opacity var(--duration-300) var(--_slide-inline-easing-out);
-  }
-
-  .slide-inline-enter-from {
-    opacity: 0;
-    translate: 2rem 0;
-  }
-
-  .slide-inline-leave-to {
-    opacity: 0;
-    translate: -2rem 0;
-  }
-
-  /*
-    Slide enter and leave
-    vertical transition
-  */
   .slide-block-enter-active {
-    transition: translate var(--duration-800) var(--ease-decelerate),
-    opacity var(--duration-400) var(--ease-decelerate);
+    transition: translate var(--cffy-duration-800) var(--cffy-ease-decelerate),
+    opacity var(--cffy-duration-400) var(--cffy-ease-decelerate);
   }
 
   .slide-block-leave-active {
-    transition: translate var(--duration-400) var(--ease-accelerate),
-    opacity var(--duration-200) var(--ease-accelerate);
+    transition: translate var(--cffy-duration-400) var(--cffy-ease-accelerate),
+    opacity var(--cffy-duration-200) var(--cffy-ease-accelerate);
   }
 
   .slide-block-enter-from {
@@ -441,33 +155,5 @@
   .slide-block-leave-to {
     opacity: 0;
     translate: 0 -1.875rem;
-  }
-
-  /*
-  Fade inline enter and leave
-  horizontal transition
-  */
-  .fade-inline-enter-active {
-    --_fade-inline-easing-in: var(--ease-decelerate);
-
-    transition: translate var(--duration-400) var(--_fade-inline-easing-in),
-    opacity var(--duration-400) var(--_fade-inline-easing-in);
-  }
-
-  .fade-inline-leave-active {
-    --_fade-inline-easing-out: var(--ease-accelerate);
-
-    transition: translate var(--duration-250) var(--_fade-inline-easing-out),
-    opacity var(--duration-250) var(--_fade-inline-easing-out);
-  }
-
-  .fade-inline-enter-from {
-    opacity: 0;
-    translate: -1rem 0;
-  }
-
-  .fade-inline-leave-to {
-    opacity: 0;
-    translate: 1rem 0;
   }
 }

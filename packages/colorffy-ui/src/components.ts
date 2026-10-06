@@ -40,12 +40,18 @@ export { default as UiButtonMenuText } from './components/ui/button/ButtonMenuTe
 export { default as UiButtonToggleGroup } from './components/ui/button/ButtonToggleGroup.vue'
 export { default as UiButtonTooltip } from './components/ui/button/ButtonTooltip.vue'
 
+// Components - Calendar
+export { default as UiCalendar } from './components/ui/calendar/Calendar.vue'
+
 // Components - Card
 export { default as UiCard } from './components/ui/card/Card.vue'
 
 // Components - Chip
 export { default as UiChip } from './components/ui/chip/Chip.vue'
+
 export { default as UiChipGroup } from './components/ui/chip/ChipGroup.vue'
+// Components - Config
+export { default as UiConfigProvider } from './components/ui/config/ConfigProvider.vue'
 
 // Components - Table
 export { default as UiDatatable } from './components/ui/datatable/Datatable.vue'
@@ -69,12 +75,18 @@ export { default as UiAvatarGroup } from './components/ui/image/AvatarGroup.vue'
 // Components - Input
 export { default as UiInputCheck } from './components/ui/input/Check.vue'
 export { default as UiInputColorPicker } from './components/ui/input/ColorPicker.vue'
+export { default as UiInputCombobox } from './components/ui/input/Combobox.vue'
+export { default as UiInputDate } from './components/ui/input/Date.vue'
 export { default as UiInputFile } from './components/ui/input/File.vue'
+export { default as UiInputMultiSelect } from './components/ui/input/MultiSelect.vue'
 export { default as UiInputOtp } from './components/ui/input/Otp.vue'
+export { default as UiInputPassword } from './components/ui/input/Password.vue'
 export { default as UiInputPhoneNumber } from './components/ui/input/PhoneNumber.vue'
 export { default as UiInputRadio } from './components/ui/input/Radio.vue'
 export { default as UiInputRange } from './components/ui/input/Range.vue'
+export { default as UiInputSearch } from './components/ui/input/Search.vue'
 export { default as UiInputSelect } from './components/ui/input/Select.vue'
+export { default as UiInputTags } from './components/ui/input/Tags.vue'
 export { default as UiInputText } from './components/ui/input/Text.vue'
 export { default as UiInputTextarea } from './components/ui/input/Textarea.vue'
 
@@ -100,6 +112,7 @@ export { default as UiNavbarToggle } from './components/ui/navbar/NavbarToggle.v
 // Components - Navigation
 export { default as UiBreadcrumb } from './components/ui/navigation/Breadcrumb.vue'
 export { default as UiNavigationBar } from './components/ui/navigation/NavigationBar.vue'
+export { default as UiPagination } from './components/ui/navigation/Pagination.vue'
 export { default as UiPopoverMenu } from './components/ui/navigation/PopoverMenu.vue'
 export { default as UiPopoverMenuGroup } from './components/ui/navigation/PopoverMenuGroup.vue'
 export { default as UiPopoverMenuItem } from './components/ui/navigation/PopoverMenuItem.vue'
@@ -116,11 +129,8 @@ export { default as UiProgressSpinner } from './components/ui/progress/ProgressS
 
 // Components - Sidebar
 export { default as UiSidebar } from './components/ui/sidebar/Sidebar.vue'
-export { default as UiSidebarBody } from './components/ui/sidebar/SidebarBody.vue'
 export { default as UiSidebarDropdown } from './components/ui/sidebar/SidebarDropdown.vue'
-export { default as UiSidebarFooter } from './components/ui/sidebar/SidebarFooter.vue'
 export { default as UiSidebarGroup } from './components/ui/sidebar/SidebarGroup.vue'
-export { default as UiSidebarHeader } from './components/ui/sidebar/SidebarHeader.vue'
 export { default as UiSidebarLink } from './components/ui/sidebar/SidebarLink.vue'
 export { default as UiSidebarText } from './components/ui/sidebar/SidebarText.vue'
 

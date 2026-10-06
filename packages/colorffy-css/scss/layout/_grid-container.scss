@@ -184,7 +184,7 @@
   // ==========================================================================
   .grid-main-content {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: 1fr;
 
     @include m.media-query(1024) {

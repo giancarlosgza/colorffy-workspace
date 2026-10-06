@@ -4,11 +4,8 @@ import UiButtonMenuItem from '../button/ButtonMenuItem.vue'
 import UiButtonMenuText from '../button/ButtonMenuText.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiSidebar from './Sidebar.vue'
-import UiSidebarBody from './SidebarBody.vue'
 import UiSidebarDropdown from './SidebarDropdown.vue'
-import UiSidebarFooter from './SidebarFooter.vue'
 import UiSidebarGroup from './SidebarGroup.vue'
-import UiSidebarHeader from './SidebarHeader.vue'
 import UiSidebarLink from './SidebarLink.vue'
 import UiSidebarText from './SidebarText.vue'
 
@@ -39,9 +36,6 @@ export const Default: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiIconMaterial,
@@ -52,24 +46,24 @@ export const Default: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
             <p class="drawer-header-title">Colorffy UI</p>
             <p class="drawer-header-subtitle">v1.0.0</p>
           </div>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Navigation" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Go to dashboard" />
           <UiSidebarLink icon="&#xe5c3;" text="Components" tooltip-text="View components" />
           <UiSidebarLink icon="&#xe873;" text="Documentation" tooltip-text="View docs" />
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter>
+        <template #footer>
           <UiBadge text="v1.0.0" variant="outline" size="sm" />
-        </UiSidebarFooter>
+        </template>
       </UiSidebar>
     `
   })
@@ -83,9 +77,6 @@ export const WithGroups: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiSidebarGroup,
@@ -96,14 +87,14 @@ export const WithGroups: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
             <p class="drawer-header-title">Colorffy UI</p>
           </div>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Main" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           
@@ -112,9 +103,9 @@ export const WithGroups: Story = {
             <UiSidebarLink icon="&#xe8b8;" text="Account" child tooltip-text="Account" />
             <UiSidebarLink icon="&#xe32a;" text="Security" child tooltip-text="Security" />
           </UiSidebarGroup>
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter />
+        <template #footer />
       </UiSidebar>
     `
   })
@@ -128,9 +119,6 @@ export const WithCollapsibleGroups: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiSidebarGroup,
@@ -141,14 +129,14 @@ export const WithCollapsibleGroups: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
             <p class="drawer-header-title">Colorffy UI</p>
           </div>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Main" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           
@@ -162,9 +150,9 @@ export const WithCollapsibleGroups: Story = {
             <UiSidebarLink icon="&#xe873;" text="Documentation" child tooltip-text="Docs" />
             <UiSidebarLink icon="&#xe8ef;" text="API Reference" child tooltip-text="API" />
           </UiSidebarGroup>
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter />
+        <template #footer />
       </UiSidebar>
     `
   })
@@ -178,9 +166,6 @@ export const WithDropdown: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiSidebarDropdown,
@@ -193,24 +178,24 @@ export const WithDropdown: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <UiSidebarDropdown title="My Workspace" subtitle="Personal" :interactive="true" placement="right-start">
             <UiButtonMenuText item-text="Switch Workspace" />
             <UiButtonMenuItem item-text="Personal" icon="&#xe853;" />
             <UiButtonMenuItem item-text="Enterprise" icon="&#xe70e;" />
           </UiSidebarDropdown>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Navigation" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           <UiSidebarLink icon="&#xe5c3;" text="Components" tooltip-text="Components" />
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter>
+        <template #footer>
           <UiSidebarDropdown title="User Name" subtitle="user@example.com" :interactive="false" />
-        </UiSidebarFooter>
+        </template>
       </UiSidebar>
     `
   })
@@ -224,9 +209,6 @@ export const RailMode: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiIconMaterial
@@ -236,18 +218,18 @@ export const RailMode: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Navigation" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           <UiSidebarLink icon="&#xe5c3;" text="Components" tooltip-text="Components" />
           <UiSidebarLink icon="&#xe873;" text="Documentation" tooltip-text="Documentation" />
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter />
+        <template #footer />
       </UiSidebar>
     `
   })
@@ -261,9 +243,6 @@ export const Bordered: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiIconMaterial
@@ -273,20 +252,20 @@ export const Bordered: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
             <p class="drawer-header-title">Colorffy UI</p>
           </div>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Navigation" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           <UiSidebarLink icon="&#xe5c3;" text="Components" tooltip-text="Components" />
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter />
+        <template #footer />
       </UiSidebar>
     `
   })
@@ -301,9 +280,6 @@ export const CustomWidth: Story = {
   render: args => ({
     components: {
       UiSidebar,
-      UiSidebarHeader,
-      UiSidebarBody,
-      UiSidebarFooter,
       UiSidebarText,
       UiSidebarLink,
       UiIconMaterial
@@ -313,21 +289,21 @@ export const CustomWidth: Story = {
     },
     template: `
       <UiSidebar v-bind="args">
-        <UiSidebarHeader>
+        <template #header>
           <UiIconMaterial icon-code="&#xe88a;" class="drawer-brand-icon" />
           <div>
             <p class="drawer-header-title">Colorffy UI</p>
             <p class="drawer-header-subtitle">Custom Width: 320px</p>
           </div>
-        </UiSidebarHeader>
+        </template>
 
-        <UiSidebarBody>
+        <template #body>
           <UiSidebarText text="Navigation" />
           <UiSidebarLink icon="&#xe88a;" text="Dashboard" active tooltip-text="Dashboard" />
           <UiSidebarLink icon="&#xe5c3;" text="Components" tooltip-text="Components" />
-        </UiSidebarBody>
+        </template>
 
-        <UiSidebarFooter />
+        <template #footer />
       </UiSidebar>
     `
   })

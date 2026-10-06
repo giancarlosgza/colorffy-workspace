@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { IAvatarProps } from '@/types/avatar'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IAvatarProps>(), {
   src: '',
-  alt: 'Avatar',
   size: 'sm',
   initials: null,
   maskShape: null,
@@ -15,10 +15,14 @@ const props = withDefaults(defineProps<IAvatarProps>(), {
   variant: null
 })
 
+/** Labels */
+const l10n = useLabels('avatar')
+
 /** Data */
 const imageError = ref(false)
 
 /** Computed */
+const altText = computed(() => props.alt ?? l10n.value.alt)
 const avatarClasses = computed(() => {
   const classes = ['img-avatar']
   if (props.size) {
@@ -88,28 +92,28 @@ function handleImageError() {
 </script>
 
 <template>
-  <!-- Status avatar: wrapped so the dot escapes mask-shape clipping -->
+  <!-- Status avatar, wrapped so the dot escapes the mask clipping -->
   <span
     v-if="status"
     :class="statusWrapperClasses"
   >
-    <!-- Initial Avatar -->
+    <!-- Image avatar -->
+    <img
+      v-if="src && !imageError"
+      :src="src"
+      :class="avatarClasses"
+      :alt="altText"
+      @error="handleImageError"
+    >
+
+    <!-- Initials avatar -->
     <span
-      v-if="initials"
+      v-else-if="initials"
       :class="initialsAvatarClasses"
     >
       {{ initials }}
     </span>
-
-    <!-- Image Avatar -->
-    <img
-      v-else-if="src && !imageError"
-      :src="src"
-      :class="avatarClasses"
-      :alt="alt"
-      @error="handleImageError"
-    >
-    <!-- Placeholder Avatar -->
+    <!-- Placeholder avatar -->
     <div
       v-else
       :class="placeholderClasses"
@@ -123,10 +127,17 @@ function handleImageError() {
     />
   </span>
 
-  <!-- Default markup, unchanged when no status is set. Kept as a direct -->
-  <!-- v-else-if chain (no <template> wrapper) so Vue still treats the -->
-  <!-- component as single-root and inherits fallthrough attrs like class -->
-  <!-- Initial Avatar -->
+  <!-- A v-else-if chain without a wrapper keeps the component single-root -->
+  <!-- Image avatar -->
+  <img
+    v-else-if="src && !imageError"
+    :src="src"
+    :class="avatarClasses"
+    :alt="altText"
+    @error="handleImageError"
+  >
+
+  <!-- Initials avatar -->
   <span
     v-else-if="initials"
     :class="initialsAvatarClasses"
@@ -134,15 +145,7 @@ function handleImageError() {
     {{ initials }}
   </span>
 
-  <!-- Image Avatar -->
-  <img
-    v-else-if="src && !imageError"
-    :src="src"
-    :class="avatarClasses"
-    :alt="alt"
-    @error="handleImageError"
-  >
-  <!-- Placeholder Avatar -->
+  <!-- Placeholder avatar -->
   <div
     v-else
     :class="placeholderClasses"

@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import type { INavbarProps } from '@/types/navbar'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<INavbarProps>(), {
   sticky: false,
   fluid: false,
-  ariaLabel: 'Main navigation',
   customClass: null
 })
 
+/** Labels */
+const l10n = useLabels('navbar')
+
 /** Computed */
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 const containerClass = computed(() => props.fluid ? 'container-fluid' : 'container')
 </script>
 
@@ -18,13 +22,13 @@ const containerClass = computed(() => props.fluid ? 'container-fluid' : 'contain
   <component
     :is="sticky ? 'div' : 'nav'"
     :class="sticky ? 'nav-sticky' : ['navbar', customClass]"
-    :aria-label="sticky ? undefined : ariaLabel"
+    :aria-label="sticky ? undefined : navText"
   >
     <nav
       v-if="sticky"
       class="navbar"
       :class="customClass"
-      :aria-label="ariaLabel"
+      :aria-label="navText"
     >
       <div :class="containerClass">
         <slot />

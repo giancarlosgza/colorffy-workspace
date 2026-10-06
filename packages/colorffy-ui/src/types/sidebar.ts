@@ -13,7 +13,7 @@ export interface ISidebarProps {
 
   /**
    * Accessible label for the navigation landmark.
-   * @default 'Main navigation'
+   * @default 'Main navigation', from the configured labels
    */
   ariaLabel?: string
 
@@ -32,7 +32,7 @@ export interface ISidebarProps {
 
   /**
    * Custom width of the sidebar.
-   * Sets --theme-nav-drawer-width CSS variable.
+   * Sets the `--cffy-sidebar-width` hook (default `--cffy-container-2xs`, 18rem).
    * When null/undefined, uses the default CSS variable value.
    * @default null
    */
@@ -42,6 +42,21 @@ export interface ISidebarProps {
    * Optional custom CSS classes to apply to the sidebar container.
    */
   customClass?: SidebarClassName | null
+
+  /**
+   * Extra classes for the `.drawer-header` wrapper the `header` slot renders in.
+   */
+  headerClass?: SidebarClassName | null
+
+  /**
+   * Extra classes for the `.drawer-body` wrapper the `body` slot renders in.
+   */
+  bodyClass?: SidebarClassName | null
+
+  /**
+   * Extra classes for the `.drawer-footer` wrapper the `footer` slot renders in.
+   */
+  footerClass?: SidebarClassName | null
 }
 
 /**
@@ -118,36 +133,6 @@ export interface ISidebarDropdownProps {
 
   /**
    * Optional custom CSS classes to apply to the dropdown content.
-   */
-  customClass?: string | null
-}
-
-/**
- * Interface props for the SidebarHeader component.
- */
-export interface ISidebarHeaderProps {
-  /**
-   * Optional custom CSS class for the header container.
-   */
-  customClass?: string | null
-}
-
-/**
- * Interface props for the SidebarBody component.
- */
-export interface ISidebarBodyProps {
-  /**
-   * Optional custom CSS class for the body container.
-   */
-  customClass?: string | null
-}
-
-/**
- * Interface props for the SidebarFooter component.
- */
-export interface ISidebarFooterProps {
-  /**
-   * Optional custom CSS class for the footer container.
    */
   customClass?: string | null
 }

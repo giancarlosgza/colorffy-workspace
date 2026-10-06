@@ -6,82 +6,82 @@
   // DEFAULT TEXT COLORS
   // ==========================================================================
   .text-primary {
-    @include m.text-color(var(--theme-primary-a10));
+    @include m.text-color(var(--cffy-primary-a10));
   }
 
   .text-secondary {
-    @include m.text-color(var(--theme-secondary-a10));
+    @include m.text-color(var(--cffy-secondary-a10));
   }
 
   .text-accent {
-    @include m.text-color(var(--theme-accent-a10));
+    @include m.text-color(var(--cffy-accent-a10));
   }
 
   .text-success {
-    @include m.text-color(var(--theme-success-a10));
+    @include m.text-color(var(--cffy-success-a10));
   }
 
   .text-warning {
-    @include m.text-color(var(--theme-warning-a10));
+    @include m.text-color(var(--cffy-warning-a10));
   }
 
   .text-danger {
-    @include m.text-color(var(--theme-danger-a10));
+    @include m.text-color(var(--cffy-danger-a10));
   }
 
   .text-info {
-    @include m.text-color(var(--theme-info-a10));
+    @include m.text-color(var(--cffy-info-a10));
   }
 
   .text-muted {
-    @include m.text-color(var(--theme-muted-a10));
+    @include m.text-color(var(--cffy-muted-a10));
   }
 
   .text-white {
-    @include m.text-color(var(--color-brand-white-500));
+    @include m.text-color(var(--cffy-color-brand-white-500));
   }
 
   .text-black {
-    @include m.text-color(var(--color-brand-black-500));
+    @include m.text-color(var(--cffy-color-brand-black-500));
   }
 
   .text-dark {
-    @include m.text-color(var(--color-brand-dark-500));
+    @include m.text-color(var(--cffy-color-brand-dark-500));
   }
 
   // ==========================================================================
   // EMPHASIS TEXT COLORS
   // ==========================================================================
   .text-primary-emphasis {
-    @include m.text-color(var(--theme-primary-a90));
+    @include m.text-color(var(--cffy-on-primary-container));
   }
 
   .text-secondary-emphasis {
-    @include m.text-color(var(--theme-secondary-a90));
+    @include m.text-color(var(--cffy-on-secondary-container));
   }
 
   .text-accent-emphasis {
-    @include m.text-color(var(--theme-accent-a90));
+    @include m.text-color(var(--cffy-on-accent-container));
   }
 
   .text-success-emphasis {
-    @include m.text-color(var(--theme-success-a90));
+    @include m.text-color(var(--cffy-on-success-container));
   }
 
   .text-warning-emphasis {
-    @include m.text-color(var(--theme-warning-a90));
+    @include m.text-color(var(--cffy-on-warning-container));
   }
 
   .text-danger-emphasis {
-    @include m.text-color(var(--theme-danger-a90));
+    @include m.text-color(var(--cffy-on-danger-container));
   }
 
   .text-info-emphasis {
-    @include m.text-color(var(--theme-info-a90));
+    @include m.text-color(var(--cffy-on-info-container));
   }
 
   .text-muted-emphasis {
-    @include m.text-color(var(--theme-muted-a90));
+    @include m.text-color(var(--cffy-on-muted-container));
   }
 
   // ==========================================================================
@@ -90,49 +90,49 @@
   .text-primary-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-primary-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-primary-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-secondary-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-secondary-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-secondary-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-accent-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-accent-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-accent-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-success-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-success-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-success-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-warning-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-warning-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-warning-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-danger-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-danger-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-danger-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-info-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-info-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-info-base-fixed) var(--_text-opacity), transparent);
   }
 
   .text-muted-fixed {
     --_text-opacity: 100%;
     --_text-space: oklab;
-    color: color-mix(in var(--_text-space), var(--theme-muted-base-fixed) var(--_text-opacity), transparent);
+    color: color-mix(in var(--_text-space), var(--cffy-muted-base-fixed) var(--_text-opacity), transparent);
   }
 
   @each $value, $opacity in v.$opacity {
@@ -145,39 +145,49 @@
   // ON SURFACE COLORS & LINK DECORATIONS
   // ==========================================================================
   .text-on-primary {
-    @include m.text-color(var(--theme-on-primary));
+    @include m.text-color(var(--cffy-on-primary));
   }
 
   .text-on-secondary {
-    @include m.text-color(var(--theme-on-secondary));
+    @include m.text-color(var(--cffy-on-secondary));
   }
 
   .text-on-accent {
-    @include m.text-color(var(--theme-on-accent));
+    @include m.text-color(var(--cffy-on-accent));
   }
 
   .text-on-success {
-    @include m.text-color(var(--theme-on-success));
+    @include m.text-color(var(--cffy-on-success));
   }
 
   .text-on-warning {
-    @include m.text-color(var(--theme-on-warning));
+    @include m.text-color(var(--cffy-on-warning));
   }
 
   .text-on-danger {
-    @include m.text-color(var(--theme-on-danger));
+    @include m.text-color(var(--cffy-on-danger));
   }
 
   .text-on-info {
-    @include m.text-color(var(--theme-on-info));
+    @include m.text-color(var(--cffy-on-info));
+  }
+
+  @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+    .text-on-#{$name}-container {
+      @include m.text-color(var(--cffy-on-#{$name}-container));
+    }
+
+    .text-#{$name}-inverse {
+      @include m.text-color(var(--cffy-#{$name}-inverse));
+    }
   }
 
   .text-on-body {
-    @include m.text-color(var(--theme-on-background));
+    @include m.text-color(var(--cffy-on-background));
   }
 
   .text-on-body-inverse {
-    @include m.text-color(var(--theme-on-background-inverse));
+    @include m.text-color(var(--cffy-on-background-inverse));
   }
 
   .text-link {
@@ -192,15 +202,15 @@
   // GRADIENT TEXT UTILITIES
   // ==========================================================================
   .text-gradient {
-    --angle: 45deg;
+    --cffy-angle: 45deg;
     --_gradient-stops: #{v.$gradient-sunset};
 
-    color: var(--theme-primary-a10);
+    color: var(--cffy-primary-a10);
     -webkit-text-fill-color: transparent;
 
-    @include m.text-gradient(var(--angle), var(--_gradient-stops));
-    @include m.generate-static-gradients(v.$static-gradients, false, false);
-    @include m.generate-gradients(v.$dynamic-gradients, false, false);
+    @include m.text-gradient(var(--cffy-angle), var(--_gradient-stops));
+    @include m.generate-gradients(v.$static-gradients, false);
+    @include m.generate-gradients(v.$dynamic-gradients, false);
 
     // Set background-clip property after background to ensure it applies correctly
     & {

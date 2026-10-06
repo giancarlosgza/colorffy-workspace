@@ -5,7 +5,7 @@
   // ==========================================================================
   // PROGRESS COMPONENT
   // ==========================================================================
-   @property --shape-angle {
+   @property --cffy-shape-loading-angle {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
@@ -15,19 +15,20 @@
   // PROGRESS BAR COMPONENT
   // ==========================================================================
   .progress {
-    --_progress-bg-color: var(--theme-surface-container-high);
-    --_progress-color: var(--theme-primary-a10);
-    --_progress-on-bg-color: var(--theme-on-primary);
-    --_progress-height: 0.85rem;
-    --_progress-radius: var(--radius-md);
-    --_progress-easing-in: var(--ease-emphasized);
-    --_progress-easing-duration: var(--duration-800);
+    --_progress-bg-color: var(--cffy-progress-bg-color, var(--cffy-surface-container-high));
+    --_progress-color: var(--cffy-progress-color, var(--cffy-primary-a10));
+    --_progress-label-color: var(--cffy-progress-label-color, var(--cffy-on-primary));
+    --_progress-height: var(--cffy-progress-height, 0.85rem);
+    --_progress-radius: var(--cffy-progress-radius, calc(var(--cffy-shape-control) * 1000));
+    --_progress-font-size: var(--cffy-progress-font-size, var(--cffy-fs-4xs));
+    --_progress-easing: var(--cffy-progress-easing, var(--cffy-ease-emphasized));
+    --_progress-duration: var(--cffy-progress-duration, var(--cffy-duration-800));
 
     display: flex;
     overflow: hidden;
     height: var(--_progress-height);
-    font-size: var(--fs-4xs);
-    font-weight: var(--fw-600);
+    font-size: var(--_progress-font-size);
+    font-weight: var(--cffy-fw-600);
     background: var(--_progress-bg-color);
     border-radius: var(--_progress-radius);
 
@@ -37,26 +38,26 @@
 
     &.progress-lg {
       --_progress-height: 2rem;
-      --_progress-radius: var(--radius-xl);
     }
 
     // Progress bar
     & .progress-bar {
       --_progress-bg-color: var(--_progress-color);
+      --_progress-value: var(--cffy-progress-value, 50%);
 
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
-      width: var(--_progress-width, 50%);
+      width: var(--_progress-value);
       max-width: 100%;
       height: var(--_progress-height);
       text-align: center;
       white-space: nowrap;
-      color: var(--_progress-on-bg-color);
+      color: var(--_progress-label-color);
       background-color: var(--_progress-bg-color);
       border-radius: inherit;
-      transition: width var(--_progress-easing-duration) var(--_progress-easing-in);
+      transition: width var(--_progress-duration) var(--_progress-easing);
 
       // Progress bar with animation
       &.progress-animated {
@@ -64,18 +65,18 @@
       }
 
       &.progress-gradient {
-        --angle: 45deg;
+        --cffy-angle: 45deg;
         --_gradient-stops: #{v.$gradient-database};
 
-        @include m.bg-gradient(var(--angle), var(--_gradient-stops));
-        @include m.generate-static-gradients(v.$static-gradients, false, true);
-        @include m.generate-gradients(v.$dynamic-gradients, false, true);
+        @include m.bg-gradient(var(--cffy-angle), var(--_gradient-stops));
+        @include m.generate-gradients(v.$static-gradients, false);
+        @include m.generate-gradients(v.$dynamic-gradients, false);
       }
 
       // Indeterminate
       &.progress-indeterminate {
         width: 40%;
-        animation: progress-indeterminate 1.4s var(--_progress-easing-in) infinite;
+        animation: progress-indeterminate 1.4s var(--_progress-easing) infinite;
         will-change: transform;
 
         @media (prefers-reduced-motion: reduce) {
@@ -91,8 +92,8 @@
   // PROGRESS SPINNER COMPONENT
   // ==========================================================================
   .progress-spinner {
-    --_progress-spinner-color: var(--theme-muted-a10);
-    --_progress-spinner-size: 1.25rem;
+    --_progress-spinner-color: var(--cffy-progress-spinner-color, var(--cffy-muted-a10));
+    --_progress-spinner-size: var(--cffy-progress-spinner-size, 1.25rem);
 
     position: relative;
     display: flex;
@@ -100,7 +101,7 @@
     height: var(--_progress-spinner-size);
 
     &:not(:last-child) {
-      margin-bottom: var(--space-12);
+      margin-bottom: var(--cffy-space-12);
     }
 
     &:after {
@@ -119,32 +120,13 @@
   // ==========================================================================
   // PLACEHOLDER & SKELETON LOADERS
   // ==========================================================================
-  .placeholder-list {
-    position: relative;
-    height: 13rem;
-    width: 100%;
-    background-color: var(--theme-surface-container);
-    z-index: 44;
-    overflow: hidden;
-    border-radius: v.$card-border-radius;
-
-    .placeholder-loader {
-      position: absolute;
-      left: -45%;
-      height: 100%;
-      width: 45%;
-      background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-      animation: placeholderLoading 1s infinite;
-      z-index: 45;
-    }
-  }
-
   .skeleton {
+    --_skeleton-color: var(--cffy-skeleton-color, var(--cffy-muted-a10));
+    --_skeleton-radius: var(--cffy-skeleton-radius, min(var(--cffy-shape-field), var(--cffy-shape-container)));
+
     display: inline-block;
-    border-radius: var(--radius-md);
-    background-color: var(--theme-muted-a10);
+    border-radius: var(--_skeleton-radius);
+    background-color: var(--_skeleton-color);
     width: 5rem;
     height: .5rem;
     opacity: 0.85;
@@ -163,7 +145,7 @@
 
     &.skeleton-lg {
       --_skeleton-thumbnail-size: 150px;
-      min-height: 2.5rem;
+      min-height: var(--cffy-field-height-md);
     }
 
     &.skeleton-thumbnail {
@@ -176,9 +158,9 @@
     &.skeleton-shimmer {
       background: linear-gradient(
         90deg,
-        var(--theme-muted-a10) 25%,
-        color-mix(in oklab, var(--theme-muted-a10) 50%, transparent) 50%,
-        var(--theme-muted-a10) 75%
+        var(--_skeleton-color) 25%,
+        color-mix(in oklab, var(--_skeleton-color) 50%, transparent) 50%,
+        var(--_skeleton-color) 75%
       );
       background-size: 200% 100%;
       animation: skeleton-shimmer 1.5s infinite linear;
@@ -186,8 +168,8 @@
 
     &.skeleton-ai-generation {
       --_skeleton-thumbnail-size: 200px;
+      --_skeleton-radius: var(--cffy-radius-xl);
 
-      border-radius: var(--radius-xl);
       min-height: 1rem;
       width: 100%;
       background-color: #444;
@@ -207,7 +189,7 @@
   // SPINNER COMPONENT
   // ==========================================================================
   .spinner {
-    animation: rotator v.$spinner-duration linear infinite;
+    animation: spin v.$spinner-duration linear infinite;
   }
 
   .path {
@@ -232,10 +214,11 @@
 
     & .loading-label-wrapper {
       grid-area: 1 / 1;
+      text-align: center;
 
       & p {
         mix-blend-mode: luminosity;
-        color: var(--theme-on-background-inverse);
+        color: var(--cffy-on-background-inverse);
       }
     }
 
@@ -248,7 +231,7 @@
 
       & .shape {
         --_shape-bg-alpha: 1;
-        --_shape-bg-color: var(--theme-primary-a10);
+        --_loading-shapes-color: var(--cffy-loading-shapes-color, var(--cffy-primary-a10));
         --_shape-size: 15rem;
 
         position: absolute;
@@ -259,11 +242,11 @@
         aspect-ratio: 1;
         border-radius: 100%;
         opacity: var(--_shape-bg-alpha);
-        background-color: var(--_shape-bg-color);
+        background-color: var(--_loading-shapes-color);
         animation: shape-loading 5s linear infinite;
         transform: translate(
-                        calc(cos(var(--shape-angle)) * 3rem),
-                        calc(sin(var(--shape-angle)) * 3rem)
+                        calc(cos(var(--cffy-shape-loading-angle)) * 3rem),
+                        calc(sin(var(--cffy-shape-loading-angle)) * 3rem)
         );
 
         &:nth-child(2) {
@@ -291,30 +274,21 @@
     }
   }
 
-  @keyframes rotator {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
   @keyframes colors {
     0% {
-      stroke: var(--theme-primary-base);
+      stroke: var(--cffy-primary-base);
     }
     25% {
-      stroke: var(--theme-secondary-base);
+      stroke: var(--cffy-secondary-base);
     }
     50% {
-      stroke: var(--theme-accent-base);
+      stroke: var(--cffy-accent-base);
     }
     75% {
-      stroke: var(--theme-warning-base);
+      stroke: var(--cffy-warning-base);
     }
     100% {
-      stroke: var(--theme-success-base);
+      stroke: var(--cffy-success-base);
     }
   }
 
@@ -348,7 +322,7 @@
 
   @keyframes shape-loading {
     to {
-      --shape-angle: 360deg;
+      --cffy-shape-loading-angle: 360deg;
     }
   }
 

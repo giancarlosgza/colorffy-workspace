@@ -31,7 +31,6 @@ const linkProps = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
@@ -43,7 +42,6 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: target

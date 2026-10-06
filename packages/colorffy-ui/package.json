@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/ui",
-  "version": "2.8.0",
+  "version": "3.0.0",
   "description": "A modern Vue 3 component library built with TypeScript and Colorffy CSS",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -19,6 +19,11 @@
       "types": "./dist/nuxt.d.ts",
       "import": "./dist/nuxt.js",
       "require": "./dist/nuxt.cjs"
+    },
+    "./locales/*": {
+      "types": "./dist/locales/*.d.ts",
+      "import": "./dist/locales/*.js",
+      "require": "./dist/locales/*.cjs"
     }
   },
   "files": [
@@ -36,6 +41,7 @@
     "deploy-storybook": "npm run build-storybook && touch ./storybook-static/.nojekyll && gh-pages -d storybook-static -t"
   },
   "peerDependencies": {
+    "@colorffy/css": "^3.0.0",
     "@vueuse/components": "^14.0.0 || ^15.0.0",
     "@vueuse/core": "^14.0.0 || ^15.0.0",
     "floating-vue": "^5.4.0",
@@ -43,6 +49,9 @@
     "vue": "^3.5.0"
   },
   "peerDependenciesMeta": {
+    "@colorffy/css": {
+      "optional": true
+    },
     "nuxt": {
       "optional": true
     }

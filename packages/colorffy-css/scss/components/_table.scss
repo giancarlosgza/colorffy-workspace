@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.table {
   // ==========================================================================
@@ -10,9 +11,12 @@
   // RESPONSIVE TABLE CONTAINER
   // ==========================================================================
   .table-responsive {
+    position: relative;
     display: block;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -20,8 +24,21 @@
     display: none;
   }
 
+  .table .form-select {
+    min-inline-size: max-content;
+  }
+
+  .table-caption {
+    margin-block: var(--cffy-space-16) 0;
+    color: var(--cffy-muted-a10);
+    font-size: var(--cffy-table-font-size, .75rem);
+    text-align: center;
+  }
+
   .table-responsive.table-responsive-sticky {
-    max-height: var(--_table-sticky-max-height, 32rem);
+    --_table-sticky-max-height: var(--cffy-table-sticky-max-height, 32rem);
+
+    max-height: var(--_table-sticky-max-height);
     overflow-y: auto;
   }
 
@@ -29,15 +46,17 @@
   // STANDARD TABLE COMPONENT
   // ==========================================================================
   .table {
-    --_table-bg-color: transparent;
-    --_table-color: currentColor;
-    --_table-border-color: var(--theme-outline-surface);
-    --_table-border-width: var(--border-width-sm);
-    --_table-gutter-x: var(--space-8);
-    --_table-gutter-y: var(--space-8);
-    --_table-font-size: .75rem;
-    --_table-border-radius: var(--radius-none);
-    --_table-thead-bg-color: var(--theme-surface-a10);
+    --_table-bg-color: var(--cffy-table-bg-color, transparent);
+    --_table-color: var(--cffy-table-color, currentColor);
+    --_table-border-color: var(--cffy-table-border-color, var(--cffy-outline-surface));
+    --_table-border-width: var(--cffy-table-border-width, var(--cffy-border-width-sm));
+    --_table-cell-padding-inline: var(--cffy-table-cell-padding-inline, var(--cffy-space-8));
+    --_table-cell-padding-block: var(--cffy-table-cell-padding-block, var(--cffy-space-8));
+    --_table-font-size: var(--cffy-table-font-size, .75rem);
+    --_table-radius: var(--cffy-table-radius, var(--cffy-radius-none));
+    --_table-header-bg-color: var(--cffy-table-header-bg-color, var(--cffy-surface-a10));
+    --_table-easing: var(--cffy-table-easing, ease-in-out);
+    --_table-duration: var(--cffy-table-duration, var(--cffy-duration-100));
 
     display: table;
     width: 100%;
@@ -48,26 +67,26 @@
     color: var(--_table-color);
 
     thead {
-      background-color: var(--_table-thead-bg-color);
+      background-color: var(--_table-header-bg-color);
 
       tr {
         th {
-          font-size: var(--fs-4xs);
-          font-weight: var(--fw-600);
-          font-family: var(--font-primary);
-          color: var(--theme-muted-a10);
+          font-size: var(--cffy-table-header-font-size, var(--cffy-fs-4xs));
+          font-weight: var(--cffy-table-header-font-weight, var(--cffy-fw-600));
+          font-family: var(--cffy-font-primary);
+          color: var(--cffy-table-header-color, var(--cffy-muted-a10));
           letter-spacing: 0.0727em;
           text-align: start;
-          padding: calc(var(--_table-gutter-y) * 1.5) var(--_table-gutter-x);
+          padding: calc(var(--_table-cell-padding-block) * 1.5) var(--_table-cell-padding-inline);
           vertical-align: middle;
           border-top: var(--_table-border-width) solid var(--_table-border-color);
 
           &:first-child {
-            border-top-left-radius: var(--_table-border-radius);
+            border-top-left-radius: var(--_table-radius);
           }
 
           &:last-child {
-            border-top-right-radius: var(--_table-border-radius);
+            border-top-right-radius: var(--_table-radius);
           }
         }
       }
@@ -79,28 +98,28 @@
         line-height: 1.5;
 
         border-top: var(--_table-border-width) solid var(--_table-border-color);
-        padding-inline: var(--_table-gutter-x);
-        padding-block: var(--_table-gutter-y);
+        padding-inline: var(--_table-cell-padding-inline);
+        padding-block: var(--_table-cell-padding-block);
         vertical-align: middle;
 
         @include m.text-wrap-pretty;
 
         .td-text {
-          font-size: .75rem;
+          font-size: var(--_table-font-size);
         }
 
         .td-name {
           display: inline-flex;
-          gap: var(--space-6);
+          gap: var(--cffy-space-6);
           align-items: center;
 
           i {
-            font-variation-settings: var(--iw-semi-bold);
-            color: var(--theme-muted-a10);
-            font-size: 1.25rem;
+            font-variation-settings: var(--cffy-iw-semi-bold);
+            color: var(--cffy-table-icon-color, var(--cffy-muted-a10));
+            font-size: var(--cffy-table-icon-size, 1.25rem);
 
             &:is(.text-gradient) {
-              font-variation-settings: var(--iw-bold);
+              font-variation-settings: var(--cffy-iw-bold);
             }
           }
 
@@ -109,14 +128,21 @@
         &.td-actions {
           .btn {
             &:not(:last-child) {
-              margin-right: var(--space-6);
+              margin-right: var(--cffy-space-6);
             }
           }
         }
       }
 
+      tr {
+        --_table-row-bg-color: transparent;
+        --_table-row-state: 0%;
+
+        background-color: f.state-layer(var(--_table-row-state), var(--_table-row-bg-color));
+      }
+
       tr.is-selected {
-        background-color: var(--theme-surface-a0);
+        --_table-row-bg-color: var(--cffy-table-selected-bg-color, var(--cffy-primary-container));
       }
     }
 
@@ -133,21 +159,28 @@
       }
     }
 
+    // Fit-content column
+    th.table-col-fit,
+    td.table-col-fit {
+      width: 1%;
+      white-space: nowrap;
+    }
+
     // Sticky header
     &.table-sticky-header thead th {
       position: sticky;
       top: 0;
       z-index: 2;
-      background-color: var(--_table-thead-bg-color);
+      background-color: var(--_table-header-bg-color);
     }
 
     // Table bordered
     &.table-bordered {
-      --_table-border-radius: var(--radius-md);
-      --_table-thead-bg-color: var(--theme-surface-container-lowest);
+      --_table-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
+      --_table-header-bg-color: var(--cffy-surface-container-lowest);
 
       & thead {
-        background-color: var(--_table-thead-bg-color);
+        background-color: var(--_table-header-bg-color);
 
         & tr th {
           border-block: none;
@@ -183,7 +216,7 @@
 
     // Table borderless
     &.table-borderless {
-      --_table-border-radius: var(--radius-md);
+      --_table-radius: min(var(--cffy-radius-md), var(--cffy-shape-container));
 
       & thead {
         & tr th {
@@ -202,7 +235,7 @@
     &.table-striped {
       tbody {
         tr:nth-child(odd) {
-          background-color: var(--theme-surface-container);
+          --_table-row-bg-color: var(--cffy-table-striped-bg-color, var(--cffy-surface-container));
         }
       }
     }
@@ -211,10 +244,10 @@
     &.table-hover {
       tbody {
         tr {
-          transition: background-color var(--duration-100) ease-in-out;
+          transition: background-color var(--_table-duration) var(--_table-easing);
 
           &:is(:hover) {
-            background-color: var(--theme-surface-a10);
+            --_table-row-state: var(--cffy-state-hover-opacity);
           }
         }
       }
@@ -222,13 +255,13 @@
 
     // Table small
     &.table-sm {
-      --_table-gutter-x: var(--space-4);
-      --_table-gutter-y: var(--space-4);
+      --_table-cell-padding-inline: var(--cffy-space-4);
+      --_table-cell-padding-block: var(--cffy-space-4);
     }
 
     &.table-lg {
-      --_table-gutter-x: var(--space-14);
-      --_table-gutter-y: var(--space-14);
+      --_table-cell-padding-inline: var(--cffy-space-14);
+      --_table-cell-padding-block: var(--cffy-space-14);
     }
   }
 
@@ -247,9 +280,9 @@
 
         @supports (container-type: scroll-state) {
           @container scroll-state(scrollable: left) {
-            background: var(--theme-surface-body-pane);
-            transition: background-color var(--duration-100) var(--ease-decelerate),
-            border var(--duration-100) var(--ease-decelerate);
+            background: var(--cffy-table-sticky-column-bg-color, var(--cffy-surface-body-pane));
+            transition: background-color var(--cffy-duration-100) var(--cffy-ease-decelerate),
+            border var(--cffy-duration-100) var(--cffy-ease-decelerate);
 
             &:after {
               content: '';

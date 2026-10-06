@@ -20,12 +20,10 @@ const sizeMap: Record<IconSize, number> = {
   lg: 40,
   xl: 48
 }
-
-/** Composable */
 const generatedUid = useId()
-const uid = computed(() => props.uid ?? generatedUid)
 
 /** Computed */
+const uid = computed(() => props.uid ?? generatedUid)
 const resolvedSize = computed(() => {
   if (typeof props.size === 'number')
     return props.size

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Interfaces */
 interface IShapeLoadingProps {
@@ -20,9 +21,11 @@ const props = withDefaults(defineProps<IShapeLoadingProps>(), {
   customClass: null,
   loadingStyles: null,
   role: 'status',
-  ariaLabel: 'Loading content',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Computed */
 const containerClasses = computed<(string | string[])[]>(() => {
@@ -35,15 +38,16 @@ const containerClasses = computed<(string | string[])[]>(() => {
   return classes
 })
 const titleClasses = computed(() => {
-  return ['subtitle-1', 'font-primary', 'fw-600', 'mb-0', 'fs-500']
+  return ['subtitle-1', 'font-primary', 'fw-600', 'mb-0', 'fs-lg']
 })
 const ariaAttributes = computed(() => {
   const attributes: Record<string, string> = {}
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.content
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 
@@ -70,7 +74,7 @@ const ariaAttributes = computed(() => {
       </p>
       <p
         v-if="subtitle"
-        class="subtitle-2 text-muted mt-1 mb-0"
+        class="subtitle-2 mt-1 mb-0"
       >
         {{ subtitle }}
       </p>

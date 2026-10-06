@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import UiButton from '../button/Button.vue'
 import UiDatatable from './Datatable.vue'
 
@@ -212,6 +212,61 @@ export const Selectable: Story = {
           </template>
         </UiDatatable>
       </div>
+    `
+  })
+}
+
+const roles = ['Admin', 'Editor', 'User', 'Viewer']
+const people = ['Maya Chen', 'Sam Ortiz', 'Ines Duarte', 'Theo Grant', 'Priya Nair', 'Leo Park', 'Ava Rossi', 'Omar Haddad']
+const manyRows = Array.from({ length: 48 }, (_, index) => ({
+  id: index + 1,
+  name: `${people[index % people.length]} ${Math.floor(index / people.length) + 1}`,
+  email: `member${index + 1}@orbit.app`,
+  role: roles[index % roles.length],
+  status: index % 5 === 0 ? 'Inactive' : 'Active'
+}))
+
+export const Paginated: Story = {
+  render: () => ({
+    components: { UiDatatable },
+    setup() {
+      const selected = ref<(string | number)[]>([])
+      const page = ref(1)
+      return { columns: columns.slice(0, 5), items: manyRows, selected, page }
+    },
+    template: `
+      <div>
+        <p class="caption text-muted mb-2">Page {{ page }} · selected: {{ selected.length ? selected.join(', ') : 'none' }}</p>
+        <UiDatatable
+          v-model:selected="selected"
+          v-model:page="page"
+          :columns="columns"
+          :items="items"
+          :pagination="{ pageSize: 8, showEdges: true }"
+          selectable
+        />
+      </div>
+    `
+  })
+}
+
+export const PaginatedWithFilter: Story = {
+  render: () => ({
+    components: { UiDatatable },
+    setup() {
+      const query = ref('')
+      const items = computed(() => {
+        const term = query.value.trim().toLowerCase()
+        return term ? manyRows.filter(row => `${row.name} ${row.role}`.toLowerCase().includes(term)) : manyRows
+      })
+      return { columns: columns.slice(0, 5), items, query }
+    },
+    template: `
+      <UiDatatable :columns="columns" :items="items" :pagination="{ pageSize: 10 }" default-sort-key="name">
+        <template #controls>
+          <input v-model="query" type="search" class="form-control form-sm" placeholder="Filter by name or role" aria-label="Filter members">
+        </template>
+      </UiDatatable>
     `
   })
 }

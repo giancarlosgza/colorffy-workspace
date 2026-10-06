@@ -5,9 +5,9 @@
   // DIVIDER COMPONENT
   // ==========================================================================
   .divider {
-    --_divider-thickness: 1px;
-    --_divider-color: var(--theme-outline-surface);
-    --_divider-spacing: .75rem;
+    --_divider-thickness: var(--cffy-divider-thickness, 1px);
+    --_divider-color: var(--cffy-divider-color, var(--cffy-outline-surface));
+    --_divider-spacing: var(--cffy-divider-spacing, .75rem);
 
     border: none;
     block-size: var(--_divider-thickness);
@@ -32,7 +32,7 @@
     // DIVIDER INSET
     // ==========================================================================
     &.divider-inset {
-      margin-inline-start: 3rem;
+      margin-inline-start: var(--cffy-divider-inset, 3rem);
     }
 
     // ==========================================================================
@@ -41,14 +41,14 @@
     &.divider-text {
       display: flex;
       align-items: center;
-      gap: .75rem;
+      gap: var(--cffy-divider-text-gap, var(--cffy-space-12));
 
       block-size: auto;
       inline-size: 100%;
       background-color: transparent;
 
-      color: var(--theme-muted-a10);
-      font-size: var(--fs-2xs);
+      color: var(--cffy-divider-text-color, var(--cffy-muted-a10));
+      font-size: var(--cffy-divider-text-font-size, var(--cffy-fs-2xs));
 
       &::before,
       &::after {

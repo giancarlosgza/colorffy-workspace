@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ISidebarEmits, ISidebarProps } from '@/types/sidebar'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ISidebarProps>(), {
@@ -8,14 +9,20 @@ const props = withDefaults(defineProps<ISidebarProps>(), {
   rail: false,
   open: false,
   width: null,
-  ariaLabel: 'Main navigation',
-  customClass: ''
+  customClass: '',
+  headerClass: null,
+  bodyClass: null,
+  footerClass: null
 })
 
 /** Emits */
 const emit = defineEmits<ISidebarEmits>()
 
+/** Labels */
+const l10n = useLabels('sidebar')
+
 /** Computed */
+const navText = computed(() => props.ariaLabel ?? l10n.value.ariaLabel)
 const sidebarClasses = computed(() => [
   'navigation-drawer',
   {
@@ -28,7 +35,7 @@ const sidebarClasses = computed(() => [
 ])
 const sidebarStyles = computed(() => {
   if (props.width) {
-    return { '--theme-nav-drawer-width': props.width }
+    return { '--cffy-sidebar-width': props.width }
   }
   return {}
 })
@@ -44,13 +51,30 @@ const sidebarStyles = computed(() => {
   <nav
     :class="sidebarClasses"
     :style="sidebarStyles"
-    :aria-label="ariaLabel"
+    :aria-label="navText"
   >
     <div class="drawer-content">
-      <slot name="header" />
-      <slot name="body" />
-      <slot name="footer" />
-      <slot />
+      <div
+        v-if="$slots.header"
+        class="drawer-header"
+        :class="headerClass"
+      >
+        <slot name="header" />
+      </div>
+      <div
+        v-if="$slots.body"
+        class="drawer-body"
+        :class="bodyClass"
+      >
+        <slot name="body" />
+      </div>
+      <div
+        v-if="$slots.footer"
+        class="drawer-footer"
+        :class="footerClass"
+      >
+        <slot name="footer" />
+      </div>
     </div>
   </nav>
 </template>

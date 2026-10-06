@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 @use '../base/typography';
 
 @layer components.list {
@@ -12,21 +13,21 @@
       content: '';
       inline-size: 16px;
       block-size: 16px;
-      background-color: var(--theme-muted-a10);
+      background-color: var(--_list-arrow-color);
       -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
       position: absolute;
       inset-block: 0;
-      right: var(--space-16);
+      right: var(--cffy-space-16);
       margin: auto;
     }
 
-    &:is(:hover) {
-      --_list-group-item-bg-color: var(--theme-surface-container-high);
+    &:is(:hover):not(.list-item-disabled) {
+      --_list-state: var(--cffy-state-hover-opacity);
     }
 
-    &:is(:active, :focus) {
-      --_list-group-item-bg-color: var(--theme-surface-container-highest);
+    &:is(:active, :focus-visible, :has(:focus-visible)):not(.list-item-disabled) {
+      --_list-state: var(--cffy-state-pressed-opacity);
     }
   }
 
@@ -34,17 +35,21 @@
   // LIST COMPONENT
   // ==========================================================================
   .list-group {
-    --_list-group-item-bg-color: var(--theme-surface-container);
-    --_list-group-item-border-color: transparent;
-    --_list-group-item-color: var(--theme-on-background);
-    --_list-group-item-color-subtitle: var(--theme-muted-a10);
-    --_list-group-item-icon-bg-color: var(--theme-surface-container-lowest);
-    --_list-group-item-icon-color: var(--theme-on-background);
-    --_list-group-item-radius: var(--radius-md);
+    --_list-gap: var(--cffy-list-gap, var(--cffy-space-6));
+    --_list-bg-color: var(--cffy-list-bg-color, var(--cffy-surface-container));
+    --_list-border-color: var(--cffy-list-border-color, transparent);
+    --_list-color: var(--cffy-list-color, var(--cffy-on-background));
+    --_list-subtitle-color: var(--cffy-list-subtitle-color, var(--cffy-muted-a10));
+    --_list-icon-bg-color: var(--cffy-list-icon-bg-color, var(--cffy-surface-container-lowest));
+    --_list-icon-color: var(--cffy-list-icon-color, var(--cffy-on-background));
+    --_list-arrow-color: var(--cffy-list-arrow-color, var(--cffy-muted-a10));
+    --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
+    --_list-easing: var(--cffy-list-easing, var(--cffy-ease-decelerate));
+    --_list-duration: var(--cffy-list-duration, var(--cffy-duration-200));
 
     display: grid;
     grid-template-rows: auto;
-    gap: var(--space-6);
+    gap: var(--_list-gap);
     width: 100%;
     padding: 0;
     margin: 0;
@@ -52,57 +57,61 @@
     background: transparent;
 
     & .list-group-item {
+      --_list-state: 0%;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      background-color: var(--_list-group-item-bg-color);
-      border: var(--border-width-sm) solid var(--_list-group-item-border-color);
-      border-radius: var(--_list-group-item-radius);
-      transition: var(--ease-decelerate);
+      background-color: f.state-layer(var(--_list-state), var(--_list-bg-color));
+      border: var(--cffy-border-width-sm) solid var(--_list-border-color);
+      border-radius: var(--_list-item-radius);
+      transition: background-color var(--_list-duration) var(--_list-easing),
+      border-color var(--_list-duration) var(--_list-easing);
 
       // Border radius
       &:is(:first-child) {
-        --_list-group-item-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+        --_list-item-radius: var(--cffy-list-radius, var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container));
       }
 
       &:is(:last-child) {
-        --_list-group-item-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
+        --_list-item-radius: min(var(--cffy-radius-sm), var(--cffy-shape-container)) min(var(--cffy-radius-sm), var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container)) var(--cffy-list-radius, var(--cffy-shape-container));
       }
 
       &:not(:first-child, :last-child) {
-        --_list-group-item-radius: var(--radius-md);
+        --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       }
 
       // Item
       & .list-item {
-        --_list-item-gap: var(--space-14);
-        --_list-item-padding: var(--space-8);
-        --_list-item-icon-padding: .625rem;
-        --_list-item-icon-size: var(--fs-lg);
-        --_list-item-image-size: 2.75rem;
+        --_list-item-gap: var(--cffy-list-item-gap, var(--cffy-space-14));
+        --_list-item-padding: var(--cffy-list-item-padding, var(--cffy-space-8));
+        --_list-icon-padding: var(--cffy-list-icon-padding, calc(var(--cffy-space-20) / 2));
+        --_list-icon-size: var(--cffy-list-icon-size, var(--cffy-fs-lg));
+        --_list-image-size: var(--cffy-list-image-size, 2.75rem);
 
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         gap: var(--_list-item-gap);
         padding: var(--_list-item-padding);
-        border-radius: var(--_list-group-item-radius);
-        width: 100%;
+        border-radius: var(--_list-item-radius);
+        flex: 1 1 0;
+        min-width: 0;
 
         // Text
         & p {
           &:is(.subtitle-1) {
-            font-family: var(--font-primary);
-            font-weight: var(--fw-600);
-            font-size: var(--fs-3xs);
-            color: var(--_list-group-item-color);
+            font-family: var(--cffy-font-primary);
+            font-weight: var(--cffy-list-title-font-weight, var(--cffy-fw-600));
+            font-size: var(--cffy-list-title-font-size, var(--cffy-fs-3xs));
+            color: var(--_list-color);
             margin-bottom: 0;
           }
 
           &:is(.subtitle-2) {
-            font-size: var(--fs-3xs);
-            color: var(--_list-group-item-color-subtitle);
+            font-size: var(--cffy-list-subtitle-font-size, var(--cffy-fs-3xs));
+            color: var(--_list-subtitle-color);
             margin-block: 0;
           }
         }
@@ -115,48 +124,48 @@
 
         // Icon
         & .list-item-icon-wrapper {
-          border-radius: var(--radius-md);
-          padding: var(--_list-item-icon-padding);
+          border-radius: var(--cffy-list-icon-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
+          padding: var(--_list-icon-padding);
           aspect-ratio: 1;
-          background-color: var(--_list-group-item-icon-bg-color);
+          background-color: var(--_list-icon-bg-color);
 
           & i {
-            font-size: var(--_list-item-icon-size);
-            color: var(--_list-group-item-icon-color);
+            font-size: var(--_list-icon-size);
+            color: var(--_list-icon-color);
           }
         }
 
         // Image
         & .list-item-image {
-          width: var(--_list-item-image-size);
-          height: var(--_list-item-image-size);
+          width: var(--_list-image-size);
+          height: var(--_list-image-size);
           flex-shrink: 0;
-          border-radius: var(--radius-md);
+          border-radius: var(--cffy-list-image-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
           object-fit: cover;
         }
       }
 
       &.list-item-active {
-        --_list-group-item-bg-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
-        --_list-group-item-border-color: color-mix(in oklab, var(--theme-surface-container-high) 85%, var(--theme-primary-base) 10%);
-        --_list-group-item-icon-bg-color: var(--theme-primary-a90);
-        --_list-group-item-icon-color: var(--theme-on-background-inverse);
+        --_list-bg-color: var(--cffy-list-active-bg-color, color-mix(in oklab, var(--cffy-surface-container-high) 85%, var(--cffy-primary-base) 10%));
+        --_list-border-color: var(--cffy-list-active-border-color, color-mix(in oklab, var(--cffy-surface-container-high) 85%, var(--cffy-primary-base) 10%));
+        --_list-icon-bg-color: var(--cffy-list-active-icon-bg-color, var(--cffy-on-primary-container));
+        --_list-icon-color: var(--cffy-list-active-icon-color, var(--cffy-on-background-inverse));
 
         z-index: 2;
-        border-width: var(--border-width-md);
+        border-width: var(--cffy-border-width-md);
 
         :where(.list-item-icon-wrapper i) {
-          font-variation-settings: var(--iw-bold);
+          font-variation-settings: var(--cffy-iw-bold);
         }
       }
 
       &.list-item-disabled {
-        --_list-group-item-bg-color: var(--theme-surface-disabled);
-        --_list-group-item-border-color: var(--theme-surface-disabled);
-        --_list-group-item-color: var(--theme-muted-a10);
-        --_list-group-item-color-subtitle: var(--theme-muted-a10);
-        --_list-group-item-icon-bg-color: var(--theme-surface-disabled);
-        --_list-group-item-icon-color: var(--theme-muted-a10);
+        --_list-bg-color: var(--cffy-surface-disabled);
+        --_list-border-color: var(--cffy-surface-disabled);
+        --_list-color: var(--cffy-muted-a10);
+        --_list-subtitle-color: var(--cffy-muted-a10);
+        --_list-icon-bg-color: var(--cffy-surface-disabled);
+        --_list-icon-color: var(--cffy-muted-a10);
 
         cursor: not-allowed;
 
@@ -178,13 +187,17 @@
       }
 
       & .list-item-actions {
-        padding-right: var(--space-16);
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--cffy-space-8);
+        padding-right: var(--cffy-space-16);
       }
     }
 
     &:not(:has(.list-group-item:nth-child(2))) {
       .list-group-item:nth-child(1) {
-        --_list-group-item-radius: var(--radius-md);
+        --_list-item-radius: var(--cffy-list-item-radius, min(var(--cffy-radius-md), var(--cffy-shape-container)));
       }
     }
 
@@ -194,11 +207,11 @@
     &.list-group-sm {
       .list-group-item {
         & .list-item {
-          --_list-item-gap: var(--space-6);
-          --_list-item-padding: var(--space-4);
-          --_list-item-icon-padding: var(--space-6);
-          --_list-item-icon-size: var(--fs-sm);
-          --_list-item-image-size: 1.75rem;
+          --_list-item-gap: var(--cffy-space-6);
+          --_list-item-padding: var(--cffy-space-4);
+          --_list-icon-padding: var(--cffy-space-6);
+          --_list-icon-size: var(--cffy-fs-sm);
+          --_list-image-size: 1.75rem;
         }
       }
     }
@@ -206,11 +219,11 @@
     &.list-group-md {
       .list-group-item {
         & .list-item {
-          --_list-item-gap: .625rem;
-          --_list-item-padding: var(--space-6);
-          --_list-item-icon-padding: var(--space-8);
-          --_list-item-icon-size: var(--fs-base);
-          --_list-item-image-size: 2.25rem;
+          --_list-item-gap: calc(var(--cffy-space-20) / 2);
+          --_list-item-padding: var(--cffy-space-6);
+          --_list-icon-padding: var(--cffy-space-8);
+          --_list-icon-size: var(--cffy-fs-base);
+          --_list-image-size: 2.25rem;
         }
       }
     }
@@ -219,17 +232,17 @@
     // LIST GROUP VARIANTS (FLUSH, LOW-CONTRAST)
     // ==========================================================================
     &.list-group-flush {
-      --_list-group-item-bg-color: transparent;
-      --_list-group-item-border-color: var(--theme-outline-surface);
+      --_list-bg-color: transparent;
+      --_list-border-color: var(--cffy-outline-surface);
 
       gap: 0;
 
       & .list-group-item {
-        --_list-group-item-radius: var(--radius-none);
+        --_list-item-radius: var(--cffy-radius-none);
 
         border: transparent;
-        border-radius: var(--radius-none);
-        border-bottom: var(--border-width-sm) solid var(--_list-group-item-border-color);
+        border-radius: var(--cffy-radius-none);
+        border-bottom: var(--cffy-border-width-sm) solid var(--_list-border-color);
 
         &:last-child {
           border-bottom: transparent;
@@ -238,8 +251,8 @@
     }
 
     &.list-group-low-contrast {
-      --_list-group-item-bg-color: var(--theme-surface-container-low);
-      --_list-group-item-icon-bg-color: var(--theme-surface-body-pane);
+      --_list-bg-color: var(--cffy-surface-container-low);
+      --_list-icon-bg-color: var(--cffy-surface-body-pane);
     }
 
     // ==========================================================================

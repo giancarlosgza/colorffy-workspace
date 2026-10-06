@@ -88,12 +88,12 @@ export const InContext: Story = {
     components: { UiProgressSpinner },
     template: `
       <div style="display: flex; flex-direction: column; gap: 2rem;">
-        <div style="padding: 2rem; background: var(--theme-surface-base); border-radius: 0.5rem; text-align: center;">
+        <div style="padding: 2rem; background: var(--cffy-surface-base); border-radius: 0.5rem; text-align: center;">
           <UiProgressSpinner size="2rem" />
-          <p style="margin-top: 1rem; color: var(--theme-on-background);">Loading content...</p>
+          <p style="margin-top: 1rem; color: var(--cffy-on-background);">Loading content...</p>
         </div>
         
-        <div style="padding: 2rem; background: var(--theme-surface-container); border-radius: 0.5rem;">
+        <div style="padding: 2rem; background: var(--cffy-surface-container); border-radius: 0.5rem;">
           <div style="display: flex; align-items: center; gap: 1rem;">
             <UiProgressSpinner size="1.25rem" />
             <span>Processing your request</span>

@@ -1,5 +1,6 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer utilities.transform {
   // ==========================================================================
@@ -20,7 +21,7 @@
     }
 
     .translate-x--#{$space} {
-      translate: -#{$value} 0;
+      translate: f.negate($value) 0;
     }
 
     .translate-y-#{$space} {
@@ -28,7 +29,7 @@
     }
 
     .translate-y--#{$space} {
-      translate: 0 -#{$value};
+      translate: 0 f.negate($value);
     }
   }
 
@@ -61,7 +62,7 @@
         }
 
         .translate-x-#{$breakpoint}--#{$space} {
-          translate: -#{$value} 0;
+          translate: f.negate($value) 0;
         }
 
         .translate-y-#{$breakpoint}-#{$space} {
@@ -69,7 +70,7 @@
         }
 
         .translate-y-#{$breakpoint}--#{$space} {
-          translate: 0 -#{$value};
+          translate: 0 f.negate($value);
         }
       }
 

@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import type { INavbarAvatarEmits, INavbarAvatarProps } from '@/types/navbar'
+import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
-const _props = withDefaults(defineProps<INavbarAvatarProps>(), {
+const props = withDefaults(defineProps<INavbarAvatarProps>(), {
   src: null,
-  alt: 'User avatar',
   size: 'navbar',
   customClass: null
 })
 
 /** Emits */
 defineEmits<INavbarAvatarEmits>()
+
+/** Labels */
+const l10n = useLabels('navbar')
+
+/** Computed */
+const altText = computed(() => props.alt ?? l10n.value.avatarAlt)
 </script>
 
 <template>
@@ -22,7 +29,7 @@ defineEmits<INavbarAvatarEmits>()
     ]"
     role="button"
     tabindex="0"
-    :aria-label="alt"
+    :aria-label="altText"
     @click="$emit('click')"
     @keydown.enter.prevent="$emit('click')"
     @keydown.space.prevent="$emit('click')"
@@ -35,7 +42,7 @@ defineEmits<INavbarAvatarEmits>()
         'avatar-sm': size === 'sm',
         'avatar-navbar': size === 'navbar',
       }"
-      :alt="alt"
+      :alt="altText"
     >
     <span
       v-else

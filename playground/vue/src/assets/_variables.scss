@@ -1,20 +1,9 @@
-/**
- * Override Colorffy CSS variables
- */
 $rounded-md: 12px;
 $rounded-lg: 25px;
 $rounded-xl: 35px;
 
+// Brand colors and fonts are CSS tokens (see main.scss); SCSS only sets compile-time radii
 @forward '@colorffy/css/scss/abstracts/variables' with (
-    /** Overrides primaries colors and gradients */
-    $primary: #4f46e5,
-    $secondary: #ec4899,
-    $accent: #0ea5e9,
-    $success: #22c55e,
-    $warning: #f59e0b,
-    $danger: #ef4444,
-    
-    /** Extra overrides */
     $card-border-radius: $rounded-md,
     $form-border-radius: $rounded-md,
     $button-border-radius: $rounded-md,

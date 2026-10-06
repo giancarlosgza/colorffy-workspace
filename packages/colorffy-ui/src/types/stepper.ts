@@ -75,5 +75,5 @@ export interface IStepperEmits {
   /**
    * Emitted when a step is selected.
    */
-  (e: 'updateActiveStep', stepId: string): void
+  (e: 'update:activeStep', stepId: string): void
 }

@@ -87,6 +87,17 @@ export type IconShape
  */
 export interface IMaterialIconProps extends IIconBaseProps {
   /**
+   * Glyph size: `xs` / `sm` / `md` / `lg` / `xl` = 20 / 24 / 32 / 40 / 48px, or a
+   * number of px. Unset, the icon follows the surrounding text size.
+   */
+  size?: IconSize | number | null
+
+  /**
+   * Glyph color, any CSS color. Unset, the icon follows the surrounding text color.
+   */
+  color?: string | null
+
+  /**
    * The symbol entity code (e.g. `'&#xe87c;'`).
    */
   iconCode: string

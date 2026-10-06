@@ -5,22 +5,22 @@
   // FORM OTP COMPONENT
   // ==========================================================================
   .form-otp {
-    --_form-otp-gap: .5rem;
+    --_input-otp-gap: var(--cffy-input-otp-gap, var(--cffy-space-8));
 
     display: flex;
     align-items: center;
-    gap: var(--_form-otp-gap);
+    gap: var(--_input-otp-gap);
     flex-wrap: wrap;
 
     .form-otp-box {
-      --_form-padding-x: 0;
-      --_form-padding-y: 0;
-      --_form-font-size: var(--fs-base);
-      --_form-width: var(--_form-height);
+      --_input-padding-inline: 0;
+      --_input-padding-block: 0;
+      --_input-font-size: var(--cffy-input-otp-font-size, var(--cffy-fs-base));
+      --_input-width: var(--_input-height);
 
       flex: 0 0 auto;
       text-align: center;
-      font-weight: var(--fw-500);
+      font-weight: var(--cffy-input-otp-font-weight, var(--cffy-fw-500));
     }
   }
 }

@@ -22,14 +22,12 @@ const avatarGroupClasses = computed(() => {
 
   return classes
 })
-// Avatars actually rendered once `max` truncates the list
 const visibleAvatars = computed(() => {
   if (!props.avatars?.length)
     return []
 
   return props.max ? props.avatars.slice(0, props.max) : props.avatars
 })
-// Remaining count collapsed into the "+N" overflow avatar
 const overflowCount = computed(() => {
   if (!props.avatars?.length || !props.max)
     return 0
@@ -54,7 +52,7 @@ const overflowClasses = computed(() => {
 
 <template>
   <div :class="avatarGroupClasses">
-    <!-- Avatars built from the `avatars` prop -->
+    <!-- Avatars from `avatars` -->
     <template v-if="avatars && avatars.length">
       <UiAvatar
         v-for="(avatar, index) in visibleAvatars"
@@ -70,7 +68,7 @@ const overflowClasses = computed(() => {
       >+{{ overflowCount }}</span>
     </template>
 
-    <!-- Avatars composed directly via the default slot -->
+    <!-- Slotted avatars -->
     <slot v-else />
   </div>
 </template>

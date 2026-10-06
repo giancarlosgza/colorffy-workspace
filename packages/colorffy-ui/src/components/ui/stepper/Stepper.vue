@@ -26,11 +26,6 @@ const currentIndex = computed(() => {
   return index === -1 ? 0 : index
 })
 
-/** Watchers */
-watch(() => props.activeStep, (newVal) => {
-  activeStepId.value = newVal ?? (steps.value?.[0]?.id ?? '')
-})
-
 /** Methods */
 function setStepButton(el: Element | ComponentPublicInstance | null, index: number) {
   stepButtons.value[index] = (el as HTMLButtonElement) ?? null
@@ -58,7 +53,7 @@ function handleSelectedStep(step: IStepItem, index: number) {
     return
 
   activeStepId.value = step.id
-  emit('updateActiveStep', step.id)
+  emit('update:activeStep', step.id)
 }
 function nextEnabledIndex(from: number, direction: number): number {
   const count = steps.value.length
@@ -99,6 +94,11 @@ function onStepKeydown(event: KeyboardEvent, index: number) {
       break
   }
 }
+
+/** Watchers */
+watch(() => props.activeStep, (newVal) => {
+  activeStepId.value = newVal ?? (steps.value?.[0]?.id ?? '')
+})
 </script>
 
 <template>

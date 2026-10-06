@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IRangeInputEmits, IRangeInputProps } from '@/types/input'
 import { computed, onMounted, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IRangeInputProps>(), {
@@ -27,11 +28,15 @@ const emit = defineEmits<IRangeInputEmits>()
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-range` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -56,9 +61,8 @@ const rangeClasses = computed(() => {
   }
   return classes
 })
-
 const valueAsPercent = computed(() => {
-  // Guard empty/NaN explicitly so a legitimate 0 isn't discarded.
+  // A legitimate 0 must not be discarded
   const numeric = Number(model.value)
   const currentValue = model.value === null || model.value === '' || Number.isNaN(numeric)
     ? props.min
@@ -69,10 +73,11 @@ const valueAsPercent = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 
-// Seed an empty model with min so the native thumb matches the stored value
+/** Lifecycle */
+// An empty model takes `min`, so the native thumb matches the stored value
 onMounted(() => {
   model.value ??= props.min
 })
@@ -97,7 +102,7 @@ onMounted(() => {
       :step="step"
       :aria-invalid="hasErrors || undefined"
       :aria-describedby="describedById"
-      :style="`--_form-range-track-fill: ${valueAsPercent}%;`"
+      :style="`--_input-range-track-fill: ${valueAsPercent}%;`"
       :disabled="disabled"
     >
 
@@ -113,7 +118,7 @@ onMounted(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

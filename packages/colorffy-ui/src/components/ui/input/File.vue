@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IFileInputEmits, IFileInputProps } from '@/types/input'
 import { computed, toRefs } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -8,7 +9,6 @@ const props = withDefaults(defineProps<IFileInputProps>(), {
   id: null,
   label: null,
   inputLabel: null,
-  large: false,
   modelValue: null,
   errorMessages: () => [],
   placeholder: null,
@@ -29,14 +29,16 @@ const emit = defineEmits<IFileInputEmits>()
 /** Model */
 const model = defineModel<File | null>('modelValue', { default: null })
 
-/** Refs */
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
 const { label, inputLabel } = toRefs(props)
+const inputId = computed(() => props.id ?? undefined)
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'input-file-group',
   { 'form-invalid': hasErrors.value }
@@ -48,7 +50,7 @@ const dropboxClasses = computed(() => [
   'input-file-dropbox',
   {
     'valid-file': !!model.value,
-    'dropbox-lg': props.size === 'lg' || props.large
+    'dropbox-lg': props.size === 'lg'
   }
 ])
 const fileClasses = computed(() => {
@@ -65,7 +67,7 @@ function handleInput(event: Event) {
   const file = target.files?.[0] ?? null
 
   model.value = file
-  emit('onUpdate', file)
+  emit('update', file)
 }
 </script>
 
@@ -92,7 +94,7 @@ function handleInput(event: Event) {
           @input="handleInput"
         >
 
-        <!-- File Info -->
+        <!-- File info -->
         <div
           v-if="model"
           class="input-file-text"
@@ -121,7 +123,7 @@ function handleInput(event: Event) {
         v-else-if="optionalLabel"
         class="caption text-muted mt-1"
       >
-        Optional
+        {{ l10nCommon.optional }}
       </p>
     </div>
   </div>

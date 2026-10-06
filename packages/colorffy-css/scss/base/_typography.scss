@@ -11,10 +11,10 @@
   h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
-    font-weight: var(--fw-500);
+    font-weight: var(--cffy-fw-500);
     font-style: normal;
     line-height: 1.2;
-    color: var(--theme-on-background);
+    color: var(--cffy-on-background);
   }
 
   // ==========================================================================
@@ -137,8 +137,8 @@
   // ==========================================================================
   p,
   a {
-    font-weight: var(--fw-400);
-    font-size: var(--fs-xs);
+    font-weight: var(--cffy-fw-400);
+    font-size: var(--cffy-fs-xs);
     letter-spacing: 0.4px;
     line-height: 20px;
   }
@@ -151,13 +151,13 @@
 
   a,
   .anchor-link {
-    --_hyperlink-color: var(--theme-primary-a10);
-    --_hyperlink-bg-color: var(--theme-primary-a20);
-    --_hyperlink-radius: var(--radius-full);
-    --_hyperlink-easing-in: var(--ease-spring);
-    --_hyperlink-easing-duration: var(--duration-800);
+    --_link-color: var(--cffy-link-color, var(--cffy-primary-a10));
+    --_link-underline-color: var(--cffy-link-underline-color, var(--cffy-primary-a20));
+    --_link-radius: var(--cffy-radius-full);
+    --_link-easing: var(--cffy-link-easing, var(--cffy-ease-spring));
+    --_link-duration: var(--cffy-link-duration, var(--cffy-duration-800));
 
-    color: var(--_hyperlink-color);
+    color: var(--_link-color);
     text-decoration: none;
     position: relative;
     cursor: pointer;
@@ -179,18 +179,18 @@
 
       width: 100%;
       height: 2px;
-      background: var(--_hyperlink-bg-color);
-      border-radius: var(--_hyperlink-radius);
+      background: var(--_link-underline-color);
+      border-radius: var(--_link-radius);
 
       opacity: 0;
       scale: 0 0;
 
-      transition: opacity var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in),
-      scale var(--_hyperlink-easing-duration) var(--_hyperlink-easing-in);
+      transition: opacity var(--_link-duration) var(--_link-easing),
+      scale var(--_link-duration) var(--_link-easing);
     }
 
     &:is(:hover) {
-      color: var(--theme-primary-a20);
+      color: var(--cffy-link-hover-color, var(--cffy-primary-a20));
       text-decoration: none;
 
       &:after {
@@ -200,7 +200,7 @@
     }
 
     &:is(:active, :focus) {
-      color: var(--theme-primary-a30);
+      color: var(--cffy-link-active-color, var(--cffy-primary-a30));
       text-decoration: none;
     }
   }
@@ -211,32 +211,32 @@
     font-weight: map.get(v.$type-label, font-weight);
     font-size: map.get(v.$type-label, font-size);
     letter-spacing: map.get(v.$type-label, letter-spacing);
-    color: var(--theme-on-background);
+    color: var(--cffy-on-background);
     margin-bottom: .75rem;
   }
 
   code {
-    --_code-color: var(--theme-muted-a10);
+    --_code-color: var(--cffy-code-color, var(--cffy-muted-a10));
 
-    font-size: var(--fs-3xs);
+    font-size: var(--cffy-code-font-size, var(--cffy-fs-3xs));
     color: var(--_code-color);
     cursor: pointer;
   }
 
   kbd {
-    font-weight: var(--fw-400);
-    font-size: var(--fs-4xs);
-    color: var(--theme-on-background);
-    background-color: var(--theme-surface-kbd);
-    border: var(--border-width-sm) solid var(--theme-surface-kbd);
-    box-shadow: var(--shadow-xs);
-    border-radius: var(--radius-md);
+    font-weight: var(--cffy-fw-400);
+    font-size: var(--cffy-kbd-font-size, var(--cffy-fs-4xs));
+    color: var(--cffy-kbd-color, var(--cffy-on-background));
+    background-color: var(--cffy-kbd-bg-color, var(--cffy-surface-kbd));
+    border: var(--cffy-border-width-sm) solid var(--cffy-kbd-bg-color, var(--cffy-surface-kbd));
+    box-shadow: var(--cffy-kbd-shadow, var(--cffy-shadow-xs));
+    border-radius: var(--cffy-kbd-radius, min(var(--cffy-radius-md), var(--cffy-shape-control)));
     padding: .25rem;
 
     &:is(.kbd-dark) {
-      color: var(--theme-white-base);
-      background-color: var(--theme-dark-base);
-      border-color: var(--theme-dark-base);
+      color: var(--cffy-white-base);
+      background-color: var(--cffy-dark-base);
+      border-color: var(--cffy-dark-base);
     }
   }
 }

@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.form-control {
   // ==========================================================================
@@ -8,18 +9,18 @@
   // ==========================================================================
   .form-group,
   .input-group {
-    --_form-group-gutter-y: var(--space-14);
+    --_form-group-spacing: var(--cffy-form-group-spacing, var(--cffy-space-14));
 
-    margin-bottom: var(--_form-group-gutter-y);
+    margin-bottom: var(--_form-group-spacing);
 
     & > label,
     & > .form-label {
       display: block;
       font-family: map.get(v.$type-label, font-family);
-      font-size: map.get(v.$type-label, font-size);
-      font-weight: map.get(v.$type-label, font-weight);
+      font-size: var(--cffy-input-label-font-size, #{map.get(v.$type-label, font-size)});
+      font-weight: var(--cffy-input-label-font-weight, #{map.get(v.$type-label, font-weight)});
       letter-spacing: map.get(v.$type-label, letter-spacing);
-      margin-bottom: var(--space-8);
+      margin-bottom: var(--cffy-input-label-gap, var(--cffy-space-8));
     }
 
     &:has(label:empty) {
@@ -31,84 +32,87 @@
     }
 
     & .form-control,
-    & .form-select {
-      --_form-width: 100%;
-      --_form-height: 2.5rem;
-      --_form-padding-x: var(--space-8);
-      --_form-padding-y: var(--space-4);
-      --_form-radius: #{v.$form-border-radius};
-      --_form-bg-color: transparent;
-      --_form-color: var(--theme-on-background);
-      --_form-border-width: #{v.$form-border};
-      --_form-border-color: var(--theme-outline-text-field);
-      --_form-easing-in: var(--ease-emphasized);
-      --_form-easing-duration: var(--duration-300);
-      --_form-font-size: 0.875rem;
+    & .form-select,
+    & .form-tags {
+      --_input-width: 100%;
+      --_input-height: var(--cffy-input-height, var(--cffy-field-height-md));
+      --_input-padding-inline: var(--cffy-input-padding-inline, var(--cffy-space-8));
+      --_input-padding-block: var(--cffy-input-padding-block, var(--cffy-space-4));
+      --_input-radius: var(--cffy-input-radius, #{f.shape(field, v.$form-border-radius)});
+      --_input-bg-color: var(--cffy-input-bg-color, transparent);
+      --_input-color: var(--cffy-input-color, var(--cffy-on-background));
+      --_input-border-width: var(--cffy-input-border-width, #{v.$form-border});
+      --_input-border-color: var(--cffy-input-border-color, var(--cffy-outline-text-field));
+      --_input-easing: var(--cffy-input-easing, var(--cffy-ease-emphasized));
+      --_input-duration: var(--cffy-input-duration, var(--cffy-duration-300));
+      --_input-font-size: var(--cffy-input-font-size, 0.875rem);
 
       position: relative;
       display: inline-block;
-      width: var(--_form-width);
-      height: var(--_form-height);
-      padding: var(--_form-padding-y) var(--_form-padding-x);
+      width: var(--_input-width);
+      height: var(--_input-height);
+      padding: var(--_input-padding-block) var(--_input-padding-inline);
       appearance: none;
       -webkit-appearance: none;
-      border-radius: var(--_form-radius);
-      border: var(--_form-border-width) solid var(--_form-border-color);
-      box-shadow: var(--shadow-xs);
-      background-color: var(--_form-bg-color);
-      color: var(--_form-color);
-      font-weight: var(--fw-400);
-      font-family: var(--font-secondary);
-      font-size: var(--_form-font-size);
+      border-radius: var(--_input-radius);
+      border: var(--_input-border-width) solid var(--_input-border-color);
+      box-shadow: var(--cffy-input-shadow, var(--cffy-shadow-xs));
+      background-color: var(--_input-bg-color);
+      color: var(--_input-color);
+      font-weight: var(--cffy-fw-400);
+      font-family: var(--cffy-font-secondary);
+      font-size: var(--_input-font-size);
       line-height: 1.5;
-      transition: background-color var(--_form-easing-duration) var(--_form-easing-in),
-      border-color var(--_form-easing-duration) var(--_form-easing-in),
-      box-shadow var(--_form-easing-duration) var(--_form-easing-in);
+      transition: background-color var(--_input-duration) var(--_input-easing),
+      border-color var(--_input-duration) var(--_input-easing),
+      box-shadow var(--_input-duration) var(--_input-easing);
 
       // Placeholder
-      @include m.form-placeholder(35%);
+      @include m.form-placeholder(35%, var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%)));
 
       // Form control variants
       &:is(.form-filled) {
-        --_form-bg-color: var(--theme-surface-container-high);
+        --_input-bg-color: var(--cffy-input-filled-bg-color, var(--cffy-surface-container-high));
       }
 
       &:is(.form-outline) {
-        --_form-border-width: #{v.$form-border * 2};
+        --_input-border-width: #{v.$form-border * 2};
       }
 
       &:is(.form-rounded) {
-        --_form-padding-x: var(--space-12);
-        --_form-radius: var(--radius-full);
+        --_input-padding-inline: var(--cffy-space-12);
+        --_input-radius: var(--cffy-radius-full);
       }
 
       &:is(.form-transparent) {
-        --_form-bg-color: transparent;
-        --_form-border-color: transparent;
+        --_input-bg-color: transparent;
+        --_input-border-color: transparent;
 
         box-shadow: none;
       }
 
       // Sizing variants
       &:is(.form-sm) {
-        --_form-height: 2rem;
-        --_form-padding-x: var(--space-6);
-        --_form-padding-y: .15rem;
-        --_form-font-size: var(--fs-3xs);
+        --_input-height: var(--cffy-field-height-sm);
+        --_input-padding-inline: var(--cffy-space-6);
+        --_input-padding-block: .15rem;
+        --_input-font-size: var(--cffy-fs-3xs);
 
         &.form-select {
+          padding-inline-end: 1.75rem;
           background-position: right .5rem center;
           background-size: 1rem;
         }
       }
 
       &:is(.form-lg) {
-        --_form-height: 3rem;
-        --_form-padding-x: var(--space-12);
-        --_form-padding-y: var(--space-6);
-        --_form-font-size: var(--fs-base);
+        --_input-height: var(--cffy-field-height-lg);
+        --_input-padding-inline: var(--cffy-space-12);
+        --_input-padding-block: var(--cffy-space-6);
+        --_input-font-size: var(--cffy-fs-base);
 
         &.form-select {
+          padding-inline-end: 2.75rem;
           background-position: right 1rem center;
           background-size: 1.5rem;
         }
@@ -116,36 +120,36 @@
 
       // Form control states
       &:is(:hover) {
-        --_form-border-color: var(--theme-on-background);
+        --_input-border-color: var(--cffy-input-hover-border-color, var(--cffy-on-background));
       }
 
       &:is(:focus, :active, :focus-visible) {
-        --_form-bg-color: var(--theme-surface-container-high);
-        --_form-border-color: var(--theme-primary-a10);
+        --_input-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
+        --_input-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
 
         outline-offset: 0.1em;
         outline: 0;
-        box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-primary-base-fixed) 25%, transparent);
+        box-shadow: 0 0 0 .15rem var(--cffy-input-focus-ring-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 25%, transparent));
 
         @media (forced-colors: active) {
-          outline: var(--border-width-md) solid Highlight;
+          outline: var(--cffy-border-width-md) solid Highlight;
         }
       }
 
       // Disabled state
-      &:is(:disabled) {
-        --_form-bg-color: var(--theme-surface-disabled);
-        --_form-color: var(--theme-muted-a10);
-        --_form-border-color: var(--theme-surface-disabled);
+      &:is(:disabled, [aria-disabled="true"]) {
+        --_input-bg-color: var(--cffy-surface-disabled);
+        --_input-color: var(--cffy-muted-a10);
+        --_input-border-color: var(--cffy-surface-disabled);
 
         &:is(:hover) {
-          --_form-border-color: var(--theme-surface-disabled);
+          --_input-border-color: var(--cffy-surface-disabled);
         }
 
         &:is(:focus, :active, :focus-visible) {
-          --_form-border-color: var(--theme-surface-disabled);
+          --_input-border-color: var(--cffy-surface-disabled);
 
-          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-muted-base-fixed) 25%, transparent);
+          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--cffy-muted-base-fixed) 25%, transparent);
         }
       }
 
@@ -156,22 +160,23 @@
 
       // User-invalid state (native browser validation once interacted)
       &:is(:user-invalid) {
-        --_form-border-color: var(--theme-danger-a10);
+        --_input-border-color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
 
         &:is(:focus, :active, :focus-visible) {
-          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
+          box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
         }
 
         + .invalid-feedback {
           display: block;
-          margin-top: var(--space-6);
-          font-size: var(--fs-3xs);
-          color: var(--theme-danger-a10);
+          margin-top: var(--cffy-space-6);
+          font-size: var(--cffy-fs-3xs);
+          color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
         }
       }
 
       // Textarea
       &:is(textarea) {
+        border-radius: min(var(--_input-radius), var(--cffy-shape-container));
         field-sizing: content;
         min-block-size: 4rlh;
         min-inline-size: 20ch;
@@ -179,16 +184,78 @@
       }
 
       &[type="datetime-local"],
-      &[type="date"] {
+      &[type="date"],
+      &[type="time"] {
         &::-webkit-calendar-picker-indicator {
-          filter: var(--theme-img-filter-invert);
+          filter: var(--cffy-img-filter-invert);
         }
+      }
+    }
+
+    // Tags field: chips and a borderless input wrap inside the field
+    & .form-tags {
+      --_input-tags-gap: var(--cffy-input-tags-gap, var(--cffy-space-4));
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--_input-tags-gap);
+      height: auto;
+      min-height: var(--_input-height);
+      cursor: text;
+
+      // Tags sit the same distance from every edge; an empty field keeps the text padding
+      &:has(> .btn-chip) {
+        padding-inline-start: var(--_input-padding-block);
+      }
+
+      &:is(:focus-within) {
+        --_input-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
+        --_input-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
+
+        box-shadow: 0 0 0 .15rem var(--cffy-input-focus-ring-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 25%, transparent));
+
+        @media (forced-colors: active) {
+          outline: var(--cffy-border-width-md) solid Highlight;
+        }
+      }
+
+      &:has(> .form-tags-input:is(:disabled, [aria-disabled="true"])) {
+        --_input-bg-color: var(--cffy-surface-disabled);
+        --_input-color: var(--cffy-muted-a10);
+        --_input-border-color: var(--cffy-surface-disabled);
+
+        cursor: default;
+      }
+
+      .btn-chip {
+        --_btn-height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
+        --_btn-padding-block: 0;
+        --_btn-padding-inline: var(--cffy-space-8);
+        --_btn-radius: max(2px, calc(var(--_input-radius) - var(--_input-border-width) - var(--_input-padding-block)));
+
+        font-size: inherit;
+      }
+
+      .form-tags-input {
+        flex: 1 0 6rem;
+        min-width: 6rem;
+        height: calc(var(--_input-height) - 2 * var(--_input-padding-block) - 2 * var(--_input-border-width));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        outline: 0;
+
+        @include m.form-placeholder(35%, var(--cffy-input-placeholder-color, color-mix(in oklab, var(--cffy-muted-a10), transparent 35%)));
       }
     }
 
     // Select arrow icon image
     & .form-select {
-      background-image: var(--theme-form-select-icon);
+      padding-inline-end: 2.25rem;
+      background-image: var(--cffy-form-select-icon);
       background-repeat: no-repeat;
       background-position: right .75rem center;
       background-size: 1.25rem;
@@ -197,81 +264,91 @@
 
     // Range input
     .form-range {
-      --_form-border-color: transparent;
-      --_form-range-bg-color: var(--theme-surface-container-high);
-      --_form-range-thumb-bg-color: color-mix(in oklab, var(--theme-surface-body-pane), var(--theme-primary-a10) 75%);
-      --_form-range-track-size: 0.75rem;
-      --_form-range-slider-height: 1.95rem;
-      --_form-range-slider-width: 0.30rem;
-      --_form-range-slider-margin: calc(var(--_form-range-track-size) - 1.45rem);
-      --_form-range-padding-x: var(--space-8);
-      --_form-range-padding-y: var(--space-4);
-      --_form-range-easing-in: var(--ease-decelerate);
+      --_input-bg-color: transparent;
+      --_input-border-color: transparent;
+      --_input-range-track-color: var(--cffy-input-range-track-color, var(--cffy-surface-container-high));
+      --_input-range-fill-color: var(--cffy-input-range-fill-color, color-mix(in oklab, var(--cffy-surface-body-pane), var(--cffy-primary-a10) 75%));
+      --_input-range-thumb-ring-color: var(--cffy-input-range-thumb-ring-color, var(--cffy-surface-body-pane));
+      --_input-range-track-size: var(--cffy-input-range-track-size, 0.75rem);
+      --_input-range-radius: var(--cffy-input-range-radius, var(--cffy-radius-full));
+      --_input-range-thumb-height: var(--cffy-input-range-thumb-height, 1.95rem);
+      --_input-range-thumb-width: var(--cffy-input-range-thumb-width, 0.30rem);
+      --_input-range-thumb-focus-width: 0.20rem;
+      --_input-range-thumb-margin: calc((var(--_input-range-track-size) - var(--_input-range-thumb-height)) / 2 - 0.1rem);
+      --_input-range-padding-inline: var(--cffy-space-8);
+      --_input-range-padding-block: var(--cffy-space-4);
+      --_input-range-easing: var(--cffy-input-range-easing, var(--cffy-ease-decelerate));
+      --_input-range-duration: var(--cffy-input-range-duration, var(--cffy-duration-100));
+
+      &:is(.form-sm) {
+        --_input-range-track-size: 0.5rem;
+        --_input-range-thumb-height: 1.35rem;
+        --_input-range-thumb-width: 0.25rem;
+        --_input-range-thumb-focus-width: 0.15rem;
+      }
 
       &:is([type="range"]) {
-        padding: var(--_form-range-padding-y) var(--_form-range-padding-x);
+        padding: var(--_input-range-padding-block) var(--_input-range-padding-inline);
         box-shadow: none;
 
         /* Chromium */
         &::-webkit-slider-runnable-track {
-          background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
-          height: var(--_form-range-track-size);
-          border-radius: var(--radius-full);
+          background: linear-gradient(to right, transparent var(--_input-range-track-fill, 0%), var(--_input-range-track-color) 0%), var(--_input-range-fill-color);
+          height: var(--_input-range-track-size);
+          border-radius: var(--_input-range-radius);
         }
 
         &::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: var(--_form-range-slider-width);
-          height: var(--_form-range-slider-height);
-          background-color: var(--_form-range-thumb-bg-color);
-          outline: 5px solid var(--theme-surface-body-pane);
-          margin-top: var(--_form-range-slider-margin);
-          border-radius: var(--radius-full);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          width: var(--_input-range-thumb-width);
+          height: var(--_input-range-thumb-height);
+          background-color: var(--_input-range-fill-color);
+          outline: 5px solid var(--_input-range-thumb-ring-color);
+          margin-top: var(--_input-range-thumb-margin);
+          border-radius: var(--_input-range-radius);
+          transition: width var(--_input-range-duration) var(--_input-range-easing);
         }
 
         &:is(:focus)::-webkit-slider-thumb {
-          --_form-range-slider-width: 0.20rem;
+          --_input-range-thumb-width: var(--_input-range-thumb-focus-width);
 
-          outline: 5px solid var(--theme-surface-body-pane);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          outline: 5px solid var(--_input-range-thumb-ring-color);
+          transition: width var(--_input-range-duration) var(--_input-range-easing);
         }
 
         /* Firefox */
         &::-moz-range-track {
-          background: linear-gradient(to right, transparent var(--_form-range-track-fill, 0%), var(--_form-range-bg-color) 0%), var(--_form-range-thumb-bg-color);
-          height: var(--_form-range-track-size);
-          border-radius: var(--radius-full);
+          background: linear-gradient(to right, transparent var(--_input-range-track-fill, 0%), var(--_input-range-track-color) 0%), var(--_input-range-fill-color);
+          height: var(--_input-range-track-size);
+          border-radius: var(--_input-range-radius);
         }
 
         &::-moz-range-thumb {
           border: none;
-          outline: 5px solid var(--theme-surface-body-pane);
-          background-color: var(--_form-range-thumb-bg-color);
-          height: var(--_form-range-slider-height);
-          width: var(--_form-range-slider-width);
-          border-radius: var(--radius-full);
+          outline: 5px solid var(--_input-range-thumb-ring-color);
+          background-color: var(--_input-range-fill-color);
+          height: var(--_input-range-thumb-height);
+          width: var(--_input-range-thumb-width);
+          border-radius: var(--_input-range-radius);
         }
 
         &:is(:focus)::-moz-range-thumb {
-          --_form-range-slider-width: 0.20rem;
+          --_input-range-thumb-width: var(--_input-range-thumb-focus-width);
 
-          outline: 5px solid var(--theme-surface-body-pane);
-          transition: width var(--duration-100) var(--_form-range-easing-in);
+          outline: 5px solid var(--_input-range-thumb-ring-color);
+          transition: width var(--_input-range-duration) var(--_input-range-easing);
         }
 
         &:is(:hover) {
-          --_form-border-color: transparent;
-          --_form-range-bg-color: var(--theme-surface-container-high);
+          --_input-border-color: transparent;
 
           cursor: pointer;
         }
 
         &:is(:focus, :active, :focus-visible) {
-          --_form-bg-color: transparent;
-          --_form-border-color: transparent;
-          --_form-range-bg-color: var(--theme-surface-container-high);
+          --_input-bg-color: transparent;
+          --_input-border-color: transparent;
 
           cursor: grabbing;
         }
@@ -280,104 +357,112 @@
 
     // Color input
     .form-color-group {
-      --_form-group-bg-color: transparent;
-      --_form-group-border-color: var(--theme-outline-text-field);
-      --_form-group-border-width: #{v.$form-border};
-      --_form-group-radius: #{v.$form-border-radius};
+      --_input-color-group-bg-color: var(--cffy-input-bg-color, transparent);
+      --_input-color-group-border-color: var(--cffy-input-border-color, var(--cffy-outline-text-field));
+      --_input-color-group-border-width: var(--cffy-input-border-width, #{v.$form-border});
+      --_input-color-group-radius: var(--cffy-input-radius, #{f.shape(field, v.$form-border-radius)});
 
       display: flex;
       align-items: center;
       gap: 0;
-      border-radius: var(--_form-group-radius);
-      background-color: var(--_form-group-bg-color);
-      border: var(--_form-group-border-width) solid var(--_form-group-border-color);
+      border-radius: var(--_input-color-group-radius);
+      background-color: var(--_input-color-group-bg-color);
+      border: var(--_input-color-group-border-width) solid var(--_input-color-group-border-color);
+      box-shadow: var(--cffy-input-shadow, var(--cffy-shadow-xs));
 
       .form-control {
-        --_form-border-color: transparent;
+        --_input-bg-color: transparent;
+        --_input-border-color: transparent;
+
+        min-width: 0;
+        box-shadow: none;
       }
 
       .form-color {
-        --_form-radius: var(--radius-md);
-        --_form-bg-color: transparent;
-        --_form-color: var(--theme-on-background);
-        --_form-border-color: transparent;
-        --_form-border-width: #{v.$form-border};
-        --_form-color-width: 3rem;
-        --_form-color-height: 2.5rem;
-        --_form-color-padding: var(--space-6);
+        --_input-radius: var(--_input-color-group-radius);
+        --_input-bg-color: transparent;
+        --_input-color: var(--cffy-on-background);
+        --_input-border-color: transparent;
+        --_input-border-width: #{v.$form-border};
+        --_input-swatch-width: 3rem;
+        --_input-swatch-height: 2.5rem;
+        --_input-swatch-padding: var(--cffy-space-6);
 
         display: inline-block;
-        border: var(--_form-border-width) solid var(--_form-border-color);
-        border-radius: var(--_form-radius);
-        background-color: var(--_form-bg-color);
-        width: var(--_form-color-width);
-        height: var(--_form-color-height);
-        padding: var(--_form-color-padding);
+        flex-shrink: 0;
+        border: var(--_input-border-width) solid var(--_input-border-color);
+        border-radius: var(--_input-radius);
+        background-color: var(--_input-bg-color);
+        width: var(--_input-swatch-width);
+        height: var(--_input-swatch-height);
+        padding: var(--_input-swatch-padding);
         cursor: pointer;
 
         &::-moz-color-swatch {
           border: 0;
-          border-radius: calc(var(--_form-radius) / 2);
+          border-radius: calc(var(--_input-radius) / 2);
         }
 
         &::-webkit-color-swatch {
           border: 0;
-          border-radius: calc(var(--_form-radius) / 2);
-        }
-
-        &:is(.color-swatch) {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border: var(--border-width-sm) solid var(--theme-outline-surface);
-          aspect-ratio: 1;
-          border-radius: var(--radius-sm);
-          padding: var(--space-14);
-          margin-inline-start: var(--space-6);
-          background-color: #0000ff;
-          transition: transform var(--duration-100) ease;
-
-          &.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            filter: grayscale(0.3);
-            pointer-events: none;
-          }
+          border-radius: calc(var(--_input-radius) / 2);
         }
       }
 
-      // Add focus styles to the form group when the form control is focused
+      // Variants
+      &:is(.form-filled) {
+        --_input-color-group-bg-color: var(--cffy-input-filled-bg-color, var(--cffy-surface-container-high));
+      }
+
+      &:is(.form-outline) {
+        --_input-color-group-border-width: #{v.$form-border * 2};
+      }
+
+      &:is(.form-rounded) {
+        --_input-color-group-radius: var(--cffy-radius-full);
+      }
+
+      &:is(.form-transparent) {
+        --_input-color-group-bg-color: transparent;
+        --_input-color-group-border-color: transparent;
+
+        box-shadow: none;
+      }
+
+      // Focus
       &:is(:focus-within) {
-        --_form-group-border-color: var(--theme-primary-a10);
-        --_form-group-bg-color: var(--theme-surface-container-high);
+        --_input-color-group-border-color: var(--cffy-input-focus-border-color, var(--cffy-primary-a10));
+        --_input-color-group-bg-color: var(--cffy-input-focus-bg-color, var(--cffy-surface-container-high));
+
+        box-shadow: 0 0 0 .15rem var(--cffy-input-focus-ring-color, color-mix(in oklab, var(--cffy-primary-base-fixed) 25%, transparent));
       }
 
       // Sizing variants
       &:is(.form-sm) {
         .form-color {
-          --_form-color-width: 2.5rem;
-          --_form-color-height: 2rem;
-          --_form-color-padding: var(--space-4);
+          --_input-swatch-width: 2.5rem;
+          --_input-swatch-height: 2rem;
+          --_input-swatch-padding: var(--cffy-space-4);
         }
         .form-control {
-          --_form-height: 2rem;
-          --_form-padding-x: var(--space-6);
-          --_form-padding-y: .15rem;
-          --_form-font-size: var(--fs-3xs);
+          --_input-height: var(--cffy-field-height-sm);
+          --_input-padding-inline: var(--cffy-space-6);
+          --_input-padding-block: .15rem;
+          --_input-font-size: var(--cffy-fs-3xs);
         }
       }
 
       &:is(.form-lg) {
         .form-color {
-          --_form-color-width: 3.5rem;
-          --_form-color-height: 3rem;
-          --_form-color-padding: var(--space-8);
+          --_input-swatch-width: 3.5rem;
+          --_input-swatch-height: 3rem;
+          --_input-swatch-padding: var(--cffy-space-8);
         }
         .form-control {
-          --_form-height: 3rem;
-          --_form-padding-x: var(--space-12);
-          --_form-padding-y: var(--space-6);
-          --_form-font-size: var(--fs-base);
+          --_input-height: var(--cffy-field-height-lg);
+          --_input-padding-inline: var(--cffy-space-12);
+          --_input-padding-block: var(--cffy-space-6);
+          --_input-font-size: var(--cffy-fs-base);
         }
       }
     }
@@ -385,104 +470,127 @@
     // Invalid form control
     &.form-invalid {
       .form-control,
-      .form-range {
-        --_form-border-color: var(--theme-danger-a10);
+      .form-range,
+      .form-tags {
+        --_input-border-color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
 
         &:is(:focus, :active, :focus-visible) {
-          box-shadow: 0 0 0 .15rem color-mix(in oklab, var(--theme-danger-base-fixed) 25%, transparent);
+          box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
         }
 
         // Show invalid feedback if form control is invalid
         + .invalid-feedback {
           display: block;
-          margin-top: var(--space-6);
-          font-size: var(--fs-3xs);
-          color: var(--theme-danger-a10);
+          margin-top: var(--cffy-space-6);
+          font-size: var(--cffy-fs-3xs);
+          color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
         }
+      }
+
+      .form-tags:is(:focus-within) {
+        box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
+      }
+
+      .form-color-group {
+        --_input-color-group-border-color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
+
+        &:is(:focus-within) {
+          box-shadow: 0 0 0 .15rem var(--cffy-input-invalid-ring-color, color-mix(in oklab, var(--cffy-danger-base-fixed) 25%, transparent));
+        }
+
+        .form-control {
+          --_input-border-color: transparent;
+
+          box-shadow: none;
+        }
+      }
+
+      // Grouped inputs: the message follows the group
+      :is(.input-group, .form-color-group) + .invalid-feedback {
+        display: block;
+        margin-top: var(--cffy-space-6);
+        font-size: var(--cffy-fs-3xs);
+        color: var(--cffy-input-invalid-color, var(--cffy-danger-a10));
       }
     }
   }
 
-  .form-color-picker-wrapper {
-    position: relative;
-    display: block;
-
-    & .v-popper {
-      width: 100%;
-    }
+  .form-group > .input-group {
+    margin-bottom: 0;
   }
 
   // ==========================================================================
   // DROPBOX FILE INPUT
   // ==========================================================================
   .input-file-group {
-    --_file-group-gutter-y: var(--space-14);
+    --_form-group-spacing: var(--cffy-form-group-spacing, var(--cffy-space-14));
 
-    margin-bottom: var(--_file-group-gutter-y);
+    margin-bottom: var(--_form-group-spacing);
 
     .input-file-dropbox {
-      --_file-bg-color: var(--theme-surface-body-pane);
-      --_file-color: var(--theme-on-background);
-      --_file-border-width: var(--border-width-md);
-      --_file-border-color: var(--theme-outline-text-field);
-      --_file-padding: var(--space-4) 0;
-      --_file-gap: var(--space-4);
-      --_file-radius: var(--radius-md);
-      --_file-easing-in: var(--ease-decelerate);
-      --_file-easing-duration: var(--duration-100);
-      --_file-height: 5rem;
+      --_input-file-bg-color: var(--cffy-input-file-bg-color, var(--cffy-surface-body-pane));
+      --_input-file-color: var(--cffy-input-file-color, var(--cffy-on-background));
+      --_input-file-border-width: var(--cffy-input-file-border-width, var(--cffy-border-width-md));
+      --_input-file-border-color: var(--cffy-input-file-border-color, var(--cffy-outline-text-field));
+      --_input-file-padding: var(--cffy-space-4) 0;
+      --_input-file-gap: var(--cffy-space-4);
+      --_input-file-radius: var(--cffy-input-file-radius, min(#{f.shape(field, v.$form-border-radius)}, var(--cffy-shape-container)));
+      --_input-file-easing: var(--cffy-input-file-easing, var(--cffy-ease-decelerate));
+      --_input-file-duration: var(--cffy-input-file-duration, var(--cffy-duration-100));
+      --_input-file-height: var(--cffy-input-file-height, 5rem);
+      --_input-file-state: 0%;
 
       display: grid;
       place-items: center;
       position: relative;
       text-align: center;
       cursor: pointer;
-      border: var(--_file-border-width) dashed var(--_file-border-color);
-      background: var(--_file-bg-color);
-      color: var(--theme-on-background);
-      padding: var(--_file-padding);
+      border: var(--_input-file-border-width) dashed var(--_input-file-border-color);
+      background: f.state-layer(var(--_input-file-state), var(--_input-file-bg-color));
+      color: var(--cffy-on-background);
+      padding: var(--_input-file-padding);
       height: 100%;
-      min-height: var(--_file-height);
-      max-height: var(--_file-height);
+      min-height: var(--_input-file-height);
+      max-height: var(--_input-file-height);
 
-      border-radius: var(--_file-radius);
-      transition: all var(--_file-easing-duration) var(--_file-easing-in);
+      border-radius: var(--_input-file-radius);
+      transition: all var(--_input-file-duration) var(--_input-file-easing);
 
       &:is(:hover) {
-        --_file-bg-color: var(--theme-surface-container-high);
-        --_file-color: var(--theme-on-background);
+        --_input-file-state: var(--cffy-state-hover-opacity);
       }
 
-      &:is(:focus, :active) {
-        --_file-bg-color: var(--theme-surface-container-highest);
+      &:is(:active, :has(:focus-visible)) {
+        --_input-file-state: var(--cffy-state-pressed-opacity);
       }
 
       &:is(.dropbox-lg) {
-        --_file-height: 10rem;
+        --_input-file-height: 10rem;
       }
 
       &.valid-file {
-        --_file-border-color: var(--theme-success-a10);
-        --_file-bg-color: color-mix(in oklab, var(--theme-success-base-fixed) 25%, transparent);
-        --_file-color: var(--theme-success-a90);
+        --cffy-state-layer-color: var(--cffy-success-base);
+        --_input-file-border-color: var(--cffy-success-a10);
+        --_input-file-bg-color: color-mix(in oklab, var(--cffy-success-base-fixed) 25%, transparent);
+        --_input-file-color: var(--cffy-on-success-container);
       }
 
       :where(.input-file-text) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--_file-gap);
+        gap: var(--_input-file-gap);
 
         & p {
-          font-weight: var(--fw-500);
-          font-size: var(--fs-3xs);
-          color: var(--_file-color);
+          font-weight: var(--cffy-fw-500);
+          font-size: var(--cffy-input-file-font-size, var(--cffy-fs-3xs));
+          color: var(--_input-file-color);
           margin-bottom: 0;
         }
 
         & i {
-          font-variation-settings: var(--iw-semi-bold);
-          color: var(--_file-color);
+          font-variation-settings: var(--cffy-iw-semi-bold);
+          color: var(--_input-file-color);
         }
       }
 

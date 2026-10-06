@@ -1,11 +1,12 @@
 /**
-*** Colorffy Design System Stylesheet v1.5.0 (Orion)
+*** Colorffy Design System Stylesheet v3.0.0
 **/
 @use './abstracts/variables';
-@use './abstracts/mixins';
+@use './base/properties';
 
 @use './base/layers';
 @use './base/roots';
+@use './base/density';
 @use './base/reboot';
 @use "./base/animations";
 @use './base/icons';
@@ -17,8 +18,8 @@
 @use './components/badge';
 @use './components/breadcrumb';
 @use './components/button';
-@use './components/button-effects';
 @use './components/button-group';
+@use './components/calendar';
 @use './components/card';
 @use './components/carousel';
 @use './components/dialog';
@@ -30,8 +31,9 @@
 @use './components/image';
 @use './components/input-group';
 @use './components/list';
+@use './components/listbox';
+@use './components/pagination';
 @use './components/popover';
-@use './components/prime';
 @use './components/progress';
 @use './components/stepper';
 @use './components/tabs';
@@ -69,8 +71,6 @@
 @use "./utilities/spacing";
 @use "./utilities/text";
 @use "./utilities/transform";
+@use "./utilities/transitions";
 @use "./utilities/visibility";
 @use "./utilities/z-index";
-
-// Pages styles
-@use './pages/core';

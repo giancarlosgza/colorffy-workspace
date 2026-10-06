@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ICheckEmits, ICheckProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ICheckProps>(), {
@@ -24,14 +25,17 @@ const props = withDefaults(defineProps<ICheckProps>(), {
 const emit = defineEmits<ICheckEmits>()
 
 /** Model */
-// Default to false so a checkbox starts as a real boolean, not null.
 const model = defineModel<string | boolean | null>('modelValue', { default: false })
+
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
 
 /** Computed */
 const hasError = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasError.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-check',
   { 'form-invalid': hasError.value },
@@ -52,7 +56,7 @@ const checkClasses = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 
@@ -89,7 +93,7 @@ watch(model, (value) => {
         v-else-if="optionalLabel"
         class="caption text-muted mt-1"
       >
-        Optional
+        {{ l10nCommon.optional }}
       </p>
     </div>
   </div>

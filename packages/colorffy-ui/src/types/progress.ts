@@ -8,12 +8,13 @@ export type ProgressSize = 'sm' | 'lg'
  * Notes:
  * - Use `size` for scalable sizing ('sm' | 'lg').
  * - Use `animated` to enable progress bar stripes animation.
- * - Use `gradient` to enable gradient variants (add specific gradient classes via customClass like 'g-red', 'g-cyan').
+ * - Use `gradient` to enable gradient variants (pick the colors with a `gradient-<name>` class in barClass, e.g. 'gradient-red', 'gradient-cyan').
  * - Use `text` to display percentage or custom text inside the progress bar.
  */
 export interface IProgressBarProps {
   /**
-   * Current progress value (0-100 by default, or within ariaValuemin/ariaValuemax range).
+   * Fill width as a percentage of the track (0-100). Sets the `--cffy-progress-value` hook;
+   * `ariaValuemin` / `ariaValuemax` only describe the range to assistive tech.
    */
   value: number
 
@@ -34,7 +35,8 @@ export interface IProgressBarProps {
   animated?: boolean
 
   /**
-   * Enable gradient style. Use customClass to add specific gradient classes (e.g., 'g-red', 'g-cyan').
+   * Enable gradient style. Pick the colors with a `gradient-<name>` class in `barClass`
+   * (e.g. 'gradient-success', 'gradient-cyan'); without one the default gradient shows.
    */
   gradient?: boolean
 
@@ -88,8 +90,9 @@ export interface IProgressBarProps {
  */
 export interface IProgressSpinnerProps {
   /**
-   * Size of the spinner. Accepts any valid CSS size value (e.g., '1.25rem', '24px', '2em').
-   * Defaults to '1.25rem'.
+   * Size of the spinner, any CSS length (e.g. '1.25rem', '2em'). Sets the
+   * `--cffy-progress-spinner-size` hook.
+   * @default '1.25rem'
    */
   size?: string
 

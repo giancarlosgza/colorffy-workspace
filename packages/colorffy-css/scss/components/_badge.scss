@@ -1,23 +1,25 @@
 @use '../abstracts/variables' as v;
 @use "../abstracts/mixins" as m;
+@use '../abstracts/functions' as f;
 
 @layer components.badge {
   // ==========================================================================
   // BADGE COMPONENT
   // ==========================================================================
   .badge {
-    --_badge-color: var(--theme-on-background);
-    --_badge-bg-color: var(--theme-surface-container-high);
-    --_badge-border-color: var(--theme-outline-button);
-    --_badge-radius: var(--radius-full);
-    --_badge-font-size: var(--fs-4xs);
-    --_badge-font-weight: var(--fw-500);
-    --_badge-gutter-y: var(--space-4);
-    --_badge-gutter-x: var(--space-8);
+    --_badge-color: var(--cffy-badge-color, var(--cffy-on-background));
+    --_badge-bg-color: var(--cffy-badge-bg-color, var(--cffy-surface-container-high));
+    --_badge-border-color: var(--cffy-badge-border-color, var(--cffy-outline-button));
+    --_badge-radius: var(--cffy-badge-radius, var(--cffy-radius-full));
+    --_badge-font-size: var(--cffy-badge-font-size, var(--cffy-fs-4xs));
+    --_badge-font-weight: var(--cffy-badge-font-weight, var(--cffy-fw-500));
+    --_badge-padding-block: var(--cffy-badge-padding-block, var(--cffy-space-4));
+    --_badge-padding-inline: var(--cffy-badge-padding-inline, var(--cffy-space-8));
+    --_badge-icon-size: var(--cffy-badge-icon-size, 1rem);
 
     display: inline-flex;
-    padding-block: var(--_badge-gutter-y);
-    padding-inline: var(--_badge-gutter-x);
+    padding-block: var(--_badge-padding-block);
+    padding-inline: var(--_badge-padding-inline);
     margin-inline: .15rem;
 
     font-size: var(--_badge-font-size);
@@ -33,139 +35,139 @@
     border-radius: var(--_badge-radius);
     color: var(--_badge-color);
     background-color: var(--_badge-bg-color);
-    border: var(--border-width-sm) solid var(--_badge-border-color);
+    border: var(--cffy-border-width-sm) solid var(--_badge-border-color);
 
     // ==========================================================================
     // BADGE STYLING VARIANTS (PRIMARY, OUTLINE, SEMANTIC, TONAL, PILL, GRADIENT)
     // ==========================================================================
     // Primary badges
     &.badge-primary {
-      --_badge-color: var(--theme-on-primary);
-      --_badge-bg-color: var(--theme-primary-a10);
-      --_badge-border-color: var(--theme-primary-a30);
+      --_badge-color: var(--cffy-on-primary);
+      --_badge-bg-color: var(--cffy-primary-a10);
+      --_badge-border-color: var(--cffy-primary-a30);
     }
 
     &.badge-secondary {
-      --_badge-color: var(--theme-on-secondary);
-      --_badge-bg-color: var(--theme-secondary-a10);
-      --_badge-border-color: var(--theme-secondary-a30);
+      --_badge-color: var(--cffy-on-secondary);
+      --_badge-bg-color: var(--cffy-secondary-a10);
+      --_badge-border-color: var(--cffy-secondary-a30);
     }
 
     &.badge-accent {
-      --_badge-color: var(--theme-on-accent);
-      --_badge-bg-color: var(--theme-accent-a10);
-      --_badge-border-color: var(--theme-accent-a30);
+      --_badge-color: var(--cffy-on-accent);
+      --_badge-bg-color: var(--cffy-accent-a10);
+      --_badge-border-color: var(--cffy-accent-a30);
     }
 
     &.badge-default {
-      --_badge-color: var(--theme-on-background);
-      --_badge-bg-color: var(--theme-surface-a30);
-      --_badge-border-color: var(--theme-outline-button);
+      --_badge-color: var(--cffy-on-background);
+      --_badge-bg-color: var(--cffy-surface-a30);
+      --_badge-border-color: var(--cffy-outline-button);
     }
 
     &.badge-outline {
       --_badge-bg-color: transparent;
-      --_badge-border-color: var(--theme-outline-surface);
+      --_badge-border-color: var(--cffy-outline-surface);
 
-      box-shadow: var(--shadow-xs);
+      box-shadow: var(--cffy-shadow-xs);
     }
 
     // Semantic badges
     &.badge-success {
-      --_badge-color: var(--theme-on-success);
-      --_badge-bg-color: var(--theme-success-a10);
-      --_badge-border-color: var(--theme-success-a30);
+      --_badge-color: var(--cffy-on-success);
+      --_badge-bg-color: var(--cffy-success-a10);
+      --_badge-border-color: var(--cffy-success-a30);
     }
 
     &.badge-warning {
-      --_badge-color: var(--theme-on-warning);
-      --_badge-bg-color: var(--theme-warning-a10);
-      --_badge-border-color: var(--theme-warning-a30);
+      --_badge-color: var(--cffy-on-warning);
+      --_badge-bg-color: var(--cffy-warning-a10);
+      --_badge-border-color: var(--cffy-warning-a30);
     }
 
     &.badge-danger {
-      --_badge-color: var(--theme-on-danger);
-      --_badge-bg-color: var(--theme-danger-a10);
-      --_badge-border-color: var(--theme-danger-a30);
+      --_badge-color: var(--cffy-on-danger);
+      --_badge-bg-color: var(--cffy-danger-a10);
+      --_badge-border-color: var(--cffy-danger-a30);
     }
 
     &.badge-info {
-      --_badge-color: var(--theme-on-info);
-      --_badge-bg-color: var(--theme-info-a10);
-      --_badge-border-color: var(--theme-info-a30);
+      --_badge-color: var(--cffy-on-info);
+      --_badge-bg-color: var(--cffy-info-a10);
+      --_badge-border-color: var(--cffy-info-a30);
     }
 
     // Tonal badges
     &.badge-tonal {
       &.tonal-primary {
-        @include m.container-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-primary-container), var(--cffy-on-primary-container), false, badge);
       }
 
       &.tonal-secondary {
-        @include m.container-tonal(var(--theme-secondary-a10), var(--theme-secondary-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-secondary-container), var(--cffy-on-secondary-container), false, badge);
       }
 
       &.tonal-accent {
-        @include m.container-tonal(var(--theme-accent-a10), var(--theme-accent-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-accent-container), var(--cffy-on-accent-container), false, badge);
       }
 
       // Semantic
       &.tonal-success {
-        @include m.container-tonal(var(--theme-success-a10), var(--theme-success-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-success-container), var(--cffy-on-success-container), false, badge);
       }
 
       &.tonal-warning {
-        @include m.container-tonal(var(--theme-warning-a10), var(--theme-warning-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-warning-container), var(--cffy-on-warning-container), false, badge);
       }
 
       &.tonal-danger {
-        @include m.container-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-danger-container), var(--cffy-on-danger-container), false, badge);
       }
 
       &.tonal-info {
-        @include m.container-tonal(var(--theme-info-a10), var(--theme-info-a90), true, false, badge);
+        @include m.container-tonal(var(--cffy-info-container), var(--cffy-on-info-container), false, badge);
       }
 
       &.tonal-default {
-        @include m.container-tonal(var(--theme-surface-a60), var(--theme-surface-a90), true, false, badge);
+        @include m.container-tonal(f.tonal(var(--cffy-surface-a60)), var(--cffy-surface-a90), false, badge);
       }
     }
 
     // Pill badge for buttons and notifications use
     &.badge-pill {
-      --_badge-gutter-y: var(--space-4);
-      --_badge-gutter-x: var(--space-6);
-      --_badge-font-weight: var(--fw-700);
+      --_badge-padding-block: var(--cffy-space-4);
+      --_badge-padding-inline: var(--cffy-space-6);
+      --_badge-font-weight: var(--cffy-fw-700);
       margin-inline: 0;
       aspect-ratio: 1;
     }
 
     &.badge-gradient {
-      --angle: 45deg;
+      --cffy-angle: 45deg;
       --_gradient-stops: #{v.$gradient-neon-green};
       
-      @include m.text-gradient(var(--angle), var(--_gradient-stops));
-      @include m.generate-static-gradients(v.$static-gradients, false, true);
-      @include m.generate-gradients(v.$dynamic-gradients, false, true);
+      @include m.text-gradient(var(--cffy-angle), var(--_gradient-stops));
+      @include m.generate-gradients(v.$static-gradients, false);
+      @include m.generate-gradients(v.$dynamic-gradients, false);
     }
 
     &:has(i) {
       display: inline-flex;
-      gap: var(--space-4);
+      gap: var(--cffy-space-4);
       align-items: center;
 
       i {
         color: inherit;
-        font-size: 1rem;
-        font-variation-settings: var(--iw-bold);
+        font-size: var(--_badge-icon-size);
+        font-variation-settings: var(--cffy-iw-bold);
       }
     }
 
     // Size
     &.badge-sm {
       --_badge-font-size: .625rem;
-      --_badge-gutter-y: var(--space-4);
-      --_badge-gutter-x: var(--space-6);
+      --_badge-padding-block: var(--cffy-space-4);
+      --_badge-padding-inline: var(--cffy-space-6);
 
       margin-block: 0;
       margin-inline: 0;
@@ -173,8 +175,8 @@
 
     // Notification Dot
     &.badge-dot {
-      --_badge-gutter-y: 0;
-      --_badge-gutter-x: 0;
+      --_badge-padding-block: 0;
+      --_badge-padding-inline: 0;
 
       width: .5rem;
       height: .5rem;
@@ -197,10 +199,12 @@
   // BADGE GROUP LAYOUT CONTAINER
   // ==========================================================================
   .badge-group {
+    --_badge-group-gap: var(--cffy-badge-group-gap, var(--cffy-space-6) var(--cffy-space-8));
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--space-6) var(--space-8);
+    gap: var(--_badge-group-gap);
 
     .badge {
       margin: 0;

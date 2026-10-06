@@ -63,7 +63,7 @@ export interface IBreadcrumbProps {
 
   /**
    * Accessible name for the `<nav>` landmark.
-   * @default 'Breadcrumb'
+   * @default 'Breadcrumb', from the configured labels
    */
   ariaLabel?: string
 

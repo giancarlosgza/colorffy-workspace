@@ -2,26 +2,24 @@
 @use '@colorffy/css/scss/main';
 
 :root {
-    --theme-primary-base: #4f46e5;
-    --theme-secondary-base: #ec4899;
-    --theme-accent-base: #0ea5e9;
-    --theme-warning-base: #f59e0b;
-    --theme-success-base: #22c55e;
-    --theme-danger-base: #ef4444;
-    --theme-on-success: #000000;
-    --theme-surface-base: #ffffff;
+    --cffy-primary-base: #4f46e5;
+    --cffy-secondary-base: #ec4899;
+    --cffy-accent-base: #0ea5e9;
+    --cffy-warning-base: #f59e0b;
+    --cffy-success-base: #22c55e;
+    --cffy-danger-base: #ef4444;
+    --cffy-surface-base: #ffffff;
 
-    --font-primary: 'Stack Sans Headline', Tahoma, Geneva, Verdana, sans-serif;
-    --font-secondary: 'Mozilla Text', Tahoma, Geneva, Verdana, sans-serif;
+    --cffy-font-primary: 'Stack Sans Headline', Tahoma, Geneva, Verdana, sans-serif;
+    --cffy-font-secondary: 'Mozilla Text', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dark-mode {
-    --theme-primary-base: #ab87ff;
-    --theme-secondary-base: #fd98cc;
-    --theme-accent-base: #6ad2ff;
-    --theme-warning-base: #ffcf57;
-    --theme-success-base: #76f6a5;
-    --theme-danger-base: #fd8585;
-    --theme-on-success: #000000;
-    --theme-surface-base: #121212;
+    --cffy-primary-base: #ab87ff;
+    --cffy-secondary-base: #fd98cc;
+    --cffy-accent-base: #6ad2ff;
+    --cffy-warning-base: #ffcf57;
+    --cffy-success-base: #76f6a5;
+    --cffy-danger-base: #fd8585;
+    --cffy-surface-base: #121212;
 }

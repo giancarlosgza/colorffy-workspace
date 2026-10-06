@@ -1,6 +1,6 @@
 # Installation & Setup
 
-Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 projects.
+Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 / 4 projects.
 
 ## Package Overview
 
@@ -17,6 +17,7 @@ Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 p
 - Dark mode support built-in
 
 **Peer Dependencies:**
+- `@vueuse/core` - Breakpoints for the responsive skeletons
 - `@vueuse/components` - Composition utilities
 - `floating-vue` - Tooltip/popover positioning
 - `vue` (3.5+) - Vue framework
@@ -28,8 +29,10 @@ Quick start guides for installing and configuring Colorffy in Vue 3 and Nuxt 3 p
 ```bash
 # Install packages
 npm install @colorffy/ui @colorffy/css
-npm install @vueuse/components floating-vue
+npm install @vueuse/core @vueuse/components floating-vue
 ```
+
+`@colorffy/css` is an optional peer dependency of `@colorffy/ui`: keep both on the same major version (3.x), since the components set `--cffy-*` variables that only CSS 3.x reads.
 
 ```typescript
 // main.ts
@@ -42,6 +45,8 @@ const app = createApp(App)
 app.use(ColorffyUI)
 app.mount('#app')
 ```
+
+Another language for the components' own text: `app.use(ColorffyUI, { locale: 'es-SV', labels: es })` with `import { es } from '@colorffy/ui/locales/es'` (see components.md → Localization).
 
 ### Option 2: With Custom SCSS
 
@@ -57,9 +62,9 @@ app.mount('#app')
 
 // Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -124,29 +129,23 @@ import '@colorffy/css'
 createApp(App).mount('#app')
 ```
 
-## Nuxt 3 Setup
+## Nuxt 3 / 4 Setup
 
 ### Option 1: Global Registration with Colorffy CSS
 
 ```bash
 # Install packages
 npm install @colorffy/ui @colorffy/css
-npm install @vueuse/components floating-vue
+npm install @vueuse/core @vueuse/components floating-vue
 ```
 
 ```typescript
-// nuxt.config.ts
+// nuxt.config.ts: the module registers every Ui* component and auto-imports
+// useToast, useTextUtils, useDateUtils, useColorffyConfig and datePresets (no plugin needed)
 export default defineNuxtConfig({
-  css: ['@colorffy/css']
-})
-```
-
-```typescript
-// plugins/colorffy-ui.ts
-import ColorffyUI from '@colorffy/ui'
-
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(ColorffyUI)
+  css: ['@colorffy/css'],
+  modules: ['@colorffy/ui/nuxt'],
+  colorffyUI: { locale: 'es-SV', labels: 'es' } // optional: language of the components' own text
 })
 ```
 
@@ -173,30 +172,15 @@ export default defineNuxtConfig({
 ```scss
 // assets/scss/main.scss: theme colors and fonts are CSS tokens (-500 light, -50 dark)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
-### Option 3: Auto-Import Components (Nuxt)
+### Components without imports
 
-Configure auto-imports for better DX:
-
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  components: [
-    {
-      path: '~/node_modules/@colorffy/ui',
-      prefix: 'Ui',
-      extensions: ['.vue']
-    }
-  ]
-})
-```
-
-Use components without imports:
+With the `@colorffy/ui/nuxt` module every component is available without imports:
 
 ```vue
 <template>
@@ -274,12 +258,12 @@ import type { ButtonVariant, AlertType } from '@colorffy/ui'
 
 ```bash
 # Install all peer dependencies
-npm install @vueuse/components floating-vue vue
+npm install @vueuse/core @vueuse/components floating-vue vue
 ```
 
 Check version compatibility:
 - Vue 3.5+
-- Nuxt 4.2+ (if using Nuxt)
+- Nuxt 3 or 4 (if using Nuxt)
 
 ### SCSS Not Compiling
 
@@ -305,6 +289,6 @@ Verify Vite/Nuxt config has SCSS preprocessor options.
 
 ### Auto-Import Not Working (Nuxt)
 
-1. Verify components directory configuration
+1. Check `'@colorffy/ui/nuxt'` is in `modules` (no `components` path entry is needed)
 2. Restart Nuxt dev server
 3. Check `.nuxt/components.d.ts` is generated

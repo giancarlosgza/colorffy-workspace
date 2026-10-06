@@ -13,13 +13,14 @@ import { UiInputText, UiInputSelect, UiButton } from '@colorffy/ui'
 
 const name = ref('')
 const role = ref('')
-const errors = ref({ name: '', role: '' })
+const errors = ref<{ name: string[], role: string[] }>({ name: [], role: [] })
 
 const validate = () => {
-  errors.value = { name: '', role: '' }
-  if (!name.value) errors.value.name = 'Name is required'
-  if (!role.value) errors.value.role = 'Role is required'
-  return !errors.value.name && !errors.value.role
+  errors.value = {
+    name: name.value ? [] : ['Name is required'],
+    role: role.value ? [] : ['Role is required']
+  }
+  return !errors.value.name.length && !errors.value.role.length
 }
 
 const submit = () => {
@@ -32,14 +33,16 @@ const submit = () => {
 <template>
   <form @submit.prevent="submit" class="d-flex flex-column gap-3">
     <UiInputText
+      id="name"
       v-model="name"
       label="Name"
       placeholder="Enter your name"
-      :error="errors.name"
+      :error-messages="errors.name"
       required
     />
     
     <UiInputSelect
+      id="role"
       v-model="role"
       label="Role"
       :options="[
@@ -47,7 +50,9 @@ const submit = () => {
         { label: 'Designer', value: 'designer' },
         { label: 'Manager', value: 'manager' }
       ]"
-      :error="errors.role"
+      option-label="label"
+      option-value="value"
+      :error-messages="errors.role"
       required
     />
     
@@ -63,51 +68,39 @@ const submit = () => {
 
 ### Modal with Actions
 
+Dialogs open and close through their exposed `showDialog()` / `closeDialog()`; there is no `v-model`.
+
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UiModal, UiButton, UiInputText } from '@colorffy/ui'
 
-const isOpen = ref(false)
+const modal = ref()
 const itemName = ref('')
 
 const handleSave = () => {
   console.log('Saving:', itemName.value)
-  isOpen.value = false
-  itemName.value = ''
-}
-
-const handleCancel = () => {
-  isOpen.value = false
-  itemName.value = ''
+  modal.value.closeDialog()
 }
 </script>
 
 <template>
-  <UiButton text="Edit Item" @click="isOpen = true" />
-  
-  <UiModal v-model="isOpen" title="Edit Item" size="md">
+  <UiButton text="Edit Item" @click="modal.showDialog()" />
+
+  <UiModal ref="modal" title="Edit Item" size="md" @close="itemName = ''">
     <template #body>
       <UiInputText
+        id="item-name"
         v-model="itemName"
         label="Item Name"
         placeholder="Enter item name"
       />
     </template>
     <template #footer>
-      <div class="d-flex gap-2 justify-content-end">
-        <UiButton 
-          text="Cancel" 
-          variant="outline"
-          @click="handleCancel" 
-        />
-        <UiButton 
-          text="Save" 
-          variant="filled"
-          color="primary"
-          @click="handleSave" 
-        />
-      </div>
+      <UiButtonGroup class="justify-content-end">
+        <UiButton text="Cancel" variant="outline" @click="modal.closeDialog()" />
+        <UiButton text="Save" variant="filled" color="primary" @click="handleSave" />
+      </UiButtonGroup>
     </template>
   </UiModal>
 </template>
@@ -118,30 +111,31 @@ const handleCancel = () => {
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { UiConfirmModal } from '@colorffy/ui'
+import { UiButton, UiConfirmModal } from '@colorffy/ui'
 
-const showConfirm = ref(false)
+const confirm = ref()
+const deleting = ref(false)
 
-const handleDelete = () => {
-  console.log('Item deleted')
+const handleDelete = async () => {
+  deleting.value = true
+  await deleteItem()
+  deleting.value = false
+  confirm.value.closeDialog()
 }
 </script>
 
 <template>
-  <UiButton 
-    text="Delete"
-    variant="filled"
-    color="danger"
-    @click="showConfirm = true"
-  />
-  
+  <UiButton text="Delete" variant="filled" color="danger" @click="confirm.showDialog()" />
+
   <UiConfirmModal
-    v-model="showConfirm"
-    title="Confirm Deletion"
-    message="Are you sure you want to delete this item? This action cannot be undone."
-    confirm-text="Delete"
-    cancel-text="Cancel"
+    ref="confirm"
     variant="danger"
+    title="Delete this item?"
+    message="This action cannot be undone."
+    confirm-label="Delete"
+    cancel-label="Cancel"
+    :is-loading="deleting"
+    loading-label="Deleting..."
     @confirm="handleDelete"
   />
 </template>
@@ -149,43 +143,26 @@ const handleDelete = () => {
 
 ### Toast Notifications
 
+Render one `UiAlertToast` and drive it with `useToast`, which takes the toast's template ref:
+
 ```vue
 <script setup lang="ts">
-import { useToast } from '@colorffy/ui'
+import type { IToastDisplay } from '@colorffy/ui'
+import { ref } from 'vue'
+import { UiAlertToast, UiButton, UiButtonGroup, useToast } from '@colorffy/ui'
 
-const toast = useToast()
-
-const showSuccess = () => {
-  toast.show({
-    message: 'Operation completed successfully!',
-    variant: 'success',
-    duration: 3000
-  })
-}
-
-const showError = () => {
-  toast.show({
-    message: 'Something went wrong. Please try again.',
-    variant: 'danger',
-    duration: 5000
-  })
-}
-
-const showInfo = () => {
-  toast.show({
-    message: 'Processing your request...',
-    variant: 'info',
-    duration: 2000
-  })
-}
+const toastRef = ref<IToastDisplay | null>(null)
+const toast = useToast(toastRef)
 </script>
 
 <template>
-  <div class="d-flex gap-2">
-    <UiButton text="Success" color="success" @click="showSuccess" />
-    <UiButton text="Error" color="danger" @click="showError" />
-    <UiButton text="Info" color="info" @click="showInfo" />
-  </div>
+  <UiButtonGroup>
+    <UiButton text="Success" @click="toast.success('Operation completed successfully!')" />
+    <UiButton text="Error" @click="toast.danger('Something went wrong. Please try again.', { duration: 5000 })" />
+    <UiButton text="Info" @click="toast.info('Processing your request…', { duration: 2000 })" />
+  </UiButtonGroup>
+
+  <UiAlertToast ref="toastRef" placement="bottom-right" />
 </template>
 ```
 
@@ -228,8 +205,8 @@ const deleteUser = (user) => {
     <template #cell-actions="{ item }">
       <UiButtonMenu text="Actions" variant="text" size="sm">
         <template #menu>
-          <UiButtonMenuItem @click="editUser(item)">Edit</UiButtonMenuItem>
-          <UiButtonMenuItem @click="deleteUser(item)">Delete</UiButtonMenuItem>
+          <UiButtonMenuItem item-text="Edit" @click="editUser(item)" />
+          <UiButtonMenuItem item-text="Delete" is-destructive @click="deleteUser(item)" />
         </template>
       </UiButtonMenu>
     </template>
@@ -274,7 +251,7 @@ const deleteUser = (user) => {
 ```vue
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { UiLoading, UiTableSkeleton, UiDatatable } from '@colorffy/ui'
+import { UiDatatable } from '@colorffy/ui'
 
 const loading = ref(true)
 const data = ref([])
@@ -289,8 +266,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <UiTableSkeleton v-if="loading" :cols="4" :rows="5" />
-    <UiDatatable v-else :items="data" :columns="columns" />
+    <!-- The table renders its own skeleton while is-loading is set -->
+    <UiDatatable :items="data" :columns="columns" :is-loading="loading" :skeleton-rows="5" />
   </div>
 </template>
 ```
@@ -312,8 +289,9 @@ const hasData = computed(() => data.value.length > 0)
     <UiEmpty
       v-else
       title="No data found"
-      message="Try adjusting your filters or create a new item"
-      icon="&#xe8b6;"
+      subtitle="Try adjusting your filters or create a new item"
+      use-custom-icon
+      icon-code="&#xe8b6;"
     >
       <template #action>
         <UiButton text="Create New" variant="filled" color="primary" />
@@ -355,10 +333,13 @@ const validateForm = () => {
 </script>
 
 <template>
+  <!-- Listeners land on the wrapper, so use focusout (it bubbles) rather than blur -->
   <UiInputText
+    id="email"
     v-model="email"
-    @blur="validateField('email')"
-    :error="errors.email"
+    label="Email"
+    :error-messages="errors.email"
+    @focusout="validateField('email')"
   />
 </template>
 ```
@@ -369,11 +350,11 @@ const validateForm = () => {
 
 ```typescript
 // ❌ Avoid generic errors
-errors.value.name = 'Invalid'
+errors.value.name = ['Invalid']
 
 // ✅ Be specific
-errors.value.name = 'Name must be at least 3 characters'
-errors.value.email = 'Please enter a valid email address'
+errors.value.name = ['Name must be at least 3 characters']
+errors.value.email = ['Please enter a valid email address']
 ```
 
 ### 4. Loading States
@@ -429,11 +410,13 @@ errors.value.email = 'Please enter a valid email address'
 **Use v-show for frequently toggled content:**
 
 ```vue
-<!-- ✅ For frequent toggling -->
-<UiCard v-show="isVisible">Content</UiCard>
+<!-- ✅ For frequent toggling (UiCard has no default slot: fill #body) -->
+<UiCard v-show="isVisible">
+  <template #body>Content</template>
+</UiCard>
 
 <!-- ✅ For conditional rendering -->
-<UiModal v-if="isOpen">Content</UiModal>
+<UiAlert v-if="hasError" variant="danger" message="Could not save" />
 ```
 
 ### 8. TypeScript Usage
@@ -441,10 +424,11 @@ errors.value.email = 'Please enter a valid email address'
 **Leverage type definitions:**
 
 ```typescript
-import type { ButtonVariant, AlertType } from '@colorffy/ui'
+import type { AlertType, AlertVariant, ButtonVariant } from '@colorffy/ui'
 
 const variant = ref<ButtonVariant>('filled')
-const alertType = ref<AlertType>('success')
+const alertType = ref<AlertType>('tonal')        // 'banner' | 'tonal' | 'snackbar'
+const alertVariant = ref<AlertVariant>('success') // the color
 ```
 
 ### 9. Composables
@@ -453,12 +437,15 @@ const alertType = ref<AlertType>('success')
 
 ```typescript
 // composables/useConfirmDelete.ts
+import type { IToastDisplay } from '@colorffy/ui'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { useToast } from '@colorffy/ui'
 
-export function useConfirmDelete() {
+// Pass the ref of a mounted <UiAlertToast>
+export function useConfirmDelete(toastRef: Ref<IToastDisplay | null>) {
   const showConfirm = ref(false)
-  const toast = useToast()
+  const toast = useToast(toastRef)
   
   const confirmDelete = async (item: any) => {
     showConfirm.value = true

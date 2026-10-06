@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { INavbarBrandProps } from '@/types/navbar'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<INavbarBrandProps>(), {
@@ -12,6 +13,9 @@ const props = withDefaults(defineProps<INavbarBrandProps>(), {
   customClass: null,
   as: 'a'
 })
+
+/** Labels */
+const l10n = useLabels('navbar')
 
 /** Computed */
 const linkTarget = computed(() => {
@@ -29,7 +33,6 @@ const linkProps = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
@@ -41,7 +44,6 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: target
@@ -63,10 +65,10 @@ const linkProps = computed(() => {
       v-else-if="logo"
       :src="logo"
       class="navbar-logo-img"
-      alt="Brand logo"
+      :alt="l10n.brandAlt"
     >
 
-    <!-- Brand link with slot support -->
+    <!-- Brand link -->
     <slot
       name="link"
       :link-target="linkTarget"

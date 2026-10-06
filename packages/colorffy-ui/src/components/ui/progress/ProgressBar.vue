@@ -51,20 +51,7 @@ const progressBarClasses = computed(() => {
 
   return classes
 })
-const progressBarStyles = computed(() => {
-  const styles: Record<string, any> = {
-    '--_progress-width': `${props.value}%`
-  }
-
-  if (props.barStyles) {
-    if (typeof props.barStyles === 'string') {
-      return [styles, props.barStyles].join('; ')
-    }
-    return { ...styles, ...props.barStyles }
-  }
-
-  return styles
-})
+const progressBarStyles = computed(() => [{ '--cffy-progress-value': `${props.value}%` }, props.barStyles])
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IButtonTooltipEmits, IButtonTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiButton from './Button.vue'
 
 /** Props */
@@ -20,20 +21,25 @@ withDefaults(defineProps<IButtonTooltipProps>(), {
   customClass: '',
   rounded: false,
   fluid: false,
-  placement: 'top' as const
+  placement: 'top' as const,
+  ariaExpanded: undefined
 })
 
 /** Emits */
 defineEmits<IButtonTooltipEmits>()
+
+/** Composables */
+const floatingProps = useFloatingContainer()
 </script>
 
 <template>
   <VTooltip
+    v-bind="floatingProps"
     :aria-id="id ? `${id}-tooltip` : undefined"
     :placement="placement"
     :class="{ 'w-100': fluid }"
   >
-    <!-- Button component -->
+    <!-- Button -->
     <UiButton
       :id
       :title
@@ -52,15 +58,19 @@ defineEmits<IButtonTooltipEmits>()
       :aria-label="text ? undefined : (title || tooltipText)"
       :aria-expanded="ariaExpanded"
       :aria-controls="ariaControls"
-      @click="$emit('onClick')"
+      :type="type"
+      :to="to"
+      :href="href"
+      :as="as"
+      @click="$emit('click', $event)"
     >
-      <!-- Icon slot -->
+      <!-- Icon -->
       <template #icon>
         <slot name="icon" />
       </template>
     </UiButton>
 
-    <!-- Tooltip text slot -->
+    <!-- Tooltip text -->
     <template #popper>
       {{ tooltipText }}
     </template>

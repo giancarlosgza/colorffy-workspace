@@ -63,7 +63,7 @@ export const Gradient: Story = {
   args: {
     value: 80,
     gradient: true,
-    customClass: 'g-cyan'
+    barClass: 'gradient-cyan'
   }
 }
 
@@ -72,7 +72,7 @@ export const GradientAnimated: Story = {
     value: 90,
     gradient: true,
     animated: true,
-    customClass: 'g-red'
+    barClass: 'gradient-red'
   }
 }
 
@@ -110,15 +110,15 @@ export const DifferentSizes: Story = {
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Small</p>
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Small</p>
           <UiProgressBar :value="60" size="sm" />
         </div>
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Default</p>
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Default</p>
           <UiProgressBar :value="60" />
         </div>
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Large</p>
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Large</p>
           <UiProgressBar :value="60" size="lg" text="60%" />
         </div>
       </div>
@@ -132,16 +132,16 @@ export const GradientVariants: Story = {
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Default Gradient</p>
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Default Gradient</p>
           <UiProgressBar :value="70" :gradient="true" />
         </div>
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Red Gradient</p>
-          <UiProgressBar :value="70" :gradient="true" custom-class="g-red" />
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Red Gradient</p>
+          <UiProgressBar :value="70" :gradient="true" bar-class="gradient-red" />
         </div>
         <div>
-          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--theme-on-surface);">Cyan Gradient</p>
-          <UiProgressBar :value="70" :gradient="true" custom-class="g-cyan" />
+          <p style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--cffy-on-surface);">Cyan Gradient</p>
+          <UiProgressBar :value="70" :gradient="true" bar-class="gradient-cyan" />
         </div>
       </div>
     `

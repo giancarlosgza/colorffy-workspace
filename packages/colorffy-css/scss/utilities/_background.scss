@@ -8,31 +8,31 @@
   // DEFAULT BACKGROUNDS
   // ==========================================================================
   .bg-primary {
-    @include m.bg-color(var(--theme-primary-a10));
+    @include m.bg-color(var(--cffy-primary-a10));
   }
 
   .bg-secondary {
-    @include m.bg-color(var(--theme-secondary-a10));
+    @include m.bg-color(var(--cffy-secondary-a10));
   }
 
   .bg-accent {
-    @include m.bg-color(var(--theme-accent-a10));
+    @include m.bg-color(var(--cffy-accent-a10));
   }
 
   .bg-success {
-    @include m.bg-color(var(--theme-success-a10));
+    @include m.bg-color(var(--cffy-success-a10));
   }
 
   .bg-warning {
-    @include m.bg-color(var(--theme-warning-a10));
+    @include m.bg-color(var(--cffy-warning-a10));
   }
 
   .bg-danger {
-    @include m.bg-color(var(--theme-danger-a10));
+    @include m.bg-color(var(--cffy-danger-a10));
   }
 
   .bg-info {
-    @include m.bg-color(var(--theme-info-a10));
+    @include m.bg-color(var(--cffy-info-a10));
   }
 
   .bg-dark {
@@ -44,25 +44,25 @@
   }
 
   .bg-body {
-    @include m.bg-color(var(--theme-background))
+    @include m.bg-color(var(--cffy-background))
   }
 
   .bg-surface-base {
-    @include m.bg-color(var(--theme-surface-base))
+    @include m.bg-color(var(--cffy-surface-base))
   }
 
   .bg-surface-pane {
-    @include m.bg-color(var(--theme-surface-body-pane))
+    @include m.bg-color(var(--cffy-surface-body-pane))
   }
 
   .bg-frosted {
-    background-color: var(--theme-frosted-glass-bg);
-    backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+    background-color: var(--cffy-frosted-glass-bg);
+    backdrop-filter: var(--cffy-frosted-glass-backdrop-filter);
   }
 
   .bg-frosted-dark {
-    background-color: var(--theme-frosted-glass-bg-dark);
-    backdrop-filter: var(--theme-frosted-glass-backdrop-filter-dark);
+    background-color: var(--cffy-frosted-glass-bg-dark);
+    backdrop-filter: var(--cffy-frosted-glass-backdrop-filter-dark);
   }
 
   .bg-transparent {
@@ -73,31 +73,40 @@
   // EMPHASIS BACKGROUNDS
   // ==========================================================================
   .bg-primary-emphasis {
-    @include m.bg-color(var(--theme-primary-a30));
+    @include m.bg-color(var(--cffy-primary-a30));
   }
 
   .bg-secondary-emphasis {
-    @include m.bg-color(var(--theme-secondary-a30));
+    @include m.bg-color(var(--cffy-secondary-a30));
   }
 
   .bg-accent-emphasis {
-    @include m.bg-color(var(--theme-accent-a30));
+    @include m.bg-color(var(--cffy-accent-a30));
   }
 
   .bg-success-emphasis {
-    @include m.bg-color(var(--theme-success-a30));
+    @include m.bg-color(var(--cffy-success-a30));
   }
 
   .bg-warning-emphasis {
-    @include m.bg-color(var(--theme-warning-a30));
+    @include m.bg-color(var(--cffy-warning-a30));
   }
 
   .bg-danger-emphasis {
-    @include m.bg-color(var(--theme-danger-a30));
+    @include m.bg-color(var(--cffy-danger-a30));
   }
 
   .bg-info-emphasis {
-    @include m.bg-color(var(--theme-info-a30));
+    @include m.bg-color(var(--cffy-info-a30));
+  }
+
+  // ==========================================================================
+  // CONTAINER BACKGROUNDS
+  // ==========================================================================
+  @each $name in (primary, secondary, accent, success, warning, danger, info, muted) {
+    .bg-#{$name}-container {
+      @include m.bg-color(var(--cffy-#{$name}-container));
+    }
   }
 
   // ==========================================================================
@@ -106,61 +115,61 @@
   .bg-primary-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-primary-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-primary-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-secondary-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-secondary-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-secondary-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-accent-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-accent-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-accent-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-success-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-success-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-success-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-warning-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-warning-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-warning-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-danger-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-danger-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-danger-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-info-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-info-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-info-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-white-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-white-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-white-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-dark-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-dark-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-dark-base-fixed) var(--_bg-opacity), transparent);
   }
 
   .bg-muted-fixed {
     --_bg-opacity: 35%;
     --_bg-space: oklab;
-    background: color-mix(in var(--_bg-space), var(--theme-muted-base-fixed) var(--_bg-opacity), transparent);
+    background: color-mix(in var(--_bg-space), var(--cffy-muted-base-fixed) var(--_bg-opacity), transparent);
   }
 
   /*
@@ -179,10 +188,10 @@
   .pane-content {
     --_pane-content-gutter-inline: 1rem;
     --_pane-content-gutter-block: 1rem;
-    --_pane-content-radius: #{v.$card-border-radius};
+    --_pane-content-radius: #{f.shape(container, v.$card-border-radius)};
     --_pane-content-min-height: auto;
 
-    background-color: var(--theme-surface-body-pane);
+    background-color: var(--cffy-surface-body-pane);
     padding-inline: var(--_pane-content-gutter-inline);
     padding-block: var(--_pane-content-gutter-block);
     border-radius: var(--_pane-content-radius);
@@ -201,18 +210,18 @@
   // GRADIENT UTILITIES
   // ==========================================================================
   .bg-gradient {
-    --angle: 90deg;
+    --cffy-angle: 90deg;
     --_gradient-stops: #{v.$gradient-database};
 
-    @include m.bg-gradient(var(--angle), var(--_gradient-stops));
-    @include m.generate-static-gradients(v.$static-gradients, false, true);
-    @include m.generate-gradients(v.$dynamic-gradients, false, true);
+    @include m.bg-gradient(var(--cffy-angle), var(--_gradient-stops));
+    @include m.generate-gradients(v.$static-gradients, false);
+    @include m.generate-gradients(v.$dynamic-gradients, false);
   }
 
   // Angles
   @each $value, $deg in v.$degrees {
     .angle-#{$value} {
-      --angle: #{$deg};
+      --cffy-angle: #{$deg};
     }
   }
 
@@ -221,19 +230,16 @@
   // ==========================================================================
   // Color Mix
   .bg-color-mix {
-    --_bg-color-one: var(--theme-primary-a10);
+    --_bg-color-one: var(--cffy-primary-a10);
     --_bg-color-two: #{v.$white};
     --_bg-color-mix-opacity: 90%;
 
-    background-color: var(--_bg-color-one);
-    @supports (color: color-mix(in srgb, white, black)) {
-      background-color: color-mix(in srgb, var(--_bg-color-one) var(--_bg-color-mix-opacity), var(--_bg-color-two));
-    }
+    background-color: color-mix(in oklab, var(--_bg-color-one) var(--_bg-color-mix-opacity), var(--_bg-color-two));
   }
 
   // Relative color
   .bg-relative-color {
-    --_bg-relative-base-color: var(--theme-primary-a10);
+    --_bg-relative-base-color: var(--cffy-primary-a10);
     --_bg-relative-alpha: 1;
 
     background-color: var(--_bg-relative-base-color);
@@ -244,12 +250,12 @@
 
   // Bordered gradient
   .bg-bordered-gradient {
-    --_bg-color: var(--theme-secondary-a10);
+    --_bg-color: var(--cffy-secondary-a10);
     --_bg-border-size: 2px;
     --_bg-bg-gradient: linear-gradient(
                     to bottom,
-                    color-mix(in oklab, var(--_bg-color), var(--theme-background) 70%),
-                    color-mix(in oklab, var(--_bg-color), var(--theme-background) 95%)
+                    color-mix(in oklab, var(--_bg-color), var(--cffy-background) 70%),
+                    color-mix(in oklab, var(--_bg-color), var(--cffy-background) 95%)
     );
     --_bg-border-gradient: linear-gradient(
                     to bottom,
@@ -258,7 +264,7 @@
     );
 
     border: var(--_bg-border-size) solid transparent;
-    box-shadow: 0 0 2px 2px var(--theme-surface-base) inset;
+    box-shadow: 0 0 2px 2px var(--cffy-surface-base) inset;
     background: var(--_bg-bg-gradient) no-repeat padding-box,
     var(--_bg-border-gradient) no-repeat border-box;
   }

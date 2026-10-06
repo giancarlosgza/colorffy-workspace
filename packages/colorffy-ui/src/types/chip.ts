@@ -15,7 +15,7 @@ export type ChipColor = 'primary' | 'secondary' | 'neutral'
  */
 export interface IChipProps {
   /**
-   * Unique identifier for the chip.
+   * DOM id, rendered unchanged on the chip's root element.
    */
   id?: string | null
 

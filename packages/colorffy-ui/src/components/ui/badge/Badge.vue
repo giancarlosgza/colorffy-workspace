@@ -42,9 +42,6 @@ const badgeClasses = computed(() => {
 
   return classes
 })
-
-// Pure passthrough of `text` unless `max` is explicitly set and exceeded,
-// e.g. text="120" + max={99} -> "99+"
 const displayText = computed(() => {
   if (props.max == null || !props.text)
     return props.text
@@ -59,7 +56,7 @@ const displayText = computed(() => {
 </script>
 
 <template>
-  <div
+  <span
     class="badge"
     :class="badgeClasses"
   >
@@ -70,5 +67,5 @@ const displayText = computed(() => {
       :style="iconStyle"
     />
     <span v-if="text && !dot" v-text="displayText" />
-  </div>
+  </span>
 </template>

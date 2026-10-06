@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<ISidebarGroupProps>(), {
   customClass: ''
 })
 
-/** State */
+/** Data */
 const isOpen = ref(props.defaultOpen)
 const contentId = useId()
 

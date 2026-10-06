@@ -2,6 +2,7 @@
 import type { ILinkTooltipProps } from '@/types/button'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 
 /** Props */
 const props = withDefaults(defineProps<ILinkTooltipProps>(), {
@@ -17,12 +18,17 @@ const props = withDefaults(defineProps<ILinkTooltipProps>(), {
   icon: false,
   iconVariant: undefined,
   iconTrailing: false,
+  placement: 'top',
   disabled: false,
   loading: false,
   customClass: '',
   rounded: false,
+  fluid: false,
   as: 'a'
 })
+
+/** Composables */
+const floatingProps = useFloatingContainer()
 
 /** Computed */
 const linkTarget = computed(() => {
@@ -35,7 +41,6 @@ const isExternalLink = computed(() => {
 const buttonClasses = computed(() => {
   const classes = []
 
-  // Variants
   if (props.variant) {
     classes.push(`btn-${props.variant}`)
     if (props.variant === 'filled' && props.color)
@@ -44,7 +49,6 @@ const buttonClasses = computed(() => {
       classes.push(`tonal-${props.color}`)
   }
 
-  // Sizes
   if (props.size) {
     let sizeClass = ''
 
@@ -77,6 +81,9 @@ const buttonClasses = computed(() => {
   if (props?.rounded)
     classes.push('btn-rounded')
 
+  if (props?.fluid)
+    classes.push('btn-block')
+
   if (props.customClass)
     classes.push(props.customClass)
 
@@ -84,13 +91,12 @@ const buttonClasses = computed(() => {
 })
 const linkProps = computed(() => {
   const baseProps = {
-    id: props.id ? `link-${props.id}` : undefined,
+    id: props.id || undefined,
     title: props.title || undefined,
     class: ['btn', ...buttonClasses.value],
     disabled: props.disabled
   }
 
-  // For anchor tags or external links
   if (props.as === 'a' || isExternalLink.value) {
     const href = typeof linkTarget.value === 'string' ? linkTarget.value : ''
     return {
@@ -103,7 +109,6 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: linkTarget.value
@@ -113,8 +118,10 @@ const linkProps = computed(() => {
 
 <template>
   <VTooltip
+    v-bind="floatingProps"
     :aria-id="id ? `${id}-tooltip` : undefined"
-    class="d-inline-block"
+    :placement="placement"
+    :class="fluid ? 'w-100' : 'd-inline-block'"
   >
     <component
       :is="props.as"

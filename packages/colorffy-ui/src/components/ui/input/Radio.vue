@@ -25,13 +25,14 @@ const emit = defineEmits<IRadioInputEmits>()
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
-/** Computed */
+/** Data */
 const labelId = useId()
 const baseId = computed(() => props.id ?? undefined)
+
+/** Computed */
 const groupName = computed(() => (baseId.value ? `radio-${baseId.value}` : undefined))
 const hasErrors = computed(() => props.errorMessages?.length > 0)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -60,20 +61,19 @@ const radioInputClasses = computed(() => {
 })
 
 /** Methods */
-// Reads a label/value field off an option, containing the unsafe cast here.
 function getField(option: unknown, key: string): unknown {
   return (option as Record<string, unknown>)[key]
 }
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 
 <template>
   <div :class="groupClasses">
-    <!-- Main Group Label -->
+    <!-- Main group label -->
     <label
       v-if="label"
       :id="labelId"
@@ -82,7 +82,7 @@ watch(model, (value) => {
       {{ label }}{{ props.required ? ' *' : '' }}
     </label>
 
-    <!-- Radio Options -->
+    <!-- Options -->
     <div
       :class="optionsWrapperClasses"
       role="radiogroup"

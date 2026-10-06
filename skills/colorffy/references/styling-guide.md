@@ -249,15 +249,16 @@ Combine Colorffy CSS with custom overrides for best of both worlds.
 ### CSS Variable Overrides
 
 ```css
-/* Override Colorffy CSS variables */
+/* Override Colorffy component hooks (--cffy-<component>-<property>) */
 :root {
-  --btn-padding: 0.75rem 1.5rem;
-  --btn-border-radius: 0.5rem;
-  --btn-font-weight: 600;
+  --cffy-btn-padding-inline: var(--cffy-space-24);
+  --cffy-btn-radius: var(--cffy-radius-md);
+  --cffy-btn-font-weight: var(--cffy-fw-600);
   
-  --card-padding: 2rem;
-  --card-border-radius: 1rem;
-  --card-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --cffy-card-padding-inline: var(--cffy-space-32);
+  --cffy-card-padding-block: var(--cffy-space-32);
+  --cffy-card-radius: var(--cffy-radius-lg);
+  --cffy-card-shadow: var(--cffy-shadow-md);
 }
 ```
 
@@ -270,7 +271,7 @@ Import only specific Colorffy CSS modules:
 @use '@colorffy/css/scss/base/typography';
 @use '@colorffy/css/scss/utilities/spacing';
 @use '@colorffy/css/scss/utilities/colors';
-@use '@colorffy/css/scss/layout/grid';
+@use '@colorffy/css/scss/layout/flex-container';
 
 // Then add custom component styles
 @import './custom-buttons';
@@ -354,16 +355,17 @@ const buttonStyle = {
 ### 3. Use CSS Variables for Theming
 
 ```css
-/* Define theme once */
+/* Set the brand once: every tone, container and on-color derives from it */
 :root {
-  --primary-color: #667eea;
-  --spacing-unit: 0.25rem;
+  --cffy-color-brand-primary-500: #667eea; /* light mode */
+  --cffy-color-brand-primary-50: #c7d2fe;  /* dark mode */
 }
 
-/* Use throughout */
-.btn-filled {
-  background: var(--primary-color);
-  padding: calc(var(--spacing-unit) * 2);
+/* Custom styles read the tokens */
+.promo-banner {
+  background: var(--cffy-primary-container);
+  color: var(--cffy-on-primary-container);
+  padding: var(--cffy-space-16);
 }
 ```
 

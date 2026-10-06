@@ -1,75 +1,29 @@
-# Nuxt Minimal Starter
+# Orbit — Colorffy playground
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install dependencies:
+A Nuxt app that uses `@colorffy/css` and `@colorffy/ui` the way a real product would: Orbit is a project-management workspace for a small product team. Every screen uses the library's components, tokens and color utilities. There are no prop galleries.
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+pnpm --filter playground-nuxt dev   # http://localhost:3019
 ```
 
-## Development Server
+## Screens
 
-Start the development server on `http://localhost:3000`:
+| Route | Screen |
+|---|---|
+| `/` | Home: greeting, stats, my tasks, projects, recent activity |
+| `/inbox` | Notifications with filters and a detail pane |
+| `/projects` | Project grid and table, filters, new-project wizard |
+| `/projects/:id` | Project overview, tasks, files and activity |
+| `/team` | Members, roles, pending invites, invite form |
+| `/billing` | Plan, usage, plan picker, payment method, invoices |
+| `/settings` | Profile, appearance (live brand color), notifications, security |
+| `/help` | Help center with search, categories, FAQ and footer |
+| `/sign-in` | Split sign-in with two-factor step (auth layout) |
 
-```bash
-# npm
-npm run dev
+## Structure
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `layouts/default.vue`: app shell (sidebar, navbar, account menu, notifications, mobile navigation bar, toast)
+- `layouts/auth.vue`: blank layout for sign-in
+- `utils/workspace.ts`: mock data shared by every screen
+- `composables/useNotify.ts`: `notify(title, message, variant)` shows the layout's toast
+- `assets/scss/abstracts/_roots.scss`: brand color and font overrides

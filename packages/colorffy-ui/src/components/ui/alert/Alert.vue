@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IAlertEmits, IAlertProps } from '@/types/alert'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -13,27 +14,21 @@ const props = withDefaults(defineProps<IAlertProps>(), {
   size: undefined,
   customClass: undefined,
   dismissible: false,
-  duration: undefined,
-  closeLabel: 'Close'
+  duration: undefined
 })
 
 /** Emits */
 const emit = defineEmits<IAlertEmits>()
 
+/** Labels */
+const l10n = useLabels('alert')
+
 /** Data */
 const isVisible = ref<boolean>(true)
 let hideTimer: ReturnType<typeof setTimeout> | null = null
 
-/** Lifecycle */
-onMounted(() => {
-  if (props.duration && props.type !== 'snackbar')
-    hideTimer = setTimeout(dismiss, props.duration)
-})
-onBeforeUnmount(() => {
-  clearHideTimer()
-})
-
 /** Computed */
+const closeText = computed(() => props.closeLabel ?? l10n.value.close)
 const alertContainerClasses = computed(() => {
   const classes = []
   if (props.type === 'snackbar' && props.placement) {
@@ -78,6 +73,15 @@ function dismiss() {
   isVisible.value = false
   emit('dismiss')
 }
+
+/** Lifecycle */
+onMounted(() => {
+  if (props.duration && props.type !== 'snackbar')
+    hideTimer = setTimeout(dismiss, props.duration)
+})
+onBeforeUnmount(() => {
+  clearHideTimer()
+})
 </script>
 
 <template>
@@ -125,7 +129,7 @@ function dismiss() {
           v-if="dismissible"
           type="button"
           class="alert-close"
-          :aria-label="closeLabel"
+          :aria-label="closeText"
           @click="dismiss"
         >
           <UiIconMaterial icon-code="&#xe5cd;" />

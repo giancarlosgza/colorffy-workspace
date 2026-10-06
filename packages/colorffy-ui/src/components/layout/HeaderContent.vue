@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IHeaderContentEmits, IHeaderContentProps } from '@/types/layout'
 import { computed, useId, useSlots } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButtonTooltip from '../ui/button/ButtonTooltip.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
@@ -13,7 +14,6 @@ const props = withDefaults(defineProps<IHeaderContentProps>(), {
   size: 'sm',
   hideActionsWhenNarrow: false,
   backButton: false,
-  backButtonLabel: 'Go back',
   viewTransitionName: null,
   containerClass: null
 })
@@ -24,17 +24,21 @@ const emit = defineEmits<IHeaderContentEmits>()
 /** Slots */
 const slots = useSlots()
 
-/** Constants */
+/** Labels */
+const l10n = useLabels('header')
+
+/** Data */
 const TITLE_SIZE_CLASSES: Record<string, string> = {
   'md': 'header-2xl',
   'lg': 'header-3xl',
   'xl': 'header-4xl',
   '2xl': 'header-5xl'
 }
-
-/** Computed */
 const generatedHeadingId = useId()
 const headingId = computed(() => props.headingId ?? generatedHeadingId)
+
+/** Computed */
+const backText = computed(() => props.backButtonLabel ?? l10n.value.back)
 const containerClasses = computed(() => [TITLE_SIZE_CLASSES[props.size ?? ''] ?? null, props.containerClass])
 const viewTransitionClass = computed(() => (props.viewTransitionName ? 'header-vt' : null))
 const titleStyle = computed(() => (props.viewTransitionName ? { viewTransitionName: props.viewTransitionName } : undefined))
@@ -69,9 +73,9 @@ function handleBackClick() {
           variant="text"
           custom-class="text-neutral"
           icon icon-variant="compact"
-          :tooltip-text="backButtonLabel"
-          :aria-label="backButtonLabel"
-          @on-click="handleBackClick"
+          :tooltip-text="backText"
+          :aria-label="backText"
+          @click="handleBackClick"
         >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5c4;" />
@@ -115,7 +119,7 @@ function handleBackClick() {
         class="header-actions"
         :class="{ 'page-header-actions-responsive': hideActionsWhenNarrow }"
         role="group"
-        aria-label="Page actions"
+        :aria-label="l10n.actions"
       >
         <slot name="actions" />
       </div>

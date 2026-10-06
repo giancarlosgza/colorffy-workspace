@@ -1,5 +1,7 @@
+@use "sass:map";
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.buttons {
   // ==========================================================================
@@ -8,19 +10,21 @@
   .btn {
     @layer base {
       --_btn-columns: 1fr;
-      --_btn-bg-color: var(--theme-surface-container);
-      --_btn-color: var(--theme-on-background);
-      --_btn-border: var(--border-width-sm);
+      --_btn-bg-color: var(--cffy-surface-container);
+      --_btn-color: var(--cffy-on-background);
+      --_btn-border: var(--cffy-border-width-sm);
       --_btn-border-color: transparent;
       --_btn-gap: 0;
-      --_btn-radius: #{v.$button-border-radius};
-      --_btn-padding-inline: var(--space-12);
-      --_btn-padding-block: var(--space-6);
-      --_btn-height: 36px;
-      --_btn-icon-size: 1.15rem;
-      --_btn-shadow: var(--shadow-sm);
-      --_btn-easing-in: var(--ease-decelerate);
-      --_btn-easing-duration: var(--duration-300);
+      --_btn-radius: var(--cffy-btn-radius, #{f.shape(control, v.$button-border-radius)});
+      --_btn-padding-inline: var(--cffy-btn-padding-inline, var(--cffy-space-12));
+      --_btn-padding-block: var(--cffy-btn-padding-block, var(--cffy-space-6));
+      --_btn-height: var(--cffy-btn-height, var(--cffy-control-height-md));
+      --_btn-icon-size: var(--cffy-btn-icon-size, 1.15rem);
+      --_btn-font-size: var(--cffy-btn-font-size, #{map.get(v.$type-button, font-size)});
+      --_btn-font-weight: var(--cffy-btn-font-weight, #{map.get(v.$type-button, font-weight)});
+      --_btn-shadow: var(--cffy-btn-shadow, var(--cffy-shadow-sm));
+      --_btn-easing: var(--cffy-btn-easing, var(--cffy-ease-decelerate));
+      --_btn-duration: var(--cffy-btn-duration, var(--cffy-duration-300));
 
       @include m.btn-base();
 
@@ -33,121 +37,121 @@
     @layer variants {
       // Filled
       &.btn-filled {
-        --_btn-bg-color: var(--theme-primary-a10);
-        --_btn-color: var(--theme-on-primary);
+        --_btn-bg-color: var(--cffy-primary-a10);
+        --_btn-color: var(--cffy-on-primary);
 
         &:is(:hover) {
-          --_btn-bg-color: var(--theme-primary-a20);
+          --_btn-bg-color: var(--cffy-primary-a20);
         }
 
         &:is(:focus, :active) {
-          --_btn-bg-color: var(--theme-primary-a30);
+          --_btn-bg-color: var(--cffy-primary-a30);
         }
 
         // Variant
         &.filled-secondary {
-          --_btn-bg-color: var(--theme-secondary-a10);
-          --_btn-color: var(--theme-on-secondary);
+          --_btn-bg-color: var(--cffy-secondary-a10);
+          --_btn-color: var(--cffy-on-secondary);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-secondary-a20);
+            --_btn-bg-color: var(--cffy-secondary-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-secondary-a30);
+            --_btn-bg-color: var(--cffy-secondary-a30);
           }
         }
 
         &.filled-accent {
-          --_btn-bg-color: var(--theme-accent-a10);
-          --_btn-color: var(--theme-on-accent);
+          --_btn-bg-color: var(--cffy-accent-a10);
+          --_btn-color: var(--cffy-on-accent);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-accent-a20);
+            --_btn-bg-color: var(--cffy-accent-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-accent-a30);
+            --_btn-bg-color: var(--cffy-accent-a30);
           }
         }
 
         // Semantic
         &.filled-success {
-          --_btn-bg-color: var(--theme-success-a10);
-          --_btn-color: var(--theme-on-success);
+          --_btn-bg-color: var(--cffy-success-a10);
+          --_btn-color: var(--cffy-on-success);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-success-a20);
+            --_btn-bg-color: var(--cffy-success-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-success-a30);
+            --_btn-bg-color: var(--cffy-success-a30);
           }
         }
 
         &.filled-warning {
-          --_btn-bg-color: var(--theme-warning-a10);
-          --_btn-color: var(--theme-on-warning);
+          --_btn-bg-color: var(--cffy-warning-a10);
+          --_btn-color: var(--cffy-on-warning);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-warning-a20);
+            --_btn-bg-color: var(--cffy-warning-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-warning-a30);
+            --_btn-bg-color: var(--cffy-warning-a30);
           }
         }
 
         &.filled-danger {
-          --_btn-bg-color: var(--theme-danger-a10);
-          --_btn-color: var(--theme-on-danger);
+          --_btn-bg-color: var(--cffy-danger-a10);
+          --_btn-color: var(--cffy-on-danger);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-danger-a20);
+            --_btn-bg-color: var(--cffy-danger-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-danger-a30);
+            --_btn-bg-color: var(--cffy-danger-a30);
           }
         }
 
         &.filled-info {
-          --_btn-bg-color: var(--theme-info-a10);
-          --_btn-color: var(--theme-on-info);
+          --_btn-bg-color: var(--cffy-info-a10);
+          --_btn-color: var(--cffy-on-info);
 
           &:is(:hover) {
-            --_btn-bg-color: var(--theme-info-a20);
+            --_btn-bg-color: var(--cffy-info-a20);
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: var(--theme-info-a30);
+            --_btn-bg-color: var(--cffy-info-a30);
           }
         }
 
         // Fixed
         &.filled-white {
-          --_btn-bg-color: var(--color-brand-white-500);
-          --_btn-color: var(--color-brand-black-500);
+          --_btn-bg-color: var(--cffy-color-brand-white-500);
+          --_btn-color: var(--cffy-color-brand-black-500);
 
           &:is(:hover) {
-            --_btn-bg-color: color-mix(in srgb, var(--color-brand-white-500) 90%, var(--color-brand-black-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-white-500) 92%, var(--cffy-color-brand-black-500));
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: color-mix(in srgb, var(--color-brand-white-500) 80%, var(--color-brand-black-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-white-500) 84%, var(--cffy-color-brand-black-500));
           }
         }
 
         &.filled-black {
-          --_btn-bg-color: var(--color-brand-black-500);
-          --_btn-color: var(--color-brand-white-500);
+          --_btn-bg-color: var(--cffy-color-brand-black-500);
+          --_btn-color: var(--cffy-color-brand-white-500);
 
           &:is(:hover) {
-            --_btn-bg-color: color-mix(in srgb, var(--color-brand-black-500) 90%, var(--color-brand-white-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-black-500) 78%, var(--cffy-color-brand-white-500));
           }
 
           &:is(:focus, :active) {
-            --_btn-bg-color: color-mix(in srgb, var(--color-brand-black-500) 80%, var(--color-brand-white-500));
+            --_btn-bg-color: color-mix(in oklab, var(--cffy-color-brand-black-500) 68%, var(--cffy-color-brand-white-500));
           }
         }
       }
@@ -158,68 +162,68 @@
 
         // Primaries
         &.tonal-primary {
-          @include m.btn-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true);
+          @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
         }
 
         &.tonal-secondary {
-          @include m.btn-tonal(var(--theme-secondary-a10), var(--theme-secondary-a90), true);
+          @include m.btn-tonal(var(--cffy-secondary-container), var(--cffy-secondary-a10), var(--cffy-on-secondary-container));
         }
 
         &.tonal-accent {
-          @include m.btn-tonal(var(--theme-accent-a10), var(--theme-accent-a90), true);
+          @include m.btn-tonal(var(--cffy-accent-container), var(--cffy-accent-a10), var(--cffy-on-accent-container));
         }
 
         // Semantic
         &.tonal-success {
-          @include m.btn-tonal(var(--theme-success-a10), var(--theme-success-a90), true);
+          @include m.btn-tonal(var(--cffy-success-container), var(--cffy-success-a10), var(--cffy-on-success-container));
         }
 
         &.tonal-warning {
-          @include m.btn-tonal(var(--theme-warning-a10), var(--theme-warning-a90), true);
+          @include m.btn-tonal(var(--cffy-warning-container), var(--cffy-warning-a10), var(--cffy-on-warning-container));
         }
 
         &.tonal-danger {
-          @include m.btn-tonal(var(--theme-danger-a10), var(--theme-danger-a90), true);
+          @include m.btn-tonal(var(--cffy-danger-container), var(--cffy-danger-a10), var(--cffy-on-danger-container));
         }
 
         &.tonal-info {
-          @include m.btn-tonal(var(--theme-info-a10), var(--theme-info-a90), true);
+          @include m.btn-tonal(var(--cffy-info-container), var(--cffy-info-a10), var(--cffy-on-info-container));
         }
 
         &.tonal-neutral {
-          @include m.btn-tonal(var(--theme-surface-a40), var(--theme-surface-a90), false);
+          @include m.btn-tonal(f.tonal(var(--cffy-surface-a40), var(--cffy-tonal-light-intensity)), var(--cffy-surface-a40), var(--cffy-surface-a90));
         }
       }
 
       // Outline
       &.btn-outline {
         --_btn-bg-color: transparent;
-        --_btn-shadow: var(--shadow-xs);
-        --_btn-border-color: var(--theme-outline-button);
+        --_btn-shadow: var(--cffy-shadow-xs);
+        --_btn-border-color: var(--cffy-outline-button);
 
         &:is(:hover) {
-          --_btn-bg-color: var(--theme-surface-container-lowest);
-          --_btn-shadow: var(--shadow-xs);
+          --_btn-bg-color: var(--cffy-surface-container-lowest);
+          --_btn-shadow: var(--cffy-shadow-xs);
         }
 
         &:is(:focus, :active) {
-          --_btn-bg-color: var(--theme-surface-container-low);
-          --_btn-shadow: var(--shadow-xs);
+          --_btn-bg-color: var(--cffy-surface-container-low);
+          --_btn-shadow: var(--cffy-shadow-xs);
         }
       }
 
       &.btn-outline-gradient {
         --_btn-bg-color: transparent;
-        --_btn-bg-gradient: var(--theme-surface-a0), var(--theme-surface-a0);
-        --_border-gradient: var(--theme-primary-a10), var(--theme-primary-a30);
+        --_btn-bg-gradient: var(--cffy-surface-a0), var(--cffy-surface-a0);
+        --_border-gradient: var(--cffy-primary-a10), var(--cffy-primary-a30);
 
         background: linear-gradient(var(--_btn-bg-gradient)) padding-box,
         linear-gradient(120deg, var(--_border-gradient)) border-box;
-        @include m.generate-static-gradients(v.$static-gradients, true, false);
-        @include m.generate-gradients(v.$dynamic-gradients, true, false);
+        @include m.generate-gradients(v.$static-gradients, true);
+        @include m.generate-gradients(v.$dynamic-gradients, true);
 
         &:is(.bg-gradient-pane) {
-          --_btn-bg-gradient: var(--theme-surface-body-pane), var(--theme-surface-body-pane);
+          --_btn-bg-gradient: var(--cffy-surface-body-pane), var(--cffy-surface-body-pane);
         }
 
         &:is(.border-md) {
@@ -230,27 +234,27 @@
       // Text
       &.btn-text {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--theme-primary-base);
+        --_btn-color: var(--cffy-primary-base);
         --_btn-shadow: none;
 
         &:is(.text-neutral) {
-          --_btn-color: var(--theme-on-background);
+          --_btn-color: var(--cffy-on-background);
         }
 
         &:is(:hover) {
           --_btn-shadow: none;
-          @include m.btn-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true);
+          @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
         }
 
         &:is(:focus, :active) {
           --_btn-shadow: none;
-          @include m.btn-tonal(var(--theme-primary-a20), var(--theme-primary-a90), true);
+          @include m.btn-tonal(f.tonal(var(--cffy-primary-a20)), var(--cffy-primary-a20), var(--cffy-on-primary-container));
         }
       }
 
       &.btn-link {
         --_btn-bg-color: transparent;
-        --_btn-color: var(--theme-on-background);
+        --_btn-color: var(--cffy-on-background);
         --_btn-shadow: none;
 
         text-decoration-style: solid;
@@ -258,35 +262,39 @@
         text-decoration-thickness: 1px;
 
         &:is(:hover) {
-          --_btn-color: var(--theme-primary-a10);
-          --_btn-bg-color: var(--theme-surface-container-high);
+          --_btn-color: var(--cffy-primary-a10);
+          --_btn-bg-color: var(--cffy-surface-container-high);
         }
 
         // Add an active state when the link is active
         &:is(.router-link-exact-active, .router-link-exact-active) {
-          --_btn-color: var(--theme-primary-a10);
-          --_btn-bg-color: var(--theme-surface-container-highest);
-          --_btn-shadow: var(--shadow-sm);
+          --_btn-color: var(--cffy-primary-a10);
+          --_btn-bg-color: var(--cffy-surface-container-highest);
+          --_btn-shadow: var(--cffy-shadow-sm);
         }
       }
 
       // Chip
       &.btn-chip {
-        --_btn-bg-color: transparent;
-        --_btn-border-color: var(--theme-outline-button);
-        --_btn-radius: var(--radius-md);
+        --_btn-bg-color: var(--cffy-chip-bg-color, transparent);
+        --_btn-color: var(--cffy-chip-color, var(--cffy-on-background));
+        --_btn-border-color: var(--cffy-chip-border-color, var(--cffy-outline-button));
+        --_btn-radius: var(--cffy-chip-radius, var(--cffy-shape-control));
         --_btn-shadow: none;
+        --_chip-state: 0%;
+
+        background: f.state-layer(var(--_chip-state), var(--_btn-bg-color));
 
         @include m.btn-size('sm');
 
         &:is(:hover) {
-          --_btn-bg-color: var(--theme-surface-container-high);
-          --_btn-shadow: var(--shadow-xs);
+          --_chip-state: var(--cffy-state-hover-opacity);
+          --_btn-shadow: var(--cffy-shadow-xs);
         }
 
-        &:is(:focus, :active) {
-          --_btn-bg-color: var(--theme-surface-container-high);
-          --_btn-shadow: var(--shadow-xs);
+        &:is(:active, :focus-visible) {
+          --_chip-state: var(--cffy-state-pressed-opacity);
+          --_btn-shadow: var(--cffy-shadow-xs);
         }
 
         &:is(.chip-text) {
@@ -295,49 +303,47 @@
 
         // Elevated variant
         &:is(.chip-elevated) {
-          --_btn-bg-color: var(--theme-surface-overlay);
+          --_btn-bg-color: var(--cffy-surface-overlay);
           --_btn-border-color: transparent;
-          --_btn-shadow: var(--shadow-md);
+          --_btn-shadow: var(--cffy-shadow-md);
 
           &:is(:hover, :focus, :active) {
-            --_btn-bg-color: var(--theme-surface-overlay);
-            --_btn-shadow: var(--shadow-md);
+            --_btn-shadow: var(--cffy-shadow-md);
           }
         }
 
         // Selected colors
         &:is(.chip-active) {
           &:not(.chip-secondary, .chip-neutral) {
-            @include m.btn-tonal(var(--theme-primary-a10), var(--theme-primary-a90), true);
+            --_chip-state: 0%;
+
+            @include m.btn-tonal(var(--cffy-primary-container), var(--cffy-primary-a10), var(--cffy-on-primary-container));
 
             --_btn-border-color: var(--_btn-bg-color);
           }
 
           &:is(.chip-secondary) {
-            @include m.btn-tonal(var(--theme-secondary-a10), var(--theme-secondary-a90), true);
+            --_chip-state: 0%;
+
+            @include m.btn-tonal(var(--cffy-secondary-container), var(--cffy-secondary-a10), var(--cffy-on-secondary-container));
 
             --_btn-border-color: var(--_btn-bg-color);
           }
 
           &:is(.chip-neutral) {
-            --_btn-bg-color: var(--theme-surface-container-high);
-            --_btn-border-color: var(--theme-surface-container-high);
-
-            &:is(:hover, :focus, :active) {
-              --_btn-bg-color: var(--theme-surface-container-highest);
-              --_btn-border-color: var(--theme-surface-container-highest);
-            }
+            --_btn-bg-color: var(--cffy-surface-container-high);
+            --_btn-border-color: var(--cffy-surface-container-high);
           }
         }
 
         // Closable chips render as a wrapper with two inner action buttons
         &:is(.chip-closable) {
-          padding-inline-end: var(--space-6);
+          padding-inline-end: var(--cffy-space-6);
 
           & :where(.chip-content, .chip-remove) {
             display: inline-flex;
             align-items: center;
-            gap: var(--_btn-gap, var(--space-6));
+            gap: var(--_btn-gap, var(--cffy-space-6));
             padding: 0;
             background: transparent;
             border: none;
@@ -351,7 +357,7 @@
           }
 
           & .chip-remove {
-            border-radius: var(--radius-full);
+            border-radius: min(var(--cffy-radius-full), calc(var(--cffy-shape-control) * 1000));
             padding: .1rem;
 
             & i {
@@ -359,7 +365,7 @@
             }
 
             &:is(:hover, :focus-visible):not(:disabled) {
-              background-color: var(--theme-surface-container-highest);
+              background-color: var(--cffy-surface-container-highest);
             }
           }
         }
@@ -367,34 +373,34 @@
 
       // Gradient
       &.btn-gradient {
-        --angle: var(--gradient-angle);
+        --cffy-angle: var(--cffy-gradient-angle);
         --_btn-shadow: rgba(255, 255, 255, 0.2) 0px 2px 3.1px inset;
         --_btn-border-color: transparent;
-        --_btn-bg-gradient: var(--theme-primary-a30), var(--theme-primary-base);
+        --_btn-bg-gradient: var(--cffy-primary-a30), var(--cffy-primary-base);
         --_gradient-stops: var(--_btn-bg-gradient);
 
-        background: linear-gradient(var(--gradient-angle), var(--_gradient-stops)) border-box;
-        color: var(--theme-on-primary);
-        transition: all var(--duration-800) var(--ease-emphasized), --gradient-angle var(--duration-800) var(--ease-emphasized);
+        background: linear-gradient(var(--cffy-gradient-angle), var(--_gradient-stops)) border-box;
+        color: var(--cffy-on-primary);
+        transition: all var(--cffy-duration-800) var(--cffy-ease-emphasized), --cffy-gradient-angle var(--cffy-duration-800) var(--cffy-ease-emphasized);
 
         &:is(:hover) {
-          --gradient-angle: 180deg;
+          --cffy-gradient-angle: 180deg;
         }
 
         &:is(:focus, :active) {
-          --gradient-angle: 360deg;
+          --cffy-gradient-angle: 360deg;
         }
 
-        @include m.generate-static-gradients(v.$static-gradients, false, true);
-        @include m.generate-gradients(v.$dynamic-gradients, false, true);
+        @include m.generate-gradients(v.$static-gradients, false);
+        @include m.generate-gradients(v.$dynamic-gradients, false);
       }
 
       &.btn-frosted {
-        --_btn-bg-color: var(--theme-frosted-glass-bg);
-        --_btn-border: var(--border-width-sm);
-        --_btn-border-color: var(--theme-outline-button);
+        --_btn-bg-color: var(--cffy-frosted-glass-bg);
+        --_btn-border: var(--cffy-border-width-sm);
+        --_btn-border-color: var(--cffy-outline-button);
 
-        backdrop-filter: var(--theme-frosted-glass-backdrop-filter);
+        backdrop-filter: var(--cffy-frosted-glass-backdrop-filter);
       }
 
       // Sizes
@@ -409,17 +415,17 @@
       &.btn-icon {
         --_btn-columns: 1fr;
         --_btn-gap: 0;
-        --_btn-radius: 100%;
+        --_btn-radius: min(50%, calc(#{f.shape(control, v.$button-border-radius)} * 1000));
 
         width: var(--_btn-height);
 
         // Shapes
         &.shape-sm {
-          --_btn-radius: var(--radius-sm);
+          --_btn-radius: var(--cffy-radius-sm);
         }
 
         &.shape-md {
-          --_btn-radius: var(--radius-md);
+          --_btn-radius: var(--cffy-radius-md);
         }
 
         // Icon sizes
@@ -433,23 +439,23 @@
       }
 
       &.btn-fab {
-        --_btn-easing-in: var(--ease-sine-in-out);
-        --_btn-easing-duration: var(--duration-300);
+        --_btn-easing: var(--cffy-ease-sine-in-out);
+        --_btn-duration: var(--cffy-duration-300);
         --_btn-columns: 1fr;
         --_btn-gap: 0;
-        --_btn-radius: calc(#{v.$button-border-radius} + 8px);
-        --_btn-shadow: var(--shadow-lg);
+        --_btn-radius: calc(#{f.shape(control, v.$button-border-radius)} * 2);
+        --_btn-shadow: var(--cffy-shadow-lg);
 
         width: fit-content;
         height: fit-content;
         aspect-ratio: 1;
         transform-origin: bottom right;
-        animation: scale-in var(--_btn-easing-duration) var(--_btn-easing-in);
+        animation: scale-in var(--_btn-duration) var(--_btn-easing);
 
         @include m.btn-size('fab');
 
         &:has(span) {
-          --_btn-gap: var(--space-8);
+          --_btn-gap: var(--cffy-space-8);
           aspect-ratio: unset;
         }
 
@@ -459,20 +465,20 @@
       }
 
       &.btn-cta {
-        --_btn-radius: var(--radius-full);
-        --_btn-padding-inline: calc(var(--space-32) + var(--space-8));
-        --_btn-padding-block: var(--space-24);
+        --_btn-radius: var(--cffy-radius-full);
+        --_btn-padding-inline: calc(var(--cffy-space-32) + var(--cffy-space-8));
+        --_btn-padding-block: var(--cffy-space-24);
 
         height: fit-content;
       }
 
       // Effects
       &.btn-bounce {
-        --_btn-easing-in: var(--ease-bounce);
-        --_btn-easing-duration: var(--duration-600);
+        --_btn-easing: var(--cffy-ease-bounce);
+        --_btn-duration: var(--cffy-duration-600);
 
 
-        transition: scale var(--_btn-easing-duration) var(--_btn-easing-in);
+        transition: scale var(--_btn-duration) var(--_btn-easing);
 
         &:is(:hover) {
           scale: 0.85;
@@ -481,11 +487,11 @@
 
       // Modifiers
       &.btn-rounded {
-        --_btn-radius: var(--radius-full);
+        --_btn-radius: var(--cffy-radius-full);
       }
 
       &.btn-square {
-        --_btn-radius: var(--radius-none);
+        --_btn-radius: var(--cffy-radius-none);
       }
 
       &.btn-block {
@@ -499,16 +505,16 @@
     @layer states {
       // Disabled
       &:is(:disabled, .disabled):not(.loading) {
-        --_btn-bg-color: var(--theme-surface-disabled);
-        --_btn-color: var(--theme-muted-a10);
-        --_btn-border-color: var(--theme-outline-button);
+        --_btn-bg-color: var(--cffy-surface-disabled);
+        --_btn-color: var(--cffy-muted-a10);
+        --_btn-border-color: var(--cffy-outline-button);
         --_btn-shadow: none;
 
         cursor: not-allowed;
         opacity: 0.75;
 
         &:is(:hover, :focus, :active) {
-          --_btn-bg-color: var(--theme-surface-disabled);
+          --_btn-bg-color: var(--cffy-surface-disabled);
           --_btn-shadow: none;
 
           scale: none;
@@ -540,7 +546,7 @@
         & svg {
           grid-area: stack;
           visibility: hidden;
-          transition: grid-areas var(--duration-300) ease-in-out;
+          transition: grid-areas var(--cffy-duration-300) ease-in-out;
         }
 
         &:is(:focus, :active) {

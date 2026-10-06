@@ -1,47 +1,48 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
+@use "../abstracts/functions" as f;
 
 @layer components.form-check {
   // ==========================================================================
   // FORM CHECK COMPONENT
   // ==========================================================================
   .form-check {
-    --_form-check-gutter-y: var(--space-14);
-    --_form-check-gap: var(--space-12);
-    --_form-check-height: 1.5rem;
-    --_form-check-input-size: 1.25rem;
-    --_form-check-input-bg-color: transparent;
-    --_form-check-input-border-width: var(--border-width-md);
-    --_form-check-input-border-color: var(--theme-outline-text-field);
-    --_form-check-input-checked-icon: none;
-    --_form-check-easing-in: var(--ease-emphasized);
-    --_form-check-easing-duration: var(--duration-300);
+    --_input-check-spacing: var(--cffy-input-check-spacing, var(--cffy-space-14));
+    --_input-check-gap: var(--cffy-input-check-gap, var(--cffy-space-12));
+    --_input-check-height: 1.5rem;
+    --_input-check-size: var(--cffy-input-check-size, 1.25rem);
+    --_input-check-bg-color: var(--cffy-input-check-bg-color, transparent);
+    --_input-check-border-width: var(--cffy-input-check-border-width, var(--cffy-border-width-md));
+    --_input-check-border-color: var(--cffy-input-check-border-color, var(--cffy-outline-text-field));
+    --_input-check-checked-icon: none;
+    --_input-check-easing: var(--cffy-input-check-easing, var(--cffy-ease-emphasized));
+    --_input-check-duration: var(--cffy-input-check-duration, var(--cffy-duration-300));
 
     display: flex;
     align-items: center;
-    gap: var(--_form-check-gap);
-    min-height: var(--_form-check-height);
+    gap: var(--_input-check-gap);
+    min-height: var(--_input-check-height);
     padding-left: 0;
 
     &:not(:last-child) {
-      margin-bottom: var(--_form-check-gutter-y);
+      margin-bottom: var(--_input-check-spacing);
     }
 
     // Sizing variants
     &:is(.form-sm) {
-      --_form-check-height: 1.25rem;
-      --_form-check-input-size: 1rem;
-      --_form-check-gap: var(--space-8);
+      --_input-check-height: 1.25rem;
+      --_input-check-size: 1rem;
+      --_input-check-gap: var(--cffy-space-8);
       
-      font-size: var(--fs-3xs);
+      font-size: var(--cffy-fs-3xs);
     }
 
     &:is(.form-lg) {
-      --_form-check-height: 1.75rem;
-      --_form-check-input-size: 1.5rem;
-      --_form-check-gap: var(--space-14);
+      --_input-check-height: 1.75rem;
+      --_input-check-size: 1.5rem;
+      --_input-check-gap: var(--cffy-space-14);
 
-      font-size: var(--fs-base);
+      font-size: var(--cffy-fs-base);
     }
 
     & label,
@@ -52,33 +53,33 @@
 
     & .form-check-input {
       position: relative;
-      width: var(--_form-check-input-size);
-      height: var(--_form-check-input-size);
+      width: var(--_input-check-size);
+      height: var(--_input-check-size);
       margin-top: 0;
       vertical-align: top;
       -webkit-appearance: none;
       appearance: none;
-      background-color: var(--_form-check-input-bg-color);
-      background-image: var(--_form-check-input-checked-icon);
+      background-color: var(--_input-check-bg-color);
+      background-image: var(--_input-check-checked-icon);
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
-      border: var(--_form-check-input-border-width) solid var(--_form-check-input-border-color);
+      border: var(--_input-check-border-width) solid var(--_input-check-border-color);
       -webkit-print-color-adjust: exact;
       color-adjust: exact;
       print-color-adjust: exact;
-      transition: background-color var(--_form-check-easing-duration) var(--_form-check-easing-in),
-      border-color var(--_form-check-easing-duration) var(--_form-check-easing-in);
+      transition: background-color var(--_input-check-duration) var(--_input-check-easing),
+      border-color var(--_input-check-duration) var(--_input-check-easing);
 
       // Form checked state
       &:is(:checked) {
-        --_form-check-input-border-color: var(--theme-primary-a10);
-        --_form-check-input-bg-color: var(--theme-primary-a10);
+        --_input-check-border-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-bg-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
       }
 
       &:is(.form-check-danger:checked) {
-        --_form-check-input-border-color: var(--theme-danger-a10);
-        --_form-check-input-bg-color: var(--theme-danger-a10);
+        --_input-check-border-color: var(--cffy-danger-a10);
+        --_input-check-bg-color: var(--cffy-danger-a10);
       }
 
       &:is(:disabled) {
@@ -88,19 +89,28 @@
 
         ~ .form-check-label {
           opacity: .75;
-          color: var(--theme-muted-a10);
+          color: var(--cffy-muted-a10);
         }
       }
     }
 
     // Checkbox exclusive radius and checked state
     & .form-check-input[type="checkbox"] {
-      border-radius: map.get(v.$border-radius, 4);
+      border-radius: var(--cffy-input-check-radius, min(calc(#{f.shape(field, v.$form-border-radius)} / 2), var(--cffy-radius-sm)));
 
       &:is(:checked) {
-        --_form-check-input-checked-icon: var(--theme-form-checkbox-icon);
+        --_input-check-checked-icon: var(--cffy-form-checkbox-icon);
 
-        background-image: var(--_form-check-input-checked-icon);
+        background-image: var(--_input-check-checked-icon);
+      }
+
+      &:is(:indeterminate) {
+        --_input-check-border-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-bg-color: var(--cffy-input-check-checked-color, var(--cffy-primary-a10));
+        --_input-check-checked-icon: linear-gradient(var(--cffy-on-primary), var(--cffy-on-primary));
+
+        background-image: var(--_input-check-checked-icon);
+        background-size: 55% var(--cffy-border-width-md);
       }
     }
 
@@ -109,29 +119,28 @@
       border-radius: map.get(v.$border-radius, 50);
 
       &:is(:checked) {
-        --_form-check-input-checked-icon: var(--theme-form-radio-icon);
+        --_input-check-checked-icon: var(--cffy-form-radio-icon);
 
-        background-image: var(--_form-check-input-checked-icon);
+        background-image: var(--_input-check-checked-icon);
       }
     }
 
     // Checkbox switch variant
     &.form-check-switch {
       & .form-check-input {
-        --_form-check-input-bg-color: var(--theme-surface-container);
-        --_form-check-input-border-color: var(--theme-outline-surface);
-        --_form-check-input-indicator-color: var(--theme-muted-base);
-        --_form-check-input-border-width: var(--border-width-md);
-        --_form-check-input-active-bg-color: var(--theme-primary-a10);
-        --_form-check-input-active-border-color: var(--theme-primary-a10);
-        --_form-check-input-indicator-active-color: var(--theme-surface-container-highest);
+        --_input-check-bg-color: var(--cffy-input-switch-bg-color, var(--cffy-surface-container));
+        --_input-check-border-color: var(--cffy-input-switch-border-color, var(--cffy-outline-surface));
+        --_input-switch-thumb-color: var(--cffy-input-switch-thumb-color, var(--cffy-muted-base));
+        --_input-switch-checked-bg-color: var(--cffy-input-switch-checked-color, var(--cffy-input-check-checked-color, var(--cffy-primary-a10)));
+        --_input-switch-checked-border-color: var(--cffy-input-switch-checked-color, var(--cffy-input-check-checked-color, var(--cffy-primary-a10)));
+        --_input-switch-checked-thumb-color: var(--cffy-input-switch-checked-thumb-color, var(--cffy-surface-container-highest));
 
         position: relative;
-        width: calc(var(--_form-check-input-size) * 2);
-        height: var(--_form-check-input-size);
-        background: var(--_form-check-input-bg-color);
-        border: var(--_form-check-input-border-width) solid var(--_form-check-input-border-color);
-        border-radius: var(--radius-full);
+        width: calc(var(--_input-check-size) * 2);
+        height: var(--_input-check-size);
+        background: var(--_input-check-bg-color);
+        border: var(--_input-check-border-width) solid var(--_input-check-border-color);
+        border-radius: var(--cffy-radius-full);
         opacity: 1;
         cursor: pointer;
 
@@ -145,21 +154,21 @@
           scale: 0.65;
           margin-block: auto;
           border-radius: inherit;
-          background-color: var(--_form-check-input-indicator-color);
+          background-color: var(--_input-switch-thumb-color);
           z-index: 0;
-          transition: left var(--_form-check-easing-duration) var(--_form-check-easing-in),
-          scale var(--_form-check-easing-duration) var(--_form-check-easing-in),
-          background-color var(--_form-check-easing-duration) var(--_form-check-easing-in);
+          transition: left var(--_input-check-duration) var(--_input-check-easing),
+          scale var(--_input-check-duration) var(--_input-check-easing),
+          background-color var(--_input-check-duration) var(--_input-check-easing);
         }
 
         &:checked {
-          background: var(--_form-check-input-active-bg-color);
-          border-color: var(--_form-check-input-active-border-color);
+          background: var(--_input-switch-checked-bg-color);
+          border-color: var(--_input-switch-checked-border-color);
 
           &:after {
             left: 50%;
             scale: 0.85;
-            background-color: var(--_form-check-input-indicator-active-color);
+            background-color: var(--_input-switch-checked-thumb-color);
           }
         }
       }

@@ -2,6 +2,7 @@
 import type { ISidebarLinkProps } from '@/types/sidebar'
 import { Tooltip as VTooltip } from 'floating-vue'
 import { computed } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -21,8 +22,13 @@ const props = withDefaults(defineProps<ISidebarLinkProps>(), {
   as: 'a'
 })
 
-/** Computed */
+/** Data */
 const tooltipId = computed(() => `${props.id}-tooltip`)
+
+/** Composables */
+const floatingProps = useFloatingContainer()
+
+/** Computed */
 const linkTarget = computed(() => {
   return props.to || props.href
 })
@@ -52,7 +58,6 @@ const linkProps = computed(() => {
 
   const target = linkTarget.value
 
-  // Anchor/external only for string targets; object targets use the router branch
   if (typeof target === 'string' && (props.as === 'a' || isExternalLink.value)) {
     return {
       ...baseProps,
@@ -64,7 +69,6 @@ const linkProps = computed(() => {
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to: target
@@ -75,6 +79,7 @@ const linkProps = computed(() => {
 <template>
   <VTooltip
     v-if="tooltipText"
+    v-bind="floatingProps"
     :aria-id="tooltipId"
     class="d-inline-block"
     :placement="tooltipPlacement"

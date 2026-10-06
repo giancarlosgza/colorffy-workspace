@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { INavigationBarProps, INavItem } from '@/types/navigation'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -22,6 +23,9 @@ const props = withDefaults(defineProps<INavigationBarProps>(), {
   indicatorFrosted: false
 })
 
+/** Labels */
+const l10n = useLabels('navigationBar')
+
 /** Computed */
 const navigationItems = computed(() => props.items)
 const navigationBarClasses = computed(() => ({
@@ -34,7 +38,6 @@ const indicatorClasses = computed(() => ({
 }))
 
 /** Methods */
-// Matches the active item by its id or its string `to` (so consumers can pass either)
 function isActiveItem(item: INavItem): boolean {
   if (props.activeItem == null)
     return false
@@ -54,7 +57,6 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     'class': 'navigation-bar-link'
   }
 
-  // For anchor tags or external links
   if (props.as === 'a' || isExternal) {
     const href = typeof to === 'string' ? to : ''
     return {
@@ -67,7 +69,6 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     }
   }
 
-  // For router components (NuxtLink, RouterLink, etc.) - supports string or object
   return {
     ...baseProps,
     to
@@ -80,7 +81,7 @@ function getLinkProps(to: string | object, ariaLabel: string, isActive: boolean)
     class="navigation-bar"
     :class="navigationBarClasses"
     role="navigation"
-    aria-label="Main navigation"
+    :aria-label="l10n.ariaLabel"
   >
     <div
       v-for="item in navigationItems"

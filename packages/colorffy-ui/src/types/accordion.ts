@@ -47,7 +47,8 @@ export interface IAccordionItemProps {
   text?: string | null
 
   /**
-   * Disables user interaction when true.
+   * When true, the header can't be clicked or focused, so the item keeps its
+   * current open state; `v-model:open` can still change it.
    */
   disabled?: boolean
 

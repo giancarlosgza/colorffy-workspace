@@ -141,7 +141,7 @@ export interface IButtonEmits {
   /**
    * Emitted when the button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**
@@ -221,7 +221,7 @@ export interface IButtonTooltipEmits {
   /**
    * Emitted when the button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**
@@ -282,14 +282,10 @@ export interface IButtonToggleGroupProps {
   options: IButtonToggleOption[]
 
   /**
-   * ARIA label for accessibility.
+   * Accessible name of the radiogroup.
+   * @default 'Toggle button group', from the configured labels
    */
   ariaLabel?: string
-
-  /**
-   * Group label for accessibility.
-   */
-  groupLabel?: string
 }
 
 /**
@@ -299,7 +295,7 @@ export interface IButtonToggleGroupEmits {
   /**
    * Emitted when an option is activated by pointer or keyboard.
    */
-  (e: 'onOptionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void
+  (e: 'optionClick', event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void
 }
 
 /**
@@ -322,6 +318,12 @@ export interface IButtonMenuProps extends IBaseButtonProps {
   isMobile?: boolean
 
   /**
+   * Tooltip on the button; none by default. Also the button's name when it has
+   * no `text` or `title`, which otherwise comes from the `buttonMenu.ariaLabel` label.
+   */
+  tooltipText?: string | null
+
+  /**
    * Optional placement for the tooltip.
    */
   tooltipPlacement?: FloatingPlacement
@@ -334,7 +336,7 @@ export interface IButtonMenuEmits {
   /**
    * Emitted when the menu button is clicked.
    */
-  (e: 'onClick'): void
+  (e: 'click', event: MouseEvent): void
 }
 
 /**
@@ -400,6 +402,19 @@ export interface IButtonMenuItemProps {
    * CSS classes for the trailing icon.
    */
   iconTrailingClass?: string | string[] | null
+
+  /**
+   * Keep the menu open after this item is clicked (for toggles and multi-step choices).
+   * @default false
+   */
+  keepOpen?: boolean
+
+  /**
+   * Makes the item a checkbox (`role="menuitemcheckbox"`) and sets its checked state.
+   * Pair it with `keepOpen` for toggles. `null` keeps a plain menu item.
+   * @default null
+   */
+  checked?: boolean | null
 }
 
 /**

@@ -1,49 +1,22 @@
 @use "sass:map";
 @use "sass:color";
 
-$property-prefix: theme- !default;
-
 // ==========================================================================
 // COLOR PALETTE TOKENS
 // ==========================================================================
 $white: hsl(100, 100%, 100%) !default;
 $black: hsl(0, 0%, 0%) !default;
-$dark: hsl(0, 0%, 7.1%) !default;
-
-// DEPRECATED palette — removed in v3
-$primary: #002678 !default;
-$secondary: #0075d6 !default;
-$accent: #fda001 !default;
-$success: hsl(145, 100%, 39%) !default;
-$muted: hsl(210, 7.3%, 35%) !default;
-$warning: hsl(40, 100%, 50%) !default;
-$info: hsl(190, 71%, 50%) !default;
-$danger: hsl(354, 73%, 51%) !default;
-
-$primary-colors: (
-        'primary': $primary,
-        'secondary': $secondary,
-        'accent': $accent,
-        'overlay': $black,
-        'dark': $dark,
-        'white': $white,
-        'success': $success,
-        'info': $info,
-        'warning': $warning,
-        'danger': $danger,
-        'muted': $muted,
-);
 
 // ==========================================================================
 // GRADIENT PRESETS & DYNAMIC MAPS
 // ==========================================================================
-$gradient-primary: var(--theme-primary-base-fixed), color-mix(in oklab, var(--theme-primary-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-secondary: var(--theme-secondary-base-fixed), color-mix(in oklab, var(--theme-secondary-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-accent: var(--theme-accent-base-fixed), color-mix(in oklab, var(--theme-accent-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-success: var(--theme-success-base-fixed), color-mix(in oklab, var(--theme-success-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-warning: var(--theme-warning-base-fixed), color-mix(in oklab, var(--theme-warning-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-danger: var(--theme-danger-base-fixed), color-mix(in oklab, var(--theme-danger-base-fixed) 75%, oklch(0% 0 0)) !default;
-$gradient-info: var(--theme-info-base-fixed), color-mix(in oklab, var(--theme-info-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-primary: var(--cffy-primary-base-fixed), color-mix(in oklab, var(--cffy-primary-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-secondary: var(--cffy-secondary-base-fixed), color-mix(in oklab, var(--cffy-secondary-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-accent: var(--cffy-accent-base-fixed), color-mix(in oklab, var(--cffy-accent-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-success: var(--cffy-success-base-fixed), color-mix(in oklab, var(--cffy-success-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-warning: var(--cffy-warning-base-fixed), color-mix(in oklab, var(--cffy-warning-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-danger: var(--cffy-danger-base-fixed), color-mix(in oklab, var(--cffy-danger-base-fixed) 75%, oklch(0% 0 0)) !default;
+$gradient-info: var(--cffy-info-base-fixed), color-mix(in oklab, var(--cffy-info-base-fixed) 75%, oklch(0% 0 0)) !default;
 
 $dynamic-gradients: (
   'primary':   $gradient-primary,
@@ -73,7 +46,7 @@ $gradient-ghost: #715cff, #6851ff !default;
 $gradient-ghost-emphasized: #150a62, #6851ff !default;
 $gradient-amethyst: #8200e7, #bf3eff !default;
 $gradient-forest: #33d655, #29ac4a, #21823e !default;
-$gradient-galaxy: var(--color-brand-accent-500), #715cff, #bf3eff, #ee5aaf, var(--color-brand-accent-500) !default;
+$gradient-galaxy: var(--cffy-color-brand-accent-500), #715cff, #bf3eff, #ee5aaf, var(--cffy-color-brand-accent-500) !default;
 $gradient-darkblue: #292a4b, #47497a, #8587b0, #c4c5d9 !default;
 
 $static-gradients: (
@@ -99,31 +72,9 @@ $static-gradients: (
   'navy':             $gradient-darkblue,
 ) !default;
 
-// Color wheel scheme colors
-$scheme-colors: (
-        'Red': hsl(0, 100%, 50%),
-        'Red-Orange': hsl(30, 100%, 50%),
-        'Orange': hsl(39, 100%, 50%),
-        'Yellow-Orange': hsl(45, 100%, 50%),
-        'Yellow': hsl(60, 100%, 50%),
-        'Yellow-Green': hsl(80, 61%, 50%),
-        'Green': hsl(120, 100%, 25%),
-        'Blue-Green': hsl(147, 50%, 47%),
-        'Blue': hsl(240, 100%, 50%),
-        'Blue-Violet': hsl(271, 76%, 53%),
-        'Violet': hsl(274, 100%, 25%),
-        'Red-Violet': hsl(322, 81%, 43%),
-);
-
 // ==========================================================================
 // FONTS & TYPOGRAPHY SCALE TOKENS
 // ==========================================================================
-// DEPRECATED font variables — removed in v3
-$font-primary: var(--font-primary) !default;
-$font-secondary: var(--font-secondary) !default;
-$font-code: var(--font-code) !default;
-$font-icons: var(--font-icons) !default;
-
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
@@ -131,50 +82,50 @@ $fw-700: 700;
 $fw-800: 800;
 
 $type-h1: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-800,
-        font-size: var(--fs-4xl),
+        font-size: var(--cffy-fs-4xl),
         letter-spacing: 0px,
         line-height: 1
 );
 
 $type-h2: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-500,
-        font-size: var(--fs-3xl),
+        font-size: var(--cffy-fs-3xl),
         letter-spacing: 0px,
 );
 
 $type-h3: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-500,
-        font-size: var(--fs-2xl),
+        font-size: var(--cffy-fs-2xl),
         letter-spacing: 0px,
 );
 
 $type-h4: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-xl),
+        font-size: var(--cffy-fs-xl),
         letter-spacing: .25px,
 );
 
 $type-h5: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-lg),
+        font-size: var(--cffy-fs-lg),
         letter-spacing: .20px,
 );
 
 $type-h6: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-base),
+        font-size: var(--cffy-fs-base),
         letter-spacing: .15px,
 );
 
 $type-display-1: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-800,
         font-size: clamp(2.5rem, calc(1.64rem + 3.57vw), 4.5rem),
         letter-spacing: -0.03em,
@@ -182,7 +133,7 @@ $type-display-1: (
 );
 
 $type-display-2: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-500,
         font-size: clamp(2rem, calc(1.3rem + 2.9vw), 3.625rem),
         letter-spacing: -0.03em,
@@ -190,7 +141,7 @@ $type-display-2: (
 );
 
 $type-display-3: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-500,
         font-size: clamp(1.625rem, calc(1.2rem + 1.79vw), 2.5rem),
         letter-spacing: -0.03em,
@@ -198,7 +149,7 @@ $type-display-3: (
 );
 
 $type-display-4: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-500,
         font-size: clamp(1.375rem, calc(1.11rem + 1.12vw), 2rem),
         letter-spacing: -0.64px,
@@ -206,57 +157,54 @@ $type-display-4: (
 );
 
 $type-body1: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-base),
+        font-size: var(--cffy-fs-base),
         letter-spacing: .5px,
         line-height: 1.5
 );
 
 $type-subtitle1: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-sm),
+        font-size: var(--cffy-fs-sm),
         letter-spacing: .45px,
 );
 
 $type-subtitle2: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-400,
-        font-size: var(--fs-2xs),
+        font-size: var(--cffy-fs-2xs),
         letter-spacing: .35px,
 );
 
 $type-button: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-600,
         font-size: .75rem,
         letter-spacing: 0.16px,
 );
 
 $type-caption: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-500,
-        font-size: var(--fs-4xs),
+        font-size: var(--cffy-fs-4xs),
         letter-spacing: .5px,
 );
 
 $type-label: (
-        font-family: (var(--font-secondary)),
+        font-family: (var(--cffy-font-secondary)),
         font-weight: $fw-600,
-        font-size: var(--fs-3xs),
+        font-size: var(--cffy-fs-3xs),
         letter-spacing: -0.01em,
 );
 
 $type-overline: (
-        font-family: (var(--font-primary)),
+        font-family: (var(--cffy-font-primary)),
         font-weight: $fw-800,
-        font-size: var(--fs-xs),
+        font-size: var(--cffy-fs-xs),
         letter-spacing: -0.01em,
 );
-
-
-$fs-table: clamp(0.75rem, 2.5cqw, 0.80rem);
 
 // ==========================================================================
 // BORDER RADIUS, BORDERS & SPACES
@@ -276,49 +224,111 @@ $rounded-sm: map.get($border-radius, 6);
 $rounded-md: map.get($border-radius, 8);
 $rounded-lg: map.get($border-radius, 12);
 $rounded-xl: map.get($border-radius, 25);
-$rounded-full: map.get($border-radius, 50);
+$rounded-full: 9999px;
 
-$card-border-radius: $rounded-lg !default;
-$form-border-radius: $rounded-md !default;
-$button-border-radius: $rounded-md !default;
-$dialog-border-radius: $rounded-lg !default;
+$shape-container: $rounded-lg !default;
+$shape-field: $rounded-md !default;
+$shape-control: $rounded-md !default;
+
+$card-border-radius: $shape-container !default;
+$form-border-radius: $shape-field !default;
+$button-border-radius: $shape-control !default;
+$dialog-border-radius: $shape-container !default;
 
 $form-border: 1px;
 $border-sm: 1px;
 $border-md: 2px;
 
-$space-1: 1rem;
-$space-2: 2rem;
-$space-3: 3rem;
-
 $spacing-sizes: (
         px: 1px,
         0: 0,
-        1: 0.25rem,
-        2: 0.5rem,
-        3: 1rem,
-        4: 1.5rem,
-        5: 3rem,
-        6: 4.5rem,
-        7: 6rem,
-        8: 7.5rem,
-        9: 9rem,
-        10: 12rem
+        1: var(--cffy-space-4),
+        2: var(--cffy-space-8),
+        3: var(--cffy-space-16),
+        4: var(--cffy-space-24),
+        5: var(--cffy-space-48),
+        6: var(--cffy-space-72),
+        7: var(--cffy-space-96),
+        8: var(--cffy-space-120),
+        9: var(--cffy-space-144),
+        10: var(--cffy-space-192)
 );
 
 // Gaps
 $gaps: (
         0: 0,
-        1: 0.25rem,
-        2: 0.5rem,
-        3: 0.75rem,
-        4: 1rem,
-        5: 1.25rem,
-        6: 1.5rem,
-        7: 1.75rem,
-        8: 2rem,
-        9: 2.25rem,
-        10: 2.5rem
+        1: var(--cffy-space-4),
+        2: var(--cffy-space-8),
+        3: var(--cffy-space-12),
+        4: var(--cffy-space-16),
+        5: var(--cffy-space-20),
+        6: var(--cffy-space-24),
+        7: var(--cffy-space-28),
+        8: var(--cffy-space-32),
+        9: var(--cffy-space-36),
+        10: var(--cffy-space-40)
+);
+
+// Space steps
+$space-steps: (
+        4: 1,
+        6: 1.5,
+        8: 2,
+        12: 3,
+        14: 3.5,
+        16: 4,
+        20: 5,
+        24: 6,
+        28: 7,
+        32: 8,
+        36: 9,
+        40: 10,
+        48: 12,
+        72: 18,
+        96: 24,
+        120: 30,
+        144: 36,
+        192: 48
+);
+
+// ==========================================================================
+// DENSITY MODES
+// ==========================================================================
+$density-modes: (
+        compact: (
+                scale: .8,
+                field: (sm: 1.75rem, md: 2rem, lg: 2.5rem),
+                control: (sm: 1.75rem, md: 2rem, lg: 2.5rem)
+        ),
+        comfortable: (
+                scale: 1,
+                field: (sm: 2rem, md: 2.5rem, lg: 3rem),
+                control: (sm: 2rem, md: 2.25rem, lg: 3rem)
+        ),
+        spacious: (
+                scale: 1.2,
+                field: (sm: 2.25rem, md: 2.75rem, lg: 3.5rem),
+                control: (sm: 2.25rem, md: 2.5rem, lg: 3.5rem)
+        )
+);
+
+// ==========================================================================
+// CONTAINER WIDTH SCALE
+// ==========================================================================
+$container-sizes: (
+  3xs: 16rem,
+  2xs: 18rem,
+  xs: 20rem,
+  sm: 24rem,
+  md: 28rem,
+  lg: 32rem,
+  xl: 36rem,
+  2xl: 42rem,
+  3xl: 48rem,
+  4xl: 56rem,
+  5xl: 64rem,
+  6xl: 72rem,
+  7xl: 80rem
 );
 
 // ==========================================================================

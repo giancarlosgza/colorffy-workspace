@@ -1,8 +1,19 @@
-# Colorffy Design System — Phase 3 & 4 Plan
+# Colorffy Design System — Open Component Backlog
 
-Continuation of the component-library roadmap. Phases 1 (consistency foundation)
-and 2 (UiChip/UiChipGroup, UiDivider, input prefix/suffix slots) shipped previously.
-`UiTable` and `UiCarousel` remain explicitly excluded from the roadmap.
+What is left of the Phase 3 & 4 roadmap. Everything else shipped: UiAvatarGroup,
+UiTooltip, UiStepper, UiTimeline, UiInputOtp, and all of Phase 4 (badge
+`dot`/`max`/`attached`, tab icons and `fluid`, polymorphic `UiButton`, avatar
+`status`, dismissible alerts, list item and card links, card media, datatable
+selection and sticky header, accordion `icon`, `UiEmpty` `#action`). None of the
+items below is breaking, so they can ship in any 3.x release.
+
+**Status (2026-10-05, branch `v3`).** Items 1 (UiPagination) and 2 (small input
+family) shipped with 3.0, stories included. Item 3 shipped whole with 3.0:
+`UiInputCombobox`, `UiInputMultiSelect`, and phase 3 (remote search, free
+text), pulled into 3.0 on 2026-10-05. With the date picker ([datepicker.md](datepicker.md))
+and localization also in 3.0, PrimeVue's Select, MultiSelect, DatePicker and
+AutoComplete all have native replacements (migration guide step 8). What is still open is
+listed in section 4.
 
 ## Conventions (apply to every item)
 
@@ -12,24 +23,43 @@ and 2 (UiChip/UiChipGroup, UiDivider, input prefix/suffix slots) shipped previou
 - Components in `packages/colorffy-ui/src/components/ui/<family>/`, exported from
   `components.ts` (auto-registered by `nuxt.ts`), types re-exported from `index.ts`.
 - SCSS in `packages/colorffy-css/scss/components/_<name>.scss` inside
-  `@layer components.<name>`, registered alphabetically in `main.scss`, private
-  vars named `--_<name>-*`, theme tokens only (no hardcoded colors).
+  `@layer components.<name>`, registered alphabetically in `main.scss`, public
+  hooks feeding `--_<name>-*` private variables (see the repo `CLAUDE.md`).
 - Every component ships with: Storybook stories, docs page in
   `docs/content/3.colorffy-ui/2.components/`, entries in
-  `skills/colorffy/references/components.md` + `component-guide.md`, README list
-  update, and a playground usage where natural.
+  `skills/colorffy/references/components.md`, and a playground usage where natural.
 - Verify via `pnpm --filter @colorffy/ui build` + playground preview
   (rebuild dist + restart dev server for new components).
 
----
+## 1. UiPagination (M) — shipped in 3.0
 
-## Phase 3 — New components
+Built as planned, with these decisions:
 
-Ordered by priority. Effort: S (small), M (medium), L (large).
+- **Pages start at 1**; `v-model:page`, sized from `total` + `pageSize` or
+  `totalPages`. A page past the end moves to the last page.
+- **Collapsing keeps a fixed slot count** (`2 × siblingCount + 5`): first and
+  last always show, an ellipsis never hides a single page, and the arrows
+  don't move between pages.
+- **Narrow screens** (below 600px, or `compact`) show `‹ Page 3 of 12 ›`.
+  A media query, not a container query: inline-size containment would collapse
+  the nav to zero width inside a flex row.
+- **Accessibility:** arrows at the ends are `aria-disabled`, not `disabled`, so
+  focus stays on them; the user's own page moves are announced through a polite
+  live region (counts changed by filtering aren't, so typing a filter stays
+  quiet). Labels are one `labels` object with a `{page}` / `{total}` template.
+- **CSS:** `.pagination-nav` / `.pagination`, the buttons are
+  `.btn.btn-text.btn-icon` with the current page styled through
+  `[aria-current="page"]`; hooks for gap, radius, current colors and status
+  color.
+- **Datatable:** `pagination: { pageSize, …pagination options }` +
+  `v-model:page`. It sorts every row then slices; select-all covers the current
+  page; row identity falls back to the absolute index. The page resets to 1 on
+  a new sort, page size or row count, except when the first rows arrive (so a
+  page restored from the URL survives loading). Trade-off: deleting a row also
+  changes the count and goes back to page 1. The pager hides at one page.
+- **Playground:** billing invoices (22 months of history, 8 per page).
 
-### 3.1 UiPagination (M) — highest priority
-
-The biggest functional hole: `UiDatatable` sorts and manages columns but cannot page.
+Original spec:
 
 - **Types** (`types/pagination.ts`): `IPaginationProps` — `page: number` (v-model),
   `total?: number` + `pageSize?: number` (or `totalPages?: number` directly),
@@ -43,53 +73,30 @@ The biggest functional hole: `UiDatatable` sorts and manages columns but cannot 
   server-side mode stays possible by leaving `pagination` off and driving
   UiPagination standalone.
 - **Acceptance**: keyboard focusable buttons, ellipsis correctness at edges,
-  datatable slice + sort interplay covered by stories.
+  datatable slice + sort + selection interplay covered by stories.
 
-### 3.2 UiAvatarGroup (S)
+## 2. Small input family (S each) — shipped in 3.0
 
-- **Types** (extend `types/avatar.ts`): `IAvatarGroupProps` — `avatars?: IAvatarProps[]`
-  or default slot of `UiAvatar`s, `max?: number` (render "+N" overflow using the
-  existing `initials` avatar), `size?` passthrough, `customClass?`.
-- **CSS**: `.avatar-group` in `_image.scss` — negative `margin-inline-start`
-  overlap, ring via `outline` in surface color, overflow avatar styled like
-  `.initials-avatar`.
-- **Playground**: dashboard team card header.
+Commits 75209d1 → 16efc76, stories in 0ca5db9. Built as planned, with these decisions:
 
-### 3.3 UiTooltip (S)
+- **CSS first:** the attached prefix/suffix boxes didn't fit an eye or clear
+  button (separate box, and focus only highlighted the input), so
+  `.input-group-inline` puts the adornments inside the field as squares the
+  height of the input. The input stays the bordered element, so focus, invalid,
+  variants and sizes needed no new rules. `UiInputText` exposes it as
+  `adornments="inline"` and gained `autocomplete` (attributes on the component
+  land on its wrapper, not the field).
+- **Tags** use a field-styled wrapper, `.form-tags` (reads the `--cffy-input-*`
+  hooks, `:focus-within` for focus, new `--cffy-input-tags-gap`), with chips
+  rendered from the `.btn-chip.chip-closable` classes, not `UiChip`: a closable
+  `UiChip` adds a second, inert button per tag. The separator is read from the
+  text (mobile keyboards send no usable key name), adds are batched into one
+  model update, and adds/removals are announced through a live region.
+- **Fixed on the way:** `UiInputText` cached slot existence in a `computed`, so a
+  suffix added later never rendered; error messages under an `.input-group`
+  weren't styled.
 
-- Generic wrapper over floating-vue's `VTooltip` (already a dependency; theming
-  exists in `_tooltip.scss`): default slot = trigger, `text?` prop or `#content`
-  slot, `placement?: FloatingPlacement`, `disabled?`, `ariaId?`.
-- Frees consumers from wrapping everything in `UiButtonTooltip`/`UiLinkTooltip`;
-  those two stay (they add button/link semantics).
-
-### 3.4 UiStepper (M)
-
-- **Types** (`types/stepper.ts`): `IStepItem` — `id`, `label`, `description?`,
-  `icon?` (Material entity), `disabled?`. `IStepperProps` — `steps: IStepItem[]`,
-  `activeStep?: string` (or index), `vertical?: boolean`, `linear?: boolean`
-  (block jumping ahead), `customClass?`. Emits `updateActiveStep(stepId)` —
-  mirror the `UiTabs` emit naming.
-- **States**: upcoming / current (`aria-current="step"`) / completed (check icon,
-  reuse chip's `&#xe5ca;`) / error variant later.
-- **CSS**: `_stepper.scss` — numbered circles, connector lines (`::after`),
-  vertical modifier; tokens shared with `.divider` for connectors.
-- **Keyboard**: arrow/Home/End roving like `Tabs.vue` (`nextEnabledIndex` pattern).
-
-### 3.5 UiTimeline (M)
-
-- Formalizes the dashboard "Actividad reciente" hand-rolled pattern.
-- **Types** (`types/timeline.ts`): `ITimelineItem` — `id`, `title?`, `text?`,
-  `time?`, `icon?`, `imageUrl?`/`imageAlt?`, `variant?: ThemeColor` (dot/icon
-  color). `ITimelineProps` — `items?: ITimelineItem[]`, `align?: 'start' | 'alternate'`,
-  `customClass?`. Per-item `#item-<id>` or scoped `#item` slot for custom bodies.
-- **CSS**: `_timeline.scss` — dot/icon column + connector line, reuse
-  `.list-item-icon-wrapper` sizing so lists and timelines align visually.
-- **Playground**: replace or complement the activity feed list.
-
-### 3.6 Small input family (S each) — builds on the prefix/suffix slots
-
-All extend `IBaseInputProps` from day one (Phase 1 rule).
+Original spec:
 
 1. **UiInputPassword** — wraps the text input with `type` toggling and a suffix
    visibility button (`&#xe8f4;` / `&#xe8f5;`); `revealed` v-model optional.
@@ -99,59 +106,101 @@ All extend `IBaseInputProps` from day one (Phase 1 rule).
    `modelValue: string[]`, `max?`, `allowDuplicates?`, Enter/comma to commit,
    Backspace on empty input removes last tag. Emits `update:modelValue`,
    `add(tag)`, `remove(tag)`.
-4. **UiInputOtp** — segmented PIN boxes; `length?: number` (default 6),
-   `modelValue: string`, auto-advance/backspace focus management, paste support,
-   `complete` emit. New `.form-otp` CSS.
 
-### 3.7 UiInputAutocomplete / UiInputMultiSelect (L) — last, or defer
+## 3. UiInputCombobox / UiInputMultiSelect (L) — shipped in 3.0
 
-- Native replacements for the PrimeVue components themed in `_prime.scss`
-  (`.p-select`, `.p-multiselect`). Only worth building if dropping the PrimeVue
-  dependency is a goal — decide before starting.
+Decided 2026-10-04: build them to drop PrimeVue's Select and MultiSelect. Names
+`UiInputCombobox` (one value; `freeText` later makes it an autocomplete) and
+`UiInputMultiSelect`; filtering on by default; released with 3.0.
+
+- **Popup:** a `popover="manual"` element in the top layer (works inside
+  `UiModal`'s `showModal()`, never clipped), placed with CSS anchor positioning
+  (`position-area`, `flip-block`, `anchor-size(width)`), gated on
+  `@supports (position-try-fallbacks: flip-block)` plus a JS check. Anchor
+  positioning is ~86% (caniuse, 2026-10), so the ~40-line fallback in
+  `useAnchoredPopup` is first-class: fixed coordinates from the field's rect,
+  flip above, height capped to the space, updated on scroll/resize. The
+  `PositionFallback` story forces it. FloatingVue was rejected: it teleports to
+  `<body>`, which is inert behind a modal dialog, and swapping it in only for
+  old browsers would mean different markup and a hydration mismatch.
+- **Keyboard core:** `useListbox` (normalize, filter, group, active option,
+  type-to-jump), reused by the multi-select.
+- **Phase 1 (done):** `UiInputCombobox`, `.listbox-*` styles and
+  `--cffy-listbox-*` hooks, second inline suffix, playground wizard lead picker.
+- **Phase 2 (done):** `UiInputMultiSelect` on the `.form-tags` field (chips,
+  Backspace removes), checkmarks, stays open, `max` (disables the rest),
+  `maxChips` + `maxChipsLabel` (PrimeVue's `maxSelectedLabels`; `0` = always the
+  summary), `add`/`remove` events, live announcements
+  and a selected-labels description. `useListbox` now owns option ids,
+  scrolling and type-to-jump (repeating a letter cycles). Playground: the team
+  invite dialog's "Add to projects".
+- **Phase 3 (done, in 3.0):** `remote` (the app filters: typing emits
+  `search` after `searchDelay` once `minSearchLength` is reached, an emptied
+  field or a closed list emits `search('')`), `loading` (searching row, also
+  shown while a search is pending), result counts announced, picked options
+  keep their labels across searches (a remembered value-to-label map, only
+  used with `remote` or typed values), and `freeText`: the combobox stores
+  typed text without auto-highlighting, the multi-select ends its list with an
+  "Add “…”" row (`useListbox`'s `create` source, `.listbox-option-create`).
+  Playground: the new-project wizard's Client (remote + free text), Labels
+  (free text) and Stakeholders (remote multi-select over a fake directory).
+- **Done in 3.0:** `_prime.scss` is deleted (2026-10-05); apps that keep
+  PrimeVue copy it from `@colorffy/css@2.8`.
+
+Original notes:
 - Scope if built: filterable listbox (combobox ARIA pattern), keyboard nav,
   `options`/`optionLabel`/`optionValue` API matching `UiInputSelect`, chips for
   multiselect values (reuse UiChip), no virtual scrolling in v1.
 
----
+## 4. After 3.0 (open, none breaking)
 
-## Phase 4 — Props & variants on existing components
+1. **Date picker extras**: Temporal once it's Baseline (see
+   [datepicker.md](datepicker.md)). Several dates and time slots shipped in 3.0.
+2. **More language packs**: `en` and `es` ship as `@colorffy/ui/locales/<code>`;
+   a pack is an `IColorffyLabels` object plus a `vite.config.ts` entry and the
+   Nuxt module's pack list.
+3. **Density modes — shipped in 3.0 (2026-10-05)**, with a `--cffy-density`
+   style-query enhancement; see [density-modes.md](density-modes.md).
+   Original summary: `data-density="compact | comfortable | spacious"`
+   on `<html>` or any element. The spacing steps are re-declared on
+   `[data-density]` so they recompute from the scope's `--cffy-space-unit`
+   (a wrapper override alone does nothing, since the steps are computed on
+   `:root`), plus a `--cffy-control-height-sm|md|lg` scale for fields,
+   buttons, chips and calendar days. Type and shape don't change; compact
+   keeps comfortable control heights on coarse pointers. No style queries
+   needed. Medium–heavy, mostly the visual check of every component in three
+   modes. See [density-modes.md](density-modes.md).
+4. **Theme scopes**: re-declaring the color derivations on
+   `:root, [data-theme]` would let a preset recolor one region (today brand
+   tokens only work on `<html>`). After density.
 
-Apply opportunistically as components get touched, or as a dedicated pass after 3.3.
+Done on 2026-10-05 from the playground QA backlog: arrow-key navigation and
+focus return in `UiButtonMenu` (plus `checked` items and `UiPopoverMenu` arrow
+keys), the modal close button wrapping on phones, the faint dark-mode danger
+red, and select text running under the arrow. Then the playground findings:
+billing on phones (fewer columns, datatable caption moved out of the scroll
+area as `.table-caption`), invite errors that outlived the bad address and
+silent tag drops (`UiInputTags` `reject` event and announcements, hidden
+cursor when full), the help search clear and the global search (`/help?q=`),
+"1 skills" (label functions, `LabelTemplate`), role selects collapsing in
+tables (`.table .form-select` min width) and modal initial focus (`autofocus`
+on a field component).
 
-| # | Component | Addition | Notes |
-|---|-----------|----------|-------|
-| 4.1 | `UiBadge` | `dot?: boolean` (label-less notification dot), `max?: number` (renders `99+`), attached/overlay mode (`.badge-attached` positioning parent) | Pairs with tab badges and avatar status |
-| 4.2 | `UiTabs` | `icon?` per `ITabItem`, `fluid?: boolean` (equal-width), overflow-x scroll affordance on the tab list | Icons match `INavItem` shape |
-| 4.3 | `UiButton` | polymorphic `as`/`to`/`href` (render `<a>`/router-link), `type?: 'button' \| 'submit' \| 'reset'` passthrough | `IBaseLinkProps` already establishes the `as` pattern |
-| 4.4 | `UiAvatar` | `status?: 'online' \| 'busy' \| 'away' \| 'offline'` indicator dot | CSS dot in `_image.scss`, positioned on the mask-safe corner |
-| 4.5 | `UiAlert` | `dismissible?: boolean` + `dismiss` emit; optional auto-hide `duration?` for non-snackbar types | Banner/tonal alerts currently can't be closed |
-| 4.6 | `UiListItem` | `as`/`to`/`href` link rendering | `is-interactive` styles exist but items can't navigate |
-| 4.7 | `UiCard` | `#media` slot / `imageUrl?` cover image, `href?` clickable card | Same image story as ListItem, one level up |
-| 4.8 | `UiDatatable` | row selection (checkbox column, `v-model:selected`), `stickyHeader?: boolean`, `pagination?` (from 3.1) | The three most-requested datatable features |
-| 4.9 | `UiAccordion` | leading `icon?` prop | Parity with list/menu items |
-| 4.10 | `UiEmpty` | `#action` slot for a CTA | Empty states almost always need one |
-
-**Suggested Phase 4 order**: 4.5 and 4.10 (trivial, high value) → 4.1 + 4.4
-(notification/status pair) → 4.3 + 4.6 (polymorphic link rendering, shared
-implementation) → 4.2, 4.7, 4.9 → 4.8 (largest, after 3.1 lands).
-
----
-
-## Sequencing & orchestration
-
-- **Sprint A (Phase 3 kickoff)**: 3.1 UiPagination (lead), 3.2 UiAvatarGroup and
-  3.3 UiTooltip in parallel (small, disjoint files).
-- **Sprint B**: 3.4 UiStepper + 3.5 UiTimeline in parallel; start 4.5/4.10 as fillers.
-- **Sprint C**: 3.6 input family (Password/Search first, then Tags/Otp); remaining
-  Phase 4 items opportunistically.
-- **Decide separately**: 3.7 autocomplete/multiselect (dependency-removal decision).
-- Orchestration pattern from Phases 1–2: disjoint file ownership per agent, no
-  agent touches `components.ts`/`index.ts`/`nuxt.ts` (integrator wires exports),
-  single build + preview verification at the end.
-
-## Breaking-change policy
-
-None of Phase 3 is breaking. Phase 4 items 4.3/4.6 must keep the current
-button/list markup for existing usage (link rendering only activates when
-`to`/`href` is passed). Any rename follows the Phase 1 pattern: land it, flag it
-in the commit body, document it in the docs page and skills refs.
+Also on 2026-10-05, pulled into 3.0: combobox and multi-select remote search and
+free text (section 3), several dates and time slots in `UiInputDate` (see
+[datepicker.md](datepicker.md)), the PrimeVue skin deleted, the navbar's active
+link keeping its size, the navigation bar indicator following `aria-current`
+and hiding without an active item, the table scrollbar hidden in every browser,
+and the `<script setup>` section and comment standard applied to all 93
+components and the playground (recorded in `CLAUDE.md`). The docs gained a
+theme presets guide (customization page and the skill's theming reference),
+and the "per subtree" claims for `--cffy-space-unit` and
+`--cffy-duration-unit` were corrected: derived tokens only change on `:root`.
+A shape sweep under the Sharp and Pill presets then fixed connected button
+groups (inner corners capped at a quarter of the height, square ends at a `0`
+control role), the color picker (one field: the group carries the shadow, focus
+ring and invalid state, the swatch rounds to half the field radius), the menu
+button's default "menu" tooltip (now opt-in, with a `buttonMenu.ariaLabel`
+name for icon-only menus), and every part that still used a fixed radius step
+(navbar and tab links, tables, skeletons, list and timeline icons, icon tiles,
+progress bars, sheets and the drawer now follow the shape roles).

@@ -2,20 +2,19 @@
 import type { IConfirmModalEmits, IConfirmModalProps } from '@/types/dialog'
 import { vOnClickOutside } from '@vueuse/components'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IConfirmModalProps>(), {
   showAsModal: true,
+  closeOnClickOutside: true,
   mode: undefined,
   size: undefined,
   title: null,
   message: null,
-  confirmLabel: 'Delete',
-  cancelLabel: 'Cancel',
   isLoading: false,
-  loadingLabel: 'Deleting...',
   variant: 'danger',
   customClass: null
 })
@@ -23,12 +22,16 @@ const props = withDefaults(defineProps<IConfirmModalProps>(), {
 /** Emits */
 const emit = defineEmits<IConfirmModalEmits>()
 
+/** Labels */
+const l10n = useLabels('confirmModal')
+
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
+
+/** Computed */
 const dialogClasses = computed(() => {
   const classes: (string | Record<string, boolean>)[] = ['dialog-confirm']
 
-  // Modes
   if (props.mode) {
     if (props.mode === 'modal') {
       classes.push('dialog-modal')
@@ -43,7 +46,6 @@ const dialogClasses = computed(() => {
     classes.push('dialog-modal')
   }
 
-  // Sizes
   if (props.size) {
     if (props.size === 'sm') {
       classes.push('dialog-sm')
@@ -63,8 +65,6 @@ const dialogClasses = computed(() => {
 
   return classes
 })
-
-/** Computed */
 const variantClass = computed(() => {
   let cssClass
   let icon
@@ -110,12 +110,20 @@ function showDialog() {
       dialogRef.value.showModal()
     else
       dialogRef.value.show()
+    // A hidden dialog can't scroll, so the reset runs once it shows
+    dialogRef.value.querySelector('.dialog-body')?.scrollTo(0, 0)
   }
 }
+// The native close event emits `close`, so Esc reports it too
 function closeDialog() {
-  dialogRef?.value?.close()
+  dialogRef.value?.close()
+}
+function closeFromOutside() {
+  if (props.closeOnClickOutside && dialogRef.value?.open)
+    closeDialog()
 }
 
+/** Expose */
 defineExpose({
   showDialog,
   closeDialog
@@ -129,9 +137,11 @@ defineExpose({
     :class="dialogClasses"
     role="dialog"
     aria-modal="true"
+    @close="emit('close')"
   >
+    <!-- Menus and tooltips opened from the dialog render outside this box -->
     <div
-      v-on-click-outside="closeDialog"
+      v-on-click-outside="[closeFromOutside, { ignore: ['.v-popper__popper'] }]"
       class="dialog-content"
     >
       <div class="dialog-body">
@@ -157,13 +167,13 @@ defineExpose({
       <div class="dialog-footer">
         <UiButton
           variant="text"
-          :text="cancelLabel"
+          :text="cancelLabel ?? l10n.cancel"
           @click="closeDialog"
         />
         <UiButton
           variant="filled"
           :class="buttonClass"
-          :text="confirmLabel"
+          :text="isLoading ? loadingLabel ?? l10n.loading : confirmLabel ?? l10n.confirm"
           :loading="isLoading"
           :disabled="isLoading"
           @click="emit('confirm')"

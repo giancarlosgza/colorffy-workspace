@@ -78,13 +78,13 @@ Theme colors and fonts are CSS custom properties. Override them in your own styl
 ```css
 :root {
   /* each theme color has a light-mode (-500) and dark-mode (-50) tone */
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --color-brand-secondary-500: oklch(62% 0.2 350);
-  --color-brand-secondary-50: oklch(92% 0.05 350);
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-color-brand-secondary-500: oklch(62% 0.2 350);
+  --cffy-color-brand-secondary-50: oklch(92% 0.05 350);
 
-  --font-primary: 'Inter', sans-serif;
-  --font-secondary: 'Inter', sans-serif;
+  --cffy-font-primary: 'Inter', sans-serif;
+  --cffy-font-secondary: 'Inter', sans-serif;
 }
 ```
 
@@ -120,8 +120,8 @@ Import only the modules you need:
 
 // Use them in your styles
 .custom-button {
-  background: vars.$primary;
-  @include mix.flex-center;
+  border-radius: vars.$button-border-radius;
+  @include mix.text-gradient(45deg, var(--cffy-primary-base), var(--cffy-accent-base));
 }
 ```
 
@@ -158,9 +158,9 @@ createApp(App).mount('#app')
 
 // Theme colors and fonts are CSS tokens (-500 = light mode, -50 = dark mode)
 :root {
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --font-primary: 'Inter', sans-serif;
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-font-primary: 'Inter', sans-serif;
 }
 ```
 
@@ -289,17 +289,15 @@ Each brand color has a light-mode (`-500`) and dark-mode (`-50`) token, for `pri
 ```css
 :root {
   /* each theme color has a light-mode (-500) and dark-mode (-50) tone */
-  --color-brand-primary-500: oklch(45% 0.2 275);
-  --color-brand-primary-50: oklch(90% 0.06 275);
-  --color-brand-secondary-500: oklch(62% 0.2 350);
-  --color-brand-secondary-50: oklch(92% 0.05 350);
+  --cffy-color-brand-primary-500: oklch(45% 0.2 275);
+  --cffy-color-brand-primary-50: oklch(90% 0.06 275);
+  --cffy-color-brand-secondary-500: oklch(62% 0.2 350);
+  --cffy-color-brand-secondary-50: oklch(92% 0.05 350);
 
-  --font-primary: 'Inter', sans-serif;
-  --font-secondary: 'Inter', sans-serif;
+  --cffy-font-primary: 'Inter', sans-serif;
+  --cffy-font-secondary: 'Inter', sans-serif;
 }
 ```
-
-The `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$info`, `$muted`, `$primary-colors` and `$font-*` SCSS variables are deprecated: nothing reads them, and they will be removed in 3.0. Set the tokens above.
 
 ### Compile-time Variables with @forward
 
@@ -321,12 +319,10 @@ The `$primary`, `$secondary`, `$accent`, `$success`, `$warning`, `$danger`, `$in
 @use '@colorffy/css/scss/abstracts/functions' as fn;
 
 .your-element {
-  @include mix.flex-center;
-  @include mix.glass-effect;
-  @include mix.text-gradient(45deg, (#ff0080, #ff8c00));
+  @include mix.text-gradient(45deg, #ff0080, #ff8c00);
 
-  // Use color functions
-  background: fn.tonal-color($primary, 10);
+  // Hover and pressed backgrounds from the shared state layer
+  background-color: fn.state-layer(var(--cffy-state-hover-opacity), var(--cffy-surface-container));
 }
 ```
 
@@ -337,8 +333,8 @@ Override CSS custom properties at runtime:
 ```css
 :root {
   /* Override theme colors */
-  --theme-primary-base: #your-color;
-  --theme-secondary-base: #your-color;
+  --cffy-primary-base: #your-color;
+  --cffy-secondary-base: #your-color;
 
   /* Override component variables */
   --_btn-radius: 50px;

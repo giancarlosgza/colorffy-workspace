@@ -18,6 +18,7 @@ Complete reference for utility classes in @colorffy/css.
 - [Transforms](#transforms)
 - [Cursors](#cursors)
 - [Opacity](#opacity)
+- [Transitions](#transitions)
 
 ## Colors
 
@@ -31,6 +32,12 @@ Complete reference for utility classes in @colorffy/css.
 <p class="text-muted">Muted text</p>
 ```
 
+**Related patterns:**
+- `text-{color}-emphasis` - the color's `--cffy-on-{color}-container` tone, for text and icons on a tinted surface (primary … info, muted)
+- `text-on-{color}` - `--cffy-on-{color}`, black or white picked for a solid `bg-{color}` fill (primary … info)
+- `text-on-{color}-container` - pairs with `bg-{color}-container` (see [Container Backgrounds](#container-backgrounds))
+- `text-{color}-inverse` - the color on an inverse surface such as a toast or tooltip (primary … info, muted)
+
 ### Background Colors
 
 **Pattern:** `bg-{color}` (same colors as text), plus `bg-{color}-fixed` for tonal variants
@@ -43,7 +50,7 @@ Complete reference for utility classes in @colorffy/css.
 
 ### Border Colors
 
-**Pattern:** `border border-{color}` with `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `muted`, `neutral`, `white`, `black`, `dark`, `transparent`. `border-neutral` is `--theme-on-background` (flips with dark mode); `white`/`black`/`dark` are fixed.
+**Pattern:** `border border-{color}` with `primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `muted`, `neutral`, `white`, `black`, `dark`, `transparent`. `border-neutral` is `--cffy-on-background` (flips with dark mode); `white`/`black`/`dark` are fixed.
 
 **Opacity:** `border-opacity-{0|5|10|20|…|90|100}` fades the border color toward transparent.
 
@@ -54,7 +61,7 @@ Complete reference for utility classes in @colorffy/css.
 
 ## Spacing
 
-Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map).
+Colorffy uses a consistent spacing system with sizes: `px`, `0`–`10`, `auto` (from the `$spacing-sizes` map). Steps `1`–`10` read the `--cffy-space-*` tokens (`1` = 0.25rem, `2` = 0.5rem, `3` = 1rem, `4` = 1.5rem, `5` = 3rem, then `--cffy-space-72`/`-96`/`-120`/`-144`/`-192` = 4.5/6/7.5/9/12rem), so `--cffy-space-unit` and the density rescale them; `gap-*` steps are `n` × `--cffy-space-unit` (`--cffy-space-4` … `--cffy-space-40`, 0.25rem … 2.5rem).
 
 ### Margin
 
@@ -132,7 +139,7 @@ Add breakpoint prefixes: `sm`, `md`, `lg`, `xl`, `xxl`
 <p class="fs-5xl">Extra large</p>
 ```
 
-**Deprecated (removed in v3):** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` still work (font-size only, no line-height). Do not use in new code.
+**Removed in 3.0:** `fs-100`…`fs-600`, `fs-sm-100`…`fs-sm-500`, `fs-xl-100` (font-size only). Their t-shirt equivalents also set the paired line-height; add `lh-1` to keep a tight line box (icons).
 
 ### Display Styles
 
@@ -284,6 +291,14 @@ For variable Material Icons:
 <div class="bg-frosted">Frosted glass</div>
 ```
 
+### Container Backgrounds
+
+**Pattern:** `bg-{color}-container` with `text-on-{color}-container` (tinted surface and its text, for primary, secondary, accent, success, warning, danger, info, muted; adapts to dark mode)
+
+```html
+<div class="bg-success-container text-on-success-container">Payment received</div>
+```
+
 ### Emphasis Backgrounds
 
 **Pattern:** `bg-{color}-emphasis` (darker variants for primary, secondary, accent, success, warning, danger)
@@ -337,7 +352,7 @@ Blend two colors together:
 - `--_bg-color-mix-opacity`: Mix ratio (default: 90%)
 
 ```html
-<div class="bg-color-mix" style="--_bg-color-one: var(--theme-accent-a10); --_bg-color-mix-opacity: 70%;">
+<div class="bg-color-mix" style="--_bg-color-one: var(--cffy-accent-a10); --_bg-color-mix-opacity: 70%;">
   Custom color mix
 </div>
 ```
@@ -355,7 +370,7 @@ Manipulate colors with relative color syntax:
 - `--_bg-relative-alpha`: Alpha channel (0-1)
 
 ```html
-<div class="bg-relative-color" style="--_bg-relative-base-color: var(--theme-success-a10); --_bg-relative-alpha: 0.5;">
+<div class="bg-relative-color" style="--_bg-relative-base-color: var(--cffy-success-a10); --_bg-relative-alpha: 0.5;">
   Semi-transparent success
 </div>
 ```
@@ -376,7 +391,7 @@ Background with gradient border effect:
 
 ## Borders
 
-Every border class is a modifier on `.border` and does nothing on its own. `.border` draws a 1px solid `--theme-outline-surface` line on all four sides; modifiers change the side, width, style and color.
+Every border class is a modifier on `.border` and does nothing on its own. `.border` draws a 1px solid `--cffy-outline-surface` line on all four sides; modifiers change the side, width, style and color.
 
 ```html
 <div class="border">1px outline border</div>
@@ -421,7 +436,7 @@ Color (`border-primary`, `border-neutral`, …) and opacity (`border-opacity-{0|
 |---|---|
 | `border-gradient` | Static 120° linear gradient edge, primary by default |
 | `border-animated` | Rotating conic glow around the element, primary by default. Needs its own background and an isolated parent (see below) |
-| `border-gradient-spin` | Rotating conic border with a soft halo, `orange` by default. Add `spin-card` to fill the inside with `--theme-surface-body-pane` |
+| `border-gradient-spin` | Rotating conic border with a soft halo, `orange` by default. Add `spin-card` to fill the inside with `--cffy-surface-body-pane` |
 | `border-gradient-corners` | Highlights two opposite corners in the current border color, so pair it with a color modifier |
 
 **Presets:** `gradient-{name}`, either a theme color (`primary`, `secondary`, `accent`, `success`, `warning`, `danger`, `info`) or a fixed palette (`pink`, `magenta`, `emerald`, `cyan`, `rose`, `purple`, `yellow`, `orange`, `lime`, `amber`, `red`, `blue`, `gray`, `white`, `indigo`, `indigo-dark`, `violet`, `green`, `fuchsia`, `navy`). Width modifiers apply to gradient borders too.
@@ -439,7 +454,7 @@ Color (`border-primary`, `border-neutral`, …) and opacity (`border-opacity-{0|
 </div>
 ```
 
-`border-gradient` and `border-gradient-spin` fill the inside with `--theme-background`, so on another surface the box shows the page background, not the surface color.
+`border-gradient` and `border-gradient-spin` fill the inside with `--cffy-background`, so on another surface the box shows the page background, not the surface color.
 
 ### Border Radius
 
@@ -527,12 +542,20 @@ Radius classes work without `.border`.
 
 ### Width & Height
 
-**Pattern:** `{w|h}-{25,50,75,100,auto}`, `m{w|h}-100`, `min-{w|h}-0`
+**Pattern:** `{w|h}-{50,75,100,auto,fit,fixed}`, `min-{w|h}-auto`
 
 ```html
 <div class="w-100">100% width</div>
 <div class="h-50">50% height</div>
-<div class="mw-100">Max width 100%</div>
+```
+
+### Max Width (container scale)
+
+**Pattern:** `max-w-{3xs|2xs|xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl}` — reads `--cffy-container-*` (16rem … 80rem)
+
+```html
+<form class="max-w-sm mx-auto">…</form>
+<article class="max-w-3xl">…</article>
 ```
 
 ### Viewport Sizing
@@ -658,6 +681,23 @@ Radius classes work without `.border`.
 <div class="user-select-all">Select all</div>
 <div class="user-select-auto">Auto select</div>
 ```
+
+## Transitions
+
+Names for Vue's `<Transition>` / `<TransitionGroup>`: `fade`, `slide-up`, `slide-down`, `slide-start`, `slide-end` (inline, RTL-aware), `scale`, `list` (TransitionGroup; moves the remaining items), `page` and `layout` (Nuxt `app.pageTransition` / `layoutTransition`; don't combine with `experimental.viewTransition`). `slide-block` is the older vertical slide used by toasts.
+
+```vue
+<Transition name="fade" mode="out-in">
+  <span v-if="saved" key="saved">Saved</span>
+  <span v-else key="idle">Unsaved changes</span>
+</Transition>
+
+<TransitionGroup name="list" tag="ul" class="list-group">
+  <li v-for="item in items" :key="item.id" class="list-group-item">…</li>
+</TransitionGroup>
+```
+
+Hooks (on `:root` or a wrapper): `--cffy-transition-enter-duration` (`--cffy-duration-300`), `-leave-duration` (`--cffy-duration-200`), `-enter-easing` (`--cffy-ease-decelerate`), `-leave-easing` (`--cffy-ease-accelerate`), `-distance` (`--cffy-space-16`), `-scale` (`0.95`). Reduced motion keeps the fade and drops movement and scaling. Removed in 3.0: `slide` / `slide-inline` (use `slide-start`), `fade-inline` (use `slide-end`), `table` (use `list`), `table-td-fade`.
 
 ## Quick Reference: Common Patterns
 

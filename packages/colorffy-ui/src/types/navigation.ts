@@ -109,21 +109,9 @@ export interface ITabItem {
 }
 
 /**
- * Interface for segmented tab items used in SegmentedControls component.
+ * Segmented tab items used in the SegmentedControls component.
  */
-export interface ISegmentedTab extends ITabItem {
-  /**
-   * Numerical position of the tab.
-   *
-   * @deprecated Unused since the indicator moved to CSS anchor positioning. Omit it; removed in v3.
-   */
-  position?: number
-
-  /**
-   * When true, the tab is disabled and cannot be selected.
-   */
-  disabled?: boolean
-}
+export type ISegmentedTab = ITabItem
 
 /**
  * Interface props for the SegmentedControls component.
@@ -182,6 +170,13 @@ export interface ITabsProps {
   rounded?: boolean
 
   /**
+   * When true, tabs with an `icon` show only the icon as a square button. The
+   * label stays the tab's accessible name (visually hidden) and shows as a
+   * native tooltip on hover. Tabs without an `icon` keep their label.
+   */
+  iconOnly?: boolean
+
+  /**
    * Tab button size ('sm' | 'md'). 'sm' uses the default button height and font size.
    * Defaults to 'md'.
    */
@@ -195,7 +190,7 @@ export interface ITabEmits {
   /**
    * Emitted when a tab is selected.
    */
-  (e: 'updateActiveTab', tabId: string): void
+  (e: 'update:activeTab', tabId: string): void
 }
 
 /**
@@ -419,27 +414,6 @@ export interface IPopoverMenuProps {
    * Title shown in the default header, beside the close button.
    */
   title?: string | null
-
-  /**
-   * @deprecated The default header is a title and the close button only. Put an
-   * identity block in the `header` slot with `UiPopoverMenuUser`. Removed in v3.
-   */
-  subtitle?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `photoUrl`. Removed in v3.
-   */
-  avatarUrl?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `avatarClass`. Removed in v3.
-   */
-  avatarCustomClass?: string | null
-
-  /**
-   * @deprecated Moved to `UiPopoverMenuUser`'s `user`. Removed in v3.
-   */
-  user?: IUserData | null
 
   /**
    * Auth state or configuration. Opaque to the component; passed through for

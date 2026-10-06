@@ -5,6 +5,8 @@ import type {
   IPopoverMenuProps
 } from '@/types/navigation'
 import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
+import { useMenuNavigation } from '@/composables/useMenuNavigation'
 import UiButton from '../button/Button.vue'
 import UiIconMaterial from '../icon/Material.vue'
 import UiPopoverMenuGroup from './PopoverMenuGroup.vue'
@@ -25,12 +27,20 @@ const props = withDefaults(defineProps<IPopoverMenuProps>(), {
 /** Emits */
 const emit = defineEmits<IPopoverMenuEmits>()
 
-/** Data */
+/** Slots */
 const slots = useSlots()
+
+/** Labels */
+const l10n = useLabels('popoverMenu')
+
+/** Data */
 const panelRef = ref<HTMLElement | null>(null)
 const supportsNativePopover = ref<boolean>(false)
-const anchorName = `--popover-menu-${useId()}`
+const anchorName = `--cffy-popover-menu-${useId()}`
 let lastNativeDismiss = 0
+
+/** Composables */
+const { onKeydown: onMenuKeydown } = useMenuNavigation(panelRef)
 
 /** Computed */
 const isNative = computed(() => props.nativePopover && supportsNativePopover.value)
@@ -39,9 +49,8 @@ const menuClasses = computed(() => [
   'popover-menu',
   { 'popover-menu-visible': !isNative.value && props.isOpened }
 ])
-
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.closable))
-const hasBody = computed(() => Boolean(slots.body || slots.default || slots['body-extra'] || listItems.value.length))
+const hasBody = computed(() => Boolean(slots.body || listItems.value.length))
 
 /** Methods */
 function handleHideDropdown() {
@@ -82,12 +91,10 @@ function isActiveMenuItem(to: string | object | null | undefined): boolean {
   if (!props.currentRoute || !to)
     return false
 
-  // String path comparison
   if (typeof to === 'string') {
     return props.currentRoute.path === to
   }
 
-  // Object route comparison
   if (typeof to === 'object' && 'name' in to) {
     return props.currentRoute.name === to.name
   }
@@ -95,17 +102,17 @@ function isActiveMenuItem(to: string | object | null | undefined): boolean {
   return false
 }
 
+/** Watchers */
+watch(() => props.isOpened, (open) => {
+  if (isNative.value)
+    syncNativePopover(open)
+})
+
 /** Lifecycle */
 onMounted(() => {
   supportsNativePopover.value = 'popover' in HTMLElement.prototype && CSS.supports('anchor-name: --a')
   if (isNative.value && props.isOpened)
     nextTick(() => syncNativePopover(true))
-})
-
-/** Watchers */
-watch(() => props.isOpened, (open) => {
-  if (isNative.value)
-    syncNativePopover(open)
 })
 </script>
 
@@ -118,9 +125,10 @@ watch(() => props.isOpened, (open) => {
       :popover="isNative ? 'auto' : undefined"
       :style="isNative ? { positionAnchor: anchorName } : undefined"
       role="menu"
-      :aria-label="ariaLabel || 'Menu'"
+      :aria-label="ariaLabel || l10n.ariaLabel"
       tabindex="0"
       @toggle="handleNativeToggle"
+      @keydown="onMenuKeydown"
     >
       <!-- Header -->
       <div
@@ -145,8 +153,8 @@ watch(() => props.isOpened, (open) => {
           variant="outline"
           icon
           custom-class="popover-menu-close"
-          aria-label="Close menu"
-          @on-click="handleHideDropdown"
+          :aria-label="l10n.close"
+          @click="handleHideDropdown"
         >
           <template #icon>
             <UiIconMaterial icon-code="&#xe5cd;" aria-hidden="true" />
@@ -160,21 +168,16 @@ watch(() => props.isOpened, (open) => {
         class="popover-menu-body"
       >
         <slot name="body">
-          <slot>
-            <UiPopoverMenuGroup>
-              <UiPopoverMenuItem
-                v-for="item in listItems"
-                :key="item.id"
-                v-bind="item"
-                :active="item.active ?? isActiveMenuItem(item.to)"
-                @click="handleMenuItemClick(item)"
-              />
-            </UiPopoverMenuGroup>
-          </slot>
+          <UiPopoverMenuGroup>
+            <UiPopoverMenuItem
+              v-for="item in listItems"
+              :key="item.id"
+              v-bind="item"
+              :active="item.active ?? isActiveMenuItem(item.to)"
+              @click="handleMenuItemClick(item)"
+            />
+          </UiPopoverMenuGroup>
         </slot>
-
-        <!-- Deprecated: use the body slot; removed in v3 -->
-        <slot name="body-extra" />
       </div>
 
       <!-- Footer -->

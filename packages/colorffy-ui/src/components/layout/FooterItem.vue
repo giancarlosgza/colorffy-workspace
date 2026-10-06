@@ -18,7 +18,6 @@ const linkTarget = computed(() => props.to || props.href || null)
 const routerComponent = computed(() => (props.as && props.as !== 'a' ? props.as : null))
 const isExternalLink = computed(() => typeof linkTarget.value === 'string' && /^(?:https?:|mailto:|tel:|\/\/)/.test(linkTarget.value))
 const usesAnchor = computed(() => isExternalLink.value || routerComponent.value === null)
-// A route object needs a router component; an anchor cannot consume one
 const isLink = computed(() => linkTarget.value !== null && (typeof linkTarget.value === 'string' || !usesAnchor.value))
 const resolvedTag = computed(() => {
   if (!isLink.value)

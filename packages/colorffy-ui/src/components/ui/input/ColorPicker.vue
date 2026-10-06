@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IColorPickerEmits, IColorPickerProps } from '@/types/input'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IColorPickerProps>(), {
@@ -27,12 +28,14 @@ const emit = defineEmits<IColorPickerEmits>()
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputIdColor = computed(() => props.id ? `${props.id}-input-color` : undefined)
-const inputIdText = computed(() => props.id ? `${props.id}-input-text` : undefined)
+const inputIdColor = computed(() => props.id ?? undefined)
+const inputIdText = computed(() => props.id ? `${props.id}-text` : undefined)
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -43,7 +46,9 @@ const labelClasses = computed(() => [
 ])
 const colorGroupClasses = computed(() => [
   'form-color-group',
-  props.size ? `form-${props.size}` : ''
+  props.size ? `form-${props.size}` : '',
+  props.variant ? `form-${props.variant}` : '',
+  { 'form-rounded': props.rounded }
 ])
 const colorClasses = computed(() => {
   const classes = ['form-color']
@@ -70,7 +75,7 @@ const textClasses = computed(() => {
     >
       {{ label }}{{ required ? ' *' : '' }}
     </label>
-    <!-- Accessible name for the hex text input (hidden visually, not from AT) -->
+    <!-- Hex input name -->
     <label
       :for="inputIdText"
       class="visually-hidden"
@@ -90,7 +95,7 @@ const textClasses = computed(() => {
         :required="required"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
-        @change="emit('onUpdate', model)"
+        @change="emit('update', model)"
       >
       <!-- Text -->
       <input
@@ -102,7 +107,7 @@ const textClasses = computed(() => {
         :disabled="disabled"
         :aria-invalid="hasErrors || undefined"
         :aria-describedby="describedById"
-        @change="emit('onUpdate', model)"
+        @change="emit('update', model)"
       >
     </div>
 
@@ -118,7 +123,7 @@ const textClasses = computed(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

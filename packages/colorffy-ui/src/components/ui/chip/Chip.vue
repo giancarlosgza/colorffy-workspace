@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IChipEmits, IChipProps } from '@/types/chip'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
@@ -14,18 +15,21 @@ const props = withDefaults(defineProps<IChipProps>(), {
   textOnly: false,
   variant: 'outline',
   color: 'primary',
-  closeLabel: 'Remove',
   customClass: null
 })
 
 /** Emits */
 const emit = defineEmits<IChipEmits>()
 
+/** Labels */
+const l10n = useLabels('chip')
+
 /** Computed */
+const closeText = computed(() => props.closeLabel ?? l10n.value.remove)
 const chipClasses = computed(() => {
   const classes: (string | string[] | Record<string, boolean>)[] = ['btn', 'btn-chip']
 
-  // Outline is the base `.btn-chip` look, so it needs no extra class
+  // Outline is the base `.btn-chip` look
   if (props.variant && props.variant !== 'outline')
     classes.push(`chip-${props.variant}`)
 
@@ -56,6 +60,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
 <template>
   <div
     v-if="closable"
+    :id="id || undefined"
     :class="chipClasses"
     :aria-disabled="disabled || undefined"
   >
@@ -77,7 +82,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
       type="button"
       class="chip-remove"
       :disabled="disabled"
-      :aria-label="closeLabel"
+      :aria-label="closeText"
       @click="emit('remove')"
     >
       <UiIconMaterial icon-code="&#xe5cd;" />
@@ -86,6 +91,7 @@ const ariaPressed = computed(() => (props.selected ? true : undefined))
 
   <button
     v-else
+    :id="id || undefined"
     type="button"
     :class="chipClasses"
     :disabled="disabled"

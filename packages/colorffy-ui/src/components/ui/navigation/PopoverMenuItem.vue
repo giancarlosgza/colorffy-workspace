@@ -34,7 +34,6 @@ const itemClasses = computed(() => [
   },
   props.customClass
 ])
-// Anchors and router links take the destination, buttons take a type
 const linkProps = computed(() => {
   if (props.as === 'button')
     return { type: 'button', disabled: props.disabled }
@@ -42,10 +41,9 @@ const linkProps = computed(() => {
   if (props.as === 'a')
     return { href: typeof props.to === 'string' ? props.to : undefined }
 
-  // Plain elements (div, li) carry no destination; anything else is a router component
   return typeof props.as === 'string' ? {} : { to: props.to ?? undefined }
 })
-// A row that only holds other controls is not itself a menu item
+// A row that only holds other controls isn't a menu item
 const isInteractive = computed(() => props.as !== 'div' && props.as !== 'span')
 
 /** Methods */

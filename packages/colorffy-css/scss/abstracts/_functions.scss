@@ -1,4 +1,47 @@
+@use "sass:map";
+@use "sass:meta";
+@use "variables" as v;
+
 // ==========================================================================
 // COLORFFY CUSTOM SCSS FUNCTIONS
 // ==========================================================================
-// (Currently all functions migrated to native CSS Relative Color Syntax)
+
+// State layer
+@function state-layer($state, $base: transparent) {
+  @return color-mix(in oklab, #{$base}, var(--cffy-state-layer-color) #{$state});
+}
+
+// Tonal
+@function tonal($tone, $intensity: var(--cffy-tonal-dark-intensity)) {
+  @return color-mix(in oklab, #{$tone}, var(--cffy-on-background-inverse) #{$intensity});
+}
+
+// On color
+@function on-color($fill) {
+  @return #{'oklch(from #{$fill} clamp(0, (0.58 - l) * 1000, 1) 0 0)'};
+}
+
+// Inverse color
+@function inverse-color($light-tone, $dark-tone) {
+  @return #{'light-dark(oklch(from #{$light-tone} max(l, 0.8) c h), oklch(from #{$dark-tone} min(l, 0.45) c h))'};
+}
+
+// Shape role
+@function shape($role, $radius: null) {
+  $role-radius: map.get((container: v.$shape-container, field: v.$shape-field, control: v.$shape-control), $role);
+
+  @if $radius == null or $radius == $role-radius {
+    @return var(--cffy-shape-#{$role});
+  }
+
+  @return $radius;
+}
+
+// Negation
+@function negate($value) {
+  @if meta.type-of($value) == 'number' {
+    @return -$value;
+  }
+
+  @return calc(-1 * #{$value});
+}

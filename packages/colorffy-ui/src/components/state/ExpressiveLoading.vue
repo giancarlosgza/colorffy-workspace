@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Interfaces */
 interface IExpressiveLoadingProps {
@@ -22,9 +23,11 @@ const props = withDefaults(defineProps<IExpressiveLoadingProps>(), {
   customClass: null,
   loadingStyles: null,
   role: 'status',
-  ariaLabel: 'Loading content',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Data */
 const titleDynamic = ref<string | null>(null)
@@ -58,11 +61,11 @@ const titleClasses = computed(() => {
   const classes = ['subtitle-1', 'font-primary', 'fw-800']
 
   if (props.size === 'sm') {
-    classes.push('fs-500')
+    classes.push('fs-base')
   } else if (props.size === 'lg') {
-    classes.push('fs-700')
+    classes.push('fs-xl')
   } else {
-    classes.push('fs-600')
+    classes.push('fs-lg')
   }
 
   return classes
@@ -77,8 +80,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.content
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 
@@ -105,20 +109,20 @@ function stopTitleRotation() {
   }
 }
 
-/** Lifecycle hooks */
+/** Watchers */
+watch(() => props.title, () => {
+  stopTitleRotation()
+  currentIndex = 0
+  startTitleRotation()
+}, { deep: true })
+
+/** Lifecycle */
 onMounted(() => {
   startTitleRotation()
 })
 onUnmounted(() => {
   stopTitleRotation()
 })
-
-// Watcher
-watch(() => props.title, () => {
-  stopTitleRotation()
-  currentIndex = 0
-  startTitleRotation()
-}, { deep: true })
 </script>
 
 <template>
@@ -147,7 +151,7 @@ watch(() => props.title, () => {
       />
     </svg>
 
-    <!-- Dynamic title text -->
+    <!-- Title -->
     <Transition mode="out-in" name="slide-block">
       <p
         v-if="titleDynamic"

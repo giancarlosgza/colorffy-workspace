@@ -2,6 +2,8 @@
 import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
 import { ref, toRef, watch } from 'vue'
+import UiBadge from '../badge/Badge.vue'
+import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
@@ -16,11 +18,6 @@ const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
 
-/** Watchers */
-watch(() => props.activeTab, (newVal) => {
-  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
-})
-
 /** Methods */
 function isActiveTab(tab: ISegmentedTab): boolean {
   return activeTabName.value === tab.id
@@ -33,7 +30,7 @@ function handleSelectedTab(tab: ISegmentedTab) {
     return
 
   activeTabName.value = tab.id
-  emit('updateActiveTab', tab.id)
+  emit('update:activeTab', tab.id)
 }
 function nextEnabledIndex(from: number, direction: number): number {
   const count = tabs.value.length
@@ -74,6 +71,11 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
       break
   }
 }
+
+/** Watchers */
+watch(() => props.activeTab, (newVal) => {
+  activeTabName.value = newVal ?? (tabs.value?.[0]?.id ?? '')
+})
 </script>
 
 <template>
@@ -105,7 +107,26 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
           @click="handleSelectedTab(tab)"
           @keydown="onTabKeydown($event, tabIndex)"
         >
+          <!-- Leading icon -->
+          <UiIconMaterial
+            v-if="tab.icon"
+            :icon-code="tab.icon"
+          />
+
           {{ tab.label }}
+
+          <!-- Badge -->
+          <UiBadge
+            v-if="tab.badge"
+            size="sm"
+            :variant="tab.badge.variant"
+            :text="tab.badge.text"
+            :icon-code="tab.badge.iconCode"
+            :icon-class="tab.badge.iconClass"
+            :icon-style="tab.badge.iconStyle"
+            :pill="tab.badge.pill"
+            :custom-class="tab.badge.customClass"
+          />
         </button>
       </li>
 

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
+import UiButtonGroup from '../ui/button/ButtonGroup.vue'
 import UiIconMaterial from '../ui/icon/Material.vue'
 
 /** Interfaces */
@@ -23,11 +25,13 @@ const props = withDefaults(defineProps<IEmptyProps>(), {
   customClass: null,
   emptyStyles: null,
   role: 'status',
-  ariaLabel: 'Empty state',
   ariaLive: 'polite',
   useCustomIcon: false,
   iconCode: '&#xeb83;'
 })
+
+/** Labels */
+const l10n = useLabels('empty')
 
 /** Computed */
 const emptyClasses = computed<(string | string[])[]>(() => {
@@ -44,8 +48,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.ariaLabel
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 
@@ -59,24 +64,24 @@ const ariaAttributes = computed(() => {
     :style="emptyStyles"
     v-bind="ariaAttributes"
   >
-    <!-- Icon State -->
+    <!-- Icon -->
     <div v-if="!useCustomIcon" class="icon-state-wrapper">
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
       <div class="icon-empty-state" />
     </div>
 
-    <!-- Custom Icon -->
+    <!-- Custom icon -->
     <UiIconMaterial
       v-else
       :icon-code="iconCode"
-      class="fs-100 text-muted mb-3"
+      class="fs-4xl lh-1 text-muted mb-3"
     />
 
     <!-- Title -->
     <h3
       v-if="title"
-      class="fw-800 mb-2 subtitle-1 fs-500"
+      class="fw-800 mb-2 subtitle-1 fs-lg"
     >
       {{ title }}
     </h3>
@@ -89,9 +94,12 @@ const ariaAttributes = computed(() => {
       {{ subtitle }}
     </p>
 
-    <!-- Action slot (falls back to legacy #button slot when unused) -->
-    <slot name="action">
-      <slot name="button" />
-    </slot>
+    <!-- Action -->
+    <UiButtonGroup
+      v-if="$slots.action"
+      custom-class="justify-content-center"
+    >
+      <slot name="action" />
+    </UiButtonGroup>
   </div>
 </template>

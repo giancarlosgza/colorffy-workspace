@@ -6,43 +6,44 @@ import type {
   IButtonToggleOption
 } from '@/types/button'
 import { computed, ref } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<IButtonToggleGroupProps>(), {
-  ariaLabel: 'Toggle button group',
-  groupLabel: ''
 })
 
 /** Emits */
 const emit = defineEmits<IButtonToggleGroupEmits>()
 
 /** Model */
-// Selected option id; takes precedence over the legacy per-option `active` flag.
+// Takes precedence over the legacy per-option `active` flag
 const model = defineModel<string>()
+
+/** Labels */
+const l10n = useLabels('buttonToggleGroup')
 
 /** Data */
 const optionRefs = ref<(HTMLElement | null)[]>([])
 
-function isSelected(option: IButtonToggleOption): boolean {
-  return model.value !== undefined ? model.value === option.id : !!option.active
-}
-
-// Roving tabindex: the selected option (or first enabled) is the only tab stop.
+/** Computed */
 const rovingIndex = computed(() => {
   const activeIndex = props.options.findIndex(o => isSelected(o) && !o.disabled)
   return activeIndex !== -1 ? activeIndex : props.options.findIndex(o => !o.disabled)
 })
 
 /** Methods */
+function isSelected(option: IButtonToggleOption): boolean {
+  return model.value !== undefined ? model.value === option.id : !!option.active
+}
 function setOptionRef(el: Element | ComponentPublicInstance | null, index: number): void {
   optionRefs.value[index] = (el as HTMLElement) ?? null
 }
 function selectOption(event: MouseEvent | KeyboardEvent, item: IButtonToggleOption): void {
   if (!item.disabled) {
     model.value = item.id
-    emit('onOptionClick', event, item)
+    emit('optionClick', event, item)
   }
 }
 function nextEnabledIndex(from: number, direction: number): number {
@@ -89,15 +90,8 @@ function onOptionKeydown(event: KeyboardEvent, index: number): void {
       break
   }
 }
-
 function getOptionKey(index: number): string {
   return `toggle-btn-${index}`
-}
-function getOptionAriaLabel(option: IButtonToggleOption): string {
-  const title = option.title || 'Option'
-  const disabled = option.disabled ? ' (disabled)' : ''
-  const active = isSelected(option) ? ' (selected)' : ''
-  return `${title}${disabled}${active}`
 }
 function getIconClass(option: IButtonToggleOption): string {
   return option.iconClass || ''
@@ -108,7 +102,7 @@ function getIconClass(option: IButtonToggleOption): string {
   <div
     class="toggle-btn-group"
     role="radiogroup"
-    :aria-label="props.ariaLabel"
+    :aria-label="props.ariaLabel ?? l10n.ariaLabel"
   >
     <div
       v-for="(option, index) in props.options"
@@ -118,7 +112,6 @@ function getIconClass(option: IButtonToggleOption): string {
       :tabindex="index === rovingIndex ? 0 : -1"
       :aria-checked="isSelected(option)"
       :aria-disabled="option.disabled"
-      :aria-label="getOptionAriaLabel(option)"
       class="toggle-btn"
       :class="{
         'toggle-btn-active': isSelected(option),
@@ -159,7 +152,6 @@ function getIconClass(option: IButtonToggleOption): string {
           <UiBadge
             :variant="option.badge.variant"
             :text="option.badge.text"
-            :aria-label="`Tier: ${option.badge.text}`"
           />
         </div>
       </div>

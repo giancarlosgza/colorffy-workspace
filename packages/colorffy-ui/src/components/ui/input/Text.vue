@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ITextInputEmits, ITextInputProps } from '@/types/input'
-import { computed, useSlots, watch } from 'vue'
+import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ITextInputProps>(), {
@@ -22,7 +23,9 @@ const props = withDefaults(defineProps<ITextInputProps>(), {
   rounded: false,
   customClass: null,
   size: null,
-  hideLabel: false
+  hideLabel: false,
+  autocomplete: null,
+  adornments: 'attached'
 })
 
 /** Emits */
@@ -31,7 +34,13 @@ const emit = defineEmits<ITextInputEmits>()
 /** Model */
 const model = defineModel<string | number | null>('modelValue', { default: null })
 
-// For type="number", coerce the string input to a real number (or null).
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
+/** Computed */
 const inputModel = computed<string | number | null>({
   get: () => model.value,
   set: (val) => {
@@ -47,22 +56,11 @@ const inputModel = computed<string | number | null>({
     model.value = Number.isNaN(num) ? null : num
   }
 })
-
-/** Composable */
-const slots = useSlots()
-
-/** Computed */
-const hasPrefix = computed(() => !!slots.prefix)
-const hasSuffix = computed(() => !!slots.suffix)
-const hasGroup = computed(() => hasPrefix.value || hasSuffix.value)
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-text` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
-
 const minValue = computed(() => (props.type === 'number' ? props.min ?? undefined : undefined))
 const maxValue = computed(() => (props.type === 'number' ? props.max ?? undefined : undefined))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -87,8 +85,6 @@ const inputClasses = computed(() => {
   }
   return classes
 })
-
-// Shared input bindings so both branches (with/without group) stay in sync
 const inputAttrs = computed(() => ({
   'id': inputId.value,
   'class': inputClasses.value,
@@ -101,13 +97,14 @@ const inputAttrs = computed(() => ({
   'required': props.required,
   'readonly': props.readonly,
   'autofocus': props.autofocus,
+  'autocomplete': props.autocomplete ?? undefined,
   'aria-invalid': hasErrors.value || undefined,
   'aria-describedby': describedById.value
 }))
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 
@@ -121,11 +118,12 @@ watch(model, (value) => {
       {{ label }}{{ required ? ' *' : '' }}
     </label>
     <div
-      v-if="hasGroup"
+      v-if="$slots.prefix || $slots.suffix"
       class="input-group"
+      :class="{ 'input-group-inline': adornments === 'inline' }"
     >
       <span
-        v-if="hasPrefix"
+        v-if="$slots.prefix"
         class="input-group-prefix"
       >
         <slot name="prefix" />
@@ -135,7 +133,7 @@ watch(model, (value) => {
         v-bind="inputAttrs"
       >
       <span
-        v-if="hasSuffix"
+        v-if="$slots.suffix"
         class="input-group-suffix"
       >
         <slot name="suffix" />
@@ -159,7 +157,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Interfaces */
 interface IBaseSkeletonProps {
   size?: 'sm' | 'md' | 'lg'
   variant?: 'default' | 'thumbnail' | 'ai-generation' | 'shimmer'
-  isThumbnail?: boolean // Deprecated: use variant="thumbnail" instead
   customClass?: string | string[] | null
   skeletonStyles?: StyleValue
   width?: string | number
@@ -21,16 +21,17 @@ interface IBaseSkeletonProps {
 const props = withDefaults(defineProps<IBaseSkeletonProps>(), {
   size: 'md',
   variant: 'default',
-  isThumbnail: false,
   customClass: null,
   skeletonStyles: null,
   width: undefined,
   height: undefined,
   rounded: false,
   role: 'status',
-  ariaLabel: 'Loading content',
   ariaLive: 'polite'
 })
+
+/** Labels */
+const l10n = useLabels('loading')
 
 /** Computed */
 const skeletonClasses = computed<(string | string[])[]>(() => {
@@ -40,14 +41,11 @@ const skeletonClasses = computed<(string | string[])[]>(() => {
     classes.push(`skeleton-${props.size}`)
   }
 
-  // Handle both new variant prop and legacy isThumbnail prop
-  const effectiveVariant = props.isThumbnail ? 'thumbnail' : props.variant
-
-  if (effectiveVariant && effectiveVariant !== 'default') {
-    if (effectiveVariant === 'thumbnail') {
+  if (props.variant && props.variant !== 'default') {
+    if (props.variant === 'thumbnail') {
       classes.push('skeleton-thumbnail')
     } else {
-      classes.push(`skeleton-${effectiveVariant}`)
+      classes.push(`skeleton-${props.variant}`)
     }
   }
 
@@ -72,7 +70,6 @@ const skeletonStyles = computed(() => {
     styles.height = typeof props.height === 'number' ? `${props.height}px` : props.height
   }
 
-  // Merge with user-provided styles
   if (props.skeletonStyles) {
     if (typeof props.skeletonStyles === 'string') {
       return [styles, props.skeletonStyles]
@@ -88,8 +85,9 @@ const ariaAttributes = computed(() => {
 
   if (props.role)
     attributes.role = props.role
-  if (props.ariaLabel)
-    attributes['aria-label'] = props.ariaLabel
+  const label = props.ariaLabel ?? l10n.value.content
+  if (label)
+    attributes['aria-label'] = label
   if (props.ariaLive && props.ariaLive !== 'off')
     attributes['aria-live'] = props.ariaLive
 

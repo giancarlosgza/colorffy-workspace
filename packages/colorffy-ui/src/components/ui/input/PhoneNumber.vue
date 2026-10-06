@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IPhoneNumberInputEmits, IPhoneNumberInputProps } from '@/types/input'
 import { computed } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 import { useTextUtils } from '@/composables/useTextUtils'
 
 /** Props */
@@ -28,29 +29,31 @@ const emit = defineEmits<IPhoneNumberInputEmits>()
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: '' })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const baseId = computed(() => props.id ?? undefined)
+
 /** Composables */
 const { formatPhoneNumber } = useTextUtils()
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const baseId = computed(() => props.id ?? undefined)
-const inputId = computed(() => (baseId.value ? `${baseId.value}-input-text` : undefined))
+const inputId = computed(() => baseId.value)
 const describedById = computed(() => (hasErrors.value && baseId.value ? `${baseId.value}-error-0` : undefined))
 const value = computed({
   get: () => {
     const currentValue = model.value ?? ''
-    // formatPhoneNumber strips non-digits, so any stored value formats safely.
     return currentValue ? formatPhoneNumber(currentValue) : ''
   },
   set: (value: string | null) => {
-    // Store raw digits so modelValue stays clean, not dash-formatted.
     const digits = (value ?? '').replace(/\D/g, '')
     model.value = digits
-    emit('onUpdate', digits)
+    emit('update', digits)
   }
 })
 const placeholderText = computed(() => props.placeholder ?? undefined)
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -111,7 +114,7 @@ const inputClasses = computed(() => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

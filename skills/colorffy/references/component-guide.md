@@ -11,7 +11,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 **Content sections**
 - Use `UiPaneContent` for basic content wrappers
 - Use `UiCard` when you need header/body/footer structure
-- Cards support variants: `pane` (default), `outlined`, `elevated`
+- Cards support variants: `outline`, `elevated`, `pane` (no default: a plain `.card` without one)
 
 **Visual separation**
 - Use `UiDivider` to separate items in a list, sections of a form, or inline toolbar actions (`vertical`)
@@ -20,7 +20,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 **Modals & Dialogs**
 - Use `UiModal` for custom modal content with full control
 - Use `UiConfirmModal` for quick confirmation dialogs
-- Modal sizes: `sm`, `md`, `lg`, `xl`, `full`
+- Modal sizes: `sm`, `md`, `lg`, `fullscreen`; `mode` picks `modal`, `side-sheet` or `headless`
 
 ## Navigation
 
@@ -36,7 +36,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 - Shows icons + labels
 
 **Sidebar navigation**
-- Use `UiSidebar` (+ `UiSidebarHeader` / `UiSidebarBody` / `UiSidebarFooter`, `UiSidebarGroup`, `UiSidebarLink`, `UiSidebarText`, `UiSidebarDropdown`) for the navigation drawer
+- Use `UiSidebar` (with `#header` / `#body` / `#footer` slots, plus `UiSidebarGroup`, `UiSidebarLink`, `UiSidebarText`, `UiSidebarDropdown`) for the navigation drawer
 - Two independent states: `rail` (compact, desktop) and `open` (responsive mobile, `v-model:open`)
 - Supports icons, active states, collapsible groups, and nested `child` links
 - Good for dashboards and admin panels
@@ -48,7 +48,7 @@ Guide for choosing the right Colorffy UI component for common UI patterns.
 
 **Active indicators (`UiTabs`, `UiSegmentedControls`, `UiNavigationBar`)**
 
-All three place *and* animate their indicator with pure CSS anchor positioning — no JavaScript. Every item gets its own `anchor-name` (`--tabs-item-1`, `--tabs-item-2`, …) from an `@for` loop, a `:has()` ladder points a `--*-anchor` custom property at the active item's name, and the indicator reads `anchor(var(--*-anchor) <side>)`. An `@supports not (anchor-name: --foo)` fallback styles the active item directly. One rule when touching it:
+All three place *and* animate their indicator with pure CSS anchor positioning — no JavaScript. Every item gets its own `anchor-name` (`--cffy-tabs-item-1`, `--cffy-tabs-item-2`, …) from an `@for` loop, a `:has()` ladder points a `--*-anchor` custom property at the active item's name, and the indicator reads `anchor(var(--*-anchor) <side>)`. An `@supports not (anchor-name: --foo)` fallback styles the active item directly. One rule when touching it:
 
 - **The transition only fires if the referenced anchor name changes.** Transitions run on computed-value changes, and `left: anchor(left)` computes the same before and after — so moving `anchor-name` between elements while the indicator keeps a fixed `position-anchor` makes it *snap*, with no transition generated at all. Switching which name the indicator references (`anchor(var(--x) left)`) does change the computed value, so it interpolates. That is why the anchor names are per-item and the active one is selected through a variable.
 - Keep the `transition` inside `@media (prefers-reduced-motion: no-preference)`, and note the `@for` bound caps how many items animate (16 for tabs/segmented, 8 for the navigation bar).
@@ -65,9 +65,14 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 ## Forms & Inputs
 
 **Text input**
-- Use `UiInputText` for single-line text
-- Types: `text`, `email`, `password`, `url`, `tel`
-- Supports label, placeholder, error messages, hints
+- Use `UiInputText` for single-line text (`type`: `text`, `email`, `url`, `tel`, `number`, …)
+- Supports label, placeholder and `errorMessages`; pass an `id` so the label and error link to the field
+- Icons inside the field: `adornments="inline"` with the `#prefix` / `#suffix` slots; units beside it: the default attached slots
+
+**Passwords, search and tags**
+- Password with a show/hide toggle → `UiInputPassword` (not `UiInputText type="password"` plus a hand-made button)
+- Search box with a clear button and `search` on Enter → `UiInputSearch`
+- A list of short values typed in one field (emails, labels, keywords) → `UiInputTags`; for picking from a fixed set, use `UiChipGroup` instead
 
 **Multi-line text**
 - Use `UiInputTextarea` for longer text content
@@ -76,17 +81,26 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Dropdowns**
 - Use `UiInputSelect` for single-choice from list
-- Provide `options` array with `label` and `value`
+- Use `UiInputCombobox` when users need to search the list, or options need groups, disabled entries or custom rows
+- Use `UiInputMultiSelect` for several values from a list (chips; `max-chips` swaps them for "3 selected" past a count, `0` in toolbars); `free-text` lets users add values that aren't options (labels with suggestions); for free-typed values with no list use `UiInputTags`
+- Options that live on a server (directories, CRMs, large catalogs) → `remote` on either field: handle `@search`, pass the results in `options`, set `loading`
+
+**Dates and times**
+- One date, a range or several dates in a field → `UiInputDate` (`mode="single" | "range" | "multiple"`); `trigger="button"` for toolbars and report headers
+- Shortcuts → `presets` with `datePresets` (`today()`, `lastDays(7)`, `lastMonths(6)`, `thisMonth()`, `lastYear()`, …)
+- A time with the date → `time` (native time field); bookable slots → `timeOptions` (`{ step, start, end }`) plus `disabledTimes` for booked ones
+- A month grid on the page (dashboards, booking pages) → `UiCalendar`
+- Provide `options`; for objects set `option-label` and `option-value`
 - Supports placeholder and required state
 
 **Checkboxes**
 - Use `UiInputCheck` for boolean choices
 - Use multiple checkboxes for multi-select
-- Supports custom colors
+- `variant="switch"` for an on/off setting
 
 **Radio buttons**
 - Use `UiInputRadio` for exclusive choices
-- Group by `name` prop
+- Pass `options` (with `option-label` / `option-value` for objects) and an `id`, which names the group
 - Better than select for 2-5 options
 
 **Sliders**
@@ -95,9 +109,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Good for volume, opacity, filters
 
 **File uploads**
-- Use `UiInputFile` for file selection
-- Supports `multiple` for multi-file upload
-- Use `accept` to limit file types
+- Use `UiInputFile` for one file: a drop zone with a button; the model is a `File | null`
+- Validate type and size yourself on `update`
 
 **Color picker**
 - Use `UiInputColorPicker` for color selection
@@ -105,9 +118,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Works with v-model
 
 **Phone numbers**
-- Use `UiInputPhoneNumber` for formatted phone input
-- Includes country code selector
-- Set `defaultCountry` for region
+- Use `UiInputPhoneNumber` for a phone field that formats as you type and stores the digits only
+- It has no country selector; put a `UiInputSelect` beside it when you need one
 
 **PIN/verification codes**
 - Use `UiInputOtp` for segmented OTP/PIN entry; `length` sets box count (default 6)
@@ -139,8 +151,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Button groups**
 - Use `UiButtonToggleGroup` for mutually exclusive options
-- Similar to radio buttons but button-styled
-- Supports single or multiple selection
+- Similar to radio buttons but button-styled (a `radiogroup`; single selection only)
+- For several selected values use `UiChipGroup multiple`
 
 **Action menus**
 - Use `UiButtonMenu` when multiple actions available
@@ -150,7 +162,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 **Buttons with tooltips**
 - Use `UiButtonTooltip` for actions needing explanation
 - Combines button functionality with helper text
-- Set `tooltipPlacement` for positioning
+- Set `placement` for the tooltip's position
 - Use `UiTooltip` to add a tooltip to any non-button/link trigger (avatar, icon, custom control); use `UiButtonTooltip`/`UiLinkTooltip` when the trigger is a plain button or link
 
 ## Feedback & Status
@@ -197,12 +209,13 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Built-in loading skeleton (`is-loading`) and empty state; custom cells via `#cell-<key>`
 - Set `selectable` + `v-model:selected` for a row-selection checkbox column (identity from `rowKey`, falling back to `id`, then index)
 - Set `sticky-header` to keep the header visible while the body scrolls (wraps in `.table-responsive-sticky`)
-- Pagination and filtering are not built in — handle them in the parent and pass the current `items`
+- Set `:pagination="{ pageSize: 20 }"` (+ optional `v-model:page`) to show one page at a time; filtering stays in the parent
+- For server paging, pass one page of `items` and render `UiPagination` with `total-pages`
 - Best for structured data with many rows
 
 **Lists**
 - Use `UiListGroup` with `UiListItem` for simple lists
-- Items support icons, active state, clickable prop
+- Items take `title`, `text` and a leading `icon` or image; `is-interactive` on `UiListGroup` adds hover and the trailing arrow
 - Pass `to` or `href` to render a row as a navigable link (`as` picks the tag/component, e.g. `NuxtLink`); link mode implies the hover/active/arrow styling automatically
 - Lighter weight than tables
 - Good for navigation lists, option lists
@@ -223,7 +236,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Collapsible sections**
 - Use `UiAccordion` for single collapsible section
-- Use `UiAccordionGroup` when only one should be open
+- Use `UiAccordionGroup` to stack accordions; give them the same `name` so only one is open at a time
 - Set `icon` for a leading Material Symbols icon before the title
 - Set `size="sm"` for compact lists; `variant="border-block"` + `shape="square"` for flush FAQ-style lists; `variant="borderless"` for a flat look
 - Good for FAQs, settings sections
@@ -249,7 +262,10 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 ### "I need a way for users to choose one option"
 - 2-5 options, visible → `UiInputRadio`
-- 6+ options → `UiInputSelect`
+- 6+ options → `UiInputSelect` (native, best on phones)
+- Long list to search, grouped options or rich rows (avatars, descriptions) → `UiInputCombobox`
+- Options fetched from a server as the user types → `UiInputCombobox remote` (add `free-text` to also accept new values)
+- A date or a time slot → `UiInputDate`
 - Button-style toggle → `UiButtonToggleGroup`
 - Visual options (tabs) → `UiTabs` or `UiSegmentedControls`
 - Filter-style pills (single or multi-select) → `UiChipGroup`
@@ -265,6 +281,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - Mobile bottom → `UiNavigationBar`
 - Sidebar / drawer → `UiSidebar` + `UiSidebarLink`
 - Breadcrumb trail → `UiBreadcrumb`
+- Pages of a long list → `UiPagination` (or `UiDatatable`'s `pagination` prop)
 - Dropdown menu → `UiButtonMenu`
 - Multi-step flow / wizard progress → `UiStepper`
 
@@ -278,7 +295,7 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 
 **Form with validation:**
 - Multiple `UiInputText`, `UiInputSelect`, etc.
-- Each with `:error` prop for validation messages
+- Each with `:error-messages` for validation messages
 - Submit with `UiButton` variant="filled"
 
 **Modal with form:**
@@ -320,4 +337,8 @@ All three place *and* animate their indicator with pure CSS anchor positioning �
 - `v-card` → `UiCard`
 - `v-text-field` → `UiInputText`
 - `v-select` → `UiInputSelect`
+- `v-autocomplete` / PrimeVue `Select` with `filter` → `UiInputCombobox`
+- `v-select multiple` / PrimeVue `MultiSelect` → `UiInputMultiSelect`
+- PrimeVue `AutoComplete` → `UiInputCombobox remote` (`multiple` → `UiInputMultiSelect remote`)
+- `v-date-picker` / PrimeVue `DatePicker` → `UiInputDate` (`inline` → `UiCalendar`)
 - `v-dialog` → `UiModal`

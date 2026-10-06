@@ -123,7 +123,8 @@ export interface IBaseInputProps {
   customClass?: string | null
 
   /**
-   * When true, shows an "(Opcional)" label next to the primary label.
+   * When true, shows an "Optional" caption below the field, hidden while an
+   * error message shows.
    */
   optionalLabel?: boolean
 

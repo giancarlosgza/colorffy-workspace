@@ -107,7 +107,6 @@ export const GroupLabels: Story = {
 
 /**
  * With no title, no header slot and `closable: false`, the header is dropped entirely.
- * This one also fills the body through the default slot, which is an alias for `#body`.
  */
 export const NoHeader: Story = {
   args: { isOpened: true, id: 'story-no-header', closable: false },
@@ -119,12 +118,14 @@ export const NoHeader: Story = {
     },
     template: `
       <UiPopoverMenu v-bind="args" aria-label="Workspace menu">
-        <UiPopoverMenuGroup>
-          <UiPopoverMenuItem icon="&#xe7fb;" text="Invite people" />
-          <UiPopoverMenuItem icon="&#xe7ef;" text="Members" :badge="{ text: '12', variant: 'primary', pill: true }" />
-          <UiPopoverMenuItem icon="&#xe157;" text="Copy link" shortcut="⌘L" />
-          <UiPopoverMenuItem icon="&#xe872;" text="Delete workspace" is-destructive />
-        </UiPopoverMenuGroup>
+        <template #body>
+          <UiPopoverMenuGroup>
+            <UiPopoverMenuItem icon="&#xe7fb;" text="Invite people" />
+            <UiPopoverMenuItem icon="&#xe7ef;" text="Members" :badge="{ text: '12', variant: 'primary', pill: true }" />
+            <UiPopoverMenuItem icon="&#xe157;" text="Copy link" shortcut="⌘L" />
+            <UiPopoverMenuItem icon="&#xe872;" text="Delete workspace" is-destructive />
+          </UiPopoverMenuGroup>
+        </template>
       </UiPopoverMenu>
     `
   })

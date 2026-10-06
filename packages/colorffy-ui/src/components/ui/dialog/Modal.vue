@@ -18,10 +18,11 @@ const emit = defineEmits<IDialogEmits>()
 
 /** Data */
 const dialogRef = ref<HTMLDialogElement | null>(null)
+
+/** Computed */
 const dialogClasses = computed(() => {
   const classes: (string | Record<string, boolean>)[] = []
 
-  // Modes
   if (props.mode) {
     if (props.mode === 'side-sheet') {
       classes.push('dialog-side-sheet')
@@ -34,7 +35,6 @@ const dialogClasses = computed(() => {
     classes.push('dialog-modal')
   }
 
-  // Sizes
   if (props.size) {
     if (props.size === 'sm')
       classes.push('dialog-sm')
@@ -63,13 +63,27 @@ function showDialog() {
       dialogRef.value.showModal()
     else
       dialogRef.value.show()
+    // A hidden dialog can't scroll, so the reset runs once it shows
+    dialogRef.value.querySelector('.dialog-body')?.scrollTo(0, 0)
+    focusMarkedField(dialogRef.value)
   }
 }
+// Browsers only autofocus a focusable element, so this focuses the control inside a marked field
+function focusMarkedField(dialog: HTMLDialogElement) {
+  const marked = dialog.querySelector<HTMLElement>('[autofocus]')
+  if (marked && !marked.contains(document.activeElement))
+    marked.querySelector<HTMLElement>('input:not([type="hidden"]), select, textarea, button, [tabindex]:not([tabindex="-1"])')?.focus()
+}
+// The native close event emits `close`, so Esc reports it too
 function closeDialog() {
-  dialogRef?.value?.close()
-  emit('onCloseDialog')
+  dialogRef.value?.close()
+}
+function closeFromOutside() {
+  if (props.closeOnClickOutside && dialogRef.value?.open)
+    closeDialog()
 }
 
+/** Expose */
 defineExpose({
   showDialog,
   closeDialog
@@ -83,19 +97,35 @@ defineExpose({
     :class="dialogClasses"
     role="dialog"
     aria-modal="true"
+    @close="emit('close')"
   >
+    <!-- Menus and tooltips opened from the dialog render outside this box -->
     <div
-      v-on-click-outside="closeOnClickOutside ? closeDialog : () => {}"
+      v-on-click-outside="[closeFromOutside, { ignore: ['.v-popper__popper'] }]"
       class="dialog-content"
     >
       <div class="dialog-header">
-        <slot name="header" />
+        <slot name="header">
+          <p
+            v-if="title"
+            class="dialog-title"
+          >
+            {{ title }}
+          </p>
+        </slot>
       </div>
       <div
         class="dialog-body"
         :class="props.bodyDialogClass"
       >
-        <slot name="body" />
+        <slot name="body">
+          <p
+            v-if="message"
+            class="mb-0"
+          >
+            {{ message }}
+          </p>
+        </slot>
       </div>
       <div class="dialog-footer">
         <slot name="footer" />

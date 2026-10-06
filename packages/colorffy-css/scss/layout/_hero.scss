@@ -5,16 +5,16 @@
   // HERO LAYOUT COMPONENT
   // ==========================================================================
   .hero-content {
-    --_hero-gap: var(--space-8);
-    --_hero-actions-gap: var(--space-24);
-    --_hero-block-end: var(--space-32);
-    --_hero-measure: 60ch;
+    --_hero-gap: var(--cffy-hero-gap, var(--cffy-space-8));
+    --_hero-actions-offset: var(--cffy-hero-actions-offset, var(--cffy-space-24));
+    --_hero-margin-block-end: var(--cffy-hero-margin-block-end, var(--cffy-space-32));
+    --_hero-max-width: var(--cffy-hero-max-width, 60ch);
 
     display: grid;
     justify-items: start;
     text-align: start;
     gap: var(--_hero-gap);
-    margin-block-end: var(--_hero-block-end);
+    margin-block-end: var(--_hero-margin-block-end);
 
     // Alignment
     &:is(.hero-center) {
@@ -30,15 +30,15 @@
     // Texts
     & .hero-title {
       margin-bottom: 0;
-      max-inline-size: var(--_hero-measure);
+      max-inline-size: var(--_hero-max-width);
       text-wrap: balance;
     }
 
     & .hero-description {
-      font-size: var(--fs-lg);
-      line-height: var(--fs-lg--line-height);
-      color: var(--theme-muted-a10);
-      max-inline-size: var(--_hero-measure);
+      font-size: var(--cffy-hero-description-font-size, var(--cffy-fs-lg));
+      line-height: var(--cffy-hero-description-line-height, var(--cffy-fs-lg--line-height));
+      color: var(--cffy-hero-description-color, var(--cffy-muted-a10));
+      max-inline-size: var(--_hero-max-width);
       margin-bottom: 0;
       @include m.text-wrap-pretty;
     }
@@ -54,8 +54,8 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: var(--space-12);
-      margin-block-start: calc(var(--_hero-actions-gap) - var(--_hero-gap));
+      gap: var(--cffy-hero-actions-gap, var(--cffy-space-12));
+      margin-block-start: calc(var(--_hero-actions-offset) - var(--_hero-gap));
     }
   }
 }

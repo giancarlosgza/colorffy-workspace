@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ITextareaInputEmits, ITextareaInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ITextareaInputProps>(), {
@@ -31,15 +32,19 @@ const emit = defineEmits<ITextareaInputEmits>()
 /** Model */
 const model = defineModel<string | null>('modelValue', { default: null })
 
+/** Labels */
+const l10nCommon = useLabels('common')
+
+/** Data */
+const inputId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const inputId = computed(() => (props.id ? `${props.id}-input-textarea` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
 const placeholderText = computed(() => props.placeholder ?? undefined)
 const textareaStyle = computed(() => ({
   resize: props.resize
 }))
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -67,7 +72,7 @@ const textareaClasses = computed(() => {
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 
@@ -109,7 +114,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

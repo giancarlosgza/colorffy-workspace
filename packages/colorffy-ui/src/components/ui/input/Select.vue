@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ISelectInputEmits, ISelectInputProps } from '@/types/input'
 import { computed, watch } from 'vue'
+import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<ISelectInputProps>(), {
@@ -11,7 +12,6 @@ const props = withDefaults(defineProps<ISelectInputProps>(), {
   options: () => [],
   optionLabel: null,
   optionValue: null,
-  placeholder: 'Clic para seleccionar',
   disabled: false,
   required: false,
   optionalLabel: false,
@@ -28,12 +28,17 @@ const emit = defineEmits<ISelectInputEmits>()
 /** Model */
 const model = defineModel<string | number | Record<string, unknown> | null>('modelValue', { default: null })
 
+/** Labels */
+const l10n = useLabels('select')
+const l10nCommon = useLabels('common')
+
+/** Data */
+const selectId = computed(() => props.id ?? undefined)
+
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const selectId = computed(() => (props.id ? `${props.id}-select` : undefined))
 const describedById = computed(() => (hasErrors.value && props.id ? `${props.id}-error-0` : undefined))
-const placeholderText = computed(() => props.placeholder ?? undefined)
-
+const placeholderText = computed(() => props.placeholder ?? l10n.value.placeholder)
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -60,14 +65,13 @@ const selectClasses = computed(() => {
 })
 
 /** Methods */
-// Reads a label/value field off an option, containing the unsafe cast here.
 function getField(option: unknown, key: string): unknown {
   return (option as Record<string, unknown>)[key]
 }
 
 /** Watchers */
 watch(model, (value) => {
-  emit('onUpdate', value)
+  emit('update', value)
 })
 </script>
 
@@ -94,7 +98,7 @@ watch(model, (value) => {
         :value="null"
         disabled
       >
-        {{ placeholder }}
+        {{ placeholderText }}
       </option>
       <option
         v-for="(option, indexOption) in options"
@@ -117,7 +121,7 @@ watch(model, (value) => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IButtonMenuItemProps } from '@/types/button'
+import { vClosePopper } from 'floating-vue'
 import { computed } from 'vue'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
@@ -17,7 +18,9 @@ const props = withDefaults(defineProps<IButtonMenuItemProps>(), {
   shortcut: null,
   iconTrailing: null,
   iconTrailingStyle: null,
-  iconTrailingClass: null
+  iconTrailingClass: null,
+  keepOpen: false,
+  checked: null
 })
 
 /** Computed */
@@ -38,15 +41,18 @@ const itemClasses = computed(() => {
 </script>
 
 <template>
-  <li>
+  <li role="none">
     <button
+      v-close-popper.all="!keepOpen"
       type="button"
       class="v-dropdown-item"
       :class="itemClasses"
+      :role="checked === null ? 'menuitem' : 'menuitemcheckbox'"
+      :aria-checked="checked ?? undefined"
       :disabled="disabled"
     >
       <span class="v-dropdown-item-primary">
-        <!-- Leading Icon & Text -->
+        <!-- Leading icon and text -->
         <UiIconMaterial
           v-if="icon"
           :icon-code="icon"
@@ -78,7 +84,7 @@ const itemClasses = computed(() => {
           {{ shortcut }}
         </span>
 
-        <!-- Icon Trailing -->
+        <!-- Trailing icon -->
         <UiIconMaterial
           v-if="iconTrailing"
           :icon-code="iconTrailing"

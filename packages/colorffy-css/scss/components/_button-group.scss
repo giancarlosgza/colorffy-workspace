@@ -1,12 +1,13 @@
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
+@use "../abstracts/functions" as f;
 
 @layer components.buttons {
   // ==========================================================================
   // CHIP GROUP COMPONENT
   // ==========================================================================
   .chip-group {
-    --_chip-group-gap: var(--space-8);
+    --_chip-group-gap: var(--cffy-chip-group-gap, var(--cffy-space-8));
 
     display: flex;
     flex-direction: row;
@@ -19,7 +20,7 @@
   // BUTTON GROUP COMPONENT
   // ==========================================================================
   .btn-group {
-    --_btn-group-gap: var(--space-12) var(--space-8);
+    --_btn-group-gap: var(--cffy-btn-group-gap, var(--cffy-space-12) var(--cffy-space-8));
 
     display: flex;
     flex-direction: row;
@@ -30,22 +31,30 @@
       margin: 0;
     }
 
+    // Text buttons only
+    &:not(:has(.btn:not(.btn-text))) {
+      --_btn-group-gap: var(--cffy-space-4);
+    }
+
     // Group Variants
     &:is(.btn-group-vertical) {
       flex-direction: column;
     }
 
     &:is(.btn-group-connected) {
-      --_btn-group-gap: var(--space-4);
+      --_btn-group-gap: var(--cffy-space-4);
 
       // Pill ends
       .btn {
-        --_btn-connected-radius: calc(var(--_btn-height) / 2);
+        --_btn-connected-radius: min(calc(var(--_btn-height) / 2), calc(#{f.shape(control, v.$button-border-radius)} * 1000));
+        --_btn-inner-radius: min(var(--_btn-radius), calc(var(--_btn-height) / 4));
+
+        border-radius: var(--_btn-inner-radius);
       }
 
       // Prevent circular icon buttons when grouped; they should match standard button shape
       .btn-icon {
-        --_btn-radius: #{v.$button-border-radius};
+        --_btn-radius: #{f.shape(control, v.$button-border-radius)};
       }
 
       // Handle v-popper wrapped buttons
@@ -85,27 +94,27 @@
       &:is(.btn-group-vertical) {
         > :is(div:has(.v-popper), .v-popper) {
           & .btn {
-            border-radius: var(--_btn-radius);
+            border-radius: var(--_btn-inner-radius);
           }
 
           &:first-child .btn {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-inner-radius) var(--_btn-inner-radius);
           }
 
           &:last-child .btn {
-            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
+            border-radius: var(--_btn-inner-radius) var(--_btn-inner-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
 
         > .btn {
-          border-radius: var(--_btn-radius);
+          border-radius: var(--_btn-inner-radius);
 
           &:first-child {
-            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-radius) var(--_btn-radius);
+            border-radius: var(--_btn-connected-radius) var(--_btn-connected-radius) var(--_btn-inner-radius) var(--_btn-inner-radius);
           }
 
           &:last-child {
-            border-radius: var(--_btn-radius) var(--_btn-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
+            border-radius: var(--_btn-inner-radius) var(--_btn-inner-radius) var(--_btn-connected-radius) var(--_btn-connected-radius);
           }
         }
       }
@@ -116,86 +125,29 @@
   // FAB GROUP COMPONENT
   // ==========================================================================
   .fab-group {
-    --_btn-fab-position-y: calc(var(--space-24) + var(--space-4));
-    --_btn-fab-position-x: calc(var(--space-24) + var(--space-4));
+    --_fab-group-offset-block: var(--cffy-fab-group-offset-block, calc(var(--cffy-space-24) + var(--cffy-space-4)));
+    --_fab-group-offset-inline: var(--cffy-fab-group-offset-inline, calc(var(--cffy-space-24) + var(--cffy-space-4)));
+    --_fab-group-gap: var(--cffy-fab-group-gap, var(--cffy-space-16));
 
     position: fixed;
-    bottom: var(--_btn-fab-position-y);
-    right: var(--_btn-fab-position-x);
+    bottom: var(--_fab-group-offset-block);
+    right: var(--_fab-group-offset-inline);
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    gap: var(--space-16);
+    gap: var(--_fab-group-gap);
     isolation: isolate;
     z-index: v.$z-index-fab;
 
     &:is(.fab-top) {
-      top: var(--_btn-fab-position-y);
+      top: var(--_fab-group-offset-block);
       bottom: auto;
     }
 
     &:is(.fab-start) {
-      left: var(--_btn-fab-position-x);
+      left: var(--_fab-group-offset-inline);
       right: auto;
       align-items: flex-start;
-    }
-  }
-
-  // ==========================================================================
-  // SEGMENTED CONTROL COMPONENT
-  // ==========================================================================
-  .segmented-control {
-    --_sc-easing-in: var(--ease-spring);
-    --_sc-easing-duration: var(--duration-800);
-
-    display: flex;
-    border: var(--border-width-sm) solid var(--theme-outline-button);
-    gap: var(--space-6);
-    padding: var(--space-4);
-    border-radius: calc(#{v.$button-border-radius} + .25rem);
-    position: relative;
-
-    & .v-popper {
-      z-index: 1;
-
-      .btn:is(.btn-chip) {
-        margin: 0;
-        padding-block: var(--space-4);
-
-        &:is(:hover, :focus, :active) {
-          background: transparent;
-        }
-
-        &.segmented-control-active i {
-          color: var(--theme-on-primary);
-        }
-      }
-    }
-
-    &:has(.segmented-control-active.active-grid) {
-      &:after {
-        translate: calc(100% + calc(var(--space-4) * 2));
-      }
-    }
-
-    &:after {
-      --_sc-bg-position: 0;
-
-      position: absolute;
-      content: '';
-      inset-block: 0;
-      left: var(--_sc-bg-position);
-      margin-block: auto;
-      margin-inline: var(--space-4);
-      // Calc the size based on inline margin and segmented control size
-      width: calc(50% - calc(var(--space-4) * 2));
-      height: 85%;
-      border-radius: calc(var(--radius-lg) - 4px);
-      background-color: var(--theme-surface-container-high);
-      z-index: 0;
-
-      translate: 0;
-      transition: translate var(--_sc-easing-duration) var(--_sc-easing-in);
     }
   }
 
@@ -203,67 +155,69 @@
   // TOGGLE BUTTON GROUP COMPONENT
   // ==========================================================================
   .toggle-btn-group {
+    --_toggle-btn-group-gap: var(--cffy-toggle-btn-group-gap, var(--cffy-space-14));
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-    gap: var(--space-14);
+    gap: var(--_toggle-btn-group-gap);
 
     & .toggle-btn {
-      --_toggle-btn-padding: var(--space-12);
-      --_toggle-btn-radius: #{v.$button-border-radius};
-      --_toggle-btn-bg-color: transparent;
-      --_toggle-btn-color: var(--theme-on-background);
-      --_toggle-btn-subtitle-color: var(--theme-muted-a10);
-      --_toggle-btn-border-size: var(--border-width-sm);
-      --_toggle-btn-border-color: var(--theme-outline-button);
-      --_toggle-btn-easing-in: var(--ease-decelerate);
-      --_toggle-btn-easing-duration: var(--duration-300);
+      --_toggle-btn-padding: var(--cffy-toggle-btn-padding, var(--cffy-space-12));
+      --_toggle-btn-radius: var(--cffy-toggle-btn-radius, min(#{f.shape(control, v.$button-border-radius)}, var(--cffy-shape-container)));
+      --_toggle-btn-bg-color: var(--cffy-toggle-btn-bg-color, transparent);
+      --_toggle-btn-color: var(--cffy-toggle-btn-color, var(--cffy-on-background));
+      --_toggle-btn-subtitle-color: var(--cffy-toggle-btn-subtitle-color, var(--cffy-muted-a10));
+      --_toggle-btn-border-width: var(--cffy-toggle-btn-border-width, var(--cffy-border-width-sm));
+      --_toggle-btn-border-color: var(--cffy-toggle-btn-border-color, var(--cffy-outline-button));
+      --_toggle-btn-easing: var(--cffy-toggle-btn-easing, var(--cffy-ease-decelerate));
+      --_toggle-btn-duration: var(--cffy-toggle-btn-duration, var(--cffy-duration-300));
 
       background: var(--_toggle-btn-bg-color);
       color: var(--_toggle-btn-color);
       border-radius: var(--_toggle-btn-radius);
-      border: var(--_toggle-btn-border-size) solid var(--_toggle-btn-border-color);
+      border: var(--_toggle-btn-border-width) solid var(--_toggle-btn-border-color);
       padding: var(--_toggle-btn-padding);
       cursor: pointer;
       transition: border-width, border-color, background, color, border-radius;
-      transition-timing-function: var(--_toggle-btn-easing-in);
-      transition-duration: var(--_toggle-btn-easing-duration);
+      transition-timing-function: var(--_toggle-btn-easing);
+      transition-duration: var(--_toggle-btn-duration);
       will-change: border;
 
       &:is(:hover, :active, :focus) {
-        --_toggle-btn-border-color: var(--theme-primary-a10);
+        --_toggle-btn-border-color: var(--cffy-toggle-btn-hover-border-color, var(--cffy-primary-a10));
 
-        box-shadow: inset 0 0 0 .5px var(--theme-primary-a10);
+        box-shadow: inset 0 0 0 .5px var(--_toggle-btn-border-color);
       }
 
       &.toggle-btn-active {
-        --_toggle-btn-bg-color: var(--theme-surface-container-low);
-        --_toggle-btn-border-color: var(--theme-primary-a10);
-        --_toggle-btn-border-size: var(--border-width-sm);
-        --_toggle-btn-radius: calc(#{v.$button-border-radius} * 3);
+        --_toggle-btn-bg-color: var(--cffy-toggle-btn-active-bg-color, var(--cffy-surface-container-low));
+        --_toggle-btn-border-color: var(--cffy-toggle-btn-active-border-color, var(--cffy-primary-a10));
+        --_toggle-btn-border-width: var(--cffy-border-width-sm);
+        --_toggle-btn-radius: min(calc(#{f.shape(control, v.$button-border-radius)} * 3), calc(var(--cffy-shape-container) * 2));
 
-        box-shadow: inset 0 0 0 1px var(--theme-primary-a10);
+        box-shadow: inset 0 0 0 1px var(--_toggle-btn-border-color);
       }
 
       &.toggle-btn-disabled {
-        --_toggle-btn-bg-color: var(--theme-surface-disabled);
-        --_toggle-btn-color: var(--theme-muted-a10);
-        --_toggle-btn-border-color: var(--theme-outline-button);
+        --_toggle-btn-bg-color: var(--cffy-surface-disabled);
+        --_toggle-btn-color: var(--cffy-muted-a10);
+        --_toggle-btn-border-color: var(--cffy-outline-button);
 
         cursor: not-allowed;
         opacity: 0.75;
 
         &:is(:hover, :focus, :active) {
-          --_toggle-btn-bg-color: var(--theme-surface-disabled);
-          --_toggle-btn-border-color: var(--theme-outline-button);
-          --_toggle-btn-border-size: var(--border-width-sm);
-          --_toggle-btn-radius: #{v.$button-border-radius};
+          --_toggle-btn-bg-color: var(--cffy-surface-disabled);
+          --_toggle-btn-border-color: var(--cffy-outline-button);
+          --_toggle-btn-border-width: var(--cffy-border-width-sm);
+          --_toggle-btn-radius: min(#{f.shape(control, v.$button-border-radius)}, var(--cffy-shape-container));
         }
       }
 
       & .toggle-btn-inner {
         display: grid;
         grid-template-areas: 'icon' 'text' 'badge';
-        gap: var(--space-12);
+        gap: var(--cffy-space-12);
 
         & .toggle-btn-icon-wrapper {
           grid-area: icon;
@@ -274,10 +228,10 @@
 
           & p {
             &.subtitle-1 {
-              font-size: var(--fs-xs);
-              font-weight: var(--fw-600);
-              font-family: var(--font-primary);
-              margin-bottom: var(--space-4);
+              font-size: var(--cffy-fs-xs);
+              font-weight: var(--cffy-fw-600);
+              font-family: var(--cffy-font-primary);
+              margin-bottom: var(--cffy-space-4);
 
               &:not(:has(~ p)) {
                 margin-bottom: 0;
@@ -299,8 +253,8 @@
   // ==========================================================================
   @include m.media-query(1024) {
     .fab-group {
-      --_btn-fab-position-y: var(--space-20);
-      --_btn-fab-position-x: var(--space-12);
+      --_fab-group-offset-block: var(--cffy-space-20);
+      --_fab-group-offset-inline: var(--cffy-space-12);
 
       & .btn-fab {
         --_btn-gap: 0;
@@ -315,10 +269,10 @@
 
     // Lift FAB
     body:has(.navigation-bar) .fab-group {
-      --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + var(--space-14));
+      --_fab-group-offset-block: calc(#{v.$navigation-bar-min-height} + var(--cffy-space-14));
 
       @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
-        --_btn-fab-position-y: calc(#{v.$navigation-bar-min-height} + 1.35rem);
+        --_fab-group-offset-block: calc(#{v.$navigation-bar-min-height} + 1.35rem);
       }
     }
   }

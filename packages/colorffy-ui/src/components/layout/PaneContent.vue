@@ -13,6 +13,9 @@ const props = withDefaults(defineProps<IPaneContentProps>(), {
   id: undefined
 })
 
+/** Data */
+const paneContentRef = ref<HTMLElement | null>(null)
+
 /** Computed */
 const paneClasses = computed(() => [props.customClass, { 'pane-content-expanded': props.isFullHeight }])
 const ariaAttributes = computed(() => {
@@ -30,11 +33,7 @@ const ariaAttributes = computed(() => {
   return attributes
 })
 
-/**
- * Create the ref reference and expose it to be used by the parent
- */
-const paneContentRef = ref<HTMLElement | null>(null)
-
+/** Expose */
 defineExpose({
   paneContentRef
 })

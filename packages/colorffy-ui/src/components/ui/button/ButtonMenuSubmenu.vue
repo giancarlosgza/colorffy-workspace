@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { IButtonMenuSubmenuProps } from '@/types/button'
 import { Dropdown as VDropdown } from 'floating-vue'
-import { computed } from 'vue'
+import { computed, ref, useId } from 'vue'
+import { useFloatingContainer } from '@/composables/useFloatingContainer'
+import { useMenuNavigation } from '@/composables/useMenuNavigation'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -23,6 +25,16 @@ const props = withDefaults(defineProps<IButtonMenuSubmenuProps>(), {
   iconTrailingClass: null
 })
 
+/** Data */
+const isOpen = ref(false)
+const triggerRef = ref<HTMLButtonElement | null>(null)
+const menuRef = ref<HTMLElement | null>(null)
+const menuId = useId()
+
+/** Composables */
+const floatingProps = useFloatingContainer()
+const { focusItem, onKeydown: onNavigationKeydown } = useMenuNavigation(menuRef)
+
 /** Computed */
 const itemClasses = computed(() => {
   const classes = []
@@ -38,24 +50,57 @@ const itemClasses = computed(() => {
 
   return classes
 })
+
+/** Methods */
+function onTriggerKeydown(event: KeyboardEvent): void {
+  if (event.key !== 'ArrowRight')
+    return
+  event.preventDefault()
+  event.stopPropagation()
+  if (isOpen.value)
+    focusItem('first')
+  else
+    isOpen.value = true
+}
+function onMenuShown(): void {
+  requestAnimationFrame(() => focusItem('first'))
+}
+function onMenuKeydown(event: KeyboardEvent): void {
+  if (event.key !== 'ArrowLeft')
+    return onNavigationKeydown(event)
+  event.preventDefault()
+  event.stopPropagation()
+  triggerRef.value?.focus()
+  isOpen.value = false
+}
 </script>
 
 <template>
-  <li>
+  <li role="none">
     <VDropdown
+      v-model:shown="isOpen"
+      v-bind="floatingProps"
       :aria-id="id ? `${id}-submenu` : undefined"
       :positioning-disabled="isMobile"
       :placement="placement"
       class="w-100"
+      no-auto-focus
+      @apply-show="onMenuShown"
     >
       <button
+        ref="triggerRef"
         type="button"
         class="v-dropdown-item"
         :class="itemClasses"
+        role="menuitem"
+        aria-haspopup="menu"
+        :aria-expanded="isOpen"
+        :aria-controls="isOpen ? menuId : undefined"
         :disabled="disabled"
+        @keydown="onTriggerKeydown"
       >
         <span class="v-dropdown-item-primary">
-          <!-- Leading Icon & Text -->
+          <!-- Leading icon and text -->
           <UiIconMaterial
             v-if="icon"
             :icon-code="icon"
@@ -82,7 +127,7 @@ const itemClasses = computed(() => {
             :custom-class="badge.customClass"
           />
 
-          <!-- Icon Trailing -->
+          <!-- Trailing icon -->
           <UiIconMaterial
             v-if="iconTrailing"
             :icon-code="iconTrailing"
@@ -93,7 +138,13 @@ const itemClasses = computed(() => {
       </button>
 
       <template #popper>
-        <ul>
+        <ul
+          :id="menuId"
+          ref="menuRef"
+          role="menu"
+          :aria-label="itemText"
+          @keydown="onMenuKeydown"
+        >
           <slot />
         </ul>
       </template>

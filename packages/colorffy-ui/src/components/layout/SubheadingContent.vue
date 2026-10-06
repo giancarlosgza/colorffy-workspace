@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<ISubheadingContentProps>(), {
   customClass: null
 })
 
-/** Constants */
+/** Data */
 const GUTTER_CLASSES: Record<string, string> = {
   none: 'subheading-m0',
   sm: 'subheading-m1'

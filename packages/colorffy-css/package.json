@@ -1,6 +1,6 @@
 {
   "name": "@colorffy/css",
-  "version": "2.8.0",
+  "version": "3.0.0",
   "description": "An expressive SCSS framework for building vibrant and beautiful user interfaces. Colorffy CSS brings your designs to life with dynamic theming, vivid gradients, and a powerful tonal color system.",
   "main": "dist/colorffy.css",
   "style": "dist/colorffy.css",
@@ -26,7 +26,7 @@
     "build": "npm run build:expanded && npm run build:minified",
     "build:expanded": "sass scss/main.scss dist/colorffy.css --style=expanded --source-map",
     "build:minified": "sass scss/main.scss dist/colorffy.min.css --style=compressed --source-map --no-error-css",
-    "size": "node scripts/size.mjs --max-brotli=50",
+    "size": "node scripts/size.mjs --max-brotli=60",
     "watch": "sass scss/main.scss dist/colorffy.css --watch --style=expanded --source-map",
     "prepublishOnly": "npm run build",
     "version:patch": "npm version patch",

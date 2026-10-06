@@ -8,7 +8,7 @@ withDefaults(defineProps<IButtonMenuTextProps>(), {
 </script>
 
 <template>
-  <li>
+  <li role="none">
     <span class="v-dropdown-item v-text-item">{{ itemText }}</span>
   </li>
 </template>

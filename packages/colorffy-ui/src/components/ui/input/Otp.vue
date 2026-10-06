@@ -2,6 +2,7 @@
 import type { ComponentPublicInstance } from 'vue'
 import type { IInputOtpEmits, IInputOtpProps } from '@/types/input'
 import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
+import { formatLabel, useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
 const props = withDefaults(defineProps<IInputOtpProps>(), {
@@ -30,23 +31,22 @@ const emit = defineEmits<IInputOtpEmits>()
 /** Model */
 const model = defineModel<string>('modelValue', { default: '' })
 
-/** Refs */
-const boxRefs = ref<(HTMLInputElement | null)[]>([])
+/** Labels */
+const l10n = useLabels('otp')
+const l10nCommon = useLabels('common')
 
-/** Composables */
+/** Data */
+const boxRefs = ref<(HTMLInputElement | null)[]>([])
 const labelId = useId()
+const baseId = computed(() => props.id ?? undefined)
 
 /** Computed */
 const hasErrors = computed(() => props.errorMessages?.length > 0)
-const baseId = computed(() => props.id ?? undefined)
 const describedById = computed(() => (hasErrors.value && baseId.value ? `${baseId.value}-error-0` : undefined))
-
-// One character per box, derived from the model string (padded/truncated to `length`).
 const boxes = computed(() => {
   const chars = (model.value ?? '').split('').slice(0, props.length)
   return Array.from({ length: props.length }, (_, index) => chars[index] ?? '')
 })
-
 const groupClasses = computed(() => [
   'form-group',
   { 'form-invalid': hasErrors.value }
@@ -76,31 +76,25 @@ const boxClasses = computed(() => {
 function setBoxRef(el: Element | ComponentPublicInstance | null, index: number) {
   boxRefs.value[index] = (el as HTMLInputElement) ?? null
 }
-
 function boxId(index: number) {
   return baseId.value ? `${baseId.value}-otp-${index}` : undefined
 }
-
 function boxLabel(index: number) {
-  const base = props.label || 'One-time code'
-  return `${base}, digit ${index + 1} of ${props.length}`
+  return formatLabel(l10n.value.digit, { label: props.label || l10n.value.ariaLabel, index: index + 1, length: props.length })
 }
-
 function sanitizeValue(value: string) {
   if (!value) {
     return ''
   }
   return props.integerOnly ? value.replace(/\D/g, '') : value
 }
-
 function setValue(value: string) {
   model.value = value
-  emit('onUpdate', value)
+  emit('update', value)
   if (value.length === props.length) {
     emit('complete', value)
   }
 }
-
 function focusBox(index: number) {
   const clamped = Math.max(0, Math.min(index, props.length - 1))
   nextTick(() => {
@@ -109,10 +103,7 @@ function focusBox(index: number) {
     target?.select()
   })
 }
-
-// Fills boxes starting at `startIndex` with `value`'s characters. Shared by
-// paste and by native autofill (e.g. WebOTP), which can drop the full code
-// into a single box's `input` event.
+// Shared by paste and autofill (WebOTP), which can drop the whole code into one box
 function distribute(value: string, startIndex: number) {
   const chars = boxes.value.slice()
   let cursor = startIndex
@@ -127,7 +118,6 @@ function distribute(value: string, startIndex: number) {
   setValue(chars.join(''))
   focusBox(Math.min(cursor, props.length - 1))
 }
-
 function handleInput(event: Event, index: number) {
   const target = event.target as HTMLInputElement
   const sanitized = sanitizeValue(target.value)
@@ -146,7 +136,6 @@ function handleInput(event: Event, index: number) {
     focusBox(index + 1)
   }
 }
-
 function handleKeydown(event: KeyboardEvent, index: number) {
   if (props.disabled || props.readonly) {
     return
@@ -177,7 +166,6 @@ function handleKeydown(event: KeyboardEvent, index: number) {
     focusBox(index + 1)
   }
 }
-
 function handlePaste(event: ClipboardEvent, index: number) {
   event.preventDefault()
   const sanitized = sanitizeValue(event.clipboardData?.getData('text') ?? '')
@@ -188,10 +176,16 @@ function handlePaste(event: ClipboardEvent, index: number) {
 
   distribute(sanitized, index)
 }
-
 function handleFocus(event: FocusEvent) {
   (event.target as HTMLInputElement)?.select()
 }
+
+/** Watchers */
+watch(() => props.length, () => {
+  if (model.value.length > props.length) {
+    setValue(model.value.slice(0, props.length))
+  }
+})
 
 /** Lifecycle */
 onMounted(() => {
@@ -200,19 +194,11 @@ onMounted(() => {
     focusBox(firstEmpty === -1 ? 0 : firstEmpty)
   }
 })
-
-/** Watchers */
-watch(() => props.length, () => {
-  // Truncate the model when `length` shrinks below the current value size.
-  if (model.value.length > props.length) {
-    setValue(model.value.slice(0, props.length))
-  }
-})
 </script>
 
 <template>
   <div :class="groupClasses">
-    <!-- Main Group Label -->
+    <!-- Main group label -->
     <label
       v-if="label"
       :id="labelId"
@@ -221,7 +207,7 @@ watch(() => props.length, () => {
       {{ label }}{{ required ? ' *' : '' }}
     </label>
 
-    <!-- Otp Boxes -->
+    <!-- Boxes -->
     <div
       class="form-otp"
       role="group"
@@ -264,7 +250,7 @@ watch(() => props.length, () => {
       v-else-if="optionalLabel"
       class="caption text-muted mt-1"
     >
-      Optional
+      {{ l10nCommon.optional }}
     </p>
   </div>
 </template>
