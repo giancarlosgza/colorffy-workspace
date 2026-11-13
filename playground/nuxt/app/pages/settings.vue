@@ -54,11 +54,6 @@ const photo = ref<File | null>(null)
 const photoPreview = ref<string | null>(null)
 const photoErrors = ref<string[]>([])
 const savingProfile = ref(false)
-const themeOptions = [
-  { label: 'System', value: 'system' },
-  { label: 'Light', value: 'light' },
-  { label: 'Dark', value: 'dark' }
-]
 const languageOptions = [
   { label: 'English', value: 'en' },
   { label: 'Español', value: 'es' }
@@ -148,7 +143,6 @@ const deleteSummary = `All ${projects.length} projects, ${tasks.length} tasks an
 
 /** Composables */
 const route = useRoute()
-const colorMode = useColorMode()
 const { notify } = useNotify()
 const activeTab = ref<TabId>(tabIds.find(id => id === route.query.tab) ?? 'profile')
 const colorffy = useColorffyConfig()
@@ -763,31 +757,7 @@ onBeforeUnmount(() => {
                 </p>
               </div>
               <div class="col-12 col-md-7">
-                <ClientOnly>
-                  <UiInputRadio
-                    id="theme"
-                    v-model="colorMode.preference"
-                    label="Theme"
-                    hide-label
-                    :options="themeOptions"
-                    option-label="label"
-                    option-value="value"
-                    class="mb-0"
-                  />
-                  <template #fallback>
-                    <UiInputRadio
-                      id="theme-fallback"
-                      model-value="system"
-                      label="Theme"
-                      hide-label
-                      :options="themeOptions"
-                      option-label="label"
-                      option-value="value"
-                      disabled
-                      class="mb-0"
-                    />
-                  </template>
-                </ClientOnly>
+                <ColorModePicker />
               </div>
             </div>
 

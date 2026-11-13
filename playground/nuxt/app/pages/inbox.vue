@@ -118,7 +118,7 @@ function toggleRead() {
   if (selected.value)
     selected.value.unread = !selected.value.unread
 }
-function snooze(until: Date | IDateRange | null) {
+function snooze(until: Date | Date[] | IDateRange | null) {
   if (!selected.value || !(until instanceof Date))
     return
 

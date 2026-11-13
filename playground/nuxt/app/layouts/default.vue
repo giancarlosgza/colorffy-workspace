@@ -7,14 +7,7 @@ import { NuxtLink } from '#components'
 const sidebarCollapse = useState<boolean>('sidebarCollapse', () => false)
 const isMenuActive = ref<boolean>(false)
 const toastRef = ref<InstanceType<typeof UiAlertToast> | null>(null)
-// The saved preference only exists on the client, so the picker follows it after mount
-const isMounted = ref<boolean>(false)
 const latestNotifications = notifications.slice(0, 3)
-const themes = [
-  { id: 'system', label: 'System', icon: '&#xe31e;' },
-  { id: 'light', label: 'Light', icon: '&#xe518;' },
-  { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
-]
 const mobileItems = [
   { id: 'home', to: '/', icon: '&#xe88a;', text: 'Home', ariaLabel: 'Go to home' },
   { id: 'inbox', to: '/inbox', icon: '&#xe156;', text: 'Inbox', ariaLabel: 'Go to inbox' },
@@ -28,12 +21,10 @@ const accountLinks = [
 ]
 
 /** Composables */
-const colorMode = useColorMode()
 const route = useRoute()
 const { register } = useNotify()
 
 /** Computed */
-const themePreference = computed(() => isMounted.value ? colorMode.preference : 'system')
 const unreadCount = computed(() => notifications.filter(n => n.unread).length)
 const mobileSection = computed(() => `/${route.path.split('/')[1] ?? ''}`)
 
@@ -52,7 +43,6 @@ function searchOrbit(text: string): void {
 /** Lifecycle */
 onMounted(() => {
   register(toastRef.value)
-  isMounted.value = true
 })
 </script>
 
@@ -66,7 +56,7 @@ onMounted(() => {
     >
       <template #header>
         <span class="workspace-logo bg-primary text-on-primary" aria-hidden="true">O</span>
-        <UiSidebarDropdown :title="workspace.name" :subtitle="workspace.team" placement="right-start" :interactive="false">
+        <UiSidebarDropdown :title="workspace.name" :subtitle="workspace.team" placement="right-start">
           <UiButtonMenuText item-text="Switch workspace" />
           <UiButtonMenuItem item-text="Orbit · Product team" icon="&#xe5ca;" icon-class="bg-primary-container text-on-primary-container rounded-sm p-1" />
           <UiButtonMenuItem item-text="Personal" icon="&#xe7fd;" icon-class="bg-accent-container text-on-accent-container rounded-sm p-1" />
@@ -112,7 +102,7 @@ onMounted(() => {
           <UiProgressBar :value="Math.round(((30 - workspace.trialDaysLeft) / 30) * 100)" size="sm" />
           <UiButton :as="NuxtLink" to="/billing" text="Upgrade" variant="filled" color="primary" size="sm" fluid class="mt-2" />
         </div>
-        <UiSidebarDropdown :title="currentUser.name" :subtitle="currentUser.email" :interactive="false">
+        <UiSidebarDropdown :title="currentUser.name" :subtitle="currentUser.email">
           <UiButtonMenuItem item-text="Profile" icon="&#xe7fd;" @click="navigateTo('/settings')" />
           <UiButtonMenuItem item-text="Sign out" icon="&#xe9ba;" is-destructive @click="navigateTo('/sign-in')" />
         </UiSidebarDropdown>
@@ -240,22 +230,7 @@ onMounted(() => {
               <UiPopoverMenuItem text="Keyboard shortcuts" icon="&#xe312;" shortcut="⌘K" />
               <UiPopoverMenuItem as="div" text="Theme" icon="&#xe40a;">
                 <template #trailing>
-                  <UiButtonGroup connected>
-                    <UiButton
-                      v-for="theme in themes"
-                      :key="theme.id"
-                      :variant="theme.id === themePreference ? 'filled' : 'outline'"
-                      :color="theme.id === themePreference ? 'primary' : ''"
-                      :aria-label="theme.label"
-                      icon
-                      size="sm"
-                      @click="colorMode.preference = theme.id"
-                    >
-                      <template #icon>
-                        <UiIconMaterial :icon-code="theme.icon" />
-                      </template>
-                    </UiButton>
-                  </UiButtonGroup>
+                  <ColorModePicker :show-labels="false" />
                 </template>
               </UiPopoverMenuItem>
             </UiPopoverMenuGroup>
@@ -328,14 +303,14 @@ onMounted(() => {
   flex-shrink: 0;
   width: 2.25rem;
   aspect-ratio: 1;
-  border-radius: var(--cffy-radius-md);
+  border-radius: var(--cffy-shape-control);
   font-weight: var(--cffy-fw-800);
 }
 
 .trial-card {
   padding: var(--cffy-space-12);
   margin-block-end: var(--cffy-space-8);
-  border-radius: var(--cffy-radius-lg);
+  border-radius: var(--cffy-shape-container);
   font-size: var(--cffy-fs-2xs);
 }
 </style>
