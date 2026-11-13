@@ -1,6 +1,6 @@
 ---
 name: colorffy
-description: Complete guide for Colorffy UI and CSS frameworks. Colorffy UI is a modern Vue 3 / Nuxt 3 component library with 70+ unstyled, headless components (buttons, cards, forms, dialogs, navigation, etc.) with TypeScript support. Colorffy CSS is an expressive SCSS framework with tonal color system, utility classes, and layout systems (grid, flexbox). Use when working with Colorffy packages, setting up Vue/Nuxt projects with Colorffy, choosing components, applying styles, using utility classes, implementing layouts, or integrating Colorffy UI with Colorffy CSS or custom styles.
+description: Complete guide for Colorffy UI and CSS frameworks. Colorffy UI is a modern Vue 3 / Nuxt 3 component library with 70+ unstyled, headless components (buttons, cards, forms, dialogs, navigation, etc.) with TypeScript support. Colorffy CSS is an expressive SCSS framework with tonal color system, utility classes, and layout systems (grid, flexbox). Use when working with Colorffy packages, setting up Vue/Nuxt projects with Colorffy, choosing components, applying styles, using utility classes, implementing layouts, building full screens (dashboards, lists, settings, billing), or integrating Colorffy UI with Colorffy CSS or custom styles.
 ---
 
 # Colorffy
@@ -21,6 +21,7 @@ Complete framework for building Vue 3 and Nuxt 3 applications with Colorffy UI (
 | | **[Official Documentation](https://colorffy-ui-docs.pages.dev/)** | Hosted Colorffy documentation |
 | | **[Changelog](https://colorffy-ui-docs.pages.dev/changelog)** | Notable changes per release, newest first |
 | **Patterns** | **[Best Practices](references/best-practices.md)** | Common patterns, workflows, tips |
+| | **[UI Recipes](references/recipes.md)** | Full screens (app shell, dashboard, list, detail, settings, billing) and the design rules they share |
 
 ## Framework Overview
 
@@ -134,6 +135,9 @@ const name = ref('')
 
 **[Theming System](references/theming.md)** - When you need to:
 - Customize colors, typography, spacing
+- Build or switch a theme preset (`data-theme`: brand + shape + type)
+- Reshape the UI with the shape roles (sharp, soft, pill)
+- Make a page or region compact or spacious (density modes)
 - Setup dark mode
 - Override SCSS variables
 - Configure design tokens
@@ -157,6 +161,11 @@ const name = ref('')
 - Common patterns (forms, modals, tables, toasts)
 - Code examples for typical use cases
 - Performance tips and anti-patterns to avoid
+
+**[UI Recipes](references/recipes.md)** - When you need to:
+- Build a whole screen: app layout (sidebar + navbar), dashboard, list/table with filters, record detail, settings, billing
+- Follow the shared page frame and design rules (surfaces, spacing, type, emphasis, actions, states)
+- Pick the components for each region of a screen
 
 ## Component Categories Quick Reference
 
@@ -189,6 +198,8 @@ const name = ref('')
 Custom CSS written alongside Colorffy should consume the design tokens instead of hardcoded values. Every public token is `--cffy-*`; never write an unprefixed Colorffy name, and never set a private `--_*` variable (set the component's `--cffy-<component>-<property>` hook instead).
 
 - **Spacing:** `var(--cffy-space-4/6/8/12/14/16/20/24/28/32/36/40/48/72/96/120/144/192)` — number = px at a 16px root; all derived from `--cffy-space-unit` (set it on `:root`; on a wrapper it does nothing)
+- **Shape:** set the roles, never the radius steps or per-component radii: `--cffy-shape-container` (cards, dialogs, popovers, alerts, tables) · `--cffy-shape-field` (inputs, selects, tags) · `--cffy-shape-control` (buttons, chips, tabs, nav links), each from `var(--cffy-radius-none|sm|md|lg|xl|full)`; they work on `:root` or any wrapper, and `0` gives square icon buttons and group ends
+- **Theme presets:** `:root[data-theme="name"] { --cffy-color-brand-primary-500: …; --cffy-color-brand-primary-50: …; --cffy-shape-*: …; }`, applied with `<html data-theme="name">`; brand, space, motion and depth tokens only work on the root (see references/theming.md → Theme Presets)
 - **Density:** `data-density="compact | comfortable | spacious"` on `<html>` or any element re-derives the spacing and sets `--cffy-field-height-sm|md|lg` (inputs) and `--cffy-control-height-sm|md|lg` (buttons, chips, calendar days); `--cffy-density` set from CSS does the same where container style queries are supported (see references/theming.md)
 - **Font sizes:** `var(--cffy-fs-4xs…5xl)` + `var(--cffy-fs-{step}--line-height)` companions
 - **Widths:** `var(--cffy-container-3xs…7xl)` (16rem … 80rem), also as `max-w-{size}` utilities

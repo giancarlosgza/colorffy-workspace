@@ -448,7 +448,63 @@ Apply with `<html data-theme="luxury">`; switch at runtime with `document.docume
 7. Keep presets to ~4–10 tokens; avoid a theme flash by setting the attribute server-side or in an inline script
 8. Test light/dark, focus, disabled, and phone width (sheets)
 
-**Playground presets** (brand light / dark / shape): Orbit `#004617`/`#d4f5de` default · Luxury `#111111`/`#e8d5a8` sharp · Playful `#2f6bff`/`#a9c1ff` pill · Enterprise `#1e3a8a`/`#c3d3f7` default · Wellness `#4f7a5c`/`#c6e3cd` soft · Studio `#6d28d9`/`#dac8ff` subtle. Shapes as container/field/control radius: sharp none/none/none, subtle sm/md/sm, default lg/md/md, soft xl/lg/lg, pill xl/full/full.
+**Ready-made presets** (the Orbit playground's six; copy as-is). Shapes as container/field/control: sharp none/none/none, subtle sm/md/sm, default lg/md/md (the library default), soft xl/lg/lg, pill xl/full/full.
+
+```css
+/* Orbit: forest green with balanced corners */
+:root[data-theme="orbit"] {
+  --cffy-color-brand-primary-500: #004617;
+  --cffy-color-brand-primary-50: #d4f5de;
+  --cffy-shape-container: var(--cffy-radius-lg);
+  --cffy-shape-field: var(--cffy-radius-md);
+  --cffy-shape-control: var(--cffy-radius-md);
+}
+
+/* Luxury: black ink and square edges, champagne at night */
+:root[data-theme="luxury"] {
+  --cffy-color-brand-primary-500: #111111;
+  --cffy-color-brand-primary-50: #e8d5a8;
+  --cffy-shape-container: var(--cffy-radius-none);
+  --cffy-shape-field: var(--cffy-radius-none);
+  --cffy-shape-control: var(--cffy-radius-none);
+}
+
+/* Playful: bright blue on pill-shaped controls */
+:root[data-theme="playful"] {
+  --cffy-color-brand-primary-500: #2f6bff;
+  --cffy-color-brand-primary-50: #a9c1ff;
+  --cffy-shape-container: var(--cffy-radius-xl);
+  --cffy-shape-field: var(--cffy-radius-full);
+  --cffy-shape-control: var(--cffy-radius-full);
+}
+
+/* Enterprise: navy with balanced corners */
+:root[data-theme="enterprise"] {
+  --cffy-color-brand-primary-500: #1e3a8a;
+  --cffy-color-brand-primary-50: #c3d3f7;
+  --cffy-shape-container: var(--cffy-radius-lg);
+  --cffy-shape-field: var(--cffy-radius-md);
+  --cffy-shape-control: var(--cffy-radius-md);
+}
+
+/* Wellness: sage green and soft, rounded panels */
+:root[data-theme="wellness"] {
+  --cffy-color-brand-primary-500: #4f7a5c;
+  --cffy-color-brand-primary-50: #c6e3cd;
+  --cffy-shape-container: var(--cffy-radius-xl);
+  --cffy-shape-field: var(--cffy-radius-lg);
+  --cffy-shape-control: var(--cffy-radius-lg);
+}
+
+/* Studio: violet with tight, subtle corners */
+:root[data-theme="studio"] {
+  --cffy-color-brand-primary-500: #6d28d9;
+  --cffy-color-brand-primary-50: #dac8ff;
+  --cffy-shape-container: var(--cffy-radius-sm);
+  --cffy-shape-field: var(--cffy-radius-md);
+  --cffy-shape-control: var(--cffy-radius-sm);
+}
+```
 
 ## Best Practices
 
