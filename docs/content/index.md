@@ -15,7 +15,7 @@ seo:
   target: _blank
   trailing-icon: i-lucide-arrow-right
   ---
-  v3.0.0 — Date picker, localization & shape roles
+  v3.1.0 — UI recipes, radio tabs & theme presets
   :::
 
 #title
