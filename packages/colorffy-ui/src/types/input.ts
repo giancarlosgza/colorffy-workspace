@@ -259,7 +259,7 @@ export interface ICheckProps extends Omit<IBaseInputProps, 'variant'> {
  * Interface emits for the Check component.
  */
 export interface ICheckEmits {
-  (e: 'update:modelValue', value: string | boolean | null): void
+  (e: 'update:modelValue', value: boolean): void
   (e: 'update', value: string | boolean | null): void
 }
 

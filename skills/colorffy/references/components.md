@@ -925,7 +925,7 @@ User avatar component; shows the image (`src`) when set (even if `initials` is a
 
 **Props:**
 - `src` (string, optional) - Image URL; takes precedence over `initials`
-- `alt` (string, default: 'Avatar') - Accessible name
+- `alt` (string, default: 'Avatar') - Accessible name; an initials avatar falls back to its `initials`, a placeholder is announced only when `alt` is set; `alt=""` = decorative
 - `initials` (string | null, optional) - Shown when `src` is empty or the image fails to load
 - `size` ('sm' | 'md' | 'lg' | 'navbar' | 'menu', default: 'sm')
 - `maskShape` ('arch' | 'pill' | 'sunny' | 'gem' | 'cookie-6' | 'cookie-9' | 'cookie-12' | 'clover-4' | 'clover-8' | 'bum' | null, optional) - Decorative mask
@@ -972,7 +972,7 @@ All inputs share the base props (`IBaseInputProps`) and bind with `v-model`.
 
 Not every input uses every base prop (`readonly` applies to `UiInputText`, `UiInputTextarea`, `UiInputOtp`, `UiInputPassword`, `UiInputSearch`, `UiInputTags`, `UiInputCombobox`, `UiInputMultiSelect` and `UiInputDate`; `UiInputCheck` replaces `variant` with `'switch'`); each section lists what applies.
 
-**Events (all inputs):** `update:modelValue` (for `v-model`) and `update` with the same value
+**Events (all inputs):** `update:modelValue` (for `v-model`) and `update` with the same value (`UiInputCheck` types `update:modelValue` as `boolean`)
 
 ### UiInputText
 

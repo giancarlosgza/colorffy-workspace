@@ -23,6 +23,10 @@ const imageError = ref(false)
 
 /** Computed */
 const altText = computed(() => props.alt ?? l10n.value.alt)
+const initialsAttrs = computed(() => props.alt === ''
+  ? { 'aria-hidden': 'true' as const }
+  : { 'role': 'img', 'aria-label': props.alt ?? props.initials ?? undefined })
+const placeholderAttrs = computed(() => props.alt ? { 'role': 'img', 'aria-label': props.alt } : {})
 const avatarClasses = computed(() => {
   const classes = ['img-avatar']
   if (props.size) {
@@ -110,6 +114,7 @@ function handleImageError() {
     <span
       v-else-if="initials"
       :class="initialsAvatarClasses"
+      v-bind="initialsAttrs"
     >
       {{ initials }}
     </span>
@@ -117,6 +122,7 @@ function handleImageError() {
     <div
       v-else
       :class="placeholderClasses"
+      v-bind="placeholderAttrs"
     />
 
     <!-- Status dot -->
@@ -141,6 +147,7 @@ function handleImageError() {
   <span
     v-else-if="initials"
     :class="initialsAvatarClasses"
+    v-bind="initialsAttrs"
   >
     {{ initials }}
   </span>
@@ -149,5 +156,6 @@ function handleImageError() {
   <div
     v-else
     :class="placeholderClasses"
+    v-bind="placeholderAttrs"
   />
 </template>

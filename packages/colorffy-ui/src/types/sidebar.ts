@@ -119,7 +119,8 @@ export interface ISidebarDropdownProps {
 
   /**
    * Enable interactive dropdown menu.
-   * When false, displays static content without dropdown.
+   * When false, renders the title and subtitle as a static label and
+   * ignores the default slot, so menu items passed to it never show.
    * @default true
    */
   interactive?: boolean

@@ -24,8 +24,9 @@ export interface IAvatarProps {
    */
   src?: string
   /**
-   * Alternative text / accessible name for the avatar image.
-   * @default 'Avatar', from the configured labels
+   * Accessible name. An image avatar defaults to 'Avatar' from the configured
+   * labels, an initials avatar to its `initials`, and a placeholder is only
+   * announced when `alt` is set. `alt=""` marks the avatar as decorative.
    */
   alt?: string
   size?: AvatarSize

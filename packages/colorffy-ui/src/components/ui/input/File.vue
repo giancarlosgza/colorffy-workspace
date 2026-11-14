@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IFileInputEmits, IFileInputProps } from '@/types/input'
-import { computed, toRefs } from 'vue'
+import { computed, ref, toRefs, watch } from 'vue'
 import { useLabels } from '@/composables/useColorffyConfig'
 import UiIconMaterial from '../icon/Material.vue'
 
@@ -33,6 +33,7 @@ const model = defineModel<File | null>('modelValue', { default: null })
 const l10nCommon = useLabels('common')
 
 /** Data */
+const inputRef = ref<HTMLInputElement | null>(null)
 const { label, inputLabel } = toRefs(props)
 const inputId = computed(() => props.id ?? undefined)
 
@@ -69,6 +70,13 @@ function handleInput(event: Event) {
   model.value = file
   emit('update', file)
 }
+
+/** Watchers */
+// The native input keeps the old file after the model is cleared, so picking it again would fire no event
+watch(model, (file) => {
+  if (!file && inputRef.value)
+    inputRef.value.value = ''
+})
 </script>
 
 <template>
@@ -85,6 +93,7 @@ function handleInput(event: Event) {
         <!-- Input -->
         <input
           :id="inputId"
+          ref="inputRef"
           :class="fileClasses"
           type="file"
           :disabled="disabled"

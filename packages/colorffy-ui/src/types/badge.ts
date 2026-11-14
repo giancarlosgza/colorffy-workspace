@@ -1,7 +1,7 @@
 import type { ClassValue, ThemeColor } from '@/types/shared'
 
 export type BadgeClassName = ClassValue
-export type BadgeVariant = ThemeColor | 'gradient' | 'default' | 'outline' | `tonal tonal-${Exclude<ThemeColor, 'neutral'>}` | (string & {})
+export type BadgeVariant = ThemeColor | 'gradient' | 'default' | 'outline' | `tonal tonal-${Exclude<ThemeColor, 'neutral'>}` | 'tonal tonal-default' | (string & {})
 export type BadgeSize = 'sm'
 
 /**

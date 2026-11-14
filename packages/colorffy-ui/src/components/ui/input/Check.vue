@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ICheckEmits, ICheckProps } from '@/types/input'
-import { computed, watch } from 'vue'
+import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { useLabels } from '@/composables/useColorffyConfig'
 
 /** Props */
@@ -24,13 +24,13 @@ const props = withDefaults(defineProps<ICheckProps>(), {
 /** Emits */
 const emit = defineEmits<ICheckEmits>()
 
-/** Model */
-const model = defineModel<string | boolean | null>('modelValue', { default: false })
-
 /** Labels */
 const l10nCommon = useLabels('common')
 
 /** Data */
+// A local copy keeps the box usable without v-model; a bound parent stays the source of truth, as with defineModel
+const model = ref<string | boolean | null>(props.modelValue)
+const instance = getCurrentInstance()
 const inputId = computed(() => props.id ?? undefined)
 
 /** Computed */
@@ -53,8 +53,29 @@ const checkClasses = computed(() => {
   }
   return classes
 })
+const checked = computed({
+  get: () => model.value,
+  set: (value: string | boolean | null) => {
+    if (!isBound())
+      model.value = value
+    emit('update:modelValue', Boolean(value))
+  }
+})
+
+/** Methods */
+function isBound(): boolean {
+  const vnodeProps = instance?.vnode.props
+  if (!vnodeProps)
+    return false
+  const hasValue = 'modelValue' in vnodeProps || 'model-value' in vnodeProps
+  const hasListener = 'onUpdate:modelValue' in vnodeProps || 'onUpdate:model-value' in vnodeProps
+  return hasValue && hasListener
+}
 
 /** Watchers */
+watch(() => props.modelValue, (value) => {
+  model.value = value
+})
 watch(model, (value) => {
   emit('update', value)
 })
@@ -65,7 +86,7 @@ watch(model, (value) => {
     <!-- Input -->
     <input
       :id="inputId"
-      v-model="model"
+      v-model="checked"
       :class="checkClasses"
       :type="type"
       :disabled="disabled"
