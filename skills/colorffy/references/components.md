@@ -1504,6 +1504,8 @@ Horizontal tab navigation.
 - `rounded` (boolean, default: false) - Fully rounded pill tabs and indicator; only with `pillTabs`
 - `iconOnly` (boolean, default: false) - Tabs with an `icon` render as square icon buttons; the label stays as visually hidden text (accessible name) and a native `title` tooltip; tabs without an icon keep their label
 - `size` ('sm' | 'md' | null, default: null) - `'sm'` uses the default button height and font size
+- `mode` ('tabs' | 'radio', default: 'tabs') - `'radio'` renders a `radiogroup` of `radio` buttons (`aria-checked`) for a single choice with no panels (view switch, color mode picker); `panelId` is ignored. Name it with an `aria-label` attribute
+- `idPrefix` (string, default: 'tab') - Button ids are `<idPrefix>-<tab id>`; panels use that id in `aria-labelledby`. Set a unique prefix when two tab bars on a page share tab ids
 
 The active indicator (underline, or the raised pill with `pillTabs`) is placed and animated with pure CSS anchor positioning; where anchor positioning is unsupported the active tab falls back to its own border/background.
 
@@ -1526,6 +1528,9 @@ Compact segmented switcher with an animated active pill.
 **Props:**
 - `tabs` (`ISegmentedTab[]`, required) - `ISegmentedTab` is `ITabItem`, the same shape as `UiTabs` items: `{ id, label, disabled?, panelId?, badge?, icon? }`. `icon` (Material Symbols code) renders before the label, `badge` (`Partial<IBadgeProps>`) after it
 - `activeTab` (string) - Id of the active tab; defaults to the first tab
+- `mode` ('tabs' | 'radio', default: 'tabs') - `'radio'` renders a radio group for a choice that switches no panels; `panelId` is ignored
+- `ariaLabel` (string) - Name of the tablist / radio group (set it with `mode="radio"`); an `aria-label` attribute would land on the outer wrapper
+- `idPrefix` (string, default: 'tab') - Button ids are `<idPrefix>-<tab id>`
 
 **Emits:**
 - `update:activeTab(tabId)` - Fired when a tab is selected; use `v-model:active-tab`

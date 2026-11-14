@@ -12,23 +12,23 @@ const { showLabels = true } = defineProps<IColorModePickerProps>()
 /** Data */
 // The saved preference only exists on the client, so the picker follows it after mount
 const isMounted = ref<boolean>(false)
-// Scoped ids keep the tab buttons unique when two pickers share a page
+// Scoped ids keep the buttons unique when two pickers share a page
 const idPrefix = useId()
 const colorModeTabs: ITabItem[] = [
-  { id: `${idPrefix}-system`, label: 'System', icon: '&#xe31e;' },
-  { id: `${idPrefix}-light`, label: 'Light', icon: '&#xe518;' },
-  { id: `${idPrefix}-dark`, label: 'Dark', icon: '&#xe51c;' }
+  { id: 'system', label: 'System', icon: '&#xe31e;' },
+  { id: 'light', label: 'Light', icon: '&#xe518;' },
+  { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
 ]
 
 /** Composables */
 const colorMode = useColorMode()
 
 /** Computed */
-const activeTab = computed(() => `${idPrefix}-${isMounted.value ? colorMode.preference : 'system'}`)
+const activeTab = computed(() => isMounted.value ? colorMode.preference : 'system')
 
 /** Methods */
-function selectColorMode(tabId: string): void {
-  colorMode.preference = tabId.slice(idPrefix.length + 1)
+function selectColorMode(mode: string): void {
+  colorMode.preference = mode
 }
 
 /** Lifecycle */
@@ -41,6 +41,8 @@ onMounted(() => {
   <UiTabs
     :tabs="colorModeTabs"
     :active-tab="activeTab"
+    mode="radio"
+    :id-prefix="idPrefix"
     pill-tabs
     size="sm"
     rounded

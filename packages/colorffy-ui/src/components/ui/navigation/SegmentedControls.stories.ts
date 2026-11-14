@@ -121,3 +121,13 @@ export const Controlled: Story = {
     `
   })
 }
+
+// A view switch with no panels renders as a named radio group
+export const RadioMode: Story = {
+  args: {
+    mode: 'radio',
+    ariaLabel: 'Filter',
+    idPrefix: 'filter',
+    tabs: defaultTabs
+  }
+}

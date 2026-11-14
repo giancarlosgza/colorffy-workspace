@@ -157,3 +157,21 @@ export const OverflowScroll: Story = {
     })
   ]
 }
+
+// A single choice with no panels renders as a radio group
+export const RadioMode: Story = {
+  args: {
+    mode: 'radio',
+    idPrefix: 'color-mode',
+    pillTabs: true,
+    rounded: true,
+    fit: true,
+    size: 'sm',
+    iconOnly: true,
+    tabs: [
+      { id: 'system', label: 'System', icon: '&#xe31e;' },
+      { id: 'light', label: 'Light', icon: '&#xe518;' },
+      { id: 'dark', label: 'Dark', icon: '&#xe51c;' }
+    ]
+  }
+}

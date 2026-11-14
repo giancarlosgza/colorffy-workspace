@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { ISegmentedControlsEmits, ISegmentedControlsProps, ISegmentedTab } from '@/types/navigation'
-import { ref, toRef, watch } from 'vue'
+import { computed, ref, toRef, watch } from 'vue'
 import UiBadge from '../badge/Badge.vue'
 import UiIconMaterial from '../icon/Material.vue'
 
 /** Props */
 const props = withDefaults(defineProps<ISegmentedControlsProps>(), {
-  activeTab: undefined
+  activeTab: undefined,
+  ariaLabel: undefined,
+  idPrefix: 'tab',
+  mode: 'tabs'
 })
 
 /** Emits */
@@ -17,6 +20,14 @@ const emit = defineEmits<ISegmentedControlsEmits>()
 const tabs = toRef(props, 'tabs')
 const activeTabName = ref<string>(props.activeTab ?? tabs.value?.[0]?.id ?? '')
 const tabButtons = ref<(HTMLButtonElement | null)[]>([])
+
+/** Computed */
+const isRadio = computed(() => props.mode === 'radio')
+// With no enabled active tab, the first enabled one keeps the group reachable by Tab
+const focusableId = computed(() => {
+  const active = tabs.value.find(tab => tab.id === activeTabName.value && !tab.disabled)
+  return active?.id ?? tabs.value.find(tab => !tab.disabled)?.id ?? ''
+})
 
 /** Methods */
 function isActiveTab(tab: ISegmentedTab): boolean {
@@ -82,7 +93,8 @@ watch(() => props.activeTab, (newVal) => {
   <div class="tab-segmented-control-container">
     <ul
       class="tab-segmented-control"
-      role="tablist"
+      :role="isRadio ? 'radiogroup' : 'tablist'"
+      :aria-label="ariaLabel"
       :style="`--_segmented-control-count: ${tabs.length}`"
     >
       <!-- Tabs -->
@@ -94,15 +106,16 @@ watch(() => props.activeTab, (newVal) => {
         role="presentation"
       >
         <button
-          :id="`tab-${tab.id}`"
+          :id="`${idPrefix}-${tab.id}`"
           :ref="(el) => setTabButton(el, tabIndex)"
           class="segmented-control-link"
-          role="tab"
+          :role="isRadio ? 'radio' : 'tab'"
           :class="{ active: isActiveTab(tab), disabled: tab.disabled }"
-          :aria-selected="isActiveTab(tab)"
-          :aria-controls="tab.panelId || undefined"
+          :aria-selected="isRadio ? undefined : isActiveTab(tab)"
+          :aria-checked="isRadio ? isActiveTab(tab) : undefined"
+          :aria-controls="isRadio ? undefined : tab.panelId || undefined"
           :aria-disabled="tab.disabled"
-          :tabindex="isActiveTab(tab) ? 0 : -1"
+          :tabindex="tab.id === focusableId ? 0 : -1"
           :disabled="tab.disabled"
           @click="handleSelectedTab(tab)"
           @keydown="onTabKeydown($event, tabIndex)"

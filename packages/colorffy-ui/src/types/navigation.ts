@@ -2,6 +2,7 @@ import type { IBadgeProps } from '@/types/badge'
 import type { IBaseLinkProps, SizeLevel } from '@/types/shared'
 
 export type TabsSize = Extract<SizeLevel, 'sm' | 'md'>
+export type TabsMode = 'tabs' | 'radio'
 
 /**
  * Shared interface for navigation and menu items.
@@ -92,7 +93,8 @@ export interface ITabItem {
   /**
    * Optional id of the tabpanel this tab controls. When set, the tab exposes
    * `aria-controls`; render the panel with that id, `role="tabpanel"`, and
-   * `aria-labelledby="tab-<id>"` (the tab button's generated id).
+   * `aria-labelledby="tab-<id>"` (the tab button's generated id, with the
+   * component's `idPrefix` in place of `tab`).
    */
   panelId?: string
 
@@ -126,6 +128,27 @@ export interface ISegmentedControlsProps {
    * The id of the tab that should be active.
    */
   activeTab?: string
+
+  /**
+   * Accessible name of the tablist or radio group. Name a radio group always.
+   */
+  ariaLabel?: string
+
+  /**
+   * Prefix of each tab button's id, which is `<idPrefix>-<tab id>`. Set a
+   * unique prefix when two tab bars on one page share tab ids, and use it in
+   * the panels' `aria-labelledby`.
+   * @default 'tab'
+   */
+  idPrefix?: string
+
+  /**
+   * `'tabs'` renders a tablist whose tabs control panels. `'radio'` renders
+   * the same buttons as a radio group, for a single choice with no panels
+   * (a view switch, a color mode picker); `panelId` is then ignored.
+   * @default 'tabs'
+   */
+  mode?: TabsMode
 }
 
 /**
@@ -181,6 +204,22 @@ export interface ITabsProps {
    * Defaults to 'md'.
    */
   size?: TabsSize | null
+
+  /**
+   * Prefix of each tab button's id, which is `<idPrefix>-<tab id>`. Set a
+   * unique prefix when two tab bars on one page share tab ids, and use it in
+   * the panels' `aria-labelledby`.
+   * @default 'tab'
+   */
+  idPrefix?: string
+
+  /**
+   * `'tabs'` renders a tablist whose tabs control panels. `'radio'` renders
+   * the same buttons as a radio group, for a single choice with no panels
+   * (a view switch, a color mode picker); `panelId` is then ignored.
+   * @default 'tabs'
+   */
+  mode?: TabsMode
 }
 
 /**
